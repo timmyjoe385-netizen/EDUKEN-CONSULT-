@@ -31,13 +31,13 @@ async function webResearch(env, question) {
     const response = await env.AI.websearch({
       gatewayId: "default",
       query: question,
-      provider: "exa",
+      provider: "ceramic",
       limit: 8,
     });
 
     if (!response.ok) return null;
     const data = await response.json();
-    const results = Array.isArray(data?.results) ? data.results : [];
+    const results = Array.isArray(data?.items) ? data.items : [];
 
     return results.slice(0, 8).map((item) => ({
       title: item?.title || "",
