@@ -180,7 +180,9 @@ export default function PlatformHub({
     if (!aiQuestion.trim()) return;
     setAiLoading(true);
     try {
-      const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });\n      const data = await res.json();\n      if (!res.ok) throw new Error(data.error || 'AI request failed');
+      const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'AI request failed');
       setAiAnswer(data.answer || 'I could not find a confident answer.');
     } catch {
       setAiAnswer(
