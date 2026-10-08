@@ -123,7 +123,7 @@ function App() {
 
   const loadContent = async () => {
     try {
-      const res = await api.get('/api/public-content');
+      const res = await api.get('/public-content');
       setContent(res.data);
     } catch {
       setToast('Unable to load live content. Please refresh.');
@@ -314,7 +314,7 @@ function App() {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     try {
-      await api.post('/api/consultations', {
+      await api.post('/consultations', {
         name: fd.get('name'),
         whatsapp: fd.get('whatsapp'),
         email: fd.get('email'),
