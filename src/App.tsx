@@ -123,7 +123,7 @@ function App() {
 
   const loadContent = async () => {
     try {
-      const res = await api.get('/public-content');
+      const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store' }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
       setContent(res.data);
     } catch {
       setToast('Unable to load live content. Please refresh.');
