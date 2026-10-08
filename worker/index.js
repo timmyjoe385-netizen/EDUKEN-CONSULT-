@@ -24,6 +24,49 @@ async function getLiveContent() {
   }
 }
 
+async function webResearch(env, question) {
+  if (!env.AI?.websearch) return null;
+
+  try {
+    const response = await env.AI.websearch({
+      gatewayId: "default",
+      query: question,
+      provider: "exa",
+      limit: 8,
+    });
+
+    if (!response.ok) return null;
+    const data = await response.json();
+    const results = Array.isArray(data?.results) ? data.results : [];
+
+    return results.slice(0, 8).map((item) => ({
+      title: item?.title || "",
+      url: item?.url || item?.link || "",
+      description: item?.description || item?.snippet || item?.text || "",
+    }));
+  } catch {
+    return null;
+  }
+}
+
+function compactResearch(results) {
+  if (!Array.isArray(results) || !results.length) {
+    return "No live web research results were available.";
+  }
+
+  return results
+    .map((item, index) =>
+      [
+        `SOURCE ${index + 1}`,
+        `TITLE: ${item.title}`,
+        `URL: ${item.url}`,
+        `DESCRIPTION: ${item.description}`,
+      ].join("\n")
+    )
+    .join("\n\n")
+    .slice(0, 24000);
+}
+
 function compactContent(content) {
   if (!content) return "No EDUKEN live content was available.";
   const sections = ["opportunities", "admissions", "updates", "faqs", "services"];
@@ -60,15 +103,24 @@ export default {
 
         const content = await getLiveContent();
         const context = compactContent(content);
+        const research = await webResearch(env, question);
+        const researchContext = compactResearch(research);
 
         const prompt = [
-          "You are the EDUKEN CONSULT AI Assistant.",
-          "Answer clearly and naturally for Nigerian students.",
-          "Use the live EDUKEN CONSULT content below whenever it is relevant.",
+          "You are the EDUKEN CONSULT AI Assistant and a web-research and verification assistant for Nigerian students.",
+          "Answer clearly and naturally.",
+          "For current questions (admissions, deadlines, scholarships, jobs, internships, fees, policies, news, or other changing information), use the LIVE WEB RESEARCH when available.",
+          "Prefer official institution, government, examination-body, or programme websites over blogs, social posts, aggregators, and adverts.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
-          "If the live content does not establish a current fact, say that it needs official-source verification.",
-          "Give practical next steps and distinguish guidance from confirmed information.",
+          "Treat search snippets as evidence to investigate, not as unquestionable truth.",
+          "When reporting a current opportunity, include the institution/programme, deadline when available, key requirements when available, and the official source URL.",
+          "If sources disagree or a fact cannot be verified, clearly say so instead of guessing.",
+          "Use EDUKEN content as supplementary context, not as proof of a current fact unless it is independently verified by the web research.",
+          "Give practical next steps and distinguish confirmed information from guidance.",
           "Keep answers concise but useful.",
+          "",
+          "LIVE WEB RESEARCH:",
+          researchContext,
           "",
           "LIVE EDUKEN CONSULT CONTENT:",
           context,
