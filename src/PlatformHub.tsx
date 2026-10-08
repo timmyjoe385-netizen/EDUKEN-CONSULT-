@@ -180,8 +180,8 @@ export default function PlatformHub({
     if (!aiQuestion.trim()) return;
     setAiLoading(true);
     try {
-      const res = await api.post('/api/ai-assistant', { question: aiQuestion });
-      setAiAnswer(res.data.answer || 'I could not find a confident answer.');
+      const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });\n      const data = await res.json();\n      if (!res.ok) throw new Error(data.error || 'AI request failed');
+      setAiAnswer(data.answer || 'I could not find a confident answer.');
     } catch {
       setAiAnswer(
         'I could not answer that right now. Please verify the official source or contact EDUKEN CONSULT.'
