@@ -1,0 +1,53 @@
+[
+  {
+    "name": "Load EDUKEN content",
+    "sanity": true,
+    "viewport": "desktop",
+    "covers": ["public-content API", "homepage rendering"],
+    "description": "Verifies the migrated site loads its public EDUKEN content through the new API.",
+    "steps": [
+      "Open the EDUKEN CONSULT homepage",
+      "Wait for the live content section to finish loading"
+    ],
+    "expected": "The EDUKEN CONSULT homepage is visible and the public content area does not show a server error."
+  },
+  {
+    "name": "Submit consultation request",
+    "viewport": "mobile",
+    "covers": ["consultation form", "POST /consultations", "success feedback"],
+    "description": "Verifies a visitor can submit a consultation request through the migrated backend.",
+    "steps": [
+      "Open the consultation section",
+      "Enter a name, WhatsApp number and request message",
+      "Submit the consultation form"
+    ],
+    "expected": "A confirmation message says the consultation request was received."
+  },
+  {
+    "name": "Protected account action requires sign-in",
+    "viewport": "desktop",
+    "covers": ["authentication guard", "protected saved opportunities"],
+    "description": "Verifies protected student workspace actions do not silently expose private data to anonymous visitors.",
+    "steps": [
+      "Open the My EDUKEN workspace",
+      "Choose the saved opportunities action while signed out"
+    ],
+    "expected": "The site asks the visitor to sign in instead of displaying another user's saved opportunities."
+  },
+  {
+    "name": "AI research failure is handled safely",
+    "viewport": "mobile",
+    "covers": [
+      "Ask EDUKEN",
+      "AI API failure handling",
+      "user-visible fallback"
+    ],
+    "description": "Verifies the AI assistant shows a safe fallback when the research service is unavailable.",
+    "steps": [
+      "Open Ask EDUKEN",
+      "Submit a question",
+      "If the AI service is unavailable, observe the response"
+    ],
+    "expected": "The user receives a clear fallback telling them to verify official sources rather than an invented answer."
+  }
+]
