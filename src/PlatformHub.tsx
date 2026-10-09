@@ -108,6 +108,7 @@ export default function PlatformHub({
   const [aiQuestion, setAiQuestion] = useState('');
   const [aiAnswer, setAiAnswer] = useState('');
   const [aiSources, setAiSources] = useState<{ title: string; url: string; description?: string }[]>([]);
+  const [aiResearchStatus, setAiResearchStatus] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
 
   const refresh = async () => {
@@ -220,16 +221,19 @@ export default function PlatformHub({
     if (!aiQuestion.trim()) return;
     setAiLoading(true);
     setAiSources([]);
+    setAiResearchStatus(null);
     try {
       const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'AI request failed');
       setAiAnswer(data.answer || 'I could not find a confident answer.');
       setAiSources(Array.isArray(data.sources) ? data.sources.filter((source: any) => source?.url) : []);
+      setAiResearchStatus(typeof data.researchStatus === 'string' ? data.researchStatus : null);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Unknown AI assistant error';
       setAiAnswer(`EDUKEN AI error: ${message}. Please try again shortly.`);
       setAiSources([]);
+      setAiResearchStatus(null);
     } finally {
       setAiLoading(false);
     }
@@ -449,6 +453,16 @@ export default function PlatformHub({
         </div>
         {aiAnswer && (
           <div className="ai-answer">
+            {aiResearchStatus && aiResearchStatus !== 'completed' && (
+              <div role="status" style={{ padding: '10px 12px', marginBottom: 12, borderRadius: 8, background: '#fff4df', color: '#744b00', fontSize: 13, lineHeight: 1.5 }}>
+                ⚠️ Live web research could not be completed for this answer. Current deadlines, availability and requirements may not be verified; check the official source before acting.
+              </div>
+            )}
+            {aiResearchStatus === 'completed' && (
+              <div role="status" style={{ padding: '8px 12px', marginBottom: 12, borderRadius: 8, background: '#e8f7ee', color: '#17633a', fontSize: 13 }}>
+                ✓ Live web search completed. Review the source links below.
+              </div>
+            )}
             <AiFormattedAnswer text={aiAnswer} />
             {aiSources.length > 0 && (
               <div className="ai-sources" style={{ marginTop: 14 }}>
