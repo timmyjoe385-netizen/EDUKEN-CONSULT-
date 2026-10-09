@@ -24,6 +24,17 @@ async function getLiveContent() {
   }
 }
 
+function needsLiveResearch(question) {
+  const q = String(question || "").toLowerCase();
+
+  // Only search when the user is asking for changing or source-verifiable facts.
+  const timeSensitive = /\\b(latest|current|currently|today|tonight|this week|this month|this year|2026|2027|deadline|closing date|still open|open now|available now|application open|admission status|cut[- ]?off mark|cutoff|screening date|application fee|school fees|tuition|how much does|price|requirements for|official source|verify|fact[- ]?check|recent update|news about)\\b/.test(q);
+  const lookupIntent = /\\b(find|search for|look up|check|confirm|verify|list|recommend|which (schools|universities|polytechnics|scholarships|jobs|internships)|any (scholarships|jobs|internships|grants|fellowships)|available (scholarships|jobs|internships|grants)|opportunities for)\\b/.test(q);
+  const changingTopic = /\\b(admission form|post[- ]?utme|screening form|scholarship|internship|graduate trainee|vacancy|vacancies|job opening|grant application|fellowship application|school fees|acceptance fee|application deadline|application portal)\\b/.test(q);
+
+  return timeSensitive || (lookupIntent && changingTopic);
+}
+
 async function webResearch(env, question) {
   if (typeof env.AI?.websearch !== "function") {
     return { results: [], status: "unavailable", error: "Cloudflare Web Search binding is unavailable." };
@@ -189,7 +200,7 @@ export default {
           "If sources disagree or a fact cannot be verified, clearly say so instead of guessing.",
           "Use EDUKEN content as supplementary context, not as proof of a current fact unless it is independently verified by the web research.",
           "Give practical next steps and distinguish confirmed information from guidance.",
-          "Keep answers concise but useful.",
+          "DEFAULT ANSWER STYLE: Be concise and summary-first. For simple questions, answer in 1–3 short sentences. For service lists or broad questions, use at most 4 short bullets and aim for under 100 words. Give only the most useful details first; avoid repeating the question, long introductions, and unnecessary sections. Expand only when the user asks for more detail.",
           "",
           "LIVE WEB SEARCH STATUS:",
           searchStatus,
