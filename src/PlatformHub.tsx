@@ -195,15 +195,26 @@ export default function PlatformHub({
     await refresh();
   };
 
+  const [notificationStatus, setNotificationStatus] = useState('');
+
   const enablePush = async () => {
     if (!user) {
       await signIn();
       return;
     }
     try {
-      await notifications.subscribe({ showUi: true });
+      const result = await notifications.subscribe({ showUi: true });
+      if (result.permission === 'unsupported') {
+        setNotificationStatus('This browser does not support notification permissions.');
+      } else if (result.permission === 'granted') {
+        setNotificationStatus('Browser permission granted. Automatic push delivery is not connected yet, so this does not enable background alerts.');
+      } else if (result.permission === 'denied') {
+        setNotificationStatus('Notifications are blocked in your browser settings. You can change that in your browser settings.');
+      } else {
+        setNotificationStatus('Notification permission was not granted. You can try again or check your browser settings.');
+      }
     } catch {
-      /* unsupported */
+      setNotificationStatus('Could not check notification permission on this device.');
     }
   };
 
@@ -421,8 +432,13 @@ export default function PlatformHub({
             />
           </div>
           <strong>
-            {jamb && post
-              ? 'Raw combined score: ' + (Number(jamb) + Number(post))
+            {jamb.trim() && post.trim()
+              ? Number.isFinite(Number(jamb)) &&
+                Number.isFinite(Number(post)) &&
+                Number(jamb) >= 0 &&
+                Number(post) >= 0
+                ? 'Raw combined score: ' + (Number(jamb) + Number(post))
+                : 'Enter valid non-negative numbers'
               : 'Enter both scores'}
           </strong>
           <small>
@@ -563,8 +579,16 @@ export default function PlatformHub({
       {open === 'alerts' && (
         <Drawer title="Notifications & Alerts" close={() => setOpen('')}>
           <button className="primary full" onClick={enablePush}>
-            <Bell size={15} /> Enable device notifications
+            <Bell size={15} /> Check browser notification permission
           </button>
+          <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
+            Automatic background push alerts are not connected yet. Topic preferences and in-app alerts can still be managed here.
+          </p>
+          {notificationStatus && (
+            <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
+              {notificationStatus}
+            </p>
+          )}
           <button className="secondary full" onClick={() => markRead()}>
             <Check size={15} /> Mark all as read
           </button>
