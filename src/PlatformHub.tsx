@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { api, auth, notifications } from './lib/api';
 import {
   Bell,
@@ -49,7 +49,7 @@ const deadlineState = (value: unknown) => {
 };
 
 function renderAiInline(text: string): React.ReactNode[] {
-  return text.split(/(\\*\\*[^*]+\\*\\*|\\*[^*]+\\*)/g).filter(Boolean).map((part, index) => {
+  return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).filter(Boolean).map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return <strong key={index}>{part.slice(2, -2)}</strong>;
     }
@@ -61,13 +61,13 @@ function renderAiInline(text: string): React.ReactNode[] {
 }
 
 function AiFormattedAnswer({ text }: { text: string }) {
-  const lines = text.replace(/\\r/g, '').split('\\n');
+  const lines = text.replace(/\r/g, '').split('\n');
   return (
     <div className="ai-formatted-answer">
       {lines.map((rawLine, index) => {
         const line = rawLine.trim();
         if (!line) return <div key={index} style={{ height: 8 }} />;
-        const heading = line.match(/^#{1,4}\\s+(.+)$/);
+        const heading = line.match(/^#{1,4}\s+(.+)$/);
         if (heading) {
           const HeadingTag = line.startsWith('# ') ? 'h3' : line.startsWith('## ') ? 'h4' : 'h5';
           return <HeadingTag key={index} style={{ margin: '14px 0 6px', lineHeight: 1.35 }}>{renderAiInline(heading[1])}</HeadingTag>;
@@ -76,9 +76,9 @@ function AiFormattedAnswer({ text }: { text: string }) {
         if (bullet) {
           return <div key={index} style={{ display: 'flex', gap: 8, margin: '5px 0', paddingLeft: 4 }}><span aria-hidden="true">•</span><span>{renderAiInline(bullet[1])}</span></div>;
         }
-        const numbered = line.match(/^\\d+[.)]\\s+(.+)$/);
+        const numbered = line.match(/^\d+[.)]\s+(.+)$/);
         if (numbered) {
-          const number = line.match(/^\\d+/)?.[0] || '';
+          const number = line.match(/^\d+/)?.[0] || '';
           return <div key={index} style={{ display: 'flex', gap: 8, margin: '5px 0', paddingLeft: 4 }}><span>{number}.</span><span>{renderAiInline(numbered[1])}</span></div>;
         }
         return <p key={index} style={{ margin: '6px 0', lineHeight: 1.65 }}>{renderAiInline(line)}</p>;
