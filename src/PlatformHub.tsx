@@ -453,7 +453,7 @@ export default function PlatformHub({
         </div>
         {aiAnswer && (
           <div className="ai-answer">
-            {aiResearchStatus && aiResearchStatus !== 'completed' && (
+            {aiResearchStatus && aiResearchStatus !== 'completed' && aiResearchStatus !== 'not_needed' && (
               <div role="status" style={{ padding: '10px 12px', marginBottom: 12, borderRadius: 8, background: '#fff4df', color: '#744b00', fontSize: 13, lineHeight: 1.5 }}>
                 ⚠️ Live web research could not be completed for this answer. Current deadlines, availability and requirements may not be verified; check the official source before acting.
               </div>
