@@ -28,7 +28,7 @@ function needsLiveResearch(question) {
   const q = String(question || "").toLowerCase();
 
   // Only search when the user is asking for changing or source-verifiable facts.
-  const timeSensitive = /\b(latest|current|currently|today|tonight|this week|this month|this year|2026|2027|deadline|closing date|still open|open now|available now|application open|admission status|cut[- ]?off mark|cutoff|screening date|application fee|school fees|tuition|how much does|price|requirements for|official source|verify|fact[- ]?check|recent update|news about)\b/.test(q);
+  const timeSensitive = /\b(latest|current|currently|today|tonight|this week|this month|this year|2026|2027|deadline|closing date|still open|open now|available now|application open|admission status|admission form|post[- ]?utme|screening form|acceptance fee|application portal|cut[- ]?off mark|cutoff|screening date|application fee|school fees|tuition|how much does|price|requirements for|official source|verify|fact[- ]?check|recent update|news about)\b/.test(q);
   const lookupIntent = /\b(find|search for|look up|check|confirm|verify|list|recommend|which (schools|universities|polytechnics|scholarships|jobs|internships)|any (scholarships|jobs|internships|grants|fellowships)|available (scholarships|jobs|internships|grants)|opportunities for)\b/.test(q);
   const changingTopic = /\b(admission form|post[- ]?utme|screening form|scholarship|internship|graduate trainee|vacancy|vacancies|job opening|grant application|fellowship application|school fees|acceptance fee|application deadline|application portal)\b/.test(q);
 
