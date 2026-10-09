@@ -27,18 +27,21 @@ async function getLiveContent() {
 function needsLiveResearch(question) {
   const q = String(question || "").toLowerCase();
 
-  // Jobs, scholarships and other opportunities must come from EDUKEN's own
-  // published records unless the user explicitly asks for outside verification.
+  // Jobs, scholarships and other opportunities use EDUKEN's own published
+  // records by default. Only search outside when the user clearly asks for it.
   const opportunityTopic = /\\b(job|jobs|vacanc(?:y|ies)|career opportunities|scholarships?|grants?|internships?|fellowships?|graduate trainee|remote work|funding opportunities)\\b/.test(q);
   const explicitExternalCheck = /\\b(search the web|search online|look online|verify externally|external verification|verify (this|these|the|it)|fact[- ]?check|check (the )?official source|confirm (from|on|with) (the )?official|official website|official source)\\b/.test(q);
   if (opportunityTopic && !explicitExternalCheck) return false;
 
-  // Stable/general EDUKEN questions never trigger a paid or metered search.
+  // Recognise ordinary student wording about current admissions across any
+  // Nigerian institution; students should not need to write special prompts.
+  const admissionsIntent = /\\b(has|have|is|are|when|what|which|can|did|does|do|any|latest|current|check|confirm|verify|search)\\b.{0,70}\\b(admission|admissions|giving admission|admission list|admission status|post[- ]?utme|screening|cut[- ]?off|cutoff|school fees|acceptance fee|admission form|application form|registration|requirements|deadline|closing date|portal)\\b|\\b(admission|admissions|giving admission|admission list|admission status|post[- ]?utme|screening|cut[- ]?off|cutoff|school fees|acceptance fee|admission form|application form|registration deadline|admission portal)\\b.{0,70}\\b(out|open|started|released|available|closing|deadline|requirements|fees|mark|status|list|form|date|2026|2027)\\b/.test(q);
+
   const timeSensitive = /\\b(latest|current|currently|today|tonight|this week|this month|this year|2026|2027|deadline|closing date|still open|open now|available now|application open|admission status|admission form|post[- ]?utme|screening form|acceptance fee|application portal|cut[- ]?off mark|cutoff|screening date|application fee|school fees|tuition|how much does|price|requirements for|official source|verify|fact[- ]?check|recent update|news about)\\b/.test(q);
   const lookupIntent = /\\b(find|search for|look up|check|confirm|verify|list|recommend|which (schools|universities|polytechnics)|available (forms|admissions))\\b/.test(q);
   const changingTopic = /\\b(admission form|post[- ]?utme|screening form|school fees|acceptance fee|application deadline|application portal|admission status|cut[- ]?off mark|cutoff|screening date)\\b/.test(q);
 
-  return timeSensitive || (lookupIntent && changingTopic);
+  return admissionsIntent || timeSensitive || (lookupIntent && changingTopic);
 }
 
 async function webResearch(env, question) {
