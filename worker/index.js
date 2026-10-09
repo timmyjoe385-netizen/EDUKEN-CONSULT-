@@ -67,6 +67,42 @@ function compactResearch(results) {
     .slice(0, 24000);
 }
 
+function extractAnswer(result) {
+  const candidates = [
+    result?.response,
+    result?.output_text,
+    result?.text,
+    result?.generated_text,
+    result?.answer,
+    result?.result?.response,
+    result?.result?.output_text,
+    result?.result?.text,
+    result?.output,
+    result?.content,
+    result?.choices?.[0]?.message?.content,
+    result?.choices?.[0]?.text,
+    result?.message?.content,
+  ];
+
+  for (const candidate of candidates) {
+    if (typeof candidate === "string" && candidate.trim()) return candidate.trim();
+    if (Array.isArray(candidate)) {
+      const text = candidate
+        .map((part) => typeof part === "string" ? part : part?.text || part?.content || "")
+        .filter(Boolean)
+        .join("\n")
+        .trim();
+      if (text) return text;
+    }
+    if (candidate && typeof candidate === "object") {
+      const nested = candidate.response || candidate.text || candidate.content || candidate.output_text;
+      if (typeof nested === "string" && nested.trim()) return nested.trim();
+    }
+  }
+
+  return "";
+}
+
 function compactContent(content) {
   if (!content) return "No EDUKEN live content was available.";
   const sections = ["opportunities", "admissions", "updates", "faqs", "services"];
@@ -140,13 +176,27 @@ export default {
           max_tokens: 700,
         });
 
-        const answer =
-          result?.response ||
-          result?.choices?.[0]?.message?.content ||
-          result?.output_text ||
-          "I could not produce a confident answer right now.";
+        const answer = extractAnswer(result);
 
-        return json({ answer, model: MODEL });
+        if (!answer) {
+          console.error("Workers AI returned no extractable text", {
+            model: MODEL,
+            responseKeys: result && typeof result === "object" ? Object.keys(result) : [],
+          });
+          return json(
+            {
+              error: "The AI model returned an empty or unexpected response. Please try again shortly.",
+              model: MODEL,
+            },
+            502
+          );
+        }
+
+        return json({
+          answer,
+          model: MODEL,
+          sources: Array.isArray(research) ? research.filter((item) => item.url) : [],
+        });
       } catch (error) {
         return json(
           {
