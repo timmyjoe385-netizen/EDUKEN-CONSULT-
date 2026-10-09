@@ -68,6 +68,7 @@ export default function PlatformHub({
   const [post, setPost] = useState('');
   const [aiQuestion, setAiQuestion] = useState('');
   const [aiAnswer, setAiAnswer] = useState('');
+  const [aiSources, setAiSources] = useState<{ title: string; url: string; description?: string }[]>([]);
   const [aiLoading, setAiLoading] = useState(false);
 
   const refresh = async () => {
@@ -179,15 +180,18 @@ export default function PlatformHub({
   const askAi = async () => {
     if (!aiQuestion.trim()) return;
     setAiLoading(true);
+    setAiSources([]);
     try {
       const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'AI request failed');
       setAiAnswer(data.answer || 'I could not find a confident answer.');
+      setAiSources(Array.isArray(data.sources) ? data.sources.filter((source: any) => source?.url) : []);
     } catch {
       setAiAnswer(
         'I could not answer that right now. Please verify the official source or contact EDUKEN CONSULT.'
       );
+      setAiSources([]);
     } finally {
       setAiLoading(false);
     }
@@ -405,7 +409,26 @@ export default function PlatformHub({
             {aiLoading ? '…' : 'Ask EDUKEN'}
           </button>
         </div>
-        {aiAnswer && <div className="ai-answer">{aiAnswer}</div>}
+        {aiAnswer && (
+          <div className="ai-answer">
+            <div>{aiAnswer}</div>
+            {aiSources.length > 0 && (
+              <div className="ai-sources" style={{ marginTop: 14 }}>
+                <strong>Web sources to verify</strong>
+                <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
+                  {aiSources.map((source, index) => (
+                    <li key={source.url + index} style={{ marginBottom: 8 }}>
+                      <a href={source.url} target="_blank" rel="noreferrer">
+                        {source.title || source.url}
+                      </a>
+                      {source.description && <div>{source.description}</div>}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {open === 'saved' && (
