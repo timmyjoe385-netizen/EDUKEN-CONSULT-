@@ -460,7 +460,7 @@ export default function PlatformHub({
             )}
             {aiResearchStatus === 'completed' && (
               <div role="status" style={{ padding: '8px 12px', marginBottom: 12, borderRadius: 8, background: '#e8f7ee', color: '#17633a', fontSize: 13 }}>
-                ✓ Live web research completed. Sources are listed by name below.
+                ✓ Live web research completed. Relevant sources are listed below.
               </div>
             )}
             <AiFormattedAnswer text={aiAnswer} />
