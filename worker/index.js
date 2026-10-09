@@ -25,27 +25,59 @@ async function getLiveContent() {
 }
 
 async function webResearch(env, question) {
-  if (!env.AI?.websearch) return null;
+  if (typeof env.AI?.websearch !== "function") {
+    return { results: [], status: "unavailable", error: "Cloudflare Web Search binding is unavailable." };
+  }
 
   try {
     const response = await env.AI.websearch({
       gatewayId: "default",
-      query: question,
+      query: question.slice(0, 1024),
       provider: "ceramic",
       limit: 8,
     });
 
-    if (!response.ok) return null;
+    if (!response.ok) {
+      const details = (await response.text().catch(() => "")).slice(0, 1000);
+      console.error("Cloudflare Web Search request failed", {
+        status: response.status,
+        details,
+      });
+      return {
+        results: [],
+        status: "unavailable",
+        error: `Cloudflare Web Search returned HTTP ${response.status}.`,
+      };
+    }
+
     const data = await response.json();
     const results = Array.isArray(data?.items) ? data.items : [];
 
-    return results.slice(0, 8).map((item) => ({
-      title: item?.title || "",
-      url: item?.url || item?.link || "",
-      description: item?.description || item?.snippet || item?.text || "",
-    }));
-  } catch {
-    return null;
+    if (!results.length) {
+      console.error("Cloudflare Web Search returned no items", {
+        responseKeys: data && typeof data === "object" ? Object.keys(data) : [],
+      });
+      return { results: [], status: "no_results", error: "The search provider returned no results." };
+    }
+
+    return {
+      status: "completed",
+      error: null,
+      results: results.slice(0, 8).map((item) => ({
+        title: item?.title || "",
+        url: item?.url || item?.link || "",
+        description: item?.description || item?.snippet || item?.text || "",
+      })),
+    };
+  } catch (error) {
+    console.error("Cloudflare Web Search threw an error", {
+      message: String(error?.message || error).slice(0, 1000),
+    });
+    return {
+      results: [],
+      status: "unavailable",
+      error: "Cloudflare Web Search request failed before returning results.",
+    };
   }
 }
 
@@ -139,8 +171,12 @@ export default {
 
         const content = await getLiveContent();
         const context = compactContent(content);
-        const research = await webResearch(env, question);
+        const researchResult = await webResearch(env, question);
+        const research = researchResult.results;
         const researchContext = compactResearch(research);
+        const searchStatus = researchResult.status === "completed"
+          ? "LIVE WEB SEARCH COMPLETED. Use only the supplied search results as live web evidence."
+          : `LIVE WEB SEARCH NOT AVAILABLE (${researchResult.status}). Do not claim that you searched the web or that any opportunity is currently open. Be transparent that current details could not be verified live.`;
 
         const prompt = [
           "You are the EDUKEN CONSULT AI Assistant and a web-research and verification assistant for Nigerian students.",
@@ -154,6 +190,9 @@ export default {
           "Use EDUKEN content as supplementary context, not as proof of a current fact unless it is independently verified by the web research.",
           "Give practical next steps and distinguish confirmed information from guidance.",
           "Keep answers concise but useful.",
+          "",
+          "LIVE WEB SEARCH STATUS:",
+          searchStatus,
           "",
           "LIVE WEB RESEARCH:",
           researchContext,
@@ -201,6 +240,8 @@ export default {
           answer,
           model: MODEL,
           sources: Array.isArray(research) ? research.filter((item) => item.url) : [],
+          researchStatus: researchResult.status,
+          researchError: researchResult.error,
         });
       } catch (error) {
         return json(
