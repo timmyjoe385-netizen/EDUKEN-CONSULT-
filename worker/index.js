@@ -80,20 +80,43 @@ async function webResearch(env, question) {
     }
 
     const data = await response.json();
-    const results = Array.isArray(data?.results) ? data.results : [];
-    if (!results.length) {
+    const rawResults = Array.isArray(data?.results) ? data.results : [];
+    if (!rawResults.length) {
       return { results: [], status: "no_results", error: "The search provider returned no results." };
     }
 
-    return {
-      status: "completed",
-      error: null,
-      results: results.slice(0, 12).map((item) => ({
-        title: item?.title || "",
-        url: item?.url || "",
-        description: String(item?.content || item?.snippet || "").slice(0, 700),
-      })),
-    };
+    // Keep results tied to the institution the student actually asked about.
+    // Do not silently replace an empty relevant set with unrelated search hits.
+    const questionLower = question.toLowerCase();
+    const knownInstitutions = [
+      ["fuoye", /\bfuoye\b|federal university oye[- ]?ekiti/i],
+      ["kwasu", /\bkwasu\b|kwara state university/i],
+      ["unilorin", /\bunilorin\b|university of ilorin/i],
+      ["fut minna", /\bfut\s?minna\b|federal university of technology,? minna/i],
+      ["futminna", /\bfut\s?minna\b|federal university of technology,? minna/i],
+      ["oau", /\boau\b|obafemi awolowo university/i],
+      ["ui", /\bui\b|university of ibadan/i],
+      ["uniabuja", /\buniabuja\b|university of abuja/i],
+      ["lasu", /\blasu\b|lagos state university/i],
+      ["lautech", /\blautech\b|ladoke akintola university/i],
+      ["fudma", /\bfudma\b|federal university dutse/i],
+      ["fud", /\bfud\b|federal university dutse/i],
+    ];
+    const institution = knownInstitutions.find(([, pattern]) => pattern.test(questionLower));
+    const mapped = rawResults.slice(0, 12).map((item) => ({
+      title: item?.title || "",
+      url: item?.url || "",
+      description: String(item?.content || item?.snippet || "").slice(0, 700),
+    }));
+    const relevant = institution
+      ? mapped.filter((item) => institution[1].test(`${item.title} ${item.description} ${item.url}`))
+      : mapped;
+
+    if (!relevant.length) {
+      return { results: [], status: "no_relevant_results", error: "Search returned results, but none clearly matched the named institution." };
+    }
+
+    return { status: "completed", error: null, results: relevant };
   } catch (error) {
     console.error("Tavily search threw an error", {
       message: String(error?.message || error).slice(0, 300),
@@ -227,9 +250,9 @@ export default {
           "Avoid anonymous blogs, copied articles with no attribution, social media rumours, sponsored adverts, and stale pages. Do not treat a site as reliable merely because it appears in search results.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
           "ADMISSION RELEASE VERIFICATION: Determine the status from the strongest and most recent evidence actually supplied. Search for batch-specific updates (first, second, third, supplementary/final batch) and current admission-list announcements, not only general application or screening notices. Ongoing applications or screening do NOT prove that no admission list has been released; never make that inference. A current official university or JAMB source can confirm a release. Recent, reputable secondary reports can support a carefully labelled statement such as “recent reports indicate that the third batch is being released,” but do not describe that as official confirmation unless an official source supports it. If official evidence is missing, do not confidently say “No, it has not been released.” State precisely that official status could not be confirmed from the sources checked, and report relevant secondary evidence with its uncertainty. Distinguish a batch already released from whether further batches are expected; do not guess about future batches.",
-          "Use source URLs internally for research and verification, but NEVER display URLs, clickable links, or markdown links in the answer. Do not include scraped page text, a source dump, unrelated search results, or a separate raw-search-results section in the answer. Return a short synthesized answer and, when relevant, mention up to 5 source names/domains in plain text only. Do not add a separate list of URLs.",
+          "Use source URLs internally for research and verification, but NEVER display URLs, clickable links, or markdown links in the answer. Do not include scraped page text, a source dump, unrelated search results, or a separate raw-search-results section in the answer. Return a short synthesized answer. Do NOT add a “Sources checked” heading or list source names in the answer; the interface displays relevant source names separately.",
           "STRICT SEARCH RELEVANCE: Before using any result, check that its title or description is substantively about the named institution, the requested academic session, and the admission question. Ignore irrelevant results completely, including dictionaries, general reference pages, unrelated schools, and generic articles. Never list a source under “sources checked” or claim it was checked unless it was actually supplied in LIVE WEB RESEARCH and is relevant to the answer. If the results are mostly irrelevant, say relevant search evidence was insufficient; do not fill gaps with guesses or pretend official portals were checked.",
-          "Treat search snippets as evidence to investigate, not as unquestionable truth. Search results may be stale, inaccurate, promotional, or unrelated; check the institution name, academic session, publication date, and whether a claim is actually supported before using it.",
+          "Treat search snippets as evidence to investigate, not as unquestionable truth. Search results may be stale, inaccurate, promotional, or unrelated; check the institution name, academic session, publication date, and whether a claim is actually supported before using it. Do not state that an admission list is released unless at least one relevant result explicitly supports that exact institution and session. If evidence is secondary-only, begin with “Recent reports indicate...” and immediately clarify that this is not official confirmation. If results do not establish the exact session or batch, say that the status remains unconfirmed from the available evidence; do not turn a weak snippet into a definite claim.",
           "NEVER dump or reproduce raw search results, scraped article text, or a long list of search-result headlines as your answer. Synthesize the findings in your own words. Give a direct answer first, then a few key details. Do not show URLs or clickable links. If useful, mention source names only in plain text, distinguishing official sources from secondary reports. If the results do not reliably establish whether admission has started, say that the status could not be confirmed from the available sources and explain briefly which sources conflict or are outdated. Do not present a search result as an official confirmation unless it is from an official source.",
           "FORMATTING RULE: Do not use asterisks for bold, italics, or decorative bullets in the final answer. Use plain text headings, short paragraphs, and simple hyphen bullets. Never output stray * characters or Markdown formatting markers. Never display URLs or clickable links in the answer; mention source names/domains only when relevant.",
           "When reporting a current opportunity, include the institution/programme, deadline when available, key requirements when available, and the official source URL.",
