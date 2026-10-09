@@ -173,7 +173,10 @@ export default {
             },
             { role: "user", content: prompt },
           ],
-          max_tokens: 700,
+          max_tokens: 1200,
+          chat_template_kwargs: {
+            enable_thinking: false,
+          },
         });
 
         const answer = extractAnswer(result);
@@ -181,7 +184,9 @@ export default {
         if (!answer) {
           console.error("Workers AI returned no extractable text", {
             model: MODEL,
+            responseType: typeof result,
             responseKeys: result && typeof result === "object" ? Object.keys(result) : [],
+            responsePreview: JSON.stringify(result)?.slice(0, 3000) || String(result).slice(0, 1000),
           });
           return json(
             {
