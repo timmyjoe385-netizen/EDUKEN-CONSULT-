@@ -88,7 +88,7 @@ async function webResearch(env, question) {
     return {
       status: "completed",
       error: null,
-      results: results.slice(0, 5).map((item) => ({
+      results: results.slice(0, 8).map((item) => ({
         title: item?.title || "",
         url: item?.url || "",
         description: item?.content || item?.snippet || "",
