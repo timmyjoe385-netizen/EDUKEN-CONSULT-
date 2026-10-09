@@ -460,21 +460,22 @@ export default function PlatformHub({
             )}
             {aiResearchStatus === 'completed' && (
               <div role="status" style={{ padding: '8px 12px', marginBottom: 12, borderRadius: 8, background: '#e8f7ee', color: '#17633a', fontSize: 13 }}>
-                ✓ Live web search completed. Review the source links below.
+                ✓ Live web research completed. Sources are listed by name below.
               </div>
             )}
             <AiFormattedAnswer text={aiAnswer} />
             {aiSources.length > 0 && (
               <div className="ai-sources" style={{ marginTop: 14 }}>
-                <strong>Web sources to verify</strong>
+                <strong>Sources checked</strong>
                 <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
-                  {aiSources.map((source, index) => (
-                    <li key={source.url + index} style={{ marginBottom: 8 }}>
-                      <a href={source.url} target="_blank" rel="noreferrer">
-                        {source.title || source.url}
-                      </a>
-                      {source.description && <div>{source.description}</div>}
-                    </li>
+                  {[...new Set(aiSources.map((source) => {
+                    try {
+                      return new URL(source.url).hostname.replace(/^www\./, '');
+                    } catch {
+                      return '';
+                    }
+                  }).filter(Boolean))].slice(0, 5).map((sourceName) => (
+                    <li key={sourceName} style={{ marginBottom: 6 }}>{sourceName}</li>
                   ))}
                 </ul>
               </div>
