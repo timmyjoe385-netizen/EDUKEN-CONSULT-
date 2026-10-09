@@ -187,10 +187,9 @@ export default function PlatformHub({
       if (!res.ok) throw new Error(data.error || 'AI request failed');
       setAiAnswer(data.answer || 'I could not find a confident answer.');
       setAiSources(Array.isArray(data.sources) ? data.sources.filter((source: any) => source?.url) : []);
-    } catch {
-      setAiAnswer(
-        'I could not answer that right now. Please verify the official source or contact EDUKEN CONSULT.'
-      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unknown AI assistant error';
+      setAiAnswer(`EDUKEN AI error: ${message}. Please try again shortly.`);
       setAiSources([]);
     } finally {
       setAiLoading(false);
