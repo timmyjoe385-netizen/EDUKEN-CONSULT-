@@ -203,6 +203,15 @@ export default {
           : { results: [], status: "not_needed", error: null };
         const research = researchResult.results;
         const researchContext = compactResearch(research);
+        const officialEvidence = research.some((item) => {
+          const url = String(item.url || "").toLowerCase();
+          return /(^|\.)fuoye\.edu\.ng\//.test(url) ||
+            /(^|\.)jamb\.gov\.ng\//.test(url);
+        });
+        const secondaryAdmissionClaim = research.some((item) => {
+          const text = `${item.title || ""} ${item.description || ""}`.toLowerCase();
+          return /admission list|admission offers|released.*admission|admission.*released|giving admission/.test(text);
+        });
         const searchStatus = researchResult.status === "completed"
           ? "LIVE WEB SEARCH COMPLETED. Use only the supplied search results as live web evidence."
           : researchResult.status === "not_needed"
@@ -217,6 +226,8 @@ export default {
           "If an official portal has no update, do not conclude that no update exists. Look for recent reports from reputable education news sites and established admissions-information platforms; label them as secondary reporting and link to them. For important current claims, seek corroboration from at least two independent reliable sources where possible.",
           "Avoid anonymous blogs, copied articles with no attribution, social media rumours, sponsored adverts, and stale pages. Do not treat a site as reliable merely because it appears in search results.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
+          "ADMISSION RELEASE VERIFICATION: A secondary website reporting that an admission list is released is not, by itself, proof of an official release. Never answer that a university has started releasing admission or that a list is available as a confirmed fact unless the supplied research includes a relevant, current official source from the institution or JAMB that supports the exact institution and session. A general official page, an old page, a search result title alone, or an unrelated page does not count as confirmation. If only secondary reports support the claim, explicitly say that secondary reports claim it but official confirmation was not found in the supplied results. Recommend checking the official school portal and JAMB CAPS without asserting the claim is true. If sources conflict or the official evidence is absent, clearly label the status as unconfirmed.",
+          "Use source URLs from the supplied research only when relevant to the exact question. Do not include scraped page text, a source dump, unrelated search results, or a separate raw-search-results section in the answer. Return a short synthesized answer and, when relevant, a Sources section with up to 5 relevant links and short labels. Do not repeat the same links in multiple sections.",
           "Treat search snippets as evidence to investigate, not as unquestionable truth. Search results may be stale, inaccurate, promotional, or unrelated; check the institution name, academic session, publication date, and whether a claim is actually supported before using it.",
           "NEVER dump or reproduce raw search results, scraped article text, or a long list of search-result headlines as your answer. Synthesize the findings in your own words. Give a direct answer first, then a few key details and 2–5 clickable source URLs. If the results do not reliably establish whether admission has started, say that the status could not be confirmed from the available sources and explain briefly which sources conflict or are outdated. Do not present a search result as an official confirmation unless it is from an official source.",
           "FORMATTING RULE: Do not use asterisks for bold, italics, or decorative bullets in the final answer. Use plain text headings, short paragraphs, and simple hyphen bullets. Never output stray * characters or Markdown formatting markers. Keep URLs readable and include only relevant source links.",
