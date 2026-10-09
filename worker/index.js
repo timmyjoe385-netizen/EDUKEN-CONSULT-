@@ -57,7 +57,7 @@ async function webResearch(env, question) {
       },
       body: JSON.stringify({
         api_key: env.TAVILY_API_KEY,
-        query: `${question.slice(0, 500)}. For a question about a specific institution’s admission status, search for the exact institution name and requested academic session alongside focused terms such as admission list, latest batch, second batch, third batch, supplementary batch, JAMB CAPS, admission portal, and recent admission news. Seek a mix of official institution/JAMB pages and reputable independent Nigerian education/admissions sources; do not let generic screening notices crowd out batch-specific reports. Prioritize recent, dated, session-specific evidence. Do not infer that admission has not been released because screening or applications are ongoing. For lists of institutions, verify each institution separately where possible, exclude unrelated institutions and old sessions, and report uncertainty when evidence is insufficient.`,
+        query: `${question.slice(0, 500)}. Find recent, session-specific Nigerian admission evidence from BOTH official university/JAMB sources AND reputable independent Nigerian education or admissions news sites. Prioritize admission-list release announcements and batch-specific reports (first, second, third, supplementary/final batch), not generic screening notices. Include dated sources where possible; avoid old sessions and unrelated institutions. Official portal silence does not prove that no admission update exists.`,
         topic: "general",
         search_depth: "basic",
         max_results: 12,
