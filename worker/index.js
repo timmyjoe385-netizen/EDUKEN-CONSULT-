@@ -27,67 +27,78 @@ async function getLiveContent() {
 function needsLiveResearch(question) {
   const q = String(question || "").toLowerCase();
 
-  // Only search when the user is asking for changing or source-verifiable facts.
-  const timeSensitive = /\b(latest|current|currently|today|tonight|this week|this month|this year|2026|2027|deadline|closing date|still open|open now|available now|application open|admission status|admission form|post[- ]?utme|screening form|acceptance fee|application portal|cut[- ]?off mark|cutoff|screening date|application fee|school fees|tuition|how much does|price|requirements for|official source|verify|fact[- ]?check|recent update|news about)\b/.test(q);
-  const lookupIntent = /\b(find|search for|look up|check|confirm|verify|list|recommend|which (schools|universities|polytechnics|scholarships|jobs|internships)|any (scholarships|jobs|internships|grants|fellowships)|available (scholarships|jobs|internships|grants)|opportunities for)\b/.test(q);
-  const changingTopic = /\b(admission form|post[- ]?utme|screening form|scholarship|internship|graduate trainee|vacancy|vacancies|job opening|grant application|fellowship application|school fees|acceptance fee|application deadline|application portal)\b/.test(q);
+  // Jobs, scholarships and other opportunities must come from EDUKEN's own
+  // published records unless the user explicitly asks for outside verification.
+  const opportunityTopic = /\\b(job|jobs|vacanc(?:y|ies)|career opportunities|scholarships?|grants?|internships?|fellowships?|graduate trainee|remote work|funding opportunities)\\b/.test(q);
+  const explicitExternalCheck = /\\b(search the web|search online|look online|verify externally|external verification|verify (this|these|the|it)|fact[- ]?check|check (the )?official source|confirm (from|on|with) (the )?official|official website|official source)\\b/.test(q);
+  if (opportunityTopic && !explicitExternalCheck) return false;
+
+  // Stable/general EDUKEN questions never trigger a paid or metered search.
+  const timeSensitive = /\\b(latest|current|currently|today|tonight|this week|this month|this year|2026|2027|deadline|closing date|still open|open now|available now|application open|admission status|admission form|post[- ]?utme|screening form|acceptance fee|application portal|cut[- ]?off mark|cutoff|screening date|application fee|school fees|tuition|how much does|price|requirements for|official source|verify|fact[- ]?check|recent update|news about)\\b/.test(q);
+  const lookupIntent = /\\b(find|search for|look up|check|confirm|verify|list|recommend|which (schools|universities|polytechnics)|available (forms|admissions))\\b/.test(q);
+  const changingTopic = /\\b(admission form|post[- ]?utme|screening form|school fees|acceptance fee|application deadline|application portal|admission status|cut[- ]?off mark|cutoff|screening date)\\b/.test(q);
 
   return timeSensitive || (lookupIntent && changingTopic);
 }
 
 async function webResearch(env, question) {
-  if (typeof env.AI?.websearch !== "function") {
-    return { results: [], status: "unavailable", error: "Cloudflare Web Search binding is unavailable." };
+  if (!env.TAVILY_API_KEY) {
+    return { results: [], status: "unavailable", error: "Live verification is not configured." };
   }
 
   try {
-    const response = await env.AI.websearch({
-      gatewayId: "default",
-      query: question.slice(0, 1024),
-      provider: "ceramic",
-      limit: 8,
+    const response = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        api_key: env.TAVILY_API_KEY,
+        query: question.slice(0, 1000),
+        topic: "general",
+        search_depth: "basic",
+        max_results: 5,
+        include_answer: false,
+        include_raw_content: false,
+      }),
     });
 
     if (!response.ok) {
-      const details = (await response.text().catch(() => "")).slice(0, 1000);
-      console.error("Cloudflare Web Search request failed", {
-        status: response.status,
-        details,
-      });
+      // Do not retry or fall back to a paid provider. Fail safely if the
+      // provider limit is reached, the key is invalid, or the service is down.
+      console.error("Tavily search request failed", { status: response.status });
       return {
         results: [],
         status: "unavailable",
-        error: `Cloudflare Web Search returned HTTP ${response.status}.`,
+        error: response.status === 429
+          ? "The live-search allowance or rate limit has been reached."
+          : "The live-search provider could not complete the request.",
       };
     }
 
     const data = await response.json();
-    const results = Array.isArray(data?.items) ? data.items : [];
-
+    const results = Array.isArray(data?.results) ? data.results : [];
     if (!results.length) {
-      console.error("Cloudflare Web Search returned no items", {
-        responseKeys: data && typeof data === "object" ? Object.keys(data) : [],
-      });
       return { results: [], status: "no_results", error: "The search provider returned no results." };
     }
 
     return {
       status: "completed",
       error: null,
-      results: results.slice(0, 8).map((item) => ({
+      results: results.slice(0, 5).map((item) => ({
         title: item?.title || "",
-        url: item?.url || item?.link || "",
-        description: item?.description || item?.snippet || item?.text || "",
+        url: item?.url || "",
+        description: item?.content || item?.snippet || "",
       })),
     };
   } catch (error) {
-    console.error("Cloudflare Web Search threw an error", {
-      message: String(error?.message || error).slice(0, 1000),
+    console.error("Tavily search threw an error", {
+      message: String(error?.message || error).slice(0, 300),
     });
     return {
       results: [],
       status: "unavailable",
-      error: "Cloudflare Web Search request failed before returning results.",
+      error: "Live verification failed before returning results.",
     };
   }
 }
@@ -198,13 +209,13 @@ export default {
         const prompt = [
           "You are the EDUKEN CONSULT AI Assistant and a web-research and verification assistant for Nigerian students.",
           "Answer clearly and naturally.",
-          "For current questions (admissions, deadlines, scholarships, jobs, internships, fees, policies, news, or other changing information), use the LIVE WEB RESEARCH when available.",
+          "Use EDUKEN’s published admissions, updates, FAQs and service records first. Use live web research only for current admissions/policy facts that need verification, and prefer official sources. Do not automatically search external websites for jobs, scholarships, grants, internships, fellowships or other opportunities; answer from EDUKEN’s published records unless the user explicitly asks for external verification.",
           "Prefer official institution, government, examination-body, or programme websites over blogs, social posts, aggregators, and adverts.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
           "Treat search snippets as evidence to investigate, not as unquestionable truth.",
           "When reporting a current opportunity, include the institution/programme, deadline when available, key requirements when available, and the official source URL.",
           "If sources disagree or a fact cannot be verified, clearly say so instead of guessing.",
-          "Use EDUKEN content as supplementary context, not as proof of a current fact unless it is independently verified by the web research.",
+          "Treat EDUKEN’s own published records as the first source for what EDUKEN has posted. If those records do not contain the answer, say so clearly. For current admissions facts, use official live sources when available; never imply EDUKEN-posted information was independently verified unless the supplied research supports that claim.",
           "Give practical next steps and distinguish confirmed information from guidance.",
           "DEFAULT ANSWER STYLE: Be concise and summary-first. For simple questions, answer in 1–3 short sentences. For service lists or broad questions, use at most 4 short bullets and aim for under 100 words. Give only the most useful details first; avoid repeating the question, long introductions, and unnecessary sections. Expand only when the user asks for more detail.",
           "",
