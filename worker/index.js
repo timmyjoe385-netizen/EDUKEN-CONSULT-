@@ -182,12 +182,18 @@ export default {
 
         const content = await getLiveContent();
         const context = compactContent(content);
-        const researchResult = await webResearch(env, question);
+        // Avoid web-search calls and related costs for stable/general questions.
+        const shouldResearch = needsLiveResearch(question);
+        const researchResult = shouldResearch
+          ? await webResearch(env, question)
+          : { results: [], status: "not_needed", error: null };
         const research = researchResult.results;
         const researchContext = compactResearch(research);
         const searchStatus = researchResult.status === "completed"
           ? "LIVE WEB SEARCH COMPLETED. Use only the supplied search results as live web evidence."
-          : `LIVE WEB SEARCH NOT AVAILABLE (${researchResult.status}). Do not claim that you searched the web or that any opportunity is currently open. Be transparent that current details could not be verified live.`;
+          : researchResult.status === "not_needed"
+            ? "LIVE WEB SEARCH NOT NEEDED. This is a general/stable question. Answer directly using EDUKEN content and general knowledge; do not mention search availability or verification warnings."
+            : `LIVE WEB SEARCH NOT AVAILABLE (${researchResult.status}). Do not claim that you searched the web or that any opportunity is currently open. Be transparent that current details could not be verified live.`;
 
         const prompt = [
           "You are the EDUKEN CONSULT AI Assistant and a web-research and verification assistant for Nigerian students.",
