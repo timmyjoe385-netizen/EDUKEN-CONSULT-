@@ -57,10 +57,10 @@ async function webResearch(env, question) {
       },
       body: JSON.stringify({
         api_key: env.TAVILY_API_KEY,
-        query: `${question.slice(0, 500)}. For a question about a specific university admission status, search the exact institution name plus 2026/2027 admission list, latest batch, second batch, third batch, admission screening, official admission portal, and recent Nigerian education news reports. Search both the institution official admission/news pages and reputable independent Nigerian education/admissions sites. Prefer the newest dated evidence and evidence explicitly about the requested session. Do not infer that admission has not been released because screening or applications are ongoing. For lists of universities, verify each institution separately where possible, exclude unrelated institutions and old sessions, and report uncertainty when evidence is insufficient.`,
+        query: `${question.slice(0, 500)}. For a question about a specific institution’s admission status, search for the exact institution name and requested academic session alongside focused terms such as admission list, latest batch, second batch, third batch, supplementary batch, JAMB CAPS, admission portal, and recent admission news. Seek a mix of official institution/JAMB pages and reputable independent Nigerian education/admissions sources; do not let generic screening notices crowd out batch-specific reports. Prioritize recent, dated, session-specific evidence. Do not infer that admission has not been released because screening or applications are ongoing. For lists of institutions, verify each institution separately where possible, exclude unrelated institutions and old sessions, and report uncertainty when evidence is insufficient.`,
         topic: "general",
         search_depth: "basic",
-        max_results: 8,
+        max_results: 12,
         include_answer: false,
         include_raw_content: false,
       }),
@@ -88,7 +88,7 @@ async function webResearch(env, question) {
     return {
       status: "completed",
       error: null,
-      results: results.slice(0, 8).map((item) => ({
+      results: results.slice(0, 12).map((item) => ({
         title: item?.title || "",
         url: item?.url || "",
         description: String(item?.content || item?.snippet || "").slice(0, 700),
@@ -121,7 +121,7 @@ function compactResearch(results) {
       ].join("\n")
     )
     .join("\n\n")
-    .slice(0, 24000);
+    .slice(0, 32000);
 }
 
 function extractAnswer(result) {
@@ -223,7 +223,7 @@ export default {
           "Answer clearly and naturally.",
           "SOURCE ORDER FOR ADMISSIONS: Always check and use relevant EDUKEN CONSULT published admissions, updates, FAQs and service records first. If EDUKEN has a useful matching update, summarize it as the starting point and clearly identify it as EDUKEN-published information. Then, when the question asks about current status or details that may have changed, use live web research to verify or update the EDUKEN information. Explain briefly whether external research confirms, adds context to, or conflicts with the site information. Do not silently replace relevant EDUKEN information with external search results, and do not claim the site contains information that is not present in LIVE EDUKEN CONSULT CONTENT. If EDUKEN has no matching record, answer the question using current external research when needed; do not imply EDUKEN records are the only source for admissions. Do not automatically search external websites for jobs, scholarships, grants, internships, fellowships or other opportunities; use EDUKEN’s published records only unless the user explicitly asks for external research or verification.",
           "Use a wider evidence base, not only the school’s official portal. Check official institution, government, examination-body, or programme sources first, then reputable independent education news outlets and established admissions-information websites for corroboration and context. Use multiple relevant sources when available and compare publication dates and session years.",
-          "If an official portal has no update, do not conclude that no update exists. Look for recent reports from reputable education news sites and established admissions-information platforms; label them as secondary reporting. For important current claims, seek corroboration from at least two independent reliable sources where possible. Never claim to have checked a portal or JAMB CAPS unless the supplied results actually support that claim.",
+          "If an official portal has no update, do not conclude that no update exists. Look for recent reports from reputable education news sites and established admissions-information platforms; label them as secondary reporting. When possible, use at least two independent sources for batch-specific claims. The search results are limited snapshots, not proof that a page or announcement does not exist. Never claim to have checked a portal or JAMB CAPS unless the supplied results actually support that claim.",
           "Avoid anonymous blogs, copied articles with no attribution, social media rumours, sponsored adverts, and stale pages. Do not treat a site as reliable merely because it appears in search results.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
           "ADMISSION RELEASE VERIFICATION: Determine the status from the strongest and most recent evidence actually supplied. Search for batch-specific updates (first, second, third, supplementary/final batch) and current admission-list announcements, not only general application or screening notices. Ongoing applications or screening do NOT prove that no admission list has been released; never make that inference. A current official university or JAMB source can confirm a release. Recent, reputable secondary reports can support a carefully labelled statement such as “recent reports indicate that the third batch is being released,” but do not describe that as official confirmation unless an official source supports it. If official evidence is missing, do not confidently say “No, it has not been released.” State precisely that official status could not be confirmed from the sources checked, and report relevant secondary evidence with its uncertainty. Distinguish a batch already released from whether further batches are expected; do not guess about future batches.",
