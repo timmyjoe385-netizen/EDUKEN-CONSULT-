@@ -57,7 +57,7 @@ async function webResearch(env, question) {
       },
       body: JSON.stringify({
         api_key: env.TAVILY_API_KEY,
-        query: `${question.slice(0, 700)}. Find current, corroborated information from official sources and reputable independent education news or admissions-information websites. Compare dates and report source URLs.`,
+        query: `${question.slice(0, 500)}. Focus on the exact institution and 2026/2027 session. Find recent, corroborated admission announcements from the institution, JAMB, and reputable independent Nigerian education news/admission websites. Exclude unrelated institutions and old sessions. Compare publication dates.`,
         topic: "general",
         search_depth: "basic",
         max_results: 8,
@@ -91,7 +91,7 @@ async function webResearch(env, question) {
       results: results.slice(0, 8).map((item) => ({
         title: item?.title || "",
         url: item?.url || "",
-        description: item?.content || item?.snippet || "",
+        description: String(item?.content || item?.snippet || "").slice(0, 700),
       })),
     };
   } catch (error) {
@@ -217,7 +217,8 @@ export default {
           "If an official portal has no update, do not conclude that no update exists. Look for recent reports from reputable education news sites and established admissions-information platforms; label them as secondary reporting and link to them. For important current claims, seek corroboration from at least two independent reliable sources where possible.",
           "Avoid anonymous blogs, copied articles with no attribution, social media rumours, sponsored adverts, and stale pages. Do not treat a site as reliable merely because it appears in search results.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
-          "Treat search snippets as evidence to investigate, not as unquestionable truth.",
+          "Treat search snippets as evidence to investigate, not as unquestionable truth. Search results may be stale, inaccurate, promotional, or unrelated; check the institution name, academic session, publication date, and whether a claim is actually supported before using it.",
+          "NEVER dump or reproduce raw search results, scraped article text, or a long list of search-result headlines as your answer. Synthesize the findings in your own words. Give a direct answer first, then a few key details and 2–5 clickable source URLs. If the results do not reliably establish whether admission has started, say that the status could not be confirmed from the available sources and explain briefly which sources conflict or are outdated. Do not present a search result as an official confirmation unless it is from an official source.",
           "When reporting a current opportunity, include the institution/programme, deadline when available, key requirements when available, and the official source URL.",
           "If sources disagree, clearly explain the difference and prioritize the most authoritative and recent evidence. If a fact cannot be verified, say so instead of guessing.",
           "Treat EDUKEN’s own published records as the first source for what EDUKEN has posted. If those records do not contain the answer, say so clearly. For current admissions facts, use official live sources when available; never imply EDUKEN-posted information was independently verified unless the supplied research supports that claim.",
