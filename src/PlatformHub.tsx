@@ -23,6 +23,14 @@ const TOPICS = [
   'Competitions',
   'Remote Jobs',
 ];
+const makeOpportunitySlug = (item: Item) =>
+  item.slug ||
+  String(item.title || item.id || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
 const STATUSES = [
   'Planning to Apply',
   'Application Started',
@@ -158,7 +166,7 @@ export default function PlatformHub({
       await api.post('/api/user/saved', {
         opportunityId: item.id,
         title: item.title,
-        slug: item.slug || item.id,
+        slug: makeOpportunitySlug(item),
       });
     await refresh();
   };
@@ -172,7 +180,7 @@ export default function PlatformHub({
       await api.post('/api/user/tracker', {
         opportunityId: item.id,
         title: item.title,
-        slug: item.slug || item.id,
+        slug: makeOpportunitySlug(item),
         status: STATUSES[0],
         deadline: item.deadline || '',
         notes: '',
@@ -302,7 +310,7 @@ export default function PlatformHub({
                   key={item.id}
                   onClick={() =>
                     (window.location.hash =
-                      'opportunity/' + encodeURIComponent(item.slug || item.id))
+                      'opportunity/' + encodeURIComponent(makeOpportunitySlug(item)))
                   }
                 >
                   <span>{item.category || 'Opportunity'}</span>
