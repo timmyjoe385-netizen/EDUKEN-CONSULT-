@@ -483,7 +483,7 @@ export default function PlatformHub({
                   })}
                 </ul>
               </div>
-            )}}
+            )}
           </div>
         )}
       </div>
