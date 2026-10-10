@@ -130,15 +130,20 @@ async function webResearch(env, question) {
     // For course requirements, keep batch-release chatter from crowding out
     // relevant course/JAMB brochure evidence. Social sources remain leads.
     const asksCourseRequirements = /\b(requirements?|subject combination|utme subjects?|o['’]?level|waec|neco|literature[- ]?in[- ]?english|english education|course requirements?)\b/i.test(question);
-    const courseEvidence = relevant.filter((item) =>
-      /jamb\.gov\.ng|ibass|brochure|subject combination|requirements?|english education|literature[- ]?in[- ]?english|o['’]?level|waec|neco/i.test(`${item.url} ${item.title} ${item.description}`)
-    );
-    const finalRelevant = asksCourseRequirements && courseEvidence.length
-      ? courseEvidence
-      : relevant;
+    const courseEvidence = relevant.filter((item) => {
+      const evidenceText = [item.title, item.description, item.url].join(" ");
+      const hasProgrammeEvidence = /english education|education.{0,35}english|literature[- ]?in[- ]?english|subject combination|utme subjects?|o['’]?level.{0,35}(english|literature|credit)|requirements?.{0,50}(english education|utme|o['’]?level)/i.test(evidenceText);
+      const isGenericAdmissionNews = /admission list|first batch|second batch|third batch|supplementary batch|admission.*released|released.*admission/i.test(evidenceText);
+      return hasProgrammeEvidence && !isGenericAdmissionNews;
+    });
+    // Do not use generic admission-list stories as evidence for course requirements.
+    // If programme-specific evidence is missing, report the gap instead of padding the answer.
+    const finalRelevant = asksCourseRequirements ? courseEvidence : relevant;
 
     if (!finalRelevant.length) {
-      return { results: [], status: "no_relevant_results", error: "Search returned results, but none clearly matched the named institution and question." };
+      return { results: [], status: "no_relevant_results", error: asksCourseRequirements
+        ? "Search returned no programme-specific evidence for the requested requirements."
+        : "Search returned results, but none clearly matched the named institution and question." };
     }
 
     return { status: "completed", error: null, results: finalRelevant };
