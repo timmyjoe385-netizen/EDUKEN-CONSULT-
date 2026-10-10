@@ -312,7 +312,8 @@ function App() {
 
   const submitConsultation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
     try {
       await api.post('/consultations', {
         name: fd.get('name'),
@@ -324,7 +325,7 @@ function App() {
         schoolCourse: fd.get('schoolCourse'),
         message: fd.get('message'),
       });
-      e.currentTarget.reset();
+      formElement.reset();
       showToast(
         'Consultation request received. We will follow up through your contact details.'
       );

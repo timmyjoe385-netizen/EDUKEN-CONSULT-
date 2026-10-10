@@ -30,7 +30,7 @@ function needsLiveResearch(question) {
   // Jobs, scholarships and other opportunities use EDUKEN's own published
   // records by default. Only search outside when the user clearly asks for it.
   const opportunityTopic = /\b(job|jobs|vacanc(?:y|ies)|career opportunities|scholarships?|grants?|internships?|fellowships?|graduate trainee|remote work|funding opportunities)\b/.test(q);
-  const explicitExternalCheck = /\b(search the web|search online|look online|verify externally|external verification|verify (this|these|the|it)|fact[- ]?check|check (the )?official source|confirm (from|on|with) (the )?official|official website|official source)\b/.test(q);
+  const explicitExternalCheck = /\b(search (the )?(web|internet|online)|search for|research (this|the|a|an)|look online|external research|external verification|verify externally|verify (this|these|the|it)|fact[- ]?check|check (the )?official source|confirm (from|on|with) (the )?official|official (website|source|portal|application portal|announcement)|genuine|legitimacy|is it real|is it genuine)\b/.test(q);
   if (opportunityTopic && !explicitExternalCheck) return false;
 
   // Recognise ordinary student wording about current admissions across any
@@ -57,7 +57,7 @@ async function webResearch(env, question) {
       },
       body: JSON.stringify({
         api_key: env.TAVILY_API_KEY,
-        query: `${question.slice(0, 350)}. Search specifically for the named Nigerian institution and academic session together with admission list release, first batch, second batch, third batch, supplementary batch, admission portal, and JAMB CAPS. Return only results that substantively mention the named institution or directly relevant official admissions process. Prioritize relevant official university/JAMB pages and reputable Nigerian education/admission news sites; also consider recent, publicly indexed posts from clearly identifiable official school accounts and established school/admissions pages on Facebook or other social platforms as leads; use them only when the post is attributable, dated, and specifically about the institution/session. Social posts and messaging-group forwards are leads, not official confirmation by themselves. Private Facebook groups and private WhatsApp groups are not accessible through this search; never imply they were checked. Exclude dictionaries, generic definitions, unrelated institutions, old sessions, generic screening notices, and pages that do not discuss this admission question. Seek a mix of official and independent sources when available. Official portal silence does not prove that no admission update exists.`,
+        query: `${question.slice(0, 350)}. Research this exact question, institution, and academic session. First search official university pages and portals, official JAMB sources, and relevant official school news pages for direct evidence. Then search reputable Nigerian education news/admissions sites for corroboration and recent publicly indexed posts from identifiable official school social accounts when available. If asking whether an admission list has been released, search specifically for the exact session and release/batch status, and include the official admission-status portal even if it is a portal rather than a news article. If asking about course requirements, search for programme-specific UTME/O'Level requirements and JAMB IBASS. Do not use a generic screening or application page as proof that a particular admission batch has or has not been released. Return the most relevant results from multiple source types, prioritising direct official evidence; include secondary reporting when official evidence is incomplete. Exclude unrelated institutions, stale sessions, and results that do not substantively answer the question. Official portal silence does not prove that no update exists.`,
         topic: "general",
         search_depth: "basic",
         max_results: 12,
@@ -69,13 +69,28 @@ async function webResearch(env, question) {
     if (!response.ok) {
       // Do not retry or fall back to a paid provider. Fail safely if the
       // provider limit is reached, the key is invalid, or the service is down.
-      console.error("Tavily search request failed", { status: response.status });
+      const failureCode = response.status === 401 || response.status === 403
+        ? "provider_auth_failed"
+        : response.status === 429
+          ? "rate_limited"
+          : response.status >= 500
+            ? "provider_server_error"
+            : "provider_http_error";
+      console.error("Tavily search request failed", {
+        status: response.status,
+        failureCode,
+      });
       return {
         results: [],
         status: "unavailable",
-        error: response.status === 429
-          ? "The live-search allowance or rate limit has been reached."
-          : "The live-search provider could not complete the request.",
+        error: failureCode === "provider_auth_failed"
+          ? "The live-search provider rejected the configured credentials."
+          : failureCode === "rate_limited"
+            ? "The live-search allowance or rate limit has been reached."
+            : failureCode === "provider_server_error"
+              ? "The live-search provider returned a server error."
+              : "The live-search provider rejected the request.",
+        diagnosticCode: failureCode,
       };
     }
 
@@ -112,11 +127,25 @@ async function webResearch(env, question) {
       ? mapped.filter((item) => institution[1].test(`${item.title} ${item.description} ${item.url}`))
       : mapped;
 
-    if (!relevant.length) {
-      return { results: [], status: "no_relevant_results", error: "Search returned results, but none clearly matched the named institution." };
+    // Apply programme-specific filtering only to course-requirement questions.
+    // Admission-release questions need official status portals and batch-specific announcements.
+    const asksCourseRequirements = /\\b(requirements?|subject combination|utme subjects?|o['’]?level|waec|neco|literature[- ]?in[- ]?english|english education|course requirements?)\\b/i.test(question);
+    const finalRelevant = asksCourseRequirements
+      ? relevant.filter((item) => {
+          const evidenceText = [item.title, item.description, item.url].join(" ");
+          const hasProgrammeEvidence = /english education|education.{0,35}english|literature[- ]?in[- ]?english|subject combination|utme subjects?|o['’]?level.{0,35}(english|literature|credit)|requirements?.{0,50}(english education|utme|o['’]?level)/i.test(evidenceText);
+          const isGenericAdmissionNews = /admission list|first batch|second batch|third batch|supplementary batch|admission.*released|released.*admission/i.test(evidenceText);
+          return hasProgrammeEvidence && !isGenericAdmissionNews;
+        })
+      : relevant;
+
+    if (!finalRelevant.length) {
+      return { results: [], status: "no_relevant_results", error: asksCourseRequirements
+        ? "Search returned no programme-specific evidence for the requested requirements."
+        : "Search returned results, but none clearly matched the named institution and question." };
     }
 
-    return { status: "completed", error: null, results: relevant };
+    return { status: "completed", error: null, results: finalRelevant };
   } catch (error) {
     console.error("Tavily search threw an error", {
       message: String(error?.message || error).slice(0, 300),
@@ -145,6 +174,32 @@ function compactResearch(results) {
     )
     .join("\n\n")
     .slice(0, 32000);
+}
+
+function cleanUserFacingAnswer(answer, question) {
+  let cleaned = String(answer || "").trim();
+
+  // Remove research-process announcements and source-list boilerplate even
+  // when the model ignores the system prompt.
+  cleaned = cleaned
+    .replace(/^\s*(?:live\s+web\s+research\s+completed\.?\s*)/i, "")
+    .replace(/^\s*(?:relevant\s+sources\s+are\s+listed\s+below\.?\s*)/i, "")
+    .replace(/^\s*(?:sources\s+checked|research\s+sources)\s*:.*(?:\n|$)/gim, "")
+    .replace(/^\s*(?:sources\s+checked|research\s+sources)\s*\n/gim, "")
+    .trim();
+
+  // Keep the answer focused on the user's actual question. In particular,
+  // do not append an unrelated opportunities/scholarship promotion to an
+  // admissions answer (or vice versa).
+  const q = String(question || "").toLowerCase();
+  const asksOpportunity = /\b(scholarships?|grants?|jobs?|vacanc(?:y|ies)|internships?|fellowships?|remote work|graduate trainee|opportunities)\b/.test(q);
+  const asksAdmission = /\b(admission|admissions|jamb|post[- ]?utme|screening|casaps|caps|acceptance fee|school fees|admission list)\b/.test(q);
+  if (asksAdmission && !asksOpportunity) {
+    const unrelatedOpportunityStart = cleaned.search(/\n\s*(?:EDUKEN['’]?S RECORDS DO NOT CURRENTLY LIST|TO STAY UPDATED, YOU CAN REGULARLY CHECK THE EDUKEN OPPORTUNITY HUB|FOR IMMEDIATE SCHOLARSHIP OPTIONS)\b/i);
+    if (unrelatedOpportunityStart >= 0) cleaned = cleaned.slice(0, unrelatedOpportunityStart).trim();
+  }
+
+  return cleaned;
 }
 
 function extractAnswer(result) {
@@ -249,15 +304,19 @@ export default {
           "If an official portal has no update, do not conclude that no update exists. Look for recent reports from reputable education news sites and established admissions-information platforms; label them as secondary reporting. When possible, use at least two independent sources for batch-specific claims. The search results are limited snapshots, not proof that a page or announcement does not exist. Never claim to have checked a portal or JAMB CAPS unless the supplied results actually support that claim.",
           "Avoid anonymous blogs, copied articles with no attribution, unverified social media rumours, sponsored adverts, and stale pages. A Facebook/Instagram/Telegram post or WhatsApp forward is not official confirmation simply because it is recent or shared in a trusted group. Never use the heading or label ‘Officially Confirmed’ unless a relevant official institution/JAMB/government source supplied in the research results directly supports the specific claim and session. If evidence is from independent education sites or social posts only, label it ‘Recent secondary reports (not officially confirmed)’ and state the limitation clearly. Do not infer that a social account is official from its display name alone.",
           "Do not invent admission openings, deadlines, fees, scholarships, jobs, or official requirements.",
-          "ADMISSION RELEASE VERIFICATION: Determine the status from the strongest and most recent evidence actually supplied. Search for batch-specific updates (first, second, third, supplementary/final batch) and current admission-list announcements, not only general application or screening notices. Ongoing applications or screening do NOT prove that no admission list has been released; never make that inference. A current official university or JAMB source can confirm a release. Recent, reputable secondary reports can support a carefully labelled statement such as “recent reports indicate that the third batch is being released,” but do not describe that as official confirmation unless an official source supports it. If official evidence is missing, do not confidently say “No, it has not been released.” State precisely that official status could not be confirmed from the sources checked, and report relevant secondary evidence with its uncertainty. Distinguish a batch already released from whether further batches are expected; do not guess about future batches.",
-          "Use source URLs internally for research and verification, but NEVER display URLs, clickable links, or markdown links in the answer. Do not include scraped page text, a source dump, unrelated search results, or a separate raw-search-results section in the answer. Return a short synthesized answer. Do NOT add a “Sources checked” heading or list source names in the answer; the interface displays relevant source names separately.",
+          "EXACT COURSE REQUIREMENTS: For a named programme and session, state exact UTME subject combinations or O'Level requirements only when a supplied research result directly supports them. If evidence is missing, say the exact requirements could not be verified from available evidence. Do not substitute generic or likely requirements, and omit unrelated admission-list news. Direct the user to official university admissions information and JAMB IBASS/brochure for confirmation. Distinguish official evidence from secondary sources.",
+          "ADMISSION RELEASE VERIFICATION: Determine status from the strongest and most recent evidence supplied. Search for exact-session, batch-specific announcements AND the official admission-status portal. A live official portal explicitly showing an admission release/status button and a relevant date is direct official evidence that admission status checking/release is available; describe exactly what it says and do not overstate it as proof that every batch or the full list is out. Prefer official evidence over secondary reports, then use 1–3 reputable secondary sources for context. Ongoing screening or application notices alone do NOT prove that no admission list has been released. If official evidence is missing, say that official status could not be confirmed, then report relevant secondary evidence with its uncertainty. Distinguish a released batch from whether further batches are expected; do not guess about future batches.",
+          "QUESTION SCOPE RULE: Answer only the question the user actually asked. Do not append unrelated scholarship, job, opportunity, admissions, or service information just because it exists in EDUKEN content. Do not combine separate topics unless the user explicitly asks for them. Never append a generic opportunity-hub reminder to an admission-status answer. Keep any service promotion to one short sentence and only when directly relevant. ",
+          "HARD OUTPUT RULE — HIDE RESEARCH SOURCES: Research sources are for internal reasoning only. Never display, name, list, link, quote, or expose URLs/domains, source titles, source names, clickable source cards, citations, source lists, “Sources checked”, “Research sources”, or similar source sections. Never say “Live web research completed”, “I searched the web”, or announce the research process. Start directly with the answer to the user’s question. You may describe evidence in general terms such as “the university has confirmed” or “recent independent reports indicate”, but only when supported by supplied results. Do not name the publications or websites. Keep the answer concise, natural, and useful; distinguish official confirmation from secondary reporting without identifying the sources. If evidence is incomplete or conflicting, explain that briefly and honestly.",
           "STRICT SEARCH RELEVANCE: Before using any result, check that its title or description is substantively about the named institution, the requested academic session, and the admission question. Ignore irrelevant results completely, including dictionaries, general reference pages, unrelated schools, and generic articles. Never list a source under “sources checked” or claim it was checked unless it was actually supplied in LIVE WEB RESEARCH and is relevant to the answer. If the results are mostly irrelevant, say relevant search evidence was insufficient; do not fill gaps with guesses or pretend official portals were checked.",
           "Treat search snippets as evidence to investigate, not as unquestionable truth. Search results may be stale, inaccurate, promotional, or unrelated; check the institution name, academic session, publication date, and whether a claim is actually supported before using it. Do not state that an admission list is released unless at least one relevant result explicitly supports that exact institution and session. If evidence is secondary-only, begin with “Recent reports indicate...” and immediately clarify that this is not official confirmation. If results do not establish the exact session or batch, say that the status remains unconfirmed from the available evidence; do not turn a weak snippet into a definite claim.",
-          "NEVER dump or reproduce raw search results, scraped article text, or a long list of search-result headlines as your answer. Synthesize the findings in your own words. Give a direct answer first, then a few key details. Do not show URLs or clickable links. If useful, mention source names only in plain text, distinguishing official sources from secondary reports. If the results do not reliably establish whether admission has started, say that the status could not be confirmed from the available sources and explain briefly which sources conflict or are outdated. Do not present a search result as an official confirmation unless it is from an official source.",
+          "NEVER dump or reproduce raw search results, scraped article text, headlines, source names, source titles, URLs, or citations. Synthesize the findings in your own words and give a direct answer first. Do not mention which websites or publications were checked. If the results do not reliably establish whether admission has started, say that the status could not be confirmed from the available evidence and briefly describe the uncertainty without identifying the sources. Do not present a search result as official confirmation unless the supplied result is from an official source.",
           "FORMATTING RULE: Do not use asterisks for bold, italics, or decorative bullets in the final answer. Use plain text headings, short paragraphs, and simple hyphen bullets. Never output stray * characters or Markdown formatting markers. Never display URLs or clickable links in the answer; mention source names/domains only when relevant.",
-          "When reporting a current opportunity, include the institution/programme, deadline when available, key requirements when available, and the official source URL.",
+          "When reporting a current opportunity, include the institution/programme, deadline when available, and key requirements when available. Never include the source URL or identify the source; tell the user to verify through the relevant official channel without displaying a link.",
           "MULTI-INSTITUTION ADMISSION QUESTIONS: For questions specifically about Nigerian universities, include Nigerian institutions only; exclude foreign universities even if search results mention them. Do not turn a few broad search results into a long unverified list. Verify each institution separately against a relevant current official university or JAMB source wherever possible, and use reputable secondary education news only as corroboration/context. For every institution mentioned, ensure the supplied evidence actually names that institution and the requested academic session. Separate results into clearly labelled groups: Officially confirmed, and Reported by secondary sources only (official confirmation not found). If the available results do not support institution-by-institution verification, say the search results are insufficient to produce a reliable complete list and provide only the institutions that can be supported. Never imply every university in a list has been verified. Remove duplicate institution names, exclude unrelated/old-session results, and do not infer that an admission list is released just because it appears on a generic admission roundup page or search-result headline.",
           "If sources disagree, clearly explain the difference and prioritize the most authoritative and recent evidence. If a fact cannot be verified, say so instead of guessing.",
+          "CRITICAL LIVE-SEARCH FAILURE RULE: If LIVE WEB SEARCH STATUS says search was not available, returned no results, or returned no relevant results, do not guess specific current admission requirements, subject combinations, O’Level credits, departmental cut-off marks, dates, fees, or whether a session's requirements have been published. Do not claim you checked FUOYE, JAMB, or another official portal unless the live research supplied relevant evidence from that source. Clearly say live verification failed or relevant evidence was insufficient, give only general guidance explicitly labelled as general and not verified for the requested session, and advise checking the official institution/JAMB pages. Never infer that information is unpublished merely because search results are missing. If research is unavailable, do not fill the answer with plausible-sounding requirements.",
+          "When live search is unavailable, include a short transparent reason if provided by the search status, but do not reveal secrets or internal implementation details. The API response will separately expose a diagnostic status for troubleshooting.",
           "Treat EDUKEN’s own published records as the first source for what EDUKEN has posted. If those records do not contain the answer, say so clearly. For current admissions facts, use official live sources when available; never imply EDUKEN-posted information was independently verified unless the supplied research supports that claim.",
           "Give practical next steps and distinguish confirmed information from guidance.",
           "GENERAL EDUCATIONAL QUESTIONS: Answer stable, general educational questions directly from reliable general knowledge. Do not begin with statements about EDUKEN records being incomplete unless the user specifically asks what EDUKEN has published or the record limitation materially affects the answer.",
@@ -292,7 +351,8 @@ export default {
           },
         });
 
-        const answer = extractAnswer(result);
+        const rawAnswer = extractAnswer(result);
+        const answer = cleanUserFacingAnswer(rawAnswer, question);
 
         if (!answer) {
           console.error("Workers AI returned no extractable text", {
@@ -313,7 +373,8 @@ export default {
         return json({
           answer,
           model: MODEL,
-          sources: Array.isArray(research) ? research.filter((item) => item.url) : [],
+          // Research stays internal; do not expose source links/cards in the user interface.
+          sources: [],
           researchStatus: researchResult.status,
           researchError: researchResult.error,
         });
