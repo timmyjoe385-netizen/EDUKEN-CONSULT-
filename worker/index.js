@@ -30,7 +30,7 @@ function needsLiveResearch(question) {
   // Jobs, scholarships and other opportunities use EDUKEN's own published
   // records by default. Only search outside when the user clearly asks for it.
   const opportunityTopic = /\b(job|jobs|vacanc(?:y|ies)|career opportunities|scholarships?|grants?|internships?|fellowships?|graduate trainee|remote work|funding opportunities)\b/.test(q);
-  const explicitExternalCheck = /\b(search the web|search online|look online|verify externally|external verification|verify (this|these|the|it)|fact[- ]?check|check (the )?official source|confirm (from|on|with) (the )?official|official website|official source)\b/.test(q);
+  const explicitExternalCheck = /\b(search (the )?(web|internet|online)|search for|research (this|the|a|an)|look online|external research|external verification|verify externally|verify (this|these|the|it)|fact[- ]?check|check (the )?official source|confirm (from|on|with) (the )?official|official (website|source|portal|application portal|announcement)|genuine|legitimacy|is it real|is it genuine)\b/.test(q);
   if (opportunityTopic && !explicitExternalCheck) return false;
 
   // Recognise ordinary student wording about current admissions across any
