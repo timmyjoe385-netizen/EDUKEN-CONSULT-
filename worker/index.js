@@ -57,7 +57,7 @@ async function webResearch(env, question) {
       },
       body: JSON.stringify({
         api_key: env.TAVILY_API_KEY,
-        query: `${question.slice(0, 350)}. Search specifically for the named Nigerian institution and academic session together with admission list release, first batch, second batch, third batch, supplementary batch, admission portal, and JAMB CAPS. Return only results that substantively mention the named institution or directly relevant official admissions process. Prioritize relevant official university/JAMB pages and reputable Nigerian education/admission news sites; also consider recent, publicly indexed posts from clearly identifiable official school accounts and established school/admissions pages on Facebook or other social platforms as leads; use them only when the post is attributable, dated, and specifically about the institution/session. Social posts and messaging-group forwards are leads, not official confirmation by themselves. Private Facebook groups and private WhatsApp groups are not accessible through this search; never imply they were checked. Exclude dictionaries, generic definitions, unrelated institutions, old sessions, generic screening notices, and pages that do not discuss this admission question. Seek a mix of official and independent sources when available. Official portal silence does not prove that no admission update exists.`,
+        query: `${question.slice(0, 350)}. Find the exact current official admission requirements and UTME subject combination for the named programme at the named Nigerian university for the requested academic session. Search the official university domain and the official JAMB IBASS/brochure sources first, then reputable Nigerian education news sources for corroboration. Search specifically for course/programme requirements, O'Level subjects, UTME subject combination, and the exact academic session. Do not prioritise admission-list batches unless the user asks whether lists have been released. Return relevant sources that directly support the requested course requirements; social media posts are leads only and must not substitute for official course requirements. Exclude unrelated institutions, old sessions, generic screening notices, and pages that do not substantively answer the question. Official portal silence does not prove that no update exists.`,
         topic: "general",
         search_depth: "basic",
         max_results: 12,
@@ -127,11 +127,21 @@ async function webResearch(env, question) {
       ? mapped.filter((item) => institution[1].test(`${item.title} ${item.description} ${item.url}`))
       : mapped;
 
-    if (!relevant.length) {
-      return { results: [], status: "no_relevant_results", error: "Search returned results, but none clearly matched the named institution." };
+    // For course requirements, keep batch-release chatter from crowding out
+    // relevant course/JAMB brochure evidence. Social sources remain leads.
+    const asksCourseRequirements = /\b(requirements?|subject combination|utme subjects?|o['’]?level|waec|neco|literature[- ]?in[- ]?english|english education|course requirements?)\b/i.test(question);
+    const courseEvidence = relevant.filter((item) =>
+      /jamb\.gov\.ng|ibass|brochure|subject combination|requirements?|english education|literature[- ]?in[- ]?english|o['’]?level|waec|neco/i.test(`${item.url} ${item.title} ${item.description}`)
+    );
+    const finalRelevant = asksCourseRequirements && courseEvidence.length
+      ? courseEvidence
+      : relevant;
+
+    if (!finalRelevant.length) {
+      return { results: [], status: "no_relevant_results", error: "Search returned results, but none clearly matched the named institution and question." };
     }
 
-    return { status: "completed", error: null, results: relevant };
+    return { status: "completed", error: null, results: finalRelevant };
   } catch (error) {
     console.error("Tavily search threw an error", {
       message: String(error?.message || error).slice(0, 300),
