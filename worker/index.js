@@ -69,13 +69,28 @@ async function webResearch(env, question) {
     if (!response.ok) {
       // Do not retry or fall back to a paid provider. Fail safely if the
       // provider limit is reached, the key is invalid, or the service is down.
-      console.error("Tavily search request failed", { status: response.status });
+      const failureCode = response.status === 401 || response.status === 403
+        ? "provider_auth_failed"
+        : response.status === 429
+          ? "rate_limited"
+          : response.status >= 500
+            ? "provider_server_error"
+            : "provider_http_error";
+      console.error("Tavily search request failed", {
+        status: response.status,
+        failureCode,
+      });
       return {
         results: [],
         status: "unavailable",
-        error: response.status === 429
-          ? "The live-search allowance or rate limit has been reached."
-          : "The live-search provider could not complete the request.",
+        error: failureCode === "provider_auth_failed"
+          ? "The live-search provider rejected the configured credentials."
+          : failureCode === "rate_limited"
+            ? "The live-search allowance or rate limit has been reached."
+            : failureCode === "provider_server_error"
+              ? "The live-search provider returned a server error."
+              : "The live-search provider rejected the request.",
+        diagnosticCode: failureCode,
       };
     }
 
@@ -258,6 +273,8 @@ export default {
           "When reporting a current opportunity, include the institution/programme, deadline when available, key requirements when available, and the official source URL.",
           "MULTI-INSTITUTION ADMISSION QUESTIONS: For questions specifically about Nigerian universities, include Nigerian institutions only; exclude foreign universities even if search results mention them. Do not turn a few broad search results into a long unverified list. Verify each institution separately against a relevant current official university or JAMB source wherever possible, and use reputable secondary education news only as corroboration/context. For every institution mentioned, ensure the supplied evidence actually names that institution and the requested academic session. Separate results into clearly labelled groups: Officially confirmed, and Reported by secondary sources only (official confirmation not found). If the available results do not support institution-by-institution verification, say the search results are insufficient to produce a reliable complete list and provide only the institutions that can be supported. Never imply every university in a list has been verified. Remove duplicate institution names, exclude unrelated/old-session results, and do not infer that an admission list is released just because it appears on a generic admission roundup page or search-result headline.",
           "If sources disagree, clearly explain the difference and prioritize the most authoritative and recent evidence. If a fact cannot be verified, say so instead of guessing.",
+          "CRITICAL LIVE-SEARCH FAILURE RULE: If LIVE WEB SEARCH STATUS says search was not available, returned no results, or returned no relevant results, do not guess specific current admission requirements, subject combinations, O’Level credits, departmental cut-off marks, dates, fees, or whether a session's requirements have been published. Do not claim you checked FUOYE, JAMB, or another official portal unless the live research supplied relevant evidence from that source. Clearly say live verification failed or relevant evidence was insufficient, give only general guidance explicitly labelled as general and not verified for the requested session, and advise checking the official institution/JAMB pages. Never infer that information is unpublished merely because search results are missing. If research is unavailable, do not fill the answer with plausible-sounding requirements.",
+          "When live search is unavailable, include a short transparent reason if provided by the search status, but do not reveal secrets or internal implementation details. The API response will separately expose a diagnostic status for troubleshooting.";
           "Treat EDUKEN’s own published records as the first source for what EDUKEN has posted. If those records do not contain the answer, say so clearly. For current admissions facts, use official live sources when available; never imply EDUKEN-posted information was independently verified unless the supplied research supports that claim.",
           "Give practical next steps and distinguish confirmed information from guidance.",
           "GENERAL EDUCATIONAL QUESTIONS: Answer stable, general educational questions directly from reliable general knowledge. Do not begin with statements about EDUKEN records being incomplete unless the user specifically asks what EDUKEN has published or the record limitation materially affects the answer.",
