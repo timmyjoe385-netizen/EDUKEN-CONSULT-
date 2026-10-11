@@ -291,7 +291,7 @@ function App() {
         if (!payload.slug)
           payload.slug = makeSlug(payload.title || '') + '-' + Date.now().toString(36);
         if (!payload.description)
-          payload.description = (payload.content || '').split('\\n')[0].slice(0, 180);
+          payload.description = (payload.content || '').split(/\r?\n/)[0].slice(0, 180);
       }
       if (form.id)
         await api.put('/api/admin/content/' + table + '/' + form.id, payload);
