@@ -414,6 +414,13 @@ function App() {
     const fields = adminFields[adminTab] || [];
     return (
       <div className="admin-shell">
+        {toast && (
+          <div className="toast" role="status" aria-live="polite">
+            <CheckCircle2 size={18} />
+            <span>{toast}</span>
+            <button type="button" aria-label="Dismiss notification" onClick={() => setToast('')}><X size={16} /></button>
+          </div>
+        )}
         <header className="admin-header">
           <div className="brand">
             <img
