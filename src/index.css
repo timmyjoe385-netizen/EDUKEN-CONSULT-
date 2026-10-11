@@ -1791,3 +1791,28 @@ footer {
   font-weight: 800;
   color: #52645a;
 }
+
+/* Admin traffic analytics */
+.analytics-panel{display:grid;gap:20px}
+.analytics-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px;border:1px solid #e1e8e3;border-radius:14px;background:#fff}
+.analytics-toolbar p{margin:8px 0 0;color:#718078;font-size:12px;line-height:1.6}
+.analytics-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.analytics-controls select{padding:11px 12px;border:1px solid #d7ded9;border-radius:8px;background:#fff;color:#25372e}
+.analytics-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.analytics-cards article{padding:20px;border:1px solid #e0e8e2;border-radius:13px;background:#fff;display:grid;gap:9px;min-width:0}
+.analytics-cards article span{font-size:11px;color:#66776d;font-weight:700}
+.analytics-cards article strong{font-size:clamp(25px,3vw,38px);letter-spacing:-.04em;color:#173f31;overflow-wrap:anywhere}
+.analytics-cards article small{font-size:10px;color:#8a9790;line-height:1.4}
+.analytics-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.analytics-card{padding:20px;border:1px solid #e0e8e2;border-radius:13px;background:#fff;min-width:0}
+.analytics-card h3{font-size:15px;margin:0 0 15px;color:#21392d}
+.analytics-card>p{font-size:12px;color:#8a9790}
+.analytics-row{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:10px 0;border-top:1px solid #edf1ee;font-size:11px}
+.analytics-row span{color:#66766d;overflow-wrap:anywhere;min-width:0}
+.analytics-row b{color:#285e46;white-space:nowrap}
+.analytics-privacy{font-size:10px;color:#7d8a82;line-height:1.6;margin:0}
+.analytics-error{border:1px solid #f0c9c9;background:#fff5f5;color:#8c2929;border-radius:10px;padding:16px}
+.analytics-error p{margin:7px 0;font-size:12px}
+.analytics-error small{font-size:10px}
+@media(max-width:760px){.analytics-toolbar{align-items:stretch;flex-direction:column}.analytics-controls{width:100%}.analytics-controls select{flex:1;min-width:0}.analytics-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.analytics-grid{grid-template-columns:1fr}}
+@media(max-width:420px){.analytics-cards{grid-template-columns:1fr 1fr;gap:8px}.analytics-cards article{padding:13px}.analytics-cards article strong{font-size:25px}.analytics-card{padding:15px}}

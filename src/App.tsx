@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { api, auth } from './lib/api';
+import { analyticsApi, api, auth } from './lib/api';
+import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
   BookOpen,
@@ -91,6 +92,10 @@ function App() {
   const [consultations, setConsultations] = useState<Item[]>([]);
   const [form, setForm] = useState<Record<string, any>>({});
   const [savingAdminMode, setSavingAdminMode] = useState<'draft' | 'publish' | 'preserve' | null>(null);
+  const [analyticsSummary, setAnalyticsSummary] = useState<any>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [analyticsError, setAnalyticsError] = useState('');
+  const [analyticsDays, setAnalyticsDays] = useState(30);
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
@@ -117,6 +122,7 @@ function App() {
     encodeURIComponent(slug);
 
   const openOpportunity = (item: Item) => {
+    trackEvent('opportunity_view', { target: item.title || item.slug || item.id });
     const slug = item.slug || makeSlug(item.title || item.id);
     window.location.hash = 'opportunity/' + encodeURIComponent(slug);
     setArticleSlug(slug);
@@ -171,6 +177,8 @@ function App() {
       window.removeEventListener('appinstalled', onInstalled);
     };
   }, []);
+
+  useEffect(() => installAnalyticsTracking(), []);
 
   const showToast = (message: string) => {
     setToast(message);
@@ -272,6 +280,19 @@ function App() {
     }
   };
 
+  const loadAnalytics = async (days = analyticsDays) => {
+    setAnalyticsLoading(true);
+    setAnalyticsError('');
+    try {
+      const result = await analyticsApi.summary(days);
+      setAnalyticsSummary(result.data);
+    } catch (error) {
+      setAnalyticsError(error instanceof Error ? error.message : 'Could not load analytics.');
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  };
+
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     if (savingAdminMode) return;
     setSavingAdminMode(publishMode);
@@ -352,6 +373,7 @@ function App() {
         schoolCourse: fd.get('schoolCourse'),
         message: fd.get('message'),
       });
+      trackEvent('consultation_submit', { target: 'Consultation form' });
       e.currentTarget.reset();
       showToast(
         'Consultation request received. We will follow up through your contact details.'
@@ -448,6 +470,7 @@ function App() {
               'faqs',
               'services',
               'consultations',
+              'analytics',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -455,14 +478,17 @@ function App() {
                 onClick={() => {
                   setAdminTab(tab);
                   setForm({});
-                  loadAdmin(tab);
+                  if (tab === 'analytics') loadAnalytics();
+                  else loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
                   ? '🌍 Opportunities'
                   : tab === 'consultations'
                     ? '📩 Consultations'
-                    : tab[0].toUpperCase() + tab.slice(1)}
+                    : tab === 'analytics'
+                      ? '📊 Analytics & Insights'
+                      : tab[0].toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <button
@@ -477,15 +503,55 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab[0].toUpperCase() + adminTab.slice(1)} Manager</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && (
+              {adminTab !== 'consultations' && adminTab !== 'analytics' && (
                 <button className="primary" onClick={() => setForm({})}>
                   <Plus size={17} /> New
                 </button>
               )}
             </div>
-            {adminTab === 'consultations' ? (
+            {adminTab === 'analytics' ? (
+              <section className="analytics-panel">
+                              <div className="analytics-toolbar">
+                                <div>
+                                  <span className="tag">First-party analytics</span>
+                                  <p>Anonymous site activity. Visitor counts are estimates based on anonymous browser IDs.</p>
+                                </div>
+                                <div className="analytics-controls">
+                                  <select value={analyticsDays} onChange={e => { const days = Number(e.target.value); setAnalyticsDays(days); loadAnalytics(days); }} aria-label="Analytics date range">
+                                    <option value={7}>Last 7 days</option>
+                                    <option value={30}>Last 30 days</option>
+                                    <option value={90}>Last 90 days</option>
+                                  </select>
+                                  <button className="primary" onClick={() => loadAnalytics()} disabled={analyticsLoading}>{analyticsLoading ? 'Refreshing…' : '↻ Refresh'}</button>
+                                </div>
+                              </div>
+                              {analyticsError ? <div className="analytics-error"><b>Analytics could not load</b><p>{analyticsError}</p><small>Analytics storage is separate from the content database.</small></div> : null}
+                              {analyticsLoading && !analyticsSummary ? <div className="admin-empty">Loading analytics…</div> : null}
+                              {analyticsSummary ? (
+                                <>
+                                  <div className="analytics-cards">
+                                    <article><span>Unique visitors</span><strong>{analyticsSummary.totals?.visitors ?? 0}</strong><small>Estimated unique browsers</small></article>
+                                    <article><span>Page views</span><strong>{analyticsSummary.totals?.pageViews ?? 0}</strong><small>Across {analyticsSummary.days} days</small></article>
+                                    <article><span>Clicks</span><strong>{analyticsSummary.totals?.clicks ?? 0}</strong><small>Buttons and outgoing links</small></article>
+                                    <article><span>Online estimate</span><strong>{analyticsSummary.onlineNow ?? 0}</strong><small>Active in the last 5 minutes</small></article>
+                                    <article><span>AI queries</span><strong>{analyticsSummary.totals?.aiQueries ?? 0}</strong><small>Submitted to EDUKEN AI</small></article>
+                                    <article><span>Consultation leads</span><strong>{analyticsSummary.totals?.consultationSubmissions ?? 0}</strong><small>Successful form submissions</small></article>
+                                  </div>
+                                  <div className="analytics-grid">
+                                    <article className="analytics-card"><h3>Most visited pages</h3>{(analyticsSummary.topPages || []).length ? analyticsSummary.topPages.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>No page views recorded yet.</p>}</article>
+                                    <article className="analytics-card"><h3>Most clicked items</h3>{(analyticsSummary.topTargets || []).length ? analyticsSummary.topTargets.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>No clicks recorded yet.</p>}</article>
+                                    <article className="analytics-card"><h3>Traffic sources</h3>{(analyticsSummary.sources || []).length ? analyticsSummary.sources.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label || 'Direct'}</span><b>{item.count}</b></div>) : <p>Sources appear as traffic arrives.</p>}</article>
+                                    <article className="analytics-card"><h3>Devices</h3>{(analyticsSummary.devices || []).length ? analyticsSummary.devices.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>No device data yet.</p>}</article>
+                                    <article className="analytics-card"><h3>Visitor countries</h3>{(analyticsSummary.countries || []).length ? analyticsSummary.countries.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>Country data appears as traffic arrives.</p>}</article>
+                                    <article className="analytics-card"><h3>Daily page views</h3>{(analyticsSummary.daily || []).length ? analyticsSummary.daily.map((item: any) => <div className="analytics-row" key={item.day}><span>{item.day}</span><b>{item.views}</b></div>) : <p>No daily trend yet.</p>}</article>
+                                  </div>
+                                  <p className="analytics-privacy">{analyticsSummary.privacy || 'Analytics are anonymous and designed to avoid collecting personal details.'} Last updated {analyticsSummary.generatedAt ? new Date(analyticsSummary.generatedAt).toLocaleString() : 'just now'}.</p>
+                                </>
+                              ) : null}
+                            </section>
+            ) : adminTab === 'consultations' ? (
               <div className="admin-list">
                 {consultations.length === 0 ? (
                   <div className="admin-empty">
