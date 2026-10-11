@@ -295,8 +295,8 @@ function App() {
         showToast('Add the official source URL before saving an opportunity.');
         return;
       }
-      if (!payload.description?.trim() && !payload.content?.trim()) {
-        showToast('Add a short description or full content.');
+      if (!payload.description?.trim()) {
+        showToast('Add a short description before saving this opportunity.');
         return;
       }
       payload.is_published = payload.status === 'Published';
@@ -307,10 +307,6 @@ function App() {
       if (!payload.slug)
         payload.slug =
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
-      if (!payload.description)
-        payload.description = (payload.content || '')
-          .split('\\n')[0]
-          .slice(0, 180);
     }
 
     try {
