@@ -26,6 +26,32 @@ import PlatformHub from './PlatformHub';
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
 
+function buildWhatsAppPost(table: string, item: Record<string, any>) {
+  const title = String(item.title || item.school || item.name || item.question || 'EDUKEN CONSULT Update').trim();
+  const description = String(item.description || item.body || item.details || item.course || item.answer || '').trim();
+  const deadline = item.deadline ? `\n⏳ Deadline: ${item.deadline}` : '';
+  const source = String(item.sourceUrl || item.link || '').trim();
+  const section = table === 'opportunities' ? 'opportunities' : table === 'admissions' ? 'admissions' : 'updates';
+  const slug = String(item.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
+  const pageUrl = table === 'opportunities' && slug
+    ? 'https://eduken-consult.timmyjoe385.workers.dev/#opportunity/' + encodeURIComponent(slug)
+    : 'https://eduken-consult.timmyjoe385.workers.dev/#' + section;
+  const heading = table === 'opportunities' ? '🌍 OPPORTUNITY UPDATE' : table === 'admissions' ? '🎓 ADMISSION UPDATE' : '📢 EDUKEN CONSULT UPDATE';
+  return [
+    heading,
+    '',
+    `📌 ${title}`,
+    description,
+    deadline,
+    '',
+    source ? `🔗 Official source: ${source}` : '',
+    `🌐 More updates: ${pageUrl}`,
+    '',
+    'EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+    '📲 Follow our WhatsApp Channel for more verified updates.'
+  ].filter(Boolean).join('\n');
+}
+
 type Item = Record<string, any> & { id: string };
 type Content = {
   opportunities: Item[];
@@ -98,6 +124,7 @@ function App() {
   const [form, setForm] = useState<Record<string, string>>({});
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
+  const [whatsAppDraft, setWhatsAppDraft] = useState('');
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
@@ -385,13 +412,24 @@ function App() {
     }
 
     try {
-      if (form.id)
+      let savedItem: Record<string, any> = { ...payload };
+      if (form.id) {
         await api.put('/api/admin/content/' + table + '/' + form.id, payload);
-      else await api.post('/api/admin/content/' + table, payload);
+        savedItem.id = form.id;
+      } else {
+        const created = await api.post('/api/admin/content/' + table, payload);
+        savedItem = { ...savedItem, ...(created?.data?.item || created?.data || {}) };
+      }
+      const isShareable = ['opportunities', 'admissions', 'updates'].includes(table);
+      if (isShareable) {
+        setWhatsAppDraft(buildWhatsAppPost(table, savedItem));
+      } else {
+        setWhatsAppDraft('');
+      }
       setForm({});
       await loadAdmin(table);
       await loadContent();
-      showToast('Saved successfully.');
+      showToast('Saved successfully. Use “Share to WhatsApp” to prepare a post for your DM or groups.');
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not save this item.');
     }
@@ -745,6 +783,18 @@ function App() {
                   <button className="primary" onClick={saveAdmin}>
                     {form.id ? 'Save changes' : 'Publish item'}
                   </button>
+                  {whatsAppDraft && ['opportunities', 'admissions', 'updates'].includes(adminTab) && (
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={() => {
+                        const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(whatsAppDraft);
+                        window.open(shareUrl, '_blank', 'noopener,noreferrer');
+                      }}
+                    >
+                      <MessageCircle size={16} /> Share to WhatsApp
+                    </button>
+                  )}
                 </div>
               </div>
             )}
