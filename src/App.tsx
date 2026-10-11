@@ -89,7 +89,8 @@ function App() {
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
-  const [form, setForm] = useState<Record<string, string>>({});
+  const [form, setForm] = useState<Record<string, any>>({});
+  const [savingAdminMode, setSavingAdminMode] = useState<'draft' | 'publish' | 'preserve' | null>(null);
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
@@ -272,9 +273,11 @@ function App() {
   };
 
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
+    if (savingAdminMode) return;
+    setSavingAdminMode(publishMode);
+    const table = adminTab;
     try {
-      const table = adminTab;
-      const payload = { ...form };
+      const payload: Record<string, any> = { ...form };
       if (table === 'opportunities') {
         if (publishMode === 'draft') {
           payload.status = 'DRAFT';
@@ -285,23 +288,31 @@ function App() {
         } else if (payload.is_published === undefined) {
           payload.is_published = String(payload.status || '').toUpperCase() === 'PUBLISHED';
         }
+        if (!payload.slug)
+          payload.slug = makeSlug(payload.title || '') + '-' + Date.now().toString(36);
+        if (!payload.description)
+          payload.description = (payload.content || '').split('\\n')[0].slice(0, 180);
       }
-      if (table === 'opportunities' && !payload.slug)
-        payload.slug =
-          makeSlug(payload.title || '') + '-' + Date.now().toString(36);
-      if (table === 'opportunities' && !payload.description)
-        payload.description = (payload.content || '')
-          .split('\n')[0]
-          .slice(0, 180);
       if (form.id)
         await api.put('/api/admin/content/' + table + '/' + form.id, payload);
-      else await api.post('/api/admin/content/' + table, payload);
+      else
+        await api.post('/api/admin/content/' + table, payload);
+
       setForm({});
       await loadAdmin(table);
       await loadContent();
-      showToast('Saved successfully.');
-    } catch {
-      showToast('Could not save this item.');
+
+      if (table === 'opportunities' && publishMode === 'draft') {
+        showToast('Draft saved successfully. You can keep editing it or publish it when ready.');
+      } else if (table === 'opportunities' && publishMode === 'publish') {
+        showToast('Published successfully! Your opportunity has been published.');
+      } else {
+        showToast('Saved successfully.');
+      }
+    } catch (error) {
+      showToast(error instanceof Error ? 'Could not save this item: ' + error.message : 'Could not save this item. Please try again.');
+    } finally {
+      setSavingAdminMode(null);
     }
   };
 
@@ -595,21 +606,21 @@ function App() {
                   })}
                   {adminTab === 'opportunities' ? (
                     <div className="admin-editor-actions">
-                      <button className="secondary" onClick={() => saveAdmin('draft')}>
-                        Save Draft
+                      <button className="secondary" disabled={savingAdminMode !== null} onClick={() => saveAdmin('draft')}>
+                        {savingAdminMode === 'draft' ? 'Saving Draft…' : 'Save Draft'}
                       </button>
                       {form.id ? (
                         <>
-                          <button className="primary" onClick={() => saveAdmin('preserve')}>
-                            Save Changes
+                          <button className="primary" disabled={savingAdminMode !== null} onClick={() => saveAdmin('preserve')}>
+                            {savingAdminMode === 'preserve' ? 'Saving…' : 'Save Changes'}
                           </button>
-                          <button className="primary" onClick={() => saveAdmin('publish')}>
-                            Publish Changes
+                          <button className="primary" disabled={savingAdminMode !== null} onClick={() => saveAdmin('publish')}>
+                            {savingAdminMode === 'publish' ? 'Publishing…' : 'Publish Changes'}
                           </button>
                         </>
                       ) : (
-                        <button className="primary" onClick={() => saveAdmin('publish')}>
-                          Publish Item
+                        <button className="primary" disabled={savingAdminMode !== null} onClick={() => saveAdmin('publish')}>
+                          {savingAdminMode === 'publish' ? 'Publishing…' : 'Publish Item'}
                         </button>
                       )}
                     </div>
