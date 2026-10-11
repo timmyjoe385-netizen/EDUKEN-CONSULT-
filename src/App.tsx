@@ -433,8 +433,8 @@ function App() {
       }
       const savedId = savedItem.id || form.id;
       setForm({ ...form, ...payload, ...(savedId ? { id: savedId } : {}), ...(table === 'opportunities' ? { status: publish === undefined ? (payload.is_published ? 'Published' : 'Draft') : (publish ? 'Published' : 'Draft') } : {}) });
-      showToast(publish === false ? 'Draft saved. You can keep editing it or publish it when ready.' : publish === true ? 'Published successfully. Refresh the public site to confirm it is visible.' : 'Saved successfully.');
       await Promise.all([loadAdmin(table), loadContent()]);
+      showToast(publish === false ? 'Draft saved successfully. You can keep editing it or publish it when ready.' : publish === true ? 'Published successfully! Your opportunity has been published.' : 'Saved successfully.');
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not save this item.');
     } finally {
