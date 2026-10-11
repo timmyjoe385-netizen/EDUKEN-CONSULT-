@@ -294,6 +294,31 @@ function App() {
     }
   };
 
+  const shareOpportunityOnWhatsApp = (item: Item) => {
+    const slug = item.slug || makeSlug(item.title || item.id);
+    const link = articleUrl(slug);
+    const teaser = String(item.description || item.content || '')
+      .split(/\r?\n/)[0]
+      .trim()
+      .slice(0, 240);
+    const message = [
+      '📢 ' + (item.title || 'EDUKEN CONSULT Update'),
+      '',
+      teaser,
+      '',
+      '🔗 READ MORE HERE 👇',
+      link,
+      '',
+      '🎓 EDUKEN CONSULT',
+      'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+    ].filter(Boolean).join('\n');
+    window.open(
+      'https://wa.me/?text=' + encodeURIComponent(message),
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
+
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     if (savingAdminMode) return;
     setSavingAdminMode(publishMode);
@@ -607,6 +632,20 @@ function App() {
                         </p>
                       </div>
                       <div className="admin-actions">
+                        {adminTab === 'opportunities' &&
+                          (String(item.status || '').toUpperCase() === 'PUBLISHED' ||
+                            item.is_published === true ||
+                            String(item.is_published).toLowerCase() === 'true' ||
+                            String(item.is_published) === '1') && (
+                            <button
+                              type="button"
+                              className="secondary"
+                              onClick={() => shareOpportunityOnWhatsApp(item)}
+                              title="Share a teaser with a Read More link on WhatsApp"
+                            >
+                              <Share2 size={14} /> Share
+                            </button>
+                          )}
                         <button onClick={() => setForm(item)}>Edit</button>
                         <button
                           className="danger"
@@ -680,6 +719,22 @@ function App() {
                   })}
                   {adminTab === 'opportunities' ? (
                     <div className="admin-editor-actions">
+                      <button
+                        className="secondary"
+                        type="button"
+                        disabled={
+                          savingAdminMode !== null ||
+                          !form.id ||
+                          !(String(form.status || '').toUpperCase() === 'PUBLISHED' ||
+                            form.is_published === true ||
+                            String(form.is_published).toLowerCase() === 'true' ||
+                            String(form.is_published) === '1')
+                        }
+                        onClick={() => shareOpportunityOnWhatsApp(form as Item)}
+                        title="Save and publish the opportunity before sharing its Read More link"
+                      >
+                        <Share2 size={15} /> Share to WhatsApp
+                      </button>
                       <button className="secondary" disabled={savingAdminMode !== null} onClick={() => saveAdmin('draft')}>
                         {savingAdminMode === 'draft' ? 'Saving Draft…' : 'Save Draft'}
                       </button>
