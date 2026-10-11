@@ -301,8 +301,22 @@ async function recordAnalyticsEvent(request, env) {
   if (!/^[a-zA-Z0-9_-]{8,80}$/.test(sessionId)) return json({ error: "Invalid session identifier." }, 400);
   if (!env.ANALYTICS_DB) return json({ error: "Analytics storage is not configured." }, 503);
 
-  const clean = (value, max = 140) => String(value || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
-  const path = clean(body.path || "/", 240);
+  const clean = (value, max = 140) => String(value || "").replace(/[\\u0000-\\u001f]/g, " ").trim().slice(0, max);
+  // Enforce route sanitization server-side; never trust the browser to remove
+  // OAuth credentials, arbitrary query strings, or unrecognised URL fragments.
+  const rawPath = clean(body.path || "/", 240);
+  const pathMatch = rawPath.match(/^(\\/)(?:#([a-zA-Z0-9/_-]{1,180}))?$/);
+  let path = "/";
+  if (pathMatch) {
+    const hash = pathMatch[2] || "";
+    const safeSections = new Set(["opportunities", "admissions", "updates", "faqs", "services", "contact", "about"]);
+    if (!hash) path = "/";
+    else if (safeSections.has(hash)) path = "/#" + hash;
+    else {
+      const articleMatch = hash.match(/^opportunity\\/([a-zA-Z0-9_-]{1,160})$/);
+      if (articleMatch) path = "/#opportunity/" + articleMatch[1];
+    }
+  }
   const pageTitle = clean(body.pageTitle, 120);
   const referrerHost = clean(body.referrerHost, 120);
   const source = clean(body.source || "direct", 100);
