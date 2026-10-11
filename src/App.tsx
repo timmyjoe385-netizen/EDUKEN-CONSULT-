@@ -133,6 +133,19 @@ function App() {
   };
 
   useEffect(() => {
+    const finishGoogleSignIn = async () => {
+      try {
+        const result = await auth.completeOAuthCallback();
+        if (result) {
+          setUser(result.user);
+          setAdminView(true);
+          await loadAdmin('consultations');
+        }
+      } catch (error) {
+        showToast(error instanceof Error ? error.message : 'Google sign-in failed.');
+      }
+    };
+    void finishGoogleSignIn();
     loadContent();
     syncArticleFromHash();
     const onHashChange = () => syncArticleFromHash();
