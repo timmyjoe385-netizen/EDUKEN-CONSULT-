@@ -562,7 +562,7 @@ function App() {
                     const isBoolean = booleanFields.includes(field);
                     const isStatus = field === 'status' && adminTab === 'opportunities';
                     const isLongText = ['content', 'eligibility', 'benefits', 'howToApply'].includes(field);
-                    const value = form[field] ?? (isBoolean ? 'false' : '');
+                    const value = form[field] ?? (isBoolean ? 'false' : isStatus ? (form.is_published ? 'Published' : 'Draft') : '');
                     return (
                       <label className={isBoolean ? 'admin-checkbox-field' : ''} key={field}>
                         <span>{field}{adminTab === 'opportunities' && ['title', 'category', 'sourceUrl'].includes(field) ? ' *' : ''}</span>
