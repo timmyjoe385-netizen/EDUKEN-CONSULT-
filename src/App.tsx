@@ -524,32 +524,64 @@ function App() {
                 </div>
                 <div className="admin-editor">
                   <h2>{form.id ? 'Edit item' : 'Create item'}</h2>
-                  {fields.map(field => (
-                    <label key={field}>
-                      {field}
-                      {[
-                        'content',
-                        'eligibility',
-                        'benefits',
-                        'howToApply',
-                      ].includes(field) ? (
-                        <textarea
-                          value={form[field] || ''}
-                          onChange={e =>
-                            setForm({ ...form, [field]: e.target.value })
-                          }
-                          rows={field === 'content' ? 8 : 5}
-                        />
-                      ) : (
-                        <input
-                          value={form[field] || ''}
-                          onChange={e =>
-                            setForm({ ...form, [field]: e.target.value })
-                          }
-                        />
-                      )}
-                    </label>
-                  ))}
+                  {fields.map(field => {
+                    const booleanFields = [
+                      'verified',
+                      'featured',
+                      'urgent',
+                      'notifyOnPublish',
+                    ];
+                    const isBoolean = booleanFields.includes(field);
+                    const isLongText = [
+                      'content',
+                      'eligibility',
+                      'benefits',
+                      'howToApply',
+                    ].includes(field);
+                    const checked =
+                      form[field] === true ||
+                      String(form[field]).toLowerCase() === 'true' ||
+                      String(form[field]) === '1';
+                    const fieldLabel = field
+                      .replace(/([A-Z])/g, ' $1')
+                      .replace(/^./, letter => letter.toUpperCase());
+                    return (
+                      <label
+                        key={field}
+                        className={isBoolean ? 'admin-toggle-field' : undefined}
+                      >
+                        <span>{fieldLabel}</span>
+                        {isBoolean ? (
+                          <span className="admin-toggle-control">
+                            <input
+                              type="checkbox"
+                              role="switch"
+                              checked={checked}
+                              onChange={e =>
+                                setForm({ ...form, [field]: e.target.checked })
+                              }
+                            />
+                            <span>{checked ? 'ON' : 'OFF'}</span>
+                          </span>
+                        ) : isLongText ? (
+                          <textarea
+                            value={form[field] ?? ''}
+                            onChange={e =>
+                              setForm({ ...form, [field]: e.target.value })
+                            }
+                            rows={field === 'content' ? 8 : 5}
+                          />
+                        ) : (
+                          <input
+                            value={form[field] ?? ''}
+                            onChange={e =>
+                              setForm({ ...form, [field]: e.target.value })
+                            }
+                          />
+                        )}
+                      </label>
+                    );
+                  })}
                   <button className="primary" onClick={saveAdmin}>
                     {form.id ? 'Save changes' : 'Publish item'}
                   </button>
