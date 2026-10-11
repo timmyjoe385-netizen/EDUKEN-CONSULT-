@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, auth, notifications } from './lib/api';
+import { trackEvent } from './lib/analytics';
 import {
   Bell,
   Bookmark,
@@ -226,6 +227,7 @@ export default function PlatformHub({
       const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'AI request failed');
+      trackEvent('ai_query', { target: 'AI question submitted' });
       setAiAnswer(data.answer || 'I could not find a confident answer.');
       setAiSources(Array.isArray(data.sources) ? data.sources.filter((source: any) => source?.url) : []);
       setAiResearchStatus(typeof data.researchStatus === 'string' ? data.researchStatus : null);
