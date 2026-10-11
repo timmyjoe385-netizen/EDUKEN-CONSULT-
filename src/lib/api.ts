@@ -100,34 +100,46 @@ export const api = {
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
   signIn: async (_options?: any) => {
-    const email = window.prompt(
-      'EDUKEN CONSULT sign-in\nEnter your email address:'
-    );
-    if (!email) throw new Error('Sign-in cancelled.');
-    const password = window.prompt('Enter your password:');
-    if (!password) throw new Error('Sign-in cancelled.');
-    const response = await fetch(
-      SUPABASE_URL + '/auth/v1/token?grant_type=password',
-      {
+    const redirectTo = window.location.origin + window.location.pathname;
+    const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
+    url.searchParams.set('provider', 'google');
+    url.searchParams.set('redirect_to', redirectTo);
+    url.searchParams.set('scopes', 'openid email profile');
+    window.location.assign(url.toString());
+    return new Promise(() => undefined);
+  },
+  completeOAuthCallback: async () => {
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+    const accessToken = hash.get('access_token');
+    const refreshToken = hash.get('refresh_token');
+    if (!accessToken) return null;
+    const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
+      headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
+    });
+    const user = await response.json();
+    if (!response.ok || !user.email) {
+      writeSession(null);
+      throw new Error('Could not verify the Google account.');
+    }
+    const allowed = ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'];
+    if (!allowed.includes(String(user.email).toLowerCase())) {
+      writeSession(null);
+      await fetch(SUPABASE_URL + '/auth/v1/logout', {
         method: 'POST',
-        headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), password }),
-      }
-    );
-    const data = await response.json();
-    if (!response.ok)
-      throw new Error(
-        data.error_description || data.msg || 'Invalid email or password.'
-      );
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
+      }).catch(() => undefined);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      throw new Error('This Google account is not authorized for EDUKEN administration.');
+    }
     const session = {
-      access_token: data.access_token,
-      refresh_token: data.refresh_token,
-      expires_at:
-        Math.floor(Date.now() / 1000) + Number(data.expires_in || 3600),
-      user: data.user,
+      access_token: accessToken,
+      refresh_token: refreshToken || undefined,
+      expires_at: Math.floor(Date.now() / 1000) + Number(hash.get('expires_in') || 3600),
+      user,
     };
     writeSession(session);
-    return { user: data.user, session };
+    window.history.replaceState({}, document.title, window.location.pathname);
+    return { user, session };
   },
   signOut: async () => {
     const session = readSession();
