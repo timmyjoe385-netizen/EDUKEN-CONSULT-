@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { api, auth } from './lib/api';
+import { analyticsApi, api, auth } from './lib/api';
+import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
   BookOpen,
@@ -24,6 +25,32 @@ import PlatformHub from './PlatformHub';
 
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
+
+function buildWhatsAppPost(table: string, item: Record<string, any>) {
+  const title = String(item.title || item.school || item.name || item.question || 'EDUKEN CONSULT Update').trim();
+  const description = String(item.description || item.body || item.details || item.course || item.answer || '').trim();
+  const deadline = item.deadline ? `\n⏳ Deadline: ${item.deadline}` : '';
+  const source = String(item.sourceUrl || item.link || '').trim();
+  const section = table === 'opportunities' ? 'opportunities' : table === 'admissions' ? 'admissions' : 'updates';
+  const slug = String(item.slug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''));
+  const pageUrl = table === 'opportunities' && slug
+    ? 'https://eduken-consult.timmyjoe385.workers.dev/#opportunity/' + encodeURIComponent(slug)
+    : 'https://eduken-consult.timmyjoe385.workers.dev/#' + section;
+  const heading = table === 'opportunities' ? '🌍 OPPORTUNITY UPDATE' : table === 'admissions' ? '🎓 ADMISSION UPDATE' : '📢 EDUKEN CONSULT UPDATE';
+  return [
+    heading,
+    '',
+    `📌 ${title}`,
+    description,
+    deadline,
+    '',
+    source ? `🔗 Official source: ${source}` : '',
+    `🌐 More updates: ${pageUrl}`,
+    '',
+    'EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+    '📲 Follow our WhatsApp Channel for more verified updates.'
+  ].filter(Boolean).join('\n');
+}
 
 type Item = Record<string, any> & { id: string };
 type Content = {
@@ -88,9 +115,17 @@ function App() {
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
-  const [form, setForm] = useState<Record<string, string>>({});
+  const [systemHealth, setSystemHealth] = useState<Array<{ name: string; status: 'checking' | 'ok' | 'error'; detail: string }>>([]);
+  const [healthChecking, setHealthChecking] = useState(false);
+  const [analyticsSummary, setAnalyticsSummary] = useState<any>(null);
+  const [analyticsLoading, setAnalyticsLoading] = useState(false);
+  const [analyticsError, setAnalyticsError] = useState('');
+  const [analyticsDays, setAnalyticsDays] = useState(30);
+  const [form, setForm] = useState<Record<string, any>>({});
+  const [savingAdmin, setSavingAdmin] = useState(false);
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
+  const [whatsAppDraft, setWhatsAppDraft] = useState('');
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
@@ -115,6 +150,7 @@ function App() {
     encodeURIComponent(slug);
 
   const openOpportunity = (item: Item) => {
+    trackEvent('opportunity_view', { target: item.title || item.slug || item.id });
     const slug = item.slug || makeSlug(item.title || item.id);
     window.location.hash = 'opportunity/' + encodeURIComponent(slug);
     setArticleSlug(slug);
@@ -133,6 +169,19 @@ function App() {
   };
 
   useEffect(() => {
+    const finishGoogleSignIn = async () => {
+      try {
+        const result = await auth.completeOAuthCallback();
+        if (result) {
+          setUser(result.user);
+          setAdminView(true);
+          await loadAdmin('consultations');
+        }
+      } catch (error) {
+        showToast(error instanceof Error ? error.message : 'Google sign-in failed.');
+      }
+    };
+    void finishGoogleSignIn();
     loadContent();
     syncArticleFromHash();
     const onHashChange = () => syncArticleFromHash();
@@ -159,6 +208,8 @@ function App() {
       window.removeEventListener('appinstalled', onInstalled);
     };
   }, []);
+
+  useEffect(() => installAnalyticsTracking(), []);
 
   const showToast = (message: string) => {
     setToast(message);
@@ -244,8 +295,8 @@ function App() {
       setUser(result.user);
       setAdminView(true);
       await loadAdmin(adminTab);
-    } catch {
-      showToast('Admin sign-in was cancelled or unavailable.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Google sign-in could not start. Check your connection and Supabase OAuth configuration.');
     }
   };
 
@@ -265,26 +316,130 @@ function App() {
     }
   };
 
-  const saveAdmin = async () => {
+  const runHealthCheck = async () => {
+    setHealthChecking(true);
+    setSystemHealth([
+      { name: 'EDUKEN API', status: 'checking', detail: 'Checking API response…' },
+      { name: 'Live content database', status: 'checking', detail: 'Checking published content…' },
+    ]);
+    const checks = await Promise.all([
+      (async () => {
+        try {
+          const result = await api.get('/health');
+          return {
+            name: 'EDUKEN API' as const,
+            status: result.data?.ok ? 'ok' as const : 'error' as const,
+            detail: result.data?.ok
+              ? `API responding · version ${result.data.version ?? 'available'}`
+              : 'API responded, but did not report a healthy status.',
+          };
+        } catch (error) {
+          return {
+            name: 'EDUKEN API' as const,
+            status: 'error' as const,
+            detail: error instanceof Error ? error.message : 'API request failed.',
+          };
+        }
+      })(),
+      (async () => {
+        try {
+          const result = await api.get('/public-content');
+          const data = result.data || {};
+          const counts = ['opportunities', 'admissions', 'updates', 'faqs', 'services']
+            .map(key => `${key}: ${Array.isArray(data[key]) ? data[key].length : 0}`)
+            .join(' · ');
+          const valid = ['opportunities', 'admissions', 'updates', 'faqs', 'services']
+            .every(key => Array.isArray(data[key]));
+          return {
+            name: 'Live content database' as const,
+            status: valid ? 'ok' as const : 'error' as const,
+            detail: valid ? counts : 'Content endpoint responded with an unexpected data shape.',
+          };
+        } catch (error) {
+          return {
+            name: 'Live content database' as const,
+            status: 'error' as const,
+            detail: error instanceof Error ? error.message : 'Content request failed.',
+          };
+        }
+      })(),
+    ]);
+    setSystemHealth(checks);
+    setHealthChecking(false);
+  };
+
+  const loadAnalytics = async (days = analyticsDays) => {
+    setAnalyticsLoading(true);
+    setAnalyticsError('');
     try {
-      const table = adminTab;
-      const payload = { ...form };
-      if (table === 'opportunities' && !payload.slug)
+      const result = await analyticsApi.summary(days);
+      setAnalyticsSummary(result.data);
+    } catch (error) {
+      setAnalyticsError(error instanceof Error ? error.message : 'Could not load analytics.');
+    } finally {
+      setAnalyticsLoading(false);
+    }
+  };
+
+  const saveAdmin = async (publish?: boolean) => {
+    if (savingAdmin) return;
+    const table = adminTab;
+    const payload: Record<string, any> = { ...form };
+
+    if (table === 'opportunities') {
+      if (!payload.title?.trim()) {
+        showToast('Please enter an opportunity title.');
+        return;
+      }
+      if (!payload.category?.trim()) {
+        showToast('Please choose or enter a category.');
+        return;
+      }
+      if (!payload.sourceUrl?.trim()) {
+        showToast('Add the official source URL before saving an opportunity.');
+        return;
+      }
+      if (!payload.description?.trim()) {
+        showToast('Add a short description before saving this opportunity.');
+        return;
+      }
+      payload.is_published = publish === undefined
+        ? payload.status === 'Published'
+        : publish;
+      delete payload.status;
+      for (const key of ['verified', 'featured', 'urgent', 'notifyOnPublish']) {
+        payload[key] = payload[key] === true || payload[key] === 'true';
+      }
+      if (!payload.slug)
         payload.slug =
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
-      if (table === 'opportunities' && !payload.description)
-        payload.description = (payload.content || '')
-          .split('\n')[0]
-          .slice(0, 180);
-      if (form.id)
+    }
+
+    setSavingAdmin(true);
+    try {
+      let savedItem: Record<string, any> = { ...payload };
+      if (form.id) {
         await api.put('/api/admin/content/' + table + '/' + form.id, payload);
-      else await api.post('/api/admin/content/' + table, payload);
-      setForm({});
-      await loadAdmin(table);
-      await loadContent();
-      showToast('Saved successfully.');
-    } catch {
-      showToast('Could not save this item.');
+        savedItem.id = form.id;
+      } else {
+        const created = await api.post('/api/admin/content/' + table, payload);
+        savedItem = { ...savedItem, ...(created?.data?.item || created?.data || {}) };
+      }
+      const isShareable = ['opportunities', 'admissions', 'updates'].includes(table);
+      if (isShareable) {
+        setWhatsAppDraft(buildWhatsAppPost(table, savedItem));
+      } else {
+        setWhatsAppDraft('');
+      }
+      const savedId = savedItem.id || form.id;
+      setForm({ ...form, ...payload, ...(savedId ? { id: savedId } : {}), ...(table === 'opportunities' ? { status: publish === undefined ? (payload.is_published ? 'Published' : 'Draft') : (publish ? 'Published' : 'Draft') } : {}) });
+      showToast(publish === false ? 'Draft saved successfully. You can keep editing it or publish it when ready.' : publish === true ? 'Published successfully! Your opportunity has been published.' : 'Saved successfully.');
+      // Refresh lists in the background so a slow read request does not keep the save button busy.
+      void Promise.all([loadAdmin(table), loadContent()]);
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not save this item.');
+    } finally {
+      setSavingAdmin(false);
     }
   };
 
@@ -292,9 +447,8 @@ function App() {
     if (!window.confirm('Delete this item permanently?')) return;
     try {
       await api.delete('/api/admin/content/' + adminTab + '/' + id);
-      await loadAdmin(adminTab);
-      await loadContent();
       showToast('Deleted successfully.');
+      await Promise.all([loadAdmin(adminTab), loadContent()]);
     } catch {
       showToast('Could not delete this item.');
     }
@@ -312,7 +466,8 @@ function App() {
 
   const submitConsultation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
     try {
       await api.post('/consultations', {
         name: fd.get('name'),
@@ -324,7 +479,8 @@ function App() {
         schoolCourse: fd.get('schoolCourse'),
         message: fd.get('message'),
       });
-      e.currentTarget.reset();
+      trackEvent('consultation_submit', { target: 'Consultation form' });
+      formElement.reset();
       showToast(
         'Consultation request received. We will follow up through your contact details.'
       );
@@ -347,10 +503,6 @@ function App() {
       'deadline',
       'link',
       'status',
-      'content',
-      'eligibility',
-      'benefits',
-      'howToApply',
       'sourceUrl',
       'verified',
       'slug',
@@ -413,6 +565,8 @@ function App() {
               'faqs',
               'services',
               'consultations',
+              'analytics',
+              'health',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -420,14 +574,20 @@ function App() {
                 onClick={() => {
                   setAdminTab(tab);
                   setForm({});
-                  loadAdmin(tab);
+                  if (tab === 'health') runHealthCheck();
+                  else if (tab === 'analytics') loadAnalytics();
+                  else loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
                   ? '🌍 Opportunities'
                   : tab === 'consultations'
                     ? '📩 Consultations'
-                    : tab[0].toUpperCase() + tab.slice(1)}
+                    : tab === 'health'
+                      ? '🩺 System health'
+                      : tab === 'analytics'
+                        ? '📊 Analytics & Insights'
+                        : tab[0].toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <button
@@ -442,15 +602,85 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab[0].toUpperCase() + adminTab.slice(1)} Manager</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'health' ? 'System health' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && (
+              {adminTab !== 'consultations' && adminTab !== 'health' && adminTab !== 'analytics' && (
                 <button className="primary" onClick={() => setForm({})}>
                   <Plus size={17} /> New
                 </button>
               )}
             </div>
-            {adminTab === 'consultations' ? (
+            {adminTab === 'analytics' ? (
+              <section className="analytics-panel">
+                <div className="analytics-toolbar">
+                  <div>
+                    <span className="tag">First-party analytics</span>
+                    <p>Anonymous site activity. Visitor counts are estimates based on anonymous browser IDs.</p>
+                  </div>
+                  <div className="analytics-controls">
+                    <select value={analyticsDays} onChange={e => { const days = Number(e.target.value); setAnalyticsDays(days); loadAnalytics(days); }} aria-label="Analytics date range">
+                      <option value={7}>Last 7 days</option>
+                      <option value={30}>Last 30 days</option>
+                      <option value={90}>Last 90 days</option>
+                    </select>
+                    <button className="primary" onClick={() => loadAnalytics()} disabled={analyticsLoading}>{analyticsLoading ? 'Refreshing…' : '↻ Refresh'}</button>
+                  </div>
+                </div>
+                {analyticsError ? <div className="analytics-error"><b>Analytics could not load</b><p>{analyticsError}</p><small>Check that the preview deployment has the analytics database binding.</small></div> : null}
+                {analyticsLoading && !analyticsSummary ? <div className="admin-empty">Loading analytics…</div> : null}
+                {analyticsSummary ? (
+                  <>
+                    <div className="analytics-cards">
+                      <article><span>Unique visitors</span><strong>{analyticsSummary.totals?.visitors ?? 0}</strong><small>Estimated unique browsers</small></article>
+                      <article><span>Page views</span><strong>{analyticsSummary.totals?.pageViews ?? 0}</strong><small>Across {analyticsSummary.days} days</small></article>
+                      <article><span>Clicks</span><strong>{analyticsSummary.totals?.clicks ?? 0}</strong><small>Buttons and outgoing links</small></article>
+                      <article><span>Online estimate</span><strong>{analyticsSummary.onlineNow ?? 0}</strong><small>Active in the last 5 minutes</small></article>
+                      <article><span>AI queries</span><strong>{analyticsSummary.totals?.aiQueries ?? 0}</strong><small>Submitted to EDUKEN AI</small></article>
+                      <article><span>Consultation leads</span><strong>{analyticsSummary.totals?.consultationSubmissions ?? 0}</strong><small>Successful form submissions</small></article>
+                    </div>
+                    <div className="analytics-grid">
+                      <article className="analytics-card"><h3>Most visited pages</h3>{(analyticsSummary.topPages || []).length ? analyticsSummary.topPages.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>No page views recorded yet.</p>}</article>
+                      <article className="analytics-card"><h3>Most clicked items</h3>{(analyticsSummary.topTargets || []).length ? analyticsSummary.topTargets.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>No clicks recorded yet.</p>}</article>
+                      <article className="analytics-card"><h3>Traffic sources</h3>{(analyticsSummary.sources || []).length ? analyticsSummary.sources.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label || 'Direct'}</span><b>{item.count}</b></div>) : <p>Sources appear as traffic arrives.</p>}</article>
+                      <article className="analytics-card"><h3>Devices</h3>{(analyticsSummary.devices || []).length ? analyticsSummary.devices.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>No device data yet.</p>}</article>
+                      <article className="analytics-card"><h3>Visitor countries</h3>{(analyticsSummary.countries || []).length ? analyticsSummary.countries.map((item: any) => <div className="analytics-row" key={item.label}><span>{item.label}</span><b>{item.count}</b></div>) : <p>Country data appears as traffic arrives.</p>}</article>
+                      <article className="analytics-card"><h3>Daily page views</h3>{(analyticsSummary.daily || []).length ? analyticsSummary.daily.map((item: any) => <div className="analytics-row" key={item.day}><span>{item.day}</span><b>{item.views}</b></div>) : <p>No daily trend yet.</p>}</article>
+                    </div>
+                    <p className="analytics-privacy">{analyticsSummary.privacy || 'Analytics are anonymous and designed to avoid collecting personal details.'} Last updated {analyticsSummary.generatedAt ? new Date(analyticsSummary.generatedAt).toLocaleString() : 'just now'}.</p>
+                  </>
+                ) : null}
+              </section>
+            ) : adminTab === 'health' ? (
+              <section className="admin-list">
+                <article className="admin-item">
+                  <div>
+                    <span className="tag">Read-only checks</span>
+                    <h3>EDUKEN system health</h3>
+                    <p>Check the API and published content feed without changing website data.</p>
+                  </div>
+                  <button className="primary" onClick={runHealthCheck} disabled={healthChecking}>
+                    {healthChecking ? 'Checking…' : 'Run checks again'}
+                  </button>
+                </article>
+                {systemHealth.map(check => (
+                  <article className="admin-item" key={check.name}>
+                    <div>
+                      <span className="tag">
+                        {check.status === 'checking' ? 'Checking' : check.status === 'ok' ? 'Healthy' : 'Needs attention'}
+                      </span>
+                      <h3>{check.name}</h3>
+                      <p>{check.detail}</p>
+                    </div>
+                    <strong aria-label={check.status}>
+                      {check.status === 'checking' ? '⏳' : check.status === 'ok' ? '✅' : '⚠️'}
+                    </strong>
+                  </article>
+                ))}
+                <p className="admin-health-note">
+                  These checks confirm API reachability and published-content responses. They do not run an AI query or test consultation submission.
+                </p>
+              </section>
+            ) : adminTab === 'consultations' ? (
               <div className="admin-list">
                 {consultations.length === 0 ? (
                   <div className="admin-empty">
@@ -507,10 +737,13 @@ function App() {
                       <div className="admin-actions">
                         <button onClick={() => setForm(item)}>Edit</button>
                         <button
+                          type="button"
                           className="danger"
+                          aria-label="Delete item"
                           onClick={() => deleteAdmin(item.id)}
                         >
                           <Trash2 size={14} />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </article>
@@ -518,35 +751,71 @@ function App() {
                 </div>
                 <div className="admin-editor">
                   <h2>{form.id ? 'Edit item' : 'Create item'}</h2>
-                  {fields.map(field => (
-                    <label key={field}>
-                      {field}
-                      {[
-                        'content',
-                        'eligibility',
-                        'benefits',
-                        'howToApply',
-                      ].includes(field) ? (
-                        <textarea
-                          value={form[field] || ''}
-                          onChange={e =>
-                            setForm({ ...form, [field]: e.target.value })
-                          }
-                          rows={field === 'content' ? 8 : 5}
-                        />
-                      ) : (
-                        <input
-                          value={form[field] || ''}
-                          onChange={e =>
-                            setForm({ ...form, [field]: e.target.value })
-                          }
-                        />
-                      )}
-                    </label>
-                  ))}
-                  <button className="primary" onClick={saveAdmin}>
-                    {form.id ? 'Save changes' : 'Publish item'}
-                  </button>
+                  {fields.map(field => {
+                    const booleanFields = ['verified', 'featured', 'urgent', 'notifyOnPublish'];
+                    const isBoolean = booleanFields.includes(field);
+                    const isStatus = field === 'status' && adminTab === 'opportunities';
+                    const isLongText = ['description'].includes(field);
+                    const value = form[field] ?? (isBoolean ? 'false' : isStatus ? (form.is_published ? 'Published' : 'Draft') : '');
+                    return (
+                      <label className={isBoolean ? 'admin-checkbox-field' : ''} key={field}>
+                        <span>{field}{adminTab === 'opportunities' && ['title', 'category', 'sourceUrl'].includes(field) ? ' *' : ''}</span>
+                        {isBoolean ? (
+                          <input
+                            type="checkbox"
+                            checked={value === true || String(value).toLowerCase() === 'true'}
+                            onChange={e => setForm({ ...form, [field]: String(e.target.checked) })}
+                          />
+                        ) : isStatus ? (
+                          <select
+                            value={value || 'Draft'}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                          >
+                            <option value="Draft">Draft — keep off the public site</option>
+                            <option value="Published">Published — show on the public site</option>
+                          </select>
+                        ) : isLongText ? (
+                          <textarea
+                            value={value}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                            rows={field === 'description' ? 8 : 5}
+                          />
+                        ) : (
+                          <input
+                            type={field === 'deadline' ? 'date' : field === 'link' || field === 'sourceUrl' ? 'url' : 'text'}
+                            value={value}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                          />
+                        )}
+                      </label>
+                    );
+                  })}
+                  {adminTab === 'opportunities' ? (
+                    <>
+                      <button type="button" className="secondary" disabled={savingAdmin} onClick={() => saveAdmin(false)}>
+                        {savingAdmin ? "Saving…" : "Save Draft"}
+                      </button>
+                      <button type="button" className="primary" disabled={savingAdmin} onClick={() => saveAdmin(true)}>
+                        {savingAdmin ? "Publishing…" : form.id ? "Publish changes" : "Publish item"}
+                      </button>
+                    </>
+                  ) : (
+                    <button className="primary" onClick={() => saveAdmin()}>
+                      {form.id ? 'Save changes' : 'Publish item'}
+                    </button>
+                  )}
+                  {whatsAppDraft && ['opportunities', 'admissions', 'updates'].includes(adminTab) && (
+                    <button
+                      type="button"
+                      className="secondary"
+                      onClick={() => {
+                        const shareUrl = 'https://wa.me/?text=' + encodeURIComponent(whatsAppDraft);
+                        window.open(shareUrl, '_blank', 'noopener,noreferrer');
+                      }}
+                    >
+                      <MessageCircle size={16} /> Share to WhatsApp
+                    </button>
+                  )}
                 </div>
               </div>
             )}
@@ -970,6 +1239,7 @@ function App() {
                 <article className="spotlight-card" key={o.id}>
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    {o.urgent && <span className="urgent-pill">🚨 Urgent</span>}
                     {o.verified ? (
                       <span className="verified-pill">✓ Verified Source</span>
                     ) : o.sourceUrl ? (
@@ -1010,6 +1280,7 @@ function App() {
                 <article className="spotlight-card closing-card" key={o.id}>
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    {o.urgent && <span className="urgent-pill">🚨 Urgent</span>}
                     <span className="deadline-pill">⏳ {o.deadline}</span>
                   </div>
                   <h3>{o.title}</h3>
@@ -1204,6 +1475,7 @@ function App() {
                 <article className="opp-card" key={o.id}>
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    {o.urgent && <span className="urgent-pill">🚨 Urgent</span>}
                     {o.verified ? (
                       <span className="verified-pill">✓ Verified Source</span>
                     ) : o.sourceUrl ? (

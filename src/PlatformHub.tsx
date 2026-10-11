@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, auth, notifications } from './lib/api';
+import { trackEvent } from './lib/analytics';
 import {
   Bell,
   Bookmark,
@@ -226,6 +227,7 @@ export default function PlatformHub({
       const res = await fetch('/api/ai-assistant', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: aiQuestion }) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'AI request failed');
+      trackEvent('ai_query', { target: 'AI question submitted' });
       setAiAnswer(data.answer || 'I could not find a confident answer.');
       setAiSources(Array.isArray(data.sources) ? data.sources.filter((source: any) => source?.url) : []);
       setAiResearchStatus(typeof data.researchStatus === 'string' ? data.researchStatus : null);
@@ -466,17 +468,21 @@ export default function PlatformHub({
             <AiFormattedAnswer text={aiAnswer} />
             {aiSources.length > 0 && (
               <div className="ai-sources" style={{ marginTop: 14 }}>
-                <strong>Sources checked</strong>
+                <strong>Research sources</strong>
                 <ul style={{ margin: '8px 0 0', paddingLeft: 20 }}>
-                  {[...new Set(aiSources.map((source) => {
+                  {aiSources.filter((source, index, all) => {
                     try {
-                      return new URL(source.url).hostname.replace(/^www\./, '');
-                    } catch {
-                      return '';
-                    }
-                  }).filter(Boolean))].slice(0, 5).map((sourceName) => (
-                    <li key={sourceName} style={{ marginBottom: 6 }}>{sourceName}</li>
-                  ))}
+                      return new URL(source.url).protocol === 'https:' && all.findIndex(item => item.url === source.url) === index;
+                    } catch { return false; }
+                  }).slice(0, 6).map(source => {
+                    const url = new URL(source.url);
+                    const host = url.hostname.replace(/^www\./, '');
+                    const official = /(^|\.)fuoye\.edu\.ng$|(^|\.)jamb\.gov\.ng$/.test(host);
+                    return <li key={source.url} style={{ marginBottom: 8 }}>
+                      <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--green, #17633a)', textDecoration: 'underline', overflowWrap: 'anywhere' }}>{source.title || host}</a>
+                      <div style={{ fontSize: 12, opacity: 0.78 }}>{official ? 'Official source' : 'Secondary source'} · {host}</div>
+                    </li>;
+                  })}
                 </ul>
               </div>
             )}
