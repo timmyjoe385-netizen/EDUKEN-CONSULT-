@@ -82,7 +82,8 @@ export function installAnalyticsTracking() {
     const target = anchor?.href && anchor.origin !== window.location.origin
       ? anchor.hostname + ' · ' + label
       : label;
-    trackEvent(anchor?.href && anchor.origin !== window.location.origin ? 'outbound_click' : 'click', { target });
+    const isWhatsApp = Boolean(anchor?.href && /(?:wa\\.me|whatsapp\\.com)/i.test(anchor.href));
+    trackEvent(isWhatsApp ? 'whatsapp_click' : anchor?.href && anchor.origin !== window.location.origin ? 'outbound_click' : 'click', { target });
   };
   pageView();
   window.addEventListener('hashchange', pageView);
