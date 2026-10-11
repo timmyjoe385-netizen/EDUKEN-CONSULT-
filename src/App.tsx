@@ -88,6 +88,8 @@ function App() {
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
+  const [systemHealth, setSystemHealth] = useState<Array<{ name: string; status: 'checking' | 'ok' | 'error'; detail: string }>>([]);
+  const [healthChecking, setHealthChecking] = useState(false);
   const [form, setForm] = useState<Record<string, string>>({});
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
@@ -278,6 +280,58 @@ function App() {
     }
   };
 
+  const runHealthCheck = async () => {
+    setHealthChecking(true);
+    setSystemHealth([
+      { name: 'EDUKEN API', status: 'checking', detail: 'Checking API response…' },
+      { name: 'Live content database', status: 'checking', detail: 'Checking published content…' },
+    ]);
+    const checks = await Promise.all([
+      (async () => {
+        try {
+          const result = await api.get('/health');
+          return {
+            name: 'EDUKEN API' as const,
+            status: result.data?.ok ? 'ok' as const : 'error' as const,
+            detail: result.data?.ok
+              ? `API responding · version ${result.data.version ?? 'available'}`
+              : 'API responded, but did not report a healthy status.',
+          };
+        } catch (error) {
+          return {
+            name: 'EDUKEN API' as const,
+            status: 'error' as const,
+            detail: error instanceof Error ? error.message : 'API request failed.',
+          };
+        }
+      })(),
+      (async () => {
+        try {
+          const result = await api.get('/public-content');
+          const data = result.data || {};
+          const counts = ['opportunities', 'admissions', 'updates', 'faqs', 'services']
+            .map(key => `${key}: ${Array.isArray(data[key]) ? data[key].length : 0}`)
+            .join(' · ');
+          const valid = ['opportunities', 'admissions', 'updates', 'faqs', 'services']
+            .every(key => Array.isArray(data[key]));
+          return {
+            name: 'Live content database' as const,
+            status: valid ? 'ok' as const : 'error' as const,
+            detail: valid ? counts : 'Content endpoint responded with an unexpected data shape.',
+          };
+        } catch (error) {
+          return {
+            name: 'Live content database' as const,
+            status: 'error' as const,
+            detail: error instanceof Error ? error.message : 'Content request failed.',
+          };
+        }
+      })(),
+    ]);
+    setSystemHealth(checks);
+    setHealthChecking(false);
+  };
+
   const saveAdmin = async () => {
     const table = adminTab;
     const payload: Record<string, any> = { ...form };
@@ -444,6 +498,7 @@ function App() {
               'faqs',
               'services',
               'consultations',
+              'health',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -451,14 +506,17 @@ function App() {
                 onClick={() => {
                   setAdminTab(tab);
                   setForm({});
-                  loadAdmin(tab);
+                  if (tab === 'health') runHealthCheck();
+                  else loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
                   ? '🌍 Opportunities'
                   : tab === 'consultations'
                     ? '📩 Consultations'
-                    : tab[0].toUpperCase() + tab.slice(1)}
+                    : tab === 'health'
+                      ? '🩺 System health'
+                      : tab[0].toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <button
@@ -475,13 +533,43 @@ function App() {
                 <span className="kicker">EDUKEN CONSULT</span>
                 <h1>{adminTab[0].toUpperCase() + adminTab.slice(1)} Manager</h1>
               </div>
-              {adminTab !== 'consultations' && (
+              {adminTab !== 'consultations' && adminTab !== 'health' && (
                 <button className="primary" onClick={() => setForm({})}>
                   <Plus size={17} /> New
                 </button>
               )}
             </div>
-            {adminTab === 'consultations' ? (
+            {adminTab === 'health' ? (
+              <section className="admin-list">
+                <article className="admin-item">
+                  <div>
+                    <span className="tag">Read-only checks</span>
+                    <h3>EDUKEN system health</h3>
+                    <p>Check the API and published content feed without changing website data.</p>
+                  </div>
+                  <button className="primary" onClick={runHealthCheck} disabled={healthChecking}>
+                    {healthChecking ? 'Checking…' : 'Run checks again'}
+                  </button>
+                </article>
+                {systemHealth.map(check => (
+                  <article className="admin-item" key={check.name}>
+                    <div>
+                      <span className="tag">
+                        {check.status === 'checking' ? 'Checking' : check.status === 'ok' ? 'Healthy' : 'Needs attention'}
+                      </span>
+                      <h3>{check.name}</h3>
+                      <p>{check.detail}</p>
+                    </div>
+                    <strong aria-label={check.status}>
+                      {check.status === 'checking' ? '⏳' : check.status === 'ok' ? '✅' : '⚠️'}
+                    </strong>
+                  </article>
+                ))}
+                <p className="admin-health-note">
+                  These checks confirm API reachability and published-content responses. They do not run an AI query or test consultation submission.
+                </p>
+              </section>
+            ) : adminTab === 'consultations' ? (
               <div className="admin-list">
                 {consultations.length === 0 ? (
                   <div className="admin-empty">
