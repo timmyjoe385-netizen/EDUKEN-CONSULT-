@@ -178,3 +178,20 @@ export const notifications = {
     return { permission };
   },
 };
+
+
+const workerRequest = async (path: string): Promise<any> => {
+  const session = await validSession();
+  const headers = new Headers({ 'Content-Type': 'application/json' });
+  if (session?.access_token) headers.set('Authorization', 'Bearer ' + session.access_token);
+  const response = await fetch(path, { headers, cache: 'no-store' });
+  const text = await response.text();
+  let data: any = {};
+  try { data = text ? JSON.parse(text) : {}; } catch { data = { error: text }; }
+  if (!response.ok) throw new Error(data.error || 'Analytics request failed.');
+  return { data };
+};
+
+export const analyticsApi = {
+  summary: (days = 30) => workerRequest('/api/analytics/summary?days=' + encodeURIComponent(String(days))),
+};
