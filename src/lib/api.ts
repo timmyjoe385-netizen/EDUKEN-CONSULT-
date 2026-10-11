@@ -112,6 +112,8 @@ export const auth = {
     const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
     const accessToken = hash.get('access_token');
     const refreshToken = hash.get('refresh_token');
+    // Clear the callback fragment before making network requests.
+    window.history.replaceState({}, document.title, window.location.pathname);
     if (!accessToken) return null;
     const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
       headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
