@@ -380,7 +380,7 @@ function App() {
     }
   };
 
-  const saveAdmin = async () => {
+  const saveAdmin = async (publish?: boolean) => {
     const table = adminTab;
     const payload: Record<string, any> = { ...form };
 
@@ -401,7 +401,9 @@ function App() {
         showToast('Add a short description before saving this opportunity.');
         return;
       }
-      payload.is_published = payload.status === 'Published';
+      payload.is_published = publish === undefined
+        ? payload.status === 'Published'
+        : publish;
       delete payload.status;
       for (const key of ['verified', 'featured', 'urgent', 'notifyOnPublish']) {
         payload[key] = payload[key] === true || payload[key] === 'true';
@@ -780,9 +782,20 @@ function App() {
                       </label>
                     );
                   })}
-                  <button className="primary" onClick={saveAdmin}>
-                    {form.id ? 'Save changes' : 'Publish item'}
-                  </button>
+                  {adminTab === 'opportunities' ? (
+                    <>
+                      <button type="button" className="secondary" onClick={() => saveAdmin(false)}>
+                        Save Draft
+                      </button>
+                      <button type="button" className="primary" onClick={() => saveAdmin(true)}>
+                        {form.id ? 'Publish changes' : 'Publish item'}
+                      </button>
+                    </>
+                  ) : (
+                    <button className="primary" onClick={() => saveAdmin()}>
+                      {form.id ? 'Save changes' : 'Publish item'}
+                    </button>
+                  )}
                   {whatsAppDraft && ['opportunities', 'admissions', 'updates'].includes(adminTab) && (
                     <button
                       type="button"
