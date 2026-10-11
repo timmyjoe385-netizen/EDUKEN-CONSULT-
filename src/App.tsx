@@ -570,7 +570,7 @@ function App() {
                 <div className="analytics-toolbar">
                   <div>
                     <span className="tag">First-party analytics</span>
-                    <p>Anonymous site activity. Visitor counts are estimates based on browser sessions.</p>
+                    <p>Anonymous site activity. Visitor counts are estimates based on anonymous browser IDs.</p>
                   </div>
                   <div className="analytics-controls">
                     <select value={analyticsDays} onChange={e => { const days = Number(e.target.value); setAnalyticsDays(days); loadAnalytics(days); }} aria-label="Analytics date range">
@@ -586,7 +586,7 @@ function App() {
                 {analyticsSummary ? (
                   <>
                     <div className="analytics-cards">
-                      <article><span>Unique visitors</span><strong>{analyticsSummary.totals?.visitors ?? 0}</strong><small>Anonymous browser sessions</small></article>
+                      <article><span>Unique visitors</span><strong>{analyticsSummary.totals?.visitors ?? 0}</strong><small>Estimated unique browsers</small></article>
                       <article><span>Page views</span><strong>{analyticsSummary.totals?.pageViews ?? 0}</strong><small>Across {analyticsSummary.days} days</small></article>
                       <article><span>Clicks</span><strong>{analyticsSummary.totals?.clicks ?? 0}</strong><small>Buttons and outgoing links</small></article>
                       <article><span>Online estimate</span><strong>{analyticsSummary.onlineNow ?? 0}</strong><small>Active in the last 5 minutes</small></article>
