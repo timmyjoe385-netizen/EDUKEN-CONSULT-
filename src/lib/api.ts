@@ -118,7 +118,14 @@ export const auth = {
     // Clear OAuth response data before making network requests, but preserve
     // ordinary SPA hashes such as #opportunities and #opportunity/article-slug.
     window.history.replaceState({}, document.title, window.location.pathname);
-    if (!accessToken) return null;
+    if (!accessToken) {
+      const oauthError = hash.get('error_description') || hash.get('error');
+      if (oauthError) {
+        const readableError = oauthError.replace(/\+/g, ' ').replace(/_/g, ' ');
+        throw new Error('Google sign-in could not finish: ' + readableError + '. Check the Supabase Auth redirect URL allowlist if this is a preview deployment.');
+      }
+      return null;
+    }
     const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
       headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
     });
