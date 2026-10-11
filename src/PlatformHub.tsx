@@ -569,18 +569,28 @@ export default function PlatformHub({
             <Check size={15} /> Mark all as read
           </button>
           <h4>Topics</h4>
-          {TOPICS.map(topic => (
-            <button
-              className={
-                'topic-row ' + (topics.includes(topic) ? 'active' : '')
-              }
-              key={topic}
-              onClick={() => toggleTopic(topic)}
-            >
-              <span>{topic}</span>
-              <b>{topics.includes(topic) ? 'ON' : 'OFF'}</b>
-            </button>
-          ))}
+          {TOPICS.map(topic => {
+            const enabled = topics.includes(topic);
+            return (
+              <button
+                type="button"
+                role="switch"
+                aria-checked={enabled}
+                aria-label={topic + ' notifications'}
+                className={'topic-row topic-switch-row ' + (enabled ? 'active' : '')}
+                key={topic}
+                onClick={() => toggleTopic(topic)}
+              >
+                <span className="topic-switch-label">{topic}</span>
+                <span className="topic-switch-state">
+                  <span className="topic-switch-track" aria-hidden="true">
+                    <span className="topic-switch-thumb" />
+                  </span>
+                  <b>{enabled ? 'ON' : 'OFF'}</b>
+                </span>
+              </button>
+            );
+          })}
           <h4>Recent alerts</h4>
           {alerts.map(x => (
             <button
