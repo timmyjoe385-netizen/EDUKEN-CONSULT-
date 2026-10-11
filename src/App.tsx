@@ -14,6 +14,7 @@ import {
   MessageCircle,
   Plus,
   Search,
+  Share2,
   ShieldCheck,
   Sparkles,
   Target,
@@ -851,6 +852,35 @@ function App() {
                     Apply Now <ArrowRight size={16} />
                   </a>
                 )}
+                <button
+                  className="secondary"
+                  onClick={() => {
+                    const slug =
+                      activeOpportunity.slug ||
+                      makeSlug(activeOpportunity.title || activeOpportunity.id);
+                    const link = articleUrl(slug);
+                    const message = [
+                      '🎓 EDUKEN CONSULT',
+                      '',
+                      activeOpportunity.title || 'Educational opportunity',
+                      activeOpportunity.description || '',
+                      '',
+                      'Read the full details here:',
+                      link,
+                      '',
+                      'Stay informed. Stay ahead with EDUKEN CONSULT.',
+                    ]
+                      .filter(Boolean)
+                      .join('\n');
+                    window.open(
+                      'https://wa.me/?text=' + encodeURIComponent(message),
+                      '_blank',
+                      'noopener,noreferrer'
+                    );
+                  }}
+                >
+                  <Share2 size={16} /> Share on WhatsApp
+                </button>
                 <button
                   className="secondary"
                   onClick={async () => {
