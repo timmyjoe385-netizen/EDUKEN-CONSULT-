@@ -1,0 +1,56 @@
+name: EDUKEN live health checks
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/health-check.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check live homepage
+        id: homepage
+        shell: bash
+        run: |
+          set -euo pipefail
+          code="$(curl --silent --show-error --location --output /tmp/home.html --write-out '%{http_code}' --max-time 25 --retry 2 --retry-delay 2 'https://eduken-consult.timmyjoe385.workers.dev/')"
+          echo "HTTP status: $code"
+          test "$code" = "200"
+          grep -qi 'EDUKEN' /tmp/home.html
+      - name: Check analytics API routing and access protection
+        shell: bash
+        run: |
+          set -euo pipefail
+          events_code="$(curl --silent --show-error --output /tmp/events.json --write-out '%{http_code}' --max-time 20 'https://eduken-consult.timmyjoe385.workers.dev/api/analytics/events')"
+          summary_code="$(curl --silent --show-error --output /tmp/summary.json --write-out '%{http_code}' --max-time 20 'https://eduken-consult.timmyjoe385.workers.dev/api/analytics/summary')"
+          echo "Events endpoint GET status (405 expected): $events_code"
+          echo "Summary endpoint unauthenticated status (403 expected): $summary_code"
+          test "$events_code" = "405"
+          test "$summary_code" = "403"
+      - name: Email alert on failure (optional SMTP configuration)
+        if: failure()
+        continue-on-error: true
+        env:
+          ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
+          ALERT_EMAIL_FROM: ${{ secrets.ALERT_EMAIL_FROM }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ -z "$ALERT_EMAIL_TO" ] || [ -z "$ALERT_EMAIL_FROM" ] || [ -z "$SMTP_SERVER" ] || [ -z "$SMTP_USERNAME" ] || [ -z "$SMTP_PASSWORD" ]; then
+            echo "::warning::Email alert not sent: repository SMTP/email secrets are not configured yet."
+            exit 0
+          fi
+          echo "SMTP alert delivery requires a configured mail action; check the failed run at $RUN_URL"
+          exit 0
