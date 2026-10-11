@@ -1736,3 +1736,7 @@ footer {
   font-size: 12px;
   line-height: 1.7;
 }
+
+
+/* Urgent opportunity badge */
+.urgent-pill{display:inline-flex;align-items:center;gap:4px;border:1px solid rgba(220,38,38,.24);background:rgba(254,226,226,.85);color:#b91c1c;border-radius:999px;padding:5px 9px;font-size:.72rem;font-weight:800;line-height:1.2;white-space:nowrap}
