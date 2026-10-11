@@ -84,6 +84,10 @@ function App() {
   const [content, setContent] = useState<Content>(emptyContent);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginBusy, setLoginBusy] = useState(false);
   const [adminView, setAdminView] = useState(false);
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
@@ -236,16 +240,21 @@ function App() {
     [content.opportunities]
   );
 
-  const signIn = async () => {
+  const signIn = async (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+    if (loginBusy) return;
+    setLoginBusy(true);
     try {
-      const result = await auth.signIn({
-        scope: 'openid email profile offline_access',
-      });
+      const result = await auth.signIn(loginEmail, loginPassword);
       setUser(result.user);
+      setLoginOpen(false);
+      setLoginPassword('');
       setAdminView(true);
       await loadAdmin(adminTab);
-    } catch {
-      showToast('Admin sign-in was cancelled or unavailable.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Unable to sign in. Please try again.');
+    } finally {
+      setLoginBusy(false);
     }
   };
 
@@ -596,7 +605,7 @@ function App() {
                 Install App
               </button>
             )}
-            <button className="admin-login" onClick={signIn}>
+            <button className="admin-login" onClick={() => setLoginOpen(true)}>
               <ShieldCheck size={15} /> Admin
             </button>
           </nav>
@@ -733,7 +742,24 @@ function App() {
             </aside>
           </div>
         </main>
-        <footer>
+        {loginOpen && (
+        <div className="login-backdrop" role="presentation" onClick={event => { if (event.target === event.currentTarget && !loginBusy) setLoginOpen(false); }}>
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+            <button className="login-close" type="button" aria-label="Close sign-in" onClick={() => setLoginOpen(false)} disabled={loginBusy}>×</button>
+            <span className="kicker">SECURE ADMIN ACCESS</span>
+            <h2 id="admin-login-title">Admin sign in</h2>
+            <p>Sign in with your authorized EDUKEN CONSULT administrator email.</p>
+            <form onSubmit={signIn}>
+              <label htmlFor="admin-email">Email address</label>
+              <input id="admin-email" type="email" autoComplete="username" required value={loginEmail} onChange={event => setLoginEmail(event.target.value)} placeholder="admin@example.com" />
+              <label htmlFor="admin-password">Password</label>
+              <input id="admin-password" type="password" autoComplete="current-password" required value={loginPassword} onChange={event => setLoginPassword(event.target.value)} placeholder="Enter your password" />
+              <button className="primary login-submit" type="submit" disabled={loginBusy}>{loginBusy ? 'Signing in…' : 'Sign in securely'} <ArrowRight size={17} /></button>
+            </form>
+          </section>
+        </div>
+      )}
+      <footer>
           <div className="footer-main">
             <div>
               <a className="brand" href="#home">
