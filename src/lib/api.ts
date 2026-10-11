@@ -99,13 +99,8 @@ export const api = {
 
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
-  signIn: async (_options?: any) => {
-    const email = window.prompt(
-      'EDUKEN CONSULT sign-in\nEnter your email address:'
-    );
-    if (!email) throw new Error('Sign-in cancelled.');
-    const password = window.prompt('Enter your password:');
-    if (!password) throw new Error('Sign-in cancelled.');
+  signIn: async (email: string, password: string) => {
+    if (!email.trim() || !password) throw new Error('Enter your email and password.');
     const response = await fetch(
       SUPABASE_URL + '/auth/v1/token?grant_type=password',
       {
@@ -117,7 +112,7 @@ export const auth = {
     const data = await response.json();
     if (!response.ok)
       throw new Error(
-        data.error_description || data.msg || 'Invalid email or password.'
+        data.msg || data.error_description || data.message || data.error || 'Sign-in failed. Please check your details and try again.'
       );
     const session = {
       access_token: data.access_token,
