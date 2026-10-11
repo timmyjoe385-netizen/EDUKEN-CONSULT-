@@ -296,7 +296,8 @@ function App() {
 
   const shareOpportunityOnWhatsApp = (item: Item) => {
     const slug = item.slug || makeSlug(item.title || item.id);
-    const link = articleUrl(slug);
+    // Keep the TinyURL short while carrying the article route through the redirect fragment.
+    const link = 'https://tinyurl.com/EDUKEN-CONSULT#opportunity/' + encodeURIComponent(slug);
     const teaser = String(item.description || item.content || '')
       .split(/\r?\n/)[0]
       .trim()
