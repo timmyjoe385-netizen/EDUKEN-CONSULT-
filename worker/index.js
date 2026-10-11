@@ -350,7 +350,7 @@ async function analyticsSummary(request, env) {
       env.ANALYTICS_DB.prepare("SELECT CASE WHEN target='' THEN event_name ELSE target END AS label, COUNT(*) AS count FROM analytics_events WHERE event_name IN ('click','outbound_click','whatsapp_click','opportunity_view') AND event_time >= datetime('now', ?) GROUP BY label ORDER BY count DESC LIMIT 8").bind(modifier).all(),
       env.ANALYTICS_DB.prepare("SELECT source AS label, COUNT(*) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY source ORDER BY count DESC LIMIT 8").bind(modifier).all(),
       env.ANALYTICS_DB.prepare("SELECT device AS label, COUNT(*) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY device ORDER BY count DESC LIMIT 6").bind(modifier).all(),
-      env.ANALYTICS_DB.prepare("SELECT CASE WHEN country='' THEN 'Unknown' ELSE country END AS label, COUNT(DISTINCT session_id) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY label ORDER BY count DESC LIMIT 8").bind(modifier).all(),
+      env.ANALYTICS_DB.prepare("SELECT CASE WHEN country='' THEN 'Unknown' ELSE country || CASE WHEN region='' THEN '' ELSE ' · ' || region END END AS label, COUNT(DISTINCT session_id) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY label ORDER BY count DESC LIMIT 8").bind(modifier).all(),
       env.ANALYTICS_DB.prepare("SELECT date(event_time) AS day, COUNT(*) AS views FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY date(event_time) ORDER BY day ASC").bind(modifier).all(),
     ]);
     return json({
