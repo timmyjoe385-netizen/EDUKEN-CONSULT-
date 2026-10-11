@@ -133,6 +133,15 @@ function App() {
   };
 
   useEffect(() => {
+    let active = true;
+    void auth.completeOAuthCallback().then((result: any) => {
+      if (!active || !result) return;
+      setUser(result.user);
+      setAdminView(true);
+      void loadAdmin('opportunities');
+    }).catch((error: unknown) => {
+      if (active) showToast(error instanceof Error ? error.message : 'Google sign-in could not be completed.');
+    });
     loadContent();
     syncArticleFromHash();
     const onHashChange = () => syncArticleFromHash();
@@ -154,6 +163,7 @@ function App() {
     window.addEventListener('beforeinstallprompt', onInstallPrompt);
     window.addEventListener('appinstalled', onInstalled);
     return () => {
+      active = false;
       window.removeEventListener('hashchange', onHashChange);
       window.removeEventListener('beforeinstallprompt', onInstallPrompt);
       window.removeEventListener('appinstalled', onInstalled);
