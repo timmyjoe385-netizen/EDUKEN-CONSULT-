@@ -92,6 +92,7 @@ function App() {
   const [form, setForm] = useState<Record<string, string>>({});
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
+  const [shareDraft, setShareDraft] = useState('');
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
@@ -108,6 +109,8 @@ function App() {
     setArticleSlug(match ? decodeURIComponent(match[1]) : '');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const articleUrlForShare = (slug: string) => window.location.origin + window.location.pathname + '#opportunity/' + encodeURIComponent(slug);
 
   const articleUrl = (slug: string) =>
     window.location.origin +
@@ -289,6 +292,18 @@ function App() {
       await loadAdmin(table);
       await loadContent();
       showToast('Saved successfully.');
+      if (['opportunities', 'admissions', 'updates'].includes(table)) {
+        const title = payload.title || payload.school || payload.category || 'EDUKEN CONSULT Update';
+        const summary = (payload.description || payload.body || payload.details || payload.content || '').replace(/\\s+/g, ' ').trim().slice(0, 220);
+        const slug = payload.slug || makeSlug(title);
+        const articleUrl = table === 'opportunities'
+          ? articleUrlForShare(slug)
+          : table === 'admissions'
+            ? `${window.location.origin}/#admissions`
+            : `${window.location.origin}/#updates`;
+        const heading = table === 'opportunities' ? '📢 OPPORTUNITY UPDATE' : table === 'admissions' ? '🎓 ADMISSION UPDATE' : '📰 EDUKEN UPDATE';
+        setShareDraft(`${heading}\\n\\n${title}\\n\\n${summary ? summary + '\\n\\n' : ''}Read the full details here 👇\\n${articleUrl}\\n\\n🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.`);
+      }
     } catch {
       showToast('Could not save this item.');
     }
@@ -590,6 +605,24 @@ function App() {
             )}
           </main>
         </div>
+      </div>
+        {shareDraft && (
+          <div className="share-composer-backdrop" role="dialog" aria-modal="true" aria-labelledby="share-composer-title">
+            <section className="share-composer">
+              <button className="share-composer-close" aria-label="Close share message" onClick={() => setShareDraft('')}>×</button>
+              <span className="kicker">PUBLISHED SUCCESSFULLY</span>
+              <h2 id="share-composer-title">Your update is ready to share 🎉</h2>
+              <p>Edit the message if you want, then choose where you want to share it. Nothing is posted automatically.</p>
+              <textarea aria-label="Share message" value={shareDraft} onChange={e => { setShareDraft(e.target.value); setShareCopied(false); }} rows={10} />
+              <div className="share-composer-actions">
+                <button className="primary" onClick={async () => { try { await navigator.clipboard.writeText(shareDraft); setShareCopied(true); showToast('Message copied. Choose any app or group to share it.'); } catch { showToast('Copy was blocked by your browser. Select the message and copy it manually.'); } }}><CheckCircle2 size={16} /> {shareCopied ? 'Copied!' : 'Copy message'}</button>
+                <a className="share-whatsapp-button" href={`https://wa.me/?text=${encodeURIComponent(shareDraft)}`} target="_blank" rel="noreferrer"><MessageCircle size={16} /> Share on WhatsApp</a>
+                <button className="secondary" onClick={() => { if (navigator.share) void navigator.share({ title: 'EDUKEN CONSULT Update', text: shareDraft }).catch(() => undefined); }}>More sharing options</button>
+              </div>
+              <small>WhatsApp lets you choose a contact or group. For Status, copy the message and paste it into your Status.</small>
+            </section>
+          </div>
+        )}
       </div>
     );
   }
