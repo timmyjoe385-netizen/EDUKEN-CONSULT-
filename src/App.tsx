@@ -302,7 +302,7 @@ function App() {
             ? `${window.location.origin}/#admissions`
             : `${window.location.origin}/#updates`;
         const heading = table === 'opportunities' ? '📢 OPPORTUNITY UPDATE' : table === 'admissions' ? '🎓 ADMISSION UPDATE' : '📰 EDUKEN UPDATE';
-        setShareDraft(`${heading}\\n\\n${title}\\n\\n${summary ? summary + '\\n\\n' : ''}Read the full details here 👇\\n${articleUrl}\\n\\n🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.`);
+        setShareDraft(`${heading}\n\n${title}\n\n${summary ? summary + '\n\n' : ''}Read the full details here 👇\n${articleUrl}\n\n🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.`);
       }
     } catch {
       showToast('Could not save this item.');
