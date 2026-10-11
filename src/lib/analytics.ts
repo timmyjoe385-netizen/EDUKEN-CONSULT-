@@ -5,7 +5,8 @@ const SESSION_KEY = 'eduken_analytics_session';
 function analyticsPath() {
   const pathname = window.location.pathname || '/';
   const hash = window.location.hash || '';
-  const section = hash.match(/^#(opportunities|admissions|updates|faqs|services|contact|about)(?:$|[/?])/);\n  if (section) return pathname + '#' + section[1];
+  const section = hash.match(/^#(opportunities|admissions|updates|faqs|services|contact|about)(?:$|[/?])/);
+  if (section) return pathname + '#' + section[1];
   const article = hash.match(/^#opportunity\/([a-zA-Z0-9_-]{1,160})$/);
   if (article) return pathname + '#opportunity/' + article[1];
   return pathname;
