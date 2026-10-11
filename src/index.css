@@ -1728,3 +1728,67 @@ footer {
 .login-dialog{position:relative;width:min(100%,440px);max-height:calc(100dvh - 40px);overflow:auto;background:#fff;border-radius:22px;padding:30px;box-shadow:0 24px 80px rgba(0,0,0,.28);color:#182238}
 .login-dialog h2{margin:8px 0;font-size:1.7rem}.login-dialog p{color:#667085;line-height:1.5;margin:0 0 22px}.login-dialog form{display:grid;gap:10px}.login-dialog label{font-size:.9rem;font-weight:650;margin-top:6px}.login-dialog input{width:100%;box-sizing:border-box;border:1px solid #d0d5dd;border-radius:10px;padding:13px 14px;font:inherit;background:#fff;color:#182238;min-height:46px}.login-dialog input:focus{outline:3px solid rgba(36,99,235,.16);border-color:#356ae6}.login-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:30px;line-height:1;color:#667085;cursor:pointer}.login-submit{margin-top:12px;justify-content:center;width:100%;min-height:48px}.login-submit:disabled{opacity:.65;cursor:wait}
 @media(max-width:480px){.login-dialog{padding:25px 20px;border-radius:18px}}
+
+
+/* Clear switch controls for student notification topic preferences */
+.topic-switch-row {
+  align-items: center;
+  min-height: 58px;
+  box-sizing: border-box;
+}
+.topic-switch-label {
+  font-weight: 650;
+  color: #20382c;
+}
+.topic-switch-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  flex-shrink: 0;
+}
+.topic-switch-state b {
+  min-width: 28px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #69776e;
+  text-align: right;
+}
+.topic-switch-track {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 25px;
+  border-radius: 999px;
+  background: #cbd5d0;
+  transition: background .18s ease;
+}
+.topic-switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.2);
+  transition: transform .18s ease;
+}
+.topic-switch-row.active .topic-switch-track {
+  background: #16834a;
+}
+.topic-switch-row.active .topic-switch-thumb {
+  transform: translateX(19px);
+}
+.topic-switch-row:focus-visible {
+  outline: 3px solid rgba(22,131,74,.28);
+  outline-offset: 2px;
+}
+.topic-switch-row:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+@media (max-width: 380px) {
+  .topic-switch-row { padding: 10px; }
+  .topic-switch-track { width: 40px; }
+  .topic-switch-row.active .topic-switch-thumb { transform: translateX(15px); }
+}
