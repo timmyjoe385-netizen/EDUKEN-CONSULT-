@@ -606,6 +606,7 @@ function App() {
           </main>
         </div>
       </div>
+
         {shareDraft && (
           <div className="share-composer-backdrop" role="dialog" aria-modal="true" aria-labelledby="share-composer-title">
             <section className="share-composer">
