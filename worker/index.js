@@ -305,7 +305,7 @@ async function recordAnalyticsEvent(request, env) {
   // Enforce route sanitization server-side; never trust the browser to remove
   // OAuth credentials, arbitrary query strings, or unrecognised URL fragments.
   const rawPath = clean(body.path || "/", 240);
-  const pathMatch = rawPath.match(/^(\\/)(?:#([a-zA-Z0-9/_-]{1,180}))?$/);
+  const pathMatch = rawPath.match(/^\\/(?:#([a-zA-Z0-9/_-]{1,180}))?$/);
   let path = "/";
   if (pathMatch) {
     const hash = pathMatch[2] || "";
