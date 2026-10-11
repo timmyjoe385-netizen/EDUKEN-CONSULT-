@@ -305,16 +305,16 @@ async function recordAnalyticsEvent(request, env) {
   // Enforce route sanitization server-side; never trust the browser to remove
   // OAuth credentials, arbitrary query strings, or unrecognised URL fragments.
   const rawPath = clean(body.path || "/", 240);
-  const pathMatch = rawPath.match(/^\\/(?:#([a-zA-Z0-9/_-]{1,180}))?$/);
+  const hasSafeShape = rawPath === "/" || (rawPath.startsWith("/#") && /^[a-zA-Z0-9/_-]{1,180}$/.test(rawPath.slice(2)));
   let path = "/";
-  if (pathMatch) {
-    const hash = pathMatch[2] || "";
+  if (hasSafeShape) {
+    const hash = rawPath.startsWith("/#") ? rawPath.slice(2) : "";
     const safeSections = new Set(["opportunities", "admissions", "updates", "faqs", "services", "contact", "about"]);
     if (!hash) path = "/";
     else if (safeSections.has(hash)) path = "/#" + hash;
-    else {
-      const articleMatch = hash.match(/^opportunity\\/([a-zA-Z0-9_-]{1,160})$/);
-      if (articleMatch) path = "/#opportunity/" + articleMatch[1];
+    else if (hash.startsWith("opportunity/")) {
+      const slug = hash.slice("opportunity/".length);
+      if (/^[a-zA-Z0-9_-]{1,160}$/.test(slug)) path = "/#opportunity/" + slug;
     }
   }
   const pageTitle = clean(body.pageTitle, 120);
