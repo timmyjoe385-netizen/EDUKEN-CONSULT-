@@ -112,7 +112,11 @@ export const auth = {
     const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
     const accessToken = hash.get('access_token');
     const refreshToken = hash.get('refresh_token');
-    // Clear the callback fragment before making network requests.
+    const isOAuthResponse = hash.has('access_token') || hash.has('refresh_token') ||
+      hash.has('error') || hash.has('error_description');
+    if (!isOAuthResponse) return null;
+    // Clear OAuth response data before making network requests, but preserve
+    // ordinary SPA hashes such as #opportunities and #opportunity/article-slug.
     window.history.replaceState({}, document.title, window.location.pathname);
     if (!accessToken) return null;
     const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
