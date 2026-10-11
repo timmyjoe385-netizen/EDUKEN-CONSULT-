@@ -8,7 +8,9 @@
     "binding": "ASSETS",
     "not_found_handling": "single-page-application",
     "run_worker_first": [
-      "/api/ai-assistant"
+      "/api/ai-assistant",
+      "/api/analytics/events",
+      "/api/analytics/summary"
     ]
   },
   "d1_databases": [
