@@ -732,10 +732,17 @@ function App() {
                       <div className="admin-actions">
                         <button onClick={() => setForm(item)}>Edit</button>
                         <button
+                          type="button"
                           className="danger"
-                          onClick={() => deleteAdmin(item.id)}
+                          aria-label="Delete item"
+                          onClick={() => {
+                            if (window.confirm('Delete this item? This cannot be undone.')) {
+                              deleteAdmin(item.id);
+                            }
+                          }}
                         >
                           <Trash2 size={14} />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </article>
