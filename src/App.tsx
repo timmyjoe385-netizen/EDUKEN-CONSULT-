@@ -433,8 +433,9 @@ function App() {
       }
       const savedId = savedItem.id || form.id;
       setForm({ ...form, ...payload, ...(savedId ? { id: savedId } : {}), ...(table === 'opportunities' ? { status: publish === undefined ? (payload.is_published ? 'Published' : 'Draft') : (publish ? 'Published' : 'Draft') } : {}) });
-      await Promise.all([loadAdmin(table), loadContent()]);
       showToast(publish === false ? 'Draft saved successfully. You can keep editing it or publish it when ready.' : publish === true ? 'Published successfully! Your opportunity has been published.' : 'Saved successfully.');
+      // Refresh lists in the background so a slow read request does not keep the save button busy.
+      void Promise.all([loadAdmin(table), loadContent()]);
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not save this item.');
     } finally {
