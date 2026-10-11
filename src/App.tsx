@@ -279,16 +279,41 @@ function App() {
   };
 
   const saveAdmin = async () => {
-    try {
-      const table = adminTab;
-      const payload = { ...form };
-      if (table === 'opportunities' && !payload.slug)
+    const table = adminTab;
+    const payload: Record<string, any> = { ...form };
+
+    if (table === 'opportunities') {
+      if (!payload.title?.trim()) {
+        showToast('Please enter an opportunity title.');
+        return;
+      }
+      if (!payload.category?.trim()) {
+        showToast('Please choose or enter a category.');
+        return;
+      }
+      if (!payload.sourceUrl?.trim()) {
+        showToast('Add the official source URL before saving an opportunity.');
+        return;
+      }
+      if (!payload.description?.trim() && !payload.content?.trim()) {
+        showToast('Add a short description or full content.');
+        return;
+      }
+      payload.is_published = payload.status === 'Published';
+      delete payload.status;
+      for (const key of ['verified', 'featured', 'urgent', 'notifyOnPublish']) {
+        payload[key] = payload[key] === true || payload[key] === 'true';
+      }
+      if (!payload.slug)
         payload.slug =
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
-      if (table === 'opportunities' && !payload.description)
+      if (!payload.description)
         payload.description = (payload.content || '')
-          .split('\n')[0]
+          .split('\\n')[0]
           .slice(0, 180);
+    }
+
+    try {
       if (form.id)
         await api.put('/api/admin/content/' + table + '/' + form.id, payload);
       else await api.post('/api/admin/content/' + table, payload);
@@ -296,8 +321,8 @@ function App() {
       await loadAdmin(table);
       await loadContent();
       showToast('Saved successfully.');
-    } catch {
-      showToast('Could not save this item.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not save this item.');
     }
   };
 
@@ -532,32 +557,45 @@ function App() {
                 </div>
                 <div className="admin-editor">
                   <h2>{form.id ? 'Edit item' : 'Create item'}</h2>
-                  {fields.map(field => (
-                    <label key={field}>
-                      {field}
-                      {[
-                        'content',
-                        'eligibility',
-                        'benefits',
-                        'howToApply',
-                      ].includes(field) ? (
-                        <textarea
-                          value={form[field] || ''}
-                          onChange={e =>
-                            setForm({ ...form, [field]: e.target.value })
-                          }
-                          rows={field === 'content' ? 8 : 5}
-                        />
-                      ) : (
-                        <input
-                          value={form[field] || ''}
-                          onChange={e =>
-                            setForm({ ...form, [field]: e.target.value })
-                          }
-                        />
-                      )}
-                    </label>
-                  ))}
+                  {fields.map(field => {
+                    const booleanFields = ['verified', 'featured', 'urgent', 'notifyOnPublish'];
+                    const isBoolean = booleanFields.includes(field);
+                    const isStatus = field === 'status' && adminTab === 'opportunities';
+                    const isLongText = ['content', 'eligibility', 'benefits', 'howToApply'].includes(field);
+                    const value = form[field] ?? (isBoolean ? 'false' : '');
+                    return (
+                      <label className={isBoolean ? 'admin-checkbox-field' : ''} key={field}>
+                        <span>{field}{adminTab === 'opportunities' && ['title', 'category', 'sourceUrl'].includes(field) ? ' *' : ''}</span>
+                        {isBoolean ? (
+                          <input
+                            type="checkbox"
+                            checked={value === true || String(value).toLowerCase() === 'true'}
+                            onChange={e => setForm({ ...form, [field]: String(e.target.checked) })}
+                          />
+                        ) : isStatus ? (
+                          <select
+                            value={value || 'Draft'}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                          >
+                            <option value="Draft">Draft — keep off the public site</option>
+                            <option value="Published">Published — show on the public site</option>
+                          </select>
+                        ) : isLongText ? (
+                          <textarea
+                            value={value}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                            rows={field === 'content' ? 8 : 5}
+                          />
+                        ) : (
+                          <input
+                            type={field === 'deadline' ? 'date' : field === 'link' || field === 'sourceUrl' ? 'url' : 'text'}
+                            value={value}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                          />
+                        )}
+                      </label>
+                    );
+                  })}
                   <button className="primary" onClick={saveAdmin}>
                     {form.id ? 'Save changes' : 'Publish item'}
                   </button>
