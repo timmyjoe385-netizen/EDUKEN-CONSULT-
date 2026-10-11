@@ -63,7 +63,7 @@ jobs:
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: ${{ github.event.inputs.test_email == 'true' && 'TEST: EDUKEN CONSULT email alert delivery' || 'ALERT: EDUKEN CONSULT live health check failed' }}
+          subject: "${{ github.event.inputs.test_email == 'true' && 'TEST: EDUKEN CONSULT email alert delivery' || 'ALERT: EDUKEN CONSULT live health check failed' }}"
           to: ${{ secrets.ALERT_EMAIL_TO }}
           from: ${{ secrets.ALERT_EMAIL_FROM }}
           body: |
