@@ -1022,6 +1022,7 @@ function App() {
                 <article className="spotlight-card" key={o.id}>
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    {o.urgent && <span className="urgent-pill">🚨 Urgent</span>}
                     {o.verified ? (
                       <span className="verified-pill">✓ Verified Source</span>
                     ) : o.sourceUrl ? (
@@ -1062,6 +1063,7 @@ function App() {
                 <article className="spotlight-card closing-card" key={o.id}>
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    {o.urgent && <span className="urgent-pill">🚨 Urgent</span>}
                     <span className="deadline-pill">⏳ {o.deadline}</span>
                   </div>
                   <h3>{o.title}</h3>
@@ -1256,6 +1258,7 @@ function App() {
                 <article className="opp-card" key={o.id}>
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    {o.urgent && <span className="urgent-pill">🚨 Urgent</span>}
                     {o.verified ? (
                       <span className="verified-pill">✓ Verified Source</span>
                     ) : o.sourceUrl ? (
