@@ -3,6 +3,7 @@
   "name": "eduken-consult",
   "main": "worker/index.js",
   "compatibility_date": "2026-10-08",
+  // Keep AI binding declared here; Cloudflare build command bypasses duplicate Preview base config.
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS",
