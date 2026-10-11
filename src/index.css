@@ -367,7 +367,6 @@ textarea {
   font-weight: 800;
   cursor: pointer;
   margin-bottom: 28px;
-  transform: rotate(180deg);
 }
 .article-back svg {
   transform: rotate(180deg);

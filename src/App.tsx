@@ -868,7 +868,6 @@ function App() {
           </div>
           <div className="footer-bottom">
             <span>© 2026 EDUKEN CONSULT. All rights reserved.</span>
-            <span>Opportunity article</span>
           </div>
         </footer>
         <a className="wa-float" href={WA} target="_blank" rel="noreferrer">
