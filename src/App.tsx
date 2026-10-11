@@ -386,10 +386,6 @@ function App() {
       'deadline',
       'link',
       'status',
-      'content',
-      'eligibility',
-      'benefits',
-      'howToApply',
       'sourceUrl',
       'verified',
       'slug',
@@ -561,7 +557,7 @@ function App() {
                     const booleanFields = ['verified', 'featured', 'urgent', 'notifyOnPublish'];
                     const isBoolean = booleanFields.includes(field);
                     const isStatus = field === 'status' && adminTab === 'opportunities';
-                    const isLongText = ['content', 'eligibility', 'benefits', 'howToApply'].includes(field);
+                    const isLongText = ['description'].includes(field);
                     const value = form[field] ?? (isBoolean ? 'false' : isStatus ? (form.is_published ? 'Published' : 'Draft') : '');
                     return (
                       <label className={isBoolean ? 'admin-checkbox-field' : ''} key={field}>
@@ -584,7 +580,7 @@ function App() {
                           <textarea
                             value={value}
                             onChange={e => setForm({ ...form, [field]: e.target.value })}
-                            rows={field === 'content' ? 8 : 5}
+                            rows={field === 'description' ? 8 : 5}
                           />
                         ) : (
                           <input
