@@ -1765,3 +1765,240 @@ footer {
 .analytics-error small{font-size:10px}
 @media(max-width:760px){.analytics-toolbar{align-items:stretch;flex-direction:column}.analytics-controls{width:100%}.analytics-controls select{flex:1;min-width:0}.analytics-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.analytics-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.analytics-cards{grid-template-columns:1fr 1fr;gap:8px}.analytics-cards article{padding:13px}.analytics-cards article strong{font-size:25px}.analytics-card{padding:15px}}
+
+
+/* Mobile fit-and-finish: keep the student tools usable on narrow screens. */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+.site,
+.admin-shell,
+.admin-main,
+.admin-grid,
+.admin-list,
+.admin-editor,
+.platform-hub,
+.platform-card,
+.platform-wide,
+.finder-box,
+.analytics-panel,
+.analytics-card {
+  min-width: 0;
+}
+
+.platform-card,
+.finder-box,
+.finder-results,
+.ai-panel,
+.analytics-card {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .platform-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .finder-box {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 20px;
+  }
+
+  .finder-inputs,
+  .finder-inputs.two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .finder-results div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .analytics-toolbar,
+  .analytics-controls {
+    min-width: 0;
+  }
+
+  .admin-title {
+    flex-wrap: wrap;
+  }
+
+  .admin-title > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .admin-item > *,
+  .admin-actions {
+    min-width: 0;
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .admin-actions button {
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    gap: 10px;
+    padding-inline: 4%;
+  }
+
+  .brand {
+    min-width: 0;
+    gap: 7px;
+    font-size: 12px;
+  }
+
+  .brand > span,
+  .brand > b {
+    overflow-wrap: anywhere;
+  }
+
+  .menu-btn {
+    flex: 0 0 auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .hero {
+    padding-top: 48px;
+  }
+
+  .hero h1 {
+    font-size: clamp(40px, 12vw, 55px);
+    overflow-wrap: anywhere;
+  }
+
+  .hero-visual {
+    min-height: 350px;
+    overflow: hidden;
+  }
+
+  .orb-one {
+    width: min(82vw, 320px);
+    height: min(82vw, 320px);
+    right: 0;
+  }
+
+  .orb-two {
+    width: min(52vw, 190px);
+    height: min(52vw, 190px);
+  }
+
+  .main-card {
+    width: min(100%, 360px);
+    padding: 20px;
+    transform: rotate(-1deg);
+  }
+
+  .visual-title {
+    font-size: clamp(27px, 8vw, 33px);
+  }
+
+  .floating-card {
+    max-width: 72%;
+    padding: 10px;
+  }
+
+  .float-one {
+    top: 6%;
+  }
+
+  .float-two {
+    bottom: 4%;
+  }
+
+  .section {
+    padding-inline: 5%;
+  }
+
+  .service-row {
+    grid-template-columns: 30px minmax(0, 1fr) auto;
+    gap: 8px;
+  }
+
+  .service-row b {
+    overflow-wrap: anywhere;
+  }
+
+  .consult-section {
+    padding: 36px 5%;
+  }
+
+  .final-cta {
+    padding: 36px 5%;
+  }
+
+  .drawer {
+    width: 100%;
+    padding: 18px;
+    padding-bottom: max(18px, env(safe-area-inset-bottom));
+  }
+
+  .drawer header h3 {
+    font-size: clamp(22px, 7vw, 28px);
+    overflow-wrap: anywhere;
+  }
+
+  .drawer-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .drawer-item > div {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  .finder-results span,
+  .finder-results b,
+  .analytics-row span {
+    overflow-wrap: anywhere;
+  }
+
+  .platform-input {
+    min-width: 0;
+  }
+
+  .platform-input .primary {
+    flex: 0 0 auto;
+    padding-inline: 11px;
+  }
+
+  .install-sheet {
+    inset: auto 12px max(12px, env(safe-area-inset-bottom)) 12px;
+    width: auto;
+    max-height: 80dvh;
+    overflow: auto;
+  }
+
+  .toast {
+    left: 12px;
+    right: 12px;
+    max-width: none;
+    overflow-wrap: anywhere;
+  }
+}
+
+/* Respect phone users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
