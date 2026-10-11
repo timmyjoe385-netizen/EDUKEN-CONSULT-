@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+    inputs:
+      test_email:
+        description: "Send a test email to verify alert delivery"
+        required: false
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths:
@@ -37,7 +43,7 @@ jobs:
           test "$summary_code" = "403"
       - name: Check email alert configuration
         id: email_config
-        if: failure()
+        if: failure() || inputs.test_email
         shell: bash
         env:
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
@@ -54,18 +60,18 @@ jobs:
             echo "::warning::Email alerts are not configured yet. Add the required repository Actions secrets to enable them."
           fi
       - name: Send email alert
-        if: failure() && steps.email_config.outputs.enabled == 'true'
+        if: (failure() || inputs.test_email) && steps.email_config.outputs.enabled == 'true'
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "ALERT: EDUKEN CONSULT live health check failed"
+          subject: ${{ inputs.test_email && 'TEST: EDUKEN CONSULT email alert delivery' || 'ALERT: EDUKEN CONSULT live health check failed' }}
           to: ${{ secrets.ALERT_EMAIL_TO }}
           from: ${{ secrets.ALERT_EMAIL_FROM }}
           body: |
-            An automated live health check for EDUKEN CONSULT has failed.
+            ${{ inputs.test_email && 'This is a test email to verify that EDUKEN CONSULT health alert delivery is configured correctly.' || 'An automated live health check for EDUKEN CONSULT has failed.' }}
 
             The check covers the live homepage and the analytics API routing/access-protection responses.
             Please open this run to see the failed step and logs:
