@@ -244,8 +244,8 @@ function App() {
       setUser(result.user);
       setAdminView(true);
       await loadAdmin(adminTab);
-    } catch {
-      showToast('Admin sign-in was cancelled or unavailable.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Google sign-in could not start. Check your connection and Supabase OAuth configuration.');
     }
   };
 
