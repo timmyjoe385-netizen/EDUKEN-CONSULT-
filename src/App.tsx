@@ -292,7 +292,7 @@ function App() {
       showToast('Saved successfully.');
       if (['opportunities', 'admissions', 'updates'].includes(table)) {
         const title = payload.title || payload.school || payload.category || 'EDUKEN CONSULT Update';
-        const summary = (payload.description || payload.body || payload.details || payload.content || '').replace(/\\s+/g, ' ').trim().slice(0, 220);
+        const summary = (payload.description || payload.body || payload.details || payload.content || '').replace(/\s+/g, ' ').trim().slice(0, 220);
         const slug = payload.slug || makeSlug(title);
         const articleUrl = table === 'opportunities'
           ? `${window.location.origin}/#opportunity/${encodeURIComponent(slug)}`
@@ -300,7 +300,7 @@ function App() {
             ? `${window.location.origin}/#admissions`
             : `${window.location.origin}/#updates`;
         const heading = table === 'opportunities' ? '📢 OPPORTUNITY UPDATE' : table === 'admissions' ? '🎓 ADMISSION UPDATE' : '📰 EDUKEN UPDATE';
-        setShareDraft(`${heading}\\n\\n${title}\\n\\n${summary ? summary + '\\n\\n' : ''}Read the full details here 👇\\n${articleUrl}\\n\\n🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.`);
+        setShareDraft(`${heading}\n\n${title}\n\n${summary ? summary + '\n\n' : ''}Read the full details here 👇\n${articleUrl}\n\n🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.`);
       }
     } catch {
       showToast('Could not save this item.');
