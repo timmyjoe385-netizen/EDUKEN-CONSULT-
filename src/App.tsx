@@ -429,9 +429,8 @@ function App() {
         setWhatsAppDraft('');
       }
       setForm({});
-      await loadAdmin(table);
-      await loadContent();
       showToast('Saved successfully. Use “Share to WhatsApp” to prepare a post for your DM or groups.');
+      await Promise.all([loadAdmin(table), loadContent()]);
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not save this item.');
     }
@@ -441,9 +440,8 @@ function App() {
     if (!window.confirm('Delete this item permanently?')) return;
     try {
       await api.delete('/api/admin/content/' + adminTab + '/' + id);
-      await loadAdmin(adminTab);
-      await loadContent();
       showToast('Deleted successfully.');
+      await Promise.all([loadAdmin(adminTab), loadContent()]);
     } catch {
       showToast('Could not delete this item.');
     }
@@ -735,11 +733,7 @@ function App() {
                           type="button"
                           className="danger"
                           aria-label="Delete item"
-                          onClick={() => {
-                            if (window.confirm('Delete this item? This cannot be undone.')) {
-                              deleteAdmin(item.id);
-                            }
-                          }}
+                          onClick={() => deleteAdmin(item.id)}
                         >
                           <Trash2 size={14} />
                           <span>Delete</span>
