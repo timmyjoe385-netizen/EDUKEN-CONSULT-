@@ -1728,3 +1728,18 @@ footer {
 .login-dialog{position:relative;width:min(100%,440px);max-height:calc(100dvh - 40px);overflow:auto;background:#fff;border-radius:22px;padding:30px;box-shadow:0 24px 80px rgba(0,0,0,.28);color:#182238}
 .login-dialog h2{margin:8px 0;font-size:1.7rem}.login-dialog p{color:#667085;line-height:1.5;margin:0 0 22px}.login-dialog form{display:grid;gap:10px}.login-dialog label{font-size:.9rem;font-weight:650;margin-top:6px}.login-dialog input{width:100%;box-sizing:border-box;border:1px solid #d0d5dd;border-radius:10px;padding:13px 14px;font:inherit;background:#fff;color:#182238;min-height:46px}.login-dialog input:focus{outline:3px solid rgba(36,99,235,.16);border-color:#356ae6}.login-close{position:absolute;right:16px;top:12px;border:0;background:transparent;font-size:30px;line-height:1;color:#667085;cursor:pointer}.login-submit{margin-top:12px;justify-content:center;width:100%;min-height:48px}.login-submit:disabled{opacity:.65;cursor:wait}
 @media(max-width:480px){.login-dialog{padding:25px 20px;border-radius:18px}}
+
+
+/* Post-publish share composer */
+.share-composer-backdrop{position:fixed;inset:0;z-index:12000;background:rgba(10,24,18,.68);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:18px}
+.share-composer{position:relative;width:min(100%,620px);max-height:calc(100dvh - 36px);overflow:auto;background:#fff;border-radius:20px;padding:28px;box-shadow:0 24px 80px rgba(0,0,0,.3);color:#17211d}
+.share-composer h2{font-size:clamp(22px,4vw,30px);line-height:1.2;margin:8px 30px 8px 0}
+.share-composer p{font-size:14px;color:#64736a;line-height:1.6;margin:0 0 16px}
+.share-composer textarea{display:block;width:100%;resize:vertical;min-height:210px;padding:14px;border:1px solid #cbd8cf;border-radius:12px;background:#fbfdfb;color:#17211d;line-height:1.55}
+.share-composer textarea:focus{outline:3px solid rgba(24,119,74,.16);border-color:#187749}
+.share-composer-close{position:absolute;right:18px;top:15px;border:0;background:#edf4ef;border-radius:50%;width:36px;height:36px;font-size:25px;line-height:1;cursor:pointer}
+.share-composer-actions{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0}
+.share-composer-actions button,.share-whatsapp-button{min-height:43px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;text-decoration:none;border:0}
+.share-whatsapp-button{background:#168b52;color:#fff}
+.share-composer>small{display:block;color:#718078;line-height:1.5;font-size:12px}
+@media(max-width:520px){.share-composer{padding:23px 18px;border-radius:16px}.share-composer-actions{display:grid;grid-template-columns:1fr}.share-composer-actions>*{width:100%}}
