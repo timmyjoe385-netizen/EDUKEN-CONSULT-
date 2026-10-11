@@ -121,7 +121,8 @@ function App() {
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [analyticsError, setAnalyticsError] = useState('');
   const [analyticsDays, setAnalyticsDays] = useState(30);
-  const [form, setForm] = useState<Record<string, string>>({});
+  const [form, setForm] = useState<Record<string, any>>({});
+  const [savingAdmin, setSavingAdmin] = useState(false);
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
   const [whatsAppDraft, setWhatsAppDraft] = useState('');
@@ -381,6 +382,7 @@ function App() {
   };
 
   const saveAdmin = async (publish?: boolean) => {
+    if (savingAdmin) return;
     const table = adminTab;
     const payload: Record<string, any> = { ...form };
 
@@ -413,6 +415,7 @@ function App() {
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
     }
 
+    setSavingAdmin(true);
     try {
       let savedItem: Record<string, any> = { ...payload };
       if (form.id) {
@@ -428,11 +431,14 @@ function App() {
       } else {
         setWhatsAppDraft('');
       }
-      setForm({});
-      showToast('Saved successfully. Use “Share to WhatsApp” to prepare a post for your DM or groups.');
+      const savedId = savedItem.id || form.id;
+      setForm({ ...form, ...payload, ...(savedId ? { id: savedId } : {}), ...(table === 'opportunities' ? { status: publish === undefined ? (payload.is_published ? 'Published' : 'Draft') : (publish ? 'Published' : 'Draft') } : {}) });
+      showToast(publish === false ? 'Draft saved. You can keep editing it or publish it when ready.' : publish === true ? 'Published successfully. Refresh the public site to confirm it is visible.' : 'Saved successfully.');
       await Promise.all([loadAdmin(table), loadContent()]);
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not save this item.');
+    } finally {
+      setSavingAdmin(false);
     }
   };
 
@@ -785,11 +791,11 @@ function App() {
                   })}
                   {adminTab === 'opportunities' ? (
                     <>
-                      <button type="button" className="secondary" onClick={() => saveAdmin(false)}>
-                        Save Draft
+                      <button type="button" className="secondary" disabled={savingAdmin} onClick={() => saveAdmin(false)}>
+                        {savingAdmin ? "Saving…" : "Save Draft"}
                       </button>
-                      <button type="button" className="primary" onClick={() => saveAdmin(true)}>
-                        {form.id ? 'Publish changes' : 'Publish item'}
+                      <button type="button" className="primary" disabled={savingAdmin} onClick={() => saveAdmin(true)}>
+                        {savingAdmin ? "Publishing…" : form.id ? "Publish changes" : "Publish item"}
                       </button>
                     </>
                   ) : (
