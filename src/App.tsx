@@ -265,10 +265,13 @@ function App() {
     }
   };
 
-  const saveAdmin = async () => {
+  const saveAdmin = async (publish: boolean) => {
     try {
       const table = adminTab;
-      const payload = { ...form };
+      const payload: Record<string, any> = { ...form, is_published: publish };
+      // The API stores publication state in is_published; the editor's status
+      // label is only a display value and must never override this explicit action.
+      delete payload.status;
       if (table === 'opportunities' && !payload.slug)
         payload.slug =
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
@@ -282,9 +285,9 @@ function App() {
       setForm({});
       await loadAdmin(table);
       await loadContent();
-      showToast('Saved successfully.');
-    } catch {
-      showToast('Could not save this item.');
+      showToast(publish ? 'Published successfully.' : 'Draft saved. It remains hidden from the public site.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not save this item.');
     }
   };
 
@@ -534,6 +537,20 @@ function App() {
                           }
                           rows={field === 'content' ? 8 : 5}
                         />
+                      ) : field === 'status' ? (
+                        <select
+                          value={form.status || (form.is_published ? 'PUBLISHED' : 'DRAFT')}
+                          onChange={e => setForm({ ...form, status: e.target.value })}
+                        >
+                          <option value="DRAFT">Draft — keep off the public site</option>
+                          <option value="PUBLISHED">Published — visible on the public site</option>
+                        </select>
+                      ) : ['verified', 'featured', 'urgent', 'notifyOnPublish'].includes(field) ? (
+                        <input
+                          type="checkbox"
+                          checked={form[field] === true || String(form[field]).toLowerCase() === 'true'}
+                          onChange={e => setForm({ ...form, [field]: e.target.checked })}
+                        />
                       ) : (
                         <input
                           value={form[field] || ''}
@@ -544,9 +561,14 @@ function App() {
                       )}
                     </label>
                   ))}
-                  <button className="primary" onClick={saveAdmin}>
-                    {form.id ? 'Save changes' : 'Publish item'}
-                  </button>
+                  <div className="admin-editor-actions">
+                    <button className="secondary" onClick={() => saveAdmin(false)}>
+                      Save Draft
+                    </button>
+                    <button className="primary" onClick={() => saveAdmin(true)}>
+                      Publish item
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
