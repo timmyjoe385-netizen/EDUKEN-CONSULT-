@@ -294,7 +294,7 @@ function App() {
       showToast('Saved successfully.');
       if (['opportunities', 'admissions', 'updates'].includes(table)) {
         const title = payload.title || payload.school || payload.category || 'EDUKEN CONSULT Update';
-        const summary = (payload.description || payload.body || payload.details || payload.content || '').replace(/\\s+/g, ' ').trim().slice(0, 220);
+        const summary = (payload.description || payload.body || payload.details || payload.content || '').replace(/\s+/g, ' ').trim().slice(0, 220);
         const slug = payload.slug || makeSlug(title);
         const articleUrl = table === 'opportunities'
           ? articleUrlForShare(slug)
