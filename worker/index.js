@@ -250,9 +250,134 @@ function compactContent(content) {
     .slice(0, 30000);
 }
 
+
+const ANALYTICS_EVENTS = new Set([
+  "page_view", "click", "outbound_click", "opportunity_view",
+  "consultation_submit", "ai_query", "heartbeat", "whatsapp_click"
+]);
+const ADMIN_EMAILS = new Set(["timmyjoe385@gmail.com", "edukenconsult00@gmail.com"]);
+
+async function isAnalyticsAdmin(request) {
+  const token = request.headers.get("Authorization")?.replace(/^Bearer\\s+/i, "");
+  if (!token) return false;
+  try {
+    const response = await fetch("https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/user", {
+      headers: {
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (!response.ok) return false;
+    const user = await response.json();
+    return ADMIN_EMAILS.has(String(user.email || "").toLowerCase());
+  } catch {
+    return false;
+  }
+}
+
+async function recordAnalyticsEvent(request, env) {
+  if (request.method !== "POST") return json({ error: "Method not allowed." }, 405);
+  const origin = request.headers.get("Origin");
+  try {
+    if (!origin || new URL(origin).host !== new URL(request.url).host) {
+      return json({ error: "Same-origin requests only." }, 403);
+    }
+  } catch {
+    return json({ error: "Invalid request origin." }, 403);
+  }
+  const declaredLength = Number(request.headers.get("Content-Length") || 0);
+  if (declaredLength > 4096) return json({ error: "Event payload too large." }, 413);
+  let body;
+  try {
+    const raw = await request.text();
+    if (raw.length > 4096) return json({ error: "Event payload too large." }, 413);
+    body = JSON.parse(raw);
+  } catch {
+    return json({ error: "Invalid event payload." }, 400);
+  }
+  const eventName = String(body?.eventName || "");
+  const sessionId = String(body?.sessionId || "");
+  if (!ANALYTICS_EVENTS.has(eventName)) return json({ error: "Unsupported event." }, 400);
+  if (!/^[a-zA-Z0-9_-]{8,80}$/.test(sessionId)) return json({ error: "Invalid session identifier." }, 400);
+  if (!env.ANALYTICS_DB) return json({ error: "Analytics storage is not configured." }, 503);
+
+  const clean = (value, max = 140) => String(value || "").replace(/[\\u0000-\\u001f]/g, " ").trim().slice(0, max);
+  const path = clean(body.path || "/", 240);
+  const pageTitle = clean(body.pageTitle, 120);
+  const referrerHost = clean(body.referrerHost, 120);
+  const source = clean(body.source || "direct", 100);
+  const medium = clean(body.medium, 100);
+  const campaign = clean(body.campaign, 100);
+  const device = ["mobile", "tablet", "desktop"].includes(body.device) ? body.device : "unknown";
+  const browser = ["Chrome", "Safari", "Firefox", "Edge", "Other"].includes(body.browser) ? body.browser : "unknown";
+  const target = clean(body.target, 140);
+  const country = clean(request.cf?.country, 8);
+  const region = clean(request.cf?.region, 80);
+
+  try {
+    await env.ANALYTICS_DB.prepare(
+      "INSERT INTO analytics_events (event_name, session_id, path, page_title, referrer_host, source, medium, campaign, device, browser, country, region, target) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+    ).bind(eventName, sessionId, path, pageTitle, referrerHost, source, medium, campaign, device, browser, country, region, target).run();
+    // Keep this first-party analytics store bounded without adding a scheduled job.
+    if (Math.random() < 0.01) {
+      await env.ANALYTICS_DB.prepare("DELETE FROM analytics_events WHERE event_time < datetime('now', '-180 days')").run();
+    }
+    return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
+  } catch (error) {
+    console.error("Analytics event write failed", String(error?.message || error));
+    return json({ error: "Could not record analytics event." }, 503);
+  }
+}
+
+async function analyticsSummary(request, env) {
+  if (request.method !== "GET") return json({ error: "Method not allowed." }, 405);
+  if (!(await isAnalyticsAdmin(request))) return json({ error: "Administrator access required." }, 403);
+  if (!env.ANALYTICS_DB) return json({ error: "Analytics storage is not configured." }, 503);
+  const url = new URL(request.url);
+  const parsedDays = Number(url.searchParams.get("days") || 30);
+  const days = Number.isFinite(parsedDays) ? Math.min(90, Math.max(1, Math.floor(parsedDays))) : 30;
+  const modifier = "-" + days + " days";
+  try {
+    const [totals, live, pages, targets, sources, devices, countries, daily] = await Promise.all([
+      env.ANALYTICS_DB.prepare(`SELECT COUNT(*) AS events, COUNT(DISTINCT session_id) AS visitors,
+        SUM(CASE WHEN event_name = 'page_view' THEN 1 ELSE 0 END) AS pageViews,
+        SUM(CASE WHEN event_name IN ('click','outbound_click','whatsapp_click') THEN 1 ELSE 0 END) AS clicks,
+        SUM(CASE WHEN event_name = 'ai_query' THEN 1 ELSE 0 END) AS aiQueries,
+        SUM(CASE WHEN event_name = 'consultation_submit' THEN 1 ELSE 0 END) AS consultationSubmissions
+        FROM analytics_events WHERE event_time >= datetime('now', ?)`).bind(modifier).first(),
+      env.ANALYTICS_DB.prepare("SELECT COUNT(DISTINCT session_id) AS online FROM analytics_events WHERE event_time >= datetime('now', '-5 minutes')").first(),
+      env.ANALYTICS_DB.prepare("SELECT path AS label, COUNT(*) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY path ORDER BY count DESC LIMIT 8").bind(modifier).all(),
+      env.ANALYTICS_DB.prepare("SELECT CASE WHEN target='' THEN event_name ELSE target END AS label, COUNT(*) AS count FROM analytics_events WHERE event_name IN ('click','outbound_click','whatsapp_click','opportunity_view') AND event_time >= datetime('now', ?) GROUP BY label ORDER BY count DESC LIMIT 8").bind(modifier).all(),
+      env.ANALYTICS_DB.prepare("SELECT source AS label, COUNT(*) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY source ORDER BY count DESC LIMIT 8").bind(modifier).all(),
+      env.ANALYTICS_DB.prepare("SELECT device AS label, COUNT(*) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY device ORDER BY count DESC LIMIT 6").bind(modifier).all(),
+      env.ANALYTICS_DB.prepare("SELECT CASE WHEN country='' THEN 'Unknown' ELSE country END AS label, COUNT(DISTINCT session_id) AS count FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY label ORDER BY count DESC LIMIT 8").bind(modifier).all(),
+      env.ANALYTICS_DB.prepare("SELECT date(event_time) AS day, COUNT(*) AS views FROM analytics_events WHERE event_name='page_view' AND event_time >= datetime('now', ?) GROUP BY date(event_time) ORDER BY day ASC").bind(modifier).all(),
+    ]);
+    return json({
+      days,
+      generatedAt: new Date().toISOString(),
+      totals: Object.fromEntries(Object.entries(totals || {}).map(([key, value]) => [key, Number(value || 0)])),
+      onlineNow: Number(live?.online || 0),
+      topPages: pages?.results || [],
+      topTargets: targets?.results || [],
+      sources: sources?.results || [],
+      devices: devices?.results || [],
+      countries: countries?.results || [],
+      daily: daily?.results || [],
+      privacy: "Anonymous session analytics only. No IP addresses, names, email addresses, or full user-agent strings are stored.",
+    });
+  } catch (error) {
+    console.error("Analytics summary failed", String(error?.message || error));
+    return json({ error: "Analytics summary is temporarily unavailable." }, 503);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.pathname === "/api/analytics/events") return recordAnalyticsEvent(request, env);
+    if (url.pathname === "/api/analytics/summary") return analyticsSummary(request, env);
 
     if (url.pathname === "/api/ai-assistant") {
       if (request.method === "OPTIONS") {
