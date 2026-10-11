@@ -272,6 +272,10 @@ function App() {
       // The API stores publication state in is_published; the editor's status
       // label is only a display value and must never override this explicit action.
       delete payload.status;
+      // Admissions require a non-null title in the database; the editor uses
+      // the school name as its visible title field.
+      if (table === 'admissions' && !payload.title)
+        payload.title = payload.school || '';
       if (table === 'opportunities' && !payload.slug)
         payload.slug =
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
@@ -350,10 +354,6 @@ function App() {
       'deadline',
       'link',
       'status',
-      'content',
-      'eligibility',
-      'benefits',
-      'howToApply',
       'sourceUrl',
       'verified',
       'slug',
