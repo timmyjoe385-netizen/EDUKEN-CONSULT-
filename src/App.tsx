@@ -1658,7 +1658,7 @@ function App() {
             <a className="primary" href="#opportunities">
               Explore Opportunities <ArrowRight size={18} />
             </a>
-            <a className="secondary" href={WA} target="_blank" rel="noreferrer">
+            <a className="primary" href={WA} target="_blank" rel="noreferrer">
               Contact EDUKEN
             </a>
           </div>
