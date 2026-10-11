@@ -301,7 +301,7 @@ async function recordAnalyticsEvent(request, env) {
   if (!/^[a-zA-Z0-9_-]{8,80}$/.test(sessionId)) return json({ error: "Invalid session identifier." }, 400);
   if (!env.ANALYTICS_DB) return json({ error: "Analytics storage is not configured." }, 503);
 
-  const clean = (value, max = 140) => String(value || "").replace(/[\\u0000-\\u001f]/g, " ").trim().slice(0, max);
+  const clean = (value, max = 140) => String(value || "").replace(/[\u0000-\u001f]/g, " ").trim().slice(0, max);
   // Enforce route sanitization server-side; never trust the browser to remove
   // OAuth credentials, arbitrary query strings, or unrecognised URL fragments.
   const rawPath = clean(body.path || "/", 240);
