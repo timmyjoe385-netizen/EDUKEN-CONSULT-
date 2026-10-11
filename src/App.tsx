@@ -85,9 +85,6 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
   const [loginOpen, setLoginOpen] = useState(false);
-  const [loginEmail, setLoginEmail] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [loginBusy, setLoginBusy] = useState(false);
   const [adminView, setAdminView] = useState(false);
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
@@ -137,6 +134,15 @@ function App() {
   };
 
   useEffect(() => {
+    let active = true;
+    void auth.completeOAuthCallback().then((result: any) => {
+      if (!active || !result) return;
+      setUser(result.user);
+      setAdminView(true);
+      void loadAdmin('opportunities');
+    }).catch((error: unknown) => {
+      if (active) setToast(error instanceof Error ? error.message : 'Google sign-in could not be completed.');
+    });
     loadContent();
     syncArticleFromHash();
     const onHashChange = () => syncArticleFromHash();
@@ -158,6 +164,7 @@ function App() {
     window.addEventListener('beforeinstallprompt', onInstallPrompt);
     window.addEventListener('appinstalled', onInstalled);
     return () => {
+      active = false;
       window.removeEventListener('hashchange', onHashChange);
       window.removeEventListener('beforeinstallprompt', onInstallPrompt);
       window.removeEventListener('appinstalled', onInstalled);
@@ -240,21 +247,11 @@ function App() {
     [content.opportunities]
   );
 
-  const signIn = async (event?: React.FormEvent<HTMLFormElement>) => {
-    event?.preventDefault();
-    if (loginBusy) return;
-    setLoginBusy(true);
+  const signIn = async () => {
     try {
-      const result = await auth.signIn(loginEmail, loginPassword);
-      setUser(result.user);
-      setLoginOpen(false);
-      setLoginPassword('');
-      setAdminView(true);
-      await loadAdmin(adminTab);
+      await auth.signIn();
     } catch (error) {
-      showToast(error instanceof Error ? error.message : 'Unable to sign in. Please try again.');
-    } finally {
-      setLoginBusy(false);
+      showToast(error instanceof Error ? error.message : 'Unable to start Google sign-in. Please try again.');
     }
   };
 
@@ -743,19 +740,13 @@ function App() {
           </div>
         </main>
         {loginOpen && (
-        <div className="login-backdrop" role="presentation" onClick={event => { if (event.target === event.currentTarget && !loginBusy) setLoginOpen(false); }}>
+        <div className="login-backdrop" role="presentation" onClick={event => { if (event.target === event.currentTarget) setLoginOpen(false); }}>
           <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
-            <button className="login-close" type="button" aria-label="Close sign-in" onClick={() => setLoginOpen(false)} disabled={loginBusy}>×</button>
+            <button className="login-close" type="button" aria-label="Close sign-in" onClick={() => setLoginOpen(false)}>×</button>
             <span className="kicker">SECURE ADMIN ACCESS</span>
             <h2 id="admin-login-title">Admin sign in</h2>
-            <p>Sign in with your authorized EDUKEN CONSULT administrator email.</p>
-            <form onSubmit={signIn}>
-              <label htmlFor="admin-email">Email address</label>
-              <input id="admin-email" type="email" autoComplete="username" required value={loginEmail} onChange={event => setLoginEmail(event.target.value)} placeholder="admin@example.com" />
-              <label htmlFor="admin-password">Password</label>
-              <input id="admin-password" type="password" autoComplete="current-password" required value={loginPassword} onChange={event => setLoginPassword(event.target.value)} placeholder="Enter your password" />
-              <button className="primary login-submit" type="submit" disabled={loginBusy}>{loginBusy ? 'Signing in…' : 'Sign in securely'} <ArrowRight size={17} /></button>
-            </form>
+            <p>Continue with one of the authorized Google accounts for EDUKEN CONSULT administration.</p>
+            <button className="primary login-submit" type="button" onClick={() => void signIn()}><ArrowRight size={17} /> Continue with Google</button>
           </section>
         </div>
       )}
