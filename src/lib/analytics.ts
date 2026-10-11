@@ -1,5 +1,16 @@
 const SESSION_KEY = 'eduken_analytics_session';
 
+// Only allow known, non-sensitive SPA routes into analytics. OAuth providers may
+// return credentials in the URL hash; never persist arbitrary hashes or query strings.
+function analyticsPath() {
+  const pathname = window.location.pathname || '/';
+  const hash = window.location.hash || '';
+  if (/^#opportunities(?:$|[/?])/.test(hash)) return pathname + '#opportunities';
+  const article = hash.match(/^#opportunity\/([a-zA-Z0-9_-]{1,160})$/);
+  if (article) return pathname + '#opportunity/' + article[1];
+  return pathname;
+}
+
 type TrackDetails = {
   target?: string;
   pageTitle?: string;
@@ -47,7 +58,7 @@ export function trackEvent(eventName: string, details: TrackDetails = {}) {
   const payload = {
     eventName,
     sessionId: sessionId(),
-    path: window.location.pathname + window.location.hash,
+    path: analyticsPath(),
     pageTitle: String(details.pageTitle || document.title || '').slice(0, 120),
     referrerHost: referrerHost.slice(0, 120),
     source: String(source).slice(0, 100),
@@ -69,7 +80,7 @@ export function installAnalyticsTracking() {
   if (typeof window === 'undefined') return () => undefined;
   let lastPath = '';
   const pageView = () => {
-    const current = window.location.pathname + window.location.hash;
+    const current = analyticsPath();
     if (current === lastPath) return;
     lastPath = current;
     trackEvent('page_view');
