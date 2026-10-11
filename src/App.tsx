@@ -271,10 +271,21 @@ function App() {
     }
   };
 
-  const saveAdmin = async () => {
+  const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     try {
       const table = adminTab;
       const payload = { ...form };
+      if (table === 'opportunities') {
+        if (publishMode === 'draft') {
+          payload.status = 'DRAFT';
+          payload.is_published = false;
+        } else if (publishMode === 'publish') {
+          payload.status = 'PUBLISHED';
+          payload.is_published = true;
+        } else if (payload.is_published === undefined) {
+          payload.is_published = String(payload.status || '').toUpperCase() === 'PUBLISHED';
+        }
+      }
       if (table === 'opportunities' && !payload.slug)
         payload.slug =
           makeSlug(payload.title || '') + '-' + Date.now().toString(36);
@@ -582,9 +593,31 @@ function App() {
                       </label>
                     );
                   })}
-                  <button className="primary" onClick={saveAdmin}>
-                    {form.id ? 'Save changes' : 'Publish item'}
-                  </button>
+                  {adminTab === 'opportunities' ? (
+                    <div className="admin-editor-actions">
+                      <button className="secondary" onClick={() => saveAdmin('draft')}>
+                        Save Draft
+                      </button>
+                      {form.id ? (
+                        <>
+                          <button className="primary" onClick={() => saveAdmin('preserve')}>
+                            Save Changes
+                          </button>
+                          <button className="primary" onClick={() => saveAdmin('publish')}>
+                            Publish Changes
+                          </button>
+                        </>
+                      ) : (
+                        <button className="primary" onClick={() => saveAdmin('publish')}>
+                          Publish Item
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <button className="primary" onClick={() => saveAdmin('preserve')}>
+                      {form.id ? 'Save changes' : 'Publish item'}
+                    </button>
+                  )}
                 </div>
               </div>
             )}
