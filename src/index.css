@@ -1319,12 +1319,32 @@ footer {
   font-size: 12px;
   max-width: 360px;
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .nav {
     padding: 0 5%;
   }
   .menu-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 60;
+    flex: 0 0 44px;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    border: 1px solid #cbd8d0;
+    background: #ffffff;
+    color: #173f31;
+    visibility: visible;
+    opacity: 1;
+  }
+  .menu-btn svg {
     display: block;
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.5;
   }
   .nav-links {
     position: absolute;
