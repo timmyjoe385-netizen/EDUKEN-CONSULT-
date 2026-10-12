@@ -428,6 +428,7 @@ function App() {
     const table = adminTab;
     try {
       const payload: Record<string, any> = { ...form };
+      if (table === 'services' && String(payload.price ?? '').trim() === '') payload.price = null;
       if (table !== 'opportunities') {
         // Persist an explicit database boolean for every admin save action.
         if (publishMode === 'draft') {
@@ -514,10 +515,10 @@ function App() {
       const details = Object.entries(serviceForm)
         .filter(([, value]) => String(value || '').trim())
         .map(([key, value]) => key.replace(/([A-Z])/g, ' $1') + ': ' + String(value).trim())
-        .join('\\n');
+        .join('\n');
       const result = await api.post('/api/service-requests', {
         serviceId: selectedService.id,
-        customerName: String(serviceForm.fullName || '').trim() || 'Customer',
+        customerName: String(serviceForm.contactName || serviceForm.fullName || '').trim() || 'Customer',
         whatsapp: String(serviceForm.whatsapp || '').trim(),
         email: String(serviceForm.email || '').trim(),
         details: details || 'Service request submitted from EDUKEN CONSULT.',
@@ -1780,6 +1781,7 @@ function App() {
           <form onSubmit={submitServiceRequest} style={{ width: 'min(100%, 620px)', maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17231d', borderRadius: 18, padding: 24, boxShadow: '0 20px 70px rgba(0,0,0,.25)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'start' }}><div><span className="kicker">NEW SERVICE REQUEST</span><h2 id="service-order-title" style={{ margin: '8px 0' }}>{selectedService.name}</h2><p style={{ marginTop: 0 }}>Price: ₦{Number(selectedService.price).toLocaleString('en-NG')}</p></div><button type="button" className="secondary" aria-label="Close service form" onClick={() => { setSelectedService(null); setServiceForm({}); }}><X size={18} /></button></div>
             <p style={{ fontSize: 13, lineHeight: 1.5, color: '#526158' }}>Enter the information accurately. Your request will receive a reference number. EDUKEN will confirm payment and processing steps with you.</p>
+            <label style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>Your full name *</span><input required value={serviceForm.contactName || ''} onChange={e => setServiceForm({ ...serviceForm, contactName: e.target.value })} placeholder="Name of the person placing the order" style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /></label>
             {jambFieldsFor(selectedService).map(field => <label key={field.name} style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>{field.label}{field.required ? ' *' : ''}</span>{field.name === 'resultNote' || field.name === 'requestDetails' ? <textarea required={field.required} rows={3} placeholder={field.placeholder || ''} value={serviceForm[field.name] || ''} onChange={e => setServiceForm({ ...serviceForm, [field.name]: e.target.value })} style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /> : <input required={field.required} placeholder={field.placeholder || ''} value={serviceForm[field.name] || ''} onChange={e => setServiceForm({ ...serviceForm, [field.name]: e.target.value })} style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} />}</label>)}
             <label style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>Your WhatsApp number *</span><input required value={serviceForm.whatsapp || ''} onChange={e => setServiceForm({ ...serviceForm, whatsapp: e.target.value })} placeholder="e.g. 08012345678" style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /></label>
             <label style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>Email (optional)</span><input type="email" value={serviceForm.email || ''} onChange={e => setServiceForm({ ...serviceForm, email: e.target.value })} placeholder="Email for updates" style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /></label>
