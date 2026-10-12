@@ -368,6 +368,10 @@ function App() {
         }
         delete payload.status;
       }
+      if (table === 'admissions' && !payload.title) {
+        // The admissions table requires title; the admin form uses school as its label.
+        payload.title = payload.school || '';
+      }
       if (table === 'updates') {
         // These flags are not columns in the updates table.
         delete payload.verified;
