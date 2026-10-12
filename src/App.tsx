@@ -357,9 +357,14 @@ function App() {
     try {
       const payload: Record<string, any> = { ...form };
       if (table !== 'opportunities') {
-        if (payload.status !== undefined) {
+        // Persist an explicit database boolean for every admin save action.
+        if (publishMode === 'draft') {
+          payload.is_published = false;
+        } else if (publishMode === 'publish') {
+          payload.is_published = true;
+        } else {
           payload.is_published =
-            String(payload.status).toUpperCase() === 'PUBLISHED';
+            String(payload.status || 'PUBLISHED').toUpperCase() === 'PUBLISHED';
         }
         delete payload.status;
       }
@@ -393,12 +398,12 @@ function App() {
       await loadAdmin(table);
       await loadContent();
 
-      if (table === 'opportunities' && publishMode === 'draft') {
-        showToast('Draft saved successfully. You can keep editing it or publish it when ready.');
-      } else if (table === 'opportunities' && publishMode === 'publish') {
-        showToast('Published successfully! Your opportunity has been published.');
+      if (publishMode === 'draft') {
+        showToast('Saved as draft successfully.');
+      } else if (publishMode === 'publish') {
+        showToast('Published successfully.');
       } else {
-        showToast('Saved successfully.');
+        showToast('Changes saved successfully.');
       }
     } catch (error) {
       showToast(error instanceof Error ? 'Could not save this item: ' + error.message : 'Could not save this item. Please try again.');
@@ -809,9 +814,34 @@ function App() {
                       )}
                     </div>
                   ) : (
-                    <button className="primary" onClick={() => saveAdmin('preserve')}>
-                      {form.id ? 'Save changes' : 'Publish item'}
-                    </button>
+                    <div className="admin-editor-actions">
+                      <button
+                        className="secondary"
+                        type="button"
+                        disabled={savingAdminMode !== null}
+                        onClick={() => saveAdmin('draft')}
+                      >
+                        {savingAdminMode === 'draft' ? 'Saving Draft…' : 'Save Draft'}
+                      </button>
+                      {form.id ? (
+                        <button
+                          className="secondary"
+                          type="button"
+                          disabled={savingAdminMode !== null}
+                          onClick={() => saveAdmin('preserve')}
+                        >
+                          {savingAdminMode === 'preserve' ? 'Saving…' : 'Save Changes'}
+                        </button>
+                      ) : null}
+                      <button
+                        className="primary"
+                        type="button"
+                        disabled={savingAdminMode !== null}
+                        onClick={() => saveAdmin('publish')}
+                      >
+                        {savingAdminMode === 'publish' ? 'Publishing…' : (form.id ? 'Publish Changes' : 'Publish Item')}
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
