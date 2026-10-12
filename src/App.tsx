@@ -77,6 +77,70 @@ const emptyContent: Content = {
   services: [],
 };
 
+const JAMB_SERVICE_TEMPLATES = [
+  { name: 'Check JAMB Admission Status', category: 'JAMB Services', description: 'Required: candidate full name, JAMB registration number and JAMB year.' },
+  { name: "JAMB O'Level Upload", category: 'JAMB Services', description: 'Required: candidate full name, JAMB registration number, JAMB year, examination type/year and a clear result document. EDUKEN will contact you to securely collect the result copy.' },
+  { name: 'JAMB Result Payment', category: 'JAMB Services', description: 'Required: candidate full name, JAMB registration number and JAMB year. Confirm the exact payment type before processing.' },
+  { name: 'JAMB Reprinting Services', category: 'JAMB Services', description: 'Required: document type, candidate full name, JAMB registration number and JAMB year.' },
+  { name: "JAMB O'Level Confirmation", category: 'JAMB Services', description: 'Required: candidate full name, JAMB registration number, JAMB year and examination type.' },
+  { name: 'Retrieve JAMB Profile Code', category: 'JAMB Services', description: 'Required: JAMB registration number OR the phone number used for JAMB registration. Availability depends on the JAMB year.' },
+  { name: 'Retrieve JAMB Registration Number', category: 'JAMB Services', description: 'Required: JAMB profile code OR the phone number used for registration. Availability depends on the JAMB year.' },
+  { name: 'JAMB Original Result Slip', category: 'JAMB Services', description: 'Required: candidate full name, JAMB registration number and JAMB year.' },
+  { name: 'JAMB Admission Letter Printing', category: 'JAMB Services', description: 'Required: candidate full name, JAMB registration number and JAMB year.' },
+  { name: 'NECO E-Verification Code', category: 'Examination Services', description: 'NECO e-verification request. EDUKEN will confirm the exact examination details before processing.' },
+];
+
+const jambFieldsFor = (service: Item): { name: string; label: string; required?: boolean; placeholder?: string }[] => {
+  const name = String(service.name || '').toLowerCase();
+  if (name.includes('admission status')) return [
+    { name: 'fullName', label: 'Candidate full name', required: true },
+    { name: 'registrationNumber', label: 'JAMB registration number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+  ];
+  if (name.includes("o'level upload")) return [
+    { name: 'fullName', label: 'Candidate full name', required: true },
+    { name: 'registrationNumber', label: 'JAMB registration number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+    { name: 'examType', label: 'O’Level exam type (WAEC/NECO/NABTEB)', required: true },
+    { name: 'examYear', label: 'O’Level exam year', required: true },
+    { name: 'resultNote', label: 'Result details / notes', placeholder: 'Any relevant notes about the result' },
+  ];
+  if (name.includes('reprinting')) return [
+    { name: 'documentType', label: 'Document to reprint', required: true, placeholder: 'e.g. UTME slip, result slip, admission letter' },
+    { name: 'fullName', label: 'Candidate full name', required: true },
+    { name: 'registrationNumber', label: 'JAMB registration number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+  ];
+  if (name.includes('profile code')) return [
+    { name: 'registrationNumberOrPhone', label: 'JAMB registration number OR registered phone number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+  ];
+  if (name.includes('registration number')) return [
+    { name: 'profileCodeOrPhone', label: 'JAMB profile code OR registered phone number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+  ];
+  if (name.includes("o'level confirmation")) return [
+    { name: 'fullName', label: 'Candidate full name', required: true },
+    { name: 'registrationNumber', label: 'JAMB registration number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+    { name: 'examType', label: 'O’Level exam type', required: true, placeholder: 'WAEC, NECO or NABTEB' },
+  ];
+  if (name.includes('result slip') || name.includes('result payment') || name.includes('admission letter')) return [
+    { name: 'fullName', label: 'Candidate full name', required: true },
+    { name: 'registrationNumber', label: 'JAMB registration number', required: true },
+    { name: 'jambYear', label: 'JAMB year', required: true, placeholder: 'e.g. 2026' },
+  ];
+  if (name.includes('neco')) return [
+    { name: 'fullName', label: 'Candidate full name', required: true },
+    { name: 'examNumber', label: 'NECO examination number', required: true },
+    { name: 'examYear', label: 'Examination year', required: true },
+  ];
+  return [
+    { name: 'fullName', label: 'Full name', required: true },
+    { name: 'requestDetails', label: 'Details needed for this service', required: true },
+  ];
+};
+
 function App() {
   const [menu, setMenu] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
@@ -102,6 +166,10 @@ function App() {
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [selectedService, setSelectedService] = useState<Item | null>(null);
+  const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
+  const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
 
   const makeSlug = (value: string) =>
     value
@@ -270,9 +338,13 @@ function App() {
       const res =
         table === 'consultations'
           ? await api.get('/api/admin/consultations')
-          : await api.get('/api/admin/content/' + table);
+          : table === 'service-requests'
+            ? await api.get('/api/admin/service-requests')
+            : await api.get('/api/admin/content/' + table);
       if (table === 'consultations') {
         setConsultations(res.data.items);
+      } else if (table === 'service-requests') {
+        setAdminItems(res.data.items || []);
       } else {
         const items = (res.data.items || []).map((item: Item) => {
           const published =
@@ -412,6 +484,55 @@ function App() {
     }
   };
 
+  const addJambServiceTemplates = async () => {
+    if (addingServiceTemplates) return;
+    setAddingServiceTemplates(true);
+    try {
+      const existing = await api.get('/api/admin/content/services');
+      const existingNames = new Set((existing.data.items || []).map((item: Item) => String(item.name || '').trim().toLowerCase()));
+      const missing = JAMB_SERVICE_TEMPLATES.filter(item => !existingNames.has(item.name.toLowerCase()));
+      if (!missing.length) {
+        showToast('Service templates already exist. Edit their prices in Services.');
+        return;
+      }
+      for (const item of missing) await api.post('/api/admin/content/services', { ...item, price: null, is_published: true });
+      await loadAdmin('services');
+      await loadContent();
+      showToast(`Added ${missing.length} service templates. Set each price in Services before accepting orders.`);
+    } catch (error) {
+      showToast(error instanceof Error ? 'Could not add service templates: ' + error.message : 'Could not add service templates.');
+    } finally {
+      setAddingServiceTemplates(false);
+    }
+  };
+
+  const submitServiceRequest = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!selectedService || serviceSubmitting) return;
+    setServiceSubmitting(true);
+    try {
+      const details = Object.entries(serviceForm)
+        .filter(([, value]) => String(value || '').trim())
+        .map(([key, value]) => key.replace(/([A-Z])/g, ' $1') + ': ' + String(value).trim())
+        .join('\\n');
+      const result = await api.post('/api/service-requests', {
+        serviceId: selectedService.id,
+        customerName: String(serviceForm.fullName || '').trim() || 'Customer',
+        whatsapp: String(serviceForm.whatsapp || '').trim(),
+        email: String(serviceForm.email || '').trim(),
+        details: details || 'Service request submitted from EDUKEN CONSULT.',
+      });
+      const reference = result.data.referenceNumber || result.data.request?.reference_number;
+      setSelectedService(null);
+      setServiceForm({});
+      showToast('Request received' + (reference ? '. Reference: ' + reference : '') + '. EDUKEN will contact you to confirm payment and processing.');
+    } catch (error) {
+      showToast(error instanceof Error ? 'Could not submit request: ' + error.message : 'Could not submit your request. Please try again.');
+    } finally {
+      setServiceSubmitting(false);
+    }
+  };
+
   const deleteAdmin = async (id: string) => {
     if (!window.confirm('Delete this item permanently?')) return;
     try {
@@ -535,6 +656,7 @@ function App() {
               'faqs',
               'services',
               'consultations',
+              'service-requests',
               'analytics',
             ].map(tab => (
               <button
@@ -570,10 +692,11 @@ function App() {
                 <span className="kicker">EDUKEN CONSULT</span>
                 <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'analytics' && (
-                <button className="primary" onClick={() => setForm({})}>
-                  <Plus size={17} /> New
-                </button>
+              {adminTab !== 'consultations' && adminTab !== 'analytics' && adminTab !== 'service-requests' && (
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {adminTab === 'services' && <button className="secondary" disabled={addingServiceTemplates} onClick={addJambServiceTemplates}>{addingServiceTemplates ? 'Adding templates…' : 'Add JAMB service templates'}</button>}
+                  <button className="primary" onClick={() => setForm({})}><Plus size={17} /> New</button>
+                </div>
               )}
             </div>
             {adminTab === 'analytics' ? (
@@ -616,6 +739,15 @@ function App() {
                                 </>
                               ) : null}
                             </section>
+            ) : adminTab === 'service-requests' ? (
+              <div className="admin-list">
+                {adminItems.length === 0 ? <div className="admin-empty">No service requests yet.</div> : adminItems.map(item => (
+                  <article className="admin-item" key={item.id}>
+                    <div><span className="tag">{item.status || 'New Requests'}</span><h3>{item.services?.name || 'EDUKEN service request'} — {item.reference_number || item.id}</h3><p>{item.customer_name} · {item.whatsapp || 'No WhatsApp'} · {item.email || 'No email'}</p><pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13 }}>{item.details || ''}</pre><small>{item.created_at ? new Date(item.created_at).toLocaleString() : ''}</small></div>
+                    <div className="admin-actions"><select aria-label="Update service request status" value={item.status || 'New Requests'} onChange={async e => { try { await api.put('/api/admin/service-requests/' + item.id, { status: e.target.value }); await loadAdmin('service-requests'); showToast('Service request status updated.'); } catch { showToast('Could not update service request status.'); } }}><option>New Requests</option><option>Paid</option><option>Processing</option><option>Need More Information</option><option>Completed</option><option>Cancelled</option></select></div>
+                  </article>
+                ))}
+              </div>
             ) : adminTab === 'consultations' ? (
               <div className="admin-list">
                 {consultations.length === 0 ? (
@@ -1623,6 +1755,38 @@ function App() {
             ))}
           </div>
         </section>
+
+        <section className="section" id="jamb-services">
+          <div className="section-head">
+            <div><span className="kicker">EDUKEN SERVICE PORTAL</span><h2>JAMB & Examination Services</h2></div>
+            <p>Choose a service, submit the required details and receive an order reference. Prices are set by EDUKEN in the admin dashboard.</p>
+          </div>
+          <div className="service-shop-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: 16 }}>
+            {content.services.filter(s => /jamb|examination/i.test(String(s.category || ''))).map(service => {
+              const price = Number(service.price);
+              const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
+              return <article className="service-shop-card" key={service.id} style={{ border: '1px solid var(--line, #dce6df)', borderRadius: 16, padding: 20, background: 'var(--surface, #fff)' }}>
+                <span className="tag">{service.category || 'Examination Services'}</span><h3 style={{ margin: '12px 0 8px' }}>{service.name}</h3><p style={{ lineHeight: 1.6 }}>{service.description || 'Service details will be confirmed before processing.'}</p>
+                <strong style={{ display: 'block', margin: '14px 0', fontSize: 20 }}>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set yet'}</strong>
+                <button className="primary" disabled={!hasPrice} onClick={() => { setSelectedService(service); setServiceForm({}); }}>{hasPrice ? 'Request this service' : 'Coming soon'}</button>
+              </article>;
+            })}
+          </div>
+          {!content.services.some(s => /jamb|examination/i.test(String(s.category || ''))) && <div className="admin-empty" style={{ marginTop: 16 }}>Service templates have not been added yet. Open Admin → Services and select “Add JAMB service templates”, then set your prices.</div>}
+          <p style={{ marginTop: 16, fontSize: 13, opacity: .8 }}>Requirements may change. EDUKEN will confirm eligibility and missing documents before processing. Never submit your JAMB password, email password or bank-card details in this form.</p>
+        </section>
+
+        {selectedService && <div role="dialog" aria-modal="true" aria-labelledby="service-order-title" style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(8, 24, 18, .65)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
+          <form onSubmit={submitServiceRequest} style={{ width: 'min(100%, 620px)', maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17231d', borderRadius: 18, padding: 24, boxShadow: '0 20px 70px rgba(0,0,0,.25)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12, alignItems: 'start' }}><div><span className="kicker">NEW SERVICE REQUEST</span><h2 id="service-order-title" style={{ margin: '8px 0' }}>{selectedService.name}</h2><p style={{ marginTop: 0 }}>Price: ₦{Number(selectedService.price).toLocaleString('en-NG')}</p></div><button type="button" className="secondary" aria-label="Close service form" onClick={() => { setSelectedService(null); setServiceForm({}); }}><X size={18} /></button></div>
+            <p style={{ fontSize: 13, lineHeight: 1.5, color: '#526158' }}>Enter the information accurately. Your request will receive a reference number. EDUKEN will confirm payment and processing steps with you.</p>
+            {jambFieldsFor(selectedService).map(field => <label key={field.name} style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>{field.label}{field.required ? ' *' : ''}</span>{field.name === 'resultNote' || field.name === 'requestDetails' ? <textarea required={field.required} rows={3} placeholder={field.placeholder || ''} value={serviceForm[field.name] || ''} onChange={e => setServiceForm({ ...serviceForm, [field.name]: e.target.value })} style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /> : <input required={field.required} placeholder={field.placeholder || ''} value={serviceForm[field.name] || ''} onChange={e => setServiceForm({ ...serviceForm, [field.name]: e.target.value })} style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} />}</label>)}
+            <label style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>Your WhatsApp number *</span><input required value={serviceForm.whatsapp || ''} onChange={e => setServiceForm({ ...serviceForm, whatsapp: e.target.value })} placeholder="e.g. 08012345678" style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /></label>
+            <label style={{ display: 'block', margin: '14px 0' }}><span style={{ display: 'block', fontWeight: 600, marginBottom: 6 }}>Email (optional)</span><input type="email" value={serviceForm.email || ''} onChange={e => setServiceForm({ ...serviceForm, email: e.target.value })} placeholder="Email for updates" style={{ width: '100%', boxSizing: 'border-box', padding: 12, borderRadius: 10, border: '1px solid #cbd5ce' }} /></label>
+            {String(selectedService.name || '').toLowerCase().includes("o'level upload") && <p style={{ fontSize: 13, background: '#fff5dd', padding: 12, borderRadius: 10 }}>Do not send result documents in this form. EDUKEN will contact you with the next step for securely providing the result copy.</p>}
+            <div style={{ display: 'flex', gap: 10, justifyContent: 'end', flexWrap: 'wrap', marginTop: 20 }}><button type="button" className="secondary" onClick={() => { setSelectedService(null); setServiceForm({}); }}>Cancel</button><button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Submitting…' : 'Submit request'}</button></div>
+          </form>
+        </div>}
 
         <section className="consult-section" id="contact">
           <div>
