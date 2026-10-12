@@ -352,10 +352,18 @@ function App() {
 
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     if (savingAdminMode) return;
-    setSavingAdminMode(publishMode);
     const table = adminTab;
+    if (table === 'opportunities') {
+      const title = String(form.title ?? '').trim();
+      if (!title) {
+        showToast('Please enter an opportunity title before saving or publishing.');
+        return;
+      }
+    }
+    setSavingAdminMode(publishMode);
     try {
       const payload: Record<string, any> = { ...form };
+      if (table === 'opportunities') payload.title = String(form.title).trim();
       if (table !== 'opportunities') {
         // Persist an explicit database boolean for every admin save action.
         if (publishMode === 'draft') {
