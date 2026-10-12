@@ -680,14 +680,18 @@ function App() {
                               <Share2 size={14} /> Share
                             </button>
                           )}
-                        <button onClick={() => setForm({
-                          ...item,
-                          status: (
-                            item.is_published === true ||
-                            String(item.is_published).toLowerCase() === 'true' ||
-                            String(item.is_published) === '1'
-                          ) ? 'PUBLISHED' : 'DRAFT',
-                        })}>Edit</button>
+                        <button onClick={() => setForm(
+                          adminTab === 'opportunities'
+                            ? item
+                            : {
+                                ...item,
+                                status: (
+                                  item.is_published === true ||
+                                  String(item.is_published).toLowerCase() === 'true' ||
+                                  String(item.is_published) === '1'
+                                ) ? 'PUBLISHED' : 'DRAFT',
+                              }
+                        )}>Edit</button>
                         <button
                           className="danger"
                           onClick={() => deleteAdmin(item.id)}
@@ -739,7 +743,7 @@ function App() {
                             />
                             <span>{checked ? 'ON' : 'OFF'}</span>
                           </span>
-                        ) : field === 'status' ? (
+                        ) : field === 'status' && adminTab !== 'opportunities' ? (
                           <select
                             value={String(form[field] || 'PUBLISHED').toUpperCase()}
                             onChange={e =>
