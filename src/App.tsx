@@ -271,8 +271,39 @@ function App() {
         table === 'consultations'
           ? await api.get('/api/admin/consultations')
           : await api.get('/api/admin/content/' + table);
-      if (table === 'consultations') setConsultations(res.data.items);
-      else setAdminItems(res.data.items);
+      if (table === 'consultations') {
+        setConsultations(res.data.items);
+      } else {
+        const items = (res.data.items || []).map((item: Item) => {
+          const published =
+            item.is_published === true ||
+            String(item.is_published).toLowerCase() === 'true' ||
+            String(item.is_published) === '1';
+          if (table === 'admissions') {
+            return {
+              ...item,
+              status: published ? 'PUBLISHED' : 'DRAFT',
+              course: item.programme ?? item.course ?? '',
+              type: item.category ?? item.type ?? '',
+              details: item.description ?? item.details ?? '',
+              link: item.application_url ?? item.link ?? '',
+            };
+          }
+          if (table === 'updates') {
+            return {
+              ...item,
+              status: published ? 'PUBLISHED' : 'DRAFT',
+              body: item.content ?? item.body ?? '',
+              sourceUrl: item.source_url ?? item.sourceUrl ?? '',
+            };
+          }
+          if (table === 'faqs' || table === 'services') {
+            return { ...item, status: published ? 'PUBLISHED' : 'DRAFT' };
+          }
+          return item;
+        });
+        setAdminItems(items);
+      }
     } catch {
       showToast(
         'Access denied. Only authorized EDUKEN administrators can use the dashboard.'
@@ -325,6 +356,19 @@ function App() {
     const table = adminTab;
     try {
       const payload: Record<string, any> = { ...form };
+      if (table !== 'opportunities') {
+        if (payload.status !== undefined) {
+          payload.is_published =
+            String(payload.status).toUpperCase() === 'PUBLISHED';
+        }
+        delete payload.status;
+      }
+      if (table === 'updates') {
+        // These flags are not columns in the updates table.
+        delete payload.verified;
+        delete payload.featured;
+        delete payload.urgent;
+      }
       if (table === 'opportunities') {
         if (publishMode === 'draft') {
           payload.status = 'DRAFT';
@@ -443,19 +487,9 @@ function App() {
       'details',
       'link',
     ],
-    updates: [
-      'category',
-      'title',
-      'body',
-      'date',
-      'sourceUrl',
-      'verified',
-      'featured',
-      'urgent',
-      'status',
-    ],
+    updates: ['category', 'title', 'body', 'sourceUrl', 'status'],
     faqs: ['question', 'answer', 'status'],
-    services: ['name', 'status'],
+    services: ['name', 'category', 'description', 'price', 'status'],
   };
 
   if (adminView) {
@@ -646,7 +680,14 @@ function App() {
                               <Share2 size={14} /> Share
                             </button>
                           )}
-                        <button onClick={() => setForm(item)}>Edit</button>
+                        <button onClick={() => setForm({
+                          ...item,
+                          status: (
+                            item.is_published === true ||
+                            String(item.is_published).toLowerCase() === 'true' ||
+                            String(item.is_published) === '1'
+                          ) ? 'PUBLISHED' : 'DRAFT',
+                        })}>Edit</button>
                         <button
                           className="danger"
                           onClick={() => deleteAdmin(item.id)}
@@ -698,6 +739,16 @@ function App() {
                             />
                             <span>{checked ? 'ON' : 'OFF'}</span>
                           </span>
+                        ) : field === 'status' ? (
+                          <select
+                            value={String(form[field] || 'PUBLISHED').toUpperCase()}
+                            onChange={e =>
+                              setForm({ ...form, [field]: e.target.value })
+                            }
+                          >
+                            <option value="DRAFT">Draft</option>
+                            <option value="PUBLISHED">Published</option>
+                          </select>
                         ) : isLongText ? (
                           <textarea
                             value={form[field] ?? ''}
