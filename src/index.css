@@ -1816,3 +1816,24 @@ footer {
 .analytics-error small{font-size:10px}
 @media(max-width:760px){.analytics-toolbar{align-items:stretch;flex-direction:column}.analytics-controls{width:100%}.analytics-controls select{flex:1;min-width:0}.analytics-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.analytics-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.analytics-cards{grid-template-columns:1fr 1fr;gap:8px}.analytics-cards article{padding:13px}.analytics-cards article strong{font-size:25px}.analytics-card{padding:15px}}
+
+
+/* Give draft actions a clear EDUKEN-green treatment in the admin editor. */
+.admin-editor-actions .draft-button {
+  background: #eaf3ed;
+  border: 1px solid #cbd8d0;
+  color: #285e46;
+  font-weight: 750;
+}
+.admin-editor-actions .draft-button:hover:not(:disabled) {
+  background: #dcebe1;
+  border-color: #a9c4b3;
+}
+.admin-editor-actions .draft-button:focus-visible {
+  outline: 3px solid rgba(40, 94, 70, 0.25);
+  outline-offset: 2px;
+}
+.admin-editor-actions .draft-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
