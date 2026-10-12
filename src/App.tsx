@@ -799,7 +799,7 @@ function App() {
                       >
                         <Share2 size={15} /> Share to WhatsApp
                       </button>
-                      <button className="secondary" disabled={savingAdminMode !== null} onClick={() => saveAdmin('draft')}>
+                      <button className="secondary draft-button" disabled={savingAdminMode !== null} onClick={() => saveAdmin('draft')}>
                         {savingAdminMode === 'draft' ? 'Saving Draft…' : 'Save Draft'}
                       </button>
                       {form.id ? (
@@ -820,7 +820,7 @@ function App() {
                   ) : (
                     <div className="admin-editor-actions">
                       <button
-                        className="secondary"
+                        className="secondary draft-button"
                         type="button"
                         disabled={savingAdminMode !== null}
                         onClick={() => saveAdmin('draft')}
