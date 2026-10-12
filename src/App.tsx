@@ -676,7 +676,7 @@ function App() {
                     ? '📩 Consultations'
                     : tab === 'analytics'
                       ? '📊 Analytics & Insights'
-                      : tab[0].toUpperCase() + tab.slice(1)}
+                      : tab === 'service-requests' ? '📦 Service Orders' : tab[0].toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <button
