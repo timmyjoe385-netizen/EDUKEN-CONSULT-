@@ -124,17 +124,30 @@ test('service request API rejects malformed and oversized submissions safely', a
 });
 
 
-test('service request backend validates input types and lengths before database writes', async () => {
-  // Exercise source on this PR branch rather than sending risky payloads to the live
-  // production Edge Function, which is intentionally not deployed from this PR.
+test('service request source has type, length and status guards before writes', async () => {
+  // Do not send malformed values to the live endpoint before the backend change is deployed.
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
-  expect(source).toContain('typeof b.customerName === "string"');
-  expect(source).toContain('typeof b.whatsapp === "string"');
-  expect(source).toContain('typeof b.details === "string"');
-  expect(source).toContain('typeof b.email === "string"');
-  expect(source).toContain('customerName.length > 120');
-  expect(source).toContain('details.length > 4000');
-  expect(source).toContain('if (b.serviceId != null && typeof b.serviceId !== "string")');
+  const routeStart = source.indexOf('if (path === "/api/service-requests" && req.method === "POST")');
+  const insertAt = source.indexOf('.from("service_requests").insert({', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(insertAt).toBeGreaterThan(routeStart);
+  const validation = source.slice(routeStart, insertAt);
+
+  for (const guard of [
+    'typeof b.customerName === "string"',
+    'typeof b.whatsapp === "string"',
+    'typeof b.details === "string"',
+    'typeof b.email === "string"',
+    'customerName.length > 120',
+    'whatsapp.length > 40',
+    'details.length > 4000',
+    'email.length > 200',
+    'if (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))',
+    'if (b.serviceId != null && typeof b.serviceId !== "string")',
+  ]) {
+    expect(validation, 'guard must run before the database insert: ' + guard).toContain(guard);
+  }
+
   expect(source).toContain('const allowedStatuses = new Set(["New Requests", "Contacted", "In Progress", "Completed", "Cancelled"])');
 });
 
