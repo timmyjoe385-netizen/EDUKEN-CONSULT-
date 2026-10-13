@@ -136,21 +136,57 @@ function App() {
       const live = res.data || {};
       const normalizeFlag = (value: unknown) =>
         value === true || String(value).toLowerCase() === 'true' || String(value) === '1';
+      const isPlaceholderOpportunity = (item: Item) => {
+        const title = String(item.title || '').trim().toLowerCase();
+        const description = String(item.description || '').trim().toLowerCase();
+        return (
+          (title === 'opportunity listings coming soon' &&
+            description === 'verified opportunities will appear here.') ||
+          (title === 'remote opportunities' &&
+            description === 'remote opportunities curated for young people.') ||
+          (title === 'jobs & internships' &&
+            description === 'student and graduate opportunities will be listed here.') ||
+          (title === 'scholarship opportunities' &&
+            description === 'browse funding opportunities when published.')
+        );
+      };
+      const isPlaceholderAdmission = (item: Item) => {
+        const school = String(item.school || item.title || '').trim().toLowerCase();
+        const details = String(item.description || item.details || item.course || '').trim().toLowerCase();
+        const hasApplicationLink = Boolean(item.link || item.application_url);
+        return !hasApplicationLink && (
+          (school === 'nigerian universities' && details === 'admission information') ||
+          (school === 'polytechnics' && details === 'application information') ||
+          (school === 'colleges of education' && details === 'programme information')
+        );
+      };
+      const isPlaceholderUpdate = (item: Item) => {
+        const title = String(item.title || '').trim().toLowerCase();
+        const body = String(item.body ?? item.content ?? '').trim().toLowerCase();
+        return (
+          (title === 'verified admission updates will appear here.' &&
+            body === 'use the eduken admin dashboard to publish clear, useful updates.') ||
+          (title === 'new opportunities will be published here.' &&
+            body === 'add scholarships, jobs, internships, grants, fellowships and competitions from the dashboard.') ||
+          (title === 'career and mentorship updates will appear here.' &&
+            body === 'publish practical career guidance and development opportunities.')
+        );
+      };
       setContent({
-        opportunities: (live.opportunities || []).map((item: Item) => ({
+        opportunities: (live.opportunities || []).filter((item: Item) => !isPlaceholderOpportunity(item)).map((item: Item) => ({
           ...item,
           verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
           featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
           urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
           sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
         })),
-        admissions: (live.admissions || []).map((item: Item) => ({
+        admissions: (live.admissions || []).filter((item: Item) => !isPlaceholderAdmission(item)).map((item: Item) => ({
           ...item,
           course: item.course ?? item.programme ?? '',
           type: item.type ?? item.category ?? '',
           link: item.link ?? item.application_url ?? '',
         })),
-        updates: (live.updates || []).map((item: Item) => ({
+        updates: (live.updates || []).filter((item: Item) => !isPlaceholderUpdate(item)).map((item: Item) => ({
           ...item,
           body: item.body ?? item.content ?? '',
           sourceUrl: item.sourceUrl ?? item.source_url ?? '',
