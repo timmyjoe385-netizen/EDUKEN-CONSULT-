@@ -71,6 +71,57 @@ test('opportunity deep links open the matching article from the URL fragment', a
   await expect(page).toHaveURL(/#opportunities$/);
 });
 
+test('service request dialog validates required fields without sending a request', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'playwright-service-request-check',
+          name: 'Playwright Service Request Check',
+          category: 'Test fixture',
+          description: 'A safe fixture for form validation coverage.',
+          price: null,
+          is_published: true,
+        }],
+      }),
+    }),
+  );
+
+  const submittedRequests = [];
+  page.on('request', request => {
+    if (
+      request.method() === 'POST' &&
+      request.url().includes('/api/service-requests')
+    ) submittedRequests.push(request.url());
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Request this service/i }).click();
+
+  const dialog = page.getByRole('dialog', {
+    name: 'Playwright Service Request Check',
+  });
+  await expect(dialog).toBeVisible();
+  for (const name of ['Full name', 'WhatsApp number', 'Request details']) {
+    await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
+    await expect(dialog.getByRole('textbox', { name })).toHaveJSProperty('validity.valid', false);
+  }
+
+  await dialog.getByRole('button', { name: 'Send service request' }).click();
+  await expect(dialog).toBeVisible();
+  expect(submittedRequests, 'an empty required form must not call the API').toEqual([]);
+
+  await dialog.getByRole('button', { name: 'Cancel' }).click();
+  await expect(dialog).toHaveCount(0);
+  expect(submittedRequests, 'closing the dialog must not submit a request').toEqual([]);
+});
+
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
