@@ -47,18 +47,33 @@ test('homepage remains usable at a mobile viewport', async ({ page }) => {
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
 });
 
-test('admin content and consultation APIs reject unauthenticated access', async ({ request }) => {
-  const adminContent = await request.get(
-    'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/api/admin/content/opportunities',
-    { headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' }, timeout: 20_000 },
-  );
-  expect(adminContent.status(), 'admin content must require an authenticated administrator').toBe(401);
+test('admin APIs reject unauthenticated reads and writes', async ({ request }) => {
+  const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
+  const headers = { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' };
 
-  const adminConsultations = await request.get(
-    'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/api/admin/consultations',
-    { headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' }, timeout: 20_000 },
-  );
-  expect(adminConsultations.status(), 'consultation records must require an authenticated administrator').toBe(401);
+  // These requests intentionally omit a user session. The API must reject
+  // them before any database read/write can occur.
+  const checks = [
+    ['GET', '/api/admin/content/opportunities'],
+    ['POST', '/api/admin/content/opportunities'],
+    ['PUT', '/api/admin/content/opportunities/playwright-unauthenticated-test'],
+    ['DELETE', '/api/admin/content/opportunities/playwright-unauthenticated-test'],
+    ['GET', '/api/admin/consultations'],
+    ['PUT', '/api/admin/consultations/playwright-unauthenticated-test'],
+  ];
+
+  for (const [method, path] of checks) {
+    const response = await request.fetch(base + path, {
+      method,
+      headers: { ...headers, 'content-type': 'application/json' },
+      data: method === 'POST' || method === 'PUT' ? { title: 'Playwright unauthenticated test' } : undefined,
+      timeout: 20_000,
+    });
+    expect(
+      response.status(),
+      `${method} ${path} should reject requests without an authenticated admin session`,
+    ).toBe(401);
+  }
 });
 
 test('public page exposes the admin sign-in entry without opening an authenticated session', async ({ page }) => {
