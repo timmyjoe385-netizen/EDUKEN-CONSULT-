@@ -632,9 +632,23 @@ function App() {
                   {adminItems.map(item => (
                     <article className="admin-item" key={item.id}>
                       <div>
-                        <span className="tag">
-                          {item.category || item.status || 'Published'}
-                        </span>
+                        {adminTab === 'opportunities' ? (
+                          <div className="admin-item-meta">
+                            <span className="tag">{item.category || 'Opportunity'}</span>
+                            <span className="tag" aria-label="Publication status">
+                              {item.is_published === false ||
+                              String(item.is_published).toLowerCase() === 'false' ||
+                              String(item.is_published) === '0' ||
+                              String(item.status || '').toUpperCase() === 'DRAFT'
+                                ? 'Draft'
+                                : 'Published'}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="tag">
+                            {item.category || item.status || 'Published'}
+                          </span>
+                        )}
                         <h3>
                           {item.title ||
                             item.school ||
