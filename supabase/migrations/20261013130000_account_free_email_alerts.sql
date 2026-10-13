@@ -35,7 +35,7 @@ create unique index if not exists email_alert_subscriptions_email_unique
 create table if not exists public.email_alert_deliveries (
   id uuid primary key default gen_random_uuid(),
   subscription_id uuid not null references public.email_alert_subscriptions(id) on delete cascade,
-  opportunity_id uuid references public.opportunities(id) on delete cascade,
+  opportunity_id uuid not null references public.opportunities(id) on delete cascade,
   event_type text not null check (event_type in ('new_opportunity', 'deadline_7d', 'deadline_3d', 'deadline_1d')),
   scheduled_for timestamptz not null,
   status text not null default 'pending' check (status in ('pending', 'processing', 'sent', 'failed', 'cancelled')),
