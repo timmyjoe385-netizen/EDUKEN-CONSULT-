@@ -5,6 +5,7 @@ import {
   isAllowedEmailAlertTopic,
   normalizeAlertEmail,
   validateEmailAlertSubscription,
+  isWithinEmailAlertCooldown,
 } from "../supabase/functions/eduken-api/email-alert-validation.mjs";
 
 test("normalizes valid emails and rejects unsafe or malformed addresses", () => {
@@ -29,6 +30,13 @@ test("rejects malformed payloads, empty topics, unknown topics and duplicates", 
     { email: "invalid", topics: ["admissions"] }]) {
     assert.ok(validateEmailAlertSubscription(body).error, JSON.stringify(body));
   }
+});
+
+test("confirmation-email cooldown prevents repeated sends but permits old or invalid timestamps", () => {
+  assert.equal(isWithinEmailAlertCooldown("2026-10-13T10:00:00.000Z", Date.parse("2026-10-13T10:01:00.000Z")), true);
+  assert.equal(isWithinEmailAlertCooldown("2026-10-13T10:00:00.000Z", Date.parse("2026-10-13T10:02:00.000Z")), false);
+  assert.equal(isWithinEmailAlertCooldown("invalid", Date.parse("2026-10-13T10:01:00.000Z")), false);
+  assert.equal(isWithinEmailAlertCooldown("2026-10-13T10:02:00.000Z", Date.parse("2026-10-13T10:01:00.000Z")), true);
 });
 
 test("topic allowlist is fixed and type-safe", () => {
