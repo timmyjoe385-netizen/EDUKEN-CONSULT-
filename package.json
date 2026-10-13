@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test",
-    "test:email-alerts": "node --test tests/email-alert-validation.test.mjs"
+    "test:email-alerts": "node --test tests/email-alert-validation.test.mjs tests/service-request-validation.test.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",
