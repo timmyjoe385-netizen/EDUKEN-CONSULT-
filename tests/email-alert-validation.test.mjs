@@ -107,18 +107,19 @@ test("email alert scheduler pins the processor URL before sending its bearer sec
   const here = dirname(fileURLToPath(import.meta.url));
   const workflow = await readFile(resolve(here, "../.github/workflows/email-alert-delivery.yml"), "utf8");
 
-  assert.match(workflow, /expected_host = "pphxltbkwygqjtjgkhxu\\.supabase\\.co"/);
-  assert.match(workflow, /expected_path = "\/functions\/v1\/eduken-api\/api\/internal\/email-alerts\/process"/);
-  for (const check of [
-    /url\\.scheme != "https"/,
-    /url\\.hostname != expected_host/,
-    /url\\.port is not None/,
-    /url\\.username is not None/,
-    /url\\.password is not None/,
-    /url\\.query/,
-    /url\\.fragment/,
+  for (const required of [
+    'expected_host = "pphxltbkwygqjtjgkhxu.supabase.co"',
+    'expected_path = "/functions/v1/eduken-api/api/internal/email-alerts/process"',
+    'url.scheme != "https"',
+    "url.hostname != expected_host",
+    "url.port is not None",
+    "url.username is not None",
+    "url.password is not None",
+    "url.path.rstrip(\"/\") != expected_path",
+    "url.query",
+    "url.fragment",
+    "Authorization: Bearer $CRON_SECRET",
   ]) {
-    assert.match(workflow, check);
+    assert.ok(workflow.includes(required), `Missing scheduler security check: ${required}`);
   }
-  assert.match(workflow, /Authorization: Bearer \\$CRON_SECRET/);
 });
