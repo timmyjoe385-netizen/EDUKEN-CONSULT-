@@ -324,7 +324,13 @@ async function enqueueOpportunityEmailAlerts(
   }
 
   const topic = opportunityAlertTopic(opportunity);
-  if (!topic || !EMAIL_ALERT_TOPICS.has(topic)) return;
+  if (!topic || !EMAIL_ALERT_TOPICS.has(topic)) {
+    await db.from("email_alert_deliveries")
+      .update({ status: "cancelled" })
+      .eq("opportunity_id", opportunity.id)
+      .eq("status", "pending");
+    return;
+  }
   const { data: subscriptions, error } = await db.from("email_alert_subscriptions")
     .select("id,topics")
     .eq("is_active", true)
@@ -683,6 +689,11 @@ Deno.serve(async (req) => {
       if (!config) return json({ error: "Email alerts are not configured." }, 503);
 
       const now = new Date();
+      const staleProcessingBefore = new Date(now.getTime() - 10 * 60 * 1000).toISOString();
+      await db.from("email_alert_deliveries")
+        .update({ status: "pending", scheduled_for: now.toISOString(), processing_started_at: null })
+        .eq("status", "processing")
+        .lt("processing_started_at", staleProcessingBefore);
       const { data: dueDeliveries, error: dueError } = await db.from("email_alert_deliveries")
         .select("id,subscription_id,opportunity_id,event_type,attempt_count")
         .eq("status", "pending")
@@ -695,7 +706,7 @@ Deno.serve(async (req) => {
       for (const delivery of dueDeliveries ?? []) {
         const attemptCount = Number(delivery.attempt_count || 0) + 1;
         const { data: claimed, error: claimError } = await db.from("email_alert_deliveries")
-          .update({ status: "processing", attempt_count: attemptCount })
+          .update({ status: "processing", attempt_count: attemptCount, processing_started_at: now.toISOString() })
           .eq("id", delivery.id)
           .eq("status", "pending")
           .select("id,attempt_count")
@@ -710,7 +721,7 @@ Deno.serve(async (req) => {
             .maybeSingle();
           if (subscriptionError) throw subscriptionError;
           if (!subscription || !subscription.is_active || !subscription.verified_at) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
             skipped++;
             continue;
           }
@@ -771,7 +782,7 @@ Deno.serve(async (req) => {
             "<p><a href=\"" + unsubscribeUrl.toString() + "\">Unsubscribe from email alerts</a></p>";
           const providerMessageId = await sendEmailAlertMessage(config, subscription.email, subject, textBody, htmlBody);
           const { error: markSentError } = await db.from("email_alert_deliveries")
-            .update({ status: "sent", provider_message_id: providerMessageId, sent_at: new Date().toISOString(), last_error: null })
+            .update({ status: "sent", provider_message_id: providerMessageId, sent_at: new Date().toISOString(), last_error: null, processing_started_at: null })
             .eq("id", delivery.id);
           if (markSentError) throw markSentError;
           sent++;
@@ -780,6 +791,7 @@ Deno.serve(async (req) => {
           const retryDelayMs = Math.min(6 * 60 * 60 * 1000, 60 * 1000 * (2 ** Math.max(0, attemptCount - 1)));
           await db.from("email_alert_deliveries").update({
             status: exhausted ? "failed" : "pending",
+            processing_started_at: null,
             scheduled_for: new Date(Date.now() + retryDelayMs).toISOString(),
             last_error: "Delivery attempt failed; details withheld from public logs.",
           }).eq("id", delivery.id);
