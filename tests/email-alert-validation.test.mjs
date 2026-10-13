@@ -12,7 +12,7 @@ import {
 
 test("normalizes valid emails and rejects unsafe or malformed addresses", () => {
   assert.equal(normalizeAlertEmail("  Student.Example@Example.COM "), "student.example@example.com");
-  for (const value of [null, 42, "", "not-an-email", "name@localhost", "a\\r\\nb@example.com", "a b@example.com", "x".repeat(250) + "@example.com"]) {
+  for (const value of [null, 42, "", "not-an-email", "name@localhost", "a\r\nb@example.com", "a b@example.com", "x".repeat(250) + "@example.com"]) {
     assert.equal(normalizeAlertEmail(value), null, String(value));
   }
 });
