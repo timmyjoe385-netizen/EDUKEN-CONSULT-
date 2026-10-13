@@ -69,3 +69,15 @@ export function emailAlertRateLimitPolicy(action) {
   if (action === "verify" || action === "unsubscribe") return Object.freeze({ limit: 20, windowSeconds: 900 });
   return null;
 }
+
+
+export const MAX_EMAIL_ALERT_DELIVERY_ATTEMPTS = 5;
+
+export function isEmailAlertAttemptExhausted(attemptCount) {
+  return Number.isFinite(attemptCount) && attemptCount >= MAX_EMAIL_ALERT_DELIVERY_ATTEMPTS;
+}
+
+export function emailAlertRetryDelayMs(attemptCount) {
+  const attempt = Number.isFinite(attemptCount) ? Math.max(1, Math.floor(attemptCount)) : 1;
+  return Math.min(6 * 60 * 60 * 1000, 60 * 1000 * (2 ** (attempt - 1)));
+}
