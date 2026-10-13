@@ -337,6 +337,12 @@ async function enqueueOpportunityEmailAlerts(
   const rows: Record<string, any>[] = [];
   for (const subscription of recipients) {
     if (options.queueNew) {
+      await db.from("email_alert_deliveries")
+        .update({ status: "pending", scheduled_for: now.toISOString(), attempt_count: 0, last_error: null })
+        .eq("subscription_id", subscription.id)
+        .eq("opportunity_id", opportunity.id)
+        .eq("event_type", "new_opportunity")
+        .eq("status", "cancelled");
       rows.push({
         subscription_id: subscription.id,
         opportunity_id: opportunity.id,
@@ -360,10 +366,17 @@ async function enqueueOpportunityEmailAlerts(
         for (const days of [7, 3, 1]) {
           const scheduledMs = Math.max(now.getTime(), deadlineMs - days * 24 * 60 * 60 * 1000);
           if (scheduledMs >= deadlineMs) continue;
+          const eventType = "deadline_" + days + "d";
+          await db.from("email_alert_deliveries")
+            .update({ status: "pending", scheduled_for: new Date(scheduledMs).toISOString(), attempt_count: 0, last_error: null })
+            .eq("subscription_id", subscription.id)
+            .eq("opportunity_id", opportunity.id)
+            .eq("event_type", eventType)
+            .eq("status", "cancelled");
           rows.push({
             subscription_id: subscription.id,
             opportunity_id: opportunity.id,
-            event_type: "deadline_" + days + "d",
+            event_type: eventType,
             scheduled_for: new Date(scheduledMs).toISOString(),
             status: "pending",
           });
@@ -909,7 +922,7 @@ Deno.serve(async (req) => {
         if (!data) return json({ error: "Record not found." }, 404);
         if (table === "opportunities") {
           if (!previousOpportunity.is_published && data.is_published) await notifyOpportunitySubscribers(data);
-          const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && String(previousOpportunity.official_source || "").trim());
+          const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && safeHttpUrl(previousOpportunity.official_source));
           const isEligible = Boolean(data.is_published && data.notify_on_publish && data.verified && String(data.official_source || "").trim());
           const deadlineChanged = previousOpportunity.deadline !== data.deadline;
           const categoryChanged = previousOpportunity.category !== data.category;
