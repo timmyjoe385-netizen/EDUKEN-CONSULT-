@@ -597,7 +597,8 @@ export default function PlatformHub({
               {notificationStatus}
             </p>
           )}
-          <button className="secondary full" onClick={() => markRead()}
+          <button className="secondary full" onClick={() => markRead()}>
+            <Check size={15} /> Mark all as read
           </button>
           <h4>Topics</h4>
           {TOPICS.map(topic => {
