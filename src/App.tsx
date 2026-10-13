@@ -158,6 +158,7 @@ function App() {
           type: item.type ?? item.category ?? '',
           details: item.details ?? item.description ?? item.content ?? '',
           link: item.link ?? item.application_url ?? '',
+          sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
           status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
         })),
         updates: (live.updates || []).map((item: Item) => ({
@@ -390,6 +391,7 @@ function App() {
             type: item.type ?? item.category ?? '',
             details: item.details ?? item.description ?? item.content ?? '',
             link: item.link ?? item.application_url ?? '',
+            sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
           };
         }
         if (table === 'updates') {
@@ -609,20 +611,11 @@ function App() {
       'deadline',
       'details',
       'link',
-    ],
-    updates: [
-      'category',
-      'title',
-      'body',
-      'date',
       'sourceUrl',
-      'verified',
-      'featured',
-      'urgent',
-      'status',
     ],
-    faqs: ['question', 'answer', 'status'],
-    services: ['name', 'status'],
+    updates: ['category', 'title', 'body', 'sourceUrl', 'status'],
+    faqs: ['question', 'answer', 'category', 'status'],
+    services: ['name', 'category', 'description', 'price', 'status'],
   };
 
   if (adminView) {
