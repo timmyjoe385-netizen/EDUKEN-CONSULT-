@@ -453,8 +453,25 @@ function App() {
 
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     if (savingAdminMode) return;
-    setSavingAdminMode(publishMode);
     const table = adminTab;
+    const requiredFields: Record<string, { field: string; label: string }[]> = {
+      opportunities: [{ field: 'title', label: 'opportunity title' }],
+      admissions: [{ field: 'school', label: 'school name' }],
+      updates: [{ field: 'title', label: 'update title' }],
+      faqs: [
+        { field: 'question', label: 'FAQ question' },
+        { field: 'answer', label: 'FAQ answer' },
+      ],
+      services: [{ field: 'name', label: 'service name' }],
+    };
+    const missingField = (requiredFields[table] || []).find(
+      required => !String(form[required.field] ?? '').trim()
+    );
+    if (missingField) {
+      showToast('Please enter the ' + missingField.label + ' before saving or publishing.');
+      return;
+    }
+    setSavingAdminMode(publishMode);
     try {
       const payload: Record<string, any> = { ...form };
       if (table !== 'opportunities') {
@@ -892,6 +909,10 @@ function App() {
                     const isBoolean = booleanFields.includes(field);
                     const isLongText = [
                       'content',
+                      'description',
+                      'details',
+                      'body',
+                      'answer',
                       'eligibility',
                       'benefits',
                       'howToApply',
@@ -909,7 +930,7 @@ function App() {
                         className={isBoolean ? 'admin-toggle-field' : undefined}
                       >
                         <span>{fieldLabel}</span>
-                        {adminTab === 'opportunities' && field === 'status' ? (
+                        {field === 'status' ? (
                           <select
                             value={String(form.status || (form.is_published ? 'PUBLISHED' : 'DRAFT')).toUpperCase() === 'PUBLISHED' ? 'PUBLISHED' : 'DRAFT'}
                             onChange={e => setForm({ ...form, status: e.target.value, is_published: e.target.value === 'PUBLISHED' })}
@@ -985,9 +1006,34 @@ function App() {
                       )}
                     </div>
                   ) : (
-                    <button className="primary" onClick={() => saveAdmin('preserve')}>
-                      {form.id ? 'Save changes' : 'Publish item'}
-                    </button>
+                    <div className="admin-editor-actions">
+                      <button
+                        className="secondary"
+                        type="button"
+                        disabled={savingAdminMode !== null}
+                        onClick={() => saveAdmin('draft')}
+                      >
+                        {savingAdminMode === 'draft' ? 'Saving Draft…' : 'Save Draft'}
+                      </button>
+                      {form.id ? (
+                        <button
+                          className="secondary"
+                          type="button"
+                          disabled={savingAdminMode !== null}
+                          onClick={() => saveAdmin('preserve')}
+                        >
+                          {savingAdminMode === 'preserve' ? 'Saving…' : 'Save Changes'}
+                        </button>
+                      ) : null}
+                      <button
+                        className="primary"
+                        type="button"
+                        disabled={savingAdminMode !== null}
+                        onClick={() => saveAdmin('publish')}
+                      >
+                        {savingAdminMode === 'publish' ? 'Publishing…' : (form.id ? 'Publish Changes' : 'Publish Item')}
+                      </button>
+                    </div>
                   )}
                 </div>
               </div>
