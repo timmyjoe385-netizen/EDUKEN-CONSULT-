@@ -29,7 +29,7 @@ The feature intentionally returns a clear `503` until all four Edge Function sec
 - A GitHub Actions scheduler is included at `.github/workflows/email-alert-delivery.yml`. After the migration and function are approved/deployed, configure repository secrets `EDUKEN_EMAIL_ALERTS_PROCESS_URL` (full HTTPS URL ending in `/api/internal/email-alerts/process`) and `EDUKEN_EMAIL_ALERTS_CRON_SECRET` (at least 32 characters). The processor handles up to 25 due deliveries per invocation and retries temporary failures up to five attempts.
 - The scheduled workflow intentionally does nothing until both repository secrets exist. Do not configure them until the database migration, Supabase function secrets and sender-domain verification are approved.
 - Add operational monitoring and an alert for repeatedly failing delivery jobs.
-- Add rate limiting/abuse controls for public subscription and token endpoints before broad public launch.
+- An atomic database-backed rate limiter is included in the feature migration: five subscription requests per IP per 15 minutes and 20 verification/unsubscribe attempts per IP per 15 minutes. It stores only hashed action/IP keys, fails closed if rate limiting is unavailable, and has no public table/function permissions.
 - Test against a dedicated inbox, then review all checks before production deployment.
 
 ## Security and deployment boundary
