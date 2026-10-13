@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
-import { validateEmailAlertSubscription } from "./email-alert-validation.mjs";
+import { isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -593,8 +593,7 @@ Deno.serve(async (req) => {
       // Per-address cooldown prevents repeated confirmation-email spam without
       // blocking already-verified subscribers from updating their preferences.
       if (existing && !(existing.is_active && existing.verified_at)) {
-        const lastRequestedAt = Date.parse(String(existing.updated_at || ""));
-        if (Number.isFinite(lastRequestedAt) && now.getTime() - lastRequestedAt < 2 * 60 * 1000) {
+        if (isWithinEmailAlertCooldown(existing.updated_at, now.getTime())) {
           return json({ error: "A confirmation was requested recently. Please wait two minutes before trying again." }, 429);
         }
       }
