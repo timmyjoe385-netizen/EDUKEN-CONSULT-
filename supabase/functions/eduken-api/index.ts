@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
-import { emailAlertRateLimitPolicy, getEmailAlertClientIp, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
+import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -316,10 +316,11 @@ async function enqueueOpportunityEmailAlerts(
     safeHttpUrl(opportunity.official_source)
   );
   if (!eligible) {
-    await db.from("email_alert_deliveries")
+    const { error: cancelError } = await db.from("email_alert_deliveries")
       .update({ status: "cancelled" })
       .eq("opportunity_id", opportunity.id)
       .eq("status", "pending");
+    if (cancelError) throw cancelError;
     return;
   }
 
@@ -343,12 +344,13 @@ async function enqueueOpportunityEmailAlerts(
   const rows: Record<string, any>[] = [];
   for (const subscription of recipients) {
     if (options.queueNew) {
-      await db.from("email_alert_deliveries")
+      const { error: requeueError } = await db.from("email_alert_deliveries")
         .update({ status: "pending", scheduled_for: now.toISOString(), attempt_count: 0, last_error: null })
         .eq("subscription_id", subscription.id)
         .eq("opportunity_id", opportunity.id)
         .eq("event_type", "new_opportunity")
         .eq("status", "cancelled");
+      if (requeueError) throw requeueError;
       rows.push({
         subscription_id: subscription.id,
         opportunity_id: opportunity.id,
@@ -360,11 +362,12 @@ async function enqueueOpportunityEmailAlerts(
   }
 
   if (options.rescheduleDeadlines) {
-    await db.from("email_alert_deliveries")
+    const { error: cancelDeadlineError } = await db.from("email_alert_deliveries")
       .update({ status: "cancelled" })
       .eq("opportunity_id", opportunity.id)
       .in("event_type", ["deadline_7d", "deadline_3d", "deadline_1d"])
       .eq("status", "pending");
+    if (cancelDeadlineError) throw cancelDeadlineError;
 
     const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
     if (Number.isFinite(deadlineMs) && deadlineMs > now.getTime()) {
@@ -374,12 +377,13 @@ async function enqueueOpportunityEmailAlerts(
           // Never send a "7 days left" reminder after that seven-day point has passed.
           if (scheduledMs < now.getTime() || scheduledMs >= deadlineMs) continue;
           const eventType = "deadline_" + days + "d";
-          await db.from("email_alert_deliveries")
+          const { error: requeueDeadlineError } = await db.from("email_alert_deliveries")
             .update({ status: "pending", scheduled_for: new Date(scheduledMs).toISOString(), attempt_count: 0, last_error: null })
             .eq("subscription_id", subscription.id)
             .eq("opportunity_id", opportunity.id)
             .eq("event_type", eventType)
             .eq("status", "cancelled");
+          if (requeueDeadlineError) throw requeueDeadlineError;
           rows.push({
             subscription_id: subscription.id,
             opportunity_id: opportunity.id,
@@ -397,6 +401,11 @@ async function enqueueOpportunityEmailAlerts(
       .upsert(rows, { onConflict: "subscription_id,opportunity_id,event_type", ignoreDuplicates: true });
     if (insertError) throw insertError;
   }
+}
+
+async function updateEmailAlertDelivery(deliveryId: string, values: Record<string, unknown>) {
+  const { error } = await db.from("email_alert_deliveries").update(values).eq("id", deliveryId);
+  if (error) throw error;
 }
 
 async function sendEmailAlertMessage(
@@ -727,10 +736,11 @@ Deno.serve(async (req) => {
         .update({ is_active: false, updated_at: now })
         .eq("id", subscription.id);
       if (error) throw error;
-      await db.from("email_alert_deliveries")
+      const { error: cancelError } = await db.from("email_alert_deliveries")
         .update({ status: "cancelled" })
         .eq("subscription_id", subscription.id)
         .eq("status", "pending");
+      if (cancelError) throw cancelError;
       return json({ message: "You have been unsubscribed from EDUKEN email alerts." });
     }
 
@@ -783,7 +793,7 @@ Deno.serve(async (req) => {
             .maybeSingle();
           if (subscriptionError) throw subscriptionError;
           if (!subscription || !subscription.is_active || !subscription.verified_at) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
             skipped++;
             continue;
           }
@@ -794,7 +804,7 @@ Deno.serve(async (req) => {
             .maybeSingle();
           if (opportunityError) throw opportunityError;
           if (!opportunity) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
             skipped++;
             continue;
           }
@@ -804,14 +814,14 @@ Deno.serve(async (req) => {
           );
           const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
           if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
             skipped++;
             continue;
           }
 
           const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
           if (String(delivery.event_type).startsWith("deadline_") && (!Number.isFinite(deadlineMs) || deadlineMs <= now.getTime())) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
             skipped++;
             continue;
           }
@@ -858,8 +868,8 @@ Deno.serve(async (req) => {
           if (markSentError) throw markSentError;
           sent++;
         } catch {
-          const exhausted = attemptCount >= 5;
-          const retryDelayMs = Math.min(6 * 60 * 60 * 1000, 60 * 1000 * (2 ** Math.max(0, attemptCount - 1)));
+          const exhausted = isEmailAlertAttemptExhausted(attemptCount);
+          const retryDelayMs = emailAlertRetryDelayMs(attemptCount);
           await db.from("email_alert_deliveries").update({
             status: exhausted ? "failed" : "pending",
             processing_started_at: null,
