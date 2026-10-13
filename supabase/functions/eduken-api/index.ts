@@ -399,13 +399,22 @@ async function enqueueOpportunityEmailAlerts(
   }
 }
 
-async function sendEmailAlertMessage(config: { apiKey: string; from: string }, to: string, subject: string, textBody: string, htmlBody: string) {
+async function sendEmailAlertMessage(
+  config: { apiKey: string; from: string },
+  to: string,
+  subject: string,
+  textBody: string,
+  htmlBody: string,
+  idempotencyKey?: string,
+) {
+  const headers: Record<string, string> = {
+    "Authorization": "Bearer " + config.apiKey,
+    "Content-Type": "application/json",
+  };
+  if (idempotencyKey) headers["Idempotency-Key"] = idempotencyKey;
   const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: {
-      "Authorization": "Bearer " + config.apiKey,
-      "Content-Type": "application/json",
-    },
+    headers,
     body: JSON.stringify({ from: config.from, to: [to], subject, text: textBody, html: htmlBody }),
   });
   if (!response.ok) {
@@ -781,7 +790,16 @@ Deno.serve(async (req) => {
             "\">View opportunity</a></p>" +
             (officialSourceUrl ? "<p><a href=\"" + escapeEmailHtml(officialSourceUrl) + "\">Official source</a></p>" : "") +
             "<p><a href=\"" + unsubscribeUrl.toString() + "\">Unsubscribe from email alerts</a></p>";
-          const providerMessageId = await sendEmailAlertMessage(config, subscription.email, subject, textBody, htmlBody);
+          // Reuse the same provider idempotency key on retries to avoid duplicate messages
+          // if the provider accepted a send but the database update failed.
+          const providerMessageId = await sendEmailAlertMessage(
+            config,
+            subscription.email,
+            subject,
+            textBody,
+            htmlBody,
+            "eduken-alert-delivery-" + delivery.id,
+          );
           const { error: markSentError } = await db.from("email_alert_deliveries")
             .update({ status: "sent", provider_message_id: providerMessageId, sent_at: new Date().toISOString(), last_error: null, processing_started_at: null })
             .eq("id", delivery.id);
