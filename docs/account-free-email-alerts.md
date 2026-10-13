@@ -18,6 +18,7 @@ Configure these through Supabase project secrets, never in the repository or bro
 - `RESEND_API_KEY` — Resend API key.
 - `EMAIL_FROM` — a verified sender, for example `EDUKEN CONSULT <alerts@your-verified-domain.example>`.
 - `PUBLIC_SITE_URL` — the HTTPS website origin used in verification links.
+- `EMAIL_ALERTS_TOKEN_SECRET` — a stable secret of at least 32 characters used to derive revocable unsubscribe tokens. Keep it unchanged after subscriptions exist.
 
 The feature intentionally returns a clear `503` until all three values are configured. Do not add fake credentials or send mail during automated browser tests.
 
@@ -25,12 +26,13 @@ The feature intentionally returns a clear `503` until all three values are confi
 
 - Apply the migration only after schema review and explicit production approval.
 - Configure and verify the sender domain in Resend.
-- Add the scheduled delivery processor for new published opportunities and 7/3/1-day deadline reminders.
+- Configure a trusted external scheduler to call `POST /api/internal/email-alerts/process` with `Authorization: Bearer <EMAIL_ALERTS_CRON_SECRET>`; `EMAIL_ALERTS_CRON_SECRET` must be at least 32 characters. The processor handles up to 25 due deliveries per invocation and retries temporary failures up to five attempts.
+- Schedule the processor at a short interval only after migration, provider secrets and sender-domain verification are approved.
 - Queue events idempotently, honor publication/source/notification eligibility, and reschedule or cancel reminders when content changes.
 - Add delivery retry/backoff, attempt limits, provider message ID storage and operational monitoring.
-- Add rate limiting/abuse controls for public subscription and token endpoints.
+- Add rate limiting/abuse controls for public subscription and token endpoints before broad public launch.
 - Test against a dedicated inbox, then review all checks before production deployment.
 
 ## Security and deployment boundary
 
-Tokens are never stored in plaintext in the database. The public UI removes one-time query tokens from the address bar before calling the API. Subscriber data and token hashes are not exposed through public database policies. This migration is not applied by this branch and the Edge Function is not deployed to production by CI.
+Verification tokens are never stored in plaintext in the database. Unsubscribe tokens are deterministically derived with HMAC from the subscription ID and `EMAIL_ALERTS_TOKEN_SECRET`; only their SHA-256 hashes are stored. Keep that secret stable to preserve existing unsubscribe links. The public UI removes one-time query tokens from the address bar before calling the API. Subscriber data and token hashes are not exposed through public database policies. This migration is not applied by this branch and the Edge Function is not deployed to production by CI.
