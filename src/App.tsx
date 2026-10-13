@@ -1721,7 +1721,7 @@ function App() {
               <article className="service-row" key={s.id} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
                 <span>{String(i + 1).padStart(2, '0')}</span>
                 <div style={{ flex: '1 1 220px', minWidth: 0 }}>
-                  <b style={{ display: 'block', marginBottom: 6 }}>{s.name}</b>
+                  <b style={{ display: 'block', marginBottom: 6 }}>{String(s.name || '').trim()}</b>
                   {s.category && <small style={{ display: 'block', opacity: 0.75, marginBottom: 6 }}>{s.category}</small>}
                   {s.description && <p style={{ margin: '0 0 8px', lineHeight: 1.55 }}>{s.description}</p>}
                   <strong style={{ display: 'block', marginBottom: 8 }}>
@@ -1944,7 +1944,7 @@ function App() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
               <div>
                 <span className="kicker">SERVICE REQUEST</span>
-                <h2 id="service-request-title" style={{ margin: '8px 0' }}>{selectedService.name}</h2>
+                <h2 id="service-request-title" style={{ margin: '8px 0' }}>{String(selectedService.name || '').trim()}</h2>
                 <p style={{ margin: '0 0 16px', lineHeight: 1.5 }}>Send your details and EDUKEN will contact you to confirm requirements and pricing. This form does not take payment.</p>
               </div>
               <button type="button" aria-label="Close service request" onClick={() => setSelectedService(null)}><X size={20} /></button>
