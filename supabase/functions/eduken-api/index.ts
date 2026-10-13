@@ -752,6 +752,12 @@ Deno.serve(async (req) => {
       if (!config) return json({ error: "Email alerts are not configured." }, 503);
 
       const now = new Date();
+      // Keep the private rate-limit table bounded without retaining inactive hashed IP keys indefinitely.
+      const rateLimitRetentionBefore = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
+      const { error: rateLimitCleanupError } = await db.from("email_alert_rate_limits")
+        .delete()
+        .lt("updated_at", rateLimitRetentionBefore);
+      if (rateLimitCleanupError) throw new Error("Could not clean up expired email alert rate limits.");
       const staleProcessingBefore = new Date(now.getTime() - 10 * 60 * 1000).toISOString();
       // Recover expired worker leases without ever exceeding the five-attempt cap.
       const { error: exhaustedRecoveryError } = await db.from("email_alert_deliveries")
@@ -870,12 +876,13 @@ Deno.serve(async (req) => {
         } catch {
           const exhausted = isEmailAlertAttemptExhausted(attemptCount);
           const retryDelayMs = emailAlertRetryDelayMs(attemptCount);
-          await db.from("email_alert_deliveries").update({
+          const { error: retryStateError } = await db.from("email_alert_deliveries").update({
             status: exhausted ? "failed" : "pending",
             processing_started_at: null,
             scheduled_for: new Date(Date.now() + retryDelayMs).toISOString(),
             last_error: "Delivery attempt failed; details withheld from public logs.",
           }).eq("id", delivery.id);
+          if (retryStateError) throw new Error("Could not record the email alert retry state.");
           failed++;
         }
       }
