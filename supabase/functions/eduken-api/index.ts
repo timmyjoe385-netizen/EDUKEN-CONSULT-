@@ -250,6 +250,15 @@ function opportunityAlertTopic(opportunity: Record<string, any>) {
   return null;
 }
 
+function safeHttpUrl(value: unknown) {
+  try {
+    const url = new URL(String(value || ""));
+    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
 function escapeEmailHtml(value: unknown) {
   return String(value ?? "").replace(/[&<>"']/g, char => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -304,7 +313,7 @@ async function enqueueOpportunityEmailAlerts(
     opportunity.is_published &&
     opportunity.notify_on_publish &&
     opportunity.verified &&
-    String(opportunity.official_source || "").trim()
+    safeHttpUrl(opportunity.official_source)
   );
   if (!eligible) {
     await db.from("email_alert_deliveries")
@@ -700,7 +709,7 @@ Deno.serve(async (req) => {
           if (opportunityError) throw opportunityError;
           const eligible = Boolean(
             opportunity && opportunity.is_published && opportunity.verified &&
-            opportunity.notify_on_publish && String(opportunity.official_source || "").trim()
+            opportunity.notify_on_publish && safeHttpUrl(opportunity.official_source)
           );
           const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
           if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
@@ -734,12 +743,14 @@ Deno.serve(async (req) => {
             intro = "The deadline for this opportunity is approaching in " + days + (days === 1 ? " day." : " days.");
           }
           const description = String(opportunity.description || "").slice(0, 1200);
+          const officialSourceUrl = safeHttpUrl(opportunity.official_source);
           const textBody = intro + "\n\n" + title + "\n" + description + "\n\nOpen: " + opportunityUrl.toString() +
-            "\nOfficial source: " + String(opportunity.official_source || "") + "\nUnsubscribe: " + unsubscribeUrl.toString();
+            (officialSourceUrl ? "\nOfficial source: " + officialSourceUrl : "") + "\nUnsubscribe: " + unsubscribeUrl.toString();
           const htmlBody = "<p>" + escapeEmailHtml(intro) + "</p><h2>" + escapeEmailHtml(title) + "</h2><p>" +
             escapeEmailHtml(description) + "</p><p><a href=\"" + opportunityUrl.toString() +
-            "\">View opportunity</a></p><p><a href=\"" + escapeEmailHtml(String(opportunity.official_source || "")) +
-            "\">Official source</a></p><p><a href=\"" + unsubscribeUrl.toString() + "\">Unsubscribe from email alerts</a></p>";
+            "\">View opportunity</a></p>" +
+            (officialSourceUrl ? "<p><a href=\"" + escapeEmailHtml(officialSourceUrl) + "\">Official source</a></p>" : "") +
+            "<p><a href=\"" + unsubscribeUrl.toString() + "\">Unsubscribe from email alerts</a></p>";
           const providerMessageId = await sendEmailAlertMessage(config, subscription.email, subject, textBody, htmlBody);
           const { error: markSentError } = await db.from("email_alert_deliveries")
             .update({ status: "sent", provider_message_id: providerMessageId, sent_at: new Date().toISOString(), last_error: null })
