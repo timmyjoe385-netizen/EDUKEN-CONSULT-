@@ -92,6 +92,8 @@ function App() {
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
   const [form, setForm] = useState<Record<string, any>>({});
+  const [deleteTarget, setDeleteTarget] = useState<{ item: Item; table: string } | null>(null);
+  const [deletingAdmin, setDeletingAdmin] = useState(false);
   const [savingAdminMode, setSavingAdminMode] = useState<'draft' | 'publish' | 'preserve' | null>(null);
   const [analyticsSummary, setAnalyticsSummary] = useState<any>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
@@ -363,15 +365,19 @@ function App() {
     }
   };
 
-  const deleteAdmin = async (id: string) => {
-    if (!window.confirm('Delete this item permanently?')) return;
+  const deleteAdmin = async (item: Item, table: string) => {
+    if (!item?.id || !table || deletingAdmin) return;
+    setDeletingAdmin(true);
     try {
-      await api.delete('/api/admin/content/' + adminTab + '/' + id);
-      await loadAdmin(adminTab);
+      await api.delete('/api/admin/content/' + table + '/' + item.id);
+      setDeleteTarget(null);
+      await loadAdmin(table);
       await loadContent();
       showToast('Deleted successfully.');
     } catch {
-      showToast('Could not delete this item.');
+      showToast('Could not delete this item. Please try again.');
+    } finally {
+      setDeletingAdmin(false);
     }
   };
 
@@ -467,6 +473,18 @@ function App() {
             <CheckCircle2 size={18} />
             <span>{toast}</span>
             <button type="button" aria-label="Dismiss notification" onClick={() => setToast('')}><X size={16} /></button>
+          </div>
+        )}
+        {deleteTarget && (
+          <div className="admin-confirm-backdrop">
+            <section className="admin-confirm-dialog" role="alertdialog" aria-modal="true" aria-labelledby="admin-delete-title" aria-describedby="admin-delete-description">
+              <h2 id="admin-delete-title">Delete this item?</h2>
+              <p id="admin-delete-description">This will permanently delete <strong>{deleteTarget.item.title || deleteTarget.item.school || deleteTarget.item.question || deleteTarget.item.name || deleteTarget.item.id}</strong>. This action cannot be undone.</p>
+              <div className="admin-confirm-actions">
+                <button type="button" className="secondary" disabled={deletingAdmin} onClick={() => setDeleteTarget(null)}>Cancel</button>
+                <button type="button" className="danger" disabled={deletingAdmin} onClick={() => deleteAdmin(deleteTarget.item, deleteTarget.table)}>{deletingAdmin ? 'Deleting…' : 'Delete permanently'}</button>
+              </div>
+            </section>
           </div>
         )}
         <header className="admin-header">
@@ -649,7 +667,7 @@ function App() {
                         <button onClick={() => setForm(item)}>Edit</button>
                         <button
                           className="danger"
-                          onClick={() => deleteAdmin(item.id)}
+                          onClick={() => setDeleteTarget({ item, table: adminTab })}
                         >
                           <Trash2 size={14} />
                         </button>
