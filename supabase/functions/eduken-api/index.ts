@@ -370,8 +370,9 @@ async function enqueueOpportunityEmailAlerts(
     if (Number.isFinite(deadlineMs) && deadlineMs > now.getTime()) {
       for (const subscription of recipients) {
         for (const days of [7, 3, 1]) {
-          const scheduledMs = Math.max(now.getTime(), deadlineMs - days * 24 * 60 * 60 * 1000);
-          if (scheduledMs >= deadlineMs) continue;
+          const scheduledMs = deadlineMs - days * 24 * 60 * 60 * 1000;
+          // Never send a "7 days left" reminder after that seven-day point has passed.
+          if (scheduledMs < now.getTime() || scheduledMs >= deadlineMs) continue;
           const eventType = "deadline_" + days + "d";
           await db.from("email_alert_deliveries")
             .update({ status: "pending", scheduled_for: new Date(scheduledMs).toISOString(), attempt_count: 0, last_error: null })
