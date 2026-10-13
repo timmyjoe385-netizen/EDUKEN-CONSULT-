@@ -101,6 +101,7 @@ function App() {
   const [analyticsDays, setAnalyticsDays] = useState(30);
   const [articleSlug, setArticleSlug] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
+  const [shareDraft, setShareDraft] = useState('');
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
@@ -478,12 +479,40 @@ function App() {
       await loadAdmin(table);
       await loadContent();
 
-      if (table === 'opportunities' && publishMode === 'draft') {
-        showToast('Draft saved successfully. You can keep editing it or publish it when ready.');
-      } else if (table === 'opportunities' && publishMode === 'publish') {
-        showToast('Published successfully! Your opportunity has been published.');
+      if (publishMode === 'draft') {
+        showToast('Saved as draft successfully.');
+      } else if (publishMode === 'publish') {
+        showToast('Published successfully.');
+        if (['opportunities', 'admissions', 'updates'].includes(table)) {
+          const title = String(payload.title || payload.school || payload.name || 'EDUKEN CONSULT Update').trim();
+          const summary = String(payload.description || payload.body || payload.details || payload.content || '')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .slice(0, 220);
+          const slug = String(payload.slug || makeSlug(title));
+          const link = table === 'opportunities'
+            ? articleUrl(slug)
+            : table === 'admissions'
+              ? window.location.origin + '/#admissions'
+              : window.location.origin + '/#updates';
+          const heading = table === 'opportunities'
+            ? '📢 OPPORTUNITY UPDATE'
+            : table === 'admissions'
+              ? '🎓 ADMISSION UPDATE'
+              : '📰 EDUKEN UPDATE';
+          setShareDraft([
+            heading,
+            '',
+            title,
+            ...(summary ? [summary, ''] : ['']),
+            'Read the full details here 👇',
+            link,
+            '',
+            '🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+          ].join('\n'));
+        }
       } else {
-        showToast('Saved successfully.');
+        showToast('Changes saved successfully.');
       }
     } catch (error) {
       showToast(error instanceof Error ? 'Could not save this item: ' + error.message : 'Could not save this item. Please try again.');
@@ -600,6 +629,30 @@ function App() {
             <CheckCircle2 size={18} />
             <span>{toast}</span>
             <button type="button" aria-label="Dismiss notification" onClick={() => setToast('')}><X size={16} /></button>
+          </div>
+        )}
+        {shareDraft && (
+          <div className="share-composer-backdrop" role="dialog" aria-modal="true" aria-labelledby="share-composer-title">
+            <section className="share-composer">
+              <button type="button" className="share-composer-close" aria-label="Close share message" onClick={() => setShareDraft('')}>×</button>
+              <span className="kicker">PUBLISHED SUCCESSFULLY</span>
+              <h2 id="share-composer-title">Your update is ready to share 🎉</h2>
+              <p>Review or edit this WhatsApp-ready message. Nothing is sent automatically.</p>
+              <textarea aria-label="WhatsApp share message" value={shareDraft} onChange={e => setShareDraft(e.target.value)} />
+              <div className="share-composer-actions">
+                <button type="button" className="secondary" onClick={async () => {
+                  try {
+                    await navigator.clipboard.writeText(shareDraft);
+                    showToast('Share message copied. You can paste it into your WhatsApp DM or group.');
+                  } catch {
+                    showToast('Copy was blocked by this browser. Select the message and copy it manually.');
+                  }
+                }}>Copy message</button>
+                <button type="button" className="primary" onClick={() => window.open('https://wa.me/?text=' + encodeURIComponent(shareDraft), '_blank', 'noopener,noreferrer')}>Open WhatsApp</button>
+                <button type="button" className="secondary" onClick={() => setShareDraft('')}>Close</button>
+              </div>
+              <small>Choose a WhatsApp chat after it opens. EDUKEN does not send messages on your behalf.</small>
+            </section>
           </div>
         )}
         {deleteTarget && (
