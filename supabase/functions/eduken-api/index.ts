@@ -873,21 +873,40 @@ Deno.serve(async (req) => {
         const b = mapAdminInput(table, await req.json());
         const { data, error } = await db.from(table).insert(b).select().single();
         if (error) throw error;
-        if (table === "opportunities") await notifyOpportunitySubscribers(data);
+        if (table === "opportunities") {
+          await notifyOpportunitySubscribers(data);
+          if (data.is_published) {
+            await enqueueOpportunityEmailAlerts(data, { queueNew: true, rescheduleDeadlines: true });
+          }
+        }
         return json({ id: data.id }, 201);
       }
       if (req.method === "PUT" && id) {
         const b = mapAdminInput(table, await req.json());
-        let wasPublished = false;
+        let previousOpportunity: any = null;
         if (table === "opportunities") {
-          const { data: existing, error: readError } = await db.from(table).select("is_published").eq("id", id).maybeSingle();
+          const { data: existing, error: readError } = await db.from(table)
+            .select("is_published,notify_on_publish,verified,official_source,deadline,category")
+            .eq("id", id)
+            .maybeSingle();
           if (readError) throw readError;
           if (!existing) return json({ error: "Record not found." }, 404);
-          wasPublished = Boolean(existing.is_published);
+          previousOpportunity = existing;
         }
         const { data, error } = await db.from(table).update(b).eq("id", id).select().maybeSingle();
-        if (error) throw error; if (!data) return json({ error: "Record not found." }, 404);
-        if (table === "opportunities" && !wasPublished && data.is_published) await notifyOpportunitySubscribers(data);
+        if (error) throw error;
+        if (!data) return json({ error: "Record not found." }, 404);
+        if (table === "opportunities") {
+          if (!previousOpportunity.is_published && data.is_published) await notifyOpportunitySubscribers(data);
+          const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && String(previousOpportunity.official_source || "").trim());
+          const isEligible = Boolean(data.is_published && data.notify_on_publish && data.verified && String(data.official_source || "").trim());
+          const deadlineChanged = previousOpportunity.deadline !== data.deadline;
+          const categoryChanged = previousOpportunity.category !== data.category;
+          await enqueueOpportunityEmailAlerts(data, {
+            queueNew: isEligible && (!wasEligible || categoryChanged),
+            rescheduleDeadlines: !isEligible || !wasEligible || deadlineChanged || categoryChanged,
+          });
+        }
         return json({ ok: true });
       }
       if (req.method === "DELETE" && id) {
