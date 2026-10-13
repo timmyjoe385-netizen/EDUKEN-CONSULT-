@@ -76,6 +76,41 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
   }
 });
 
+
+test('service request API rejects malformed and oversized submissions safely', async ({ request }) => {
+  const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
+  const headers = {
+    apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p',
+    'content-type': 'application/json',
+  };
+  const invalidPayloads = [
+    {},
+    { customerName: '   ', whatsapp: '08000000000', details: 'Test request' },
+    { customerName: 'Test user', whatsapp: '   ', details: 'Test request' },
+    { customerName: 'Test user', whatsapp: '08000000000', details: '   ' },
+    { customerName: 42, whatsapp: '08000000000', details: 'Test request' },
+    { customerName: 'Test user', whatsapp: '08000000000', details: 'Test request', email: 'not-an-email' },
+    { customerName: 'x'.repeat(121), whatsapp: '08000000000', details: 'Test request' },
+    { customerName: 'Test user', whatsapp: '08000000000', details: 'x'.repeat(4001) },
+    { customerName: 'Test user', whatsapp: '08000000000', details: 'Test request', serviceId: { unexpected: true } },
+  ];
+
+  for (const payload of invalidPayloads) {
+    const response = await request.post(base + '/api/service-requests', {
+      headers,
+      data: payload,
+      timeout: 20_000,
+    });
+    expect(response.status(), 'invalid service requests must be rejected before database writes').toBe(400);
+  }
+
+  const privateRead = await request.get(base + '/api/service-requests', {
+    headers: { apikey: headers.apikey },
+    timeout: 20_000,
+  });
+  expect(privateRead.status(), 'customer request history must require sign-in').toBe(401);
+});
+
 test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
