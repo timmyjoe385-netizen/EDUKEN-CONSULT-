@@ -6,6 +6,8 @@ import {
   normalizeAlertEmail,
   validateEmailAlertSubscription,
   isWithinEmailAlertCooldown,
+  emailAlertRateLimitPolicy,
+  getEmailAlertClientIp,
 } from "../supabase/functions/eduken-api/email-alert-validation.mjs";
 
 test("normalizes valid emails and rejects unsafe or malformed addresses", () => {
@@ -85,4 +87,24 @@ test("delivery retries use bounded exponential backoff and stop after five attem
   assert.equal(isEmailAlertAttemptExhausted(4), false);
   assert.equal(isEmailAlertAttemptExhausted(5), true);
   assert.equal(isEmailAlertAttemptExhausted(6), true);
+});
+
+
+test("rate limits are explicit and bounded by action", () => {
+  assert.deepEqual(emailAlertRateLimitPolicy("subscribe"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("verify"), { limit: 20, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("unsubscribe"), { limit: 20, windowSeconds: 900 });
+  assert.equal(emailAlertRateLimitPolicy("admin"), null);
+});
+
+test("client IP extraction prefers trusted gateway headers and rejects missing values", () => {
+  assert.equal(getEmailAlertClientIp(new Headers({
+    "cf-connecting-ip": "203.0.113.4",
+    "x-forwarded-for": "198.51.100.8, 203.0.113.9",
+  })), "203.0.113.4");
+  assert.equal(getEmailAlertClientIp(new Headers({
+    "x-forwarded-for": "198.51.100.8, 203.0.113.9",
+  })), "203.0.113.9");
+  assert.equal(getEmailAlertClientIp(new Headers()), null);
+  assert.equal(getEmailAlertClientIp(new Headers({ "cf-connecting-ip": "x".repeat(129) })), null);
 });
