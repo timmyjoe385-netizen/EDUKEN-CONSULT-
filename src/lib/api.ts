@@ -61,11 +61,22 @@ const validSession = async () => {
   return refreshSession(session);
 };
 
+const isUnisolatedPreview = () => {
+  const host = window.location.hostname.toLowerCase();
+  // Keep the known production hostname working. Other Cloudflare Workers
+  // preview hostnames must not write to the production Supabase project.
+  return host.endsWith('.workers.dev') && host !== 'eduken-consult.timmyjoe385.workers.dev';
+};
+
 const request = async (
   path: string,
   options: RequestInit = {},
   retry = true
 ): Promise<any> => {
+  const method = String(options.method || 'GET').toUpperCase();
+  if (isUnisolatedPreview() && !['GET', 'HEAD', 'OPTIONS'].includes(method)) {
+    throw new Error('Preview safety mode: saving is disabled until a separate test database is connected. No changes were sent to the live database.');
+  }
   const session = await validSession();
   const headers = new Headers(options.headers || {});
   headers.set('Content-Type', 'application/json');
