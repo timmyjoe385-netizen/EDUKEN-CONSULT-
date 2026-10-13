@@ -159,6 +159,50 @@ test('account-free email alert form submits only the selected topics', async ({ 
   });
 });
 
+test('email alert verification links consume tokens safely', async ({ page }) => {
+  const token = 'a'.repeat(64);
+  let postedBody;
+  let urlWhenRequested;
+  await page.route('**/functions/v1/eduken-api/api/email-alerts/verify', async route => {
+    postedBody = route.request().postDataJSON();
+    urlWhenRequested = page.url();
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ message: 'Your email alerts are confirmed and active.' }),
+    });
+  });
+
+  await page.goto('/?email_alert_verify=' + token + '#admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('Your email alerts are confirmed and active.').first()).toBeVisible();
+  expect(postedBody).toEqual({ token });
+  expect(urlWhenRequested).not.toContain('email_alert_verify');
+  expect(page.url()).not.toContain(token);
+  expect(page.url()).toMatch(/#admissions$/);
+});
+
+test('email alert unsubscribe links consume tokens safely', async ({ page }) => {
+  const token = 'b'.repeat(64);
+  let postedBody;
+  let urlWhenRequested;
+  await page.route('**/functions/v1/eduken-api/api/email-alerts/unsubscribe', async route => {
+    postedBody = route.request().postDataJSON();
+    urlWhenRequested = page.url();
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ message: 'You have been unsubscribed from EDUKEN email alerts.' }),
+    });
+  });
+
+  await page.goto('/?email_alert_unsubscribe=' + token + '#admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText('You have been unsubscribed from EDUKEN email alerts.').first()).toBeVisible();
+  expect(postedBody).toEqual({ token });
+  expect(urlWhenRequested).not.toContain('email_alert_unsubscribe');
+  expect(page.url()).not.toContain(token);
+  expect(page.url()).toMatch(/#admissions$/);
+});
+
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
