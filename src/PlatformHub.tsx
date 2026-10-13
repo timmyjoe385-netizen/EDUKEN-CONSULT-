@@ -23,6 +23,14 @@ const TOPICS = [
   'Competitions',
   'Remote Jobs',
 ];
+const makeOpportunitySlug = (item: Item) =>
+  item.slug ||
+  String(item.title || item.id || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+
 const STATUSES = [
   'Planning to Apply',
   'Application Started',
@@ -158,7 +166,7 @@ export default function PlatformHub({
       await api.post('/api/user/saved', {
         opportunityId: item.id,
         title: item.title,
-        slug: item.slug || item.id,
+        slug: makeOpportunitySlug(item),
       });
     await refresh();
   };
@@ -172,7 +180,7 @@ export default function PlatformHub({
       await api.post('/api/user/tracker', {
         opportunityId: item.id,
         title: item.title,
-        slug: item.slug || item.id,
+        slug: makeOpportunitySlug(item),
         status: STATUSES[0],
         deadline: item.deadline || '',
         notes: '',
@@ -195,15 +203,26 @@ export default function PlatformHub({
     await refresh();
   };
 
+  const [notificationStatus, setNotificationStatus] = useState('');
+
   const enablePush = async () => {
     if (!user) {
       await signIn();
       return;
     }
     try {
-      await notifications.subscribe({ showUi: true });
+      const result = await notifications.subscribe({ showUi: true });
+      if (result.permission === 'unsupported') {
+        setNotificationStatus('This browser does not support notification permissions.');
+      } else if (result.permission === 'granted') {
+        setNotificationStatus('Browser permission granted. Automatic push delivery is not connected yet, so this does not enable background alerts.');
+      } else if (result.permission === 'denied') {
+        setNotificationStatus('Notifications are blocked in your browser settings. You can change that in your browser settings.');
+      } else {
+        setNotificationStatus('Notification permission was not granted. You can try again or check your browser settings.');
+      }
     } catch {
-      /* unsupported */
+      setNotificationStatus('Could not check notification permission on this device.');
     }
   };
 
@@ -302,7 +321,7 @@ export default function PlatformHub({
                   key={item.id}
                   onClick={() =>
                     (window.location.hash =
-                      'opportunity/' + encodeURIComponent(item.slug || item.id))
+                      'opportunity/' + encodeURIComponent(makeOpportunitySlug(item)))
                   }
                 >
                   <span>{item.category || 'Opportunity'}</span>
@@ -421,8 +440,13 @@ export default function PlatformHub({
             />
           </div>
           <strong>
-            {jamb && post
-              ? 'Raw combined score: ' + (Number(jamb) + Number(post))
+            {jamb.trim() && post.trim()
+              ? Number.isFinite(Number(jamb)) &&
+                Number.isFinite(Number(post)) &&
+                Number(jamb) >= 0 &&
+                Number(post) >= 0
+                ? 'Raw combined score: ' + (Number(jamb) + Number(post))
+                : 'Enter valid non-negative numbers'
               : 'Enter both scores'}
           </strong>
           <small>
@@ -563,10 +587,17 @@ export default function PlatformHub({
       {open === 'alerts' && (
         <Drawer title="Notifications & Alerts" close={() => setOpen('')}>
           <button className="primary full" onClick={enablePush}>
-            <Bell size={15} /> Enable device notifications
+            <Bell size={15} /> Check browser notification permission
           </button>
-          <button className="secondary full" onClick={() => markRead()}>
-            <Check size={15} /> Mark all as read
+          <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
+            Automatic background push alerts are not connected yet. Topic preferences and in-app alerts can still be managed here.
+          </p>
+          {notificationStatus && (
+            <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
+              {notificationStatus}
+            </p>
+          )}
+          <button className="secondary full" onClick={() => markRead()}
           </button>
           <h4>Topics</h4>
           {TOPICS.map(topic => {
