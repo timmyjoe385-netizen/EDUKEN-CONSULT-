@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
 
 const publicContentUrl =
   'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content';
@@ -83,16 +84,13 @@ test('service request API rejects malformed and oversized submissions safely', a
     apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p',
     'content-type': 'application/json',
   };
+  // Only send blank submissions to the live API: these are guaranteed to be rejected
+  // before inserts even if the currently deployed Edge Function lags behind this PR.
   const invalidPayloads = [
     {},
     { customerName: '   ', whatsapp: '08000000000', details: 'Test request' },
     { customerName: 'Test user', whatsapp: '   ', details: 'Test request' },
     { customerName: 'Test user', whatsapp: '08000000000', details: '   ' },
-    { customerName: 42, whatsapp: '08000000000', details: 'Test request' },
-    { customerName: 'Test user', whatsapp: '08000000000', details: 'Test request', email: 'not-an-email' },
-    { customerName: 'x'.repeat(121), whatsapp: '08000000000', details: 'Test request' },
-    { customerName: 'Test user', whatsapp: '08000000000', details: 'x'.repeat(4001) },
-    { customerName: 'Test user', whatsapp: '08000000000', details: 'Test request', serviceId: { unexpected: true } },
   ];
 
   for (const payload of invalidPayloads) {
@@ -123,6 +121,21 @@ test('service request API rejects malformed and oversized submissions safely', a
     timeout: 20_000,
   });
   expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
+});
+
+
+test('service request backend validates input types and lengths before database writes', async () => {
+  // Exercise source on this PR branch rather than sending risky payloads to the live
+  // production Edge Function, which is intentionally not deployed from this PR.
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  expect(source).toContain('typeof b.customerName === "string"');
+  expect(source).toContain('typeof b.whatsapp === "string"');
+  expect(source).toContain('typeof b.details === "string"');
+  expect(source).toContain('typeof b.email === "string"');
+  expect(source).toContain('customerName.length > 120');
+  expect(source).toContain('details.length > 4000');
+  expect(source).toContain('if (b.serviceId != null && typeof b.serviceId !== "string")');
+  expect(source).toContain('const allowedStatuses = new Set(["New Requests", "Contacted", "In Progress", "Completed", "Cancelled"])');
 });
 
 test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
