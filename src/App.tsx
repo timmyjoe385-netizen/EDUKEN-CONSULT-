@@ -1205,7 +1205,7 @@ function App() {
             <div className="orb orb-two" />
             <div className="visual-card main-card">
               <div className="card-top">
-                <span className="mini-logo">E</span>
+                <span className="mini-logo">🌍</span>
                 <span>EDUKEN OPPORTUNITY HUB</span>
                 <span className="live-dot" />
               </div>
