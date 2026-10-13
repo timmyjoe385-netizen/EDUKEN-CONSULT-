@@ -254,9 +254,21 @@ function App() {
     [content.updates]
   );
 
+  const isPlaceholderAdmission = (item: Item) => {
+    const school = String(item.school || '').trim().toLowerCase();
+    const course = String(item.course || '').trim().toLowerCase();
+    const details = String(item.details || item.description || item.content || '').trim();
+    const link = String(item.link || item.application_url || '').trim();
+    const deadline = String(item.deadline || '').trim();
+    const genericSchool = /^(nigerian universities|universities|polytechnics|colleges of education|admission information|application information|programme information)$/i.test(school);
+    const genericCourse = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(course);
+    return (genericSchool || genericCourse) && !details && !link && !deadline;
+  };
+
   const filteredAdmissions = useMemo(
     () =>
       content.admissions.filter(a =>
+        !isPlaceholderAdmission(a) &&
         ((a.school || '') + (a.course || '') + (a.type || ''))
           .toLowerCase()
           .includes(search.toLowerCase())
@@ -1564,6 +1576,8 @@ function App() {
           <div className="admission-grid">
             {loading ? (
               <p>Loading live admissions...</p>
+            ) : filteredAdmissions.length === 0 ? (
+              <p className="empty-state">No matching published admission records yet. Please check back soon.</p>
             ) : (
               filteredAdmissions.map(a => (
                 <article className="admission-card" key={a.id}>
