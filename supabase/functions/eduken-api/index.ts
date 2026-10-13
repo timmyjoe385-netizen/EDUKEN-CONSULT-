@@ -425,6 +425,27 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe") {
+  // Prefer platform-provided client IP headers. If a proxy supplies an X-Forwarded-For
+  // chain, use the last address (the nearest proxy-added value) rather than a caller-
+  // supplied first entry. Only a SHA-256 hash of action + IP is persisted.
+  const forwarded = req.headers.get("x-forwarded-for");
+  const ip = (req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") ||
+    (forwarded ? forwarded.split(",").map(value => value.trim()).filter(Boolean).at(-1) : "") || "").trim();
+  if (!ip || ip.length > 128) return null;
+  const keyHash = await sha256Hex("eduken-email-alert-rate-limit:" + action + ":" + ip);
+  const policy = action === "subscribe"
+    ? { limit: 5, windowSeconds: 900 }
+    : { limit: 20, windowSeconds: 900 };
+  const { data, error } = await db.rpc("consume_email_alert_rate_limit", {
+    p_key_hash: keyHash,
+    p_limit: policy.limit,
+    p_window_seconds: policy.windowSeconds,
+  });
+  if (error) throw new Error("Email alert rate limiting is unavailable.");
+  return data === true;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   const path = pathOf(req);
@@ -572,6 +593,10 @@ Deno.serve(async (req) => {
 
 
     if (path === "/api/email-alerts/subscribe" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "subscribe"); } catch { return json({ error: "Email alerts are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Email alerts are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many requests. Please try again in 15 minutes." }, 429);
       let body: any;
       try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateEmailAlertSubscription(body);
@@ -655,6 +680,10 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/email-alerts/verify" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "verify"); } catch { return json({ error: "Email alerts are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Email alerts are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many requests. Please try again in 15 minutes." }, 429);
       let body: any;
       try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const token = typeof body?.token === "string" ? body.token.trim() : "";
@@ -668,14 +697,25 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (lookupError) throw lookupError;
       if (!subscription) return json({ error: "This confirmation link is invalid or expired." }, 400);
-      const { error } = await db.from("email_alert_subscriptions")
+      // Consume the one-time token atomically. A second concurrent request cannot
+      // verify the same subscription after the token hash has been cleared.
+      const { data: verifiedSubscription, error } = await db.from("email_alert_subscriptions")
         .update({ verified_at: now, is_active: true, verification_token_hash: null, verification_expires_at: null, updated_at: now })
-        .eq("id", subscription.id);
+        .eq("id", subscription.id)
+        .eq("verification_token_hash", tokenHash)
+        .gt("verification_expires_at", now)
+        .select("id")
+        .maybeSingle();
       if (error) throw error;
+      if (!verifiedSubscription) return json({ error: "This confirmation link is invalid or expired." }, 400);
       return json({ message: "Your email alerts are confirmed and active." });
     }
 
     if (path === "/api/email-alerts/unsubscribe" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "unsubscribe"); } catch { return json({ error: "Email alerts are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Email alerts are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many requests. Please try again in 15 minutes." }, 429);
       let body: any;
       try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const token = typeof body?.token === "string" ? body.token.trim() : "";
@@ -708,10 +748,19 @@ Deno.serve(async (req) => {
 
       const now = new Date();
       const staleProcessingBefore = new Date(now.getTime() - 10 * 60 * 1000).toISOString();
-      await db.from("email_alert_deliveries")
+      // Recover expired worker leases without ever exceeding the five-attempt cap.
+      const { error: exhaustedRecoveryError } = await db.from("email_alert_deliveries")
+        .update({ status: "failed", processing_started_at: null, last_error: "Processing lease expired after maximum attempts." })
+        .eq("status", "processing")
+        .lt("processing_started_at", staleProcessingBefore)
+        .gte("attempt_count", 5);
+      if (exhaustedRecoveryError) throw exhaustedRecoveryError;
+      const { error: staleRecoveryError } = await db.from("email_alert_deliveries")
         .update({ status: "pending", scheduled_for: now.toISOString(), processing_started_at: null })
         .eq("status", "processing")
-        .lt("processing_started_at", staleProcessingBefore);
+        .lt("processing_started_at", staleProcessingBefore)
+        .lt("attempt_count", 5);
+      if (staleRecoveryError) throw staleRecoveryError;
       const { data: dueDeliveries, error: dueError } = await db.from("email_alert_deliveries")
         .select("id,subscription_id,opportunity_id,event_type,attempt_count")
         .eq("status", "pending")
