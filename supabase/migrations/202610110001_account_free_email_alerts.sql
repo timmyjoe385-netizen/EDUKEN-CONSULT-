@@ -15,6 +15,8 @@ create table if not exists public.email_alert_subscriptions (
   updated_at timestamptz not null default now(),
   constraint email_alert_subscriptions_email_lowercase
     check (email = lower(trim(email))),
+  constraint email_alert_subscriptions_topics_nonempty
+    check (cardinality(topics) > 0),
   constraint email_alert_subscriptions_topics_allowed
     check (topics <@ array[
       'admissions',
@@ -43,6 +45,12 @@ create table if not exists public.email_alert_deliveries (
   created_at timestamptz not null default now(),
   unique (subscription_id, opportunity_id, event_type)
 );
+
+-- PostgreSQL unique constraints treat NULL opportunity_id values as distinct.
+-- This partial index makes account-verification queueing idempotent as well.
+create unique index if not exists email_alert_deliveries_single_verification
+  on public.email_alert_deliveries (subscription_id, event_type)
+  where opportunity_id is null and event_type = 'verification';
 
 create index if not exists email_alert_deliveries_due_idx
   on public.email_alert_deliveries (scheduled_for)
