@@ -238,31 +238,16 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
 });
 
 
-test('service request API rejects malformed and oversized submissions safely', async ({ request }) => {
+test('service request API keeps private endpoints protected without creating records', async ({ request }) => {
   const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
   const headers = {
     apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p',
     'content-type': 'application/json',
   };
-  // Only send blank submissions to the live API: these are guaranteed to be rejected
-  // before inserts even if the currently deployed Edge Function lags behind this PR.
-  const invalidPayloads = [
-    {},
-    { customerName: '   ', whatsapp: '08000000000', details: 'Test request' },
-    { customerName: 'Test user', whatsapp: '   ', details: 'Test request' },
-    { customerName: 'Test user', whatsapp: '08000000000', details: '   ' },
-  ];
 
-  for (const payload of invalidPayloads) {
-    const response = await request.post(base + '/api/service-requests', {
-      headers,
-      data: payload,
-      timeout: 20_000,
-    });
-    const responseBody = await response.text();
-    expect(response.status(), `invalid request should return 400; payload=${JSON.stringify(payload)}; response=${responseBody.slice(0, 300)}`).toBe(400);
-  }
-
+  // Keep live production checks read-only or unauthorized. Payload validation
+  // is covered locally by the pure validator tests below; never send malformed
+  // service-request submissions to the production Edge Function.
   const privateRead = await request.get(base + '/api/service-requests', {
     headers: { apikey: headers.apikey },
     timeout: 20_000,
@@ -282,7 +267,6 @@ test('service request API rejects malformed and oversized submissions safely', a
   });
   expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
 });
-
 
 test('service request validator rejects invalid payloads before database writes', async () => {
   const valid = { customerName: '  Ada Example  ', whatsapp: '  08012345678 ', details: '  Please advise  ', email: ' ada@example.com ' };
