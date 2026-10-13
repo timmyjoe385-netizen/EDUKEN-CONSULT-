@@ -102,6 +102,7 @@ function App() {
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [selectedService, setSelectedService] = useState<Item | null>(null);
 
   const makeSlug = (value: string) =>
     value
@@ -538,6 +539,26 @@ function App() {
       );
     } catch {
       showToast('We could not save your request. Please try again.');
+    }
+  };
+
+  const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedService) return;
+    const fd = new FormData(e.currentTarget);
+    try {
+      const result = await api.post('/api/service-requests', {
+        serviceId: selectedService.id,
+        customerName: String(fd.get('customerName') || '').trim(),
+        whatsapp: String(fd.get('whatsapp') || '').trim(),
+        email: String(fd.get('email') || '').trim(),
+        details: String(fd.get('details') || '').trim(),
+      });
+      trackEvent('service_request_submit', { target: selectedService.name || selectedService.id });
+      setSelectedService(null);
+      showToast('Request received. Reference: ' + (result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'We could not save your request. Please try again.');
     }
   };
 
@@ -1152,6 +1173,31 @@ function App() {
           </section>
         </div>
       )}
+      {selectedService && (
+        <div role="presentation" onClick={e => { if (e.target === e.currentTarget) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12, 24, 18, 0.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22, boxShadow: '0 20px 70px rgba(0,0,0,.25)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+              <div>
+                <span className="kicker">SERVICE REQUEST</span>
+                <h2 id="service-request-title" style={{ margin: '8px 0' }}>{selectedService.name}</h2>
+                <p style={{ margin: '0 0 16px', lineHeight: 1.5 }}>Send your details and EDUKEN will contact you to confirm requirements and pricing. This form does not take payment.</p>
+              </div>
+              <button type="button" aria-label="Close service request" onClick={() => setSelectedService(null)}><X size={20} /></button>
+            </div>
+            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
+              <input name="customerName" required maxLength={120} placeholder="Full name" aria-label="Full name" />
+              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
+              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+              <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need for this service..." aria-label="Request details" />
+              <p style={{ fontSize: 13, lineHeight: 1.5, margin: 0 }}>Please do not submit passwords, bank details or sensitive identity documents in this form.</p>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button type="submit" className="primary">Send service request <ArrowRight size={16} /></button>
+                <button type="button" className="secondary" onClick={() => setSelectedService(null)}>Cancel</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
       <footer>
           <div className="footer-main">
             <div>
@@ -1684,25 +1730,36 @@ function App() {
           </div>
         </section>
 
-        <section className="section pale">
+        <section className="section pale" id="services">
           <div className="section-head">
             <div>
               <span className="kicker">OUR SERVICES</span>
               <h2>Practical support when you need it.</h2>
             </div>
             <p>
-              From choosing an application route to navigating educational
-              opportunities, get structured guidance without the noise.
+              Explore the available services, review the details and send a request.
+              We confirm the cost with you before any payment is made.
             </p>
           </div>
           <div className="service-list">
-            {content.services.map((s, i) => (
-              <div className="service-row" key={s.id}>
+            {content.services.length ? content.services.map((s, i) => (
+              <article className="service-row" key={s.id} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
                 <span>{String(i + 1).padStart(2, '0')}</span>
-                <b>{s.name}</b>
-                <ArrowRight size={18} />
-              </div>
-            ))}
+                <div style={{ flex: '1 1 220px', minWidth: 0 }}>
+                  <b style={{ display: 'block', marginBottom: 6 }}>{s.name}</b>
+                  {s.category && <small style={{ display: 'block', opacity: 0.75, marginBottom: 6 }}>{s.category}</small>}
+                  {s.description && <p style={{ margin: '0 0 8px', lineHeight: 1.55 }}>{s.description}</p>}
+                  <strong style={{ display: 'block', marginBottom: 8 }}>
+                    {s.price !== null && s.price !== undefined && s.price !== ''
+                      ? (Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : String(s.price))
+                      : 'Contact for price'}
+                  </strong>
+                  <button type="button" className="primary" onClick={() => setSelectedService(s)}>
+                    Request this service <ArrowRight size={15} />
+                  </button>
+                </div>
+              </article>
+            )) : <p>Our service catalogue is being updated. Please contact EDUKEN on WhatsApp for assistance.</p>}
           </div>
         </section>
 
