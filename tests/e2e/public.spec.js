@@ -353,6 +353,21 @@ test('service request statuses use an explicit allowlist', async () => {
   }
 });
 
+test('email delivery rechecks current subscription consent immediately before sending', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const workerStart = source.indexOf('if (path === "/api/internal/email-alerts/process" && req.method === "POST")');
+  const consentRecheckAt = source.indexOf('const { data: latestSubscription, error: latestSubscriptionError }', workerStart);
+  const sendAt = source.indexOf('const providerMessageId = await sendEmailAlertMessage(', workerStart);
+  expect(workerStart).toBeGreaterThanOrEqual(0);
+  expect(consentRecheckAt).toBeGreaterThan(workerStart);
+  expect(sendAt).toBeGreaterThan(consentRecheckAt);
+  const recheck = source.slice(consentRecheckAt, sendAt);
+  expect(recheck).toContain('latestSubscription.is_active');
+  expect(recheck).toContain('latestSubscription.verified_at');
+  expect(recheck).toContain('latestSubscription.topics.includes(topic)');
+  expect(recheck).toContain('status: "cancelled"');
+});
+
 test('service request route validates before inserting into the database', async () => {
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const routeStart = source.indexOf('if (path === "/api/service-requests" && req.method === "POST")');
