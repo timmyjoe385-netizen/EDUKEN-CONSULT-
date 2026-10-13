@@ -11,14 +11,14 @@ test("accepts and normalizes a valid service request", () => {
     whatsapp: "  +234 800 000 0000 ",
     details: "  Please contact me about admission support. ",
     email: "  ada@example.com ",
-    serviceId: "service-id",
+    serviceId: "550e8400-e29b-41d4-a716-446655440000",
   }), {
     data: {
       customerName: "Ada Example",
       whatsapp: "+234 800 000 0000",
       details: "Please contact me about admission support.",
       email: "ada@example.com",
-      serviceId: "service-id",
+      serviceId: "550e8400-e29b-41d4-a716-446655440000",
     },
   });
 });
@@ -34,6 +34,7 @@ test("rejects malformed objects and wrong-typed fields without throwing", () => 
     { customerName: "Ada", whatsapp: "+2348000000000", details: [] },
     { customerName: "Ada", whatsapp: "+2348000000000", details: "Help", email: {} },
     { customerName: "Ada", whatsapp: "+2348000000000", details: "Help", serviceId: 7 },
+    { customerName: "Ada", whatsapp: "+2348000000000", details: "Help", serviceId: "not-a-uuid" },
   ]) {
     assert.doesNotThrow(() => validateServiceRequestBody(body));
     assert.ok(validateServiceRequestBody(body).error, JSON.stringify(body));
