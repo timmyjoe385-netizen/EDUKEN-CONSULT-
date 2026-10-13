@@ -26,8 +26,8 @@ The feature intentionally returns a clear `503` until all three values are confi
 
 - Apply the migration only after schema review and explicit production approval.
 - Configure and verify the sender domain in Resend.
-- Configure a trusted external scheduler to call `POST /api/internal/email-alerts/process` with `Authorization: Bearer <EMAIL_ALERTS_CRON_SECRET>`; `EMAIL_ALERTS_CRON_SECRET` must be at least 32 characters. The processor handles up to 25 due deliveries per invocation and retries temporary failures up to five attempts.
-- Schedule the processor at a short interval only after migration, provider secrets and sender-domain verification are approved.
+- A GitHub Actions scheduler is included at `.github/workflows/email-alert-delivery.yml`. After the migration and function are approved/deployed, configure repository secrets `EDUKEN_EMAIL_ALERTS_PROCESS_URL` (full HTTPS URL ending in `/api/internal/email-alerts/process`) and `EDUKEN_EMAIL_ALERTS_CRON_SECRET` (at least 32 characters). The processor handles up to 25 due deliveries per invocation and retries temporary failures up to five attempts.
+- The scheduled workflow intentionally does nothing until both repository secrets exist. Do not configure them until the database migration, Supabase function secrets and sender-domain verification are approved.
 - Queue events idempotently, honor publication/source/notification eligibility, and reschedule or cancel reminders when content changes.
 - Add delivery retry/backoff, attempt limits, provider message ID storage and operational monitoring.
 - Add rate limiting/abuse controls for public subscription and token endpoints before broad public launch.
