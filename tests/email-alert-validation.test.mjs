@@ -45,3 +45,25 @@ test("topic allowlist is fixed and type-safe", () => {
   assert.equal(isAllowedEmailAlertTopic("admin"), false);
   assert.equal(isAllowedEmailAlertTopic(null), false);
 });
+
+ 
+test("rate-limit policy limits confirmation-email abuse and token guessing", async () => {
+  const { emailAlertRateLimitPolicy } = await import("../supabase/functions/eduken-api/email-alert-validation.mjs");
+  assert.deepEqual(emailAlertRateLimitPolicy("subscribe"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("verify"), { limit: 20, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("unsubscribe"), { limit: 20, windowSeconds: 900 });
+  assert.equal(emailAlertRateLimitPolicy("unknown"), null);
+});
+
+test("client IP extraction prefers platform headers and uses the nearest forwarded address", async () => {
+  const { getEmailAlertClientIp } = await import("../supabase/functions/eduken-api/email-alert-validation.mjs");
+  assert.equal(getEmailAlertClientIp(new Headers({
+    "cf-connecting-ip": "203.0.113.4",
+    "x-forwarded-for": "198.51.100.9, 203.0.113.5",
+  })), "203.0.113.4");
+  assert.equal(getEmailAlertClientIp(new Headers({
+    "x-forwarded-for": "198.51.100.9, 203.0.113.5",
+  })), "203.0.113.5");
+  assert.equal(getEmailAlertClientIp(new Headers()), null);
+  assert.equal(getEmailAlertClientIp(new Headers({ "x-real-ip": "x".repeat(129) })), null);
+});
