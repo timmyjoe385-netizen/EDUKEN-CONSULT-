@@ -353,12 +353,22 @@ function App() {
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     if (savingAdminMode) return;
     const table = adminTab;
-    if (table === 'opportunities') {
-      const title = String(form.title ?? '').trim();
-      if (!title) {
-        showToast('Please enter an opportunity title before saving or publishing.');
-        return;
-      }
+    const requiredFields: Record<string, { field: string; label: string }[]> = {
+      opportunities: [{ field: 'title', label: 'opportunity title' }],
+      admissions: [{ field: 'school', label: 'school name' }],
+      updates: [{ field: 'title', label: 'update title' }],
+      faqs: [
+        { field: 'question', label: 'FAQ question' },
+        { field: 'answer', label: 'FAQ answer' },
+      ],
+      services: [{ field: 'name', label: 'service name' }],
+    };
+    const missingField = (requiredFields[table] || []).find(
+      required => !String(form[required.field] ?? '').trim()
+    );
+    if (missingField) {
+      showToast('Please enter the ' + missingField.label + ' before saving or publishing.');
+      return;
     }
     setSavingAdminMode(publishMode);
     try {
