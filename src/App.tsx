@@ -135,7 +135,46 @@ function App() {
   const loadContent = async () => {
     try {
       const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store', headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' } }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
-      setContent(res.data);
+      const live = res.data || {};
+      const normalizeFlag = (value: unknown) =>
+        value === true || String(value).toLowerCase() === 'true' || String(value) === '1';
+      const normalizePublished = (item: Item) =>
+        normalizeFlag(item.is_published ?? item.isPublished ?? item.published);
+      setContent({
+        opportunities: (live.opportunities || []).map((item: Item) => ({
+          ...item,
+          verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+          featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+          urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+          sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
+          link: item.link ?? item.application_url ?? '',
+          status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
+        })),
+        admissions: (live.admissions || []).map((item: Item) => ({
+          ...item,
+          school: item.school ?? item.title ?? '',
+          course: item.course ?? item.programme ?? '',
+          type: item.type ?? item.category ?? '',
+          details: item.details ?? item.description ?? item.content ?? '',
+          link: item.link ?? item.application_url ?? '',
+          status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
+        })),
+        updates: (live.updates || []).map((item: Item) => ({
+          ...item,
+          body: item.body ?? item.content ?? '',
+          sourceUrl: item.sourceUrl ?? item.source_url ?? '',
+          verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+          status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
+        })),
+        faqs: (live.faqs || []).map((item: Item) => ({
+          ...item,
+          status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
+        })),
+        services: (live.services || []).map((item: Item) => ({
+          ...item,
+          status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
+        })),
+      });
     } catch {
       setToast('Unable to load live content. Please refresh.');
     } finally {
@@ -321,8 +360,48 @@ function App() {
         table === 'consultations'
           ? await api.get('/api/admin/consultations')
           : await api.get('/api/admin/content/' + table);
-      if (table === 'consultations') setConsultations(res.data.items);
-      else setAdminItems(res.data.items);
+      if (table === 'consultations') {
+        setConsultations(res.data.items || []);
+        return;
+      }
+
+      const normalizeFlag = (value: unknown) =>
+        value === true || String(value).toLowerCase() === 'true' || String(value) === '1';
+      const items = (res.data.items || []).map((item: Item) => {
+        const published = normalizeFlag(item.is_published ?? item.isPublished ?? item.published);
+        if (table === 'opportunities') {
+          return {
+            ...item,
+            status: published ? 'PUBLISHED' : 'DRAFT',
+            verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+            featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+            urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+            sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
+            link: item.link ?? item.application_url ?? '',
+          };
+        }
+        if (table === 'admissions') {
+          return {
+            ...item,
+            status: published ? 'PUBLISHED' : 'DRAFT',
+            school: item.school ?? item.title ?? '',
+            course: item.course ?? item.programme ?? '',
+            type: item.type ?? item.category ?? '',
+            details: item.details ?? item.description ?? item.content ?? '',
+            link: item.link ?? item.application_url ?? '',
+          };
+        }
+        if (table === 'updates') {
+          return {
+            ...item,
+            status: published ? 'PUBLISHED' : 'DRAFT',
+            body: item.body ?? item.content ?? '',
+            sourceUrl: item.sourceUrl ?? item.source_url ?? '',
+          };
+        }
+        return { ...item, status: published ? 'PUBLISHED' : 'DRAFT' };
+      });
+      setAdminItems(items);
     } catch {
       showToast(
         'Access denied. Only authorized EDUKEN administrators can use the dashboard.'
