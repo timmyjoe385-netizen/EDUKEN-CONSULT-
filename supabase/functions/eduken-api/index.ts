@@ -382,7 +382,7 @@ Deno.serve(async (req) => {
       const email = typeof b.email === "string" ? b.email.trim() : "";
       if (!customerName || !whatsapp || !details) return json({ error: "Name, WhatsApp number and request details are required." }, 400);
       if (customerName.length > 120 || whatsapp.length > 40 || details.length > 4000 || email.length > 200) return json({ error: "One or more fields exceed the allowed length." }, 400);
-      if (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) return json({ error: "Enter a valid email address." }, 400);
+      if (email && !/^[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(email)) return json({ error: "Enter a valid email address." }, 400);
       if (b.serviceId != null && typeof b.serviceId !== "string") return json({ error: "Invalid service selection." }, 400);
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
