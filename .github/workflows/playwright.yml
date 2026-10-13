@@ -31,7 +31,7 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Install Chromium for Playwright
         run: npx playwright install chromium --with-deps
-      - name: Run public website checks
+      - name: Run branch preview browser checks
         run: npm run test:e2e
       - name: Upload browser report and failure evidence
         if: always()
