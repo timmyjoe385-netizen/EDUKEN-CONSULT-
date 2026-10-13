@@ -67,3 +67,22 @@ test("client IP extraction prefers platform headers and uses the nearest forward
   assert.equal(getEmailAlertClientIp(new Headers()), null);
   assert.equal(getEmailAlertClientIp(new Headers({ "x-real-ip": "x".repeat(129) })), null);
 });
+
+
+test("delivery retries use bounded exponential backoff and stop after five attempts", async () => {
+  const {
+    MAX_EMAIL_ALERT_DELIVERY_ATTEMPTS,
+    emailAlertRetryDelayMs,
+    isEmailAlertAttemptExhausted,
+  } = await import("../supabase/functions/eduken-api/email-alert-validation.mjs");
+  assert.equal(MAX_EMAIL_ALERT_DELIVERY_ATTEMPTS, 5);
+  assert.equal(emailAlertRetryDelayMs(1), 60_000);
+  assert.equal(emailAlertRetryDelayMs(2), 120_000);
+  assert.equal(emailAlertRetryDelayMs(3), 240_000);
+  assert.equal(emailAlertRetryDelayMs(4), 480_000);
+  assert.equal(emailAlertRetryDelayMs(5), 960_000);
+  assert.equal(emailAlertRetryDelayMs(30), 6 * 60 * 60 * 1000);
+  assert.equal(isEmailAlertAttemptExhausted(4), false);
+  assert.equal(isEmailAlertAttemptExhausted(5), true);
+  assert.equal(isEmailAlertAttemptExhausted(6), true);
+});
