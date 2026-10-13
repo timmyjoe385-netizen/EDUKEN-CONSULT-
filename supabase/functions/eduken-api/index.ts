@@ -1,7 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
-import { isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
+import { emailAlertRateLimitPolicy, getEmailAlertClientIp, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -426,17 +426,12 @@ async function sendEmailAlertMessage(
 }
 
 async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe") {
-  // Prefer platform-provided client IP headers. If a proxy supplies an X-Forwarded-For
-  // chain, use the last address (the nearest proxy-added value) rather than a caller-
-  // supplied first entry. Only a SHA-256 hash of action + IP is persisted.
-  const forwarded = req.headers.get("x-forwarded-for");
-  const ip = (req.headers.get("cf-connecting-ip") || req.headers.get("x-real-ip") ||
-    (forwarded ? forwarded.split(",").map(value => value.trim()).filter(Boolean).at(-1) : "") || "").trim();
-  if (!ip || ip.length > 128) return null;
+  const ip = getEmailAlertClientIp(req.headers);
+  if (!ip) return null;
+  const policy = emailAlertRateLimitPolicy(action);
+  if (!policy) return null;
+  // Persist only a one-way hash of the action and client IP.
   const keyHash = await sha256Hex("eduken-email-alert-rate-limit:" + action + ":" + ip);
-  const policy = action === "subscribe"
-    ? { limit: 5, windowSeconds: 900 }
-    : { limit: 20, windowSeconds: 900 };
   const { data, error } = await db.rpc("consume_email_alert_rate_limit", {
     p_key_hash: keyHash,
     p_limit: policy.limit,
