@@ -99,3 +99,26 @@ test("email alert migration requires an opportunity for every idempotent deliver
   assert.match(migration, /unique \(subscription_id, opportunity_id, event_type\)/);
   assert.match(migration, /alter table public\.email_alert_deliveries enable row level security/);
 });
+
+test("email alert scheduler pins the processor URL before sending its bearer secret", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const workflow = await readFile(resolve(here, "../.github/workflows/email-alert-delivery.yml"), "utf8");
+
+  assert.match(workflow, /expected_host = "pphxltbkwygqjtjgkhxu\\.supabase\\.co"/);
+  assert.match(workflow, /expected_path = "\/functions\/v1\/eduken-api\/api\/internal\/email-alerts\/process"/);
+  for (const check of [
+    /url\\.scheme != "https"/,
+    /url\\.hostname != expected_host/,
+    /url\\.port is not None/,
+    /url\\.username is not None/,
+    /url\\.password is not None/,
+    /url\\.query/,
+    /url\\.fragment/,
+  ]) {
+    assert.match(workflow, check);
+  }
+  assert.match(workflow, /Authorization: Bearer \\$CRON_SECRET/);
+});
