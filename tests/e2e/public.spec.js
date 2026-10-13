@@ -76,6 +76,33 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
   }
 });
 
+
+test('service request API rejects empty submissions and unauthenticated reads', async ({ request }) => {
+  const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
+  const headers = { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' };
+
+  // Empty/blank submissions must be rejected before any database insert.
+  for (const payload of [
+    {},
+    { customerName: '   ', whatsapp: '08000000000', details: 'Test request' },
+    { customerName: 'Test user', whatsapp: '   ', details: 'Test request' },
+    { customerName: 'Test user', whatsapp: '08000000000', details: '   ' },
+  ]) {
+    const response = await request.post(base + '/api/service-requests', {
+      headers: { ...headers, 'content-type': 'application/json' },
+      data: payload,
+      timeout: 20_000,
+    });
+    expect(response.status(), 'invalid service requests should return HTTP 400').toBe(400);
+  }
+
+  const privateRead = await request.get(base + '/api/service-requests', {
+    headers,
+    timeout: 20_000,
+  });
+  expect(privateRead.status(), 'service request history must require sign-in').toBe(401);
+});
+
 test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
