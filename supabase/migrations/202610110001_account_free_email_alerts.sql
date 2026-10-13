@@ -34,7 +34,7 @@ create table if not exists public.email_alert_deliveries (
   id uuid primary key default gen_random_uuid(),
   subscription_id uuid not null references public.email_alert_subscriptions(id) on delete cascade,
   opportunity_id uuid references public.opportunities(id) on delete cascade,
-  event_type text not null check (event_type in ('new_opportunity', 'deadline_7d', 'deadline_3d', 'deadline_1d', 'verification')),
+  event_type text not null check (event_type in ('new_opportunity', 'deadline_7d', 'deadline_3d', 'deadline_1d')),
   scheduled_for timestamptz not null,
   status text not null default 'pending' check (status in ('pending', 'processing', 'sent', 'failed', 'cancelled')),
   processing_started_at timestamptz,
@@ -46,11 +46,6 @@ create table if not exists public.email_alert_deliveries (
   unique (subscription_id, opportunity_id, event_type)
 );
 
--- PostgreSQL treats NULL opportunity_id values as distinct under normal unique constraints.
-create unique index if not exists email_alert_deliveries_single_verification
-  on public.email_alert_deliveries (subscription_id, event_type)
-  where opportunity_id is null and event_type = 'verification';
-
 create index if not exists email_alert_deliveries_due_idx
   on public.email_alert_deliveries (scheduled_for)
   where status = 'pending';
@@ -59,3 +54,62 @@ alter table public.email_alert_subscriptions enable row level security;
 alter table public.email_alert_deliveries enable row level security;
 
 -- Intentionally no anon/authenticated policies. Only the server-side Edge Function accesses these tables.
+
+
+-- Atomic server-side rate limiting for public email-alert endpoints. Keys are
+-- one-way hashes of an action and client IP; raw IP addresses are never stored.
+create table if not exists public.email_alert_rate_limits (
+  key_hash text primary key check (key_hash ~ '^[a-f0-9]{64}$'),
+  window_started_at timestamptz not null default now(),
+  request_count integer not null default 0 check (request_count >= 0),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists email_alert_rate_limits_window_idx
+  on public.email_alert_rate_limits (window_started_at);
+
+alter table public.email_alert_rate_limits enable row level security;
+
+create or replace function public.consume_email_alert_rate_limit(
+  p_key_hash text,
+  p_limit integer,
+  p_window_seconds integer
+)
+returns boolean
+language plpgsql
+security definer
+set search_path = pg_catalog, public
+as $$
+declare
+  current_count integer;
+begin
+  if p_key_hash !~ '^[a-f0-9]{64}$'
+     or p_limit < 1 or p_limit > 100
+     or p_window_seconds < 1 or p_window_seconds > 86400 then
+    raise exception 'Invalid rate-limit arguments';
+  end if;
+
+  insert into public.email_alert_rate_limits as existing
+    (key_hash, window_started_at, request_count, updated_at)
+  values (p_key_hash, now(), 1, now())
+  on conflict (key_hash) do update
+    set window_started_at = case
+          when existing.window_started_at <= now() - make_interval(secs => p_window_seconds)
+            then now()
+          else existing.window_started_at
+        end,
+        request_count = case
+          when existing.window_started_at <= now() - make_interval(secs => p_window_seconds)
+            then 1
+          else existing.request_count + 1
+        end,
+        updated_at = now()
+  returning request_count into current_count;
+
+  return current_count <= p_limit;
+end;
+$$;
+
+revoke all on function public.consume_email_alert_rate_limit(text, integer, integer) from public, anon, authenticated;
+grant execute on function public.consume_email_alert_rate_limit(text, integer, integer) to service_role;
+revoke all on table public.email_alert_rate_limits from public, anon, authenticated;
