@@ -520,7 +520,8 @@ function App() {
 
   const submitConsultation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
     try {
       await api.post('/consultations', {
         name: fd.get('name'),
@@ -533,12 +534,16 @@ function App() {
         message: fd.get('message'),
       });
       trackEvent('consultation_submit', { target: 'Consultation form' });
-      e.currentTarget.reset();
+      formElement.reset();
       showToast(
         'Consultation request received. We will follow up through your contact details.'
       );
-    } catch {
-      showToast('We could not save your request. Please try again.');
+    } catch (error) {
+      showToast(
+        error instanceof Error
+          ? error.message
+          : 'We could not save your request. Please try again.'
+      );
     }
   };
 
