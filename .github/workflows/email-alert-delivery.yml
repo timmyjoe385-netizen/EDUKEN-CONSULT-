@@ -1,0 +1,52 @@
+name: EDUKEN email alert delivery
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eduken-email-alert-delivery
+  cancel-in-progress: false
+
+jobs:
+  process-due-alerts:
+    name: Process due email alerts
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check delivery configuration
+        id: config
+        shell: bash
+        env:
+          PROCESS_URL: ${{ secrets.EDUKEN_EMAIL_ALERTS_PROCESS_URL }}
+          CRON_SECRET: ${{ secrets.EDUKEN_EMAIL_ALERTS_CRON_SECRET }}
+        run: |
+          if [ -z "$PROCESS_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "Email alert delivery is not enabled: repository secrets are not configured."
+            exit 0
+          fi
+          case "$PROCESS_URL" in
+            https://*) ;;
+            *) echo "PROCESS_URL must use HTTPS."; exit 1 ;;
+          esac
+          if [ "${#CRON_SECRET}" -lt 32 ]; then
+            echo "CRON_SECRET must be at least 32 characters."; exit 1
+          fi
+          echo "configured=true" >> "$GITHUB_OUTPUT"
+      - name: Process due alerts
+        if: steps.config.outputs.configured == 'true'
+        shell: bash
+        env:
+          PROCESS_URL: ${{ secrets.EDUKEN_EMAIL_ALERTS_PROCESS_URL }}
+          CRON_SECRET: ${{ secrets.EDUKEN_EMAIL_ALERTS_CRON_SECRET }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 45 \
+            --request POST "$PROCESS_URL" \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            --header "Content-Type: application/json" \
+            --data '{}'
