@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
+import { isAllowedServiceRequestStatus, validateServiceRequestBody } from '../../supabase/functions/eduken-api/service-request-validation.mjs';
 
 const publicContentUrl =
   'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content';
@@ -124,31 +125,56 @@ test('service request API rejects malformed and oversized submissions safely', a
 });
 
 
-test('service request source has type, length and status guards before writes', async () => {
-  // Do not send malformed values to the live endpoint before the backend change is deployed.
+test('service request validator rejects invalid payloads before database writes', async () => {
+  const valid = { customerName: '  Ada Example  ', whatsapp: '  08012345678 ', details: '  Please advise  ', email: ' ada@example.com ' };
+  const result = validateServiceRequestBody(valid);
+  expect(result.error).toBeUndefined();
+  expect(result.data).toEqual({
+    customerName: 'Ada Example',
+    whatsapp: '08012345678',
+    details: 'Please advise',
+    email: 'ada@example.com',
+    serviceId: null,
+  });
+
+  for (const payload of [
+    null,
+    [],
+    {},
+    { customerName: 42, whatsapp: '08012345678', details: 'Request' },
+    { customerName: 'Ada', whatsapp: false, details: 'Request' },
+    { customerName: 'Ada', whatsapp: '08012345678', details: ['Request'] },
+    { customerName: '   ', whatsapp: '08012345678', details: 'Request' },
+    { customerName: 'Ada', whatsapp: '08012345678', details: '   ' },
+    { customerName: 'A'.repeat(121), whatsapp: '08012345678', details: 'Request' },
+    { customerName: 'Ada', whatsapp: '0'.repeat(41), details: 'Request' },
+    { customerName: 'Ada', whatsapp: '08012345678', details: 'D'.repeat(4001) },
+    { customerName: 'Ada', whatsapp: '08012345678', details: 'Request', email: 'x'.repeat(201) + '@example.com' },
+    { customerName: 'Ada', whatsapp: '08012345678', details: 'Request', email: 'not-an-email' },
+    { customerName: 'Ada', whatsapp: '08012345678', details: 'Request', serviceId: 123 },
+  ]) {
+    expect(validateServiceRequestBody(payload).error, 'payload must be rejected: ' + JSON.stringify(payload).slice(0, 120)).toBeTruthy();
+  }
+});
+
+test('service request statuses use an explicit allowlist', async () => {
+  for (const status of ['New Requests', 'Contacted', 'In Progress', 'Completed', 'Cancelled']) {
+    expect(isAllowedServiceRequestStatus(status)).toBe(true);
+  }
+  for (const status of ['Paid', 'Admin', 'anything', '', null, 7, {}]) {
+    expect(isAllowedServiceRequestStatus(status)).toBe(false);
+  }
+});
+
+test('service request route validates before inserting into the database', async () => {
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const routeStart = source.indexOf('if (path === "/api/service-requests" && req.method === "POST")');
+  const validationAt = source.indexOf('validateServiceRequestBody(b)', routeStart);
   const insertAt = source.indexOf('.from("service_requests").insert({', routeStart);
   expect(routeStart).toBeGreaterThanOrEqual(0);
-  expect(insertAt).toBeGreaterThan(routeStart);
-  const validation = source.slice(routeStart, insertAt);
-
-  for (const guard of [
-    'typeof b.customerName === "string"',
-    'typeof b.whatsapp === "string"',
-    'typeof b.details === "string"',
-    'typeof b.email === "string"',
-    'customerName.length > 120',
-    'whatsapp.length > 40',
-    'details.length > 4000',
-    'email.length > 200',
-    'if (email && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email))',
-    'if (b.serviceId != null && typeof b.serviceId !== "string")',
-  ]) {
-    expect(validation, 'guard must run before the database insert: ' + guard).toContain(guard);
-  }
-
-  expect(source).toContain('const allowedStatuses = new Set(["New Requests", "Contacted", "In Progress", "Completed", "Cancelled"])');
+  expect(validationAt).toBeGreaterThan(routeStart);
+  expect(insertAt).toBeGreaterThan(validationAt);
+  expect(source).toContain('isAllowedServiceRequestStatus(b.status)');
 });
 
 test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
