@@ -139,7 +139,7 @@ test("least-privilege migration removes broad client grants and keeps only requi
   assert.match(migration, /grant select, update on table public\.notifications to authenticated/i);
   assert.match(migration, /grant select on table public\.payments to authenticated/i);
   assert.doesNotMatch(migration, /grant all privileges/i);
-  assert.doesNotMatch(migration, /grant [^;]* on table public\\.service_requests to authenticated/i);
-  assert.doesNotMatch(migration, /grant [^;]* on table public\\.consultations to (anon|authenticated)/i);
+  assert.doesNotMatch(migration, /grant [^;]* on table public\.service_requests to authenticated/i);
+  assert.doesNotMatch(migration, /grant [^;]* on table public\.consultations to (anon|authenticated)/i);
   assert.match(migration, /RLS policies remain the row-level authorization boundary/i);
 });
