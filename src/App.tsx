@@ -91,6 +91,9 @@ function App() {
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
+  const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
+  const [selectedService, setSelectedService] = useState<Item | null>(null);
+  const [serviceSubmitting, setServiceSubmitting] = useState(false);
   const [form, setForm] = useState<Record<string, any>>({});
   const [deleteTarget, setDeleteTarget] = useState<{ item: Item; table: string } | null>(null);
   const [deletingAdmin, setDeletingAdmin] = useState(false);
@@ -363,9 +366,15 @@ function App() {
       const res =
         table === 'consultations'
           ? await api.get('/api/admin/consultations')
-          : await api.get('/api/admin/content/' + table);
+          : table === 'service-requests'
+            ? await api.get('/api/admin/service-requests')
+            : await api.get('/api/admin/content/' + table);
       if (table === 'consultations') {
         setConsultations(res.data.items || []);
+        return;
+      }
+      if (table === 'service-requests') {
+        setServiceRequests(res.data.items || []);
         return;
       }
 
@@ -581,6 +590,40 @@ function App() {
     }
   };
 
+  const updateServiceRequest = async (item: Item, status: string) => {
+    try {
+      await api.put('/api/admin/service-requests/' + encodeURIComponent(item.id), { status });
+      await loadAdmin('service-requests');
+      showToast('Service request status updated.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not update service request.');
+    }
+  };
+
+  const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedService || serviceSubmitting) return;
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
+    setServiceSubmitting(true);
+    try {
+      const result = await api.post('/api/service-requests', {
+        serviceId: selectedService.id || null,
+        customerName: String(fd.get('customerName') || '').trim(),
+        whatsapp: String(fd.get('whatsapp') || '').trim(),
+        email: String(fd.get('email') || '').trim(),
+        details: String(fd.get('details') || '').trim(),
+      });
+      formElement.reset();
+      setSelectedService(null);
+      showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
+    } finally {
+      setServiceSubmitting(false);
+    }
+  };
+
   const submitConsultation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElement = e.currentTarget;
@@ -724,6 +767,7 @@ function App() {
               'faqs',
               'services',
               'consultations',
+              'service-requests',
               'analytics',
             ].map(tab => (
               <button
@@ -740,7 +784,9 @@ function App() {
                   ? '🌍 Opportunities'
                   : tab === 'consultations'
                     ? '📩 Consultations'
-                    : tab === 'analytics'
+                    : tab === 'service-requests'
+                      ? '🧾 Service Requests'
+                      : tab === 'analytics'
                       ? '📊 Analytics & Insights'
                       : tab[0].toUpperCase() + tab.slice(1)}
               </button>
@@ -759,7 +805,7 @@ function App() {
                 <span className="kicker">EDUKEN CONSULT</span>
                 <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'analytics' && (
+              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && (
                 <button className="primary" onClick={() => setForm({})}>
                   <Plus size={17} /> New
                 </button>
@@ -805,6 +851,24 @@ function App() {
                                 </>
                               ) : null}
                             </section>
+            ) : adminTab === 'service-requests' ? (
+              <div className="admin-list">
+                {serviceRequests.length === 0 ? (
+                  <div className="admin-empty">No service requests yet.</div>
+                ) : serviceRequests.map(item => (
+                  <article className="admin-item" key={item.id}>
+                    <div>
+                      <span className="tag">{item.status || 'New Requests'}</span>
+                      <h3>{item.reference_number || 'Service request'} — {item.services?.name || 'Service enquiry'}</h3>
+                      <p>{item.details}</p>
+                      <small>{item.customer_name} • {item.whatsapp} • {item.email || 'No email'} • {item.created_at ? new Date(item.created_at).toLocaleString() : ''}</small>
+                    </div>
+                    <select aria-label={'Status for ' + (item.reference_number || 'service request')} value={item.status || 'New Requests'} onChange={e => updateServiceRequest(item, e.target.value)}>
+                      <option>New Requests</option><option>Contacted</option><option>In Progress</option><option>Completed</option><option>Cancelled</option>
+                    </select>
+                  </article>
+                ))}
+              </div>
             ) : adminTab === 'consultations' ? (
               <div className="admin-list">
                 {consultations.length === 0 ? (
@@ -1810,12 +1874,23 @@ function App() {
             </p>
           </div>
           <div className="service-list">
-            {content.services.map((s, i) => (
-              <div className="service-row" key={s.id}>
+            {(content.services.length ? content.services : [
+              { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
+              { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
+              { id: 'fallback-jamb', name: 'JAMB Guidance', category: 'JAMB Services', description: 'Ask about JAMB-related guidance and available support.', price: null },
+              { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
+              { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
+            ]).map((s, i) => (
+              <article className="service-row" key={s.id || s.name} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
                 <span>{String(i + 1).padStart(2, '0')}</span>
-                <b>{s.name}</b>
-                <ArrowRight size={18} />
-              </div>
+                <div style={{ flex: '1 1 220px', minWidth: 0 }}>
+                  <b style={{ display: 'block', marginBottom: 6 }}>{s.name}</b>
+                  {s.category && <small style={{ display: 'block', opacity: 0.75, marginBottom: 6 }}>{s.category}</small>}
+                  {s.description && <p style={{ margin: '0 0 8px', lineHeight: 1.55 }}>{s.description}</p>}
+                  <strong style={{ display: 'block', marginBottom: 8 }}>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
+                  <button type="button" className="primary" onClick={() => setSelectedService(s)}>Request this service <ArrowRight size={15} /></button>
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -2020,6 +2095,27 @@ function App() {
         </section>
       </main>
 
+      {selectedService && (
+        <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>We will confirm requirements and pricing before any payment. This form does not take payment.</p></div>
+              <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
+            </div>
+            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
+              <input name="customerName" required maxLength={120} placeholder="Full name" aria-label="Full name" />
+              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
+              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+              <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need..." aria-label="Request details" />
+              <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>
+                <button type="button" className="secondary" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}>Cancel</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
       <footer>
         <div className="footer-main">
           <div>
