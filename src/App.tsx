@@ -210,13 +210,14 @@ function App() {
       window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
       const path = verificationToken ? '/api/email-alerts/verify' : '/api/email-alerts/unsubscribe';
       const token = verificationToken || unsubscribeToken;
+      // Do not gate this one-time action's result on the effect's active flag:
+      // React StrictMode replays effects in development after this URL token is
+      // removed, and its cleanup would otherwise suppress the only user feedback.
       void api.post(path, { token }).then((result: any) => {
-        if (!active) return;
         const message = result.data.message || 'Your email alert preference has been updated.';
         setAlertMessage(message);
         setToast(message);
       }).catch((error: unknown) => {
-        if (!active) return;
         const message = error instanceof Error ? error.message : 'This email alert link could not be processed.';
         setAlertMessage(message);
         setToast(message);
