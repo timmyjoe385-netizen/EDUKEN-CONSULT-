@@ -45,3 +45,10 @@ export function validateEmailAlertSubscription(body) {
 export function isAllowedEmailAlertTopic(topic) {
   return typeof topic === "string" && allowedTopics.has(topic);
 }
+
+export function isWithinEmailAlertCooldown(updatedAt, nowMs = Date.now(), cooldownMs = 120_000) {
+  const timestamp = Date.parse(String(updatedAt ?? ""));
+  if (!Number.isFinite(timestamp)) return false;
+  // Treat a future timestamp as recent too; clock skew must not bypass the cooldown.
+  return nowMs - timestamp < cooldownMs;
+}
