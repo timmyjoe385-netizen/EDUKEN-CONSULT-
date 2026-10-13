@@ -103,6 +103,7 @@ function App() {
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
   const [selectedService, setSelectedService] = useState<Item | null>(null);
+  const [submittingServiceRequest, setSubmittingServiceRequest] = useState(false);
 
   const makeSlug = (value: string) =>
     value
@@ -544,8 +545,9 @@ function App() {
 
   const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!selectedService) return;
+    if (!selectedService || submittingServiceRequest) return;
     const fd = new FormData(e.currentTarget);
+    setSubmittingServiceRequest(true);
     try {
       const result = await api.post('/api/service-requests', {
         serviceId: selectedService.id,
@@ -559,6 +561,8 @@ function App() {
       showToast('Request received. Reference: ' + (result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'We could not save your request. Please try again.');
+    } finally {
+      setSubmittingServiceRequest(false);
     }
   };
 
@@ -1956,7 +1960,7 @@ function App() {
               <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need for this service..." aria-label="Request details" />
               <p style={{ fontSize: 13, lineHeight: 1.5, margin: 0 }}>Please do not submit passwords, bank details or sensitive identity documents in this form.</p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button type="submit" className="primary">Send service request <ArrowRight size={16} /></button>
+                <button type="submit" className="primary" disabled={submittingServiceRequest}>{submittingServiceRequest ? "Sending request…" : "Send service request"} {!submittingServiceRequest && <ArrowRight size={16} />}</button>
                 <button type="button" className="secondary" onClick={() => setSelectedService(null)}>Cancel</button>
               </div>
             </form>
