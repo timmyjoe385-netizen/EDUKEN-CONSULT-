@@ -49,6 +49,38 @@ test('homepage remains usable at a mobile viewport', async ({ page }) => {
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
 });
 
+test('mobile navigation opens and closes accessibly', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const toggle = page.getByRole('button', { name: 'Open navigation' });
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  await toggle.click();
+  await expect(page.getByRole('button', { name: 'Close navigation' })).toHaveAttribute('aria-expanded', 'true');
+
+  const navigation = page.locator('#primary-navigation');
+  await expect(navigation).toBeVisible();
+  await navigation.getByRole('link', { name: 'Admissions' }).click();
+  await expect(page).toHaveURL(/#admissions$/);
+  await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
+});
+
+test('global search results can be cleared accessibly', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const search = page.getByRole('textbox', { name: 'Search all EDUKEN content' });
+  await expect(search).toBeVisible();
+  await search.fill('playwright-no-match-check');
+
+  await expect(page.getByRole('region', { name: 'Search results' })).toBeVisible();
+  const clear = page.getByRole('button', { name: 'Clear search' });
+  await expect(clear).toBeVisible();
+  await clear.click();
+
+  await expect(search).toHaveValue('');
+  await expect(page.getByRole('region', { name: 'Search results' })).toHaveCount(0);
+});
+
 test('admin APIs reject unauthenticated reads and writes', async ({ request }) => {
   const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
   const headers = { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' };
