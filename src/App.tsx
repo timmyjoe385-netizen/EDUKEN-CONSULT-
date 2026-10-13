@@ -27,6 +27,15 @@ import PlatformHub from './PlatformHub';
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
 
+const EMAIL_ALERT_TOPICS = [
+  ['admissions', 'Admissions'],
+  ['scholarships-grants', 'Scholarships & grants'],
+  ['jobs-internships', 'Jobs & internships'],
+  ['remote-opportunities', 'Remote opportunities'],
+  ['educational-updates', 'Educational updates'],
+  ['career-mentorship', 'Career & mentorship'],
+] as const;
+
 type Item = Record<string, any> & { id: string };
 type Content = {
   opportunities: Item[];
@@ -94,6 +103,10 @@ function App() {
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [alertEmail, setAlertEmail] = useState('');
+  const [alertTopics, setAlertTopics] = useState<string[]>(['admissions', 'scholarships-grants', 'jobs-internships']);
+  const [alertSubmitting, setAlertSubmitting] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
   const [form, setForm] = useState<Record<string, any>>({});
   const [deleteTarget, setDeleteTarget] = useState<{ item: Item; table: string } | null>(null);
   const [deletingAdmin, setDeletingAdmin] = useState(false);
@@ -189,6 +202,26 @@ function App() {
 
   useEffect(() => {
     let active = true;
+    const params = new URLSearchParams(window.location.search);
+    const verificationToken = params.get('email_alert_verify');
+    const unsubscribeToken = params.get('email_alert_unsubscribe');
+    if (verificationToken || unsubscribeToken) {
+      // Remove one-time tokens from the visible URL before making a request.
+      window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+      const path = verificationToken ? '/api/email-alerts/verify' : '/api/email-alerts/unsubscribe';
+      const token = verificationToken || unsubscribeToken;
+      void api.post(path, { token }).then((result: any) => {
+        if (!active) return;
+        const message = result.data.message || 'Your email alert preference has been updated.';
+        setAlertMessage(message);
+        setToast(message);
+      }).catch((error: unknown) => {
+        if (!active) return;
+        const message = error instanceof Error ? error.message : 'This email alert link could not be processed.';
+        setAlertMessage(message);
+        setToast(message);
+      });
+    }
     void auth.completeOAuthCallback().then((result: any) => {
       if (!active || !result) return;
       setUser(result.user);
@@ -646,6 +679,29 @@ function App() {
       showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
     } finally {
       setServiceSubmitting(false);
+    }
+  };
+
+  const submitEmailAlerts = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (alertSubmitting) return;
+    if (!alertTopics.length) {
+      setAlertMessage('Choose at least one category.');
+      return;
+    }
+    setAlertSubmitting(true);
+    setAlertMessage('');
+    try {
+      const result = await api.post('/api/email-alerts/subscribe', {
+        email: alertEmail,
+        topics: alertTopics,
+      });
+      setAlertMessage(result.data.message || 'Check your inbox for a confirmation link.');
+      setAlertEmail('');
+    } catch (error) {
+      setAlertMessage(error instanceof Error ? error.message : 'We could not start your email subscription. Please try again.');
+    } finally {
+      setAlertSubmitting(false);
     }
   };
 
@@ -2145,6 +2201,40 @@ function App() {
               Contact EDUKEN
             </a>
           </div>
+        </section>
+
+        <section className="section pale" id="email-alerts" aria-labelledby="email-alerts-title" style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <div className="section-head">
+            <div>
+              <span className="kicker">FREE EMAIL ALERTS</span>
+              <h2 id="email-alerts-title">Get important opportunities in your inbox.</h2>
+            </div>
+            <p>Choose the topics you care about. No account or password required. We only activate alerts after you confirm your email.</p>
+          </div>
+          <form onSubmit={submitEmailAlerts} style={{ display: 'grid', gap: 16, maxWidth: 760 }}>
+            <label htmlFor="email-alert-address" style={{ display: 'grid', gap: 6, fontWeight: 600 }}>
+              Email address
+              <input id="email-alert-address" type="email" name="email" autoComplete="email" required maxLength={254} value={alertEmail} onChange={e => setAlertEmail(e.target.value)} placeholder="you@example.com" />
+            </label>
+            <fieldset style={{ border: '1px solid var(--border, #d9e2dc)', borderRadius: 14, padding: 16, display: 'grid', gap: 12 }}>
+              <legend style={{ padding: '0 6px', fontWeight: 700 }}>Select at least one category</legend>
+              {EMAIL_ALERT_TOPICS.map(([value, label]) => (
+                <label key={value} style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 500 }}>
+                  <input
+                    type="checkbox"
+                    checked={alertTopics.includes(value)}
+                    onChange={e => setAlertTopics(current => e.target.checked ? [...current, value] : current.filter(topic => topic !== value))}
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </fieldset>
+            <button className="primary" type="submit" disabled={alertSubmitting || !alertTopics.length}>
+              {alertSubmitting ? 'Sending confirmation…' : 'Subscribe to free email alerts'} <ArrowRight size={17} />
+            </button>
+            <p aria-live="polite" role="status" style={{ margin: 0 }}>{alertMessage}</p>
+            <small>Confirm within 30 minutes. Unsubscribe links are provided. Your email is not shown publicly.</small>
+          </form>
         </section>
 
         <section className="whatsapp-cta" aria-label="EDUKEN WhatsApp Channel">
