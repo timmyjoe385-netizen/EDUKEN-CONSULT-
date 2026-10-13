@@ -204,16 +204,52 @@ function App() {
     setInstallOpen(true);
   };
 
+  const isPlaceholderOpportunity = (item: Item) => {
+    const title = String(item.title || '').trim().toLowerCase();
+    const description = String(item.description || '').trim().toLowerCase();
+    const hasDetails = Boolean(
+      String(item.content || '').trim() ||
+      String(item.link || item.application_url || '').trim() ||
+      String(item.sourceUrl || item.official_source || '').trim()
+    );
+    return !hasDetails && (
+      /coming soon|will be published here|will be listed here|when published/.test(title) ||
+      /verified opportunities will appear here|student and graduate opportunities will be listed here|browse funding opportunities when published|remote opportunities curated for young people/.test(description)
+    );
+  };
+
+  const isPlaceholderUpdate = (item: Item) => {
+    const title = String(item.title || '').trim().toLowerCase();
+    const body = String(item.body || '').trim().toLowerCase();
+    return /will appear here|will be published here/.test(title) ||
+      /use the eduken admin dashboard to publish clear, useful updates|add scholarships, jobs, internships, grants, fellowships and competitions from the dashboard|publish practical career guidance and development opportunities/.test(body);
+  };
+
   const filteredOpps = useMemo(
     () =>
-      content.opportunities.filter(
-        o =>
-          (oppFilter === 'All' || o.category === oppFilter) &&
-          ((o.title || '') + (o.description || ''))
+      content.opportunities.filter(o => {
+        if (isPlaceholderOpportunity(o)) return false;
+        const category = String(o.category || '').trim().toLowerCase();
+        const filter = oppFilter.toLowerCase();
+        const categoryMatches = oppFilter === 'All' ||
+          (filter === 'scholarships' && /scholarship|grant|fellowship|funding/.test(category)) ||
+          (filter === 'jobs' && /job|career|employment|vacancy/.test(category)) ||
+          (filter === 'internships' && /internship|trainee/.test(category)) ||
+          (filter === 'grants' && /grant|funding/.test(category)) ||
+          (filter === 'fellowships' && /fellowship/.test(category)) ||
+          (filter === 'remote' && /remote/.test(category)) ||
+          (filter === 'competitions' && /competition|contest/.test(category));
+        return categoryMatches &&
+          ((o.title || '') + (o.description || '') + (o.content || ''))
             .toLowerCase()
-            .includes(search.toLowerCase())
-      ),
+            .includes(search.toLowerCase());
+      }),
     [content.opportunities, oppFilter, search]
+  );
+
+  const visibleUpdates = useMemo(
+    () => content.updates.filter(item => !isPlaceholderUpdate(item)),
+    [content.updates]
   );
 
   const filteredAdmissions = useMemo(
@@ -1285,7 +1321,7 @@ function App() {
           </section>
         )}
 
-        {content.updates.length > 0 && (
+        {visibleUpdates.length > 0 && (
           <section className="section newsroom-preview">
             <div className="section-head">
               <div>
@@ -1298,7 +1334,7 @@ function App() {
               </p>
             </div>
             <div className="newsroom-grid">
-              {content.updates.slice(0, 3).map(x => (
+              {visibleUpdates.slice(0, 3).map(x => (
                 <article className="newsroom-card" key={x.id}>
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
@@ -1603,7 +1639,7 @@ function App() {
             </p>
           </div>
           <div className="update-grid">
-            {content.updates.map((x, i) => (
+            {visibleUpdates.map((x, i) => (
               <article className="update-card" key={x.id}>
                 <div className={'update-image u' + (i % 3)}>
                   <span>{x.category || 'Update'}</span>
