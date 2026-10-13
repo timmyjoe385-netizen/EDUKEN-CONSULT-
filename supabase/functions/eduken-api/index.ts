@@ -793,7 +793,7 @@ Deno.serve(async (req) => {
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateServiceRequestBody(b);
-      if (validation.error) return json({ error: validation.error }, 400);
+      if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
       const { customerName, whatsapp, details, email, serviceId } = validation.data;
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
