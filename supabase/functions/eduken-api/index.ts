@@ -86,6 +86,7 @@ const toAdmission = (x: any) => ({
   type: x.category ?? "",
   status: x.is_published ? "PUBLISHED" : "DRAFT",
   link: x.application_url ?? "",
+  sourceUrl: x.official_source ?? "",
   details: x.description ?? "",
 });
 
@@ -155,8 +156,9 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
     if (x.type !== undefined && x.category === undefined) x.category = x.type;
     if (x.details !== undefined && x.description === undefined) x.description = x.details;
     if (x.link !== undefined && x.application_url === undefined) x.application_url = x.link;
+    if (x.sourceUrl !== undefined && x.official_source === undefined) x.official_source = x.sourceUrl;
     if (x.title === undefined && x.school !== undefined) x.title = x.school;
-    delete x.course; delete x.type; delete x.details; delete x.link; delete x.status;
+    delete x.course; delete x.type; delete x.details; delete x.link; delete x.sourceUrl; delete x.status;
   }
   if (table === "updates") {
     if (x.body !== undefined && x.content === undefined) x.content = x.body;
