@@ -329,6 +329,7 @@ function App() {
       .map(item => ({ type: 'Opportunity', id: item.id, title: item.title || 'Opportunity', detail: item.category || 'Opportunity', item }));
     const admissions = content.admissions
       .filter(item =>
+        !isPlaceholderAdmission(item) &&
         [item.school, item.course, item.type, item.status, item.details]
           .some(value => String(value || '').toLowerCase().includes(query))
       )
@@ -1776,9 +1777,11 @@ function App() {
                       openOpportunity(result.item);
                     } else if (result.type === 'Admission') {
                       window.location.hash = 'admissions';
+                      setSearch('');
                       setMenu(false);
                     } else {
                       window.location.hash = 'updates';
+                      setSearch('');
                       setMenu(false);
                     }
                   }}
