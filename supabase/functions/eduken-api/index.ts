@@ -559,7 +559,7 @@ Deno.serve(async (req) => {
       let body: any;
       try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateEmailAlertSubscription(body);
-      if (validation.error) return json({ error: validation.error }, 400);
+      if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
       const config = emailAlertConfiguration();
       if (!config) return json({ error: "Email alerts are not configured yet. Please use the EDUKEN WhatsApp Channel for updates." }, 503);
 
@@ -720,8 +720,13 @@ Deno.serve(async (req) => {
             .eq("id", delivery.opportunity_id)
             .maybeSingle();
           if (opportunityError) throw opportunityError;
+          if (!opportunity) {
+            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            skipped++;
+            continue;
+          }
           const eligible = Boolean(
-            opportunity && opportunity.is_published && opportunity.verified &&
+            opportunity.is_published && opportunity.verified &&
             opportunity.notify_on_publish && safeHttpUrl(opportunity.official_source)
           );
           const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
