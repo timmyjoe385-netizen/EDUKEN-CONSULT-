@@ -608,7 +608,7 @@ function App() {
     setServiceSubmitting(true);
     try {
       const result = await api.post('/api/service-requests', {
-        serviceId: selectedService.id || null,
+        serviceId: selectedService.id && !String(selectedService.id).startsWith('fallback-') ? selectedService.id : null,
         customerName: String(fd.get('customerName') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
         email: String(fd.get('email') || '').trim(),
