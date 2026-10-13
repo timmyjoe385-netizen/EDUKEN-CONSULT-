@@ -6,6 +6,9 @@ export function validateServiceRequestBody(body) {
   const customerName = typeof body.customerName === "string" ? body.customerName.trim() : "";
   const whatsapp = typeof body.whatsapp === "string" ? body.whatsapp.trim() : "";
   const details = typeof body.details === "string" ? body.details.trim() : "";
+  if (body.email != null && typeof body.email !== "string") {
+    return { error: "Enter a valid email address." };
+  }
   const email = typeof body.email === "string" ? body.email.trim() : "";
 
   if (!customerName || !whatsapp || !details) {
