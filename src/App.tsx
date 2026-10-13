@@ -133,7 +133,32 @@ function App() {
   const loadContent = async () => {
     try {
       const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store', headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' } }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
-      setContent(res.data);
+      const live = res.data || {};
+      const normalizeFlag = (value: unknown) =>
+        value === true || String(value).toLowerCase() === 'true' || String(value) === '1';
+      setContent({
+        opportunities: (live.opportunities || []).map((item: Item) => ({
+          ...item,
+          verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+          featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+          urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+          sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
+        })),
+        admissions: (live.admissions || []).map((item: Item) => ({
+          ...item,
+          course: item.course ?? item.programme ?? '',
+          type: item.type ?? item.category ?? '',
+          link: item.link ?? item.application_url ?? '',
+        })),
+        updates: (live.updates || []).map((item: Item) => ({
+          ...item,
+          body: item.body ?? item.content ?? '',
+          sourceUrl: item.sourceUrl ?? item.source_url ?? '',
+          verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+        })),
+        faqs: live.faqs || [],
+        services: live.services || [],
+      });
     } catch {
       setToast('Unable to load live content. Please refresh.');
     } finally {
@@ -1155,10 +1180,10 @@ function App() {
           </span>
         </a>
         <nav className={menu ? 'nav-links open' : 'nav-links'}>
-          {['Home', 'Opportunities', 'Admissions', 'Updates', 'More'].map(x => (
+          {['Home', 'Opportunities', 'Admissions', 'Updates', 'Services', 'FAQs', 'Contact', 'More'].map(x => (
             <a
               key={x}
-              href={x === 'More' ? '#more' : '#' + x.toLowerCase()}
+              href={x === 'More' ? '#more' : x === 'FAQs' ? '#faq' : '#' + x.toLowerCase()}
               onClick={() => setMenu(false)}
             >
               {x}
@@ -1328,7 +1353,7 @@ function App() {
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1377,7 +1402,7 @@ function App() {
                   <div className="spotlight-meta">
                     <span>
                       {o.verified
-                        ? '✓ Verified Source'
+                        ? '✓ Verified'
                         : o.sourceUrl
                           ? 'Source available'
                           : 'Verify with provider'}
@@ -1410,7 +1435,7 @@ function App() {
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
                     {x.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified</span>
                     ) : null}
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
@@ -1562,7 +1587,7 @@ function App() {
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1720,7 +1745,7 @@ function App() {
                 <p>{x.body || 'Open this update for more information.'}</p>
                 {x.verified ? (
                   <span className="verified-pill inline-pill">
-                    ✓ Verified Source
+                    ✓ Verified
                   </span>
                 ) : x.sourceUrl ? (
                   <span className="source-pill inline-pill">
@@ -1785,7 +1810,7 @@ function App() {
           </div>
         </section>
 
-        <section className="faq section">
+        <section className="faq section" id="faq">
           <div className="section-head">
             <div>
               <span className="kicker">FAQ</span>
