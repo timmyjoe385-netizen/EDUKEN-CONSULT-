@@ -101,7 +101,8 @@ test('service request API rejects malformed and oversized submissions safely', a
       data: payload,
       timeout: 20_000,
     });
-    expect(response.status(), 'invalid service requests must be rejected before database writes').toBe(400);
+    const responseBody = await response.text();
+    expect(response.status(), `invalid request should return 400; payload=${JSON.stringify(payload)}; response=${responseBody.slice(0, 300)}`).toBe(400);
   }
 
   const privateRead = await request.get(base + '/api/service-requests', {
