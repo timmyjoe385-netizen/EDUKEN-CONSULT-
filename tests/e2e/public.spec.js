@@ -32,6 +32,45 @@ test('public content API returns the expected data structure', async ({ request 
   }
 });
 
+test('opportunity deep links open the matching article from the URL fragment', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [{
+          id: 'playwright-opportunity',
+          slug: 'playwright-deep-link-check',
+          title: 'Playwright Deep Link Check',
+          category: 'Scholarship',
+          description: 'A safe test-only opportunity fixture.',
+          content: 'This fixture verifies direct article links.',
+          deadline: 'See details',
+          is_published: true,
+        }],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/#opportunity/playwright-deep-link-check', {
+    waitUntil: 'domcontentloaded',
+  });
+
+  await expect(page.getByRole('heading', {
+    level: 1,
+    name: 'Playwright Deep Link Check',
+  })).toBeVisible();
+  await expect(page.locator('.article-page')).toContainText(
+    'A safe test-only opportunity fixture.',
+  );
+  await page.getByRole('button', { name: /Back to Opportunity Hub/i }).click();
+  await expect(page).toHaveURL(/#opportunities$/);
+});
+
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
