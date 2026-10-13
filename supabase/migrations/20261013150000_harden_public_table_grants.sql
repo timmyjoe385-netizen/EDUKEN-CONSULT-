@@ -28,7 +28,8 @@ grant select, insert, update, delete on table
 to authenticated;
 grant select, update on table public.notifications to authenticated;
 grant select on table public.payments to authenticated;
-grant select, insert on table public.service_requests to authenticated;
+-- Service requests and consultations are written through the validated Edge Function;
+-- do not grant direct client inserts, including user_id IS NULL requests.
 
 -- Intentionally no direct client table grants for consultations or other tables.
 -- Public forms and admin CRUD are handled by the server-side Edge Function,
