@@ -109,6 +109,19 @@ test('service request API rejects malformed and oversized submissions safely', a
     timeout: 20_000,
   });
   expect(privateRead.status(), 'customer request history must require sign-in').toBe(401);
+
+  const adminList = await request.get(base + '/api/admin/service-requests', {
+    headers: { apikey: headers.apikey },
+    timeout: 20_000,
+  });
+  expect(adminList.status(), 'service request administration must require an authorized admin').toBe(401);
+
+  const adminUpdate = await request.put(base + '/api/admin/service-requests/00000000-0000-0000-0000-000000000000', {
+    headers,
+    data: { status: 'Completed' },
+    timeout: 20_000,
+  });
+  expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
 });
 
 test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
