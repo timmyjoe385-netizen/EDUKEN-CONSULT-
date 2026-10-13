@@ -37,6 +37,7 @@ create table if not exists public.email_alert_deliveries (
   event_type text not null check (event_type in ('new_opportunity', 'deadline_7d', 'deadline_3d', 'deadline_1d', 'verification')),
   scheduled_for timestamptz not null,
   status text not null default 'pending' check (status in ('pending', 'processing', 'sent', 'failed', 'cancelled')),
+  processing_started_at timestamptz,
   attempt_count integer not null default 0 check (attempt_count >= 0),
   provider_message_id text,
   last_error text,
