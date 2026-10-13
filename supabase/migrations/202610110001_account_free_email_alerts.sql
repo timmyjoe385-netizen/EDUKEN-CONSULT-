@@ -14,6 +14,8 @@ create table if not exists public.email_alert_subscriptions (
   updated_at timestamptz not null default now(),
   constraint email_alert_subscriptions_email_lowercase
     check (email = lower(trim(email))),
+  constraint email_alert_subscriptions_email_length
+    check (char_length(email) between 3 and 254),
   constraint email_alert_subscriptions_topics_nonempty
     check (cardinality(topics) > 0),
   constraint email_alert_subscriptions_topics_allowed
@@ -52,6 +54,11 @@ create index if not exists email_alert_deliveries_due_idx
 
 alter table public.email_alert_subscriptions enable row level security;
 alter table public.email_alert_deliveries enable row level security;
+
+-- Explicitly remove direct table privileges as defense in depth; service_role is used
+-- only inside the server-side Edge Function and bypasses RLS by design.
+revoke all on table public.email_alert_subscriptions from public, anon, authenticated;
+revoke all on table public.email_alert_deliveries from public, anon, authenticated;
 
 -- Intentionally no anon/authenticated policies. Only the server-side Edge Function accesses these tables.
 
