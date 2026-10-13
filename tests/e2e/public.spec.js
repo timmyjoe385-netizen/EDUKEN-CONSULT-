@@ -46,3 +46,22 @@ test('homepage remains usable at a mobile viewport', async ({ page }) => {
     `mobile page should not overflow horizontally: ${JSON.stringify(dimensions)}`,
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
 });
+
+test('admin content and consultation APIs reject unauthenticated access', async ({ request }) => {
+  const adminContent = await request.get(
+    'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/api/admin/content/opportunities',
+    { headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' }, timeout: 20_000 },
+  );
+  expect(adminContent.status(), 'admin content must require an authenticated administrator').toBe(401);
+
+  const adminConsultations = await request.get(
+    'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/api/admin/consultations',
+    { headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' }, timeout: 20_000 },
+  );
+  expect(adminConsultations.status(), 'consultation records must require an authenticated administrator').toBe(401);
+});
+
+test('public page exposes the admin sign-in entry without opening an authenticated session', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('button', { name: /admin/i })).toBeVisible();
+});
