@@ -122,6 +122,43 @@ test('service request dialog validates required fields without sending a request
   expect(submittedRequests, 'closing the dialog must not submit a request').toEqual([]);
 });
 
+test('account-free email alert form submits only the selected topics', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [], admissions: [], updates: [], faqs: [], services: [],
+      }),
+    }),
+  );
+
+  let submittedBody;
+  await page.route('**/functions/v1/eduken-api/api/email-alerts/subscribe', async route => {
+    submittedBody = route.request().postDataJSON();
+    await route.fulfill({
+      status: 202,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        message: 'Check your inbox for a confirmation link. The link expires in 30 minutes.',
+      }),
+    });
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Email address').fill('playwright@example.com');
+  await page.getByLabel('Scholarships & grants').uncheck();
+  await page.getByLabel('Jobs & internships').uncheck();
+  await page.getByLabel('Remote opportunities').check();
+  await page.getByRole('button', { name: /Subscribe to free email alerts/i }).click();
+
+  await expect(page.getByRole('status')).toContainText('Check your inbox for a confirmation link');
+  expect(submittedBody).toEqual({
+    email: 'playwright@example.com',
+    topics: ['admissions', 'remote-opportunities'],
+  });
+});
+
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
