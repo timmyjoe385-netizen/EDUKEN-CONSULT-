@@ -89,3 +89,13 @@ test("delivery retries use bounded exponential backoff and stop after five attem
   assert.equal(isEmailAlertAttemptExhausted(6), true);
 });
 
+test("email alert migration requires an opportunity for every idempotent delivery", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const migration = await readFile(resolve(here, "../supabase/migrations/20261013130000_account_free_email_alerts.sql"), "utf8");
+  assert.match(migration, /opportunity_id uuid not null references public\.opportunities\(id\) on delete cascade/);
+  assert.match(migration, /unique \(subscription_id, opportunity_id, event_type\)/);
+  assert.match(migration, /alter table public\.email_alert_deliveries enable row level security/);
+});
