@@ -19,7 +19,8 @@ jobs:
   public-browser-checks:
     name: Public website browser checks
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # Dependency installation and Chromium setup can exceed 10 minutes on a cold runner.
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -28,7 +29,7 @@ jobs:
         with:
           node-version: 20
       - name: Install project dependencies
-        run: npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund --prefer-offline
       - name: Set up Deno for Edge Function checks
         uses: denoland/setup-deno@v2
         with:
