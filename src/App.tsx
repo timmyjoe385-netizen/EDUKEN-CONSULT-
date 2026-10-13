@@ -286,9 +286,8 @@ function App() {
           (filter === 'remote' && /remote/.test(category)) ||
           (filter === 'competitions' && /competition|contest/.test(category));
         return categoryMatches &&
-          ((o.title || '') + (o.description || '') + (o.content || ''))
-            .toLowerCase()
-            .includes(search.toLowerCase());
+          [o.title, o.description, o.content, o.category, o.eligibility, o.benefits]
+            .some(value => String(value || '').toLowerCase().includes(search.toLowerCase()));
       }),
     [content.opportunities, oppFilter, search]
   );
@@ -321,6 +320,32 @@ function App() {
       ),
     [content.admissions, search]
   );
+
+  const globalSearchResults = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) return [];
+    const opportunities = content.opportunities
+      .filter(item =>
+        !isPlaceholderOpportunity(item) &&
+        [item.title, item.description, item.content, item.category, item.eligibility, item.benefits]
+          .some(value => String(value || '').toLowerCase().includes(query))
+      )
+      .map(item => ({ type: 'Opportunity', id: item.id, title: item.title || 'Opportunity', detail: item.category || 'Opportunity', item }));
+    const admissions = content.admissions
+      .filter(item =>
+        !isPlaceholderAdmission(item) &&
+        [item.school, item.course, item.type, item.status, item.details]
+          .some(value => String(value || '').toLowerCase().includes(query))
+      )
+      .map(item => ({ type: 'Admission', id: item.id, title: item.school || 'Admission update', detail: [item.course, item.type, item.status].filter(Boolean).join(' • '), item }));
+    const updates = content.updates
+      .filter(item =>
+        [item.title, item.body, item.category, item.date]
+          .some(value => String(value || '').toLowerCase().includes(query))
+      )
+      .map(item => ({ type: 'Update', id: item.id, title: item.title || 'Education update', detail: item.category || 'EDUKEN Update', item }));
+    return [...opportunities, ...admissions, ...updates].slice(0, 12);
+  }, [content.opportunities, content.admissions, content.updates, search]);
 
   const closingSoon = useMemo(
     () =>
@@ -1390,7 +1415,7 @@ function App() {
             EDUKEN <b>CONSULT</b>
           </span>
         </a>
-        <nav className={menu ? 'nav-links open' : 'nav-links'}>
+        <nav id="primary-navigation" className={menu ? 'nav-links open' : 'nav-links'}>
           {['Home', 'Opportunities', 'Admissions', 'Updates', 'More'].map(x => (
             <a
               key={x}
@@ -1419,9 +1444,12 @@ function App() {
           </a>
         </nav>
         <button
+          type="button"
           className="menu-btn"
-          aria-label="Toggle navigation"
-          onClick={() => setMenu(!menu)}
+          aria-label={menu ? 'Close navigation' : 'Open navigation'}
+          aria-controls="primary-navigation"
+          aria-expanded={menu}
+          onClick={() => setMenu(open => !open)}
         >
           {menu ? <X /> : <Menu />}
         </button>
@@ -1765,8 +1793,14 @@ function App() {
               <input
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                placeholder="Search opportunities, schools, courses..."
+                placeholder="Search opportunities, schools, courses, updates..."
+                aria-label="Search all EDUKEN content"
               />
+              {search && (
+                <button type="button" className="search-clear" onClick={() => setSearch('')} aria-label="Clear search">
+                  <X size={16} />
+                </button>
+              )}
             </div>
             <div className="filters">
               {[
@@ -1789,6 +1823,44 @@ function App() {
               ))}
             </div>
           </div>
+          {search.trim() && (
+            <div className="global-search-results" role="region" aria-live="polite" aria-label="Search results">
+              <div className="global-search-heading">
+                <b>Search results</b>
+                <span>{loading ? 'Searching published content…' : `${globalSearchResults.length} result(s) found`}</span>
+              </div>
+              {!loading && globalSearchResults.length === 0 && (
+                <p className="search-empty">No matching published opportunities, admissions or updates were found. Try another keyword.</p>
+              )}
+              {globalSearchResults.map(result => (
+                <button
+                  type="button"
+                  className="global-search-result"
+                  key={result.type + ':' + result.id}
+                  onClick={() => {
+                    if (result.type === 'Opportunity') {
+                      openOpportunity(result.item);
+                    } else if (result.type === 'Admission') {
+                      window.location.hash = 'admissions';
+                      setSearch('');
+                      setMenu(false);
+                    } else {
+                      window.location.hash = 'updates';
+                      setSearch('');
+                      setMenu(false);
+                    }
+                  }}
+                >
+                  <span className="search-result-type">{result.type}</span>
+                  <span className="search-result-copy">
+                    <b>{result.title}</b>
+                    <small>{result.detail}</small>
+                  </span>
+                  <ArrowRight size={16} />
+                </button>
+              ))}
+            </div>
+          )}
           <div className="opp-grid">
             {loading ? (
               <p>Loading live opportunities...</p>
