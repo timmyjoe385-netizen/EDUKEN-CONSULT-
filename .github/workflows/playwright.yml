@@ -29,6 +29,12 @@ jobs:
           node-version: 20
       - name: Install project dependencies
         run: npm install --no-audit --no-fund
+      - name: Set up Deno for Edge Function checks
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check Supabase Edge Function
+        run: deno check supabase/functions/eduken-api/index.ts
       - name: Install Chromium for Playwright
         run: npx playwright install chromium --with-deps
       - name: Test email alert validation
