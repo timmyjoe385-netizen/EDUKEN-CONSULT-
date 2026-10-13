@@ -5,8 +5,7 @@ on:
     branches:
       - fix/hide-public-placeholder-content
   pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build:
