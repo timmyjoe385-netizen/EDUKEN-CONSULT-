@@ -20,6 +20,10 @@ export function validateServiceRequestBody(body) {
   if (body.serviceId != null && typeof body.serviceId !== "string") {
     return { error: "Invalid service selection." };
   }
+  if (typeof body.serviceId === "string" && body.serviceId.trim() &&
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(body.serviceId.trim())) {
+    return { error: "Invalid service selection." };
+  }
 
   return {
     data: {
@@ -27,7 +31,7 @@ export function validateServiceRequestBody(body) {
       whatsapp,
       details,
       email,
-      serviceId: body.serviceId || null,
+      serviceId: body.serviceId?.trim() || null,
     },
   };
 }
