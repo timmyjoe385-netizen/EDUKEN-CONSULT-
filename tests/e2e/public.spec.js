@@ -90,6 +90,7 @@ test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const siteOrigin = new URL(page.url()).origin;
   const authNavigation = page.waitForRequest(
     request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
   );
@@ -98,5 +99,5 @@ test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
   const authUrl = new URL(request.url());
 
   expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(new URL('/', page.url()).origin + '/');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
 });
