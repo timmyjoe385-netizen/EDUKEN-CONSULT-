@@ -76,7 +76,12 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
   }
 });
 
-test('public page exposes the admin sign-in entry without opening an authenticated session', async ({ page }) => {
+test('admin sign-in dialog opens and offers Google sign-in', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('button', { name: /admin/i })).toBeVisible();
+  await page.getByRole('button', { name: /admin/i }).click();
+  const dialog = page.getByRole('dialog', { name: /admin sign in/i });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText(/authorized Google accounts/i);
+  await expect(dialog.getByRole('button', { name: /continue with Google/i })).toBeVisible();
+  // Do not click Google sign-in in unattended CI: it requires a real user session.
 });
