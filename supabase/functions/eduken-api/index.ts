@@ -545,8 +545,6 @@ Deno.serve(async (req) => {
       const now = new Date();
       const verificationToken = secureRandomToken();
       const verificationTokenHash = await sha256Hex(verificationToken);
-      const unsubscribeToken = secureRandomToken();
-      const unsubscribeTokenHash = await sha256Hex(unsubscribeToken);
       const { data: existing, error: lookupError } = await db
         .from("email_alert_subscriptions")
         .select("id,is_active,verified_at")
@@ -562,7 +560,9 @@ Deno.serve(async (req) => {
         return json({ message: "Your email alert preferences have been updated." });
       }
 
-      let subscriptionId: string;
+      const subscriptionId = existing?.id || crypto.randomUUID();
+      const unsubscribeToken = await deriveUnsubscribeToken(subscriptionId, config.tokenSecret);
+      const unsubscribeTokenHash = await sha256Hex(unsubscribeToken);
       const subscriptionValues = {
         email,
         topics,
@@ -574,20 +574,14 @@ Deno.serve(async (req) => {
         updated_at: now.toISOString(),
       };
       if (existing) {
-        const { data, error } = await db.from("email_alert_subscriptions")
+        const { error } = await db.from("email_alert_subscriptions")
           .update(subscriptionValues)
-          .eq("id", existing.id)
-          .select("id")
-          .single();
+          .eq("id", existing.id);
         if (error) throw error;
-        subscriptionId = data.id;
       } else {
-        const { data, error } = await db.from("email_alert_subscriptions")
-          .insert(subscriptionValues)
-          .select("id")
-          .single();
+        const { error } = await db.from("email_alert_subscriptions")
+          .insert({ id: subscriptionId, ...subscriptionValues });
         if (error) throw error;
-        subscriptionId = data.id;
       }
 
       const verificationUrl = new URL(config.siteUrl.toString());
@@ -657,6 +651,113 @@ Deno.serve(async (req) => {
         .eq("subscription_id", subscription.id)
         .eq("status", "pending");
       return json({ message: "You have been unsubscribed from EDUKEN email alerts." });
+    }
+
+    if (path === "/api/internal/email-alerts/process" && req.method === "POST") {
+      const cronSecret = Deno.env.get("EMAIL_ALERTS_CRON_SECRET");
+      if (!cronSecret || cronSecret.length < 32) return json({ error: "Email alert processing is not configured." }, 503);
+      if (req.headers.get("Authorization") !== "Bearer " + cronSecret) return json({ error: "Unauthorized." }, 401);
+      const config = emailAlertConfiguration();
+      if (!config) return json({ error: "Email alerts are not configured." }, 503);
+
+      const now = new Date();
+      const { data: dueDeliveries, error: dueError } = await db.from("email_alert_deliveries")
+        .select("id,subscription_id,opportunity_id,event_type,attempt_count")
+        .eq("status", "pending")
+        .lte("scheduled_for", now.toISOString())
+        .order("scheduled_for", { ascending: true })
+        .limit(25);
+      if (dueError) throw dueError;
+      let sent = 0, failed = 0, skipped = 0;
+
+      for (const delivery of dueDeliveries ?? []) {
+        const attemptCount = Number(delivery.attempt_count || 0) + 1;
+        const { data: claimed, error: claimError } = await db.from("email_alert_deliveries")
+          .update({ status: "processing", attempt_count: attemptCount })
+          .eq("id", delivery.id)
+          .eq("status", "pending")
+          .select("id,attempt_count")
+          .maybeSingle();
+        if (claimError) throw claimError;
+        if (!claimed) continue;
+
+        try {
+          const { data: subscription, error: subscriptionError } = await db.from("email_alert_subscriptions")
+            .select("id,email,topics,verified_at,is_active,unsubscribe_token_hash")
+            .eq("id", delivery.subscription_id)
+            .maybeSingle();
+          if (subscriptionError) throw subscriptionError;
+          if (!subscription || !subscription.is_active || !subscription.verified_at) {
+            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            skipped++;
+            continue;
+          }
+
+          const { data: opportunity, error: opportunityError } = await db.from("opportunities")
+            .select("id,title,slug,category,description,deadline,application_url,official_source,is_published,verified,notify_on_publish")
+            .eq("id", delivery.opportunity_id)
+            .maybeSingle();
+          if (opportunityError) throw opportunityError;
+          const eligible = Boolean(
+            opportunity && opportunity.is_published && opportunity.verified &&
+            opportunity.notify_on_publish && String(opportunity.official_source || "").trim()
+          );
+          const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
+          if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
+            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            skipped++;
+            continue;
+          }
+
+          const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
+          if (String(delivery.event_type).startsWith("deadline_") && (!Number.isFinite(deadlineMs) || deadlineMs <= now.getTime())) {
+            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            skipped++;
+            continue;
+          }
+
+          const slug = String(opportunity.slug || slugify(opportunity.title || opportunity.id));
+          const opportunityUrl = new URL(config.siteUrl.toString());
+          opportunityUrl.hash = "opportunity/" + encodeURIComponent(slug);
+          const unsubscribeToken = await deriveUnsubscribeToken(subscription.id, config.tokenSecret);
+          if (await sha256Hex(unsubscribeToken) !== subscription.unsubscribe_token_hash) {
+            throw new Error("Unsubscribe token configuration mismatch.");
+          }
+          const unsubscribeUrl = new URL(config.siteUrl.toString());
+          unsubscribeUrl.searchParams.set("email_alert_unsubscribe", unsubscribeToken);
+          const title = String(opportunity.title || "EDUKEN opportunity").slice(0, 180);
+          let subject = "New EDUKEN opportunity: " + title;
+          let intro = "A new verified opportunity matching your selected interests is available.";
+          if (delivery.event_type === "deadline_7d" || delivery.event_type === "deadline_3d" || delivery.event_type === "deadline_1d") {
+            const days = Number(String(delivery.event_type).match(/deadline_(\d+)d/)?.[1] || 0);
+            subject = "EDUKEN deadline reminder: " + title;
+            intro = "The deadline for this opportunity is approaching in " + days + (days === 1 ? " day." : " days.");
+          }
+          const description = String(opportunity.description || "").slice(0, 1200);
+          const textBody = intro + "\n\n" + title + "\n" + description + "\n\nOpen: " + opportunityUrl.toString() +
+            "\nOfficial source: " + String(opportunity.official_source || "") + "\nUnsubscribe: " + unsubscribeUrl.toString();
+          const htmlBody = "<p>" + escapeEmailHtml(intro) + "</p><h2>" + escapeEmailHtml(title) + "</h2><p>" +
+            escapeEmailHtml(description) + "</p><p><a href=\"" + opportunityUrl.toString() +
+            "\">View opportunity</a></p><p><a href=\"" + escapeEmailHtml(String(opportunity.official_source || "")) +
+            "\">Official source</a></p><p><a href=\"" + unsubscribeUrl.toString() + "\">Unsubscribe from email alerts</a></p>";
+          const providerMessageId = await sendEmailAlertMessage(config, subscription.email, subject, textBody, htmlBody);
+          const { error: markSentError } = await db.from("email_alert_deliveries")
+            .update({ status: "sent", provider_message_id: providerMessageId, sent_at: new Date().toISOString(), last_error: null })
+            .eq("id", delivery.id);
+          if (markSentError) throw markSentError;
+          sent++;
+        } catch {
+          const exhausted = attemptCount >= 5;
+          const retryDelayMs = Math.min(6 * 60 * 60 * 1000, 60 * 1000 * (2 ** Math.max(0, attemptCount - 1)));
+          await db.from("email_alert_deliveries").update({
+            status: exhausted ? "failed" : "pending",
+            scheduled_for: new Date(Date.now() + retryDelayMs).toISOString(),
+            last_error: "Delivery attempt failed; details withheld from public logs.",
+          }).eq("id", delivery.id);
+          failed++;
+        }
+      }
+      return json({ ok: true, processed: sent + failed + skipped, sent, failed, skipped });
     }
 
     if (path === "/api/service-requests" && req.method === "POST") {
