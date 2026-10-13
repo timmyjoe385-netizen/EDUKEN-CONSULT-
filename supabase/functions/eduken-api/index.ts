@@ -239,6 +239,25 @@ const EMAIL_ALERT_TOPICS = new Set([
   "career-mentorship",
 ]);
 
+function opportunityAlertTopic(opportunity: Record<string, any>) {
+  const category = String(opportunity.category || "").trim().toLowerCase();
+  if (/admission|jamb|post.?utme|school application/.test(category)) return "admissions";
+  if (/scholarship|grant|fellowship|bursary/.test(category)) return "scholarships-grants";
+  if (/job|internship|graduate trainee|employment/.test(category)) return "jobs-internships";
+  if (/remote|work.?from.?home|freelance/.test(category)) return "remote-opportunities";
+  if (/career|mentorship|professional development/.test(category)) return "career-mentorship";
+  if (/education|educational|exam|result|policy|school update/.test(category)) return "educational-updates";
+  return null;
+}
+
+function escapeEmailHtml(value: unknown) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[char] || char);
+}
+
+
+
 function secureRandomToken() {
   const bytes = crypto.getRandomValues(new Uint8Array(32));
   return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
@@ -253,7 +272,8 @@ function emailAlertConfiguration() {
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const from = Deno.env.get("EMAIL_FROM");
   const site = Deno.env.get("PUBLIC_SITE_URL");
-  if (!apiKey || !from || !site) return null;
+  const tokenSecret = Deno.env.get("EMAIL_ALERTS_TOKEN_SECRET");
+  if (!apiKey || !from || !site || !tokenSecret || tokenSecret.length < 32) return null;
   let siteUrl: URL;
   try {
     siteUrl = new URL(site);
@@ -261,7 +281,93 @@ function emailAlertConfiguration() {
     return null;
   }
   if (siteUrl.protocol !== "https:" || siteUrl.username || siteUrl.password) return null;
-  return { apiKey, from, siteUrl };
+  return { apiKey, from, siteUrl, tokenSecret };
+}
+
+async function deriveUnsubscribeToken(subscriptionId: string, secret: string) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode("eduken-email-alert-unsubscribe:" + subscriptionId));
+  return Array.from(new Uint8Array(signature), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function enqueueOpportunityEmailAlerts(
+  opportunity: Record<string, any>,
+  options: { queueNew: boolean; rescheduleDeadlines: boolean },
+) {
+  const eligible = Boolean(
+    opportunity.is_published &&
+    opportunity.notify_on_publish &&
+    opportunity.verified &&
+    String(opportunity.official_source || "").trim()
+  );
+  if (!eligible) {
+    await db.from("email_alert_deliveries")
+      .update({ status: "cancelled" })
+      .eq("opportunity_id", opportunity.id)
+      .eq("status", "pending");
+    return;
+  }
+
+  const topic = opportunityAlertTopic(opportunity);
+  if (!topic || !EMAIL_ALERT_TOPICS.has(topic)) return;
+  const { data: subscriptions, error } = await db.from("email_alert_subscriptions")
+    .select("id,topics")
+    .eq("is_active", true)
+    .not("verified_at", "is", null);
+  if (error) throw error;
+  const recipients = (subscriptions ?? []).filter((subscription: any) =>
+    Array.isArray(subscription.topics) && subscription.topics.includes(topic)
+  );
+  const now = new Date();
+  const rows: Record<string, any>[] = [];
+  for (const subscription of recipients) {
+    if (options.queueNew) {
+      rows.push({
+        subscription_id: subscription.id,
+        opportunity_id: opportunity.id,
+        event_type: "new_opportunity",
+        scheduled_for: now.toISOString(),
+        status: "pending",
+      });
+    }
+  }
+
+  if (options.rescheduleDeadlines) {
+    await db.from("email_alert_deliveries")
+      .update({ status: "cancelled" })
+      .eq("opportunity_id", opportunity.id)
+      .in("event_type", ["deadline_7d", "deadline_3d", "deadline_1d"])
+      .eq("status", "pending");
+
+    const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
+    if (Number.isFinite(deadlineMs) && deadlineMs > now.getTime()) {
+      for (const subscription of recipients) {
+        for (const days of [7, 3, 1]) {
+          const scheduledMs = Math.max(now.getTime(), deadlineMs - days * 24 * 60 * 60 * 1000);
+          if (scheduledMs >= deadlineMs) continue;
+          rows.push({
+            subscription_id: subscription.id,
+            opportunity_id: opportunity.id,
+            event_type: "deadline_" + days + "d",
+            scheduled_for: new Date(scheduledMs).toISOString(),
+            status: "pending",
+          });
+        }
+      }
+    }
+  }
+
+  if (rows.length) {
+    const { error: insertError } = await db.from("email_alert_deliveries")
+      .upsert(rows, { onConflict: "subscription_id,opportunity_id,event_type", ignoreDuplicates: true });
+    if (insertError) throw insertError;
+  }
 }
 
 async function sendEmailAlertMessage(config: { apiKey: string; from: string }, to: string, subject: string, textBody: string, htmlBody: string) {
