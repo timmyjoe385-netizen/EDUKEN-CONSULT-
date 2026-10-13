@@ -289,7 +289,10 @@ function emailAlertConfiguration() {
   } catch {
     return null;
   }
-  if (siteUrl.protocol !== "https:" || siteUrl.username || siteUrl.password) return null;
+  // Require a clean HTTPS origin; path/query/hash values could otherwise leak into
+  // generated links or create unsafe HTML attribute content.
+  if (siteUrl.protocol !== "https:" || siteUrl.username || siteUrl.password ||
+      siteUrl.pathname !== "/" || siteUrl.search || siteUrl.hash) return null;
   return { apiKey, from, siteUrl, tokenSecret };
 }
 
@@ -671,8 +674,8 @@ Deno.serve(async (req) => {
           "Confirm your email alerts within 30 minutes: " + verificationUrl.toString() +
             "\n\nIf you did not request this, ignore this message. You can also unsubscribe: " + unsubscribeUrl.toString(),
           "<p>Confirm your EDUKEN CONSULT email alerts within 30 minutes.</p><p><a href=\"" +
-            verificationUrl.toString() + "\">Confirm email alerts</a></p><p>If you did not request this, ignore this message.</p><p><a href=\"" +
-            unsubscribeUrl.toString() + "\">Unsubscribe</a></p>"
+            escapeEmailHtml(verificationUrl.toString()) + "\">Confirm email alerts</a></p><p>If you did not request this, ignore this message.</p><p><a href=\"" +
+            escapeEmailHtml(unsubscribeUrl.toString()) + "\">Unsubscribe</a></p>"
         );
       } catch {
         await db.from("email_alert_subscriptions")
@@ -854,10 +857,10 @@ Deno.serve(async (req) => {
           const textBody = intro + "\n\n" + title + "\n" + description + "\n\nOpen: " + opportunityUrl.toString() +
             (officialSourceUrl ? "\nOfficial source: " + officialSourceUrl : "") + "\nUnsubscribe: " + unsubscribeUrl.toString();
           const htmlBody = "<p>" + escapeEmailHtml(intro) + "</p><h2>" + escapeEmailHtml(title) + "</h2><p>" +
-            escapeEmailHtml(description) + "</p><p><a href=\"" + opportunityUrl.toString() +
+            escapeEmailHtml(description) + "</p><p><a href=\"" + escapeEmailHtml(opportunityUrl.toString()) +
             "\">View opportunity</a></p>" +
             (officialSourceUrl ? "<p><a href=\"" + escapeEmailHtml(officialSourceUrl) + "\">Official source</a></p>" : "") +
-            "<p><a href=\"" + unsubscribeUrl.toString() + "\">Unsubscribe from email alerts</a></p>";
+            "<p><a href=\"" + escapeEmailHtml(unsubscribeUrl.toString()) + "\">Unsubscribe from email alerts</a></p>";
           // Reuse the same provider idempotency key on retries to avoid duplicate messages
           // if the provider accepted a send but the database update failed.
           const providerMessageId = await sendEmailAlertMessage(
