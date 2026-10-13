@@ -69,6 +69,18 @@ const categories = [
   ],
 ];
 
+const fallbackServices: Item[] = [
+  { id: '', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
+  { id: '', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and preparing for school application processes.', price: null },
+  { id: '', name: 'Change of Institution/Course Guidance', category: 'Admissions', description: 'Guidance on reviewing institution or course change options before applying.', price: null },
+  { id: '', name: 'Screening/Application Support', category: 'Applications', description: 'Help understanding screening requirements, registration steps and application information.', price: null },
+  { id: '', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education, admission and study-related decisions.', price: null },
+  { id: '', name: 'Admission/School Research', category: 'Research', description: 'Research support to help you compare schools, courses and published requirements.', price: null },
+  { id: '', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other relevant opportunities.', price: null },
+  { id: '', name: 'Student Mentorship', category: 'Mentorship', description: 'Practical support for planning your academic and personal development next steps.', price: null },
+  { id: '', name: 'Document Services', category: 'Documentation', description: 'Ask EDUKEN about available document-processing support and requirements.', price: null },
+];
+
 const emptyContent: Content = {
   opportunities: [],
   admissions: [],
@@ -550,7 +562,7 @@ function App() {
     setSubmittingServiceRequest(true);
     try {
       const result = await api.post('/api/service-requests', {
-        serviceId: selectedService.id,
+        serviceId: selectedService.id || null,
         customerName: String(fd.get('customerName') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
         email: String(fd.get('email') || '').trim(),
@@ -1721,8 +1733,8 @@ function App() {
             </p>
           </div>
           <div className="service-list">
-            {content.services.length ? content.services.map((s, i) => (
-              <article className="service-row" key={s.id} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
+            {(content.services.length ? content.services : fallbackServices).map((s, i) => (
+              <article className="service-row" key={s.id || s.name} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
                 <span>{String(i + 1).padStart(2, '0')}</span>
                 <div style={{ flex: '1 1 220px', minWidth: 0 }}>
                   <b style={{ display: 'block', marginBottom: 6 }}>{String(s.name || '').trim()}</b>
@@ -1738,7 +1750,7 @@ function App() {
                   </button>
                 </div>
               </article>
-            )) : <p>Our service catalogue is being updated. Please contact EDUKEN on WhatsApp for assistance.</p>}
+            ))}
           </div>
         </section>
 
