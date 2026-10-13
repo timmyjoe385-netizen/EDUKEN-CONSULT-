@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
+import { validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -228,6 +229,58 @@ async function aiAnswer(question: string) {
   return data.output_text || "I could not find a confident answer. Please verify the official source.";
 }
 
+
+const EMAIL_ALERT_TOPICS = new Set([
+  "admissions",
+  "scholarships-grants",
+  "jobs-internships",
+  "remote-opportunities",
+  "educational-updates",
+  "career-mentorship",
+]);
+
+function secureRandomToken() {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function sha256Hex(value: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function emailAlertConfiguration() {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("EMAIL_FROM");
+  const site = Deno.env.get("PUBLIC_SITE_URL");
+  if (!apiKey || !from || !site) return null;
+  let siteUrl: URL;
+  try {
+    siteUrl = new URL(site);
+  } catch {
+    return null;
+  }
+  if (siteUrl.protocol !== "https:" || siteUrl.username || siteUrl.password) return null;
+  return { apiKey, from, siteUrl };
+}
+
+async function sendEmailAlertMessage(config: { apiKey: string; from: string }, to: string, subject: string, textBody: string, htmlBody: string) {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + config.apiKey,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ from: config.from, to: [to], subject, text: textBody, html: htmlBody }),
+  });
+  if (!response.ok) {
+    // Keep provider response bodies and subscriber data out of public error messages.
+    throw new Error("Transactional email provider rejected the message.");
+  }
+  const result = await response.json();
+  return typeof result.id === "string" ? result.id : null;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   const path = pathOf(req);
@@ -372,6 +425,133 @@ Deno.serve(async (req) => {
       return json({ answer: await aiAnswer(question) });
     }
 
+
+
+    if (path === "/api/email-alerts/subscribe" && req.method === "POST") {
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const validation = validateEmailAlertSubscription(body);
+      if (validation.error) return json({ error: validation.error }, 400);
+      const config = emailAlertConfiguration();
+      if (!config) return json({ error: "Email alerts are not configured yet. Please use the EDUKEN WhatsApp Channel for updates." }, 503);
+
+      const { email, topics } = validation.data;
+      const now = new Date();
+      const verificationToken = secureRandomToken();
+      const verificationTokenHash = await sha256Hex(verificationToken);
+      const unsubscribeToken = secureRandomToken();
+      const unsubscribeTokenHash = await sha256Hex(unsubscribeToken);
+      const { data: existing, error: lookupError } = await db
+        .from("email_alert_subscriptions")
+        .select("id,is_active,verified_at")
+        .eq("email", email)
+        .maybeSingle();
+      if (lookupError) throw lookupError;
+
+      if (existing?.is_active && existing?.verified_at) {
+        const { error } = await db.from("email_alert_subscriptions")
+          .update({ topics, updated_at: now.toISOString() })
+          .eq("id", existing.id);
+        if (error) throw error;
+        return json({ message: "Your email alert preferences have been updated." });
+      }
+
+      let subscriptionId: string;
+      const subscriptionValues = {
+        email,
+        topics,
+        verified_at: null,
+        verification_token_hash: verificationTokenHash,
+        verification_expires_at: new Date(now.getTime() + 30 * 60 * 1000).toISOString(),
+        unsubscribe_token_hash: unsubscribeTokenHash,
+        is_active: false,
+        updated_at: now.toISOString(),
+      };
+      if (existing) {
+        const { data, error } = await db.from("email_alert_subscriptions")
+          .update(subscriptionValues)
+          .eq("id", existing.id)
+          .select("id")
+          .single();
+        if (error) throw error;
+        subscriptionId = data.id;
+      } else {
+        const { data, error } = await db.from("email_alert_subscriptions")
+          .insert(subscriptionValues)
+          .select("id")
+          .single();
+        if (error) throw error;
+        subscriptionId = data.id;
+      }
+
+      const verificationUrl = new URL(config.siteUrl.toString());
+      verificationUrl.searchParams.set("email_alert_verify", verificationToken);
+      const unsubscribeUrl = new URL(config.siteUrl.toString());
+      unsubscribeUrl.searchParams.set("email_alert_unsubscribe", unsubscribeToken);
+      try {
+        await sendEmailAlertMessage(
+          config,
+          email,
+          "Confirm your EDUKEN CONSULT email alerts",
+          "Confirm your email alerts within 30 minutes: " + verificationUrl.toString() +
+            "\n\nIf you did not request this, ignore this message. You can also unsubscribe: " + unsubscribeUrl.toString(),
+          "<p>Confirm your EDUKEN CONSULT email alerts within 30 minutes.</p><p><a href=\"" +
+            verificationUrl.toString() + "\">Confirm email alerts</a></p><p>If you did not request this, ignore this message.</p><p><a href=\"" +
+            unsubscribeUrl.toString() + "\">Unsubscribe</a></p>"
+        );
+      } catch {
+        await db.from("email_alert_subscriptions")
+          .update({ verification_token_hash: null, verification_expires_at: null, updated_at: new Date().toISOString() })
+          .eq("id", subscriptionId);
+        return json({ error: "We could not send the confirmation email. Please try again later." }, 502);
+      }
+      return json({ message: "Check your inbox for a confirmation link. The link expires in 30 minutes." }, 202);
+    }
+
+    if (path === "/api/email-alerts/verify" && req.method === "POST") {
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const token = typeof body?.token === "string" ? body.token.trim() : "";
+      if (!/^[a-f0-9]{64}$/i.test(token)) return json({ error: "This confirmation link is invalid or expired." }, 400);
+      const tokenHash = await sha256Hex(token);
+      const now = new Date().toISOString();
+      const { data: subscription, error: lookupError } = await db.from("email_alert_subscriptions")
+        .select("id")
+        .eq("verification_token_hash", tokenHash)
+        .gt("verification_expires_at", now)
+        .maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!subscription) return json({ error: "This confirmation link is invalid or expired." }, 400);
+      const { error } = await db.from("email_alert_subscriptions")
+        .update({ verified_at: now, is_active: true, verification_token_hash: null, verification_expires_at: null, updated_at: now })
+        .eq("id", subscription.id);
+      if (error) throw error;
+      return json({ message: "Your email alerts are confirmed and active." });
+    }
+
+    if (path === "/api/email-alerts/unsubscribe" && req.method === "POST") {
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const token = typeof body?.token === "string" ? body.token.trim() : "";
+      if (!/^[a-f0-9]{64}$/i.test(token)) return json({ error: "This unsubscribe link is invalid." }, 400);
+      const tokenHash = await sha256Hex(token);
+      const { data: subscription, error: lookupError } = await db.from("email_alert_subscriptions")
+        .select("id")
+        .eq("unsubscribe_token_hash", tokenHash)
+        .maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!subscription) return json({ error: "This unsubscribe link is invalid." }, 400);
+      const now = new Date().toISOString();
+      const { error } = await db.from("email_alert_subscriptions")
+        .update({ is_active: false, updated_at: now })
+        .eq("id", subscription.id);
+      if (error) throw error;
+      await db.from("email_alert_deliveries")
+        .update({ status: "cancelled" })
+        .eq("subscription_id", subscription.id)
+        .eq("status", "pending");
+      return json({ message: "You have been unsubscribed from EDUKEN email alerts." });
+    }
 
     if (path === "/api/service-requests" && req.method === "POST") {
       let b: any;
