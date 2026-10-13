@@ -732,7 +732,7 @@ Deno.serve(async (req) => {
             .maybeSingle();
           if (opportunityError) throw opportunityError;
           if (!opportunity) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
             skipped++;
             continue;
           }
@@ -742,14 +742,14 @@ Deno.serve(async (req) => {
           );
           const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
           if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
             skipped++;
             continue;
           }
 
           const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
           if (String(delivery.event_type).startsWith("deadline_") && (!Number.isFinite(deadlineMs) || deadlineMs <= now.getTime())) {
-            await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("id", delivery.id);
+            await db.from("email_alert_deliveries").update({ status: "cancelled", processing_started_at: null }).eq("id", delivery.id);
             skipped++;
             continue;
           }
