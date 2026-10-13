@@ -1173,31 +1173,6 @@ function App() {
           </section>
         </div>
       )}
-      {selectedService && (
-        <div role="presentation" onClick={e => { if (e.target === e.currentTarget) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12, 24, 18, 0.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
-          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22, boxShadow: '0 20px 70px rgba(0,0,0,.25)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
-              <div>
-                <span className="kicker">SERVICE REQUEST</span>
-                <h2 id="service-request-title" style={{ margin: '8px 0' }}>{selectedService.name}</h2>
-                <p style={{ margin: '0 0 16px', lineHeight: 1.5 }}>Send your details and EDUKEN will contact you to confirm requirements and pricing. This form does not take payment.</p>
-              </div>
-              <button type="button" aria-label="Close service request" onClick={() => setSelectedService(null)}><X size={20} /></button>
-            </div>
-            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
-              <input name="customerName" required maxLength={120} placeholder="Full name" aria-label="Full name" />
-              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
-              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
-              <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need for this service..." aria-label="Request details" />
-              <p style={{ fontSize: 13, lineHeight: 1.5, margin: 0 }}>Please do not submit passwords, bank details or sensitive identity documents in this form.</p>
-              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button type="submit" className="primary">Send service request <ArrowRight size={16} /></button>
-                <button type="button" className="secondary" onClick={() => setSelectedService(null)}>Cancel</button>
-              </div>
-            </form>
-          </section>
-        </div>
-      )}
       <footer>
           <div className="footer-main">
             <div>
@@ -1963,6 +1938,31 @@ function App() {
         </section>
       </main>
 
+      {selectedService && (
+        <div role="presentation" onClick={e => { if (e.target === e.currentTarget) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12, 24, 18, 0.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22, boxShadow: '0 20px 70px rgba(0,0,0,.25)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+              <div>
+                <span className="kicker">SERVICE REQUEST</span>
+                <h2 id="service-request-title" style={{ margin: '8px 0' }}>{selectedService.name}</h2>
+                <p style={{ margin: '0 0 16px', lineHeight: 1.5 }}>Send your details and EDUKEN will contact you to confirm requirements and pricing. This form does not take payment.</p>
+              </div>
+              <button type="button" aria-label="Close service request" onClick={() => setSelectedService(null)}><X size={20} /></button>
+            </div>
+            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
+              <input name="customerName" required maxLength={120} placeholder="Full name" aria-label="Full name" />
+              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
+              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+              <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need for this service..." aria-label="Request details" />
+              <p style={{ fontSize: 13, lineHeight: 1.5, margin: 0 }}>Please do not submit passwords, bank details or sensitive identity documents in this form.</p>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button type="submit" className="primary">Send service request <ArrowRight size={16} /></button>
+                <button type="button" className="secondary" onClick={() => setSelectedService(null)}>Cancel</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
       <footer>
         <div className="footer-main">
           <div>
