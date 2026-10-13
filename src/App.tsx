@@ -298,12 +298,14 @@ function App() {
   const isPlaceholderAdmission = (item: Item) => {
     const school = String(item.school || '').trim().toLowerCase();
     const course = String(item.course || '').trim().toLowerCase();
-    const details = String(item.details || item.description || item.content || '').trim();
+    const details = String(item.details || item.description || item.content || '').trim().toLowerCase();
     const link = String(item.link || item.application_url || '').trim();
     const deadline = String(item.deadline || '').trim();
     const genericSchool = /^(nigerian universities|universities|polytechnics|colleges of education|admission information|application information|programme information)$/i.test(school);
     const genericCourse = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(course);
-    return (genericSchool || genericCourse) && !details && !link && !deadline;
+    const genericDetails = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(details);
+    // Hide seeded category cards even if their generic description field is populated.
+    return (genericSchool || genericCourse || genericDetails) && !link && !deadline;
   };
 
   const filteredAdmissions = useMemo(
@@ -1771,8 +1773,8 @@ function App() {
               filteredAdmissions.map(a => (
                 <article className="admission-card" key={a.id}>
                   <div className="admission-top">
-                    <span>{a.type}</span>
-                    <b>{a.status}</b>
+                    <span>{a.type || 'Admission'}</span>
+                    {a.verified ? <b>✓ Verified Source</b> : null}
                   </div>
                   <h3>{a.school}</h3>
                   <p>{a.course}</p>
