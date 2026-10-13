@@ -646,7 +646,7 @@ function App() {
                               <Share2 size={14} /> Share
                             </button>
                           )}
-                        <button onClick={() => setForm(item)}>Edit</button>
+                        <button onClick={() => setForm(adminTab === 'opportunities' ? { ...item, status: (item.is_published === true || String(item.is_published).toLowerCase() === 'true' || String(item.is_published) === '1') ? 'PUBLISHED' : 'DRAFT' } : item)}>Edit</button>
                         <button
                           className="danger"
                           onClick={() => deleteAdmin(item.id)}
@@ -686,7 +686,15 @@ function App() {
                         className={isBoolean ? 'admin-toggle-field' : undefined}
                       >
                         <span>{fieldLabel}</span>
-                        {isBoolean ? (
+                        {adminTab === 'opportunities' && field === 'status' ? (
+                          <select
+                            value={String(form.status || (form.is_published ? 'PUBLISHED' : 'DRAFT')).toUpperCase() === 'PUBLISHED' ? 'PUBLISHED' : 'DRAFT'}
+                            onChange={e => setForm({ ...form, status: e.target.value, is_published: e.target.value === 'PUBLISHED' })}
+                          >
+                            <option value="DRAFT">Draft</option>
+                            <option value="PUBLISHED">Published</option>
+                          </select>
+                        ) : isBoolean ? (
                           <span className="admin-toggle-control">
                             <input
                               type="checkbox"
