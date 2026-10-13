@@ -91,9 +91,9 @@ test("email alert migration requires an opportunity for every idempotent deliver
   const { dirname, resolve } = await import("node:path");
   const here = dirname(fileURLToPath(import.meta.url));
   const migration = await readFile(resolve(here, "../supabase/migrations/20261013130000_account_free_email_alerts.sql"), "utf8");
-  assert.match(migration, /opportunity_id uuid not null references public\\.opportunities\\(id\\) on delete cascade/);
-  assert.match(migration, /unique \\(subscription_id, opportunity_id, event_type\\)/);
-  assert.match(migration, /alter table public\\.email_alert_deliveries enable row level security/);
+  assert.match(migration, /opportunity_id uuid not null references public\.opportunities\(id\) on delete cascade/);
+  assert.match(migration, /unique \(subscription_id, opportunity_id, event_type\)/);
+  assert.match(migration, /alter table public\.email_alert_deliveries enable row level security/);
 });
 
 test("email alert scheduler pins the processor URL before sending its bearer secret", async () => {
@@ -129,14 +129,14 @@ test("least-privilege migration removes broad client grants and keeps only requi
 
   assert.match(migration, /revoke all privileges on all tables in schema public from anon, authenticated/i);
   assert.match(migration, /revoke all privileges on all sequences in schema public from anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role postgres in schema public[\\s\\S]*revoke all privileges on tables from anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role postgres in schema public[\\s\\S]*revoke all privileges on sequences from anon, authenticated/i);
-  assert.match(migration, /grant select on table[\\s\\S]*public\\.opportunities[\\s\\S]*public\\.admissions[\\s\\S]*public\\.updates[\\s\\S]*public\\.faqs[\\s\\S]*public\\.services[\\s\\S]*to anon, authenticated/i);
-  assert.match(migration, /grant select, insert, update on table public\\.profiles to authenticated/i);
-  assert.match(migration, /grant select, update on table public\\.notifications to authenticated/i);
-  assert.match(migration, /grant select on table public\\.payments to authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on tables from anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on sequences from anon, authenticated/i);
+  assert.match(migration, /grant select on table[\s\S]*public\.opportunities[\s\S]*public\.admissions[\s\S]*public\.updates[\s\S]*public\.faqs[\s\S]*public\.services[\s\S]*to anon, authenticated/i);
+  assert.match(migration, /grant select, insert, update on table public\.profiles to authenticated/i);
+  assert.match(migration, /grant select, update on table public\.notifications to authenticated/i);
+  assert.match(migration, /grant select on table public\.payments to authenticated/i);
   assert.doesNotMatch(migration, /grant all privileges/i);
-  assert.doesNotMatch(migration, /grant [^;]* on table public\\.service_requests to authenticated/i);
-  assert.doesNotMatch(migration, /grant [^;]* on table public\\.consultations to (anon|authenticated)/i);
+  assert.doesNotMatch(migration, /grant [^;]* on table public\.service_requests to authenticated/i);
+  assert.doesNotMatch(migration, /grant [^;]* on table public\.consultations to (anon|authenticated)/i);
   assert.match(migration, /RLS policies remain the row-level authorization boundary/i);
 });
