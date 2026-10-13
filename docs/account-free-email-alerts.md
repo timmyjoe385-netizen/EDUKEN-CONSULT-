@@ -19,8 +19,9 @@ Configure these through Supabase project secrets, never in the repository or bro
 - `EMAIL_FROM` — a verified sender, for example `EDUKEN CONSULT <alerts@your-verified-domain.example>`.
 - `PUBLIC_SITE_URL` — the HTTPS website origin used in verification links.
 - `EMAIL_ALERTS_TOKEN_SECRET` — a stable secret of at least 32 characters used to derive revocable unsubscribe tokens. Keep it unchanged after subscriptions exist.
+- `EMAIL_ALERTS_CRON_SECRET` — a separate random secret of at least 32 characters required by the internal delivery processor. Configure the same value as the GitHub repository secret `EDUKEN_EMAIL_ALERTS_CRON_SECRET`; never reuse the Resend API key.
 
-The feature intentionally returns a clear `503` until all four Edge Function secrets are configured. Do not add fake credentials or send mail during automated browser tests.
+The public subscription and verification endpoints require rate limiting to be available. The internal delivery processor also returns a clear `503` until its required Edge Function secrets and email provider configuration are present. Do not add fake credentials or send mail during automated browser tests.
 
 ## Still required before enabling the feature
 
