@@ -52,3 +52,20 @@ export function isWithinEmailAlertCooldown(updatedAt, nowMs = Date.now(), cooldo
   // Treat a future timestamp as recent too; clock skew must not bypass the cooldown.
   return nowMs - timestamp < cooldownMs;
 }
+
+ 
+// Extract an address only from common gateway-provided headers. The caller hashes
+// the result before persistence; this helper never stores or logs the address.
+export function getEmailAlertClientIp(headers) {
+  const forwarded = headers.get("x-forwarded-for");
+  const value = headers.get("cf-connecting-ip") || headers.get("x-real-ip") ||
+    (forwarded ? forwarded.split(",").map(item => item.trim()).filter(Boolean).at(-1) : "");
+  const ip = typeof value === "string" ? value.trim() : "";
+  return ip && ip.length <= 128 ? ip : null;
+}
+
+export function emailAlertRateLimitPolicy(action) {
+  if (action === "subscribe") return Object.freeze({ limit: 5, windowSeconds: 900 });
+  if (action === "verify" || action === "unsubscribe") return Object.freeze({ limit: 20, windowSeconds: 900 });
+  return null;
+}
