@@ -3,9 +3,17 @@
 -- RLS policies remain the row-level authorization boundary; these grants remove
 -- broad table-level privileges that RLS alone does not replace.
 
--- Remove inherited/default broad privileges first.
+-- Remove inherited/default broad privileges from existing public-schema objects.
 revoke all privileges on all tables in schema public from anon, authenticated;
 revoke all privileges on all sequences in schema public from anon, authenticated;
+
+-- Also prevent future tables/sequences created by the migration owner (postgres)
+-- from silently inheriting client grants. New client-accessible objects must
+-- receive explicit grants in their reviewed migration.
+alter default privileges for role postgres in schema public
+  revoke all privileges on tables from anon, authenticated;
+alter default privileges for role postgres in schema public
+  revoke all privileges on sequences from anon, authenticated;
 
 -- Public catalogue: anonymous visitors may read rows only; existing RLS policies
 -- restrict the rows to published content. The Edge Function uses service_role.
