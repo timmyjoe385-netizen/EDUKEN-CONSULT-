@@ -137,7 +137,9 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
     const normalized = String(value ?? "").trim().toUpperCase();
     return normalized === "PUBLISHED" || normalized === "TRUE" || normalized === "1";
   };
-  if (table !== "opportunities" && x.status !== undefined && x.is_published === undefined) {
+  if (table !== "opportunities" && x.status !== undefined) {
+    // The UI status is authoritative when editing an existing row; the raw
+    // is_published value may otherwise still reflect the previous state.
     x.is_published = toPublishedBoolean(x.status);
   }
 
