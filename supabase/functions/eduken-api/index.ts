@@ -861,6 +861,31 @@ Deno.serve(async (req) => {
             "\">View opportunity</a></p>" +
             (officialSourceUrl ? "<p><a href=\"" + escapeEmailHtml(officialSourceUrl) + "\">Official source</a></p>" : "") +
             "<p><a href=\"" + escapeEmailHtml(unsubscribeUrl.toString()) + "\">Unsubscribe from email alerts</a></p>";
+          // Re-check subscription consent immediately before the external send. The first
+          // read above is needed to build the message, but an unsubscribe may happen while
+          // the worker is preparing it. This second read narrows that race window; fully
+          // atomic coordination with an external email provider is not possible here.
+          const { data: latestSubscription, error: latestSubscriptionError } = await db
+            .from("email_alert_subscriptions")
+            .select("is_active,verified_at,topics")
+            .eq("id", subscription.id)
+            .maybeSingle();
+          if (latestSubscriptionError) throw latestSubscriptionError;
+          if (
+            !latestSubscription ||
+            !latestSubscription.is_active ||
+            !latestSubscription.verified_at ||
+            !Array.isArray(latestSubscription.topics) ||
+            !latestSubscription.topics.includes(topic)
+          ) {
+            await updateEmailAlertDelivery(delivery.id, {
+              status: "cancelled",
+              processing_started_at: null,
+            });
+            skipped++;
+            continue;
+          }
+
           // Reuse the same provider idempotency key on retries to avoid duplicate messages
           // if the provider accepted a send but the database update failed.
           const providerMessageId = await sendEmailAlertMessage(
