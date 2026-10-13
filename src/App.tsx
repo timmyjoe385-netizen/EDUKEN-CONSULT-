@@ -457,6 +457,19 @@ function App() {
     const table = adminTab;
     try {
       const payload: Record<string, any> = { ...form };
+      if (table !== 'opportunities') {
+        // Keep the database boolean in sync with the editor's Draft/Published
+        // control, including when an existing row is switched to a new state.
+        if (publishMode === 'draft') {
+          payload.status = 'DRAFT';
+          payload.is_published = false;
+        } else if (publishMode === 'publish') {
+          payload.status = 'PUBLISHED';
+          payload.is_published = true;
+        } else if (payload.status !== undefined) {
+          payload.is_published = String(payload.status).toUpperCase() === 'PUBLISHED';
+        }
+      }
       if (table === 'opportunities') {
         if (publishMode === 'draft') {
           payload.status = 'DRAFT';
