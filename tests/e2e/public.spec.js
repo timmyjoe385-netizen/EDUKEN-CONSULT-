@@ -76,12 +76,27 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
   }
 });
 
-test('admin sign-in dialog opens and offers Google sign-in', async ({ page }) => {
+test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
+  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+
+  // Stub the OAuth navigation so CI verifies the hand-off without logging in
+  // or opening a real Google account.
+  await page.route(authorizeEndpoint + '**', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+    }),
+  );
+
   await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const authNavigation = page.waitForRequest(
+    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
+  );
   await page.getByRole('button', { name: /admin/i }).click();
-  const dialog = page.getByRole('dialog', { name: /admin sign in/i });
-  await expect(dialog).toBeVisible();
-  await expect(dialog).toContainText(/authorized Google accounts/i);
-  await expect(dialog.getByRole('button', { name: /continue with Google/i })).toBeVisible();
-  // Do not click Google sign-in in unattended CI: it requires a real user session.
+  const request = await authNavigation;
+  const authUrl = new URL(request.url());
+
+  expect(authUrl.searchParams.get('provider')).toBe('google');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(new URL('/', page.url()).origin + '/');
 });
