@@ -486,7 +486,7 @@ function App() {
         if (['opportunities', 'admissions', 'updates'].includes(table)) {
           const title = String(payload.title || payload.school || payload.name || 'EDUKEN CONSULT Update').trim();
           const summary = String(payload.description || payload.body || payload.details || payload.content || '')
-            .replace(/\\s+/g, ' ')
+            .replace(/\s+/g, ' ')
             .trim()
             .slice(0, 220);
           const slug = String(payload.slug || makeSlug(title));
@@ -509,7 +509,7 @@ function App() {
             link,
             '',
             '🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
-          ].join('\\n'));
+          ].join('\n'));
         }
       } else {
         showToast('Changes saved successfully.');
