@@ -110,7 +110,7 @@ test('service request dialog validates required fields without sending a request
   await expect(dialog).toBeVisible();
   for (const name of ['Full name', 'WhatsApp number', 'Request details']) {
     await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
-    await expect(dialog.getByRole('textbox', { name })).toHaveJSProperty('validity.valid', false);
+    expect(await dialog.getByRole('textbox', { name }).evaluate(element => element.checkValidity())).toBe(false);
   }
 
   await dialog.getByRole('button', { name: 'Send service request' }).click();
