@@ -1,5 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -375,19 +376,13 @@ Deno.serve(async (req) => {
     if (path === "/api/service-requests" && req.method === "POST") {
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
-      if (!b || typeof b !== "object" || Array.isArray(b)) return json({ error: "A valid request object is required." }, 400);
-      const customerName = typeof b.customerName === "string" ? b.customerName.trim() : "";
-      const whatsapp = typeof b.whatsapp === "string" ? b.whatsapp.trim() : "";
-      const details = typeof b.details === "string" ? b.details.trim() : "";
-      const email = typeof b.email === "string" ? b.email.trim() : "";
-      if (!customerName || !whatsapp || !details) return json({ error: "Name, WhatsApp number and request details are required." }, 400);
-      if (customerName.length > 120 || whatsapp.length > 40 || details.length > 4000 || email.length > 200) return json({ error: "One or more fields exceed the allowed length." }, 400);
-      if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: "Enter a valid email address." }, 400);
-      if (b.serviceId != null && typeof b.serviceId !== "string") return json({ error: "Invalid service selection." }, 400);
+      const validation = validateServiceRequestBody(b);
+      if (validation.error) return json({ error: validation.error }, 400);
+      const { customerName, whatsapp, details, email, serviceId } = validation.data;
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
       const { data, error } = await db.from("service_requests").insert({
-        user_id: user?.id ?? null, service_id: b.serviceId || null, customer_name: customerName,
+        user_id: user?.id ?? null, service_id: serviceId, customer_name: customerName,
         whatsapp, email: email || null, details,
         status: "New Requests", reference_number: reference
       }).select("id,reference_number,status,created_at").single();
@@ -467,8 +462,7 @@ Deno.serve(async (req) => {
       if (req.method === "PUT" && id) {
         let b: any;
         try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
-        const allowedStatuses = new Set(["New Requests", "Contacted", "In Progress", "Completed", "Cancelled"]);
-        if (!b || typeof b.status !== "string" || !allowedStatuses.has(b.status)) return json({ error: "Invalid service request status." }, 400);
+        if (!b || !isAllowedServiceRequestStatus(b.status)) return json({ error: "Invalid service request status." }, 400);
         const { data, error } = await db.from("service_requests").update({ status: b.status }).eq("id", id).select("id,status").maybeSingle();
         if (error) throw error; if (!data) return json({ error: "Service request not found." }, 404);
         return json({ ok: true, request: data });
