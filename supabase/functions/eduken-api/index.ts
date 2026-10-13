@@ -585,10 +585,19 @@ Deno.serve(async (req) => {
       const verificationTokenHash = await sha256Hex(verificationToken);
       const { data: existing, error: lookupError } = await db
         .from("email_alert_subscriptions")
-        .select("id,is_active,verified_at")
+        .select("id,is_active,verified_at,updated_at")
         .eq("email", email)
         .maybeSingle();
       if (lookupError) throw lookupError;
+
+      // Per-address cooldown prevents repeated confirmation-email spam without
+      // blocking already-verified subscribers from updating their preferences.
+      if (existing && !(existing.is_active && existing.verified_at)) {
+        const lastRequestedAt = Date.parse(String(existing.updated_at || ""));
+        if (Number.isFinite(lastRequestedAt) && now.getTime() - lastRequestedAt < 2 * 60 * 1000) {
+          return json({ error: "A confirmation was requested recently. Please wait two minutes before trying again." }, 429);
+        }
+      }
 
       if (existing?.is_active && existing?.verified_at) {
         const { error } = await db.from("email_alert_subscriptions")
