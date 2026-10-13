@@ -10,6 +10,11 @@ on:
         required: false
         type: boolean
         default: false
+      test_ai:
+        description: "Run one real Ask EDUKEN smoke test (uses AI resources)"
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -27,6 +32,27 @@ jobs:
           echo "Homepage HTTP status: $code"
           test "$code" = "200"
           grep -qi 'EDUKEN' /tmp/home.html
+
+      - name: Check public EDUKEN content API
+        shell: bash
+        env:
+          SUPABASE_PUBLISHABLE_KEY: "sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p"
+        run: |
+          set -euo pipefail
+          code="$(curl --silent --show-error --location --output /tmp/public-content.json --write-out '%{http_code}' --max-time 25 --retry 2 --retry-delay 2 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content' -H "apikey: $SUPABASE_PUBLISHABLE_KEY")"
+          echo "Public content API HTTP status: $code"
+          test "$code" = "200"
+          jq -e 'type == "object" or type == "array"' /tmp/public-content.json >/dev/null
+          echo "Public content API returned valid JSON."
+
+      - name: Check AI endpoint routing without using AI resources
+        shell: bash
+        run: |
+          set -euo pipefail
+          code="$(curl --silent --show-error --output /tmp/ai-route.json --write-out '%{http_code}' --max-time 20 'https://eduken-consult.timmyjoe385.workers.dev/api/ai-assistant')"
+          echo "AI endpoint GET status (405 expected): $code"
+          test "$code" = "405"
+
       - name: Check analytics API routing and access protection
         shell: bash
         run: |
@@ -37,6 +63,18 @@ jobs:
           echo "Analytics summary endpoint unauthenticated status (403 expected): $summary_code"
           test "$events_code" = "405"
           test "$summary_code" = "403"
+
+      - name: Optional Ask EDUKEN live smoke test
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.test_ai == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          code="$(curl --silent --show-error --location --output /tmp/ai-response.json --write-out '%{http_code}' --max-time 90 --retry 1 --retry-delay 3 'https://eduken-consult.timmyjoe385.workers.dev/api/ai-assistant' -H 'content-type: application/json' --data '{"question":"Explain what a scholarship is in one short sentence."}')"
+          echo "Ask EDUKEN live smoke test HTTP status: $code"
+          test "$code" = "200"
+          jq -e '.answer | type == "string" and length > 0' /tmp/ai-response.json >/dev/null
+          echo "Ask EDUKEN returned a non-empty answer."
+
       - name: Check email alert configuration
         id: email_config
         if: failure() || github.event.inputs.test_email == 'true'
@@ -55,6 +93,7 @@ jobs:
             echo "enabled=false" >> "$GITHUB_OUTPUT"
             echo "::warning::Email alerts are not configured yet. Add the required repository Actions secrets to enable them."
           fi
+
       - name: Send email alert
         if: (failure() || github.event.inputs.test_email == 'true') && steps.email_config.outputs.enabled == 'true'
         uses: dawidd6/action-send-mail@v3
@@ -69,6 +108,6 @@ jobs:
           body: |
             ${{ github.event.inputs.test_email == 'true' && 'This is a test email to verify that EDUKEN CONSULT health alert delivery is configured correctly.' || 'An automated live health check for EDUKEN CONSULT has failed.' }}
 
-            The check covers the live homepage and the analytics API routing/access-protection responses.
+            The check covers the live homepage, public content API, AI endpoint routing, and analytics API routing/access-protection. A manual Ask EDUKEN smoke test is available and uses AI resources.
             Please open this run to see the failed step and logs:
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
