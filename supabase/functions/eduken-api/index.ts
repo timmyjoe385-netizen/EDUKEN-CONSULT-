@@ -3,7 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
@@ -986,13 +986,15 @@ Deno.serve(async (req) => {
         headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
         body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
       });
-      const result = await paystack.json();
-      if (!paystack.ok || !result.status || !result.data?.authorization_url) return json({ error: "Unable to initialize payment." }, 502);
+      let result: any;
+      try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
+      if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
       const { data: payment, error } = await db.from("payments").insert({
         user_id: user.id, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
       }).select().single();
       if (error) throw error;
-      return json({ payment, authorizationUrl: result.data.authorization_url, accessCode: result.data.access_code, reference });
+      return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
     if (path === "/api/payments/verify" && req.method === "POST") {
