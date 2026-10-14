@@ -707,3 +707,40 @@ test('aggregate calculator applies the added provisional school-specific formula
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
   await expect(page.locator('.aggregate-result')).toContainText('80.00');
 });
+
+test('aggregate calculator rejects out-of-range scores and invalid custom weights', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  const calculate = page.getByRole('button', { name: /Calculate aggregate/i });
+
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('401');
+  await expect(page.getByRole('alert')).toContainText('whole-number UTME score from 0 to 400');
+  await expect(calculate).toBeDisabled();
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('250.5');
+  await expect(calculate).toBeDisabled();
+
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Institution / formula').selectOption('uniben');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('101');
+  await expect(page.getByRole('alert')).toContainText('Post-UTME score from 0 to 100');
+  await expect(calculate).toBeDisabled();
+
+  await page.getByLabel('Institution / formula').selectOption('custom');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.locator('#aggregate-jw').fill('0');
+  await page.locator('#aggregate-pw').fill('0');
+  await page.locator('#aggregate-ow').fill('0');
+  await expect(page.getByRole('alert')).toContainText('combined total greater than zero');
+  await expect(calculate).toBeDisabled();
+
+  await page.locator('#aggregate-jw').fill('50');
+  await page.locator('#aggregate-pw').fill('30');
+  await page.locator('#aggregate-ow').fill('20');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('101');
+  await expect(page.getByRole('alert')).toContainText('O’Level score from 0 to 100');
+  await expect(calculate).toBeDisabled();
+
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await expect(calculate).toBeEnabled();
+  await calculate.click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
+});
