@@ -1,0 +1,38 @@
+
+.aggregate-page{min-height:100vh;background:#f5f7f5;color:#17251d;font-family:inherit}
+.aggregate-topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px max(20px,calc((100vw - 1050px)/2));background:#fff;border-bottom:1px solid #dce5df}
+.aggregate-topbar span,.aggregate-back{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#173f31;text-decoration:none}
+.aggregate-shell{width:min(100% - 32px,820px);margin:0 auto;padding:38px 0 60px}
+.aggregate-intro{margin-bottom:24px}
+.aggregate-kicker{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:#e5f0e9;color:#173f31;padding:7px 11px;font-size:.78rem;font-weight:800;letter-spacing:.04em}
+.aggregate-intro h1{font-size:clamp(2rem,6vw,3.2rem);line-height:1.08;letter-spacing:-.04em;margin:16px 0 12px;color:#173f31}
+.aggregate-intro p,.aggregate-source p{line-height:1.7;color:#526158;margin:0;max-width:720px}
+.aggregate-card,.aggregate-source{background:#fff;border:1px solid #dfe7e1;border-radius:20px;padding:clamp(18px,4vw,30px);box-shadow:0 12px 35px rgba(23,63,49,.05)}
+.aggregate-card h2,.aggregate-source h2{margin:0 0 20px;font-size:1.3rem;color:#173f31}
+.aggregate-field{display:grid;gap:7px;margin:16px 0;font-weight:650}
+.aggregate-field label,.aggregate-field span{font-size:.95rem}
+.aggregate-field input,.aggregate-field select{width:100%;min-height:48px;border:1px solid #cbd8cf;border-radius:11px;padding:11px 12px;background:#fff;color:#17251d;font:inherit;box-sizing:border-box}
+.aggregate-field input:focus,.aggregate-field select:focus{outline:3px solid rgba(43,111,78,.18);border-color:#2b6f4e}
+.aggregate-field small,.aggregate-card>small{font-weight:400;color:#64736a;line-height:1.5}
+.aggregate-helper{padding:12px 14px;background:#f0f5f1;border-radius:10px;color:#42564a;line-height:1.55}
+.aggregate-two-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.aggregate-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.aggregate-primary,.aggregate-secondary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;border-radius:11px;padding:12px 17px;font:inherit;font-weight:750;cursor:pointer}
+.aggregate-primary{background:#173f31;color:#fff;border:1px solid #173f31}
+.aggregate-primary:disabled{opacity:.45;cursor:not-allowed}
+.aggregate-secondary{background:#fff;color:#173f31;border:1px solid #cbd8cf}
+.aggregate-result{margin-top:22px;padding:20px;border-radius:15px;background:#edf6ef;border:1px solid #c7dfcd}
+.aggregate-result>span{display:block;font-size:.75rem;font-weight:800;letter-spacing:.06em;color:#315d42}
+.aggregate-result>strong{display:block;font-size:clamp(2.4rem,8vw,3.5rem);line-height:1.2;color:#173f31;margin:8px 0}
+.aggregate-result>strong small{font-size:1rem;font-weight:600}
+.aggregate-result p{line-height:1.6;color:#526158}
+.aggregate-breakdown{display:grid;gap:0;margin-top:16px}
+.aggregate-breakdown div{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-top:1px solid #d2e4d6;font-size:.92rem}
+.aggregate-breakdown b{text-align:right;white-space:nowrap}
+.aggregate-source{margin-top:18px}
+.aggregate-source h2{margin-bottom:10px}
+.aggregate-source a{display:inline-flex;align-items:center;gap:6px;margin-top:14px;color:#17623f;font-weight:750;text-decoration:underline}
+.aggregate-source .aggregate-disclaimer{margin-top:18px;padding-top:16px;border-top:1px solid #e2e9e4;font-size:.9rem}
+.aggregate-footer{text-align:center;padding:22px 16px;color:#6b786f;font-size:.85rem}
+.aggregate-shortcut{position:fixed;left:14px;bottom:16px;z-index:900;display:inline-flex;align-items:center;gap:8px;padding:12px 15px;background:#173f31;color:#fff;text-decoration:none;border-radius:999px;box-shadow:0 6px 22px rgba(10,36,25,.24);font-size:.88rem;font-weight:750}
+@media(max-width:560px){.aggregate-topbar{padding:14px 16px}.aggregate-topbar span{font-size:.85rem}.aggregate-shell{width:min(100% - 22px,820px);padding-top:26px}.aggregate-two-fields{grid-template-columns:1fr;gap:0}.aggregate-shortcut{left:10px;bottom:10px;padding:11px 13px}.aggregate-breakdown div{font-size:.84rem}}
