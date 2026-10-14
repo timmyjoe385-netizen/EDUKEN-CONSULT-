@@ -45,6 +45,9 @@ const directory = [
   { name: 'National Open University of Nigeria (NOUN)', status: 'review', note: 'Admission route differs; aggregate method needs separate review' },
 ];
 
+const isValidScore = (value: string, max: number) => value !== '' && Number.isFinite(Number(value)) && Number(value) >= 0 && Number(value) <= max;
+const isValidWholeScore = (value: string, max: number) => isValidScore(value, max) && Number.isInteger(Number(value));
+
 const clamp = (value: string, max: number) => {
   const n = Number(value);
   return Number.isFinite(n) ? Math.min(max, Math.max(0, n)) : 0;
@@ -124,14 +127,20 @@ export default function AggregateCalculator() {
     return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
   }, [school, jamb, post, olevelPoints, grades, jambWeight, postWeight, olevelWeight]);
 
-  const ready = Boolean(jamb) &&
-    (school === 'unilorin' ? Boolean(post) && olevelPoints !== '' :
+  const validJamb = isValidWholeScore(jamb, 400);
+  const validPost = isValidWholeScore(post, 100);
+  const olevelMax = school === 'oau' ? 10 : school === 'custom' ? 100 : 20;
+  const validOlevelPoints = isValidScore(olevelPoints, olevelMax);
+  const validCustomWeights = isValidScore(jambWeight, 100) && isValidScore(postWeight, 100) &&
+    isValidScore(olevelWeight, 100) && Number(jambWeight) + Number(postWeight) + Number(olevelWeight) > 0;
+  const ready = validJamb &&
+    (school === 'unilorin' ? validPost && validOlevelPoints :
       school === 'fuhsi' ? grades.every(Boolean) :
-      school === 'unilag' ? Boolean(post) && olevelPoints !== '' :
-      school === 'oau' ? Boolean(post) && olevelPoints !== '' :
+      school === 'unilag' ? validPost && validOlevelPoints :
+      school === 'oau' ? validPost && validOlevelPoints :
       school === 'ui' ? false :
-      school === 'uniben' ? Boolean(post) :
-      Boolean(post) && Number(jambWeight) + Number(postWeight) + Number(olevelWeight) > 0 && (Number(olevelWeight) <= 0 || olevelPoints !== ''));
+      school === 'uniben' ? validPost :
+      validPost && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
 
   const clear = () => {
     setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false);
@@ -173,17 +182,20 @@ export default function AggregateCalculator() {
         {school === 'uniben' && <p className="aggregate-helper">Multiple education sources report a 50:50 formula for UNIBEN, but we did not find an official university page confirming this weighting for 2026/2027. Treat the result as provisional and verify the current admission instructions.</p>}
         <div className="aggregate-field">
           <label htmlFor="aggregate-jamb">JAMB UTME score (out of 400)</label>
-          <input id="aggregate-jamb" type="number" inputMode="numeric" min="0" max="400" value={jamb} onChange={e => { setJamb(e.target.value); setShowResult(false); }} placeholder="e.g. 250" />
+          <input id="aggregate-jamb" type="number" inputMode="numeric" min="0" max="400" step="1" value={jamb} onChange={e => { setJamb(e.target.value); setShowResult(false); }} placeholder="e.g. 250" />
+          {jamb !== '' && !validJamb && <small role="alert">Enter a whole-number UTME score from 0 to 400.</small>}
         </div>
         {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || school === 'custom') && <>
           <div className="aggregate-field">
             <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
-            <input id="aggregate-post" type="number" min="0" max={100} value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
+            <input id="aggregate-post" type="number" min="0" max={100} step="1" value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
+          {post !== '' && !validPost && <small role="alert">Enter a whole-number Post-UTME score from 0 to 100.</small>}
           </div>
         </>}
         {(school === 'unilorin' || school === 'unilag' || school === 'oau') && <div className="aggregate-field">
           <label htmlFor="aggregate-olevel">O’Level contribution (out of {school === 'oau' ? 10 : 20})</label>
-          <input id="aggregate-olevel" type="number" min="0" max={school === 'oau' ? 10 : 20} value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter the contribution from the applicable instructions" />
+          <input id="aggregate-olevel" type="number" min="0" max={school === 'oau' ? 10 : 20} step="any" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter the contribution from the applicable instructions" />
+          {olevelPoints !== '' && !validOlevelPoints && <small role="alert">Enter an O’Level contribution within the displayed range.</small>}
           <small>{school === 'unilorin' ? 'Enter the O’Level contribution according to the current official scoring instructions. EDUKEN does not guess the grade conversion.' : 'Manual O’Level contribution only. This provisional formula does not guess a grade-to-point conversion.'}</small>
         </div>}
         {school !== 'fuhsi' && <div className="aggregate-extra-grades">
@@ -225,11 +237,12 @@ export default function AggregateCalculator() {
         {school === 'custom' && <>
           <p className="aggregate-helper">Use only when you know the official weights. Custom mode is a user-defined estimate, not an EDUKEN-verified school formula.</p>
           <div className="aggregate-two-fields">
-            <div className="aggregate-field"><label htmlFor="aggregate-jw">UTME weight (%)</label><input id="aggregate-jw" type="number" min="0" max="100" value={jambWeight} onChange={e => { setJambWeight(e.target.value); setShowResult(false); }} /></div>
-            <div className="aggregate-field"><label htmlFor="aggregate-pw">Post-UTME weight (%)</label><input id="aggregate-pw" type="number" min="0" max="100" value={postWeight} onChange={e => { setPostWeight(e.target.value); setShowResult(false); }} /></div>
-            <div className="aggregate-field"><label htmlFor="aggregate-ow">O’Level weight (%)</label><input id="aggregate-ow" type="number" min="0" max="100" value={olevelWeight} onChange={e => { setOlevelWeight(e.target.value); setShowResult(false); }} /></div>
+            <div className="aggregate-field"><label htmlFor="aggregate-jw">UTME weight (%)</label><input id="aggregate-jw" type="number" min="0" max="100" step="any" value={jambWeight} onChange={e => { setJambWeight(e.target.value); setShowResult(false); }} /></div>
+            <div className="aggregate-field"><label htmlFor="aggregate-pw">Post-UTME weight (%)</label><input id="aggregate-pw" type="number" min="0" max="100" step="any" value={postWeight} onChange={e => { setPostWeight(e.target.value); setShowResult(false); }} /></div>
+            <div className="aggregate-field"><label htmlFor="aggregate-ow">O’Level weight (%)</label><input id="aggregate-ow" type="number" min="0" max="100" step="any" value={olevelWeight} onChange={e => { setOlevelWeight(e.target.value); setShowResult(false); }} /></div>
           </div>
-          {Number(olevelWeight) > 0 && <div className="aggregate-field"><label htmlFor="aggregate-olevel">O’Level score / contribution (out of 100)</label><input id="aggregate-olevel" type="number" min="0" max="100" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter score from the formula you are using" /></div>}
+          {!validCustomWeights && <small role="alert">Enter valid weights from 0 to 100, with a combined total greater than zero.</small>}
+          {Number(olevelWeight) > 0 && <div className="aggregate-field"><label htmlFor="aggregate-olevel">O’Level score / contribution (out of 100)</label><input id="aggregate-olevel" type="number" min="0" max="100" step="any" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter score from the formula you are using" />{olevelPoints !== '' && !validOlevelPoints && <small role="alert">Enter an O’Level score from 0 to 100.</small>}</div>}
           <small>Weights are normalized to 100. When O’Level weight is above zero, enter the O’Level component score out of 100. This is a user-defined estimate, not a verified school formula.</small>
         </>}
         <div className="aggregate-actions">
