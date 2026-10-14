@@ -57,7 +57,7 @@ test("rate-limit policy limits public form spam, confirmation-email abuse and to
   assert.equal(emailAlertRateLimitPolicy("unknown"), null);
 });
 
-test("client IP extraction prefers platform headers and uses the nearest forwarded address", async () => {
+test("client IP extraction trusts gateway headers, not caller-supplied x-real-ip", async () => {
   assert.equal(getEmailAlertClientIp(new Headers({
     "cf-connecting-ip": "203.0.113.4",
     "x-forwarded-for": "198.51.100.9, 203.0.113.5",
@@ -65,6 +65,11 @@ test("client IP extraction prefers platform headers and uses the nearest forward
   assert.equal(getEmailAlertClientIp(new Headers({
     "x-forwarded-for": "198.51.100.9, 203.0.113.5",
   })), "203.0.113.5");
+  assert.equal(getEmailAlertClientIp(new Headers({
+    "x-real-ip": "203.0.113.99",
+    "x-forwarded-for": "198.51.100.9, 203.0.113.5",
+  })), "203.0.113.5");
+  assert.equal(getEmailAlertClientIp(new Headers({ "x-real-ip": "203.0.113.99" })), null);
   assert.equal(getEmailAlertClientIp(new Headers()), null);
   assert.equal(getEmailAlertClientIp(new Headers({ "x-real-ip": "x".repeat(129) })), null);
 });
