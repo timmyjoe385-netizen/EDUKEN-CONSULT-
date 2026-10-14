@@ -40,7 +40,7 @@ jobs:
         run: npx playwright install chromium --with-deps
       - name: Test API input validation
         run: npm run test:validation
-      - name: Run branch preview browser checks
+      - name: Run local branch browser checks
         run: npm run test:e2e
       - name: Upload browser report and failure evidence
         if: always()
