@@ -50,3 +50,6 @@ const allowedServiceRequestStatuses = new Set([
 export function isAllowedServiceRequestStatus(status) {
   return typeof status === "string" && allowedServiceRequestStatuses.has(status);
 }
+export function isPublishedService(service) {
+  return Boolean(service && service.is_published === true);
+}
