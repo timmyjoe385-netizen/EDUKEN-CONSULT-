@@ -627,7 +627,7 @@ Deno.serve(async (req) => {
       // blocking already-verified subscribers from updating their preferences.
       if (existing && !(existing.is_active && existing.verified_at)) {
         if (isWithinEmailAlertCooldown(existing.updated_at, now.getTime())) {
-          return json({ error: "A confirmation was requested recently. Please wait two minutes before trying again." }, 429);
+          return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
         }
       }
 
@@ -636,7 +636,7 @@ Deno.serve(async (req) => {
           .update({ topics, updated_at: now.toISOString() })
           .eq("id", existing.id);
         if (error) throw error;
-        return json({ message: "Your email alert preferences have been updated." });
+        return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
       }
 
       const subscriptionId = existing?.id || crypto.randomUUID();
@@ -684,7 +684,7 @@ Deno.serve(async (req) => {
           .eq("id", subscriptionId);
         return json({ error: "We could not send the confirmation email. Please try again later." }, 502);
       }
-      return json({ message: "Check your inbox for a confirmation link. The link expires in 30 minutes." }, 202);
+      return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
     }
 
     if (path === "/api/email-alerts/verify" && req.method === "POST") {
