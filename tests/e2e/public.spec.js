@@ -257,6 +257,50 @@ test('global search results can be cleared accessibly', async ({ page }) => {
   await expect(page.getByRole('region', { name: 'Search results' })).toHaveCount(0);
 });
 
+test('global search excludes placeholder updates but keeps real updates searchable', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [
+          {
+            id: 'placeholder-update-search-check',
+            title: 'Updates will appear here',
+            body: 'Use the EDUKEN admin dashboard to publish clear, useful updates.',
+            category: 'Placeholder',
+            date: '2026-10-14',
+            is_published: true,
+          },
+          {
+            id: 'playwright-real-update-search-check',
+            title: 'Playwright Searchable Update',
+            body: 'A safe published update fixture for global-search regression coverage.',
+            category: 'Test fixture',
+            date: '2026-10-14',
+            is_published: true,
+          },
+        ],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const search = page.getByRole('textbox', { name: 'Search all EDUKEN content' });
+  const results = page.getByRole('region', { name: 'Search results' });
+
+  await search.fill('will appear here');
+  await expect(results).toBeVisible();
+  await expect(results).not.toContainText('Updates will appear here');
+
+  await search.fill('Playwright Searchable Update');
+  await expect(results).toContainText('Playwright Searchable Update');
+});
+
 test('admin APIs reject unauthenticated reads and writes', async ({ request }) => {
   const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
   const headers = { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' };
