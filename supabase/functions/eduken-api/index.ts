@@ -823,9 +823,11 @@ Deno.serve(async (req) => {
             skipped++;
             continue;
           }
+          const officialSource = String(opportunity.official_source || "").trim();
           const eligible = Boolean(
             opportunity.is_published && opportunity.verified &&
-            opportunity.notify_on_publish && safeHttpUrl(opportunity.official_source)
+            opportunity.notify_on_publish &&
+            (!officialSource || safeHttpUrl(officialSource))
           );
           const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
           if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
