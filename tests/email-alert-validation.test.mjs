@@ -151,7 +151,13 @@ test("verified opportunity email alerts permit a missing source but reject unsaf
   assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: "   " }), true);
   assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: "https://official.example/path" }), true);
   assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: "http://official.example/path" }), true);
-  for (const source of ["javascript:alert(1)", "ftp://official.example", "not a URL"]) {
+  for (const source of [
+    "javascript:alert(1)",
+    "ftp://official.example",
+    "not a URL",
+    "https://user:password@official.example/path",
+    "http://:password@official.example/path",
+  ]) {
     assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: source }), false, source);
   }
   assert.equal(isEmailAlertOpportunityEligible({ ...base, verified: false, official_source: null }), false);
