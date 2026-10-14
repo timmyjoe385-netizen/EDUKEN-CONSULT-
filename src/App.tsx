@@ -368,6 +368,7 @@ function App() {
       .map(item => ({ type: 'Admission', id: item.id, title: item.school || 'Admission update', detail: [item.course, item.type, item.status].filter(Boolean).join(' • '), item }));
     const updates = content.updates
       .filter(item =>
+        !isPlaceholderUpdate(item) &&
         [item.title, item.body, item.category, item.date]
           .some(value => String(value || '').toLowerCase().includes(query))
       )
