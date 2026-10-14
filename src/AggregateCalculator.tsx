@@ -99,7 +99,7 @@ export default function AggregateCalculator() {
     if (school === 'oau') {
       const parts = [
         { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
-        { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 40) / 40 * 40, max: 40 },
+        { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 100) / 100 * 40, max: 40 },
         { label: 'O’Level contribution (manually entered out of 10)', value: clamp(olevelPoints, 10), max: 10 },
       ];
       return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
@@ -174,8 +174,8 @@ export default function AggregateCalculator() {
         </div>
         {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || school === 'custom') && <>
           <div className="aggregate-field">
-            <label htmlFor="aggregate-post">Post-UTME score (out of {school === 'oau' ? 40 : 100})</label>
-            <input id="aggregate-post" type="number" min="0" max={school === 'oau' ? 40 : 100} value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
+            <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
+            <input id="aggregate-post" type="number" min="0" max={100} value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
           </div>
         </>}
         {(school === 'unilorin' || school === 'unilag' || school === 'oau') && <div className="aggregate-field">
@@ -239,7 +239,7 @@ export default function AggregateCalculator() {
                 : school === 'ui'
                   ? <p>The University of Ibadan’s official 2026/2027 notice confirms the screening exercise but does not state the aggregate calculation. EDUKEN has disabled this calculator option until a reliable scoring formula is verified. Check the official admission notice before relying on third-party claims.</p>
                   : school === 'oau'
-                    ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level model for OAU. We have not confirmed the current official scoring conversion or grade scale; the O’Level component is entered manually.</p>
+                    ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level weighting for OAU. Enter the raw Post-UTME score out of 100 and the O’Level contribution out of 10 manually. We have not confirmed the current official scoring conversion or grade scale, so this is provisional only.</p>
                     : <p>Custom mode uses only the weights and scores you provide. It does not confirm that an institution accepts this formula.</p>}
         {school !== 'custom' && sources[school] && <a href={sources[school]} target="_blank" rel="noreferrer">Open source / admission portal <ExternalLink size={14} /></a>}
         <p className="aggregate-disclaimer">Admission requirements and screening methods can change by session and course. Check the institution’s current instructions before making an application decision.</p>
