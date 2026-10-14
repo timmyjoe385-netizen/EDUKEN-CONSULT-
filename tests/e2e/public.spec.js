@@ -587,14 +587,26 @@ test('database hardening migration removes broad client grants and unsafe direct
   expect(migration).toContain('cannot alter that role\'s defaults');
 });
 
-test('public FAQ query selects only fields required by the public interface', () => {
+test('public catalogue queries select only reviewed public fields', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const publicContent = handler.slice(
     handler.indexOf('async function publicContent()'),
     handler.indexOf('async function scoped('),
   );
   expect(publicContent).toContain(
+    'db.from("opportunities").select("id, title, slug, category, description, organization, location, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent, content, eligibility, benefits, how_to_apply")',
+  );
+  expect(publicContent).toContain(
+    'db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at")',
+  );
+  expect(publicContent).toContain(
+    'db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at")',
+  );
+  expect(publicContent).toContain(
     'db.from("faqs").select("id, question, answer, category, created_at, updated_at")',
   );
-  expect(publicContent).not.toContain('db.from("faqs").select("*")');
+  expect(publicContent).toContain(
+    'db.from("services").select("id, name, category, description, price, is_published, created_at, updated_at")',
+  );
+  expect(publicContent).not.toMatch(/db\\.from\\("(?:opportunities|admissions|updates|faqs|services)"\\)\\.select\\("\*"\\)/);
 });
