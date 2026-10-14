@@ -69,6 +69,7 @@ export default function AggregateCalculator() {
   const [intendedCourse, setIntendedCourse] = useState('');
   const [stateOfOrigin, setStateOfOrigin] = useState('');
   const [targetAggregate, setTargetAggregate] = useState('75');
+  const [olevelSittings, setOlevelSittings] = useState('1');
 
   const result = useMemo(() => {
     const utme = clamp(jamb, 400);
@@ -167,8 +168,24 @@ export default function AggregateCalculator() {
     ? ((Number(targetAggregate) - plannerOtherContribution) / plannerPostWeight) * 100
     : null;
 
+  const assessmentSubjects = school === 'fuhsi'
+    ? [
+        { subject: 'English Language', grade: grades[0] },
+        { subject: 'Mathematics', grade: grades[1] },
+        { subject: 'Physics', grade: grades[2] },
+        { subject: 'Chemistry', grade: grades[3] },
+        { subject: 'Biology', grade: grades[4] },
+        ...extraGrades,
+      ]
+    : extraGrades;
+  const creditSubjects = assessmentSubjects.filter(item => item.subject.trim() && Boolean(gradePoints[item.grade]));
+  const hasEnglishCredit = assessmentSubjects.some(item => item.subject.trim() && /english/i.test(item.subject) && Boolean(gradePoints[item.grade]));
+  const hasMathCredit = assessmentSubjects.some(item => item.subject.trim() && /mathematics|maths?/i.test(item.subject) && Boolean(gradePoints[item.grade]));
+  const hasFiveCredits = creditSubjects.length >= 5;
+  const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
+
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setIntendedCourse(''); setStateOfOrigin('');
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
   };
 
   const filteredDirectory = directory.filter((item) => {
@@ -280,6 +297,47 @@ export default function AggregateCalculator() {
           <div className="aggregate-breakdown">{result.parts.map(part => <div key={part.label}><span>{part.label}</span><b>{part.value.toFixed(2)} / {part.max}</b></div>)}</div>
           {(school === 'uniben' || school === 'oau' || school === 'unilag') && <p><strong>Provisional formula:</strong> this model is not confirmed as the university’s official 2026/2027 formula.</p>}
         </div>}
+      </section>
+      <section className="aggregate-olevel-assessment" aria-labelledby="aggregate-olevel-title">
+        <div className="aggregate-planner-heading">
+          <span className="aggregate-kicker"><ShieldCheck size={15} /> O’LEVEL READINESS CHECK</span>
+          <h2 id="aggregate-olevel-title">Review your O’Level credits</h2>
+          <p>Use your subject-and-grade entries above to review common screening checks. This is a basic checklist, not a course-specific eligibility decision.</p>
+        </div>
+        <div className="aggregate-two-fields">
+          <div className="aggregate-field">
+            <label htmlFor="aggregate-sittings">Number of O’Level sittings</label>
+            <select id="aggregate-sittings" value={olevelSittings} onChange={e => setOlevelSittings(e.target.value)}>
+              <option value="1">One sitting</option>
+              <option value="2">Two sittings</option>
+            </select>
+          </div>
+          <div className="aggregate-assessment-stat">
+            <span>Credit grades entered</span>
+            <strong>{creditSubjects.length}</strong>
+            <small>A1–C6 counted as credit grades for this checklist.</small>
+          </div>
+        </div>
+        <div className="aggregate-assessment-checks" aria-live="polite">
+          <div className={hasFiveCredits ? 'aggregate-assessment-check is-met' : 'aggregate-assessment-check'}>
+            <span>{hasFiveCredits ? '✓' : '○'}</span>
+            <div><strong>{hasFiveCredits ? 'Five or more credit grades entered' : 'Five credit grades not yet recorded'}</strong><small>{hasFiveCredits ? 'You have entered at least five credit grades.' : 'Enter your subjects and grades above to review the common five-credit benchmark.'}</small></div>
+          </div>
+          <div className={hasEnglishCredit ? 'aggregate-assessment-check is-met' : 'aggregate-assessment-check'}>
+            <span>{hasEnglishCredit ? '✓' : '○'}</span>
+            <div><strong>{hasEnglishCredit ? 'English Language credit recorded' : 'English Language credit not confirmed'}</strong><small>{hasEnglishCredit ? 'An English Language credit is present in your entries.' : 'Add English Language and its grade above if you have it.'}</small></div>
+          </div>
+          <div className={hasMathCredit ? 'aggregate-assessment-check is-met' : 'aggregate-assessment-check'}>
+            <span>{hasMathCredit ? '✓' : '○'}</span>
+            <div><strong>{hasMathCredit ? 'Mathematics credit recorded' : 'Mathematics credit not confirmed'}</strong><small>{hasMathCredit ? 'A Mathematics credit is present in your entries.' : 'Add Mathematics and its grade above if you have it.'}</small></div>
+          </div>
+        </div>
+        <p className="aggregate-assessment-disclaimer">
+          {assessmentHasSubjects
+            ? `Current entry: ${olevelSittings === '1' ? 'one sitting' : 'two sittings'}. `
+            : 'No subject-and-grade records are available for this checklist yet. '}
+          Universities and courses can require different subjects, credit combinations, and sitting limits. This panel does not verify accreditation, subject combinations, admission cutoffs, or eligibility; check the current official requirements for your course and institution.
+        </p>
       </section>
       <section className="aggregate-planner" aria-labelledby="aggregate-planner-title">
         <div className="aggregate-planner-heading">

@@ -764,3 +764,33 @@ test('admission planner estimates the required Post-UTME score from the selected
   await page.getByLabel('Institution / formula').selectOption('fuhsi');
   await expect(page.locator('.aggregate-planner-result')).toContainText('not a Post-UTME component');
 });
+
+
+test('O’Level readiness checklist counts named credit grades and resets sitting choice', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Review your O’Level credits' })).toBeVisible();
+  await page.getByLabel('Number of O’Level sittings').selectOption('2');
+  await page.getByRole('button', { name: /Add O’Level subject/i }).click();
+  const rows = page.locator('.aggregate-extra-grade-row');
+  const entries = [
+    ['English Language', 'C6'],
+    ['Mathematics', 'B3'],
+    ['Biology', 'A1'],
+    ['Chemistry', 'C5'],
+    ['Physics', 'D7'],
+  ];
+  for (const [index, [subject, grade]] of entries.entries()) {
+    if (index > 0) await page.getByRole('button', { name: /Add O’Level subject/i }).click();
+    await rows.nth(index).locator('input').fill(subject);
+    await rows.nth(index).locator('select').selectOption(grade);
+  }
+  await expect(page.locator('.aggregate-assessment-stat strong')).toHaveText('4');
+  await expect(page.locator('.aggregate-assessment-check')).toHaveCount(3);
+  await expect(page.locator('.aggregate-assessment-check').nth(0)).toContainText('Five credit grades not yet recorded');
+  await expect(page.locator('.aggregate-assessment-check').nth(1)).toContainText('English Language credit recorded');
+  await expect(page.locator('.aggregate-assessment-check').nth(2)).toContainText('Mathematics credit recorded');
+  await expect(page.locator('.aggregate-assessment-disclaimer')).toContainText('two sittings');
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(page.getByLabel('Number of O’Level sittings')).toHaveValue('1');
+  await expect(page.locator('.aggregate-extra-grade-row')).toHaveCount(0);
+});
