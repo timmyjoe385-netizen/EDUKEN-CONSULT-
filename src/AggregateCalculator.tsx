@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, Calculator, ExternalLink, GraduationCap, Search, ShieldCheck } from 'lucide-react';
 
-type SchoolKey = 'unilorin' | 'fuhsi' | 'uniben' | 'custom';
+type SchoolKey = 'unilorin' | 'fuhsi' | 'uniben' | 'unilag' | 'ui' | 'oau' | 'custom';
 type FormulaStatus = 'official' | 'community';
 const gradePoints: Record<string, number> = { A1: 8, B2: 7, B3: 6, C4: 5, C5: 4, C6: 3 };
 const gradeOptions = Object.keys(gradePoints);
@@ -9,14 +9,17 @@ const sources: Partial<Record<SchoolKey, string>> = {
   unilorin: 'https://www.unilorin.edu.ng/wp-content/uploads/2026/06/Pre-admission-screening-2026.pdf',
   fuhsi: 'https://fuhsi.edu.ng/admissions.html',
   uniben: 'https://www.uniben.edu/',
+  unilag: 'https://counselling.unilag.edu.ng/notices.html',
+  ui: 'https://ui.edu.ng/news/post-utmedirect-entry-screening-prospective-candidates-20262027-admission-exercise',
+  oau: 'https://oauife.edu.ng/',
 };
 const directory = [
   { name: 'University of Ilorin (UNILORIN)', status: 'official', note: '2026/2027 formula available', href: sources.unilorin },
   { name: 'Federal University of Health Sciences, Ila-Orangun (FUHSI)', status: 'official', note: 'Published 70:30 UTME/O’Level model', href: sources.fuhsi },
   { name: 'University of Benin (UNIBEN)', status: 'community', note: '50:50 formula reported by multiple education sources; official confirmation not found', href: sources.uniben },
-  { name: 'University of Lagos (UNILAG)', status: 'review', note: 'Current session formula needs confirmation; do not assume older weightings' },
-  { name: 'University of Ibadan (UI)', status: 'review', note: 'Conflicting third-party formula reports; current weighting needs confirmation', href: 'https://ui.edu.ng/news' },
-  { name: 'Obafemi Awolowo University (OAU)', status: 'review', note: 'Current score weighting and O’Level scale need confirmation', href: 'https://oauife.edu.ng/' },
+  { name: 'University of Lagos (UNILAG)', status: 'community', note: 'Historical official 2025/2026 notice lists 50:30:20; 2026/2027 weighting still needs confirmation', href: sources.unilag },
+  { name: 'University of Ibadan (UI)', status: 'community', note: 'CampusAI reports 50:50 UTME/Post-UTME; current official scoring conversion not found', href: sources.ui },
+  { name: 'Obafemi Awolowo University (OAU)', status: 'community', note: 'CampusAI reports 50:40:10; current official formula and O’Level conversion need confirmation', href: sources.oau },
   { name: 'Lagos State University (LASU)', status: 'review', note: 'Online screening confirmed; complete current scoring conversion needs confirmation', href: 'https://lasu.edu.ng/' },
   { name: 'Federal University of Technology, Akure (FUTA)', status: 'review', note: 'Current formula not confirmed in the notice reviewed', href: 'https://futa.edu.ng/' },
   { name: 'University of Nigeria, Nsukka (UNN)', status: 'review', note: 'Method may vary by session; confirm the current score conversion', href: 'https://www.unn.edu.ng/' },
@@ -78,6 +81,29 @@ export default function AggregateCalculator() {
       ];
       return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
     }
+    if (school === 'ui') {
+      const parts = [
+        { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
+        { label: 'Post-UTME contribution (reported 50%)', value: clamp(post, 100) / 100 * 50, max: 50 },
+      ];
+      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+    }
+    if (school === 'unilag') {
+      const parts = [
+        { label: 'UTME contribution (historical 50%)', value: utme / 400 * 50, max: 50 },
+        { label: 'Post-UTME contribution (historical 30%)', value: clamp(post, 100) / 100 * 30, max: 30 },
+        { label: 'O’Level contribution (manually entered out of 20)', value: clamp(olevelPoints, 20), max: 20 },
+      ];
+      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+    }
+    if (school === 'oau') {
+      const parts = [
+        { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
+        { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 40) / 40 * 40, max: 40 },
+        { label: 'O’Level contribution (manually entered out of 10)', value: clamp(olevelPoints, 10), max: 10 },
+      ];
+      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+    }
     if (school === 'uniben') {
       const parts = [
         { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
@@ -98,7 +124,9 @@ export default function AggregateCalculator() {
   const ready = Boolean(jamb) &&
     (school === 'unilorin' ? Boolean(post) && olevelPoints !== '' :
       school === 'fuhsi' ? grades.every(Boolean) :
-      school === 'uniben' ? Boolean(post) :
+      school === 'unilag' ? Boolean(post) && olevelPoints !== '' :
+      school === 'oau' ? Boolean(post) && olevelPoints !== '' :
+      school === 'ui' || school === 'uniben' ? Boolean(post) :
       Boolean(post) && Number(jambWeight) + Number(postWeight) > 0);
 
   const clear = () => {
@@ -131,24 +159,28 @@ export default function AggregateCalculator() {
             <option value="unilorin">University of Ilorin — 50:30:20 (official)</option>
             <option value="fuhsi">FUHSI, Ila-Orangun — 70:30 (official)</option>
             <option value="uniben">University of Benin — 50:50 (community-reported)</option>
+            <option value="unilag">University of Lagos — 50:30:20 (historical; current session unverified)</option>
+            <option value="ui">University of Ibadan — 50:50 (community-reported)</option>
+            <option value="oau">Obafemi Awolowo University — 50:40:10 (community-reported)</option>
             <option value="custom">Custom UTME + Post-UTME weights</option>
           </select>
         </label>
+        {(school === 'unilag' || school === 'ui' || school === 'oau') && <p className="aggregate-helper">This is a provisional model based on previously published or third-party information, not a verified 2026/2027 institutional scoring rule. Confirm the current formula with the university before relying on this result.</p>}
         {school === 'uniben' && <p className="aggregate-helper">Multiple education sources report a 50:50 formula for UNIBEN, but we did not find an official university page confirming this weighting for 2026/2027. Treat the result as provisional and verify the current admission instructions.</p>}
         <div className="aggregate-field">
           <label htmlFor="aggregate-jamb">JAMB UTME score (out of 400)</label>
           <input id="aggregate-jamb" type="number" inputMode="numeric" min="0" max="400" value={jamb} onChange={e => { setJamb(e.target.value); setShowResult(false); }} placeholder="e.g. 250" />
         </div>
-        {(school === 'unilorin' || school === 'uniben' || school === 'custom') && <>
+        {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'ui' || school === 'oau' || school === 'custom') && <>
           <div className="aggregate-field">
             <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
             <input id="aggregate-post" type="number" min="0" max="100" value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
           </div>
         </>}
-        {school === 'unilorin' && <div className="aggregate-field">
-          <label htmlFor="aggregate-olevel">O’Level contribution (out of 20)</label>
-          <input id="aggregate-olevel" type="number" min="0" max="20" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Points based on official instructions" />
-          <small>Enter the O’Level contribution according to the current official scoring instructions. EDUKEN does not guess the grade conversion.</small>
+        {(school === 'unilorin' || school === 'unilag' || school === 'oau') && <div className="aggregate-field">
+          <label htmlFor="aggregate-olevel">O’Level contribution (out of {school === 'oau' ? 10 : 20})</label>
+          <input id="aggregate-olevel" type="number" min="0" max={school === 'oau' ? 10 : 20} value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter the contribution from the applicable instructions" />
+          <small>{school === 'unilorin' ? 'Enter the O’Level contribution according to the current official scoring instructions. EDUKEN does not guess the grade conversion.' : 'Manual O’Level contribution only. This provisional formula does not guess a grade-to-point conversion.'}</small>
         </div>}
         {school === 'fuhsi' && <>
           <p className="aggregate-helper">Select the grades for the five required subjects listed in FUHSI’s published screening formula.</p>
@@ -190,7 +222,7 @@ export default function AggregateCalculator() {
           <span>YOUR CALCULATED AGGREGATE</span><strong>{result.total.toFixed(2)} <small>/ 100</small></strong>
           <p>This is a calculation of the inputs supplied, not a prediction or guarantee of admission.</p>
           <div className="aggregate-breakdown">{result.parts.map(part => <div key={part.label}><span>{part.label}</span><b>{part.value.toFixed(2)} / {part.max}</b></div>)}</div>
-          {school === 'uniben' && <p><strong>Provisional formula:</strong> independently reported, not officially confirmed for this session.</p>}
+          {(school === 'uniben' || school === 'ui' || school === 'oau' || school === 'unilag') && <p><strong>Provisional formula:</strong> this model is not confirmed as the university’s official 2026/2027 formula.</p>}
         </div>}
       </section>
       <section className="aggregate-source">
@@ -201,7 +233,13 @@ export default function AggregateCalculator() {
             ? <p>FUHSI publishes a 70% UTME + 30% O’Level model for 2026/2027, including an A1–C6 point scale for five required subjects.</p>
             : school === 'uniben'
               ? <p>Multiple independent education sources report a 50% UTME + 50% Post-UTME model for UNIBEN. The current official session formula was not found in the official material reviewed, so this is marked community-reported rather than officially verified.</p>
-              : <p>Custom mode uses only the weights and scores you provide. It does not confirm that an institution accepts this formula.</p>}
+              : school === 'unilag'
+                ? <p>UNILAG’s Admissions Office lists a 50% UTME, 30% Post-UTME and 20% O’Level model for 2025/2026. The current 2026/2027 conversion has not been confirmed, so this is historical guidance only.</p>
+                : school === 'ui'
+                  ? <p>CampusAI reports a 50:50 UTME/Post-UTME model for UI, but we did not confirm the exact scoring conversion in current official instructions. Treat the result as provisional.</p>
+                  : school === 'oau'
+                    ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level model for OAU. We have not confirmed the current official scoring conversion or grade scale; the O’Level component is entered manually.</p>
+                    : <p>Custom mode uses only the weights and scores you provide. It does not confirm that an institution accepts this formula.</p>}
         {school !== 'custom' && sources[school] && <a href={sources[school]} target="_blank" rel="noreferrer">Open source / admission portal <ExternalLink size={14} /></a>}
         <p className="aggregate-disclaimer">Admission requirements and screening methods can change by session and course. Check the institution’s current instructions before making an application decision.</p>
       </section>
