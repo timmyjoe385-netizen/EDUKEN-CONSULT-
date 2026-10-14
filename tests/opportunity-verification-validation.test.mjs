@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateOpportunityVerification } from "../supabase/functions/eduken-api/opportunity-verification-validation.mjs";
+import { isOpportunityVerified, validateOpportunityVerification } from "../supabase/functions/eduken-api/opportunity-verification-validation.mjs";
 
 test("unverified opportunities may be saved without an official source", () => {
   assert.deepEqual(validateOpportunityVerification({ verified: false }), { valid: true });
@@ -30,4 +30,11 @@ test("verified opportunities reject missing, malformed, unsafe, or credentialed 
       `expected ${JSON.stringify(official_source)} to be rejected`,
     );
   }
+});
+
+test("public verified badge requires a valid official source", () => {
+  assert.equal(isOpportunityVerified({ verified: true, official_source: "https://example.org/source" }), true);
+  assert.equal(isOpportunityVerified({ verified: true, official_source: "" }), false);
+  assert.equal(isOpportunityVerified({ verified: true, official_source: "javascript:alert(1)" }), false);
+  assert.equal(isOpportunityVerified({ verified: false, official_source: "https://example.org/source" }), false);
 });
