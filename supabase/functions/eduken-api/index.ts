@@ -1024,7 +1024,7 @@ Deno.serve(async (req) => {
       }
       const { data: payment, error } = await db.from("payments").update({
         status: paid ? "Paid" : "Failed", paid_at: paid ? new Date().toISOString() : null
-      }).eq("id", existingPayment.id).eq("user_id", user.id).eq("status", "Pending").select().maybeSingle();
+      }).eq("id", existingPayment.id).eq("user_id", user.id).in("status", ["Pending", "Failed"]).select().maybeSingle();
       if (error) throw error;
       if (paid && !payment && existingPayment.status !== "Paid") {
         const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).eq("user_id", user.id).maybeSingle();
