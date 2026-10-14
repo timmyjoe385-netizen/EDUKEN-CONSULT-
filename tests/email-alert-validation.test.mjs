@@ -109,6 +109,8 @@ test("email alert migration requires an opportunity for every idempotent deliver
   assert.match(migration, /translate\(p_key_hash, '0123456789abcdef', ''\) <> ''/);
   assert.match(migration, /p_limit < 1 or p_limit > 100/);
   assert.match(migration, /p_window_seconds < 1 or p_window_seconds > 86400/);
+  assert.equal((migration.match(/create or replace function public\.consume_email_alert_rate_limit\(/g) || []).length, 1);
+  assert.ok(migration.trimEnd().endsWith("revoke all on table public.email_alert_rate_limits from public, anon, authenticated;"));
   assert.match(migration, /revoke all on function public\.consume_email_alert_rate_limit\(text, integer, integer\) from public, anon, authenticated/);
   assert.match(migration, /grant execute on function public\.consume_email_alert_rate_limit\(text, integer, integer\) to service_role/);
   assert.match(migration, /alter table public\.email_alert_subscriptions enable row level security/i);
