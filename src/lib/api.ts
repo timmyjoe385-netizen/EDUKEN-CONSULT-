@@ -62,11 +62,10 @@ const validSession = async () => {
 };
 
 const isUnisolatedPreview = () => {
-  const host = window.location.hostname.toLowerCase();
-  // Writes are allowed only from the explicitly approved production origin.
-  // This protects localhost, Pages previews, custom preview domains, and
-  // other Workers hostnames from accidentally mutating the live Supabase data.
-  return host !== 'eduken-consult.timmyjoe385.workers.dev';
+  // Compare the full origin, not only hostname: hostname-only checks would also
+  // allow HTTP and non-standard ports on the production hostname.
+  // This is a client-side safety rail for preview builds, not server authorization.
+  return window.location.origin !== 'https://eduken-consult.timmyjoe385.workers.dev';
 };
 
 const request = async (
