@@ -59,6 +59,7 @@ export default function AggregateCalculator() {
   const [extraGrades, setExtraGrades] = useState<Array<{ subject: string; grade: string }>>([]);
   const [jambWeight, setJambWeight] = useState('50');
   const [postWeight, setPostWeight] = useState('50');
+  const [olevelWeight, setOlevelWeight] = useState('0');
   const [showResult, setShowResult] = useState(false);
   const [directoryQuery, setDirectoryQuery] = useState('');
   const [directoryFilter, setDirectoryFilter] = useState<'all' | 'ready' | 'review'>('all');
@@ -113,13 +114,15 @@ export default function AggregateCalculator() {
     }
     const jw = clamp(jambWeight, 100);
     const pw = clamp(postWeight, 100);
-    const totalWeight = jw + pw || 1;
+    const ow = clamp(olevelWeight, 100);
+    const totalWeight = jw + pw + ow || 1;
     const parts = [
       { label: 'UTME contribution', value: utme / 400 * (jw / totalWeight * 100), max: jw / totalWeight * 100 },
       { label: 'Post-UTME contribution', value: clamp(post, 100) / 100 * (pw / totalWeight * 100), max: pw / totalWeight * 100 },
+      ...(ow > 0 ? [{ label: 'O’Level contribution (manual score out of 100)', value: clamp(olevelPoints, 100) / 100 * (ow / totalWeight * 100), max: ow / totalWeight * 100 }] : []),
     ];
     return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
-  }, [school, jamb, post, olevelPoints, grades, jambWeight, postWeight]);
+  }, [school, jamb, post, olevelPoints, grades, jambWeight, postWeight, olevelWeight]);
 
   const ready = Boolean(jamb) &&
     (school === 'unilorin' ? Boolean(post) && olevelPoints !== '' :
@@ -128,10 +131,10 @@ export default function AggregateCalculator() {
       school === 'oau' ? Boolean(post) && olevelPoints !== '' :
       school === 'ui' ? false :
       school === 'uniben' ? Boolean(post) :
-      Boolean(post) && Number(jambWeight) + Number(postWeight) > 0);
+      Boolean(post) && Number(jambWeight) + Number(postWeight) + Number(olevelWeight) > 0 && (Number(olevelWeight) <= 0 || olevelPoints !== ''));
 
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setShowResult(false);
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false);
   };
 
   const filteredDirectory = directory.filter((item) => {
@@ -163,7 +166,7 @@ export default function AggregateCalculator() {
             <option value="unilag">University of Lagos — 50:30:20 (historical; current session unverified)</option>
             <option value="ui" disabled>University of Ibadan — formula under verification</option>
             <option value="oau">Obafemi Awolowo University — 50:40:10 (community-reported)</option>
-            <option value="custom">Custom UTME + Post-UTME weights</option>
+            <option value="custom">Custom UTME + Post-UTME + optional O’Level weights</option>
           </select>
         </label>
         {(school === 'unilag' || school === 'oau') && <p className="aggregate-helper">This is a provisional model based on previously published or third-party information, not a verified 2026/2027 institutional scoring rule. Confirm the current formula with the university before relying on this result.</p>}
@@ -182,6 +185,18 @@ export default function AggregateCalculator() {
           <label htmlFor="aggregate-olevel">O’Level contribution (out of {school === 'oau' ? 10 : 20})</label>
           <input id="aggregate-olevel" type="number" min="0" max={school === 'oau' ? 10 : 20} value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter the contribution from the applicable instructions" />
           <small>{school === 'unilorin' ? 'Enter the O’Level contribution according to the current official scoring instructions. EDUKEN does not guess the grade conversion.' : 'Manual O’Level contribution only. This provisional formula does not guess a grade-to-point conversion.'}</small>
+        </div>}
+        {school !== 'fuhsi' && <div className="aggregate-extra-grades">
+          <div className="aggregate-extra-grades-heading">
+            <div><strong>O’Level subjects and grades (optional)</strong><small>Record your WAEC, NECO or NABTEB subjects. These entries do not change a school score unless its formula below explicitly uses them.</small></div>
+            <button type="button" className="aggregate-add-grade" onClick={() => { setExtraGrades(current => [...current, { subject: '', grade: '' }]); setShowResult(false); }}>+ Add O’Level subject</button>
+          </div>
+          {extraGrades.map((item, index) => <div className="aggregate-extra-grade-row" key={index}>
+            <label className="aggregate-field"><span>Subject {index + 1}</span><input value={item.subject} onChange={e => { setExtraGrades(current => current.map((grade, i) => i === index ? { ...grade, subject: e.target.value } : grade)); setShowResult(false); }} placeholder="e.g. English Language" /></label>
+            <label className="aggregate-field"><span>Grade</span><select value={item.grade} onChange={e => { setExtraGrades(current => current.map((grade, i) => i === index ? { ...grade, grade: e.target.value } : grade)); setShowResult(false); }}><option value="">Choose grade</option>{gradeOptions.map(grade => <option key={grade} value={grade}>{grade} — {gradePoints[grade]} points</option>)}<option value="D7">D7 — below credit</option><option value="E8">E8 — below credit</option><option value="F9">F9 — below credit</option></select></label>
+            <button type="button" className="aggregate-remove-grade" onClick={() => { setExtraGrades(current => current.filter((_, i) => i !== index)); setShowResult(false); }} aria-label={`Remove O’Level subject ${index + 1}`}>Remove</button>
+          </div>)}
+          <p className="aggregate-helper">Grades are stored temporarily in this page only. The calculator will not invent a grade conversion for schools whose current official scoring scale has not been verified.</p>
         </div>}
         {school === 'fuhsi' && <>
           <p className="aggregate-helper">Select the grades for the five required subjects listed in FUHSI’s published screening formula.</p>
@@ -212,8 +227,10 @@ export default function AggregateCalculator() {
           <div className="aggregate-two-fields">
             <div className="aggregate-field"><label htmlFor="aggregate-jw">UTME weight (%)</label><input id="aggregate-jw" type="number" min="0" max="100" value={jambWeight} onChange={e => { setJambWeight(e.target.value); setShowResult(false); }} /></div>
             <div className="aggregate-field"><label htmlFor="aggregate-pw">Post-UTME weight (%)</label><input id="aggregate-pw" type="number" min="0" max="100" value={postWeight} onChange={e => { setPostWeight(e.target.value); setShowResult(false); }} /></div>
+            <div className="aggregate-field"><label htmlFor="aggregate-ow">O’Level weight (%)</label><input id="aggregate-ow" type="number" min="0" max="100" value={olevelWeight} onChange={e => { setOlevelWeight(e.target.value); setShowResult(false); }} /></div>
           </div>
-          <small>Weights are normalized to 100. This simplified mode does not include O’Level or other factors unless the formula you know does not require them.</small>
+          {Number(olevelWeight) > 0 && <div className="aggregate-field"><label htmlFor="aggregate-olevel">O’Level score / contribution (out of 100)</label><input id="aggregate-olevel" type="number" min="0" max="100" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter score from the formula you are using" /></div>}
+          <small>Weights are normalized to 100. When O’Level weight is above zero, enter the O’Level component score out of 100. This is a user-defined estimate, not a verified school formula.</small>
         </>}
         <div className="aggregate-actions">
           <button type="button" className="aggregate-primary" disabled={!ready} onClick={() => setShowResult(true)}>Calculate aggregate <Calculator size={17} /></button>
@@ -240,7 +257,7 @@ export default function AggregateCalculator() {
                   ? <p>The University of Ibadan’s official 2026/2027 notice confirms the screening exercise but does not state the aggregate calculation. EDUKEN has disabled this calculator option until a reliable scoring formula is verified. Check the official admission notice before relying on third-party claims.</p>
                   : school === 'oau'
                     ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level weighting for OAU. Enter the Post-UTME score out of 100; the calculator converts it to a contribution out of 40. Enter the O’Level contribution out of 10 manually. OAU’s public screening notice does not reproduce the aggregate table, so treat this third-party-reported model as provisional and confirm it with the university.</p>
-                    : <p>Custom mode uses only the weights and scores you provide. It does not confirm that an institution accepts this formula.</p>}
+                    : <p>Custom mode uses the weights and scores you provide for UTME, Post-UTME and, optionally, O’Level. It does not confirm that an institution accepts this formula.</p>}
         {school !== 'custom' && sources[school] && <a href={sources[school]} target="_blank" rel="noreferrer">Open source / admission portal <ExternalLink size={14} /></a>}
         <p className="aggregate-disclaimer">Admission requirements and screening methods can change by session and course. Check the institution’s current instructions before making an application decision.</p>
       </section>
