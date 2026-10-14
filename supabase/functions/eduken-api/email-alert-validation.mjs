@@ -15,7 +15,12 @@ export function isEmailAlertOpportunityEligible(opportunity) {
   if (source) {
     try {
       const parsed = new URL(source);
-      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
+      if (
+        (parsed.protocol !== "https:" && parsed.protocol !== "http:") ||
+        !parsed.hostname ||
+        parsed.username ||
+        parsed.password
+      ) return false;
     } catch {
       return false;
     }
