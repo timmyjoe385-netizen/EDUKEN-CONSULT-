@@ -3,6 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
+import { getNextPaymentStatus, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
@@ -1014,19 +1015,16 @@ Deno.serve(async (req) => {
       const result = await response.json();
       if (!response.ok || !result.status || !result.data) return json({ error: "Unable to verify payment with the provider." }, 502);
       const transaction = result.data;
-      const expectedKobo = Math.round(Number(existingPayment.amount) * 100);
-      const providerAmount = Number(transaction.amount);
-      const providerCurrency = String(transaction.currency || "").toUpperCase();
-      const providerReference = String(transaction.reference || "");
-      const paid = transaction.status === "success";
-      if (paid && (providerAmount !== expectedKobo || providerCurrency !== "NGN" || providerReference !== reference)) {
+      const paid = isSuccessfulPaystackTransaction(transaction);
+      if (paid && !matchesStoredPaystackPayment(transaction, {
+        amount: existingPayment.amount,
+        currency: existingPayment.currency,
+        reference,
+      })) {
         return json({ error: "The provider's payment details do not match this payment. Please contact support." }, 409);
       }
-      // A non-success response is not always a final failure; Paystack can report
-      // pending/ongoing/processing while settlement is still in progress.
-      const providerStatus = String(transaction.status || "").toLowerCase();
-      const finalFailure = ["failed", "abandoned", "reversed"].includes(providerStatus);
-      const nextPaymentStatus = paid ? "Paid" : finalFailure ? "Failed" : "Pending";
+      // Non-final provider statuses remain Pending until settlement is resolved.
+      const nextPaymentStatus = getNextPaymentStatus(transaction);
       const { data: payment, error } = await db.from("payments").update({
         status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
       }).eq("id", existingPayment.id).eq("user_id", user.id).in("status", ["Pending", "Failed"]).select().maybeSingle();
