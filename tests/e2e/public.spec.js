@@ -552,7 +552,9 @@ test('published admission placeholders stay hidden while real admissions remain 
   await page.goto('/#admissions', { waitUntil: 'domcontentloaded' });
   const admissions = page.locator('#admissions');
   await expect(admissions.getByRole('heading', { name: 'Playwright Test University' })).toBeVisible();
-  await expect(admissions.getByRole('heading', { name: 'Nigerian Universities', exact: true })).toHaveCount(1);
+  const specificAdmission = admissions.getByRole('heading', { name: 'Nigerian Universities', exact: true });
+  await expect(specificAdmission).toBeVisible();
+  await expect(specificAdmission).toHaveCount(1);
 
   await expect(admissions).not.toContainText('Polytechnics');
   await expect(admissions).not.toContainText('Colleges of Education');
