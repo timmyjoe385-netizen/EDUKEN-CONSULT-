@@ -682,7 +682,9 @@ Deno.serve(async (req) => {
         await db.from("email_alert_subscriptions")
           .update({ verification_token_hash: null, verification_expires_at: null, updated_at: new Date().toISOString() })
           .eq("id", subscriptionId);
-        return json({ error: "We could not send the confirmation email. Please try again later." }, 502);
+        // Keep provider failures indistinguishable from other valid subscription
+        // requests so this endpoint cannot reveal whether an address is subscribed.
+        return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
       }
       return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
     }
