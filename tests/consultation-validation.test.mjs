@@ -38,6 +38,12 @@ test("rejects invalid optional field types and malformed email", () => {
     name: "A", whatsapp: "123", message: "Hi", state: { unexpected: true },
   }).error);
   assert.ok(validateConsultationBody({
+    name: "A", whatsapp: "123", message: "Hi", education_level: { unexpected: true },
+  }).error);
+  assert.ok(validateConsultationBody({
+    name: "A", whatsapp: "123", message: "Hi", school_course: 17,
+  }).error);
+  assert.ok(validateConsultationBody({
     name: "A", whatsapp: "123", message: "Hi", email: "not-an-email",
   }).error);
 });
