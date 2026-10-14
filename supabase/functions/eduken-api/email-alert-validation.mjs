@@ -89,7 +89,9 @@ export function getEmailAlertClientIp(headers) {
 }
 
 export function emailAlertRateLimitPolicy(action) {
-  if (action === "subscribe") return Object.freeze({ limit: 5, windowSeconds: 900 });
+  if (action === "subscribe" || action === "consultation" || action === "service-request") {
+    return Object.freeze({ limit: 5, windowSeconds: 900 });
+  }
   if (action === "verify" || action === "unsubscribe") return Object.freeze({ limit: 20, windowSeconds: 900 });
   return null;
 }
