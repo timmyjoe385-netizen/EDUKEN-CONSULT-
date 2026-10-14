@@ -105,6 +105,8 @@ test("email alert migration requires an opportunity for every idempotent deliver
   assert.match(migration, /create or replace function public\.consume_email_alert_rate_limit\(/);
   assert.match(migration, /on conflict \(key_hash\) do update/);
   assert.match(migration, /p_key_hash is null[\s\S]*?p_limit is null[\s\S]*?p_window_seconds is null/i);
+  assert.match(migration, /length\(p_key_hash\) <> 64/);
+  assert.match(migration, /translate\(p_key_hash, '0123456789abcdef', ''\) <> ''/);
   assert.match(migration, /p_limit < 1 or p_limit > 100/);
   assert.match(migration, /p_window_seconds < 1 or p_window_seconds > 86400/);
   assert.match(migration, /revoke all on function public\.consume_email_alert_rate_limit\(text, integer, integer\) from public, anon, authenticated/);
