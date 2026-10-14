@@ -96,6 +96,13 @@ test("email alert migration requires an opportunity for every idempotent deliver
   assert.match(migration, /opportunity_id uuid not null references public\.opportunities\(id\) on delete cascade/);
   assert.match(migration, /unique \(subscription_id, opportunity_id, event_type\)/);
   assert.match(migration, /alter table public\.email_alert_deliveries enable row level security/);
+  assert.match(migration, /create table if not exists public\.email_alert_rate_limits/);
+  assert.match(migration, /create or replace function public\.consume_email_alert_rate_limit\(/);
+  assert.match(migration, /on conflict \(key_hash\) do update/);
+  assert.match(migration, /p_limit < 1 or p_limit > 100/);
+  assert.match(migration, /p_window_seconds < 1 or p_window_seconds > 86400/);
+  assert.match(migration, /revoke all on function public\.consume_email_alert_rate_limit\(text, integer, integer\) from public, anon, authenticated/);
+  assert.match(migration, /grant execute on function public\.consume_email_alert_rate_limit\(text, integer, integer\) to service_role/);
 });
 
 test("email alert scheduler pins the processor URL before sending its bearer secret", async () => {
