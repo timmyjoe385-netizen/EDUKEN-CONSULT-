@@ -573,3 +573,16 @@ test('public opportunity content omits internal notification preferences', () =>
   expect(publicContent).toContain('map(publicOpportunity)');
   expect(publicContent).not.toContain('map(toOpportunity)');
 });
+
+test('database hardening migration removes broad client grants and unsafe direct-submit policies', () => {
+  const migration = readFileSync(
+    'supabase/migrations/20261013150000_harden_public_table_grants.sql',
+    'utf8',
+  );
+  expect(migration).toContain('revoke all privileges on all tables in schema public from public, anon, authenticated;');
+  expect(migration).toContain('alter default privileges for role postgres in schema public');
+  expect(migration).toContain('drop policy if exists "Anyone can submit a consultation" on public.consultations;');
+  expect(migration).toContain('drop policy if exists "Users can create service requests" on public.service_requests;');
+  expect(migration).toContain('broad defaults for supabase_admin');
+  expect(migration).toContain('cannot alter that role\'s defaults');
+});
