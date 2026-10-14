@@ -633,7 +633,7 @@ test('aggregate calculator scores only the five FUHSI core subjects and clears e
   }
 
   await page.getByRole('button', { name: /Add another grade/i }).click();
-  await page.getByLabel('Subject 6').fill('Economics');
+  await page.locator('.aggregate-extra-grade-row input').fill('Economics');
   await page.locator('.aggregate-extra-grade-row select').selectOption('A1');
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
 
