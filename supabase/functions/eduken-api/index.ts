@@ -2,6 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
+import { validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
@@ -1032,6 +1033,10 @@ Deno.serve(async (req) => {
       if (req.method === "GET") return json({ items: await adminList(table) });
       if (req.method === "POST") {
         const b = mapAdminInput(table, await req.json());
+        if (table === "opportunities") {
+          const verification = validateOpportunityVerification(b);
+          if (!verification.valid) return json({ error: verification.error }, 400);
+        }
         const { data, error } = await db.from(table).insert(b).select().single();
         if (error) throw error;
         if (table === "opportunities") {
@@ -1053,6 +1058,8 @@ Deno.serve(async (req) => {
           if (readError) throw readError;
           if (!existing) return json({ error: "Record not found." }, 404);
           previousOpportunity = existing;
+          const verification = validateOpportunityVerification({ ...existing, ...b });
+          if (!verification.valid) return json({ error: verification.error }, 400);
         }
         const { data, error } = await db.from(table).update(b).eq("id", id).select().maybeSingle();
         if (error) throw error;
