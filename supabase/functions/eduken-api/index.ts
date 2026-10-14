@@ -1,6 +1,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
+import { validateConsultationBody } from "./consultation-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
@@ -462,13 +463,16 @@ Deno.serve(async (req) => {
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
     if (req.method === "POST" && (path === "/consultations" || path === "/api/consultations")) {
-      const b = await req.json();
-      if (!b?.name?.trim() || !b?.whatsapp?.trim() || !b?.message?.trim()) return json({ error: "Name, WhatsApp number and message are required." }, 400);
+      let body: unknown;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const validation = validateConsultationBody(body);
+      if (validation.error || !validation.data) return json({ error: validation.error || "Invalid consultation request." }, 400);
+      const b = validation.data;
       const { data, error } = await db.from("consultations").insert({
-        name: b.name.trim(), whatsapp: b.whatsapp.trim(), email: b.email || null, state: b.state || null,
-        education_level: b.educationLevel || b.education_level || null, interest: b.interest || null,
-        school_course: b.schoolCourse || b.school_course || null, message: b.message.trim(), status: "New"
-      }).select().single();
+        name: b.name, whatsapp: b.whatsapp, email: b.email || null, state: b.state || null,
+        education_level: b.educationLevel || null, interest: b.interest || null,
+        school_course: b.schoolCourse || null, message: b.message, status: "New"
+      }).select("id").single();
       if (error) throw error;
       return json({ id: data.id, message: "Consultation request received." }, 201);
     }
