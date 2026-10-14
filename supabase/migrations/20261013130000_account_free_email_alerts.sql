@@ -90,7 +90,38 @@ as $$
 declare
   current_count integer;
 begin
-  if p_key_hash !~ '^[a-f0-9]{64}$'
+  if p_key_hash is null
+     or p_limit is null
+     or p_window_seconds is null
+     or p_key_hash !~ '^[a-f0-9]{64}
+    raise exception 'Invalid rate-limit arguments';
+  end if;
+
+  insert into public.email_alert_rate_limits as existing
+    (key_hash, window_started_at, request_count, updated_at)
+  values (p_key_hash, now(), 1, now())
+  on conflict (key_hash) do update
+    set window_started_at = case
+          when existing.window_started_at <= now() - make_interval(secs => p_window_seconds)
+            then now()
+          else existing.window_started_at
+        end,
+        request_count = case
+          when existing.window_started_at <= now() - make_interval(secs => p_window_seconds)
+            then 1
+          else existing.request_count + 1
+        end,
+        updated_at = now()
+  returning request_count into current_count;
+
+  return current_count <= p_limit;
+end;
+$$;
+
+revoke all on function public.consume_email_alert_rate_limit(text, integer, integer) from public, anon, authenticated;
+grant execute on function public.consume_email_alert_rate_limit(text, integer, integer) to service_role;
+revoke all on table public.email_alert_rate_limits from public, anon, authenticated;
+
      or p_limit < 1 or p_limit > 100
      or p_window_seconds < 1 or p_window_seconds > 86400 then
     raise exception 'Invalid rate-limit arguments';
