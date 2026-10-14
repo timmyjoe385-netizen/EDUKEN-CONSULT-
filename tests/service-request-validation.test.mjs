@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   validateServiceRequestBody,
   isAllowedServiceRequestStatus,
+  isPublishedService,
 } from "../supabase/functions/eduken-api/service-request-validation.mjs";
 
 test("accepts and normalizes a valid service request", () => {
@@ -64,4 +65,14 @@ test("service request statuses use a strict allowlist", () => {
   for (const status of ["admin", "pending", "", null, 7]) {
     assert.equal(isAllowedServiceRequestStatus(status), false);
   }
+});
+
+
+test("published service guard accepts only an existing explicitly published service", () => {
+  assert.equal(isPublishedService({ id: "service-1", is_published: true }), true);
+  assert.equal(isPublishedService({ id: "service-1", is_published: false }), false);
+  assert.equal(isPublishedService({ id: "service-1", is_published: null }), false);
+  assert.equal(isPublishedService({ id: "service-1", is_published: "true" }), false);
+  assert.equal(isPublishedService(null), false);
+  assert.equal(isPublishedService(undefined), false);
 });
