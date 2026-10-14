@@ -687,4 +687,23 @@ test('aggregate calculator applies the added provisional school-specific formula
   await page.getByLabel('O’Level contribution (out of 10)').fill('8');
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
   await expect(page.locator('.aggregate-result')).toContainText('76.80');
+
+  await page.getByLabel('Institution / formula').selectOption('uniben');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Add O’Level subject/i }).click();
+  await page.locator('.aggregate-extra-grade-row input').fill('Economics');
+  await page.locator('.aggregate-extra-grade-row select').selectOption('A1');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
+
+  await page.getByLabel('Institution / formula').selectOption('custom');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByLabel('UTME weight (%)').fill('50');
+  await page.getByLabel('Post-UTME weight (%)').fill('30');
+  await page.getByLabel('O’Level weight (%)').fill('20');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
 });
