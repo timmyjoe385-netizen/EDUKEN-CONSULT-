@@ -173,8 +173,8 @@ export default function AggregateCalculator() {
         </div>
         {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'ui' || school === 'oau' || school === 'custom') && <>
           <div className="aggregate-field">
-            <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
-            <input id="aggregate-post" type="number" min="0" max="100" value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
+            <label htmlFor="aggregate-post">Post-UTME score (out of {school === 'oau' ? 40 : 100})</label>
+            <input id="aggregate-post" type="number" min="0" max={school === 'oau' ? 40 : 100} value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
           </div>
         </>}
         {(school === 'unilorin' || school === 'unilag' || school === 'oau') && <div className="aggregate-field">
