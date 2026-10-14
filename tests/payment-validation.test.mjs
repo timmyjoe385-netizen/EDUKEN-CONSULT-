@@ -65,6 +65,8 @@ test("only returns HTTPS Paystack-hosted checkout URLs", () => {
     "https://example.com/fake-checkout",
     "https://checkout.paystack.com.evil.example/abc",
     "https://user:pass@checkout.paystack.com/abc",
+    "https://checkout.paystack.com:444/abc",
+    "https://checkout.paystack.com/",
     "not a URL",
     "",
   ]) {
