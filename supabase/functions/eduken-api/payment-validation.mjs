@@ -28,3 +28,14 @@ export function getNextPaymentStatus(transaction) {
   if (isFinalPaystackFailure(transaction)) return "Failed";
   return "Pending";
 }
+
+export function getPaystackAuthorizationUrl(result) {
+  if (!result || result.status !== true || typeof result.data?.authorization_url !== "string") return null;
+  try {
+    const url = new URL(result.data.authorization_url);
+    if (url.protocol !== "https:" || url.hostname !== "checkout.paystack.com" || url.username || url.password) return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
