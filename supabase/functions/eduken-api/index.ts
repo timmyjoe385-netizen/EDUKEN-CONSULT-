@@ -319,7 +319,7 @@ async function enqueueOpportunityEmailAlerts(
     opportunity.is_published &&
     opportunity.notify_on_publish &&
     opportunity.verified &&
-    safeHttpUrl(opportunity.official_source)
+    (!String(opportunity.official_source || "").trim() || safeHttpUrl(opportunity.official_source))
   );
   if (!eligible) {
     const { error: cancelError } = await db.from("email_alert_deliveries")
@@ -1117,8 +1117,8 @@ Deno.serve(async (req) => {
         if (!data) return json({ error: "Record not found." }, 404);
         if (table === "opportunities") {
           if (!previousOpportunity.is_published && data.is_published) await notifyOpportunitySubscribers(data);
-          const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && safeHttpUrl(previousOpportunity.official_source));
-          const isEligible = Boolean(data.is_published && data.notify_on_publish && data.verified && String(data.official_source || "").trim());
+          const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && (!String(previousOpportunity.official_source || "").trim() || safeHttpUrl(previousOpportunity.official_source)));
+          const isEligible = Boolean(data.is_published && data.notify_on_publish && data.verified && (!String(data.official_source || "").trim() || safeHttpUrl(data.official_source)));
           const deadlineChanged = previousOpportunity.deadline !== data.deadline;
           const categoryChanged = previousOpportunity.category !== data.category;
           await enqueueOpportunityEmailAlerts(data, {
