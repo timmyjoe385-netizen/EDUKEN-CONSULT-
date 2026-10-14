@@ -476,3 +476,86 @@ test('public AI assistant rejects oversized questions before provider work', asy
     'length guard must run before the AI provider call',
   ).toBeLessThan(handler.indexOf('return json({ answer: await aiAnswer(question) });'));
 });
+
+
+test('published admission placeholders stay hidden while real admissions remain visible', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [
+          {
+            id: 'placeholder-universities',
+            title: 'Nigerian Universities',
+            school: 'Nigerian Universities',
+            programme: 'Admission information',
+            category: 'University',
+            description: '',
+            application_url: null,
+            deadline: null,
+            is_published: true,
+          },
+          {
+            id: 'placeholder-polytechnics',
+            title: 'Polytechnics',
+            school: 'Polytechnics',
+            programme: 'Application information',
+            category: 'Polytechnic',
+            description: '',
+            application_url: null,
+            deadline: null,
+            is_published: true,
+          },
+          {
+            id: 'placeholder-colleges',
+            title: 'Colleges of Education',
+            school: 'Colleges of Education',
+            programme: 'Programme information',
+            category: 'College of Education',
+            description: '',
+            application_url: null,
+            deadline: null,
+            is_published: true,
+          },
+          {
+            id: 'playwright-real-admission',
+            title: 'Playwright Test University',
+            school: 'Playwright Test University',
+            programme: 'Computer Science',
+            category: 'University',
+            description: 'A clearly identified test-only admission record.',
+            application_url: 'https://example.com/apply',
+            deadline: '2026-12-31',
+            is_published: true,
+          },
+        ],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/#admissions', { waitUntil: 'domcontentloaded' });
+  const admissions = page.locator('#admissions');
+  await expect(admissions.getByRole('heading', { name: 'Playwright Test University' })).toBeVisible();
+  await expect(admissions).not.toContainText('Nigerian Universities');
+  await expect(admissions).not.toContainText('Polytechnics');
+  await expect(admissions).not.toContainText('Colleges of Education');
+  await expect(admissions).not.toContainText('No matching published admission records yet');
+});
+
+test('public opportunity content omits internal notification preferences', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const publicContent = handler.slice(
+    handler.indexOf('async function publicContent()'),
+    handler.indexOf('async function scoped('),
+  );
+  expect(handler).toContain('const publicOpportunity =');
+  expect(handler).toContain('key !== "notifyOnPublish"');
+  expect(handler).toContain('key !== "notify_on_publish"');
+  expect(publicContent).toContain('map(publicOpportunity)');
+  expect(publicContent).not.toContain('map(toOpportunity)');
+});
