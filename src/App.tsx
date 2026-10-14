@@ -974,7 +974,8 @@ function App() {
                       <p>{item.details}</p>
                       <small>{item.customer_name} • {item.whatsapp} • {item.email || 'No email'} • {item.created_at ? new Date(item.created_at).toLocaleString() : ''}</small>
                     </div>
-                    <select aria-label={'Status for ' + (item.reference_number || 'service request')} value={item.status || 'New Requests'} onChange={e => updateServiceRequest(item, e.target.value)}>
+                    <select aria-label={'Status for ' + (item.reference_number || 'service request')} value={item.status || 'New Requests'} disabled={item.status === 'Paid'} onChange={e => updateServiceRequest(item, e.target.value)}>
+                      {item.status === 'Paid' && <option value="Paid" disabled>Paid (payment confirmed)</option>}
                       <option>New Requests</option><option>Contacted</option><option>In Progress</option><option>Completed</option><option>Cancelled</option>
                     </select>
                   </article>
