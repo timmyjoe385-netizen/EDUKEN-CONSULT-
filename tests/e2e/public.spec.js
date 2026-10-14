@@ -122,7 +122,7 @@ test('service request dialog validates required fields without sending a request
   expect(submittedRequests, 'closing the dialog must not submit a request').toEqual([]);
 });
 
-test('account-free email alert form submits only the selected topics', async ({ page }) => {
+test('preview safety mode blocks email alert subscriptions without sending a request', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -133,15 +133,13 @@ test('account-free email alert form submits only the selected topics', async ({ 
     }),
   );
 
-  let submittedBody;
+  let requestReachedApi = false;
   await page.route('**/functions/v1/eduken-api/api/email-alerts/subscribe', async route => {
-    submittedBody = route.request().postDataJSON();
+    requestReachedApi = true;
     await route.fulfill({
       status: 202,
       contentType: 'application/json',
-      body: JSON.stringify({
-        message: 'Check your inbox for a confirmation link. The link expires in 30 minutes.',
-      }),
+      body: JSON.stringify({ message: 'Mock subscription accepted.' }),
     });
   });
 
@@ -152,53 +150,52 @@ test('account-free email alert form submits only the selected topics', async ({ 
   await page.getByLabel('Remote opportunities').check();
   await page.getByRole('button', { name: /Subscribe to free email alerts/i }).click();
 
-  await expect(page.getByRole('status')).toContainText('Check your inbox for a confirmation link');
-  expect(submittedBody).toEqual({
-    email: 'playwright@example.com',
-    topics: ['admissions', 'remote-opportunities'],
-  });
+  await expect(page.getByRole('status')).toContainText(
+    'Preview safety mode: saving is disabled until a separate test database is connected.',
+  );
+  expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
-test('email alert verification links consume tokens safely', async ({ page }) => {
+test('preview safety mode removes email verification tokens and blocks the write', async ({ page }) => {
   const token = 'a'.repeat(64);
-  let postedBody;
-  let urlWhenRequested;
+  let requestReachedApi = false;
   await page.route('**/functions/v1/eduken-api/api/email-alerts/verify', async route => {
-    postedBody = route.request().postDataJSON();
-    urlWhenRequested = page.url();
+    requestReachedApi = true;
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify({ message: 'Your email alerts are confirmed and active.' }),
+      body: JSON.stringify({ message: 'Mock verification accepted.' }),
     });
   });
 
   await page.goto('/?email_alert_verify=' + token + '#admissions', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('Your email alerts are confirmed and active.').first()).toBeVisible();
-  expect(postedBody).toEqual({ token });
-  expect(urlWhenRequested).not.toContain('email_alert_verify');
+  await expect(page.getByRole('status')).toContainText(
+    'Preview safety mode: saving is disabled until a separate test database is connected.',
+  );
+  expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
+  expect(page.url()).not.toContain('email_alert_verify');
   expect(page.url()).not.toContain(token);
   expect(page.url()).toMatch(/#admissions$/);
 });
 
-test('email alert unsubscribe links consume tokens safely', async ({ page }) => {
+test('preview safety mode removes email unsubscribe tokens and blocks the write', async ({ page }) => {
   const token = 'b'.repeat(64);
-  let postedBody;
-  let urlWhenRequested;
+  let requestReachedApi = false;
   await page.route('**/functions/v1/eduken-api/api/email-alerts/unsubscribe', async route => {
-    postedBody = route.request().postDataJSON();
-    urlWhenRequested = page.url();
+    requestReachedApi = true;
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
-      body: JSON.stringify({ message: 'You have been unsubscribed from EDUKEN email alerts.' }),
+      body: JSON.stringify({ message: 'Mock unsubscribe accepted.' }),
     });
   });
 
   await page.goto('/?email_alert_unsubscribe=' + token + '#admissions', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText('You have been unsubscribed from EDUKEN email alerts.').first()).toBeVisible();
-  expect(postedBody).toEqual({ token });
-  expect(urlWhenRequested).not.toContain('email_alert_unsubscribe');
+  await expect(page.getByRole('status')).toContainText(
+    'Preview safety mode: saving is disabled until a separate test database is connected.',
+  );
+  expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
+  expect(page.url()).not.toContain('email_alert_unsubscribe');
   expect(page.url()).not.toContain(token);
   expect(page.url()).toMatch(/#admissions$/);
 });
