@@ -16,6 +16,11 @@ export function validateConsultationBody(body) {
       return { error: "One or more consultation fields are invalid." };
     }
   }
+  for (const field of ["education_level", "school_course"]) {
+    if (body[field] != null && typeof body[field] !== "string") {
+      return { error: "One or more consultation fields are invalid." };
+    }
+  }
 
   for (const field of ["name", "whatsapp", "message"]) {
     if (typeof body[field] !== "string") {
