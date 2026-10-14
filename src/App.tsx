@@ -1649,7 +1649,7 @@ function App() {
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified by EDUKEN</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1698,7 +1698,7 @@ function App() {
                   <div className="spotlight-meta">
                     <span>
                       {o.verified
-                        ? '✓ Verified Source'
+                        ? '✓ Verified by EDUKEN'
                         : o.sourceUrl
                           ? 'Source available'
                           : 'Verify with provider'}
@@ -1731,7 +1731,7 @@ function App() {
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
                     {x.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified by EDUKEN</span>
                     ) : null}
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
@@ -1927,7 +1927,7 @@ function App() {
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified by EDUKEN</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1967,7 +1967,7 @@ function App() {
                 <article className="admission-card" key={a.id}>
                   <div className="admission-top">
                     <span>{a.type || 'Admission'}</span>
-                    {a.verified ? <b>✓ Verified Source</b> : null}
+                    {a.verified ? <b>✓ Verified by EDUKEN</b> : null}
                   </div>
                   <h3>{a.school}</h3>
                   <p>{a.course}</p>
@@ -2098,7 +2098,7 @@ function App() {
                 <p>{x.body || 'Open this update for more information.'}</p>
                 {x.verified ? (
                   <span className="verified-pill inline-pill">
-                    ✓ Verified Source
+                    ✓ Verified by EDUKEN
                   </span>
                 ) : x.sourceUrl ? (
                   <span className="source-pill inline-pill">
