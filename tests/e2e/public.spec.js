@@ -633,7 +633,7 @@ test('aggregate calculator scores only the five FUHSI core subjects and clears e
   }
 
   await page.getByRole('button', { name: /Add another grade/i }).click();
-  await page.getByLabel('Subject 6').fill('Economics');
+  await page.locator('.aggregate-extra-grade-row input').fill('Economics');
   await page.locator('.aggregate-extra-grade-row select').selectOption('A1');
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
 
@@ -663,4 +663,47 @@ test('aggregate calculator directory search and mobile layout work', async ({ pa
     dimensions.pageWidth,
     `aggregate calculator should not overflow horizontally on mobile: ${JSON.stringify(dimensions)}`,
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+});
+
+
+test('aggregate calculator applies the added provisional school-specific formulas', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('unilag');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByLabel('O’Level contribution (out of 20)').fill('15');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
+  await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
+
+  await expect(page.getByLabel('Institution / formula').locator('option[value="ui"]')).toHaveAttribute('disabled', '');
+  await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
+  await expect(page.locator('.aggregate-directory-list')).toContainText('does not publish the UTME aggregate formula');
+
+  await page.getByLabel('Institution / formula').selectOption('oau');
+  await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('72');
+  await page.getByLabel('O’Level contribution (out of 10)').fill('8');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('76.80');
+
+  await page.getByLabel('Institution / formula').selectOption('uniben');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Add O’Level subject/i }).click();
+  await page.locator('.aggregate-extra-grade-row input').fill('Economics');
+  await page.locator('.aggregate-extra-grade-row select').selectOption('A1');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
+
+  await page.getByLabel('Institution / formula').selectOption('custom');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.locator('#aggregate-jw').fill('50');
+  await page.locator('#aggregate-pw').fill('30');
+  await page.locator('#aggregate-ow').fill('20');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
 });
