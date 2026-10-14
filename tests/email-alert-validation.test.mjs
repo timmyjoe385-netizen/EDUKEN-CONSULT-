@@ -48,8 +48,10 @@ test("topic allowlist is fixed and type-safe", () => {
   assert.equal(isAllowedEmailAlertTopic(null), false);
 });
 
-test("rate-limit policy limits confirmation-email abuse and token guessing", async () => {
+test("rate-limit policy limits public form spam, confirmation-email abuse and token guessing", async () => {
   assert.deepEqual(emailAlertRateLimitPolicy("subscribe"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("consultation"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("service-request"), { limit: 5, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("verify"), { limit: 20, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("unsubscribe"), { limit: 20, windowSeconds: 900 });
   assert.equal(emailAlertRateLimitPolicy("unknown"), null);
