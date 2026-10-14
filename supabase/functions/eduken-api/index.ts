@@ -1,6 +1,6 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
-import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
+import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
@@ -938,7 +938,7 @@ Deno.serve(async (req) => {
           .eq("id", serviceId)
           .maybeSingle();
         if (serviceError) throw serviceError;
-        if (!service || service.is_published !== true) {
+        if (!isPublishedService(service)) {
           return json({ error: "Please choose an available published service." }, 400);
         }
       }
