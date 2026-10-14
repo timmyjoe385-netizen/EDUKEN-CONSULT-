@@ -237,3 +237,23 @@ test("public consultation and service-request routes enforce the atomic database
   assert.match(serviceRequest, /if \(!rateAllowed\)[\s\S]*?429/);
   assert.ok(serviceRequest.indexOf("consumeEmailAlertRateLimit") < serviceRequest.indexOf("req.json()"));
 });
+
+test("database grant-hardening migration preserves least-privilege client access", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const migration = await readFile(resolve(here, "../supabase/migrations/20261013150000_harden_public_table_grants.sql"), "utf8");
+
+  assert.match(migration, /revoke all privileges on all tables in schema public from public, anon, authenticated/i);
+  assert.match(migration, /revoke all privileges on all sequences in schema public from public, anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*?revoke all privileges on tables from public, anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*?revoke all privileges on sequences from public, anon, authenticated/i);
+  assert.match(migration, /revoke execute on all functions in schema public from public, anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*?revoke execute on functions from public, anon, authenticated/i);
+  assert.match(migration, /grant select on table[\s\S]*?public\.opportunities,[\s\S]*?public\.admissions,[\s\S]*?public\.updates,[\s\S]*?public\.faqs,[\s\S]*?public\.services[\s\S]*?to anon, authenticated/i);
+  assert.match(migration, /drop policy if exists "Anyone can submit a consultation" on public\.consultations/i);
+  assert.match(migration, /drop policy if exists "Users can create service requests" on public\.service_requests/i);
+  assert.doesNotMatch(migration, /grant\s+[^;]*\bon\s+table\s+(?:public\.)?(?:consultations|service_requests)\b/i);
+  assert.match(migration, /supabase_admin/i);
+});
