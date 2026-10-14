@@ -257,3 +257,19 @@ test("database grant-hardening migration preserves least-privilege client access
   assert.doesNotMatch(migration, /grant\s+[^;]*\bon\s+table\s+(?:public\.)?(?:consultations|service_requests)\b/i);
   assert.match(migration, /supabase_admin/i);
 });
+
+test("restored historical opportunity migrations retain the database-recorded schema changes", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const controls = await readFile(resolve(here, "../supabase/migrations/20261011063351_add_opportunity_controls.sql"), "utf8");
+  const details = await readFile(resolve(here, "../supabase/migrations/20261011192027_add_opportunity_editor_detail_fields.sql"), "utf8");
+
+  assert.match(controls, /add column if not exists verified boolean not null default false/i);
+  assert.match(controls, /add column if not exists featured boolean not null default false/i);
+  assert.match(controls, /add column if not exists urgent boolean not null default false/i);
+  assert.match(controls, /add column if not exists notify_on_publish boolean not null default false/i);
+  assert.match(controls, /set verified = \(official_source is not null and btrim\(official_source\) <> ''\)[\s\S]*?where verified = false/i);
+  assert.match(details, /add column if not exists content text[\s\S]*?add column if not exists eligibility text[\s\S]*?add column if not exists benefits text[\s\S]*?add column if not exists how_to_apply text/i);
+});
