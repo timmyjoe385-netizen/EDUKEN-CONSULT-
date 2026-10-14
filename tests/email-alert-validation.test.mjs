@@ -142,3 +142,19 @@ test("least-privilege migration removes broad client grants and keeps only requi
   assert.doesNotMatch(migration, /grant [^;]* on table public\.consultations to (anon|authenticated)/i);
   assert.match(migration, /RLS policies remain the row-level authorization boundary/i);
 });
+
+
+test("verified opportunity email alerts permit a missing source but reject unsafe supplied URLs", async () => {
+  const { isEmailAlertOpportunityEligible } = await import("../supabase/functions/eduken-api/email-alert-validation.mjs");
+  const base = { is_published: true, verified: true, notify_on_publish: true };
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: null }), true);
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: "   " }), true);
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: "https://official.example/path" }), true);
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: "http://official.example/path" }), true);
+  for (const source of ["javascript:alert(1)", "ftp://official.example", "not a URL"]) {
+    assert.equal(isEmailAlertOpportunityEligible({ ...base, official_source: source }), false, source);
+  }
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, verified: false, official_source: null }), false);
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, is_published: false, official_source: null }), false);
+  assert.equal(isEmailAlertOpportunityEligible({ ...base, notify_on_publish: false, official_source: null }), false);
+});
