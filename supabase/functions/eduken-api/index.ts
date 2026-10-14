@@ -84,6 +84,15 @@ const toOpportunity = (x: any) => ({
   notifyOnPublish: Boolean(x.notify_on_publish),
 });
 
+const publicOpportunity = (x: any) => {
+  const item = toOpportunity(x);
+  return Object.fromEntries(
+    Object.entries(item).filter(
+      ([key]) => key !== "notifyOnPublish" && key !== "notify_on_publish",
+    ),
+  );
+};
+
 const toAdmission = (x: any) => ({
   ...x,
   title: x.title ?? x.school ?? "",
@@ -115,7 +124,8 @@ async function publicContent() {
   const err = [a,b,c,d,e].find(x => x.error)?.error;
   if (err) throw err;
   return {
-    opportunities: (a.data ?? []).map(toOpportunity),
+    // Keep the editorial notification preference private to the admin API.
+    opportunities: (a.data ?? []).map(publicOpportunity),
     admissions: (b.data ?? []).map(toAdmission),
     updates: (c.data ?? []).map(toUpdate),
     faqs: d.data ?? [],
