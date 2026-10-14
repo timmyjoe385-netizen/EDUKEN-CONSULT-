@@ -1093,8 +1093,23 @@ Deno.serve(async (req) => {
         let b: any;
         try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
         if (!b || !isAllowedServiceRequestStatus(b.status)) return json({ error: "Invalid service request status." }, 400);
-        const { data, error } = await db.from("service_requests").update({ status: b.status }).eq("id", id).select("id,status").maybeSingle();
-        if (error) throw error; if (!data) return json({ error: "Service request not found." }, 404);
+        const { data: existing, error: existingError } = await db.from("service_requests").select("id,status").eq("id", id).maybeSingle();
+        if (existingError) throw existingError;
+        if (!existing) return json({ error: "Service request not found." }, 404);
+        if (existing.status === "Paid") return json({ error: "Payment-confirmed service requests cannot be changed through the status manager." }, 409);
+
+        // Keep the protection in the database update predicate as well as the
+        // pre-check, so a request becoming Paid between the read and write is
+        // not overwritten by an admin status change.
+        const { data, error } = await db.from("service_requests").update({ status: b.status }).eq("id", id).neq("status", "Paid").select("id,status").maybeSingle();
+        if (error) throw error;
+        if (!data) {
+          const { data: current, error: currentError } = await db.from("service_requests").select("id,status").eq("id", id).maybeSingle();
+          if (currentError) throw currentError;
+          if (!current) return json({ error: "Service request not found." }, 404);
+          if (current.status === "Paid") return json({ error: "Payment-confirmed service requests cannot be changed through the status manager." }, 409);
+          return json({ error: "Service request status could not be updated." }, 409);
+        }
         return json({ ok: true, request: data });
       }
     }
