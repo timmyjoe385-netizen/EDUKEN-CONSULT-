@@ -664,3 +664,30 @@ test('aggregate calculator directory search and mobile layout work', async ({ pa
     `aggregate calculator should not overflow horizontally on mobile: ${JSON.stringify(dimensions)}`,
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
 });
+
+
+test('aggregate calculator applies the added provisional school-specific formulas', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('unilag');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByLabel('O’Level contribution (out of 20)').fill('15');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
+  await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
+
+  await page.getByLabel('Institution / formula').selectOption('ui');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
+  await expect(page.locator('.aggregate-helper')).toContainText('provisional model');
+
+  await page.getByLabel('Institution / formula').selectOption('oau');
+  await expect(page.getByLabel('Post-UTME score (out of 40)')).toBeVisible();
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 40)').fill('30');
+  await page.getByLabel('O’Level contribution (out of 10)').fill('8');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('78.00');
+});
