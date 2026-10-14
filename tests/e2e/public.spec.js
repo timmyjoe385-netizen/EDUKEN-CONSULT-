@@ -430,7 +430,7 @@ test('service request route validates before inserting into the database', async
 
 test('database hardening migration removes direct client access to consultation submissions', async () => {
   const migration = readFileSync(
-    'supabase/migrations/20261013150000_harden_public_table_grants.sql',
+    'supabase/migrations/20261014135746_harden_public_table_grants.sql',
     'utf8',
   );
   expect(migration).toContain('revoke all privileges on all tables in schema public from public, anon, authenticated;');
@@ -576,7 +576,7 @@ test('public opportunity content omits internal notification preferences', () =>
 
 test('database hardening migration removes broad client grants and unsafe direct-submit policies', () => {
   const migration = readFileSync(
-    'supabase/migrations/20261013150000_harden_public_table_grants.sql',
+    'supabase/migrations/20261014135746_harden_public_table_grants.sql',
     'utf8',
   );
   expect(migration).toContain('revoke all privileges on all tables in schema public from public, anon, authenticated;');
