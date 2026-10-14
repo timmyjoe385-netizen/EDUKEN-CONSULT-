@@ -57,3 +57,13 @@
 .aggregate-directory-item a{display:inline-flex;align-items:center;gap:5px;color:#17623f;font-size:.82rem;font-weight:750;text-decoration:underline}
 .aggregate-directory>.aggregate-disclaimer{margin:18px 0 0;padding-top:14px;border-top:1px solid #e2e9e4;font-size:.88rem;line-height:1.6;color:#64736a}
 @media(max-width:640px){.aggregate-directory-list{grid-template-columns:1fr}.aggregate-directory-item-top strong{min-width:0}}
+
+.aggregate-extra-grades{margin:18px 0;padding:15px;border:1px dashed #cbd9ce;border-radius:13px;background:#f8fbf8}
+.aggregate-extra-grades-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.aggregate-extra-grades-heading>div{display:grid;gap:4px}
+.aggregate-extra-grades-heading strong{color:#214634}
+.aggregate-extra-grades-heading small{color:#617268;line-height:1.5}
+.aggregate-add-grade,.aggregate-remove-grade{border:1px solid #b9d0c0;border-radius:9px;background:#fff;color:#1b5b3b;padding:9px 11px;font:inherit;font-size:.82rem;font-weight:750;cursor:pointer}
+.aggregate-extra-grade-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.7fr) auto;gap:10px;align-items:end;margin:10px 0}
+.aggregate-remove-grade{color:#7b3434;border-color:#e3caca}
+@media(max-width:540px){.aggregate-extra-grade-row{grid-template-columns:1fr 1fr}.aggregate-extra-grade-row .aggregate-remove-grade{grid-column:1/-1;justify-self:start}}
