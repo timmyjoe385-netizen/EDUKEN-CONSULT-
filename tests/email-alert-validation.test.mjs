@@ -273,3 +273,18 @@ test("restored historical opportunity migrations retain the database-recorded sc
   assert.match(controls, /set verified = \(official_source is not null and btrim\(official_source\) <> ''\)[\s\S]*?where verified = false/i);
   assert.match(details, /add column if not exists content text[\s\S]*?add column if not exists eligibility text[\s\S]*?add column if not exists benefits text[\s\S]*?add column if not exists how_to_apply text/i);
 });
+
+
+test("schema recovery instructions use a supported read-only dump and forbid remote reset", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const docs = await readFile(resolve(here, "../docs/account-free-email-alerts.md"), "utf8");
+
+  assert.match(docs, /supabase db dump --db-url "\$EDUKEN_DATABASE_URL" --schema public -f \/tmp\/eduken-live-public-schema\.sql/);
+  assert.match(docs, /--schema-only is not a supported/);
+  assert.match(docs, /Separately inventory any custom triggers or policies on managed/);
+  assert.match(docs, /Do not use `supabase db reset --linked`, `supabase db push`/);
+  assert.doesNotMatch(docs, /supabase db dump --schema-only/);
+});
