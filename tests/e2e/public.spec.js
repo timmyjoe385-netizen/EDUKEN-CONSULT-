@@ -676,12 +676,9 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-result')).toContainText('79.00');
   await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
 
-  await page.getByLabel('Institution / formula').selectOption('ui');
-  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
-  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
-  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
-  await expect(page.locator('.aggregate-result')).toContainText('80.00');
-  await expect(page.locator('.aggregate-helper')).toContainText('provisional model');
+  await expect(page.getByLabel('Institution / formula').locator('option[value="ui"]')).toBeDisabled();
+  await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
+  await expect(page.locator('.aggregate-directory-list')).toContainText('does not publish the aggregate formula');
 
   await page.getByLabel('Institution / formula').selectOption('oau');
   await expect(page.getByLabel('Post-UTME score (out of 40)')).toBeVisible();
