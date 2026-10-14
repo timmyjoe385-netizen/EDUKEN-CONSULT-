@@ -8,7 +8,7 @@ const gradeOptions = Object.keys(gradePoints);
 const sources: Partial<Record<SchoolKey, string>> = {
   unilorin: 'https://www.unilorin.edu.ng/wp-content/uploads/2026/06/Pre-admission-screening-2026.pdf',
   fuhsi: 'https://fuhsi.edu.ng/admissions.html',
-  uniben: 'https://unibenportal.com/',
+  uniben: 'https://www.uniben.edu/',
 };
 const directory = [
   { name: 'University of Ilorin (UNILORIN)', status: 'official', note: '2026/2027 formula available', href: sources.unilorin },
@@ -122,7 +122,7 @@ export default function AggregateCalculator() {
       <div className="aggregate-intro">
         <span className="aggregate-kicker"><Calculator size={15} /> FREE STUDENT TOOL</span>
         <h1>EDUKEN Aggregate Calculator</h1>
-        <p>Calculate a screening aggregate using a published institutional formula or a clearly labelled community-reported formula. Your inputs stay in this browser.</p>
+        <p>Calculate a screening aggregate using a published institutional formula or a clearly labelled community-reported formula. Your inputs are processed on this page and are not sent to EDUKEN.</p>
       </div>
       <section className="aggregate-card" aria-labelledby="aggregate-form-title">
         <h2 id="aggregate-form-title">Calculate your score</h2>
@@ -162,7 +162,7 @@ export default function AggregateCalculator() {
           )}
           <div className="aggregate-extra-grades">
             <div className="aggregate-extra-grades-heading">
-              <div><strong>Additional O’Level grades</strong><small>Add other subjects to keep your full result record together.</small></div>
+              <div><strong>Additional O’Level grades</strong><small>Add other subjects to keep track of them while this page is open.</small></div>
               <button type="button" className="aggregate-add-grade" onClick={() => { setExtraGrades(current => [...current, { subject: '', grade: '' }]); setShowResult(false); }}>+ Add another grade</button>
             </div>
             {extraGrades.map((item, index) => <div className="aggregate-extra-grade-row" key={index}>
@@ -170,7 +170,7 @@ export default function AggregateCalculator() {
               <label className="aggregate-field"><span>Grade</span><select value={item.grade} onChange={e => { setExtraGrades(current => current.map((grade, i) => i === index ? { ...grade, grade: e.target.value } : grade)); setShowResult(false); }}><option value="">Choose grade</option>{gradeOptions.map(grade => <option key={grade} value={grade}>{grade} — {gradePoints[grade]} points</option>)}</select></label>
               <button type="button" className="aggregate-remove-grade" onClick={() => { setExtraGrades(current => current.filter((_, i) => i !== index)); setShowResult(false); }} aria-label={`Remove additional subject ${index + 6}`}>Remove</button>
             </div>)}
-            <p className="aggregate-helper">FUHSI’s published formula uses the five specified core subjects above. Additional grades are saved only in this browser and are not added to the score, so extra entries cannot inflate your aggregate.</p>
+            <p className="aggregate-helper">FUHSI’s published formula uses the five specified core subjects above. Additional grades are kept temporarily on this page and are not added to the score, so extra entries cannot inflate your aggregate. Refreshing or clearing the page removes them.</p>
           </div>
           <small>Confirm your subject and eligibility requirements with the institution before relying on this result.</small>
         </>}
