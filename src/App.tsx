@@ -107,6 +107,8 @@ function App() {
   const [alertTopics, setAlertTopics] = useState<string[]>(['admissions', 'scholarships-grants', 'jobs-internships']);
   const [alertSubmitting, setAlertSubmitting] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
+  const [pendingEmailAction, setPendingEmailAction] = useState<{ type: 'verify' | 'unsubscribe'; token: string } | null>(null);
+  const [emailActionSubmitting, setEmailActionSubmitting] = useState(false);
   const [form, setForm] = useState<Record<string, any>>({});
   const [deleteTarget, setDeleteTarget] = useState<{ item: Item; table: string } | null>(null);
   const [deletingAdmin, setDeletingAdmin] = useState(false);
@@ -208,19 +210,11 @@ function App() {
     if (verificationToken || unsubscribeToken) {
       // Remove one-time tokens from the visible URL before making a request.
       window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
-      const path = verificationToken ? '/api/email-alerts/verify' : '/api/email-alerts/unsubscribe';
-      const token = verificationToken || unsubscribeToken;
-      // Do not gate this one-time action's result on the effect's active flag:
-      // React StrictMode replays effects in development after this URL token is
-      // removed, and its cleanup would otherwise suppress the only user feedback.
-      void api.post(path, { token }).then((result: any) => {
-        const message = result.data.message || 'Your email alert preference has been updated.';
-        setAlertMessage(message);
-        setToast(message);
-      }).catch((error: unknown) => {
-        const message = error instanceof Error ? error.message : 'This email alert link could not be processed.';
-        setAlertMessage(message);
-        setToast(message);
+      // Do not perform a subscription-changing action just because a browser or
+      // email-security scanner opened the link. Ask the visitor to confirm first.
+      setPendingEmailAction({
+        type: verificationToken ? 'verify' : 'unsubscribe',
+        token: (verificationToken || unsubscribeToken)!,
       });
     }
     void auth.completeOAuthCallback().then((result: any) => {
@@ -703,6 +697,27 @@ function App() {
       setAlertMessage(error instanceof Error ? error.message : 'We could not start your email subscription. Please try again.');
     } finally {
       setAlertSubmitting(false);
+    }
+  };
+
+  const confirmEmailAlertAction = async () => {
+    if (!pendingEmailAction || emailActionSubmitting) return;
+    setEmailActionSubmitting(true);
+    try {
+      const path = pendingEmailAction.type === 'verify'
+        ? '/api/email-alerts/verify'
+        : '/api/email-alerts/unsubscribe';
+      const result = await api.post(path, { token: pendingEmailAction.token });
+      const message = result.data.message || 'Your email alert preference has been updated.';
+      setAlertMessage(message);
+      setToast(message);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'This email alert link could not be processed.';
+      setAlertMessage(message);
+      setToast(message);
+    } finally {
+      setEmailActionSubmitting(false);
+      setPendingEmailAction(null);
     }
   };
 
@@ -2258,6 +2273,23 @@ function App() {
         </section>
       </main>
 
+      {pendingEmailAction && (
+        <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1100, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="email-alert-action-title" style={{ width: '100%', maxWidth: 480, background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+            <span className="kicker">EDUKEN EMAIL ALERTS</span>
+            <h2 id="email-alert-action-title">{pendingEmailAction.type === 'verify' ? 'Confirm your email alerts?' : 'Unsubscribe from email alerts?'}</h2>
+            <p>{pendingEmailAction.type === 'verify'
+              ? 'Confirm only if you requested EDUKEN email alerts. This will activate email notifications for your selected topics.'
+              : 'Please confirm if you want to stop receiving EDUKEN email alerts. Opening this page alone will not unsubscribe you.'}</p>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button type="button" className="primary" disabled={emailActionSubmitting} onClick={() => void confirmEmailAlertAction()}>
+                {emailActionSubmitting ? 'Processing…' : pendingEmailAction.type === 'verify' ? 'Confirm email alerts' : 'Yes, unsubscribe'}
+              </button>
+              <button type="button" className="secondary" disabled={emailActionSubmitting} onClick={() => setPendingEmailAction(null)}>Cancel</button>
+            </div>
+          </section>
+        </div>
+      )}
       {selectedService && (
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
           <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
