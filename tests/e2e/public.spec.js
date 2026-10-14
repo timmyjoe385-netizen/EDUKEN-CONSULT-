@@ -586,3 +586,15 @@ test('database hardening migration removes broad client grants and unsafe direct
   expect(migration).toContain('supabase_admin');
   expect(migration).toContain('cannot alter that role\'s defaults');
 });
+
+test('public FAQ query selects only fields required by the public interface', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const publicContent = handler.slice(
+    handler.indexOf('async function publicContent()'),
+    handler.indexOf('async function scoped('),
+  );
+  expect(publicContent).toContain(
+    'db.from("faqs").select("id, question, answer, category, created_at, updated_at")',
+  );
+  expect(publicContent).not.toContain('db.from("faqs").select("*")');
+});
