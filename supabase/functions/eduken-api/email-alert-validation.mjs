@@ -78,11 +78,13 @@ export function isWithinEmailAlertCooldown(updatedAt, nowMs = Date.now(), cooldo
 }
 
  
-// Extract an address only from common gateway-provided headers. The caller hashes
-// the result before persistence; this helper never stores or logs the address.
+// Trust the gateway-provided client IP or the final address appended by
+// Supabase's gateway to X-Forwarded-For. Do not trust x-real-ip: callers can
+// supply it themselves on paths where the gateway does not overwrite it.
+// The caller hashes the result before persistence; this helper never stores or logs the address.
 export function getEmailAlertClientIp(headers) {
   const forwarded = headers.get("x-forwarded-for");
-  const value = headers.get("cf-connecting-ip") || headers.get("x-real-ip") ||
+  const value = headers.get("cf-connecting-ip") ||
     (forwarded ? forwarded.split(",").map(item => item.trim()).filter(Boolean).at(-1) : "");
   const ip = typeof value === "string" ? value.trim() : "";
   return ip && ip.length <= 128 ? ip : null;
