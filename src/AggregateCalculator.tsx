@@ -178,9 +178,9 @@ export default function AggregateCalculator() {
         ...extraGrades,
       ]
     : extraGrades;
-  const creditSubjects = assessmentSubjects.filter(item => Boolean(gradePoints[item.grade]));
-  const hasEnglishCredit = assessmentSubjects.some(item => /english/i.test(item.subject) && Boolean(gradePoints[item.grade]));
-  const hasMathCredit = assessmentSubjects.some(item => /mathematics|maths?/i.test(item.subject) && Boolean(gradePoints[item.grade]));
+  const creditSubjects = assessmentSubjects.filter(item => item.subject.trim() && Boolean(gradePoints[item.grade]));
+  const hasEnglishCredit = assessmentSubjects.some(item => item.subject.trim() && /english/i.test(item.subject) && Boolean(gradePoints[item.grade]));
+  const hasMathCredit = assessmentSubjects.some(item => item.subject.trim() && /mathematics|maths?/i.test(item.subject) && Boolean(gradePoints[item.grade]));
   const hasFiveCredits = creditSubjects.length >= 5;
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
