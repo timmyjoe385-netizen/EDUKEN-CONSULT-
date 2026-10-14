@@ -8,6 +8,25 @@ export const ALLOWED_EMAIL_ALERT_TOPICS = Object.freeze([
 ]);
 
 const allowedTopics = new Set(ALLOWED_EMAIL_ALERT_TOPICS);
+
+export function isEmailAlertOpportunityEligible(opportunity) {
+  if (!opportunity || typeof opportunity !== "object") return false;
+  const source = String(opportunity.official_source || "").trim();
+  if (source) {
+    try {
+      const parsed = new URL(source);
+      if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
+    } catch {
+      return false;
+    }
+  }
+  return Boolean(
+    opportunity.is_published &&
+    opportunity.verified &&
+    opportunity.notify_on_publish
+  );
+}
+
 const emailPattern = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 
 export function normalizeAlertEmail(value) {
