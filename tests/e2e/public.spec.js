@@ -608,5 +608,9 @@ test('public catalogue queries select only reviewed public fields', () => {
   expect(publicContent).toContain(
     'db.from("services").select("id, name, category, description, price, is_published, created_at, updated_at")',
   );
-  expect(publicContent).not.toMatch(/db\\.from\\("(?:opportunities|admissions|updates|faqs|services)"\\)\\.select\\("\*"\\)/);
+  expect(publicContent).not.toContain('db.from("opportunities").select("*")');
+  expect(publicContent).not.toContain('db.from("admissions").select("*")');
+  expect(publicContent).not.toContain('db.from("updates").select("*")');
+  expect(publicContent).not.toContain('db.from("faqs").select("*")');
+  expect(publicContent).not.toContain('db.from("services").select("*")');
 });
