@@ -331,9 +331,6 @@ function App() {
     const details = String(item.details || item.description || item.content || '').trim().toLowerCase();
     const link = String(item.link || item.application_url || '').trim();
     const deadline = String(item.deadline || '').trim();
-    const genericSchool = /^(nigerian universities|universities|polytechnics|colleges of education|admission information|application information|programme information)$/i.test(school);
-    const genericCourse = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(course);
-    const genericDetails = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(details);
     // A single generic field is not enough to discard a potentially real record.
     // Hide only linkless/deadlineless rows whose populated identifying fields are all generic.
     const identifyingFields = [school, course, details].filter(Boolean);
