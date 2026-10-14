@@ -467,6 +467,7 @@ test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
 
 test('public AI assistant rejects oversized questions before provider work', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  expect(handler).toContain('typeof b?.question !== "string"');
   expect(handler).toContain('if (question.length > 2000)');
   expect(handler).toContain('Question must be 2000 characters or fewer.');
   expect(handler).toContain('A valid JSON request body is required.');
