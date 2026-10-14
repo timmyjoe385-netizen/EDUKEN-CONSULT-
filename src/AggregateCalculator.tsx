@@ -179,7 +179,7 @@ export default function AggregateCalculator() {
       ]
     : extraGrades;
   const normalizeSubjectName = (subject: string) => {
-    const normalized = subject.toLowerCase().trim().replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ');
+    const normalized = subject.toLowerCase().trim().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ');
     if (normalized === 'maths' || normalized === 'math') return 'mathematics';
     if (normalized === 'english') return 'english language';
     return normalized;
@@ -192,6 +192,7 @@ export default function AggregateCalculator() {
   const hasEnglishCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'english language' && Boolean(gradePoints[item.grade]));
   const hasMathCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'mathematics' && Boolean(gradePoints[item.grade]));
   const hasFiveCredits = creditSubjects.length >= 5;
+  const duplicateSubjectCount = assessmentSubjects.filter(item => normalizeSubjectName(item.subject) !== '').length - uniqueAssessmentSubjects.length;
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
   const clear = () => {
@@ -342,6 +343,7 @@ export default function AggregateCalculator() {
             <div><strong>{hasMathCredit ? 'Mathematics credit recorded' : 'Mathematics credit not confirmed'}</strong><small>{hasMathCredit ? 'A Mathematics credit is present in your entries.' : 'Add Mathematics and its grade above if you have it.'}</small></div>
           </div>
         </div>
+        {duplicateSubjectCount > 0 && <p className="aggregate-helper" role="status">{duplicateSubjectCount} duplicate subject {duplicateSubjectCount === 1 ? 'entry was' : 'entries were'} found. Each distinct subject counts only once toward the credit checklist; check the subject names and grades you entered.</p>}
         <p className="aggregate-assessment-disclaimer">
           {assessmentHasSubjects
             ? `Current entry: ${olevelSittings === '1' ? 'one sitting' : 'two sittings'}. `
