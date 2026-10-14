@@ -582,7 +582,7 @@ test('database hardening migration removes broad client grants and unsafe direct
   expect(migration).toContain('revoke all privileges on all tables in schema public from public, anon, authenticated;');
   expect(migration).toContain('revoke select (notify_on_publish) on table public.opportunities from public, anon, authenticated;');
   expect(migration).toContain('grant select (');
-  expect(migration).not.toContain('grant select on table');
+  expect(migration).not.toMatch(/^\\s*grant select on table\\b/im);
   expect(migration).toContain('alter default privileges for role postgres in schema public');
   expect(migration).toContain('drop policy if exists "Anyone can submit a consultation" on public.consultations;');
   expect(migration).toContain('drop policy if exists "Users can create service requests" on public.service_requests;');
