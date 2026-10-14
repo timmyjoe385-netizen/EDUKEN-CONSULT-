@@ -639,7 +639,7 @@ test('aggregate calculator scores only the five FUHSI core subjects and clears e
 
   const result = page.locator('.aggregate-result');
   await expect(result).toContainText('75.00');
-  await expect(result).toContainText('Additional grades are kept temporarily');
+  await expect(page.locator('.aggregate-extra-grades')).toContainText('Additional grades are kept temporarily');
   await expect(page.locator('.aggregate-extra-grade-row')).toHaveCount(1);
 
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
