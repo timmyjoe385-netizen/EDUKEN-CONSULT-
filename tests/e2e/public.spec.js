@@ -208,6 +208,24 @@ test('opening an email unsubscribe link requires an explicit user confirmation',
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
+test('O’Level readiness counts distinct subjects rather than duplicate entries', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+
+  const addSubject = page.getByRole('button', { name: '+ Add O’Level subject' });
+  for (let index = 0; index < 5; index += 1) await addSubject.click();
+
+  const rows = page.locator('.aggregate-extra-grade-row');
+  for (let index = 0; index < 5; index += 1) {
+    await rows.nth(index).getByLabel(new RegExp(`Subject ${index + 1}`)).fill(index < 5 ? 'English Language' : 'Mathematics');
+    await rows.nth(index).getByLabel('Grade').selectOption('C6');
+  }
+
+  await expect(page.locator('.aggregate-assessment-stat').filter({ hasText: 'Credit grades entered' }).locator('strong')).toHaveText('1');
+  await expect(page.getByText('Five credit grades not yet recorded')).toBeVisible();
+  await expect(page.getByText('English Language credit recorded')).toBeVisible();
+  await expect(page.getByText('Mathematics credit not confirmed')).toBeVisible();
+});
+
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const response = await page.goto('/', { waitUntil: 'domcontentloaded' });
