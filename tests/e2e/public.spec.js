@@ -744,3 +744,23 @@ test('aggregate calculator rejects out-of-range scores and invalid custom weight
   await calculate.click();
   await expect(page.locator('.aggregate-result')).toContainText('80.00');
 });
+
+
+test('admission planner estimates the required Post-UTME score from the selected formula', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('unilorin');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('60');
+  await page.getByLabel('O’Level contribution (out of 20)').fill('15');
+  await page.getByLabel('Intended course').fill('Linguistics');
+  await page.getByLabel('State of origin (optional)').fill('Niger State');
+  await page.getByLabel('Target aggregate (out of 100)').fill('75');
+  await expect(page.locator('.aggregate-planner-result')).toContainText('Estimated Post-UTME score needed: 66.7 / 100');
+  await expect(page.locator('.aggregate-planner-result')).toContainText('Linguistics');
+  await expect(page.locator('.aggregate-planner-result')).toContainText('Niger State');
+
+  await page.getByLabel('Target aggregate (out of 100)').fill('95');
+  await expect(page.locator('.aggregate-planner-result')).toContainText('This target is not reachable');
+  await page.getByLabel('Institution / formula').selectOption('fuhsi');
+  await expect(page.locator('.aggregate-planner-result')).toContainText('not a Post-UTME component');
+});
