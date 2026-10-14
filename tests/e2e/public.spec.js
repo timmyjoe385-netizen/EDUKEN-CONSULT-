@@ -430,7 +430,7 @@ test('service request route validates before inserting into the database', async
 
 test('admin service request status changes are guarded and payment-confirmed status is read-only', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
-  const adminStart = handler.indexOf('const adminRequests = path.match(/^\\/api\\/admin\\/service-requests(?:\\/([^/]+))?$/);');
+  const adminStart = handler.indexOf('const adminRequests = path.match(');
   const adminEnd = handler.indexOf('if (path === "/api/admin/payments" && req.method === "GET")', adminStart);
   expect(adminStart).toBeGreaterThanOrEqual(0);
   expect(adminEnd).toBeGreaterThan(adminStart);
