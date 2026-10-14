@@ -15,6 +15,13 @@ alter default privileges for role postgres in schema public
 alter default privileges for role postgres in schema public
   revoke all privileges on sequences from anon, authenticated;
 
+-- PostgreSQL functions can also receive EXECUTE grants by default. Prevent new
+-- public-schema functions from becoming callable by client roles unless a
+-- reviewed migration explicitly grants access. Existing functions are not
+-- changed here; audit their current EXECUTE grants separately for compatibility.
+alter default privileges for role postgres in schema public
+  revoke execute on functions from anon, authenticated;
+
 -- Public catalogue: anonymous visitors may read rows only; existing RLS policies
 -- restrict the rows to published content. The Edge Function uses service_role.
 grant select on table
