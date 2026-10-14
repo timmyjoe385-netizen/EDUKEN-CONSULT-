@@ -118,7 +118,7 @@ async function publicContent() {
     db.from("opportunities").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("admissions").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("updates").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("faqs").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("faqs").select("id, question, answer, category, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("services").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
   ]);
   const err = [a,b,c,d,e].find(x => x.error)?.error;
