@@ -15,12 +15,12 @@ alter default privileges for role postgres in schema public
 alter default privileges for role postgres in schema public
   revoke all privileges on sequences from anon, authenticated;
 
--- The live inventory showed only the trigger helper set_updated_at; the email-alert
--- rate-limit function created by the preceding migration explicitly revokes client
--- execution too. Remove current client EXECUTE grants and stop future default grants.
-revoke execute on all functions in schema public from anon, authenticated;
+-- Remove direct and PUBLIC-inherited EXECUTE privileges. Revoking only from
+-- anon/authenticated is insufficient when PUBLIC has EXECUTE, because every
+-- client role inherits that grant. Keep future function defaults least-privilege.
+revoke execute on all functions in schema public from public, anon, authenticated;
 alter default privileges for role postgres in schema public
-  revoke execute on functions from anon, authenticated;
+  revoke execute on functions from public, anon, authenticated;
 
 -- Public catalogue: anonymous visitors may read rows only; existing RLS policies
 -- restrict the rows to published content. The Edge Function uses service_role.
