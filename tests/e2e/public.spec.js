@@ -678,7 +678,7 @@ test('aggregate calculator applies the added provisional school-specific formula
 
   await expect(page.getByLabel('Institution / formula').locator('option[value="ui"]')).toHaveAttribute('disabled', '');
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
-  await expect(page.locator('.aggregate-directory-list')).toContainText('does not publish the UTME aggregate formula');
+  await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
   await page.getByLabel('Institution / formula').selectOption('oau');
   await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
