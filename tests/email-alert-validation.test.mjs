@@ -174,7 +174,7 @@ test("email-alert subscribe responses do not disclose whether an address is alre
   const api = await readFile(resolve(here, "../supabase/functions/eduken-api/index.ts"), "utf8");
   const genericResponse = 'message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required."';
 
-  assert.equal(api.split(genericResponse).length - 1, 3);
+  assert.equal(api.split(genericResponse).length - 1, 4);
   assert.doesNotMatch(api, /Your email alert preferences have been updated/);
   assert.doesNotMatch(api, /A confirmation was requested recently/);
   assert.doesNotMatch(api, /Check your inbox for a confirmation link/);
