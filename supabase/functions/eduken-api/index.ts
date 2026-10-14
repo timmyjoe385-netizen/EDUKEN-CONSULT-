@@ -1022,8 +1022,13 @@ Deno.serve(async (req) => {
       if (paid && (providerAmount !== expectedKobo || providerCurrency !== "NGN" || providerReference !== reference)) {
         return json({ error: "The provider's payment details do not match this payment. Please contact support." }, 409);
       }
+      // A non-success response is not always a final failure; Paystack can report
+      // pending/ongoing/processing while settlement is still in progress.
+      const providerStatus = String(transaction.status || "").toLowerCase();
+      const finalFailure = ["failed", "abandoned", "reversed"].includes(providerStatus);
+      const nextPaymentStatus = paid ? "Paid" : finalFailure ? "Failed" : "Pending";
       const { data: payment, error } = await db.from("payments").update({
-        status: paid ? "Paid" : "Failed", paid_at: paid ? new Date().toISOString() : null
+        status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
       }).eq("id", existingPayment.id).eq("user_id", user.id).in("status", ["Pending", "Failed"]).select().maybeSingle();
       if (error) throw error;
       if (paid && !payment && existingPayment.status !== "Paid") {
