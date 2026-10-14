@@ -4,7 +4,7 @@ import { isAllowedServiceRequestStatus, isPublishedService, validateServiceReque
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
-import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
+import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -315,12 +315,7 @@ async function enqueueOpportunityEmailAlerts(
   opportunity: Record<string, any>,
   options: { queueNew: boolean; rescheduleDeadlines: boolean },
 ) {
-  const eligible = Boolean(
-    opportunity.is_published &&
-    opportunity.notify_on_publish &&
-    opportunity.verified &&
-    (!String(opportunity.official_source || "").trim() || safeHttpUrl(opportunity.official_source))
-  );
+  const eligible = isEmailAlertOpportunityEligible(opportunity);
   if (!eligible) {
     const { error: cancelError } = await db.from("email_alert_deliveries")
       .update({ status: "cancelled" })
@@ -823,12 +818,7 @@ Deno.serve(async (req) => {
             skipped++;
             continue;
           }
-          const officialSource = String(opportunity.official_source || "").trim();
-          const eligible = Boolean(
-            opportunity.is_published && opportunity.verified &&
-            opportunity.notify_on_publish &&
-            (!officialSource || safeHttpUrl(officialSource))
-          );
+          const eligible = isEmailAlertOpportunityEligible(opportunity);
           const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
           if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
             await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
