@@ -53,6 +53,7 @@ export default function AggregateCalculator() {
   const [post, setPost] = useState('');
   const [olevelPoints, setOlevelPoints] = useState('');
   const [grades, setGrades] = useState<string[]>(['', '', '', '', '']);
+  const [extraGrades, setExtraGrades] = useState<Array<{ subject: string; grade: string }>>([]);
   const [jambWeight, setJambWeight] = useState('50');
   const [postWeight, setPostWeight] = useState('50');
   const [showResult, setShowResult] = useState(false);
@@ -101,7 +102,7 @@ export default function AggregateCalculator() {
       Boolean(post) && Number(jambWeight) + Number(postWeight) > 0);
 
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setShowResult(false);
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setShowResult(false);
   };
 
   const filteredDirectory = directory.filter((item) => {
@@ -159,6 +160,18 @@ export default function AggregateCalculator() {
               </select>
             </label>
           )}
+          <div className="aggregate-extra-grades">
+            <div className="aggregate-extra-grades-heading">
+              <div><strong>Additional O’Level grades</strong><small>Add other subjects to keep your full result record together.</small></div>
+              <button type="button" className="aggregate-add-grade" onClick={() => { setExtraGrades(current => [...current, { subject: '', grade: '' }]); setShowResult(false); }}>+ Add another grade</button>
+            </div>
+            {extraGrades.map((item, index) => <div className="aggregate-extra-grade-row" key={index}>
+              <label className="aggregate-field"><span>Subject {index + 6}</span><input value={item.subject} onChange={e => { setExtraGrades(current => current.map((grade, i) => i === index ? { ...grade, subject: e.target.value } : grade)); setShowResult(false); }} placeholder="e.g. Economics" /></label>
+              <label className="aggregate-field"><span>Grade</span><select value={item.grade} onChange={e => { setExtraGrades(current => current.map((grade, i) => i === index ? { ...grade, grade: e.target.value } : grade)); setShowResult(false); }}><option value="">Choose grade</option>{gradeOptions.map(grade => <option key={grade} value={grade}>{grade} — {gradePoints[grade]} points</option>)}</select></label>
+              <button type="button" className="aggregate-remove-grade" onClick={() => { setExtraGrades(current => current.filter((_, i) => i !== index)); setShowResult(false); }} aria-label={`Remove additional subject ${index + 6}`}>Remove</button>
+            </div>)}
+            <p className="aggregate-helper">FUHSI’s published formula uses the five specified core subjects above. Additional grades are saved only in this browser and are not added to the score, so extra entries cannot inflate your aggregate.</p>
+          </div>
           <small>Confirm your subject and eligibility requirements with the institution before relying on this result.</small>
         </>}
         {school === 'custom' && <>
