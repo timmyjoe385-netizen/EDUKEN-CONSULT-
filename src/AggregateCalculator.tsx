@@ -184,10 +184,19 @@ export default function AggregateCalculator() {
     if (normalized === 'english') return 'english language';
     return normalized;
   };
-  const uniqueAssessmentSubjects = assessmentSubjects.filter((item, index, items) => {
+  const uniqueAssessmentSubjects = assessmentSubjects.reduce<typeof assessmentSubjects>((unique, item) => {
     const normalized = normalizeSubjectName(item.subject);
-    return normalized !== '' && items.findIndex(candidate => normalizeSubjectName(candidate.subject) === normalized) === index;
-  });
+    if (normalized === '') return unique;
+    const existingIndex = unique.findIndex(candidate => normalizeSubjectName(candidate.subject) === normalized);
+    if (existingIndex === -1) {
+      unique.push(item);
+    } else if ((gradePoints[item.grade] || 0) > (gradePoints[unique[existingIndex].grade] || 0)) {
+      // A duplicate cannot inflate the count, but a later valid credit should
+      // not be hidden by an earlier non-credit entry for the same subject.
+      unique[existingIndex] = item;
+    }
+    return unique;
+  }, []);
   const creditSubjects = uniqueAssessmentSubjects.filter(item => Boolean(gradePoints[item.grade]));
   const hasEnglishCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'english language' && Boolean(gradePoints[item.grade]));
   const hasMathCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'mathematics' && Boolean(gradePoints[item.grade]));
