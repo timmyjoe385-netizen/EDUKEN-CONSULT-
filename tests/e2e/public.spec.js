@@ -520,6 +520,17 @@ test('published admission placeholders stay hidden while real admissions remain 
             is_published: true,
           },
           {
+            id: 'specific-admission-without-link-yet',
+            title: 'Nigerian Universities',
+            school: 'Nigerian Universities',
+            programme: 'Computer Science',
+            category: 'University',
+            description: 'Specific Computer Science admission details are available, but the official application link has not been published yet.',
+            application_url: null,
+            deadline: null,
+            is_published: true,
+          },
+          {
             id: 'playwright-real-admission',
             title: 'Playwright Test University',
             school: 'Playwright Test University',
@@ -541,6 +552,7 @@ test('published admission placeholders stay hidden while real admissions remain 
   await page.goto('/#admissions', { waitUntil: 'domcontentloaded' });
   const admissions = page.locator('#admissions');
   await expect(admissions.getByRole('heading', { name: 'Playwright Test University' })).toBeVisible();
+  await expect(admissions.getByRole('heading', { name: 'Nigerian Universities' })).toBeVisible();
   await expect(admissions).not.toContainText('Nigerian Universities');
   await expect(admissions).not.toContainText('Polytechnics');
   await expect(admissions).not.toContainText('Colleges of Education');
