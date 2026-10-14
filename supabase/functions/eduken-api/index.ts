@@ -435,7 +435,7 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
-async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe") {
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request") {
   const ip = getEmailAlertClientIp(req.headers);
   if (!ip) return null;
   const policy = emailAlertRateLimitPolicy(action);
@@ -460,6 +460,10 @@ Deno.serve(async (req) => {
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
     if (req.method === "POST" && (path === "/consultations" || path === "/api/consultations")) {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "consultation"); } catch { return json({ error: "Consultations are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Consultations are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many consultation requests. Please try again in 15 minutes." }, 429);
       let body: unknown;
       try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateConsultationBody(body);
@@ -918,6 +922,10 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/service-requests" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "service-request"); } catch { return json({ error: "Service requests are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Service requests are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many service requests. Please try again in 15 minutes." }, 429);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateServiceRequestBody(b);
