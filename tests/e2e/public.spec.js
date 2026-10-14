@@ -224,6 +224,7 @@ test('O’Level readiness counts distinct subjects rather than duplicate entries
   await expect(page.getByText('Five credit grades not yet recorded')).toBeVisible();
   await expect(page.getByText('English Language credit recorded')).toBeVisible();
   await expect(page.getByText('Mathematics credit not confirmed')).toBeVisible();
+  await expect(page.getByText(/duplicate subject entries were found/i)).toBeVisible();
 });
 
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
