@@ -26,3 +26,10 @@ export function validateOpportunityVerification(value) {
 
   return { valid: true };
 }
+
+export function isOpportunityVerified(value) {
+  const verified = value?.verified === true ||
+    (typeof value?.verified === "string" &&
+      ["true", "t", "1", "yes", "on"].includes(value.verified.trim().toLowerCase()));
+  return verified && validateOpportunityVerification({ ...value, verified: true }).valid;
+}
