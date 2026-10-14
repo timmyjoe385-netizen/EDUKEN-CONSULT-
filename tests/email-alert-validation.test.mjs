@@ -283,7 +283,7 @@ test("schema recovery instructions use a supported read-only dump and forbid rem
   const docs = await readFile(resolve(here, "../docs/account-free-email-alerts.md"), "utf8");
 
   assert.match(docs, /supabase db dump --db-url "\$EDUKEN_DATABASE_URL" --schema public -f \/tmp\/eduken-live-public-schema\.sql/);
-  assert.match(docs, /--schema-only is not a supported/);
+  assert.match(docs, /`--schema-only` is not a supported/);
   assert.match(docs, /Separately inventory any custom triggers or policies on managed/);
   assert.match(docs, /Do not use `supabase db reset --linked`, `supabase db push`/);
   assert.doesNotMatch(docs, /supabase db dump --schema-only/);
