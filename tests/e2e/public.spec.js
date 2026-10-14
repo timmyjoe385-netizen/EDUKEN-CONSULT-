@@ -463,3 +463,15 @@ test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
   expect(authUrl.searchParams.get('provider')).toBe('google');
   expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
 });
+
+
+test('public AI assistant rejects oversized questions before provider work', async () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  expect(handler).toContain('if (question.length > 2000)');
+  expect(handler).toContain('Question must be 2000 characters or fewer.');
+  expect(handler).toContain('A valid JSON request body is required.');
+  expect(
+    handler.indexOf('if (question.length > 2000)'),
+    'length guard must run before the AI provider call',
+  ).toBeLessThan(handler.indexOf('return json({ answer: await aiAnswer(question) });'));
+});
