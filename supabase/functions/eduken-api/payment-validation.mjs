@@ -33,7 +33,14 @@ export function getPaystackAuthorizationUrl(result) {
   if (!result || result.status !== true || typeof result.data?.authorization_url !== "string") return null;
   try {
     const url = new URL(result.data.authorization_url);
-    if (url.protocol !== "https:" || url.hostname !== "checkout.paystack.com" || url.username || url.password) return null;
+    if (
+      url.protocol !== "https:"
+      || url.hostname !== "checkout.paystack.com"
+      || url.port
+      || url.username
+      || url.password
+      || !url.pathname || url.pathname === "/"
+    ) return null;
     return url.toString();
   } catch {
     return null;
