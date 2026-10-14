@@ -1,0 +1,70 @@
+name: EDUKEN email alert delivery
+
+# Deliberately manual until sender configuration, secrets, and real-subscriber
+# delivery have been verified and live delivery is explicitly enabled.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eduken-email-alert-delivery
+  cancel-in-progress: false
+
+jobs:
+  process-due-alerts:
+    name: Process due email alerts
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check delivery configuration
+        id: config
+        shell: bash
+        env:
+          PROCESS_URL: ${{ secrets.EDUKEN_EMAIL_ALERTS_PROCESS_URL }}
+          CRON_SECRET: ${{ secrets.EDUKEN_EMAIL_ALERTS_CRON_SECRET }}
+        run: |
+          if [ -z "$PROCESS_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "Email alert delivery is not enabled: repository secrets are not configured."
+            exit 0
+          fi
+          python3 - <<'PY'
+          import os
+          from urllib.parse import urlsplit
+
+          url = urlsplit(os.environ["PROCESS_URL"])
+          expected_host = "pphxltbkwygqjtjgkhxu.supabase.co"
+          expected_path = "/functions/v1/eduken-api/api/internal/email-alerts/process"
+          if (
+              url.scheme != "https"
+              or url.hostname != expected_host
+              or url.port is not None
+              or url.username is not None
+              or url.password is not None
+              or url.path.rstrip("/") != expected_path
+              or url.query
+              or url.fragment
+          ):
+              raise SystemExit(
+                  "PROCESS_URL must be the HTTPS email-alert processor endpoint "
+                  "for the configured EDUKEN Supabase project."
+              )
+          PY
+          if [ "${#CRON_SECRET}" -lt 32 ]; then
+            echo "CRON_SECRET must be at least 32 characters."; exit 1
+          fi
+          echo "configured=true" >> "$GITHUB_OUTPUT"
+      - name: Process due alerts
+        if: steps.config.outputs.configured == 'true'
+        shell: bash
+        env:
+          PROCESS_URL: ${{ secrets.EDUKEN_EMAIL_ALERTS_PROCESS_URL }}
+          CRON_SECRET: ${{ secrets.EDUKEN_EMAIL_ALERTS_CRON_SECRET }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 45 \
+            --request POST "$PROCESS_URL" \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            --header "Content-Type: application/json" \
+            --data '{}'

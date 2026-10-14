@@ -27,6 +27,15 @@ import PlatformHub from './PlatformHub';
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
 
+const EMAIL_ALERT_TOPICS = [
+  ['admissions', 'Admissions'],
+  ['scholarships-grants', 'Scholarships & grants'],
+  ['jobs-internships', 'Jobs & internships'],
+  ['remote-opportunities', 'Remote opportunities'],
+  ['educational-updates', 'Educational updates'],
+  ['career-mentorship', 'Career & mentorship'],
+] as const;
+
 type Item = Record<string, any> & { id: string };
 type Content = {
   opportunities: Item[];
@@ -91,6 +100,15 @@ function App() {
   const [adminTab, setAdminTab] = useState('opportunities');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
+  const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
+  const [selectedService, setSelectedService] = useState<Item | null>(null);
+  const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [alertEmail, setAlertEmail] = useState('');
+  const [alertTopics, setAlertTopics] = useState<string[]>(['admissions', 'scholarships-grants', 'jobs-internships']);
+  const [alertSubmitting, setAlertSubmitting] = useState(false);
+  const [alertMessage, setAlertMessage] = useState('');
+  const [pendingEmailAction, setPendingEmailAction] = useState<{ type: 'verify' | 'unsubscribe'; token: string } | null>(null);
+  const [emailActionSubmitting, setEmailActionSubmitting] = useState(false);
   const [form, setForm] = useState<Record<string, any>>({});
   const [deleteTarget, setDeleteTarget] = useState<{ item: Item; table: string } | null>(null);
   const [deletingAdmin, setDeletingAdmin] = useState(false);
@@ -186,6 +204,19 @@ function App() {
 
   useEffect(() => {
     let active = true;
+    const params = new URLSearchParams(window.location.search);
+    const verificationToken = params.get('email_alert_verify');
+    const unsubscribeToken = params.get('email_alert_unsubscribe');
+    if (verificationToken || unsubscribeToken) {
+      // Remove one-time tokens from the visible URL before making a request.
+      window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+      // Do not perform a subscription-changing action just because a browser or
+      // email-security scanner opened the link. Ask the visitor to confirm first.
+      setPendingEmailAction({
+        type: verificationToken ? 'verify' : 'unsubscribe',
+        token: (verificationToken || unsubscribeToken)!,
+      });
+    }
     void auth.completeOAuthCallback().then((result: any) => {
       if (!active || !result) return;
       setUser(result.user);
@@ -283,9 +314,8 @@ function App() {
           (filter === 'remote' && /remote/.test(category)) ||
           (filter === 'competitions' && /competition|contest/.test(category));
         return categoryMatches &&
-          ((o.title || '') + (o.description || '') + (o.content || ''))
-            .toLowerCase()
-            .includes(search.toLowerCase());
+          [o.title, o.description, o.content, o.category, o.eligibility, o.benefits]
+            .some(value => String(value || '').toLowerCase().includes(search.toLowerCase()));
       }),
     [content.opportunities, oppFilter, search]
   );
@@ -301,11 +331,24 @@ function App() {
     const details = String(item.details || item.description || item.content || '').trim().toLowerCase();
     const link = String(item.link || item.application_url || '').trim();
     const deadline = String(item.deadline || '').trim();
-    const genericSchool = /^(nigerian universities|universities|polytechnics|colleges of education|admission information|application information|programme information)$/i.test(school);
-    const genericCourse = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(course);
-    const genericDetails = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(details);
-    // Hide seeded category cards even if their generic description field is populated.
-    return (genericSchool || genericCourse || genericDetails) && !link && !deadline;
+    // A single generic field is not enough to discard a potentially real record.
+    // Hide only linkless/deadlineless rows whose populated identifying fields are all generic.
+    const identifyingFields = [school, course, details].filter(Boolean);
+    const genericValues = new Set([
+      'nigerian universities',
+      'universities',
+      'polytechnics',
+      'colleges of education',
+      'admission information',
+      'application information',
+      'programme information',
+      'general admission information',
+      'details coming soon',
+    ]);
+    return identifyingFields.length >= 2 &&
+      identifyingFields.every(value => genericValues.has(value)) &&
+      !link &&
+      !deadline;
   };
 
   const filteredAdmissions = useMemo(
@@ -318,6 +361,33 @@ function App() {
       ),
     [content.admissions, search]
   );
+
+  const globalSearchResults = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) return [];
+    const opportunities = content.opportunities
+      .filter(item =>
+        !isPlaceholderOpportunity(item) &&
+        [item.title, item.description, item.content, item.category, item.eligibility, item.benefits]
+          .some(value => String(value || '').toLowerCase().includes(query))
+      )
+      .map(item => ({ type: 'Opportunity', id: item.id, title: item.title || 'Opportunity', detail: item.category || 'Opportunity', item }));
+    const admissions = content.admissions
+      .filter(item =>
+        !isPlaceholderAdmission(item) &&
+        [item.school, item.course, item.type, item.status, item.details]
+          .some(value => String(value || '').toLowerCase().includes(query))
+      )
+      .map(item => ({ type: 'Admission', id: item.id, title: item.school || 'Admission update', detail: [item.course, item.type, item.status].filter(Boolean).join(' • '), item }));
+    const updates = content.updates
+      .filter(item =>
+        !isPlaceholderUpdate(item) &&
+        [item.title, item.body, item.category, item.date]
+          .some(value => String(value || '').toLowerCase().includes(query))
+      )
+      .map(item => ({ type: 'Update', id: item.id, title: item.title || 'Education update', detail: item.category || 'EDUKEN Update', item }));
+    return [...opportunities, ...admissions, ...updates].slice(0, 12);
+  }, [content.opportunities, content.admissions, content.updates, search]);
 
   const closingSoon = useMemo(
     () =>
@@ -363,9 +433,15 @@ function App() {
       const res =
         table === 'consultations'
           ? await api.get('/api/admin/consultations')
-          : await api.get('/api/admin/content/' + table);
+          : table === 'service-requests'
+            ? await api.get('/api/admin/service-requests')
+            : await api.get('/api/admin/content/' + table);
       if (table === 'consultations') {
         setConsultations(res.data.items || []);
+        return;
+      }
+      if (table === 'service-requests') {
+        setServiceRequests(res.data.items || []);
         return;
       }
 
@@ -581,6 +657,84 @@ function App() {
     }
   };
 
+  const updateServiceRequest = async (item: Item, status: string) => {
+    try {
+      await api.put('/api/admin/service-requests/' + encodeURIComponent(item.id), { status });
+      await loadAdmin('service-requests');
+      showToast('Service request status updated.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not update service request.');
+    }
+  };
+
+  const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!selectedService || serviceSubmitting) return;
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
+    setServiceSubmitting(true);
+    try {
+      const result = await api.post('/api/service-requests', {
+        serviceId: selectedService.id && !String(selectedService.id).startsWith('fallback-') ? selectedService.id : null,
+        customerName: String(fd.get('customerName') || '').trim(),
+        whatsapp: String(fd.get('whatsapp') || '').trim(),
+        email: String(fd.get('email') || '').trim(),
+        details: String(fd.get('details') || '').trim(),
+      });
+      formElement.reset();
+      setSelectedService(null);
+      showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
+    } catch (error) {
+      showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
+    } finally {
+      setServiceSubmitting(false);
+    }
+  };
+
+  const submitEmailAlerts = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (alertSubmitting) return;
+    if (!alertTopics.length) {
+      setAlertMessage('Choose at least one category.');
+      return;
+    }
+    setAlertSubmitting(true);
+    setAlertMessage('');
+    try {
+      const result = await api.post('/api/email-alerts/subscribe', {
+        email: alertEmail,
+        topics: alertTopics,
+      });
+      setAlertMessage(result.data.message || 'Check your inbox for a confirmation link.');
+      setAlertEmail('');
+    } catch (error) {
+      setAlertMessage(error instanceof Error ? error.message : 'We could not start your email subscription. Please try again.');
+    } finally {
+      setAlertSubmitting(false);
+    }
+  };
+
+  const confirmEmailAlertAction = async () => {
+    if (!pendingEmailAction || emailActionSubmitting) return;
+    setEmailActionSubmitting(true);
+    try {
+      const path = pendingEmailAction.type === 'verify'
+        ? '/api/email-alerts/verify'
+        : '/api/email-alerts/unsubscribe';
+      const result = await api.post(path, { token: pendingEmailAction.token });
+      const message = result.data.message || 'Your email alert preference has been updated.';
+      setAlertMessage(message);
+      setToast(message);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'This email alert link could not be processed.';
+      setAlertMessage(message);
+      setToast(message);
+    } finally {
+      setEmailActionSubmitting(false);
+      setPendingEmailAction(null);
+    }
+  };
+
   const submitConsultation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElement = e.currentTarget;
@@ -724,6 +878,7 @@ function App() {
               'faqs',
               'services',
               'consultations',
+              'service-requests',
               'analytics',
             ].map(tab => (
               <button
@@ -740,7 +895,9 @@ function App() {
                   ? '🌍 Opportunities'
                   : tab === 'consultations'
                     ? '📩 Consultations'
-                    : tab === 'analytics'
+                    : tab === 'service-requests'
+                      ? '🧾 Service Requests'
+                      : tab === 'analytics'
                       ? '📊 Analytics & Insights'
                       : tab[0].toUpperCase() + tab.slice(1)}
               </button>
@@ -759,7 +916,7 @@ function App() {
                 <span className="kicker">EDUKEN CONSULT</span>
                 <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'analytics' && (
+              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && (
                 <button className="primary" onClick={() => setForm({})}>
                   <Plus size={17} /> New
                 </button>
@@ -805,6 +962,24 @@ function App() {
                                 </>
                               ) : null}
                             </section>
+            ) : adminTab === 'service-requests' ? (
+              <div className="admin-list">
+                {serviceRequests.length === 0 ? (
+                  <div className="admin-empty">No service requests yet.</div>
+                ) : serviceRequests.map(item => (
+                  <article className="admin-item" key={item.id}>
+                    <div>
+                      <span className="tag">{item.status || 'New Requests'}</span>
+                      <h3>{item.reference_number || 'Service request'} — {item.services?.name || 'Service enquiry'}</h3>
+                      <p>{item.details}</p>
+                      <small>{item.customer_name} • {item.whatsapp} • {item.email || 'No email'} • {item.created_at ? new Date(item.created_at).toLocaleString() : ''}</small>
+                    </div>
+                    <select aria-label={'Status for ' + (item.reference_number || 'service request')} value={item.status || 'New Requests'} onChange={e => updateServiceRequest(item, e.target.value)}>
+                      <option>New Requests</option><option>Contacted</option><option>In Progress</option><option>Completed</option><option>Cancelled</option>
+                    </select>
+                  </article>
+                ))}
+              </div>
             ) : adminTab === 'consultations' ? (
               <div className="admin-list">
                 {consultations.length === 0 ? (
@@ -1326,7 +1501,7 @@ function App() {
             EDUKEN <b>CONSULT</b>
           </span>
         </a>
-        <nav className={menu ? 'nav-links open' : 'nav-links'}>
+        <nav id="primary-navigation" className={menu ? 'nav-links open' : 'nav-links'}>
           {['Home', 'Opportunities', 'Admissions', 'Updates', 'More'].map(x => (
             <a
               key={x}
@@ -1355,9 +1530,12 @@ function App() {
           </a>
         </nav>
         <button
+          type="button"
           className="menu-btn"
-          aria-label="Toggle navigation"
-          onClick={() => setMenu(!menu)}
+          aria-label={menu ? 'Close navigation' : 'Open navigation'}
+          aria-controls="primary-navigation"
+          aria-expanded={menu}
+          onClick={() => setMenu(open => !open)}
         >
           {menu ? <X /> : <Menu />}
         </button>
@@ -1500,7 +1678,7 @@ function App() {
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified by EDUKEN</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1549,7 +1727,7 @@ function App() {
                   <div className="spotlight-meta">
                     <span>
                       {o.verified
-                        ? '✓ Verified Source'
+                        ? '✓ Verified by EDUKEN'
                         : o.sourceUrl
                           ? 'Source available'
                           : 'Verify with provider'}
@@ -1582,7 +1760,7 @@ function App() {
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
                     {x.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified by EDUKEN</span>
                     ) : null}
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
@@ -1701,8 +1879,14 @@ function App() {
               <input
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                placeholder="Search opportunities, schools, courses..."
+                placeholder="Search opportunities, schools, courses, updates..."
+                aria-label="Search all EDUKEN content"
               />
+              {search && (
+                <button type="button" className="search-clear" onClick={() => setSearch('')} aria-label="Clear search">
+                  <X size={16} />
+                </button>
+              )}
             </div>
             <div className="filters">
               {[
@@ -1725,6 +1909,44 @@ function App() {
               ))}
             </div>
           </div>
+          {search.trim() && (
+            <div className="global-search-results" role="region" aria-live="polite" aria-label="Search results">
+              <div className="global-search-heading">
+                <b>Search results</b>
+                <span>{loading ? 'Searching published content…' : `${globalSearchResults.length} result(s) found`}</span>
+              </div>
+              {!loading && globalSearchResults.length === 0 && (
+                <p className="search-empty">No matching published opportunities, admissions or updates were found. Try another keyword.</p>
+              )}
+              {globalSearchResults.map(result => (
+                <button
+                  type="button"
+                  className="global-search-result"
+                  key={result.type + ':' + result.id}
+                  onClick={() => {
+                    if (result.type === 'Opportunity') {
+                      openOpportunity(result.item);
+                    } else if (result.type === 'Admission') {
+                      window.location.hash = 'admissions';
+                      setSearch('');
+                      setMenu(false);
+                    } else {
+                      window.location.hash = 'updates';
+                      setSearch('');
+                      setMenu(false);
+                    }
+                  }}
+                >
+                  <span className="search-result-type">{result.type}</span>
+                  <span className="search-result-copy">
+                    <b>{result.title}</b>
+                    <small>{result.detail}</small>
+                  </span>
+                  <ArrowRight size={16} />
+                </button>
+              ))}
+            </div>
+          )}
           <div className="opp-grid">
             {loading ? (
               <p>Loading live opportunities...</p>
@@ -1734,7 +1956,7 @@ function App() {
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified Source</span>
+                      <span className="verified-pill">✓ Verified by EDUKEN</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1774,7 +1996,7 @@ function App() {
                 <article className="admission-card" key={a.id}>
                   <div className="admission-top">
                     <span>{a.type || 'Admission'}</span>
-                    {a.verified ? <b>✓ Verified Source</b> : null}
+                    {a.verified ? <b>✓ Verified by EDUKEN</b> : null}
                   </div>
                   <h3>{a.school}</h3>
                   <p>{a.course}</p>
@@ -1810,12 +2032,23 @@ function App() {
             </p>
           </div>
           <div className="service-list">
-            {content.services.map((s, i) => (
-              <div className="service-row" key={s.id}>
+            {(content.services.length ? content.services : [
+              { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
+              { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
+              { id: 'fallback-jamb', name: 'JAMB Guidance', category: 'JAMB Services', description: 'Ask about JAMB-related guidance and available support.', price: null },
+              { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
+              { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
+            ]).map((s, i) => (
+              <article className="service-row" key={s.id || s.name} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
                 <span>{String(i + 1).padStart(2, '0')}</span>
-                <b>{s.name}</b>
-                <ArrowRight size={18} />
-              </div>
+                <div style={{ flex: '1 1 220px', minWidth: 0 }}>
+                  <b style={{ display: 'block', marginBottom: 6 }}>{s.name}</b>
+                  {s.category && <small style={{ display: 'block', opacity: 0.75, marginBottom: 6 }}>{s.category}</small>}
+                  {s.description && <p style={{ margin: '0 0 8px', lineHeight: 1.55 }}>{s.description}</p>}
+                  <strong style={{ display: 'block', marginBottom: 8 }}>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
+                  <button type="button" className="primary" onClick={() => setSelectedService(s)}>Request this service <ArrowRight size={15} /></button>
+                </div>
+              </article>
             ))}
           </div>
         </section>
@@ -1894,7 +2127,7 @@ function App() {
                 <p>{x.body || 'Open this update for more information.'}</p>
                 {x.verified ? (
                   <span className="verified-pill inline-pill">
-                    ✓ Verified Source
+                    ✓ Verified by EDUKEN
                   </span>
                 ) : x.sourceUrl ? (
                   <span className="source-pill inline-pill">
@@ -2000,6 +2233,40 @@ function App() {
           </div>
         </section>
 
+        <section className="section pale" id="email-alerts" aria-labelledby="email-alerts-title" style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <div className="section-head">
+            <div>
+              <span className="kicker">FREE EMAIL ALERTS</span>
+              <h2 id="email-alerts-title">Get important opportunities in your inbox.</h2>
+            </div>
+            <p>Choose the topics you care about. No account or password required. We only activate alerts after you confirm your email.</p>
+          </div>
+          <form onSubmit={submitEmailAlerts} style={{ display: 'grid', gap: 16, maxWidth: 760 }}>
+            <label htmlFor="email-alert-address" style={{ display: 'grid', gap: 6, fontWeight: 600 }}>
+              Email address
+              <input id="email-alert-address" type="email" name="email" autoComplete="email" required maxLength={254} value={alertEmail} onChange={e => setAlertEmail(e.target.value)} placeholder="you@example.com" />
+            </label>
+            <fieldset style={{ border: '1px solid var(--border, #d9e2dc)', borderRadius: 14, padding: 16, display: 'grid', gap: 12 }}>
+              <legend style={{ padding: '0 6px', fontWeight: 700 }}>Select at least one category</legend>
+              {EMAIL_ALERT_TOPICS.map(([value, label]) => (
+                <label key={value} style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 500 }}>
+                  <input
+                    type="checkbox"
+                    checked={alertTopics.includes(value)}
+                    onChange={e => setAlertTopics(current => e.target.checked ? [...current, value] : current.filter(topic => topic !== value))}
+                  />
+                  <span>{label}</span>
+                </label>
+              ))}
+            </fieldset>
+            <button className="primary" type="submit" disabled={alertSubmitting || !alertTopics.length}>
+              {alertSubmitting ? 'Sending confirmation…' : 'Subscribe to free email alerts'} <ArrowRight size={17} />
+            </button>
+            <p aria-live="polite" role="status" style={{ margin: 0 }}>{alertMessage}</p>
+            <small>Confirm within 30 minutes. Unsubscribe links are provided. Your email is not shown publicly.</small>
+          </form>
+        </section>
+
         <section className="whatsapp-cta" aria-label="EDUKEN WhatsApp Channel">
           <div>
             <span className="kicker">STAY CONNECTED</span>
@@ -2020,6 +2287,44 @@ function App() {
         </section>
       </main>
 
+      {pendingEmailAction && (
+        <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1100, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="email-alert-action-title" style={{ width: '100%', maxWidth: 480, background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+            <span className="kicker">EDUKEN EMAIL ALERTS</span>
+            <h2 id="email-alert-action-title">{pendingEmailAction.type === 'verify' ? 'Confirm your email alerts?' : 'Unsubscribe from email alerts?'}</h2>
+            <p>{pendingEmailAction.type === 'verify'
+              ? 'Confirm only if you requested EDUKEN email alerts. This will activate email notifications for your selected topics.'
+              : 'Please confirm if you want to stop receiving EDUKEN email alerts. Opening this page alone will not unsubscribe you.'}</p>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <button type="button" className="primary" disabled={emailActionSubmitting} onClick={() => void confirmEmailAlertAction()}>
+                {emailActionSubmitting ? 'Processing…' : pendingEmailAction.type === 'verify' ? 'Confirm email alerts' : 'Yes, unsubscribe'}
+              </button>
+              <button type="button" className="secondary" disabled={emailActionSubmitting} onClick={() => setPendingEmailAction(null)}>Cancel</button>
+            </div>
+          </section>
+        </div>
+      )}
+      {selectedService && (
+        <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
+          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
+              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>We will confirm requirements and pricing before any payment. This form does not take payment.</p></div>
+              <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
+            </div>
+            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
+              <input name="customerName" required maxLength={120} placeholder="Full name" aria-label="Full name" />
+              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
+              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+              <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need..." aria-label="Request details" />
+              <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
+              <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+                <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>
+                <button type="button" className="secondary" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}>Cancel</button>
+              </div>
+            </form>
+          </section>
+        </div>
+      )}
       <footer>
         <div className="footer-main">
           <div>

@@ -19,7 +19,8 @@ jobs:
   public-browser-checks:
     name: Public website browser checks
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # Dependency installation and Chromium setup can exceed 10 minutes on a cold runner.
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -28,10 +29,18 @@ jobs:
         with:
           node-version: 20
       - name: Install project dependencies
-        run: npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund --prefer-offline --legacy-peer-deps
+      - name: Set up Deno for Edge Function checks
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check Supabase Edge Function
+        run: deno check --node-modules-dir=auto supabase/functions/eduken-api/index.ts
       - name: Install Chromium for Playwright
         run: npx playwright install chromium --with-deps
-      - name: Run public website checks
+      - name: Test API input validation
+        run: npm run test:validation
+      - name: Run local branch browser checks
         run: npm run test:e2e
       - name: Upload browser report and failure evidence
         if: always()

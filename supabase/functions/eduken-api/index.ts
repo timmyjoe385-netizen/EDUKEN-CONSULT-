@@ -1,5 +1,10 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
+import { validateConsultationBody } from "./consultation-validation.mjs";
+import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -73,11 +78,20 @@ const toOpportunity = (x: any) => ({
   eligibility: x.eligibility ?? "",
   benefits: x.benefits ?? "",
   howToApply: x.how_to_apply ?? "",
-  verified: Boolean(x.verified),
+  verified: isOpportunityVerified(x),
   featured: Boolean(x.featured),
   urgent: Boolean(x.urgent),
   notifyOnPublish: Boolean(x.notify_on_publish),
 });
+
+const publicOpportunity = (x: any) => {
+  const item = toOpportunity(x);
+  return Object.fromEntries(
+    Object.entries(item).filter(
+      ([key]) => key !== "notifyOnPublish" && key !== "notify_on_publish",
+    ),
+  );
+};
 
 const toAdmission = (x: any) => ({
   ...x,
@@ -101,16 +115,17 @@ const toService = (x: any) => ({ ...x });
 
 async function publicContent() {
   const [a, b, c, d, e] = await Promise.all([
-    db.from("opportunities").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("admissions").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("updates").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("faqs").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("services").select("*").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("opportunities").select("id, title, slug, category, description, organization, location, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent, content, eligibility, benefits, how_to_apply").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("faqs").select("id, question, answer, category, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("services").select("id, name, category, description, price, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
   ]);
   const err = [a,b,c,d,e].find(x => x.error)?.error;
   if (err) throw err;
   return {
-    opportunities: (a.data ?? []).map(toOpportunity),
+    // Keep the editorial notification preference private to the admin API.
+    opportunities: (a.data ?? []).map(publicOpportunity),
     admissions: (b.data ?? []).map(toAdmission),
     updates: (c.data ?? []).map(toUpdate),
     faqs: d.data ?? [],
@@ -227,6 +242,225 @@ async function aiAnswer(question: string) {
   return data.output_text || "I could not find a confident answer. Please verify the official source.";
 }
 
+
+const EMAIL_ALERT_TOPICS = new Set([
+  "admissions",
+  "scholarships-grants",
+  "jobs-internships",
+  "remote-opportunities",
+  "educational-updates",
+  "career-mentorship",
+]);
+
+function opportunityAlertTopic(opportunity: Record<string, any>) {
+  const category = String(opportunity.category || "").trim().toLowerCase();
+  if (/admission|jamb|post.?utme|school application/.test(category)) return "admissions";
+  if (/scholarship|grant|fellowship|bursary/.test(category)) return "scholarships-grants";
+  if (/job|internship|graduate trainee|employment/.test(category)) return "jobs-internships";
+  if (/remote|work.?from.?home|freelance/.test(category)) return "remote-opportunities";
+  if (/career|mentorship|professional development/.test(category)) return "career-mentorship";
+  if (/education|educational|exam|result|policy|school update/.test(category)) return "educational-updates";
+  return null;
+}
+
+function safeHttpUrl(value: unknown) {
+  try {
+    const url = new URL(String(value || ""));
+    return url.protocol === "https:" || url.protocol === "http:" ? url.toString() : null;
+  } catch {
+    return null;
+  }
+}
+
+function escapeEmailHtml(value: unknown) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[char] || char);
+}
+
+
+
+function secureRandomToken() {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function sha256Hex(value: string) {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function emailAlertConfiguration() {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("EMAIL_FROM");
+  const site = Deno.env.get("PUBLIC_SITE_URL");
+  const tokenSecret = Deno.env.get("EMAIL_ALERTS_TOKEN_SECRET");
+  if (!apiKey || !from || !site || !tokenSecret || tokenSecret.length < 32) return null;
+  let siteUrl: URL;
+  try {
+    siteUrl = new URL(site);
+  } catch {
+    return null;
+  }
+  // Require a clean HTTPS origin; path/query/hash values could otherwise leak into
+  // generated links or create unsafe HTML attribute content.
+  if (siteUrl.protocol !== "https:" || siteUrl.username || siteUrl.password ||
+      siteUrl.pathname !== "/" || siteUrl.search || siteUrl.hash) return null;
+  return { apiKey, from, siteUrl, tokenSecret };
+}
+
+async function deriveUnsubscribeToken(subscriptionId: string, secret: string) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode("eduken-email-alert-unsubscribe:" + subscriptionId));
+  return Array.from(new Uint8Array(signature), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+async function enqueueOpportunityEmailAlerts(
+  opportunity: Record<string, any>,
+  options: { queueNew: boolean; rescheduleDeadlines: boolean },
+) {
+  const eligible = isEmailAlertOpportunityEligible(opportunity);
+  if (!eligible) {
+    const { error: cancelError } = await db.from("email_alert_deliveries")
+      .update({ status: "cancelled" })
+      .eq("opportunity_id", opportunity.id)
+      .eq("status", "pending");
+    if (cancelError) throw cancelError;
+    return;
+  }
+
+  const topic = opportunityAlertTopic(opportunity);
+  if (!topic || !EMAIL_ALERT_TOPICS.has(topic)) {
+    await db.from("email_alert_deliveries")
+      .update({ status: "cancelled" })
+      .eq("opportunity_id", opportunity.id)
+      .eq("status", "pending");
+    return;
+  }
+  const { data: subscriptions, error } = await db.from("email_alert_subscriptions")
+    .select("id,topics")
+    .eq("is_active", true)
+    .not("verified_at", "is", null);
+  if (error) throw error;
+  const recipients = (subscriptions ?? []).filter((subscription: any) =>
+    Array.isArray(subscription.topics) && subscription.topics.includes(topic)
+  );
+  const now = new Date();
+  const rows: Record<string, any>[] = [];
+  for (const subscription of recipients) {
+    if (options.queueNew) {
+      const { error: requeueError } = await db.from("email_alert_deliveries")
+        .update({ status: "pending", scheduled_for: now.toISOString(), attempt_count: 0, last_error: null })
+        .eq("subscription_id", subscription.id)
+        .eq("opportunity_id", opportunity.id)
+        .eq("event_type", "new_opportunity")
+        .eq("status", "cancelled");
+      if (requeueError) throw requeueError;
+      rows.push({
+        subscription_id: subscription.id,
+        opportunity_id: opportunity.id,
+        event_type: "new_opportunity",
+        scheduled_for: now.toISOString(),
+        status: "pending",
+      });
+    }
+  }
+
+  if (options.rescheduleDeadlines) {
+    const { error: cancelDeadlineError } = await db.from("email_alert_deliveries")
+      .update({ status: "cancelled" })
+      .eq("opportunity_id", opportunity.id)
+      .in("event_type", ["deadline_7d", "deadline_3d", "deadline_1d"])
+      .eq("status", "pending");
+    if (cancelDeadlineError) throw cancelDeadlineError;
+
+    const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
+    if (Number.isFinite(deadlineMs) && deadlineMs > now.getTime()) {
+      for (const subscription of recipients) {
+        for (const days of [7, 3, 1]) {
+          const scheduledMs = deadlineMs - days * 24 * 60 * 60 * 1000;
+          // Never send a "7 days left" reminder after that seven-day point has passed.
+          if (scheduledMs < now.getTime() || scheduledMs >= deadlineMs) continue;
+          const eventType = "deadline_" + days + "d";
+          const { error: requeueDeadlineError } = await db.from("email_alert_deliveries")
+            .update({ status: "pending", scheduled_for: new Date(scheduledMs).toISOString(), attempt_count: 0, last_error: null })
+            .eq("subscription_id", subscription.id)
+            .eq("opportunity_id", opportunity.id)
+            .eq("event_type", eventType)
+            .eq("status", "cancelled");
+          if (requeueDeadlineError) throw requeueDeadlineError;
+          rows.push({
+            subscription_id: subscription.id,
+            opportunity_id: opportunity.id,
+            event_type: eventType,
+            scheduled_for: new Date(scheduledMs).toISOString(),
+            status: "pending",
+          });
+        }
+      }
+    }
+  }
+
+  if (rows.length) {
+    const { error: insertError } = await db.from("email_alert_deliveries")
+      .upsert(rows, { onConflict: "subscription_id,opportunity_id,event_type", ignoreDuplicates: true });
+    if (insertError) throw insertError;
+  }
+}
+
+async function updateEmailAlertDelivery(deliveryId: string, values: Record<string, unknown>) {
+  const { error } = await db.from("email_alert_deliveries").update(values).eq("id", deliveryId);
+  if (error) throw error;
+}
+
+async function sendEmailAlertMessage(
+  config: { apiKey: string; from: string },
+  to: string,
+  subject: string,
+  textBody: string,
+  htmlBody: string,
+  idempotencyKey?: string,
+) {
+  const headers: Record<string, string> = {
+    "Authorization": "Bearer " + config.apiKey,
+    "Content-Type": "application/json",
+  };
+  if (idempotencyKey) headers["Idempotency-Key"] = idempotencyKey;
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ from: config.from, to: [to], subject, text: textBody, html: htmlBody }),
+  });
+  if (!response.ok) {
+    // Keep provider response bodies and subscriber data out of public error messages.
+    throw new Error("Transactional email provider rejected the message.");
+  }
+  const result = await response.json();
+  return typeof result.id === "string" ? result.id : null;
+}
+
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request") {
+  const ip = getEmailAlertClientIp(req.headers);
+  if (!ip) return null;
+  const policy = emailAlertRateLimitPolicy(action);
+  if (!policy) return null;
+  // Persist only a one-way hash of the action and client IP.
+  const keyHash = await sha256Hex("eduken-email-alert-rate-limit:" + action + ":" + ip);
+  const { data, error } = await db.rpc("consume_email_alert_rate_limit", {
+    p_key_hash: keyHash,
+    p_limit: policy.limit,
+    p_window_seconds: policy.windowSeconds,
+  });
+  if (error) throw new Error("Email alert rate limiting is unavailable.");
+  return data === true;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   const path = pathOf(req);
@@ -236,13 +470,20 @@ Deno.serve(async (req) => {
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
     if (req.method === "POST" && (path === "/consultations" || path === "/api/consultations")) {
-      const b = await req.json();
-      if (!b?.name?.trim() || !b?.whatsapp?.trim() || !b?.message?.trim()) return json({ error: "Name, WhatsApp number and message are required." }, 400);
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "consultation"); } catch { return json({ error: "Consultations are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Consultations are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many consultation requests. Please try again in 15 minutes." }, 429);
+      let body: unknown;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const validation = validateConsultationBody(body);
+      if (validation.error || !validation.data) return json({ error: validation.error || "Invalid consultation request." }, 400);
+      const b = validation.data;
       const { data, error } = await db.from("consultations").insert({
-        name: b.name.trim(), whatsapp: b.whatsapp.trim(), email: b.email || null, state: b.state || null,
-        education_level: b.educationLevel || b.education_level || null, interest: b.interest || null,
-        school_course: b.schoolCourse || b.school_course || null, message: b.message.trim(), status: "New"
-      }).select().single();
+        name: b.name, whatsapp: b.whatsapp, email: b.email || null, state: b.state || null,
+        education_level: b.educationLevel || null, interest: b.interest || null,
+        school_course: b.schoolCourse || null, message: b.message, status: "New"
+      }).select("id").single();
       if (error) throw error;
       return json({ id: data.id, message: "Consultation request received." }, 201);
     }
@@ -366,22 +607,365 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/ai-assistant" && req.method === "POST") {
-      const b = await req.json(); const question = String(b.question || "").trim();
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      if (typeof b?.question !== "string") return json({ error: "Question must be a text string." }, 400);
+      const question = b.question.trim();
       if (!question) return json({ error: "Question is required." }, 400);
+      // Bound public input before loading database context or calling the paid AI provider.
+      if (question.length > 2000) return json({ error: "Question must be 2000 characters or fewer." }, 400);
       return json({ answer: await aiAnswer(question) });
     }
 
 
+
+    if (path === "/api/email-alerts/subscribe" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "subscribe"); } catch { return json({ error: "Email alerts are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Email alerts are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many requests. Please try again in 15 minutes." }, 429);
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const validation = validateEmailAlertSubscription(body);
+      if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
+      const config = emailAlertConfiguration();
+      if (!config) return json({ error: "Email alerts are not configured yet. Please use the EDUKEN WhatsApp Channel for updates." }, 503);
+
+      const { email, topics } = validation.data;
+      const now = new Date();
+      const verificationToken = secureRandomToken();
+      const verificationTokenHash = await sha256Hex(verificationToken);
+      const { data: existing, error: lookupError } = await db
+        .from("email_alert_subscriptions")
+        .select("id,is_active,verified_at,updated_at")
+        .eq("email", email)
+        .maybeSingle();
+      if (lookupError) throw lookupError;
+
+      // Per-address cooldown prevents repeated confirmation-email spam without
+      // blocking already-verified subscribers from updating their preferences.
+      if (existing && !(existing.is_active && existing.verified_at)) {
+        if (isWithinEmailAlertCooldown(existing.updated_at, now.getTime())) {
+          return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
+        }
+      }
+
+      if (existing?.is_active && existing?.verified_at) {
+        const { error } = await db.from("email_alert_subscriptions")
+          .update({ topics, updated_at: now.toISOString() })
+          .eq("id", existing.id);
+        if (error) throw error;
+        return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
+      }
+
+      const subscriptionId = existing?.id || crypto.randomUUID();
+      const unsubscribeToken = await deriveUnsubscribeToken(subscriptionId, config.tokenSecret);
+      const unsubscribeTokenHash = await sha256Hex(unsubscribeToken);
+      const subscriptionValues = {
+        email,
+        topics,
+        verified_at: null,
+        verification_token_hash: verificationTokenHash,
+        verification_expires_at: new Date(now.getTime() + 30 * 60 * 1000).toISOString(),
+        unsubscribe_token_hash: unsubscribeTokenHash,
+        is_active: false,
+        updated_at: now.toISOString(),
+      };
+      if (existing) {
+        const { error } = await db.from("email_alert_subscriptions")
+          .update(subscriptionValues)
+          .eq("id", existing.id);
+        if (error) throw error;
+      } else {
+        const { error } = await db.from("email_alert_subscriptions")
+          .insert({ id: subscriptionId, ...subscriptionValues });
+        if (error) throw error;
+      }
+
+      const verificationUrl = new URL(config.siteUrl.toString());
+      verificationUrl.searchParams.set("email_alert_verify", verificationToken);
+      const unsubscribeUrl = new URL(config.siteUrl.toString());
+      unsubscribeUrl.searchParams.set("email_alert_unsubscribe", unsubscribeToken);
+      try {
+        await sendEmailAlertMessage(
+          config,
+          email,
+          "Confirm your EDUKEN CONSULT email alerts",
+          "Confirm your email alerts within 30 minutes: " + verificationUrl.toString() +
+            "\n\nIf you did not request this, ignore this message. You can also unsubscribe: " + unsubscribeUrl.toString(),
+          "<p>Confirm your EDUKEN CONSULT email alerts within 30 minutes.</p><p><a href=\"" +
+            escapeEmailHtml(verificationUrl.toString()) + "\">Confirm email alerts</a></p><p>If you did not request this, ignore this message.</p><p><a href=\"" +
+            escapeEmailHtml(unsubscribeUrl.toString()) + "\">Unsubscribe</a></p>"
+        );
+      } catch {
+        await db.from("email_alert_subscriptions")
+          .update({ verification_token_hash: null, verification_expires_at: null, updated_at: new Date().toISOString() })
+          .eq("id", subscriptionId);
+        // Keep provider failures indistinguishable from other valid subscription
+        // requests so this endpoint cannot reveal whether an address is subscribed.
+        return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
+      }
+      return json({ message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required." }, 202);
+    }
+
+    if (path === "/api/email-alerts/verify" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "verify"); } catch { return json({ error: "Email alerts are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Email alerts are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many requests. Please try again in 15 minutes." }, 429);
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const token = typeof body?.token === "string" ? body.token.trim() : "";
+      if (!/^[a-f0-9]{64}$/i.test(token)) return json({ error: "This confirmation link is invalid or expired." }, 400);
+      const tokenHash = await sha256Hex(token);
+      const now = new Date().toISOString();
+      const { data: subscription, error: lookupError } = await db.from("email_alert_subscriptions")
+        .select("id")
+        .eq("verification_token_hash", tokenHash)
+        .gt("verification_expires_at", now)
+        .maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!subscription) return json({ error: "This confirmation link is invalid or expired." }, 400);
+      // Consume the one-time token atomically. A second concurrent request cannot
+      // verify the same subscription after the token hash has been cleared.
+      const { data: verifiedSubscription, error } = await db.from("email_alert_subscriptions")
+        .update({ verified_at: now, is_active: true, verification_token_hash: null, verification_expires_at: null, updated_at: now })
+        .eq("id", subscription.id)
+        .eq("verification_token_hash", tokenHash)
+        .gt("verification_expires_at", now)
+        .select("id")
+        .maybeSingle();
+      if (error) throw error;
+      if (!verifiedSubscription) return json({ error: "This confirmation link is invalid or expired." }, 400);
+      return json({ message: "Your email alerts are confirmed and active." });
+    }
+
+    if (path === "/api/email-alerts/unsubscribe" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "unsubscribe"); } catch { return json({ error: "Email alerts are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Email alerts are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many requests. Please try again in 15 minutes." }, 429);
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const token = typeof body?.token === "string" ? body.token.trim() : "";
+      if (!/^[a-f0-9]{64}$/i.test(token)) return json({ error: "This unsubscribe link is invalid." }, 400);
+      const tokenHash = await sha256Hex(token);
+      const { data: subscription, error: lookupError } = await db.from("email_alert_subscriptions")
+        .select("id")
+        .eq("unsubscribe_token_hash", tokenHash)
+        .maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!subscription) return json({ error: "This unsubscribe link is invalid." }, 400);
+      const now = new Date().toISOString();
+      const { error } = await db.from("email_alert_subscriptions")
+        .update({ is_active: false, updated_at: now })
+        .eq("id", subscription.id);
+      if (error) throw error;
+      const { error: cancelError } = await db.from("email_alert_deliveries")
+        .update({ status: "cancelled" })
+        .eq("subscription_id", subscription.id)
+        .eq("status", "pending");
+      if (cancelError) throw cancelError;
+      return json({ message: "You have been unsubscribed from EDUKEN email alerts." });
+    }
+
+    if (path === "/api/internal/email-alerts/process" && req.method === "POST") {
+      const cronSecret = Deno.env.get("EMAIL_ALERTS_CRON_SECRET");
+      if (!cronSecret || cronSecret.length < 32) return json({ error: "Email alert processing is not configured." }, 503);
+      if (req.headers.get("Authorization") !== "Bearer " + cronSecret) return json({ error: "Unauthorized." }, 401);
+      const config = emailAlertConfiguration();
+      if (!config) return json({ error: "Email alerts are not configured." }, 503);
+
+      const now = new Date();
+      // Keep the private rate-limit table bounded without retaining inactive hashed IP keys indefinitely.
+      const rateLimitRetentionBefore = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
+      const { error: rateLimitCleanupError } = await db.from("email_alert_rate_limits")
+        .delete()
+        .lt("updated_at", rateLimitRetentionBefore);
+      if (rateLimitCleanupError) throw new Error("Could not clean up expired email alert rate limits.");
+      const staleProcessingBefore = new Date(now.getTime() - 10 * 60 * 1000).toISOString();
+      // Recover expired worker leases without ever exceeding the five-attempt cap.
+      const { error: exhaustedRecoveryError } = await db.from("email_alert_deliveries")
+        .update({ status: "failed", processing_started_at: null, last_error: "Processing lease expired after maximum attempts." })
+        .eq("status", "processing")
+        .lt("processing_started_at", staleProcessingBefore)
+        .gte("attempt_count", 5);
+      if (exhaustedRecoveryError) throw exhaustedRecoveryError;
+      const { error: staleRecoveryError } = await db.from("email_alert_deliveries")
+        .update({ status: "pending", scheduled_for: now.toISOString(), processing_started_at: null })
+        .eq("status", "processing")
+        .lt("processing_started_at", staleProcessingBefore)
+        .lt("attempt_count", 5);
+      if (staleRecoveryError) throw staleRecoveryError;
+      const { data: dueDeliveries, error: dueError } = await db.from("email_alert_deliveries")
+        .select("id,subscription_id,opportunity_id,event_type,attempt_count")
+        .eq("status", "pending")
+        .lte("scheduled_for", now.toISOString())
+        .order("scheduled_for", { ascending: true })
+        .limit(25);
+      if (dueError) throw dueError;
+      let sent = 0, failed = 0, skipped = 0;
+
+      for (const delivery of dueDeliveries ?? []) {
+        const attemptCount = Number(delivery.attempt_count || 0) + 1;
+        const { data: claimed, error: claimError } = await db.from("email_alert_deliveries")
+          .update({ status: "processing", attempt_count: attemptCount, processing_started_at: now.toISOString() })
+          .eq("id", delivery.id)
+          .eq("status", "pending")
+          .select("id,attempt_count")
+          .maybeSingle();
+        if (claimError) throw claimError;
+        if (!claimed) continue;
+
+        try {
+          const { data: subscription, error: subscriptionError } = await db.from("email_alert_subscriptions")
+            .select("id,email,topics,verified_at,is_active,unsubscribe_token_hash")
+            .eq("id", delivery.subscription_id)
+            .maybeSingle();
+          if (subscriptionError) throw subscriptionError;
+          if (!subscription || !subscription.is_active || !subscription.verified_at) {
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
+            skipped++;
+            continue;
+          }
+
+          const { data: opportunity, error: opportunityError } = await db.from("opportunities")
+            .select("id,title,slug,category,description,deadline,application_url,official_source,is_published,verified,notify_on_publish")
+            .eq("id", delivery.opportunity_id)
+            .maybeSingle();
+          if (opportunityError) throw opportunityError;
+          if (!opportunity) {
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
+            skipped++;
+            continue;
+          }
+          const eligible = isEmailAlertOpportunityEligible(opportunity);
+          const topic = opportunity ? opportunityAlertTopic(opportunity) : null;
+          if (!eligible || !topic || !Array.isArray(subscription.topics) || !subscription.topics.includes(topic)) {
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
+            skipped++;
+            continue;
+          }
+
+          const deadlineMs = opportunity.deadline ? new Date(String(opportunity.deadline)).getTime() : NaN;
+          if (String(delivery.event_type).startsWith("deadline_") && (!Number.isFinite(deadlineMs) || deadlineMs <= now.getTime())) {
+            await updateEmailAlertDelivery(delivery.id, { status: "cancelled", processing_started_at: null });
+            skipped++;
+            continue;
+          }
+
+          const slug = String(opportunity.slug || slugify(opportunity.title || opportunity.id));
+          const opportunityUrl = new URL(config.siteUrl.toString());
+          opportunityUrl.hash = "opportunity/" + encodeURIComponent(slug);
+          const unsubscribeToken = await deriveUnsubscribeToken(subscription.id, config.tokenSecret);
+          if (await sha256Hex(unsubscribeToken) !== subscription.unsubscribe_token_hash) {
+            throw new Error("Unsubscribe token configuration mismatch.");
+          }
+          const unsubscribeUrl = new URL(config.siteUrl.toString());
+          unsubscribeUrl.searchParams.set("email_alert_unsubscribe", unsubscribeToken);
+          const title = String(opportunity.title || "EDUKEN opportunity").slice(0, 180);
+          let subject = "New EDUKEN opportunity: " + title;
+          let intro = "A new verified opportunity matching your selected interests is available.";
+          if (delivery.event_type === "deadline_7d" || delivery.event_type === "deadline_3d" || delivery.event_type === "deadline_1d") {
+            const days = Number(String(delivery.event_type).match(/deadline_(\d+)d/)?.[1] || 0);
+            subject = "EDUKEN deadline reminder: " + title;
+            intro = "The deadline for this opportunity is approaching in " + days + (days === 1 ? " day." : " days.");
+          }
+          const description = String(opportunity.description || "").slice(0, 1200);
+          const officialSourceUrl = safeHttpUrl(opportunity.official_source);
+          const textBody = intro + "\n\n" + title + "\n" + description + "\n\nOpen: " + opportunityUrl.toString() +
+            (officialSourceUrl ? "\nOfficial source: " + officialSourceUrl : "") + "\nUnsubscribe: " + unsubscribeUrl.toString();
+          const htmlBody = "<p>" + escapeEmailHtml(intro) + "</p><h2>" + escapeEmailHtml(title) + "</h2><p>" +
+            escapeEmailHtml(description) + "</p><p><a href=\"" + escapeEmailHtml(opportunityUrl.toString()) +
+            "\">View opportunity</a></p>" +
+            (officialSourceUrl ? "<p><a href=\"" + escapeEmailHtml(officialSourceUrl) + "\">Official source</a></p>" : "") +
+            "<p><a href=\"" + escapeEmailHtml(unsubscribeUrl.toString()) + "\">Unsubscribe from email alerts</a></p>";
+          // Re-check subscription consent immediately before the external send. The first
+          // read above is needed to build the message, but an unsubscribe may happen while
+          // the worker is preparing it. This second read narrows that race window; fully
+          // atomic coordination with an external email provider is not possible here.
+          const { data: latestSubscription, error: latestSubscriptionError } = await db
+            .from("email_alert_subscriptions")
+            .select("is_active,verified_at,topics")
+            .eq("id", subscription.id)
+            .maybeSingle();
+          if (latestSubscriptionError) throw latestSubscriptionError;
+          if (
+            !latestSubscription ||
+            !latestSubscription.is_active ||
+            !latestSubscription.verified_at ||
+            !Array.isArray(latestSubscription.topics) ||
+            !latestSubscription.topics.includes(topic)
+          ) {
+            await updateEmailAlertDelivery(delivery.id, {
+              status: "cancelled",
+              processing_started_at: null,
+            });
+            skipped++;
+            continue;
+          }
+
+          // Reuse the same provider idempotency key on retries to avoid duplicate messages
+          // if the provider accepted a send but the database update failed.
+          const providerMessageId = await sendEmailAlertMessage(
+            config,
+            subscription.email,
+            subject,
+            textBody,
+            htmlBody,
+            "eduken-alert-delivery-" + delivery.id,
+          );
+          const { error: markSentError } = await db.from("email_alert_deliveries")
+            .update({ status: "sent", provider_message_id: providerMessageId, sent_at: new Date().toISOString(), last_error: null, processing_started_at: null })
+            .eq("id", delivery.id);
+          if (markSentError) throw markSentError;
+          sent++;
+        } catch {
+          const exhausted = isEmailAlertAttemptExhausted(attemptCount);
+          const retryDelayMs = emailAlertRetryDelayMs(attemptCount);
+          const { error: retryStateError } = await db.from("email_alert_deliveries").update({
+            status: exhausted ? "failed" : "pending",
+            processing_started_at: null,
+            scheduled_for: new Date(Date.now() + retryDelayMs).toISOString(),
+            last_error: "Delivery attempt failed; details withheld from public logs.",
+          }).eq("id", delivery.id);
+          if (retryStateError) throw new Error("Could not record the email alert retry state.");
+          failed++;
+        }
+      }
+      return json({ ok: true, processed: sent + failed + skipped, sent, failed, skipped });
+    }
+
     if (path === "/api/service-requests" && req.method === "POST") {
-      const b = await req.json();
-      if (!b.customerName?.trim() || !b.whatsapp?.trim() || !b.details?.trim()) return json({ error: "Name, WhatsApp number and request details are required." }, 400);
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "service-request"); } catch { return json({ error: "Service requests are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Service requests are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many service requests. Please try again in 15 minutes." }, 429);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const validation = validateServiceRequestBody(b);
+      if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
+      const { customerName, whatsapp, details, email, serviceId } = validation.data;
+      // Reject stale, deleted, or unpublished service selections before creating a request.
+      // A null serviceId remains valid for general enquiries.
+      if (serviceId) {
+        const { data: service, error: serviceError } = await db
+          .from("services")
+          .select("id,is_published")
+          .eq("id", serviceId)
+          .maybeSingle();
+        if (serviceError) throw serviceError;
+        if (!isPublishedService(service)) {
+          return json({ error: "Please choose an available published service." }, 400);
+        }
+      }
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
       const { data, error } = await db.from("service_requests").insert({
-        user_id: user?.id ?? null, service_id: b.serviceId || null, customer_name: b.customerName.trim(),
-        whatsapp: b.whatsapp.trim(), email: b.email || null, details: b.details.trim(),
+        user_id: user?.id ?? null, service_id: serviceId, customer_name: customerName,
+        whatsapp, email: email || null, details,
         status: "New Requests", reference_number: reference
-      }).select().single();
+      }).select("id,reference_number,status,created_at").single();
       if (error) throw error;
       return json({ request: data, referenceNumber: reference }, 201);
     }
@@ -403,41 +987,91 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/payments/initialize" && req.method === "POST") {
-      const user = await requireUser(req); const b = await req.json();
-      if (!b.serviceRequestId || !Number(b.amount) || Number(b.amount) <= 0) return json({ error: "A valid service request and amount are required." }, 400);
-      const { data: request, error: requestError } = await db.from("service_requests").select("id,reference_number,customer_name,email,whatsapp").eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      if (typeof b?.serviceRequestId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(b.serviceRequestId)) {
+        return json({ error: "A valid service request is required." }, 400);
+      }
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,service_id,reference_number,email,services(name,price,is_published)")
+        .eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Service request not found." }, 404);
+      const service = Array.isArray(request.services) ? request.services[0] : request.services;
+      const trustedAmount = Number(service?.price);
+      if (!service || !service.is_published || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+        return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
+      }
+      // If the client sends a display amount, reject stale or tampered values;
+      // the server-side published service price remains authoritative.
+      if (b.amount !== undefined && (!Number.isFinite(Number(b.amount)) || Math.round(Number(b.amount) * 100) !== Math.round(trustedAmount * 100))) {
+        return json({ error: "The service price has changed. Refresh and try again." }, 409);
+      }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
       const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
         method: "POST",
         headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(Number(b.amount) * 100), reference, callback_url: b.callbackUrl || undefined, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
+        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
       });
-      const result = await paystack.json();
-      if (!paystack.ok || !result.status) return json({ error: result.message || "Unable to initialize payment." }, 502);
+      let result: any;
+      try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
+      if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
       const { data: payment, error } = await db.from("payments").insert({
-        user_id: user.id, service_request_id: request.id, amount: Number(b.amount), currency: "NGN", status: "Pending", payment_reference: reference
+        user_id: user.id, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
       }).select().single();
       if (error) throw error;
-      return json({ payment, authorizationUrl: result.data.authorization_url, accessCode: result.data.access_code, reference });
+      return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
     if (path === "/api/payments/verify" && req.method === "POST") {
-      const user = await requireUser(req); const b = await req.json();
-      if (!b.reference) return json({ error: "Payment reference is required." }, 400);
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
-      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(String(b.reference)), { headers: { "Authorization": "Bearer " + secret } });
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference")
+        .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment) return json({ error: "Payment record not found." }, 404);
+      if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
+      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
+        headers: { "Authorization": "Bearer " + secret }
+      });
       const result = await response.json();
-      if (!response.ok || !result.status) return json({ error: result.message || "Unable to verify payment." }, 502);
-      const paid = result.data?.status === "success";
-      const { data: payment, error } = await db.from("payments").update({ status: paid ? "Paid" : "Failed", paid_at: paid ? new Date().toISOString() : null }).eq("payment_reference", b.reference).eq("user_id", user.id).select().maybeSingle();
+      if (!response.ok || !result.status || !result.data) return json({ error: "Unable to verify payment with the provider." }, 502);
+      const transaction = result.data;
+      const paid = isSuccessfulPaystackTransaction(transaction);
+      if (paid && !matchesStoredPaystackPayment(transaction, {
+        amount: existingPayment.amount,
+        currency: existingPayment.currency,
+        reference,
+      })) {
+        return json({ error: "The provider's payment details do not match this payment. Please contact support." }, 409);
+      }
+      // Non-final provider statuses remain Pending until settlement is resolved.
+      const nextPaymentStatus = getNextPaymentStatus(transaction);
+      const { data: payment, error } = await db.from("payments").update({
+        status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
+      }).eq("id", existingPayment.id).eq("user_id", user.id).in("status", ["Pending", "Failed"]).select().maybeSingle();
       if (error) throw error;
-      if (paid && payment?.service_request_id) await db.from("service_requests").update({ status: "Paid" }).eq("id", payment.service_request_id).eq("user_id", user.id);
-      return json({ paid, payment, provider: result.data });
+      if (paid && !payment && existingPayment.status !== "Paid") {
+        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).eq("user_id", user.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Please refresh and check your payment history." }, 409);
+      }
+      if (paid && existingPayment.service_request_id) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+        if (requestUpdateError) throw requestUpdateError;
+      }
+      return json({ paid, payment: payment || existingPayment });
     }
 
     if (path === "/api/payments" && req.method === "GET") {
@@ -456,10 +1090,12 @@ Deno.serve(async (req) => {
         return json({ items: data ?? [] });
       }
       if (req.method === "PUT" && id) {
-        const b = await req.json();
-        const { data, error } = await db.from("service_requests").update(b).eq("id", id).select().maybeSingle();
+        let b: any;
+        try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+        if (!b || !isAllowedServiceRequestStatus(b.status)) return json({ error: "Invalid service request status." }, 400);
+        const { data, error } = await db.from("service_requests").update({ status: b.status }).eq("id", id).select("id,status").maybeSingle();
         if (error) throw error; if (!data) return json({ error: "Service request not found." }, 404);
-        return json({ ok: true });
+        return json({ ok: true, request: data });
       }
     }
 
@@ -478,23 +1114,48 @@ Deno.serve(async (req) => {
       if (req.method === "GET") return json({ items: await adminList(table) });
       if (req.method === "POST") {
         const b = mapAdminInput(table, await req.json());
+        if (table === "opportunities") {
+          const verification = validateOpportunityVerification(b);
+          if (!verification.valid) return json({ error: verification.error }, 400);
+        }
         const { data, error } = await db.from(table).insert(b).select().single();
         if (error) throw error;
-        if (table === "opportunities") await notifyOpportunitySubscribers(data);
+        if (table === "opportunities") {
+          await notifyOpportunitySubscribers(data);
+          if (data.is_published) {
+            await enqueueOpportunityEmailAlerts(data, { queueNew: true, rescheduleDeadlines: true });
+          }
+        }
         return json({ id: data.id }, 201);
       }
       if (req.method === "PUT" && id) {
         const b = mapAdminInput(table, await req.json());
-        let wasPublished = false;
+        let previousOpportunity: any = null;
         if (table === "opportunities") {
-          const { data: existing, error: readError } = await db.from(table).select("is_published").eq("id", id).maybeSingle();
+          const { data: existing, error: readError } = await db.from(table)
+            .select("is_published,notify_on_publish,verified,official_source,deadline,category")
+            .eq("id", id)
+            .maybeSingle();
           if (readError) throw readError;
           if (!existing) return json({ error: "Record not found." }, 404);
-          wasPublished = Boolean(existing.is_published);
+          previousOpportunity = existing;
+          const verification = validateOpportunityVerification({ ...existing, ...b });
+          if (!verification.valid) return json({ error: verification.error }, 400);
         }
         const { data, error } = await db.from(table).update(b).eq("id", id).select().maybeSingle();
-        if (error) throw error; if (!data) return json({ error: "Record not found." }, 404);
-        if (table === "opportunities" && !wasPublished && data.is_published) await notifyOpportunitySubscribers(data);
+        if (error) throw error;
+        if (!data) return json({ error: "Record not found." }, 404);
+        if (table === "opportunities") {
+          if (!previousOpportunity.is_published && data.is_published) await notifyOpportunitySubscribers(data);
+          const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && (!String(previousOpportunity.official_source || "").trim() || safeHttpUrl(previousOpportunity.official_source)));
+          const isEligible = Boolean(data.is_published && data.notify_on_publish && data.verified && (!String(data.official_source || "").trim() || safeHttpUrl(data.official_source)));
+          const deadlineChanged = previousOpportunity.deadline !== data.deadline;
+          const categoryChanged = previousOpportunity.category !== data.category;
+          await enqueueOpportunityEmailAlerts(data, {
+            queueNew: isEligible && (!wasEligible || categoryChanged),
+            rescheduleDeadlines: !isEligible || !wasEligible || deadlineChanged || categoryChanged,
+          });
+        }
         return json({ ok: true });
       }
       if (req.method === "DELETE" && id) {
