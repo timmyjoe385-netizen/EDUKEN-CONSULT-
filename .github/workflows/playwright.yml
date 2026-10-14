@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: 20
       - name: Install project dependencies
-        run: npm install --no-audit --no-fund --prefer-offline
+        run: npm install --no-audit --no-fund --prefer-offline --legacy-peer-deps
       - name: Set up Deno for Edge Function checks
         uses: denoland/setup-deno@v2
         with:
