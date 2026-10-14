@@ -7,12 +7,18 @@
 revoke all privileges on all tables in schema public from public, anon, authenticated;
 revoke all privileges on all sequences in schema public from public, anon, authenticated;
 
--- Prevent future tables/sequences created by the migration role (postgres)
--- from silently inheriting client grants. New client-accessible objects must
+-- Prevent future tables/sequences created by either observed migration
+-- owner from silently inheriting client grants. Production currently has broad
+-- defaults for both postgres and supabase_admin; hardening only postgres would
+-- leave a privilege reintroduction path. New client-accessible objects must
 -- receive explicit grants in their reviewed migration.
 alter default privileges for role postgres in schema public
   revoke all privileges on tables from public, anon, authenticated;
 alter default privileges for role postgres in schema public
+  revoke all privileges on sequences from public, anon, authenticated;
+alter default privileges for role supabase_admin in schema public
+  revoke all privileges on tables from public, anon, authenticated;
+alter default privileges for role supabase_admin in schema public
   revoke all privileges on sequences from public, anon, authenticated;
 
 -- Remove direct and PUBLIC-inherited EXECUTE privileges. Revoking only from
