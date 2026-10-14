@@ -7,16 +7,12 @@
 revoke all privileges on all tables in schema public from public, anon, authenticated;
 revoke all privileges on all sequences in schema public from public, anon, authenticated;
 
--- Prevent future tables/sequences created by either role whose defaults are
--- currently broad (confirmed in the target database) from silently inheriting
--- client grants. New client-accessible objects must receive explicit grants.
+-- Prevent future tables/sequences created by the migration role (postgres)
+-- from silently inheriting client grants. New client-accessible objects must
+-- receive explicit grants in their reviewed migration.
 alter default privileges for role postgres in schema public
   revoke all privileges on tables from public, anon, authenticated;
 alter default privileges for role postgres in schema public
-  revoke all privileges on sequences from public, anon, authenticated;
-alter default privileges for role supabase_admin in schema public
-  revoke all privileges on tables from public, anon, authenticated;
-alter default privileges for role supabase_admin in schema public
   revoke all privileges on sequences from public, anon, authenticated;
 
 -- Remove direct and PUBLIC-inherited EXECUTE privileges. Revoking only from
@@ -24,8 +20,6 @@ alter default privileges for role supabase_admin in schema public
 -- client role inherits that grant. Keep future function defaults least-privilege.
 revoke execute on all functions in schema public from public, anon, authenticated;
 alter default privileges for role postgres in schema public
-  revoke execute on functions from public, anon, authenticated;
-alter default privileges for role supabase_admin in schema public
   revoke execute on functions from public, anon, authenticated;
 
 -- Public catalogue: anonymous visitors may read rows only; existing RLS policies
