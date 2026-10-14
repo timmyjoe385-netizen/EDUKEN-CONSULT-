@@ -929,6 +929,19 @@ Deno.serve(async (req) => {
       const validation = validateServiceRequestBody(b);
       if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
       const { customerName, whatsapp, details, email, serviceId } = validation.data;
+      // Reject stale, deleted, or unpublished service selections before creating a request.
+      // A null serviceId remains valid for general enquiries.
+      if (serviceId) {
+        const { data: service, error: serviceError } = await db
+          .from("services")
+          .select("id,is_published")
+          .eq("id", serviceId)
+          .maybeSingle();
+        if (serviceError) throw serviceError;
+        if (!service || service.is_published !== true) {
+          return json({ error: "Please choose an available published service." }, 400);
+        }
+      }
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
       const { data, error } = await db.from("service_requests").insert({
