@@ -11,14 +11,14 @@ const sources: Partial<Record<SchoolKey, string>> = {
   uniben: 'https://www.uniben.edu/',
   unilag: 'https://counselling.unilag.edu.ng/notices.html',
   ui: 'https://ui.edu.ng/news/post-utmedirect-entry-screening-prospective-candidates-20262027-admission-exercise',
-  oau: 'https://oauife.edu.ng/',
+  oau: 'https://campusai.com.ng/news/how-to-calculate-your-oau-aggregate-score-for-20262027-admission',
 };
 const directory = [
   { name: 'University of Ilorin (UNILORIN)', status: 'official', note: '2026/2027 formula available', href: sources.unilorin },
   { name: 'Federal University of Health Sciences, Ila-Orangun (FUHSI)', status: 'official', note: 'Published 70:30 UTME/O’Level model', href: sources.fuhsi },
   { name: 'University of Benin (UNIBEN)', status: 'community', note: '50:50 formula reported by multiple education sources; official confirmation not found', href: sources.uniben },
   { name: 'University of Lagos (UNILAG)', status: 'community', note: 'Historical official 2025/2026 notice lists 50:30:20; 2026/2027 weighting still needs confirmation', href: sources.unilag },
-  { name: 'University of Ibadan (UI)', status: 'review', note: '2026/2027 official notice confirms screening but does not publish the aggregate formula; third-party weighting not verified', href: sources.ui },
+  { name: 'University of Ibadan (UI)', status: 'review', note: 'Official 2026/2027 Direct Entry notice found; it does not publish the UTME aggregate formula; third-party weighting not verified', href: sources.ui },
   { name: 'Obafemi Awolowo University (OAU)', status: 'community', note: 'CampusAI reports 50:40:10; current official formula and O’Level conversion need confirmation', href: sources.oau },
   { name: 'Lagos State University (LASU)', status: 'review', note: 'Online screening confirmed; complete current scoring conversion needs confirmation', href: 'https://lasu.edu.ng/' },
   { name: 'Federal University of Technology, Akure (FUTA)', status: 'review', note: 'Current formula not confirmed in the notice reviewed', href: 'https://futa.edu.ng/' },
@@ -99,7 +99,7 @@ export default function AggregateCalculator() {
     if (school === 'oau') {
       const parts = [
         { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
-        { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 40), max: 40 },
+        { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 100) / 100 * 40, max: 40 },
         { label: 'O’Level contribution (manually entered out of 10)', value: clamp(olevelPoints, 10), max: 10 },
       ];
       return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
@@ -174,8 +174,8 @@ export default function AggregateCalculator() {
         </div>
         {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || school === 'custom') && <>
           <div className="aggregate-field">
-            <label htmlFor="aggregate-post">Post-UTME score (out of {school === 'oau' ? 40 : 100})</label>
-            <input id="aggregate-post" type="number" min="0" max={school === 'oau' ? 40 : 100} value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
+            <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
+            <input id="aggregate-post" type="number" min="0" max={100} value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
           </div>
         </>}
         {(school === 'unilorin' || school === 'unilag' || school === 'oau') && <div className="aggregate-field">
@@ -239,7 +239,7 @@ export default function AggregateCalculator() {
                 : school === 'ui'
                   ? <p>The University of Ibadan’s official 2026/2027 notice confirms the screening exercise but does not state the aggregate calculation. EDUKEN has disabled this calculator option until a reliable scoring formula is verified. Check the official admission notice before relying on third-party claims.</p>
                   : school === 'oau'
-                    ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level weighting for OAU. Enter the official Post-UTME score out of 40 and the O’Level contribution out of 10 manually. We have not confirmed the current official scoring conversion or grade scale, so this is provisional only.</p>
+                    ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level weighting for OAU. Enter the Post-UTME score out of 100; the calculator converts it to a contribution out of 40. Enter the O’Level contribution out of 10 manually. OAU’s public screening notice does not reproduce the aggregate table, so treat this third-party-reported model as provisional and confirm it with the university.</p>
                     : <p>Custom mode uses only the weights and scores you provide. It does not confirm that an institution accepts this formula.</p>}
         {school !== 'custom' && sources[school] && <a href={sources[school]} target="_blank" rel="noreferrer">Open source / admission portal <ExternalLink size={14} /></a>}
         <p className="aggregate-disclaimer">Admission requirements and screening methods can change by session and course. Check the institution’s current instructions before making an application decision.</p>
