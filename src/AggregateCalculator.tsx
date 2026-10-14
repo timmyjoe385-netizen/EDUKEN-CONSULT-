@@ -66,6 +66,9 @@ export default function AggregateCalculator() {
   const [showResult, setShowResult] = useState(false);
   const [directoryQuery, setDirectoryQuery] = useState('');
   const [directoryFilter, setDirectoryFilter] = useState<'all' | 'ready' | 'review'>('all');
+  const [intendedCourse, setIntendedCourse] = useState('');
+  const [stateOfOrigin, setStateOfOrigin] = useState('');
+  const [targetAggregate, setTargetAggregate] = useState('75');
 
   const result = useMemo(() => {
     const utme = clamp(jamb, 400);
@@ -142,8 +145,30 @@ export default function AggregateCalculator() {
       school === 'uniben' ? validPost :
       validPost && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
 
+  const plannerPostWeight = school === 'unilorin' ? 30
+    : school === 'uniben' ? 50
+    : school === 'unilag' ? 30
+    : school === 'oau' ? 40
+    : school === 'custom'
+      ? (Number(postWeight) / (Number(jambWeight) + Number(postWeight) + Number(olevelWeight) || 1)) * 100
+      : 0;
+  const plannerOtherContribution = result.parts
+    .filter(part => !part.label.toLowerCase().includes('post-utme'))
+    .reduce((sum, part) => sum + part.value, 0);
+  const validTarget = isValidScore(targetAggregate, 100);
+  const plannerHasRequiredInputs = validJamb && validTarget &&
+    (school === 'fuhsi' ? grades.every(Boolean) :
+      school === 'unilorin' || school === 'unilag' || school === 'oau'
+        ? validOlevelPoints
+        : school === 'custom'
+          ? validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100))
+          : true);
+  const requiredPostScore = plannerPostWeight > 0
+    ? ((Number(targetAggregate) - plannerOtherContribution) / plannerPostWeight) * 100
+    : null;
+
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false);
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setIntendedCourse(''); setStateOfOrigin('');
   };
 
   const filteredDirectory = directory.filter((item) => {
@@ -255,6 +280,44 @@ export default function AggregateCalculator() {
           <div className="aggregate-breakdown">{result.parts.map(part => <div key={part.label}><span>{part.label}</span><b>{part.value.toFixed(2)} / {part.max}</b></div>)}</div>
           {(school === 'uniben' || school === 'oau' || school === 'unilag') && <p><strong>Provisional formula:</strong> this model is not confirmed as the university’s official 2026/2027 formula.</p>}
         </div>}
+      </section>
+      <section className="aggregate-planner" aria-labelledby="aggregate-planner-title">
+        <div className="aggregate-planner-heading">
+          <span className="aggregate-kicker"><GraduationCap size={15} /> PLAN YOUR NEXT STEP</span>
+          <h2 id="aggregate-planner-title">Admission planning workspace</h2>
+          <p>Set your intended course and target aggregate, then estimate the Post-UTME score needed under the formula currently selected above. This is a planning estimate, not an admission decision.</p>
+        </div>
+        <div className="aggregate-two-fields">
+          <div className="aggregate-field">
+            <label htmlFor="aggregate-course">Intended course</label>
+            <input id="aggregate-course" value={intendedCourse} onChange={e => setIntendedCourse(e.target.value)} placeholder="e.g. Linguistics" />
+          </div>
+          <div className="aggregate-field">
+            <label htmlFor="aggregate-origin">State of origin (optional)</label>
+            <input id="aggregate-origin" value={stateOfOrigin} onChange={e => setStateOfOrigin(e.target.value)} placeholder="e.g. Niger State" />
+          </div>
+          <div className="aggregate-field">
+            <label htmlFor="aggregate-target">Target aggregate (out of 100)</label>
+            <input id="aggregate-target" type="number" min="0" max="100" step="any" value={targetAggregate} onChange={e => setTargetAggregate(e.target.value)} />
+            {targetAggregate !== '' && !validTarget && <small role="alert">Enter a target from 0 to 100.</small>}
+          </div>
+        </div>
+        <div className="aggregate-planner-result" aria-live="polite">
+          {school === 'ui'
+            ? <p>Select a formula that can currently be calculated. UI remains unavailable until a reliable current scoring formula is verified.</p>
+            : school === 'fuhsi'
+              ? <p>FUHSI’s formula in this calculator uses UTME and five O’Level core subjects, not a Post-UTME component. Use the aggregate result above to compare your current score with your target.</p>
+              : !plannerHasRequiredInputs
+                ? <p>Enter valid UTME and the required score components above to calculate a target Post-UTME estimate.</p>
+                : requiredPostScore === null
+                  ? <p>A Post-UTME target estimate is unavailable for this formula.</p>
+                  : requiredPostScore <= 0
+                    ? <><strong>Your target is already covered by the other entered components.</strong><p>Based on these inputs, the target does not require additional Post-UTME points. This is only a mathematical estimate.</p></>
+                    : requiredPostScore > 100
+                      ? <><strong>This target is not reachable with a Post-UTME score capped at 100.</strong><p>Try a lower target or review the inputs and formula selected.</p></>
+                      : <><strong>Estimated Post-UTME score needed: {requiredPostScore.toFixed(1)} / 100</strong><p>This estimate uses your current UTME and O’Level components and the selected formula’s Post-UTME weight. It assumes that the selected formula and score scale apply to your course and admission session.</p></>}
+          {(intendedCourse.trim() || stateOfOrigin.trim()) && <small>Plan details: {intendedCourse.trim() || 'Course not entered'} · {stateOfOrigin.trim() || 'State not entered'}. These details are for your on-page planning only; EDUKEN has not checked course-specific subject requirements, catchment rules or eligibility from these entries.</small>}
+        </div>
       </section>
       <section className="aggregate-source">
         <h2>Formula & important notes</h2>
