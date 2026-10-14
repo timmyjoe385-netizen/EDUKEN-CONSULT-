@@ -63,9 +63,10 @@ const validSession = async () => {
 
 const isUnisolatedPreview = () => {
   const host = window.location.hostname.toLowerCase();
-  // Keep the known production hostname working. Other Cloudflare Workers
-  // preview hostnames must not write to the production Supabase project.
-  return host.endsWith('.workers.dev') && host !== 'eduken-consult.timmyjoe385.workers.dev';
+  // Writes are allowed only from the explicitly approved production origin.
+  // This protects localhost, Pages previews, custom preview domains, and
+  // other Workers hostnames from accidentally mutating the live Supabase data.
+  return host !== 'eduken-consult.timmyjoe385.workers.dev';
 };
 
 const request = async (
