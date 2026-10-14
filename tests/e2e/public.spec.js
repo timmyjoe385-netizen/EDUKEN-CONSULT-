@@ -428,6 +428,32 @@ test('service request route validates before inserting into the database', async
   expect(source).toContain('isAllowedServiceRequestStatus(b.status)');
 });
 
+test('admin service request status changes are guarded and payment-confirmed status is read-only', async () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const adminStart = handler.indexOf('const adminRequests = path.match(/^\\/api\\/admin\\/service-requests(?:\\/([^/]+))?$/);');
+  const adminEnd = handler.indexOf('if (path === "/api/admin/payments" && req.method === "GET")', adminStart);
+  expect(adminStart).toBeGreaterThanOrEqual(0);
+  expect(adminEnd).toBeGreaterThan(adminStart);
+
+  const adminRoute = handler.slice(adminStart, adminEnd);
+  const requireAdminAt = adminRoute.indexOf('await requireAdmin(req)');
+  const listAt = adminRoute.indexOf('db.from("service_requests").select');
+  const statusValidationAt = adminRoute.indexOf('isAllowedServiceRequestStatus(b.status)');
+  const updateAt = adminRoute.indexOf('.update({ status: b.status })');
+  expect(requireAdminAt).toBeGreaterThanOrEqual(0);
+  expect(listAt).toBeGreaterThan(requireAdminAt);
+  expect(statusValidationAt).toBeGreaterThan(requireAdminAt);
+  expect(updateAt).toBeGreaterThan(statusValidationAt);
+  expect(adminRoute.slice(updateAt, updateAt + 80)).toContain('.update({ status: b.status })');
+
+  const validator = readFileSync('supabase/functions/eduken-api/service-request-validation.mjs', 'utf8');
+  const app = readFileSync('src/App.tsx', 'utf8');
+  expect(validator).toContain('"Completed",\n  "Cancelled"');
+  expect(validator).not.toContain('"Paid"');
+  expect(app).toContain('disabled={item.status === \'Paid\'}');
+  expect(app).toContain('{item.status === \'Paid\' && <option value="Paid" disabled>Paid (payment confirmed)</option>}');
+});
+ 
 test('database hardening migration removes direct client access to consultation submissions', async () => {
   const migration = readFileSync(
     'supabase/migrations/20261013150000_harden_public_table_grants.sql',
