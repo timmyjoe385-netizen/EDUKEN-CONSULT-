@@ -2,7 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
-import { validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
+import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
@@ -77,7 +77,7 @@ const toOpportunity = (x: any) => ({
   eligibility: x.eligibility ?? "",
   benefits: x.benefits ?? "",
   howToApply: x.how_to_apply ?? "",
-  verified: Boolean(x.verified),
+  verified: isOpportunityVerified(x),
   featured: Boolean(x.featured),
   urgent: Boolean(x.urgent),
   notifyOnPublish: Boolean(x.notify_on_publish),
