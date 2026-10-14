@@ -599,7 +599,8 @@ Deno.serve(async (req) => {
     if (path === "/api/ai-assistant" && req.method === "POST") {
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
-      const question = String(b?.question || "").trim();
+      if (typeof b?.question !== "string") return json({ error: "Question must be a text string." }, 400);
+      const question = b.question.trim();
       if (!question) return json({ error: "Question is required." }, 400);
       // Bound public input before loading database context or calling the paid AI provider.
       if (question.length > 2000) return json({ error: "Question must be 2000 characters or fewer." }, 400);
