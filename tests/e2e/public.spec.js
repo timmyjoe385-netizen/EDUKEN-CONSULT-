@@ -208,6 +208,77 @@ test('opening an email unsubscribe link requires an explicit user confirmation',
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
+test('O’Level readiness counts distinct subjects rather than duplicate entries', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+
+  const addSubject = page.getByRole('button', { name: '+ Add O’Level subject' });
+  for (let index = 0; index < 5; index += 1) await addSubject.click();
+
+  const rows = page.locator('.aggregate-extra-grade-row');
+  for (let index = 0; index < 5; index += 1) {
+    await rows.nth(index).getByLabel(new RegExp(`Subject ${index + 1}`)).fill(index < 5 ? 'English Language' : 'Mathematics');
+    await rows.nth(index).getByLabel('Grade').selectOption('C6');
+  }
+
+  await expect(page.locator('.aggregate-assessment-stat').filter({ hasText: 'Credit grades entered' }).locator('strong')).toHaveText('1');
+  await expect(page.getByText('Five credit grades not yet recorded')).toBeVisible();
+  await expect(page.getByText('English Language credit recorded')).toBeVisible();
+  await expect(page.getByText('Mathematics credit not confirmed')).toBeVisible();
+  await expect(page.getByText(/duplicate subject entries were found/i)).toBeVisible();
+});
+
+test('O’Level readiness normalizes English and Mathematics aliases before deduplicating', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+
+  const addSubject = page.getByRole('button', { name: '+ Add O’Level subject' });
+  for (let index = 0; index < 5; index += 1) await addSubject.click();
+
+  const rows = page.locator('.aggregate-extra-grade-row');
+  const entries = [
+    ['English', 'C6'],
+    ['English Language', 'C5'],
+    ['Math', 'C6'],
+    ['Maths', 'B3'],
+    ['Biology', 'A1'],
+  ];
+
+  for (const [index, [subject, grade]] of entries.entries()) {
+    await rows.nth(index).getByLabel(new RegExp(`Subject ${index + 1}`)).fill(subject);
+    await rows.nth(index).getByLabel('Grade').selectOption(grade);
+  }
+
+  await expect(page.locator('.aggregate-assessment-stat').filter({ hasText: 'Credit grades entered' }).locator('strong')).toHaveText('3');
+  await expect(page.getByText('English Language credit recorded')).toBeVisible();
+  await expect(page.getByText('Mathematics credit recorded')).toBeVisible();
+  await expect(page.getByText('Five credit grades not yet recorded')).toBeVisible();
+  await expect(page.getByText(/2 duplicate subject entries were found/i)).toBeVisible();
+});
+
+test('O’Level duplicate subject keeps the best grade without inflating the distinct-subject count', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  const addSubject = page.getByRole('button', { name: '+ Add O’Level subject' });
+  for (let index = 0; index < 6; index += 1) await addSubject.click();
+
+  const rows = page.locator('.aggregate-extra-grade-row');
+  const entries = [
+    ['English', 'D7'],
+    ['English Language', 'C6'],
+    ['Mathematics', 'C6'],
+    ['Biology', 'C6'],
+    ['Chemistry', 'C6'],
+    ['Physics', 'C6'],
+  ];
+  for (const [index, [subject, grade]] of entries.entries()) {
+    await rows.nth(index).getByLabel(new RegExp(`Subject ${index + 1}`)).fill(subject);
+    await rows.nth(index).getByLabel('Grade').selectOption(grade);
+  }
+
+  await expect(page.locator('.aggregate-assessment-stat').filter({ hasText: 'Credit grades entered' }).locator('strong')).toHaveText('5');
+  await expect(page.getByText('Five or more credit grades entered')).toBeVisible();
+  await expect(page.getByText('English Language credit recorded')).toBeVisible();
+  await expect(page.getByText(/1 duplicate subject entry was found/i)).toBeVisible();
+});
+
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   const response = await page.goto('/', { waitUntil: 'domcontentloaded' });

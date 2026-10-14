@@ -178,10 +178,30 @@ export default function AggregateCalculator() {
         ...extraGrades,
       ]
     : extraGrades;
-  const creditSubjects = assessmentSubjects.filter(item => item.subject.trim() && Boolean(gradePoints[item.grade]));
-  const hasEnglishCredit = assessmentSubjects.some(item => item.subject.trim() && /english/i.test(item.subject) && Boolean(gradePoints[item.grade]));
-  const hasMathCredit = assessmentSubjects.some(item => item.subject.trim() && /mathematics|maths?/i.test(item.subject) && Boolean(gradePoints[item.grade]));
+  const normalizeSubjectName = (subject: string) => {
+    const normalized = subject.toLowerCase().trim().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ');
+    if (normalized === 'maths' || normalized === 'math') return 'mathematics';
+    if (normalized === 'english') return 'english language';
+    return normalized;
+  };
+  const uniqueAssessmentSubjects = assessmentSubjects.reduce<typeof assessmentSubjects>((unique, item) => {
+    const normalized = normalizeSubjectName(item.subject);
+    if (normalized === '') return unique;
+    const existingIndex = unique.findIndex(candidate => normalizeSubjectName(candidate.subject) === normalized);
+    if (existingIndex === -1) {
+      unique.push(item);
+    } else if ((gradePoints[item.grade] || 0) > (gradePoints[unique[existingIndex].grade] || 0)) {
+      // A duplicate cannot inflate the count, but a later valid credit should
+      // not be hidden by an earlier non-credit entry for the same subject.
+      unique[existingIndex] = item;
+    }
+    return unique;
+  }, []);
+  const creditSubjects = uniqueAssessmentSubjects.filter(item => Boolean(gradePoints[item.grade]));
+  const hasEnglishCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'english language' && Boolean(gradePoints[item.grade]));
+  const hasMathCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'mathematics' && Boolean(gradePoints[item.grade]));
   const hasFiveCredits = creditSubjects.length >= 5;
+  const duplicateSubjectCount = assessmentSubjects.filter(item => normalizeSubjectName(item.subject) !== '').length - uniqueAssessmentSubjects.length;
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
   const clear = () => {
@@ -332,6 +352,7 @@ export default function AggregateCalculator() {
             <div><strong>{hasMathCredit ? 'Mathematics credit recorded' : 'Mathematics credit not confirmed'}</strong><small>{hasMathCredit ? 'A Mathematics credit is present in your entries.' : 'Add Mathematics and its grade above if you have it.'}</small></div>
           </div>
         </div>
+        {duplicateSubjectCount > 0 && <p className="aggregate-helper" role="status">{duplicateSubjectCount} duplicate subject {duplicateSubjectCount === 1 ? 'entry was' : 'entries were'} found. Each distinct subject counts only once toward the credit checklist; check the subject names and grades you entered.</p>}
         <p className="aggregate-assessment-disclaimer">
           {assessmentHasSubjects
             ? `Current entry: ${olevelSittings === '1' ? 'one sitting' : 'two sittings'}. `
