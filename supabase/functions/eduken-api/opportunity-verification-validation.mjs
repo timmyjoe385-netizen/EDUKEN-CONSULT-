@@ -1,18 +1,28 @@
+function isTruthyFlag(value) {
+  return value === true ||
+    (typeof value === "string" &&
+      ["true", "t", "1", "yes", "on"].includes(value.trim().toLowerCase()));
+}
+
 export function validateOpportunityVerification(value) {
-  const verified = value?.verified === true ||
-    (typeof value?.verified === "string" &&
-      ["true", "t", "1", "yes", "on"].includes(value.verified.trim().toLowerCase()));
-  if (!verified) {
+  if (!isTruthyFlag(value?.verified)) {
+    return { valid: true };
+  }
+
+  // EDUKEN may verify an opportunity editorially without attaching a source URL.
+  // When a URL is supplied, still reject malformed, unsafe, or credentialed URLs.
+  const rawSource = String(value?.official_source ?? "").trim();
+  if (!rawSource) {
     return { valid: true };
   }
 
   let source;
   try {
-    source = new URL(String(value?.official_source ?? "").trim());
+    source = new URL(rawSource);
   } catch {
     return {
       valid: false,
-      error: "A verified opportunity must include a valid official source URL.",
+      error: "If provided, the official source must be a valid HTTP(S) URL.",
     };
   }
 
@@ -20,7 +30,7 @@ export function validateOpportunityVerification(value) {
       !source.hostname || source.username || source.password) {
     return {
       valid: false,
-      error: "A verified opportunity must include a valid official source URL.",
+      error: "If provided, the official source must be a valid HTTP(S) URL.",
     };
   }
 
@@ -28,8 +38,6 @@ export function validateOpportunityVerification(value) {
 }
 
 export function isOpportunityVerified(value) {
-  const verified = value?.verified === true ||
-    (typeof value?.verified === "string" &&
-      ["true", "t", "1", "yes", "on"].includes(value.verified.trim().toLowerCase()));
-  return verified && validateOpportunityVerification({ ...value, verified: true }).valid;
+  // The badge reflects the admin's editorial verification decision, not URL presence.
+  return isTruthyFlag(value?.verified);
 }
