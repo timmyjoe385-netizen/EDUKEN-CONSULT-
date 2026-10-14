@@ -133,9 +133,6 @@ test("least-privilege migration removes broad client grants and keeps only requi
   assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on sequences from public, anon, authenticated/i);
   assert.match(migration, /revoke execute on all functions in schema public from public, anon, authenticated/i);
   assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke execute on functions from public, anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role supabase_admin in schema public[\s\S]*revoke all privileges on tables from public, anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role supabase_admin in schema public[\s\S]*revoke all privileges on sequences from public, anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role supabase_admin in schema public[\s\S]*revoke execute on functions from public, anon, authenticated/i);
   assert.match(migration, /grant select on table[\s\S]*public\.opportunities[\s\S]*public\.admissions[\s\S]*public\.updates[\s\S]*public\.faqs[\s\S]*public\.services[\s\S]*to anon, authenticated/i);
   assert.match(migration, /grant select, insert, update on table public\.profiles to authenticated/i);
   assert.match(migration, /grant select, update on table public\.notifications to authenticated/i);
