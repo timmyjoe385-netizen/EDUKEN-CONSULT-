@@ -168,7 +168,7 @@ export default function AggregateCalculator() {
     : null;
 
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75');
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setIntendedCourse(''); setStateOfOrigin('');
   };
 
   const filteredDirectory = directory.filter((item) => {
