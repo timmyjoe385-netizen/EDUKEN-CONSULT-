@@ -37,7 +37,7 @@ The public subscription and verification endpoints require rate limiting to be a
 
 The proposed least-privilege migration revokes existing broad client grants and adjusts default privileges for objects created by `postgres`. A read-only production ACL audit also found broad default privileges for `supabase_admin`; the migration role `postgres` is not a member of `supabase_admin`, so it cannot change that role's defaults. Resolve this with an approved owner-level database change or a documented platform-supported procedure before treating default privileges as fully hardened. Do not add a role membership or attempt to change production ACLs from this feature branch.
 
-The live migration history also contains versions `20261011063351` and `20261011192027` whose SQL source files are absent from this repository. Reconcile those source files from the authoritative original before attempting schema repair or production migration work.
+The SQL for historical migration versions `20261011063351` and `20261011192027` was recovered verbatim from the live database's `supabase_migrations.schema_migrations.statements` records and restored as `supabase/migrations/20261011063351_add_opportunity_controls.sql` and `supabase/migrations/20261011192027_add_opportunity_editor_detail_fields.sql`. This restores those two incremental migration sources, but it does not establish a complete initial baseline for the live schema. The repository still needs an authoritative full schema export/reconciliation covering tables, functions, triggers, RLS policies and grants before a clean database reset can be claimed as verified. Do not apply feature migrations to production until that reconciliation and staging reset tests are complete.
 
 ## Security and deployment boundary
 
