@@ -1,5 +1,8 @@
 export function validateOpportunityVerification(value) {
-  if (value?.verified !== true) {
+  const verified = value?.verified === true ||
+    (typeof value?.verified === "string" &&
+      ["true", "t", "1", "yes", "on"].includes(value.verified.trim().toLowerCase()));
+  if (!verified) {
     return { valid: true };
   }
 
