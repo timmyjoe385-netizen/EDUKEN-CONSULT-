@@ -428,6 +428,16 @@ test('service request route validates before inserting into the database', async
   expect(source).toContain('isAllowedServiceRequestStatus(b.status)');
 });
 
+test('database hardening migration removes direct client access to consultation submissions', async () => {
+  const migration = readFileSync(
+    'supabase/migrations/20261013150000_harden_public_table_grants.sql',
+    'utf8',
+  );
+  expect(migration).toContain('revoke all privileges on all tables in schema public from public, anon, authenticated;');
+  expect(migration).toContain('drop policy if exists "Anyone can submit a consultation" on public.consultations;');
+  expect(migration).toContain('do not grant direct client inserts');
+});
+
 test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
