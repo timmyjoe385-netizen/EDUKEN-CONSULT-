@@ -7,9 +7,9 @@
 revoke all privileges on all tables in schema public from public, anon, authenticated;
 revoke all privileges on all sequences in schema public from public, anon, authenticated;
 
--- Prevent future tables/sequences created by postgres from silently
--- inheriting client grants. The live project also has broad defaults for
--- supabase_admin, but postgres is not a member of that role; this migration
+-- Prevent future tables/sequences/functions created by postgres from
+-- silently inheriting client grants. The live project also has broad defaults
+-- for supabase_admin, but postgres is not a member of that role; this migration
 -- cannot alter that role's defaults. That remaining owner-level ACL task must
 -- be completed separately before claiming default privileges are fully hardened.
 -- New client-accessible objects must receive explicit reviewed grants.
