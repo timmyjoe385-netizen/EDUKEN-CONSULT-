@@ -956,41 +956,87 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/payments/initialize" && req.method === "POST") {
-      const user = await requireUser(req); const b = await req.json();
-      if (!b.serviceRequestId || !Number(b.amount) || Number(b.amount) <= 0) return json({ error: "A valid service request and amount are required." }, 400);
-      const { data: request, error: requestError } = await db.from("service_requests").select("id,reference_number,customer_name,email,whatsapp").eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      if (typeof b?.serviceRequestId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(b.serviceRequestId)) {
+        return json({ error: "A valid service request is required." }, 400);
+      }
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,service_id,reference_number,email,services(name,price,is_published)")
+        .eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Service request not found." }, 404);
+      const service = Array.isArray(request.services) ? request.services[0] : request.services;
+      const trustedAmount = Number(service?.price);
+      if (!service || !service.is_published || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+        return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
+      }
+      // If the client sends a display amount, reject stale or tampered values;
+      // the server-side published service price remains authoritative.
+      if (b.amount !== undefined && (!Number.isFinite(Number(b.amount)) || Math.round(Number(b.amount) * 100) !== Math.round(trustedAmount * 100))) {
+        return json({ error: "The service price has changed. Refresh and try again." }, 409);
+      }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
       const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
         method: "POST",
         headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(Number(b.amount) * 100), reference, callback_url: b.callbackUrl || undefined, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
+        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
       });
       const result = await paystack.json();
-      if (!paystack.ok || !result.status) return json({ error: result.message || "Unable to initialize payment." }, 502);
+      if (!paystack.ok || !result.status || !result.data?.authorization_url) return json({ error: "Unable to initialize payment." }, 502);
       const { data: payment, error } = await db.from("payments").insert({
-        user_id: user.id, service_request_id: request.id, amount: Number(b.amount), currency: "NGN", status: "Pending", payment_reference: reference
+        user_id: user.id, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
       }).select().single();
       if (error) throw error;
       return json({ payment, authorizationUrl: result.data.authorization_url, accessCode: result.data.access_code, reference });
     }
 
     if (path === "/api/payments/verify" && req.method === "POST") {
-      const user = await requireUser(req); const b = await req.json();
-      if (!b.reference) return json({ error: "Payment reference is required." }, 400);
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
-      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(String(b.reference)), { headers: { "Authorization": "Bearer " + secret } });
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference")
+        .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment) return json({ error: "Payment record not found." }, 404);
+      if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
+      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
+        headers: { "Authorization": "Bearer " + secret }
+      });
       const result = await response.json();
-      if (!response.ok || !result.status) return json({ error: result.message || "Unable to verify payment." }, 502);
-      const paid = result.data?.status === "success";
-      const { data: payment, error } = await db.from("payments").update({ status: paid ? "Paid" : "Failed", paid_at: paid ? new Date().toISOString() : null }).eq("payment_reference", b.reference).eq("user_id", user.id).select().maybeSingle();
+      if (!response.ok || !result.status || !result.data) return json({ error: "Unable to verify payment with the provider." }, 502);
+      const transaction = result.data;
+      const expectedKobo = Math.round(Number(existingPayment.amount) * 100);
+      const providerAmount = Number(transaction.amount);
+      const providerCurrency = String(transaction.currency || "").toUpperCase();
+      const providerReference = String(transaction.reference || "");
+      const paid = transaction.status === "success";
+      if (paid && (providerAmount !== expectedKobo || providerCurrency !== "NGN" || providerReference !== reference)) {
+        return json({ error: "The provider's payment details do not match this payment. Please contact support." }, 409);
+      }
+      const { data: payment, error } = await db.from("payments").update({
+        status: paid ? "Paid" : "Failed", paid_at: paid ? new Date().toISOString() : null
+      }).eq("id", existingPayment.id).eq("user_id", user.id).eq("status", "Pending").select().maybeSingle();
       if (error) throw error;
-      if (paid && payment?.service_request_id) await db.from("service_requests").update({ status: "Paid" }).eq("id", payment.service_request_id).eq("user_id", user.id);
-      return json({ paid, payment, provider: result.data });
+      if (paid && !payment && existingPayment.status !== "Paid") {
+        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).eq("user_id", user.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Please refresh and check your payment history." }, 409);
+      }
+      if (paid && existingPayment.service_request_id) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+        if (requestUpdateError) throw requestUpdateError;
+      }
+      return json({ paid, payment: payment || existingPayment });
     }
 
     if (path === "/api/payments" && req.method === "GET") {
