@@ -334,8 +334,24 @@ function App() {
     const genericSchool = /^(nigerian universities|universities|polytechnics|colleges of education|admission information|application information|programme information)$/i.test(school);
     const genericCourse = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(course);
     const genericDetails = /^(admission information|application information|programme information|general admission information|details coming soon)$/i.test(details);
-    // Hide seeded category cards even if their generic description field is populated.
-    return (genericSchool || genericCourse || genericDetails) && !link && !deadline;
+    // A single generic field is not enough to discard a potentially real record.
+    // Hide only linkless/deadlineless rows whose populated identifying fields are all generic.
+    const identifyingFields = [school, course, details].filter(Boolean);
+    const genericValues = new Set([
+      'nigerian universities',
+      'universities',
+      'polytechnics',
+      'colleges of education',
+      'admission information',
+      'application information',
+      'programme information',
+      'general admission information',
+      'details coming soon',
+    ]);
+    return identifyingFields.length >= 2 &&
+      identifyingFields.every(value => genericValues.has(value)) &&
+      !link &&
+      !deadline;
   };
 
   const filteredAdmissions = useMemo(
