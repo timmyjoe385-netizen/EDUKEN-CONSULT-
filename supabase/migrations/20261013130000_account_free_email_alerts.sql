@@ -93,7 +93,10 @@ begin
   if p_key_hash is null
      or p_limit is null
      or p_window_seconds is null
-     or p_key_hash !~ '^[a-f0-9]{64}
+     or length(p_key_hash) <> 64
+     or translate(p_key_hash, '0123456789abcdef', '') <> ''
+     or p_limit < 1 or p_limit > 100
+     or p_window_seconds < 1 or p_window_seconds > 86400 then
     raise exception 'Invalid rate-limit arguments';
   end if;
 
