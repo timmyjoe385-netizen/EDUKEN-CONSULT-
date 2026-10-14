@@ -155,6 +155,8 @@ test("least-privilege migration removes broad client grants and keeps only requi
   assert.doesNotMatch(migration, /grant all privileges/i);
   assert.doesNotMatch(migration, /grant [^;]* on table public\.service_requests to authenticated/i);
   assert.doesNotMatch(migration, /grant [^;]* on table public\.consultations to (anon|authenticated)/i);
+  assert.match(migration, /drop policy if exists "Anyone can submit a consultation" on public\.consultations/i);
+  assert.match(migration, /drop policy if exists "Users can create service requests" on public\.service_requests/i);
   assert.match(migration, /RLS policies remain the row-level authorization boundary/i);
 });
 
