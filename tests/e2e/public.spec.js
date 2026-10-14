@@ -439,12 +439,18 @@ test('admin service request status changes are guarded and payment-confirmed sta
   const requireAdminAt = adminRoute.indexOf('await requireAdmin(req)');
   const listAt = adminRoute.indexOf('db.from("service_requests").select');
   const statusValidationAt = adminRoute.indexOf('isAllowedServiceRequestStatus(b.status)');
+  const paidGuardAt = adminRoute.indexOf('existing.status === "Paid"');
+  const paidWriteGuardAt = adminRoute.indexOf('.neq("status", "Paid")');
   const updateAt = adminRoute.indexOf('.update({ status: b.status })');
   expect(requireAdminAt).toBeGreaterThanOrEqual(0);
   expect(listAt).toBeGreaterThan(requireAdminAt);
   expect(statusValidationAt).toBeGreaterThan(requireAdminAt);
-  expect(updateAt).toBeGreaterThan(statusValidationAt);
+  expect(paidGuardAt).toBeGreaterThan(statusValidationAt);
+  expect(updateAt).toBeGreaterThan(paidGuardAt);
+  expect(paidWriteGuardAt).toBeGreaterThan(updateAt);
   expect(adminRoute.slice(updateAt, updateAt + 80)).toContain('.update({ status: b.status })');
+  expect(adminRoute).toContain('Payment-confirmed service requests cannot be changed through the status manager.');
+  expect(adminRoute).toContain('return json({ error: "Service request status could not be updated." }, 409);');
 
   const validator = readFileSync('supabase/functions/eduken-api/service-request-validation.mjs', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
