@@ -700,9 +700,9 @@ test('aggregate calculator applies the added provisional school-specific formula
   await page.getByLabel('Institution / formula').selectOption('custom');
   await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
   await page.getByLabel('Post-UTME score (out of 100)').fill('80');
-  await page.getByLabel('UTME weight (%)').fill('50');
-  await page.getByLabel('Post-UTME weight (%)').fill('30');
-  await page.getByLabel('O’Level weight (%)').fill('20');
+  await page.locator('#aggregate-jw').fill('50');
+  await page.locator('#aggregate-pw').fill('30');
+  await page.locator('#aggregate-ow').fill('20');
   await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
   await expect(page.locator('.aggregate-result')).toContainText('80.00');
