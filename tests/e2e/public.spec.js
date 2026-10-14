@@ -617,3 +617,50 @@ test('public catalogue queries select only reviewed public fields', () => {
   expect(publicContent).not.toContain('db.from("faqs").select("*")');
   expect(publicContent).not.toContain('db.from("services").select("*")');
 });
+
+
+test('aggregate calculator scores only the five FUHSI core subjects and clears extra grades', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'EDUKEN Aggregate Calculator' })).toBeVisible();
+
+  await page.getByLabel('Institution / formula').selectOption('fuhsi');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('300');
+
+  const coreGrades = ['A1', 'B2', 'B3', 'C4', 'C5'];
+  for (const [index, grade] of coreGrades.entries()) {
+    await page.locator('.aggregate-field').filter({ has: page.locator('span', { hasText: ['English Language', 'Mathematics', 'Physics', 'Chemistry', 'Biology'][index] }) })
+      .locator('select').selectOption(grade);
+  }
+
+  await page.getByRole('button', { name: /Add another grade/i }).click();
+  await page.getByLabel('Subject 6').fill('Economics');
+  await page.locator('.aggregate-extra-grade-row select').selectOption('A1');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+
+  const result = page.locator('.aggregate-result');
+  await expect(result).toContainText('75.00');
+  await expect(result).toContainText('Additional grades are kept temporarily');
+  await expect(page.locator('.aggregate-extra-grade-row')).toHaveCount(1);
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(page.locator('.aggregate-extra-grade-row')).toHaveCount(0);
+  await expect(page.locator('.aggregate-result')).toHaveCount(0);
+  await expect(page.getByLabel('JAMB UTME score (out of 400)')).toHaveValue('');
+});
+
+test('aggregate calculator directory search and mobile layout work', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Benin');
+  await expect(page.locator('.aggregate-directory-list')).toContainText('University of Benin (UNIBEN)');
+  await expect(page.locator('.aggregate-directory-list')).not.toContainText('University of Lagos (UNILAG)');
+
+  const dimensions = await page.evaluate(() => ({
+    viewportWidth: document.documentElement.clientWidth,
+    pageWidth: document.documentElement.scrollWidth,
+  }));
+  expect(
+    dimensions.pageWidth,
+    `aggregate calculator should not overflow horizontally on mobile: ${JSON.stringify(dimensions)}`,
+  ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
+});
