@@ -53,6 +53,10 @@ grant select on table public.payments to authenticated;
 -- grant accidentally restores direct client access. The Edge Function uses the
 -- service_role server credential and does not depend on this client-facing policy.
 drop policy if exists "Anyone can submit a consultation" on public.consultations;
+-- Remove the legacy authenticated INSERT path too. Its user_id IS NULL
+-- branch allows signed-in clients to submit anonymous-style requests directly,
+-- bypassing Edge Function validation and the database-backed rate limiter.
+drop policy if exists "Users can create service requests" on public.service_requests;
 
 -- Intentionally no direct client table grants for consultations or other tables.
 -- Public forms and admin CRUD are handled by the server-side Edge Function,
