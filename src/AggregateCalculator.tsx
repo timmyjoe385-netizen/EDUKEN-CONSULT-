@@ -178,9 +178,19 @@ export default function AggregateCalculator() {
         ...extraGrades,
       ]
     : extraGrades;
-  const creditSubjects = assessmentSubjects.filter(item => item.subject.trim() && Boolean(gradePoints[item.grade]));
-  const hasEnglishCredit = assessmentSubjects.some(item => item.subject.trim() && /english/i.test(item.subject) && Boolean(gradePoints[item.grade]));
-  const hasMathCredit = assessmentSubjects.some(item => item.subject.trim() && /mathematics|maths?/i.test(item.subject) && Boolean(gradePoints[item.grade]));
+  const normalizeSubjectName = (subject: string) => {
+    const normalized = subject.toLowerCase().trim().replace(/[^a-z0-9]+/g, ' ').replace(/\\s+/g, ' ');
+    if (normalized === 'maths' || normalized === 'math') return 'mathematics';
+    if (normalized === 'english') return 'english language';
+    return normalized;
+  };
+  const uniqueAssessmentSubjects = assessmentSubjects.filter((item, index, items) => {
+    const normalized = normalizeSubjectName(item.subject);
+    return normalized !== '' && items.findIndex(candidate => normalizeSubjectName(candidate.subject) === normalized) === index;
+  });
+  const creditSubjects = uniqueAssessmentSubjects.filter(item => Boolean(gradePoints[item.grade]));
+  const hasEnglishCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'english language' && Boolean(gradePoints[item.grade]));
+  const hasMathCredit = uniqueAssessmentSubjects.some(item => normalizeSubjectName(item.subject) === 'mathematics' && Boolean(gradePoints[item.grade]));
   const hasFiveCredits = creditSubjects.length >= 5;
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
