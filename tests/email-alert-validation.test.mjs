@@ -181,3 +181,31 @@ test("email-alert subscribe responses do not disclose whether an address is alre
   assert.doesNotMatch(api, /A confirmation was requested recently/);
   assert.doesNotMatch(api, /Check your inbox for a confirmation link/);
 });
+
+
+test("public consultation and service-request routes enforce the atomic database limiter before parsing payloads", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const api = await readFile(resolve(here, "../supabase/functions/eduken-api/index.ts"), "utf8");
+
+  const consultation = api.slice(
+    api.indexOf('if (req.method === "POST" && (path === "/consultations"'),
+    api.indexOf('if (path === "/api/me"')
+  );
+  const serviceRequest = api.slice(
+    api.indexOf('if (path === "/api/service-requests" && req.method === "POST")'),
+    api.indexOf('if (path === "/api/service-requests" && req.method === "GET")')
+  );
+
+  assert.match(consultation, /consumeEmailAlertRateLimit\(req, "consultation"\)/);
+  assert.match(consultation, /if \(rateAllowed === null\)[\s\S]*?503/);
+  assert.match(consultation, /if \(!rateAllowed\)[\s\S]*?429/);
+  assert.ok(consultation.indexOf("consumeEmailAlertRateLimit") < consultation.indexOf("req.json()"));
+
+  assert.match(serviceRequest, /consumeEmailAlertRateLimit\(req, "service-request"\)/);
+  assert.match(serviceRequest, /if \(rateAllowed === null\)[\s\S]*?503/);
+  assert.match(serviceRequest, /if \(!rateAllowed\)[\s\S]*?429/);
+  assert.ok(serviceRequest.indexOf("consumeEmailAlertRateLimit") < serviceRequest.indexOf("req.json()"));
+});
