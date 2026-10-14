@@ -681,10 +681,10 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-directory-list')).toContainText('does not publish the aggregate formula');
 
   await page.getByLabel('Institution / formula').selectOption('oau');
-  await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
+  await expect(page.getByLabel('Post-UTME score (out of 40)')).toBeVisible();
   await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
-  await page.getByLabel('Post-UTME score (out of 100)').fill('30');
+  await page.getByLabel('Post-UTME score (out of 40)').fill('30');
   await page.getByLabel('O’Level contribution (out of 10)').fill('8');
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
-  await expect(page.locator('.aggregate-result')).toContainText('60.00');
+  await expect(page.locator('.aggregate-result')).toContainText('78.00');
 });
