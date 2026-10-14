@@ -33,6 +33,12 @@ The public subscription and verification endpoints require rate limiting to be a
 - An atomic database-backed rate limiter is included in the feature migration: five subscription, consultation, or service-request submissions per identified client IP and endpoint action per 15 minutes, and 20 verification/unsubscribe attempts per IP per 15 minutes. It stores only hashed action/IP keys, fails closed if rate limiting is unavailable, and has no public table/function permissions. Consultation and service-request protection depends on this migration being applied before the corresponding API code is deployed.
 - Test against a dedicated inbox, then review all checks before production deployment.
 
+## Database grant hardening follow-up
+
+The proposed least-privilege migration revokes existing broad client grants and adjusts default privileges for objects created by `postgres`. A read-only production ACL audit also found broad default privileges for `supabase_admin`; the migration role `postgres` is not a member of `supabase_admin`, so it cannot change that role's defaults. Resolve this with an approved owner-level database change or a documented platform-supported procedure before treating default privileges as fully hardened. Do not add a role membership or attempt to change production ACLs from this feature branch.
+
+The live migration history also contains versions `20261011063351` and `20261011192027` whose SQL source files are absent from this repository. Reconcile those source files from the authoritative original before attempting schema repair or production migration work.
+
 ## Security and deployment boundary
 
 Verification tokens are never stored in plaintext in the database. Unsubscribe tokens are deterministically derived with HMAC from the subscription ID and `EMAIL_ALERTS_TOKEN_SECRET`; only their SHA-256 hashes are stored. Keep that secret stable to preserve existing unsubscribe links. The public UI removes one-time query tokens from the address bar before calling the API. Subscriber data and token hashes are not exposed through public database policies. This migration is not applied by this branch and the Edge Function is not deployed to production by CI.
