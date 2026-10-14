@@ -25,15 +25,34 @@ revoke execute on all functions in schema public from public, anon, authenticate
 alter default privileges for role postgres in schema public
   revoke execute on functions from public, anon, authenticated;
 
--- Public catalogue: anonymous visitors may read rows only; existing RLS policies
--- restrict the rows to published content. The Edge Function uses service_role.
-grant select on table
-  public.opportunities,
-  public.admissions,
-  public.updates,
-  public.faqs,
-  public.services
-to anon, authenticated;
+-- Public catalogue: RLS limits rows to published content, while column-level
+-- grants prevent direct PostgREST clients from reading internal editorial fields.
+-- In particular, opportunities.notify_on_publish must remain admin-only.
+revoke select (notify_on_publish) on table public.opportunities from public, anon, authenticated;
+
+grant select (
+  id, title, slug, category, description, organization, location, deadline,
+  application_url, official_source, is_published, created_at, updated_at,
+  verified, featured, urgent, content, eligibility, benefits, how_to_apply
+) on table public.opportunities to anon, authenticated;
+
+grant select (
+  id, title, school, programme, category, description, deadline, application_url,
+  official_source, is_published, created_at, updated_at
+) on table public.admissions to anon, authenticated;
+
+grant select (
+  id, title, category, content, source, source_url, is_published, created_at, updated_at
+) on table public.updates to anon, authenticated;
+
+-- is_published is needed to evaluate the RLS policy but is not returned by the
+-- public-content API; only explicitly listed columns are readable to clients.
+grant select (id, question, answer, category, is_published, created_at, updated_at)
+  on table public.faqs to anon, authenticated;
+
+grant select (
+  id, name, category, description, price, is_published, created_at, updated_at
+) on table public.services to anon, authenticated;
 
 -- User-owned workspace tables: grants permit only operations represented by
 -- the existing auth.uid() = user_id/id RLS policies.
