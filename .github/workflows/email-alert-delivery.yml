@@ -1,8 +1,8 @@
 name: EDUKEN email alert delivery
 
+# Deliberately manual until sender configuration, secrets, and real-subscriber
+# delivery have been verified and live delivery is explicitly enabled.
 on:
-  schedule:
-    - cron: '*/10 * * * *'
   workflow_dispatch:
 
 permissions:
