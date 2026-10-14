@@ -156,7 +156,7 @@ test('preview safety mode blocks email alert subscriptions without sending a req
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
-test('preview safety mode removes email verification tokens and blocks the write', async ({ page }) => {
+test('opening an email verification link requires an explicit user confirmation', async ({ page }) => {
   const token = 'a'.repeat(64);
   let requestReachedApi = false;
   await page.route('**/functions/v1/eduken-api/api/email-alerts/verify', async route => {
@@ -169,16 +169,20 @@ test('preview safety mode removes email verification tokens and blocks the write
   });
 
   await page.goto('/?email_alert_verify=' + token + '#admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog')).toContainText('Confirm your email alerts?');
+  expect(requestReachedApi, 'opening a link alone must not verify a subscription').toBe(false);
+  expect(page.url()).not.toContain('email_alert_verify');
+  expect(page.url()).not.toContain(token);
+  expect(page.url()).toMatch(/#admissions$/);
+
+  await page.getByRole('button', { name: 'Confirm email alerts' }).click();
   await expect(page.getByRole('status')).toContainText(
     'Preview safety mode: saving is disabled until a separate test database is connected.',
   );
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
-  expect(page.url()).not.toContain('email_alert_verify');
-  expect(page.url()).not.toContain(token);
-  expect(page.url()).toMatch(/#admissions$/);
 });
 
-test('preview safety mode removes email unsubscribe tokens and blocks the write', async ({ page }) => {
+test('opening an email unsubscribe link requires an explicit user confirmation', async ({ page }) => {
   const token = 'b'.repeat(64);
   let requestReachedApi = false;
   await page.route('**/functions/v1/eduken-api/api/email-alerts/unsubscribe', async route => {
@@ -191,13 +195,17 @@ test('preview safety mode removes email unsubscribe tokens and blocks the write'
   });
 
   await page.goto('/?email_alert_unsubscribe=' + token + '#admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog')).toContainText('Unsubscribe from email alerts?');
+  expect(requestReachedApi, 'opening a link alone must not unsubscribe a subscriber').toBe(false);
+  expect(page.url()).not.toContain('email_alert_unsubscribe');
+  expect(page.url()).not.toContain(token);
+  expect(page.url()).toMatch(/#admissions$/);
+
+  await page.getByRole('button', { name: 'Yes, unsubscribe' }).click();
   await expect(page.getByRole('status')).toContainText(
     'Preview safety mode: saving is disabled until a separate test database is connected.',
   );
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
-  expect(page.url()).not.toContain('email_alert_unsubscribe');
-  expect(page.url()).not.toContain(token);
-  expect(page.url()).toMatch(/#admissions$/);
 });
 
 test('homepage remains usable at a mobile viewport', async ({ page }) => {
