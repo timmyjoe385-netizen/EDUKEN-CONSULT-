@@ -15,10 +15,10 @@ alter default privileges for role postgres in schema public
 alter default privileges for role postgres in schema public
   revoke all privileges on sequences from anon, authenticated;
 
--- PostgreSQL functions can also receive EXECUTE grants by default. Prevent new
--- public-schema functions from becoming callable by client roles unless a
--- reviewed migration explicitly grants access. Existing functions are not
--- changed here; audit their current EXECUTE grants separately for compatibility.
+-- The live inventory showed only the trigger helper set_updated_at; the email-alert
+-- rate-limit function created by the preceding migration explicitly revokes client
+-- execution too. Remove current client EXECUTE grants and stop future default grants.
+revoke execute on all functions in schema public from anon, authenticated;
 alter default privileges for role postgres in schema public
   revoke execute on functions from anon, authenticated;
 
