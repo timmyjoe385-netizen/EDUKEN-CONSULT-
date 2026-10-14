@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   getNextPaymentStatus,
+  getPaystackAuthorizationUrl,
   isFinalPaystackFailure,
   isSuccessfulPaystackTransaction,
   matchesStoredPaystackPayment,
@@ -52,4 +53,23 @@ test("rejects invalid or non-positive stored amounts", () => {
   const transaction = { amount: 100, currency: "NGN", reference: "ref" };
   assert.equal(matchesStoredPaystackPayment(transaction, { amount: 0, reference: "ref" }), false);
   assert.equal(matchesStoredPaystackPayment(transaction, { amount: "not-a-number", reference: "ref" }), false);
+});
+
+test("only returns HTTPS Paystack-hosted checkout URLs", () => {
+  assert.equal(
+    getPaystackAuthorizationUrl({ status: true, data: { authorization_url: "https://checkout.paystack.com/abc123" } }),
+    "https://checkout.paystack.com/abc123",
+  );
+  for (const authorization_url of [
+    "http://checkout.paystack.com/abc",
+    "https://example.com/fake-checkout",
+    "https://checkout.paystack.com.evil.example/abc",
+    "https://user:pass@checkout.paystack.com/abc",
+    "not a URL",
+    "",
+  ]) {
+    assert.equal(getPaystackAuthorizationUrl({ status: true, data: { authorization_url } }), null, authorization_url);
+  }
+  assert.equal(getPaystackAuthorizationUrl({ status: false, data: { authorization_url: "https://checkout.paystack.com/abc" } }), null);
+  assert.equal(getPaystackAuthorizationUrl(null), null);
 });
