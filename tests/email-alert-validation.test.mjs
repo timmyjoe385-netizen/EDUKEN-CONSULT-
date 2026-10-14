@@ -127,10 +127,12 @@ test("least-privilege migration removes broad client grants and keeps only requi
   const here = dirname(fileURLToPath(import.meta.url));
   const migration = await readFile(resolve(here, "../supabase/migrations/20261013150000_harden_public_table_grants.sql"), "utf8");
 
-  assert.match(migration, /revoke all privileges on all tables in schema public from anon, authenticated/i);
-  assert.match(migration, /revoke all privileges on all sequences in schema public from anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on tables from anon, authenticated/i);
-  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on sequences from anon, authenticated/i);
+  assert.match(migration, /revoke all privileges on all tables in schema public from public, anon, authenticated/i);
+  assert.match(migration, /revoke all privileges on all sequences in schema public from public, anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on tables from public, anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke all privileges on sequences from public, anon, authenticated/i);
+  assert.match(migration, /revoke execute on all functions in schema public from public, anon, authenticated/i);
+  assert.match(migration, /alter default privileges for role postgres in schema public[\s\S]*revoke execute on functions from public, anon, authenticated/i);
   assert.match(migration, /grant select on table[\s\S]*public\.opportunities[\s\S]*public\.admissions[\s\S]*public\.updates[\s\S]*public\.faqs[\s\S]*public\.services[\s\S]*to anon, authenticated/i);
   assert.match(migration, /grant select, insert, update on table public\.profiles to authenticated/i);
   assert.match(migration, /grant select, update on table public\.notifications to authenticated/i);
