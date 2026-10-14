@@ -164,3 +164,18 @@ test("verified opportunity email alerts permit a missing source but reject unsaf
   assert.equal(isEmailAlertOpportunityEligible({ ...base, is_published: false, official_source: null }), false);
   assert.equal(isEmailAlertOpportunityEligible({ ...base, notify_on_publish: false, official_source: null }), false);
 });
+
+
+test("email-alert subscribe responses do not disclose whether an address is already subscribed", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const api = await readFile(resolve(here, "../supabase/functions/eduken-api/index.ts"), "utf8");
+  const genericResponse = 'message: "If this address is eligible, your request has been processed. Check your inbox if confirmation is required."';
+
+  assert.equal(api.split(genericResponse).length - 1, 3);
+  assert.doesNotMatch(api, /Your email alert preferences have been updated/);
+  assert.doesNotMatch(api, /A confirmation was requested recently/);
+  assert.doesNotMatch(api, /Check your inbox for a confirmation link/);
+});
