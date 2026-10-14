@@ -16,6 +16,10 @@ test("verified opportunities require an HTTP(S) official source URL", () => {
     validateOpportunityVerification({ verified: true, official_source: "http://example.org/source" }),
     { valid: true },
   );
+  assert.equal(
+    validateOpportunityVerification({ verified: "true", official_source: "" }).valid,
+    false,
+  );
 });
 
 test("verified opportunities reject missing, malformed, unsafe, or credentialed source URLs", () => {
