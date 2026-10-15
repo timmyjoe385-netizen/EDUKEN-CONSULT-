@@ -953,3 +953,13 @@ test('FUHSI official course and catchment cut-offs populate the comparison safel
   await expect(page.getByLabel('FUHSI course (2026/2027 official cut-off)')).toHaveValue('');
   await expect(cutoff).toHaveValue('');
 });
+
+
+test('public navigation hides admin entry while the private /admin URL opens sign-in', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('button', { name: /^Admin$/ })).toHaveCount(0);
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveURL(/\/admin\/?$/);
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+});
