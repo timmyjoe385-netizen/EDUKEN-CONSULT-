@@ -206,7 +206,7 @@ function App() {
     let active = true;
     // Admin entry is intentionally not linked from public navigation.
     // Owners can open /admin directly; OAuth returns to this same path.
-    if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
+    if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
       setLoginOpen(true);
     }
     const params = new URLSearchParams(window.location.search);
