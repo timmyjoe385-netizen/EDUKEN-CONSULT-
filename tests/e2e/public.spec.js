@@ -784,7 +784,8 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
   await expect(page.getByLabel('Institution / formula').locator('option[value="oau"]')).toHaveAttribute('disabled', '');
-  await expect(page.locator('.aggregate-result')).toHaveCount(0);
+  await expect(page.getByLabel('Institution / formula')).toHaveValue('unilag');
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
 
   await page.getByLabel('Institution / formula').selectOption('uniben');
   await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
