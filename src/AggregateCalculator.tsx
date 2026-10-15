@@ -273,7 +273,7 @@ export default function AggregateCalculator() {
             const presets: Record<string, [string, string, string]> = {
               unilag50: ['50', '50', '0'], 'ui-estimate': ['50', '50', '0'], 'oau-estimate': ['50', '40', '10'],
               'unn50': ['50', '50', '0'], 'unn90': ['90', '10', '0'], futminna: ['50', '30', '20'],
-              fuoye: ['60', '40', '0'], f50: ['50', '50', '0'], 'f503020': ['50', '30', '20'],
+              fuoye: ['60', '40', '0'], kwasu: ['70', '0', '30'], f50: ['50', '50', '0'], 'f503020': ['50', '30', '20'],
               'f6040': ['60', '40', '0'], 'f4060': ['40', '60', '0'], 'f7525': ['75', '25', '0'],
               screen: ['70', '0', '30'], 'jambonly': ['100', '0', '0']
             };
@@ -357,6 +357,7 @@ export default function AggregateCalculator() {
         </label>
         {(school === 'unilag' || school === 'unilag50' || school === 'ui-estimate' || school === 'oau-estimate' || school === 'unn50' || school === 'unn90' || school === 'futminna' || school === 'fuoye') && <p className="aggregate-helper">This is a provisional or historical model, not a verified current-session institutional scoring rule. Confirm the current formula with the institution before relying on this result.</p>}
         {isGenericModel && school !== 'custom' && <p className="aggregate-helper">Your institution remains available in the list. Its current official scoring formula has not been fully verified here, so this calculator uses editable general weights only. Adjust the weights to match an official admission notice; do not treat the default estimate as the institution’s official result.</p>}
+        {school === 'kwasu' && <p className="aggregate-helper">KWASU’s official 2026/2027 notice confirms 70% UTME/DE and 30% for five relevant O’Level grades. The notice does not provide a complete grade-to-point conversion in the source checked, so enter the O’Level component score from official instructions; do not treat a guessed grade conversion as official.</p>}
         {school === 'uniben' && <p className="aggregate-helper">Multiple education sources report a 50:50 formula for UNIBEN, but we did not find an official university page confirming this weighting for 2026/2027. Treat the result as provisional and verify the current admission instructions.</p>}
         <div className="aggregate-field">
           <label htmlFor="aggregate-jamb">JAMB UTME score (out of 400)</label>
