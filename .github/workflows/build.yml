@@ -25,3 +25,5 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build website
         run: npm run build
+      - name: Run validation and security regression tests
+        run: npm run test:validation
