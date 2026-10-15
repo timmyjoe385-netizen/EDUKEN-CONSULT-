@@ -1167,6 +1167,11 @@ Deno.serve(async (req) => {
           .upsert({ id: "global", settings: incoming, updated_by: user.id, updated_at: new Date().toISOString() }, { onConflict: "id" })
           .select("settings,updated_at").single();
         if (error) throw error;
+        if (!incoming.deadlineEmailAlertsEnabled) {
+          const { error: cancelError } = await db.from("email_alert_deliveries")
+            .update({ status: "cancelled" }).eq("status", "pending");
+          if (cancelError) throw cancelError;
+        }
         return json({ ok: true, settings: data.settings, updated_at: data.updated_at });
       }
       return json({ error: "Method not allowed." }, 405);
