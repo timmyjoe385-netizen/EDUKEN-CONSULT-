@@ -204,6 +204,11 @@ function App() {
 
   useEffect(() => {
     let active = true;
+    // Admin entry is intentionally not linked from public navigation.
+    // Owners can open /admin directly; OAuth returns to this same path.
+    if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
+      setLoginOpen(true);
+    }
     const params = new URLSearchParams(window.location.search);
     const verificationToken = params.get('email_alert_verify');
     const unsubscribeToken = params.get('email_alert_unsubscribe');
@@ -1262,9 +1267,6 @@ function App() {
                 Install App
               </button>
             )}
-            <button className="admin-login" onClick={() => setLoginOpen(true)}>
-              <ShieldCheck size={15} /> Admin
-            </button>
           </nav>
         </header>
         <main className="article-page">
@@ -1523,9 +1525,6 @@ function App() {
               Install App
             </button>
           )}
-          <button className="admin-login" onClick={signIn}>
-            <ShieldCheck size={15} /> Admin
-          </button>
           <a className="nav-cta" href={WA} target="_blank" rel="noreferrer">
             Get Consultation <ArrowRight size={16} />
           </a>
@@ -2302,6 +2301,17 @@ function App() {
               </button>
               <button type="button" className="secondary" disabled={emailActionSubmitting} onClick={() => setPendingEmailAction(null)}>Cancel</button>
             </div>
+          </section>
+        </div>
+      )}
+      {loginOpen && (
+        <div className="login-backdrop" role="presentation" onClick={event => { if (event.target === event.currentTarget) setLoginOpen(false); }}>
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+            <button className="login-close" type="button" aria-label="Close sign-in" onClick={() => setLoginOpen(false)}>×</button>
+            <span className="kicker">PRIVATE ADMIN ACCESS</span>
+            <h2 id="admin-login-title">Admin sign in</h2>
+            <p>This private sign-in page is for authorized EDUKEN CONSULT administrators only.</p>
+            <button className="primary login-submit" type="button" onClick={() => void signIn()}><ArrowRight size={17} /> Continue with Google</button>
           </section>
         </div>
       )}
