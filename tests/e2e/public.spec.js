@@ -1065,3 +1065,23 @@ test('aggregate calculator clear preserves KWASU official weights', async ({ pag
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
   await expect(page.locator('.aggregate-result')).toContainText('80.00');
 });
+
+test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-point cut-offs', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('jambonly');
+
+  const target = page.getByLabel('Target aggregate (out of 50)');
+  const cutoff = page.getByLabel('Departmental cut-off mark (optional, out of 50)');
+  await expect(target).toHaveValue('40');
+  await expect(cutoff).toBeVisible();
+
+  await target.fill('51');
+  await expect(page.getByRole('alert')).toContainText('Enter a target from 0 to 50');
+  await cutoff.fill('51');
+  await expect(page.getByRole('alert')).toContainText('Enter a departmental cut-off from 0 to 50');
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(target).toHaveValue('40');
+  await expect(cutoff).toHaveValue('');
+  await expect(page.getByRole('alert')).toHaveCount(0);
+});
