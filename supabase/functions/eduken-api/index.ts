@@ -531,6 +531,52 @@ Deno.serve(async (req) => {
   try {
     if (req.method === "GET" && path === "/health") return json({ ok: true, service: "EDUKEN CONSULT API", version: 4 });
 
+    // Paystack signs webhook bodies with HMAC-SHA512. Verify the exact raw body
+    // before parsing or processing it; never trust browser redirects as payment proof.
+    if (path === "/api/payments/webhook" && req.method === "POST") {
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      const mode = (Deno.env.get("PAYSTACK_MODE") || "test").toLowerCase();
+      if (!secret || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
+        return json({ error: "Payment gateway is not configured for the selected mode." }, 503);
+      }
+      const rawBody = await req.text();
+      const supplied = req.headers.get("x-paystack-signature") || "";
+      const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-512" }, false, ["sign"]);
+      const digest = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(rawBody)));
+      const expected = Array.from(digest, byte => byte.toString(16).padStart(2, "0")).join("");
+      if (!/^[a-f0-9]{128}$/i.test(supplied) || supplied.length !== expected.length) return json({ error: "Invalid webhook signature." }, 401);
+      let signatureMatches = true;
+      for (let i = 0; i < expected.length; i++) signatureMatches = signatureMatches && (expected.charCodeAt(i) === supplied.toLowerCase().charCodeAt(i));
+      if (!signatureMatches) return json({ error: "Invalid webhook signature." }, 401);
+      let event: any;
+      try { event = JSON.parse(rawBody); } catch { return json({ error: "Invalid webhook payload." }, 400); }
+      if (event?.event !== "charge.success" || !event?.data) return json({ received: true });
+      const transaction = event.data;
+      const reference = typeof transaction.reference === "string" ? transaction.reference : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference) || !isSuccessfulPaystackTransaction(transaction)) return json({ received: true });
+      const { data: payment, error: lookupError } = await db.from("payments")
+        .select("id,user_id,service_request_id,amount,currency,status,payment_reference")
+        .eq("payment_reference", reference).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!payment) return json({ error: "Payment reference not found." }, 404);
+      if (!matchesStoredPaystackPayment(transaction, { amount: payment.amount, currency: payment.currency, reference })) {
+        console.error("Paystack webhook amount/currency/reference mismatch.", reference);
+        return json({ error: "Payment details do not match the stored payment." }, 409);
+      }
+      if (payment.status !== "Paid") {
+        const { error: updateError } = await db.from("payments").update({ status: "Paid", paid_at: new Date().toISOString() })
+          .eq("id", payment.id).in("status", ["Pending", "Failed"]);
+        if (updateError) throw updateError;
+      }
+      if (payment.service_request_id) {
+        let requestUpdate = db.from("service_requests").update({ status: "Paid" }).eq("id", payment.service_request_id);
+        requestUpdate = payment.user_id ? requestUpdate.eq("user_id", payment.user_id) : requestUpdate.is("user_id", null);
+        const { error: requestUpdateError } = await requestUpdate;
+        if (requestUpdateError) throw requestUpdateError;
+      }
+      return json({ received: true });
+    }
+
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
     if (req.method === "POST" && (path === "/consultations" || path === "/api/consultations")) {
@@ -1071,59 +1117,77 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/payments/initialize" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await currentUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       if (typeof b?.serviceRequestId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(b.serviceRequestId)) {
         return json({ error: "A valid service request is required." }, 400);
       }
-      const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,service_id,reference_number,email,services(name,price,is_published)")
-        .eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
+      const email = typeof b.email === "string" ? b.email.trim() : "";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 200) {
+        return json({ error: "Enter a valid email address for your payment receipt." }, 400);
+      }
+      let requestQuery = db.from("service_requests")
+        .select("id,user_id,service_id,reference_number,email,details,services(name,price,is_published)")
+        .eq("id", b.serviceRequestId);
+      requestQuery = user ? requestQuery.eq("user_id", user.id) : requestQuery.is("user_id", null).eq("email", email);
+      const { data: request, error: requestError } = await requestQuery.maybeSingle();
       if (requestError) throw requestError;
-      if (!request) return json({ error: "Service request not found." }, 404);
+      if (!request) return json({ error: "Service request not found for this account/email." }, 404);
+      if (String(request.email || "").trim().toLowerCase() !== email.toLowerCase()) return json({ error: "Use the same email address you entered on the service request." }, 400);
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
-      const trustedAmount = Number(service?.price);
+      const candidateMatch = String(request.details || "").match(/(?:^|\n)Number of candidates:\s*(\d+)/i);
+      const quantity = Math.min(100, Math.max(1, Number(candidateMatch?.[1] || 1)));
+      const unitAmount = Number(service?.price);
+      const trustedAmount = unitAmount * quantity;
       if (!service || !service.is_published || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
         return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
       }
-      // If the client sends a display amount, reject stale or tampered values;
-      // the server-side published service price remains authoritative.
+      // Server-side published catalogue price and validated candidate quantity are authoritative.
       if (b.amount !== undefined && (!Number.isFinite(Number(b.amount)) || Math.round(Number(b.amount) * 100) !== Math.round(trustedAmount * 100))) {
         return json({ error: "The service price has changed. Refresh and try again." }, 409);
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      const mode = (Deno.env.get("PAYSTACK_MODE") || "test").toLowerCase();
+      if (!secret || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
+        return json({ error: "Payment gateway is not configured for the selected mode.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      }
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
+      const callbackBase = Deno.env.get("PAYSTACK_CALLBACK_URL") || "https://eduken-consult.timmyjoe385.workers.dev/";
+      const callbackUrl = new URL(callbackBase);
+      callbackUrl.searchParams.set("payment_reference", reference);
       const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
         method: "POST",
         headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
+        body: JSON.stringify({ email, amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl.toString(), metadata: { service_request_id: request.id, user_id: user?.id ?? null, reference_number: request.reference_number, quantity } })
       });
       let result: any;
       try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
       const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
       const { data: payment, error } = await db.from("payments").insert({
-        user_id: user.id, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
+        user_id: user?.id ?? null, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
       }).select().single();
       if (error) throw error;
       return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
     if (path === "/api/payments/verify" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await currentUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
       if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      const mode = (Deno.env.get("PAYSTACK_MODE") || "test").toLowerCase();
+      if (!secret || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
+        return json({ error: "Payment gateway is not configured for the selected mode.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      }
       const { data: existingPayment, error: lookupError } = await db.from("payments")
-        .select("id,amount,currency,status,service_request_id,payment_reference")
-        .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
+        .select("id,user_id,amount,currency,status,service_request_id,payment_reference")
+        .eq("payment_reference", reference).maybeSingle();
       if (lookupError) throw lookupError;
-      if (!existingPayment) return json({ error: "Payment record not found." }, 404);
+      if (!existingPayment || (user && existingPayment.user_id && existingPayment.user_id !== user.id)) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
@@ -1143,16 +1207,17 @@ Deno.serve(async (req) => {
       const nextPaymentStatus = getNextPaymentStatus(transaction);
       const { data: payment, error } = await db.from("payments").update({
         status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
-      }).eq("id", existingPayment.id).eq("user_id", user.id).in("status", ["Pending", "Failed"]).select().maybeSingle();
+      }).eq("id", existingPayment.id).in("status", ["Pending", "Failed"]).select().maybeSingle();
       if (error) throw error;
       if (paid && !payment && existingPayment.status !== "Paid") {
-        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).eq("user_id", user.id).maybeSingle();
+        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).maybeSingle();
         if (currentError) throw currentError;
         if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Please refresh and check your payment history." }, 409);
       }
       if (paid && existingPayment.service_request_id) {
-        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
-          .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+        let requestUpdate = db.from("service_requests").update({ status: "Paid" }).eq("id", existingPayment.service_request_id);
+        requestUpdate = existingPayment.user_id ? requestUpdate.eq("user_id", existingPayment.user_id) : requestUpdate.is("user_id", null);
+        const { error: requestUpdateError } = await requestUpdate;
         if (requestUpdateError) throw requestUpdateError;
       }
       return json({ paid, payment: payment || existingPayment });
