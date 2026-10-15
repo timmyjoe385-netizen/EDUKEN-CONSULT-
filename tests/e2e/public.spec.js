@@ -803,10 +803,10 @@ test('public catalogue queries select only reviewed public fields', () => {
     'db.from("opportunities").select("id, title, slug, category, description, organization, location, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent, content, eligibility, benefits, how_to_apply")',
   );
   expect(publicContent).toContain(
-    'db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at")',
+    'db.from("admissions").select("id, title, slug, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent")',
   );
   expect(publicContent).toContain(
-    'db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at")',
+    'db.from("updates").select("id, title, slug, category, content, source, source_url, is_published, created_at, updated_at, verified, featured, urgent")',
   );
   expect(publicContent).toContain(
     'db.from("faqs").select("id, question, answer, category, created_at, updated_at")',
