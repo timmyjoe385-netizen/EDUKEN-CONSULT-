@@ -268,11 +268,11 @@ export default function AggregateCalculator() {
             const nextSchool = e.target.value as SchoolKey;
             setSchool(nextSchool);
             const presets: Record<string, [string, string, string]> = {
-              unilag50: ['50', '50', '0'], ui-estimate: ['50', '50', '0'], oau-estimate: ['50', '40', '10'],
-              unn50: ['50', '50', '0'], unn90: ['90', '10', '0'], futminna: ['50', '30', '20'],
-              fuoye: ['60', '40', '0'], f50: ['50', '50', '0'], f503020: ['50', '30', '20'],
-              f6040: ['60', '40', '0'], f4060: ['40', '60', '0'], f7525: ['75', '25', '0'],
-              screen: ['70', '0', '30'], jambonly: ['100', '0', '0']
+              unilag50: ['50', '50', '0'], 'ui-estimate': ['50', '50', '0'], 'oau-estimate': ['50', '40', '10'],
+              'unn50': ['50', '50', '0'], 'unn90': ['90', '10', '0'], futminna: ['50', '30', '20'],
+              fuoye: ['60', '40', '0'], f50: ['50', '50', '0'], 'f503020': ['50', '30', '20'],
+              'f6040': ['60', '40', '0'], 'f4060': ['40', '60', '0'], 'f7525': ['75', '25', '0'],
+              screen: ['70', '0', '30'], 'jambonly': ['100', '0', '0']
             };
             if (presets[nextSchool]) {
               setJambWeight(presets[nextSchool][0]);
