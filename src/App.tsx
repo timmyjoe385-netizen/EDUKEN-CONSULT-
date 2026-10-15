@@ -158,24 +158,60 @@ function App() {
   const admissionUrl = (item: Item) =>
     window.location.origin + window.location.pathname + '#admission/' + encodeURIComponent(String(item.id));
 
+  const formatShareDate = (value: string) => {
+    const match = value.match(/^(\d{4})-(\d{2})-(\d{2})(?:$|T)/);
+    if (!match) return value;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    if (
+      date.getUTCFullYear() !== year ||
+      date.getUTCMonth() !== month - 1 ||
+      date.getUTCDate() !== day
+    ) return value;
+    return new Intl.DateTimeFormat('en-GB', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      timeZone: 'UTC',
+    }).format(date);
+  };
+
   const shareAdmissionOnWhatsApp = (item: Item) => {
     const title = String(item.school || item.title || 'Admission update').trim();
     const course = String(item.course || item.programme || '').trim();
-    const details = String(item.details || item.description || item.content || '')
+    const rawDetails = String(item.details || item.description || item.content || '')
       .replace(/\s+/g, ' ')
-      .trim()
-      .slice(0, 240);
-    const deadline = String(item.deadline || '').trim();
+      .trim();
+    const details = rawDetails.slice(0, 240);
+    const dateValue = String(item.deadline || '').trim();
     const link = admissionUrl(item);
-    const headline = course
-      ? '🎓 ADMISSION SPOTLIGHT: ' + title + ' — ' + course
-      : '🎓 ADMISSION SPOTLIGHT: ' + title;
+    const context = [title, course, String(item.type || ''), rawDetails].join(' ');
+    const calendarMatch = context.match(/\b(20\d{2}\s*[/–-]\s*20\d{2})\b/);
+    const isAcademicCalendar = /academic calendar/i.test(context) && Boolean(calendarMatch);
+    const session = calendarMatch?.[1].replace(/\s*([/–-])\s*/g, '$1');
+    const genericCourse = /^(all\s+programmes?|all\s+programs?|all courses?)$/i.test(course);
+    const headlineTitle = isAcademicCalendar && session
+      ? title + ' — ' + session + ' Academic Calendar'
+      : title + (course && !genericCourse ? ' — ' + course : '');
+    const headline = '🎓 ADMISSION SPOTLIGHT: ' + headlineTitle;
+    const dateLabel = /\b(resumption|resume|reopening|re-open|reopen|resumes)\b/i.test(context)
+      ? 'Resumption Date'
+      : /\b(application deadline|deadline|closing date|last date to apply|applications close)\b/i.test(context)
+        ? 'Application Deadline'
+        : 'Key Date';
+    const formattedDate = dateValue ? formatShareDate(dateValue) : '';
+    const intro = isAcademicCalendar
+      ? '📣 STUDENTS, TAKE NOTE! Check this academic calendar update from EDUKEN CONSULT.'
+      : '📣 Looking for your next admission opportunity? Check out this update from EDUKEN CONSULT.';
     const message = [
       headline,
       '',
-      '📣 Looking for your next admission opportunity? Check out this update from EDUKEN CONSULT.',
+      intro,
       ...(details ? ['', details] : []),
-      ...(deadline ? ['', '⏳ Deadline: ' + deadline] : []),
+      ...(formattedDate ? ['', '📅 ' + dateLabel + ': ' + formattedDate] : []),
       '',
       '👉 READ MORE on EDUKEN CONSULT:',
       link,
