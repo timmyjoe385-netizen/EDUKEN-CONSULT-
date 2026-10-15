@@ -2676,7 +2676,7 @@ function App() {
                       {field.options.map(option => <option key={option} value={option}>{option}</option>)}
                     </select>
                   ) : (
-                    <input name={'serviceField_' + field.name} required maxLength={160} placeholder={field.placeholder || field.label} aria-label={field.label} />
+                    <input name={'serviceField_' + field.name} type={field.type || 'text'} min={field.type === 'number' ? 2000 : undefined} max={field.type === 'number' ? 2100 : undefined} required maxLength={160} placeholder={field.placeholder || field.label} aria-label={field.label} />
                   )}
                 </label>
               ))}
