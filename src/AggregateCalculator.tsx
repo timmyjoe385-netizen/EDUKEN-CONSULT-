@@ -6,6 +6,14 @@ type FormulaStatus = 'official' | 'community';
 const gradePoints: Record<string, number> = { A1: 8, B2: 7, B3: 6, C4: 5, C5: 4, C6: 3 };
 const gradeOptions = Object.keys(gradePoints);
 
+type AggregatePart = { label: string; value: number; max: number };
+const buildAggregateResult = (parts: AggregatePart[]) => ({
+  total: parts.reduce((sum, part) => sum + part.value, 0),
+  parts,
+});
+const weightedContribution = (score: number, scoreMax: number, weight: number) =>
+  scoreMax > 0 ? (score / scoreMax) * weight : 0;
+
 const fuhsiCutoffCategories = ['Merit', 'Osun', 'Oyo', 'Ondo', 'Ogun', 'Ekiti', 'Lagos'] as const;
 type FuhsiCutoffCategory = typeof fuhsiCutoffCategories[number];
 const fuhsiDepartmentCutoffs: Record<string, Record<FuhsiCutoffCategory, number>> = {
@@ -98,60 +106,60 @@ export default function AggregateCalculator() {
     const utme = clamp(jamb, 400);
     if (school === 'unilorin') {
       const parts = [
-        { label: 'UTME contribution', value: utme / 400 * 50, max: 50 },
-        { label: 'Post-UTME contribution', value: clamp(post, 100) / 100 * 30, max: 30 },
-        { label: 'O’Level contribution (entered out of 20)', value: clamp(olevelPoints, 20), max: 20 },
+        { label: 'UTME contribution', value: weightedContribution(utme, 400, 50), max: 50 },
+        { label: 'Post-UTME contribution', value: weightedContribution(clamp(post, 100), 100, 30), max: 30 },
+        { label: 'O’Level contribution (entered out of 20)', value: weightedContribution(clamp(olevelPoints, 20), 1, 1), max: 20 },
       ];
-      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+      return buildAggregateResult(parts);
     }
     if (school === 'fuhsi') {
       const olevel = grades.reduce((sum, grade) => sum + (gradePoints[grade] || 0), 0);
       const parts = [
-        { label: 'UTME contribution', value: utme / 400 * 70, max: 70 },
-        { label: 'O’Level contribution', value: olevel / 40 * 30, max: 30 },
+        { label: 'UTME contribution', value: weightedContribution(utme, 400, 70), max: 70 },
+        { label: 'O’Level contribution', value: weightedContribution(olevel, 40, 30), max: 30 },
       ];
-      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+      return buildAggregateResult(parts);
     }
     if (school === 'ui') {
       const parts = [
-        { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
-        { label: 'Post-UTME contribution (reported 50%)', value: clamp(post, 100) / 100 * 50, max: 50 },
+        { label: 'UTME contribution (reported 50%)', value: weightedContribution(utme, 400, 50), max: 50 },
+        { label: 'Post-UTME contribution (reported 50%)', value: weightedContribution(clamp(post, 100), 100, 50), max: 50 },
       ];
-      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+      return buildAggregateResult(parts);
     }
     if (school === 'unilag') {
       const parts = [
-        { label: 'UTME contribution (historical 50%)', value: utme / 400 * 50, max: 50 },
-        { label: 'Post-UTME contribution (historical 30%)', value: clamp(post, 100) / 100 * 30, max: 30 },
-        { label: 'O’Level contribution (manually entered out of 20)', value: clamp(olevelPoints, 20), max: 20 },
+        { label: 'UTME contribution (historical 50%)', value: weightedContribution(utme, 400, 50), max: 50 },
+        { label: 'Post-UTME contribution (historical 30%)', value: weightedContribution(clamp(post, 100), 100, 30), max: 30 },
+        { label: 'O’Level contribution (manually entered out of 20)', value: weightedContribution(clamp(olevelPoints, 20), 1, 1), max: 20 },
       ];
-      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+      return buildAggregateResult(parts);
     }
     if (school === 'oau') {
       const parts = [
-        { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
+        { label: 'UTME contribution (reported 50%)', value: weightedContribution(utme, 400, 50), max: 50 },
         { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 100) / 100 * 40, max: 40 },
-        { label: 'O’Level contribution (manually entered out of 10)', value: clamp(olevelPoints, 10), max: 10 },
+        { label: 'O’Level contribution (manually entered out of 10)', value: weightedContribution(clamp(olevelPoints, 10), 1, 1), max: 10 },
       ];
-      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+      return buildAggregateResult(parts);
     }
     if (school === 'uniben') {
       const parts = [
-        { label: 'UTME contribution (reported 50%)', value: utme / 400 * 50, max: 50 },
-        { label: 'Post-UTME contribution (reported 50%)', value: clamp(post, 100) / 100 * 50, max: 50 },
+        { label: 'UTME contribution (reported 50%)', value: weightedContribution(utme, 400, 50), max: 50 },
+        { label: 'Post-UTME contribution (reported 50%)', value: weightedContribution(clamp(post, 100), 100, 50), max: 50 },
       ];
-      return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+      return buildAggregateResult(parts);
     }
     const jw = clamp(jambWeight, 100);
     const pw = clamp(postWeight, 100);
     const ow = clamp(olevelWeight, 100);
     const totalWeight = jw + pw + ow || 1;
     const parts = [
-      { label: 'UTME contribution', value: utme / 400 * (jw / totalWeight * 100), max: jw / totalWeight * 100 },
-      { label: 'Post-UTME contribution', value: clamp(post, 100) / 100 * (pw / totalWeight * 100), max: pw / totalWeight * 100 },
-      ...(ow > 0 ? [{ label: 'O’Level contribution (manual score out of 100)', value: clamp(olevelPoints, 100) / 100 * (ow / totalWeight * 100), max: ow / totalWeight * 100 }] : []),
+      { label: 'UTME contribution', value: weightedContribution(utme, 400, jw / totalWeight * 100), max: jw / totalWeight * 100 },
+      { label: 'Post-UTME contribution', value: weightedContribution(clamp(post, 100), 100, pw / totalWeight * 100), max: pw / totalWeight * 100 },
+      ...(ow > 0 ? [{ label: 'O’Level contribution (manual score out of 100)', value: weightedContribution(clamp(olevelPoints, 100), 100, ow / totalWeight * 100), max: ow / totalWeight * 100 }] : []),
     ];
-    return { total: parts.reduce((sum, part) => sum + part.value, 0), parts };
+    return buildAggregateResult(parts);
   }, [school, jamb, post, olevelPoints, grades, jambWeight, postWeight, olevelWeight]);
 
   const validJamb = isValidWholeScore(jamb, 400);
@@ -165,7 +173,7 @@ export default function AggregateCalculator() {
     (school === 'unilorin' ? validPost && validOlevelPoints :
       school === 'fuhsi' ? grades.every(Boolean) :
       school === 'unilag' ? validPost && validOlevelPoints :
-      school === 'oau' ? validPost && validOlevelPoints :
+      school === 'oau' ? false :
       school === 'ui' ? false :
       school === 'uniben' ? validPost :
       validPost && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
@@ -173,7 +181,7 @@ export default function AggregateCalculator() {
   const plannerPostWeight = school === 'unilorin' ? 30
     : school === 'uniben' ? 50
     : school === 'unilag' ? 30
-    : school === 'oau' ? 40
+    : school === 'oau' ? 0
     : school === 'custom'
       ? (Number(postWeight) / (Number(jambWeight) + Number(postWeight) + Number(olevelWeight) || 1)) * 100
       : 0;
@@ -183,9 +191,11 @@ export default function AggregateCalculator() {
   const validTarget = isValidScore(targetAggregate, 100);
   const plannerHasRequiredInputs = validJamb && validTarget &&
     (school === 'fuhsi' ? grades.every(Boolean) :
-      school === 'unilorin' || school === 'unilag' || school === 'oau'
-        ? validOlevelPoints
-        : school === 'custom'
+      school === 'oau'
+        ? false
+        : school === 'unilorin' || school === 'unilag'
+          ? validOlevelPoints
+          : school === 'custom'
           ? validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100))
           : true);
   const requiredPostScore = plannerPostWeight > 0
