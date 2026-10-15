@@ -23,6 +23,7 @@ import {
   X,
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
+import PaymentsAdmin from './PaymentsAdmin';
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
@@ -1197,6 +1198,7 @@ function App() {
               'services',
               'consultations',
               'service-requests',
+              'payments',
               'analytics',
               'system-settings',
             ].map(tab => (
@@ -1217,8 +1219,10 @@ function App() {
                     ? '📩 Consultations'
                     : tab === 'service-requests'
                       ? '🧾 Service Requests'
-                      : tab === 'analytics'
-                      ? '📊 Analytics & Insights'
+                      : tab === 'payments'
+                        ? '💳 Payments'
+                        : tab === 'analytics'
+                          ? '📊 Analytics & Insights'
                       : tab === 'system-settings'
                         ? '⚙️ Manage System'
                         : tab[0].toUpperCase() + tab.slice(1)}
@@ -1322,6 +1326,8 @@ function App() {
                                 </>
                               ) : null}
                             </section>
+            ) : adminTab === 'payments' ? (
+              <PaymentsAdmin />
             ) : adminTab === 'service-requests' ? (
               <div className="admin-list">
                 {serviceRequests.length === 0 ? (
