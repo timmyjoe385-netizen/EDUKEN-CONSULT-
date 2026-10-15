@@ -779,11 +779,11 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-result')).toContainText('79.00');
   await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
 
-  await expect(page.getByLabel('Institution / formula').locator('option[value="ui"]')).toHaveAttribute('disabled', '');
+  await expect(page.getByLabel('Institution / formula').locator('option[value="ui-estimate"]')).toContainText('unverified estimate');
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
   await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
-  await expect(page.getByLabel('Institution / formula').locator('option[value="oau"]')).toHaveAttribute('disabled', '');
+  await expect(page.getByLabel('Institution / formula').locator('option[value="oau-estimate"]')).toContainText('unverified estimate');
   await expect(page.getByLabel('Institution / formula')).toHaveValue('unilag');
   await expect(page.locator('.aggregate-result')).toContainText('79.00');
 
@@ -1013,7 +1013,7 @@ test('aggregate calculator restores the complete original institution list', asy
   await expect(page.getByText(/uses editable general weights only/i)).toBeVisible();
   await expect(page.getByLabel('JAMB UTME score (out of 400)')).toBeVisible();
   await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
-  await expect(page.getByLabel('UTME weight (%)')).toBeVisible();
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toBeVisible();
 });
 
 
@@ -1029,7 +1029,7 @@ test('aggregate calculator applies the official UNILORIN 50:30:20 arithmetic', a
 test('aggregate calculator preloads KWASU official 70:30 weights without inventing grade conversion', async ({ page }) => {
   await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
   await page.getByLabel('Institution / formula').selectOption('kwasu');
-  await expect(page.getByLabel('UTME weight (%)')).toHaveValue('70');
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toHaveValue('70');
   await expect(page.getByLabel('Post-UTME weight (%)')).toHaveValue('0');
   await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
   await expect(page.getByText(/KWASU’s official 2026\/2027 notice confirms 70% UTME\/DE/i)).toBeVisible();
