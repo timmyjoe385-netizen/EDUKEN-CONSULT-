@@ -1177,6 +1177,10 @@ test('admissions and updates expose persisted opportunity-style admin controls',
       expect(fields, `${table} form should include ${field}`).toContain(`'${field}'`);
     }
   }
+  expect(handler).toContain('db.from("admissions").select("id, title, slug, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent")');
+  expect(handler).toContain('db.from("updates").select("id, title, slug, category, content, source, source_url, is_published, created_at, updated_at, verified, featured, urgent")');
+  // Public cards need persisted verification/feature flags, but notification preferences stay private.
+  expect(handler).not.toContain('notify_on_publish, verified');
   expect(handler).toContain('if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined)');
   expect(handler).toContain('async function notifyEditorialSubscribers');
   expect(handler).not.toContain('// These controls are not columns in the updates table.');
