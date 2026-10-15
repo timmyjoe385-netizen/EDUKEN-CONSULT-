@@ -586,7 +586,7 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public navigation hides admin entry and private /admin keeps the OAuth return path', async ({ page }) => {
+test('public navigation exposes Admin Login and private /admin keeps the OAuth return path', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -599,8 +599,9 @@ test('public navigation hides admin entry and private /admin keeps the OAuth ret
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('button', { name: /^Admin$/ })).toHaveCount(0);
-  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  const adminLogin = page.getByRole('link', { name: 'Admin Login' });
+  await expect(adminLogin).toBeVisible();
+  await adminLogin.click();
   await expect(page).toHaveURL(/\/admin\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
 
@@ -1136,7 +1137,7 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
 test('admin system settings are separate, persisted, and protected by backend authorization', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
-  const migration = readFileSync('supabase/migrations/20261015150000_admin_system_settings.sql', 'utf8');
+  const migration = readFileSync('supabase/migrations/20261015130931_admin_system_settings.sql', 'utf8');
   const start = handler.indexOf('if (path === "/api/admin/system-settings")');
   const end = handler.indexOf('const adminContent = path.match', start);
   const route = handler.slice(start, end);
