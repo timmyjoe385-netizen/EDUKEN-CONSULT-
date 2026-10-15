@@ -556,7 +556,7 @@ test('public navigation hides admin entry and private /admin keeps the OAuth ret
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('button', { name: /^Admin$/ })).toHaveCount(0);
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-  await expect(page).toHaveURL(/\\/admin\\/?$/);
+  await expect(page).toHaveURL(/\/admin\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
 
   const siteOrigin = new URL(page.url()).origin;
