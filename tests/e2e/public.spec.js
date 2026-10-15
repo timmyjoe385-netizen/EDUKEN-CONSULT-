@@ -1034,3 +1034,15 @@ test('aggregate calculator preloads KWASU official 70:30 weights without inventi
   await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
   await expect(page.getByText(/KWASU’s official 2026\/2027 notice confirms 70% UTME\/DE/i)).toBeVisible();
 });
+
+
+test('JAMB-only divide-by-eight model reports a 50-point maximum consistently', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('jambonly');
+  await expect(page.getByLabel('Target aggregate (out of 50)')).toHaveAttribute('max', '50');
+  await expect(page.getByLabel('Departmental cut-off mark (optional, out of 50)')).toHaveAttribute('max', '50');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('40.00');
+  await expect(page.locator('.aggregate-result')).toContainText('/ 50');
+});
