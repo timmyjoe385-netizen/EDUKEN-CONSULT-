@@ -697,7 +697,7 @@ function App() {
       .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 300);
-    const link = window.location.origin + window.location.pathname + '#updates';
+    const link = window.location.origin + '/#updates';
     const message = [
       '📰 EDUKEN CONSULT UPDATE',
       '',
