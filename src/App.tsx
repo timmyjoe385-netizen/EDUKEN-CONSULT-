@@ -952,7 +952,7 @@ function App() {
     const hasOnlinePrice = Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0
       && selectedService.id && !String(selectedService.id).startsWith('fallback-');
     const quantity = isJambCatalogueService(selectedService)
-      ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))
+      ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))
       : 1;
     setServiceSubmitting(true);
     let savedReference = '';
