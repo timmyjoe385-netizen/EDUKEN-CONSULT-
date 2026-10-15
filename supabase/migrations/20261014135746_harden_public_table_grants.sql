@@ -1,5 +1,5 @@
 -- EDUKEN CONSULT: least-privilege grants for public-schema tables.
--- Apply only with the matching Edge Function/API release after staging regression tests.
+-- Production migration recorded in Supabase history as version 20261014135746; this file preserves the applied schema change.
 -- RLS policies remain the row-level authorization boundary; these grants remove
 -- broad table-level privileges that RLS alone does not replace.
 

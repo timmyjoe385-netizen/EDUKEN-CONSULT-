@@ -1,5 +1,5 @@
 -- EDUKEN CONSULT account-free email alerts
--- Feature-branch migration only. Do not apply to production until the API and delivery worker are approved.
+-- Production migration recorded in Supabase history as version 20261014135725. Delivery remains manual-only until sender configuration is verified.
 
 create table if not exists public.email_alert_subscriptions (
   id uuid primary key default gen_random_uuid(),
