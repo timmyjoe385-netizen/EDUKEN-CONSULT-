@@ -161,21 +161,26 @@ function App() {
   const shareAdmissionOnWhatsApp = (item: Item) => {
     const title = String(item.school || item.title || 'Admission update').trim();
     const course = String(item.course || item.programme || '').trim();
-    const details = String(item.details || item.description || item.content || '').replace(/\s+/g, ' ').trim().slice(0, 240);
+    const details = String(item.details || item.description || item.content || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 240);
     const deadline = String(item.deadline || '').trim();
     const link = admissionUrl(item);
+    const headline = course
+      ? '🎓 ADMISSION SPOTLIGHT: ' + title + ' — ' + course
+      : '🎓 ADMISSION SPOTLIGHT: ' + title;
     const message = [
-      '🎓 EDUKEN CONSULT — ADMISSION UPDATE',
+      headline,
       '',
-      title,
-      ...(course ? ['Programme/Course: ' + course] : []),
+      '📣 Looking for your next admission opportunity? Check out this update from EDUKEN CONSULT.',
       ...(details ? ['', details] : []),
-      ...(deadline ? ['Deadline: ' + deadline] : []),
+      ...(deadline ? ['', '⏳ Deadline: ' + deadline] : []),
       '',
-      '🔗 Read this admission post on EDUKEN CONSULT:',
+      '👉 READ MORE on EDUKEN CONSULT:',
       link,
       '',
-      '🌍 Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+      '🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
     ].join('\n');
     window.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
   };
