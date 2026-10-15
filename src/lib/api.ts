@@ -65,7 +65,7 @@ const isUnisolatedPreview = () => {
   // Compare the full origin, not only hostname: hostname-only checks would also
   // allow HTTP and non-standard ports on the production hostname.
   // This is a client-side safety rail for preview builds, not server authorization.
-  return window.location.origin !== 'https://eduken-consult.timmyjoe385.workers.dev';
+  return window.location.origin !== 'https://eduken-consult.workers.dev';
 };
 
 const request = async (
