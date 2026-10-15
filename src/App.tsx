@@ -136,8 +136,16 @@ function App() {
     const hash = window.location.hash;
     const opportunityMatch = hash.match(/^#opportunity\/(.+)$/);
     const admissionMatch = hash.match(/^#admission\/(.+)$/);
-    setArticleSlug(opportunityMatch ? decodeURIComponent(opportunityMatch[1]) : '');
-    setAdmissionId(admissionMatch ? decodeURIComponent(admissionMatch[1]) : '');
+    const decodeHashValue = (value: string | undefined) => {
+      if (!value) return '';
+      try {
+        return decodeURIComponent(value);
+      } catch {
+        return '';
+      }
+    };
+    setArticleSlug(decodeHashValue(opportunityMatch?.[1]));
+    setAdmissionId(decodeHashValue(admissionMatch?.[1]));
     if (!admissionMatch) window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
