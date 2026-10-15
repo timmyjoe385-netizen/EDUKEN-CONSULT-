@@ -35,9 +35,11 @@ const directory = [
   { name: 'University of Ilorin (UNILORIN)', status: 'official', note: '2026/2027 formula available', href: sources.unilorin },
   { name: 'Federal University of Health Sciences, Ila-Orangun (FUHSI)', status: 'official', note: 'Published 70:30 UTME/O’Level model', href: sources.fuhsi },
   { name: 'University of Benin (UNIBEN)', status: 'community', note: '50:50 formula reported by multiple education sources; official confirmation not found', href: sources.uniben },
-  { name: 'University of Lagos (UNILAG)', status: 'community', note: 'Official 2026/2027 merit cut-off marks are published; the current aggregate weighting is still unconfirmed. The calculator remains historical 50:30:20 only.', href: sources.unilag },
+  { name: 'University of Lagos (UNILAG)', status: 'review', note: 'Historical 50:30:20 model only; current 2026/2027 aggregate weighting is unconfirmed. Do not treat the historical calculation as current official policy.', href: sources.unilag },
+  { name: 'Kwara State University (KWASU), Malete', status: 'review', note: 'Official 2026/2027 notice confirms 70% UTME/DE + 30% five relevant O’Level grades, but the notice reviewed does not publish the grade-to-point conversion needed for a complete calculator. Formula weighting confirmed; calculation scale incomplete.', href: 'https://kwasu.edu.ng/wp-content/uploads/2026/06/20262027-KWASU-POST-UTME-REGISTRATION-AND-SCREENING.pdf' },
+  { name: 'Obafemi Awolowo University (OAU)', status: 'review', note: 'Third-party 50:40:10 reports are not sufficiently reconciled with current official evidence. Formula is under verification and should not be used as a trusted current-session calculation.', href: sources.oau },
   { name: 'University of Ibadan (UI)', status: 'review', note: 'Official 2026/2027 admission portal lists cut-off marks and screening updates, but the aggregate formula and score conversion are not published on the page reviewed.', href: sources.ui },
-  { name: 'Obafemi Awolowo University (OAU)', status: 'community', note: 'CampusAI reports 50:40:10; current official formula and O’Level conversion need confirmation', href: sources.oau },
+  
   { name: 'Lagos State University (LASU)', status: 'review', note: 'Official 2026/2027 notice confirms point grading from UTME plus five best relevant O’Level subjects; exact point conversion still needs confirmation', href: 'https://lasu.edu.ng/home/news/read.php?id=642' },
   { name: 'Federal University of Technology, Akure (FUTA)', status: 'review', note: 'Official 2026/2027 notice confirms minimum UTME 180 and five O’Level credits; aggregate scoring conversion is not specified', href: 'https://admission.futa.edu.ng/home/news/1399' },
   { name: 'University of Nigeria, Nsukka (UNN)', status: 'review', note: 'Official 2026/2027 screening notice confirms eligibility, registration and O’Level upload requirements; it does not specify an aggregate score conversion.', href: 'https://www.unn.edu.ng/2026-2027-screening-exercise-for-admission/' },
@@ -258,7 +260,7 @@ export default function AggregateCalculator() {
             <option value="uniben">University of Benin — 50:50 (community-reported)</option>
             <option value="unilag">University of Lagos — 50:30:20 (historical; current session unverified)</option>
             <option value="ui" disabled>University of Ibadan — formula under verification</option>
-            <option value="oau">Obafemi Awolowo University — 50:40:10 (community-reported)</option>
+            <option value="oau" disabled>Obafemi Awolowo University — formula under verification</option>
             <option value="custom">Custom UTME + Post-UTME + optional O’Level weights</option>
           </select>
         </label>
@@ -466,7 +468,7 @@ export default function AggregateCalculator() {
                 : school === 'ui'
                   ? <p>The University of Ibadan’s official 2026/2027 notice confirms the screening exercise but does not state the aggregate calculation. EDUKEN has disabled this calculator option until a reliable scoring formula is verified. Check the official admission notice before relying on third-party claims.</p>
                   : school === 'oau'
-                    ? <p>CampusAI reports a 50:40:10 UTME/Post-UTME/O’Level weighting for OAU. Enter the Post-UTME score out of 100; the calculator converts it to a contribution out of 40. Enter the O’Level contribution out of 10 manually. OAU’s public screening notice does not reproduce the aggregate table, so treat this third-party-reported model as provisional and confirm it with the university.</p>
+                    ? <p>OAU’s formula is currently under verification because the third-party-reported weighting has not been reconciled with current official evidence. Do not rely on this model for a current admission decision.</p>
                     : <p>Custom mode uses the weights and scores you provide for UTME, Post-UTME and, optionally, O’Level. It does not confirm that an institution accepts this formula.</p>}
         {school !== 'custom' && sources[school] && <a href={sources[school]} target="_blank" rel="noreferrer">Open source / admission portal <ExternalLink size={14} /></a>}
         <p className="aggregate-disclaimer">Admission requirements and screening methods can change by session and course. Check the institution’s current instructions before making an application decision.</p>
@@ -480,7 +482,7 @@ export default function AggregateCalculator() {
         <label className="aggregate-directory-search"><Search size={17} /><input value={directoryQuery} onChange={e => setDirectoryQuery(e.target.value)} placeholder="Search a university..." aria-label="Search university directory" /></label>
         <div className="aggregate-directory-filters" role="group" aria-label="Filter universities">
           <button type="button" className={directoryFilter === 'all' ? 'active' : ''} onClick={() => setDirectoryFilter('all')}>All schools ({directory.length})</button>
-          <button type="button" className={directoryFilter === 'ready' ? 'active' : ''} onClick={() => setDirectoryFilter('ready')}>Formula available ({directory.filter(item => item.status !== 'review').length})</button>
+          <button type="button" className={directoryFilter === 'ready' ? 'active' : ''} onClick={() => setDirectoryFilter('ready')}>Usable formula (official/provisional) ({directory.filter(item => item.status === 'official' || item.status === 'community').length})</button>
           <button type="button" className={directoryFilter === 'review' ? 'active' : ''} onClick={() => setDirectoryFilter('review')}>Under verification ({directory.filter(item => item.status === 'review').length})</button>
         </div>
         <div className="aggregate-directory-list">
