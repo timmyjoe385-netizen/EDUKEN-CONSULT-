@@ -783,13 +783,9 @@ test('aggregate calculator applies the added provisional school-specific formula
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
   await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
-  await page.getByLabel('Institution / formula').selectOption('oau');
-  await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
-  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
-  await page.getByLabel('Post-UTME score (out of 100)').fill('72');
-  await page.getByLabel('O’Level contribution (out of 10)').fill('8');
-  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
-  await expect(page.locator('.aggregate-result')).toContainText('76.80');
+  await expect(page.getByLabel('Institution / formula').locator('option[value="oau"]')).toHaveAttribute('disabled', '');
+  await expect(page.getByLabel('Institution / formula')).toHaveValue('unilag');
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
 
   await page.getByLabel('Institution / formula').selectOption('uniben');
   await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
@@ -896,4 +892,64 @@ test('O’Level readiness checklist counts named credit grades and resets sittin
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
   await expect(page.getByLabel('Number of O’Level sittings')).toHaveValue('1');
   await expect(page.locator('.aggregate-extra-grade-row')).toHaveCount(0);
+});
+
+test('aggregate calculator compares the result with a user-entered departmental cut-off', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('fuhsi');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('300');
+
+  const coreGrades = ['A1', 'B2', 'B3', 'C4', 'C5'];
+  for (const [index, grade] of coreGrades.entries()) {
+    await page.locator('.aggregate-field').filter({ has: page.locator('span', { hasText: ['English Language', 'Mathematics', 'Physics', 'Chemistry', 'Biology'][index] }) })
+      .locator('select').selectOption(grade);
+  }
+
+  const cutoff = page.getByLabel('Departmental cut-off mark (optional, out of 100)');
+  await expect(cutoff).toBeVisible();
+  await cutoff.fill('70');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('At or above the cut-off entered');
+  await expect(page.locator('.aggregate-result')).toContainText('5.00 point(s) above');
+  await expect(page.locator('.aggregate-result')).toContainText('not a guarantee of admission');
+
+  await cutoff.fill('101');
+  await expect(page.getByRole('alert')).toContainText('departmental cut-off from 0 to 100');
+  await expect(page.getByRole('button', { name: /Calculate aggregate/i })).toBeDisabled();
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(cutoff).toHaveValue('');
+  await expect(page.locator('.aggregate-result')).toHaveCount(0);
+});
+
+
+test('FUHSI official course and catchment cut-offs populate the comparison safely', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('fuhsi');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('300');
+
+  const coreGrades = ['A1', 'B2', 'B3', 'C4', 'C5'];
+  for (const [index, grade] of coreGrades.entries()) {
+    await page.locator('.aggregate-field').filter({ has: page.locator('span', { hasText: ['English Language', 'Mathematics', 'Physics', 'Chemistry', 'Biology'][index] }) })
+      .locator('select').selectOption(grade);
+  }
+
+  await page.getByLabel('FUHSI course (2026/2027 official cut-off)').selectOption('Medicine and Surgery (MBBS)');
+  const cutoff = page.getByLabel('Departmental cut-off mark (optional, out of 100)');
+  await expect(cutoff).toHaveValue('81.3');
+
+  await page.getByLabel('Admission category').selectOption('Lagos');
+  await expect(cutoff).toHaveValue('72.2');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('2.80 point(s) above');
+
+  await page.getByLabel('Admission category').selectOption('Merit');
+  await expect(cutoff).toHaveValue('81.3');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('Below the cut-off entered');
+  await expect(page.locator('.aggregate-result')).toContainText('6.30 point(s) below');
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(page.getByLabel('FUHSI course (2026/2027 official cut-off)')).toHaveValue('');
+  await expect(cutoff).toHaveValue('');
 });
