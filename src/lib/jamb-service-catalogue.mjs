@@ -120,20 +120,27 @@ export function jambServiceFieldsFor(service) {
   const field = (name, label, placeholder = label, type = 'text') => ({ name, label, placeholder, type });
   const fullName = field('candidateFullName', 'Candidate full name (as registered with JAMB)');
   const registrationNumber = field('registrationNumber', 'JAMB registration number');
-  const jambYear = field('jambYear', 'JAMB examination year', 'e.g. 2026', 'number');
+  const jambYear = field('jambYear', 'JAMB examination year', '2026', 'number');
+  const yearOptions = (start, end) => Array.from({ length: end - start + 1 }, (_, index) => String(end - index));
   const profileCode = field('profileCode', 'JAMB profile code');
   if (name.includes('e-pin')) return [fullName, profileCode];
   if (name.includes('original result printing')) return [fullName, registrationNumber, jambYear];
   if (name.includes('admission letter printing')) return [fullName, registrationNumber, jambYear];
   if (name === 'jamb reprinting') return [
-    { name: 'documentType', label: 'Document to reprint', options: ['UTME Examination Slip', 'UTME Registration Slip', 'Direct Entry Registration Slip', 'Original Result Slip', 'Admission Letter', 'Change of Course/Institution Slip', 'Other'] },
+    { name: 'documentType', label: 'Document to reprint', options: ['2026 JAMB Result Notification', '2026 UTME Examination Slip', 'UTME Registration Slip', 'Direct Entry Registration Slip', 'Original Result Slip', 'Admission Letter', 'Change of Course/Institution Slip', 'Other'] },
     fullName,
     registrationNumber,
     jambYear,
   ];
   if (name.includes('check jamb admission status')) return [fullName, registrationNumber, jambYear];
   if (name.includes("o'level result screenshot")) return [fullName, registrationNumber, jambYear];
-  if (name.includes('profile code retrieval')) return [field('registrationNumberOrPhone', 'JAMB registration number OR registered phone number')];
-  if (name.includes('registration number retrieval')) return [field('profileCodeOrPhone', 'JAMB profile code OR registered phone number')];
+  if (name.includes('profile code retrieval')) return [
+    field('registrationNumberOrPhone', 'JAMB registration number OR registered phone number'),
+    { name: 'jambYear', label: 'JAMB year (2021–2026)', options: yearOptions(2021, 2026) },
+  ];
+  if (name.includes('registration number retrieval')) return [
+    field('profileCodeOrPhone', 'JAMB profile code OR registered phone number'),
+    { name: 'jambYear', label: 'JAMB year (2017–2026)', options: yearOptions(2017, 2026) },
+  ];
   return [];
 }
