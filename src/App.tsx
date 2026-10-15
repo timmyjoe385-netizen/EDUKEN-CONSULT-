@@ -167,6 +167,10 @@ function App() {
     '#opportunity/' +
     encodeURIComponent(slug);
 
+  const shortArticleUrl = (slug: string) =>
+    'https://tinyurl.com/EDUKEN-CONSULT#opportunity/' +
+    encodeURIComponent(slug);
+
   const admissionUrl = (item: Item) =>
     window.location.origin + window.location.pathname + '#admission/' + encodeURIComponent(String(item.id));
 
@@ -657,7 +661,7 @@ function App() {
 
   const shareOpportunityOnWhatsApp = (item: Item) => {
     const slug = item.slug || makeSlug(item.title || item.id);
-    const link = articleUrl(slug);
+    const link = shortArticleUrl(slug);
     const teaser = String(item.description || item.content || '')
       .split(/\r?\n/)[0]
       .trim()
@@ -1576,7 +1580,7 @@ function App() {
                     const slug =
                       activeOpportunity.slug ||
                       makeSlug(activeOpportunity.title || activeOpportunity.id);
-                    const link = articleUrl(slug);
+                    const link = shortArticleUrl(slug);
                     const message = [
                       '🎓 EDUKEN CONSULT',
                       '',
