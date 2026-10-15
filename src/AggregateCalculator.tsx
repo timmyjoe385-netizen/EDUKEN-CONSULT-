@@ -44,7 +44,7 @@ const directory = [
   { name: 'Federal University Oye-Ekiti (FUOYE)', status: 'review', note: 'Official 2026/2027 guide confirms online screening and programme-specific UTME/O’Level requirements; it does not state a complete aggregate scoring conversion.', href: 'https://fuoye.edu.ng/post-utme-screening/' },
   { name: 'Federal University of Technology, Minna (FUTMINNA)', status: 'review', note: 'Official 2026/2027 notice confirms course-specific UTME cutoffs and five relevant O’Level credits; aggregate scoring conversion is not specified', href: 'https://futminna.edu.ng/2026-2027-pre-admission-screening-exercise-2026-utme-de/' },
   { name: 'Ahmadu Bello University (ABU), Zaria', status: 'review', note: 'Current score scale and formula need confirmation' },
-  { name: 'Nnamdi Azikiwe University (UNIZIK)', status: 'review', note: 'Current formula needs confirmation' },
+  { name: 'Nnamdi Azikiwe University (UNIZIK)', status: 'review', note: 'An official 2023/2024 document used 70% UTME and 30% O’Level points with a single-sitting bonus; this is historical only and the 2026/2027 formula needs confirmation', href: 'https://unizik.edu.ng/wp-content/uploads/2023/10/CALCULATION-FORMULA-USED-FOR-THE-2023-2024-POST-UTME-ADMISSIONS-SCREENING-EXERCISE1.pdf' },
   { name: 'Alex Ekwueme Federal University, Ndufu-Alike (AE-FUNAI)', status: 'review', note: 'Screening method and score scale need confirmation' },
   { name: 'Federal University, Otuoke (FUOTUOKE)', status: 'review', note: 'O’Level-based options are reported; exact current method needs confirmation' },
   { name: 'Imo State University (IMSU)', status: 'review', note: 'Current formula needs confirmation' },
