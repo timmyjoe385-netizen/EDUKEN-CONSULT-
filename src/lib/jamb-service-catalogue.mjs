@@ -4,7 +4,7 @@ export const JAMB_SERVICE_TEMPLATES = [
     legacyNames: [],
     category: 'JAMB Services',
     description: 'UTME e-PIN for candidates registering without the optional mock examination.',
-    requirements: 'Candidate full name exactly as registered with JAMB; JAMB profile code; JAMB registration year. Do not submit your NIN, OTP, password, or bank-card details.',
+    requirements: 'Candidate full name exactly as registered with JAMB; JAMB profile code. Do not submit your NIN, OTP, password, or bank-card details.',
     price: 7128,
     is_available: false,
     is_catalog_item: true,
@@ -14,7 +14,7 @@ export const JAMB_SERVICE_TEMPLATES = [
     legacyNames: [],
     category: 'JAMB Services',
     description: 'UTME e-PIN for candidates registering with the optional mock examination.',
-    requirements: 'Candidate full name exactly as registered with JAMB; JAMB profile code; JAMB registration year. Do not submit your NIN, OTP, password, or bank-card details.',
+    requirements: 'Candidate full name exactly as registered with JAMB; JAMB profile code. Do not submit your NIN, OTP, password, or bank-card details.',
     price: 8613,
     is_available: false,
     is_catalog_item: true,
@@ -24,7 +24,7 @@ export const JAMB_SERVICE_TEMPLATES = [
     legacyNames: [],
     category: 'JAMB Services',
     description: 'JAMB Direct Entry registration e-PIN.',
-    requirements: 'Candidate full name exactly as registered with JAMB; JAMB profile code; JAMB registration year. Do not submit your NIN, OTP, password, or bank-card details.',
+    requirements: 'Candidate full name exactly as registered with JAMB; JAMB profile code. Do not submit your NIN, OTP, password, or bank-card details.',
     price: 5643,
     is_available: false,
     is_catalog_item: true,
@@ -122,7 +122,6 @@ export function jambServiceFieldsFor(service) {
   const registrationNumber = field('registrationNumber', 'JAMB registration number');
   const jambYear = field('jambYear', 'JAMB examination year', 'e.g. 2026', 'number');
   const profileCode = field('profileCode', 'JAMB profile code');
-  const phoneNumber = field('registeredPhone', 'Phone number used for JAMB registration');
   if (name.includes('e-pin')) return [fullName, profileCode];
   if (name.includes('original result printing')) return [fullName, registrationNumber, jambYear];
   if (name.includes('admission letter printing')) return [fullName, registrationNumber, jambYear];
