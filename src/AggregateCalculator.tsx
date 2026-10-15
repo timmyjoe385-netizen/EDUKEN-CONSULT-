@@ -158,7 +158,8 @@ export default function AggregateCalculator() {
   const validOlevelPoints = isValidScore(olevelPoints, olevelMax);
   const validCustomWeights = isValidScore(jambWeight, 100) && isValidScore(postWeight, 100) &&
     isValidScore(olevelWeight, 100) && Number(jambWeight) + Number(postWeight) + Number(olevelWeight) > 0;
-  const ready = validJamb &&
+  const validDepartmentCutoff = departmentCutoff === '' || isValidScore(departmentCutoff, 100);
+  const ready = validDepartmentCutoff && validJamb &&
     (school === 'unilorin' ? validPost && validOlevelPoints :
       school === 'fuhsi' ? grades.every(Boolean) :
       school === 'unilag' ? validPost && validOlevelPoints :
@@ -356,7 +357,7 @@ export default function AggregateCalculator() {
         </div>}
         <div className="aggregate-field">
           <label htmlFor="aggregate-department-cutoff">Departmental cut-off mark (optional, out of 100)</label>
-          <input id="aggregate-department-cutoff" type="number" min="0" max="100" step="any" value={departmentCutoff} onChange={e => setDepartmentCutoff(e.target.value)} placeholder="Enter a cut-off from the official admission notice" />
+          <input id="aggregate-department-cutoff" type="number" min="0" max="100" step="any" value={departmentCutoff} onChange={e => { setDepartmentCutoff(e.target.value); setShowResult(false); }} placeholder="Enter a cut-off from the official admission notice" />
           {departmentCutoff !== '' && !isValidScore(departmentCutoff, 100) && <small role="alert">Enter a departmental cut-off from 0 to 100.</small>}
           <small>Use the current official cut-off for your course and admission session. EDUKEN does not invent cut-off marks.</small>
         </div>
