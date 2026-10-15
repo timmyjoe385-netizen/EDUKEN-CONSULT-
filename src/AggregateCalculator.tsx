@@ -108,7 +108,7 @@ export default function AggregateCalculator() {
       const parts = [
         { label: 'UTME contribution', value: weightedContribution(utme, 400, 50), max: 50 },
         { label: 'Post-UTME contribution', value: weightedContribution(clamp(post, 100), 100, 30), max: 30 },
-        { label: 'O’Level contribution (entered out of 20)', value: weightedContribution(clamp(olevelPoints, 20), 1, 1), max: 20 },
+        { label: 'O’Level contribution (entered out of 20)', value: clamp(olevelPoints, 20), max: 20 },
       ];
       return buildAggregateResult(parts);
     }
@@ -131,15 +131,15 @@ export default function AggregateCalculator() {
       const parts = [
         { label: 'UTME contribution (historical 50%)', value: weightedContribution(utme, 400, 50), max: 50 },
         { label: 'Post-UTME contribution (historical 30%)', value: weightedContribution(clamp(post, 100), 100, 30), max: 30 },
-        { label: 'O’Level contribution (manually entered out of 20)', value: weightedContribution(clamp(olevelPoints, 20), 1, 1), max: 20 },
+        { label: 'O’Level contribution (manually entered out of 20)', value: clamp(olevelPoints, 20), max: 20 },
       ];
       return buildAggregateResult(parts);
     }
     if (school === 'oau') {
       const parts = [
         { label: 'UTME contribution (reported 50%)', value: weightedContribution(utme, 400, 50), max: 50 },
-        { label: 'Post-UTME contribution (reported 40%)', value: clamp(post, 100) / 100 * 40, max: 40 },
-        { label: 'O’Level contribution (manually entered out of 10)', value: weightedContribution(clamp(olevelPoints, 10), 1, 1), max: 10 },
+        { label: 'Post-UTME contribution (reported 40%)', value: weightedContribution(clamp(post, 100), 100, 40), max: 40 },
+        { label: 'O’Level contribution (manually entered out of 10)', value: clamp(olevelPoints, 10), max: 10 },
       ];
       return buildAggregateResult(parts);
     }
