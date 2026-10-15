@@ -902,6 +902,10 @@ function App() {
         whatsapp: String(fd.get('whatsapp') || '').trim(),
         email: String(fd.get('email') || '').trim(),
         details: [
+          ...(isJambCatalogueService(selectedService) ? [
+            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))),
+            'Estimated total: ₦' + (Number(selectedService.price) * Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))).toLocaleString('en-NG'),
+          ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
         ].filter(Boolean).join('\n'),
@@ -2349,7 +2353,7 @@ function App() {
                   <h3 style={{ margin: '4px 0' }}>{service.name}</h3>
                   {service.description ? <p style={{ margin: 0, lineHeight: 1.55 }}>{service.description}</p> : null}
                   {service.requirements ? <div style={{ fontSize: 13, lineHeight: 1.55, whiteSpace: 'pre-line' }}><b>Requirements</b><p style={{ margin: '4px 0 0' }}>{service.requirements}</p></div> : null}
-                  <strong style={{ display: 'block', marginTop: 'auto', fontSize: 21 }}>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
+                  <strong style={{ display: 'block', marginTop: 'auto', fontSize: 21 }}>{hasPrice ? '₦' + price.toLocaleString('en-NG') + ' per candidate' : 'Price not set'}</strong>
                   <button type="button" className="primary" disabled={!available || !hasPrice} onClick={() => { setSelectedService(service); setServiceForm({}); }}>
                     {!available ? 'Unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
                   </button>
@@ -2667,6 +2671,13 @@ function App() {
               <input name="customerName" required maxLength={120} placeholder="Your full name" aria-label="Your full name" />
               <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
               <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+              {isJambCatalogueService(selectedService) ? (
+                <label style={{ display: 'grid', gap: 6 }}>
+                  <span style={{ fontWeight: 600 }}>Number of candidates *</span>
+                  <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
+                  <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
+                </label>
+              ) : null}
               {jambServiceFieldsFor(selectedService).map(field => (
                 <label key={field.name} style={{ display: 'grid', gap: 6 }}>
                   <span style={{ fontWeight: 600 }}>{field.label} *</span>
