@@ -779,11 +779,11 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-result')).toContainText('79.00');
   await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
 
-  await expect(page.getByLabel('Institution / formula').locator('option[value="ui"]')).toHaveAttribute('disabled', '');
+  await expect(page.getByLabel('Institution / formula').locator('option[value="ui-estimate"]')).toContainText('unverified estimate');
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
   await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
-  await expect(page.getByLabel('Institution / formula').locator('option[value="oau"]')).toHaveAttribute('disabled', '');
+  await expect(page.getByLabel('Institution / formula').locator('option[value="oau-estimate"]')).toContainText('unverified estimate');
   await expect(page.getByLabel('Institution / formula')).toHaveValue('unilag');
   await expect(page.locator('.aggregate-result')).toContainText('79.00');
 
@@ -952,4 +952,136 @@ test('FUHSI official course and catchment cut-offs populate the comparison safel
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
   await expect(page.getByLabel('FUHSI course (2026/2027 official cut-off)')).toHaveValue('');
   await expect(cutoff).toHaveValue('');
+});
+
+
+test('aggregate calculator restores the complete original institution list', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  const institution = page.getByLabel('Institution / formula');
+  const expected = [
+    'University of Lagos (UNILAG)',
+    'University of Ibadan (UI)',
+    'Obafemi Awolowo University (OAU)',
+    'University of Nigeria, Nsukka (UNN)',
+    'Ahmadu Bello University (ABU)',
+    'University of Ilorin (UNILORIN)',
+    'University of Port Harcourt (UNIPORT)',
+    'Federal University of Technology, Akure (FUTA)',
+    'FUNAAB',
+    'FUTMinna',
+    'FUTO',
+    'UNIZIK',
+    'UNICAL',
+    'UNIJOS',
+    'BUK',
+    'UNIMAID',
+    'UDUSOK',
+    'Lagos State University (LASU)',
+    'DELSU',
+    'EKSU',
+    'RSU',
+    'IMSU',
+    'AAU',
+    'OOU',
+    'ESUT',
+    'TASUED',
+    'KWASU',
+    'FUOYE',
+    'ABSU',
+    'BSU',
+    'Yaba College of Technology (YABATECH)',
+    'Federal Polytechnic, Ado-Ekiti',
+    'Federal Polytechnic, Bauchi',
+    'Federal Polytechnic, Bida',
+    'Federal Polytechnic, Ilaro',
+    'Federal Polytechnic, Nekede',
+    'Federal Polytechnic, Offa',
+    'Federal Polytechnic, Oko',
+    'Kaduna Polytechnic',
+    'Auchi Polytechnic',
+    'Lagos State Polytechnic / LASPOTECH',
+    'Moshood Abiola Polytechnic (MAPOLY)',
+    'The Polytechnic, Ibadan',
+    'Kwara State Polytechnic',
+    'Delta State Polytechnic'
+  ];
+  for (const label of expected) {
+    await expect(institution.locator('option').filter({ hasText: label }).first()).toBeAttached();
+    await expect(institution.locator('option').filter({ hasText: label }).first()).not.toBeDisabled();
+  }
+  await institution.selectOption('fedpolyado');
+  await expect(page.getByText(/uses editable general weights only/i)).toBeVisible();
+  await expect(page.getByLabel('JAMB UTME score (out of 400)')).toBeVisible();
+  await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toBeVisible();
+});
+
+
+test('aggregate calculator applies the official UNILORIN 50:30:20 arithmetic', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByLabel(/O’Level contribution \(out of 20\)/).fill('15');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
+});
+
+test('aggregate calculator preloads KWASU official 70:30 weights without inventing grade conversion', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('kwasu');
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toHaveValue('70');
+  await expect(page.getByLabel('Post-UTME weight (%)')).toHaveValue('0');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await expect(page.getByText(/KWASU’s official 2026\/2027 notice confirms 70% UTME\/DE/i)).toBeVisible();
+});
+
+
+test('JAMB-only divide-by-eight model reports a 50-point maximum consistently', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('jambonly');
+  await expect(page.getByLabel('Target aggregate (out of 50)')).toHaveAttribute('max', '50');
+  await expect(page.getByLabel('Departmental cut-off mark (optional, out of 50)')).toHaveAttribute('max', '50');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('40.00');
+  await expect(page.locator('.aggregate-result')).toContainText('/ 50');
+});
+
+
+test('aggregate calculator clear preserves KWASU official weights', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('kwasu');
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toHaveValue('70');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toHaveValue('70');
+  await expect(page.getByLabel('Post-UTME weight (%)')).toHaveValue('0');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await expect(page.getByLabel('O’Level score / contribution (out of 100)')).toHaveValue('');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
+});
+
+test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-point cut-offs', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('jambonly');
+
+  const target = page.getByLabel('Target aggregate (out of 50)');
+  const cutoff = page.getByLabel('Departmental cut-off mark (optional, out of 50)');
+  await expect(target).toHaveValue('40');
+  await expect(cutoff).toBeVisible();
+
+  await target.fill('51');
+  await expect(page.getByRole('alert')).toContainText('Enter a target from 0 to 50');
+  await cutoff.fill('51');
+  await expect(page.getByText('Enter a departmental cut-off from 0 to 50.', { exact: true })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(target).toHaveValue('40');
+  await expect(cutoff).toHaveValue('');
+  await expect(page.getByRole('alert')).toHaveCount(0);
 });
