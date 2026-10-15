@@ -692,11 +692,17 @@ function App() {
 
   const shareUpdateOnWhatsApp = (item: Item) => {
     const title = String(item.title || 'EDUKEN educational update').trim();
-    const category = String(item.category || 'Educational Update').trim();
-    const body = String(item.body || item.content || item.description || '')
+    const rawCategory = String(item.category || '').trim();
+    const category = !rawCategory || /^update$/i.test(rawCategory)
+      ? 'Educational Update'
+      : rawCategory;
+    const fullBody = String(item.body || item.content || item.description || '')
       .replace(/\s+/g, ' ')
-      .trim()
-      .slice(0, 300);
+      .trim();
+    const bodyLimit = 800;
+    const body = fullBody.length > bodyLimit
+      ? fullBody.slice(0, bodyLimit).replace(/\s+\S*$/, '').trimEnd() + '…'
+      : fullBody;
     const link = window.location.origin + '/#updates';
     const message = [
       '📰 EDUKEN CONSULT UPDATE',
