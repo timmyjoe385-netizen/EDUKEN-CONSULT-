@@ -1046,3 +1046,22 @@ test('JAMB-only divide-by-eight model reports a 50-point maximum consistently', 
   await expect(page.locator('.aggregate-result')).toContainText('40.00');
   await expect(page.locator('.aggregate-result')).toContainText('/ 50');
 });
+
+
+test('aggregate calculator clear preserves KWASU official weights', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('kwasu');
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toHaveValue('70');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(page.getByRole('spinbutton', { name: 'UTME weight (%)', exact: true })).toHaveValue('70');
+  await expect(page.getByLabel('Post-UTME weight (%)')).toHaveValue('0');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await expect(page.getByLabel('O’Level score / contribution (out of 100)')).toHaveValue('');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('O’Level score / contribution (out of 100)').fill('80');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('80.00');
+});
