@@ -149,7 +149,7 @@ async function publicContent() {
     db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("faqs").select("id, question, answer, category, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("services").select("id, name, category, description, price, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("services").select("id, name, category, description, requirements, price, is_available, is_catalog_item, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
   ]);
   const err = [a,b,c,d,e].find(x => x.error)?.error;
   if (err) throw err;
@@ -1035,7 +1035,7 @@ Deno.serve(async (req) => {
       if (serviceId) {
         const { data: service, error: serviceError } = await db
           .from("services")
-          .select("id,is_published")
+          .select("id,is_published,is_available")
           .eq("id", serviceId)
           .maybeSingle();
         if (serviceError) throw serviceError;
