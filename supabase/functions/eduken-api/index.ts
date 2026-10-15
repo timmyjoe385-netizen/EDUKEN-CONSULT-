@@ -536,17 +536,15 @@ Deno.serve(async (req) => {
     if (path === "/api/payments/webhook" && req.method === "POST") {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       const mode = (Deno.env.get("PAYSTACK_MODE") || "test").toLowerCase();
-      if (!secret || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
+      if (!secret || !["test", "live"].includes(mode) || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
         return json({ error: "Payment gateway is not configured for the selected mode." }, 503);
       }
       const rawBody = await req.text();
       const supplied = req.headers.get("x-paystack-signature") || "";
-      const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-512" }, false, ["sign"]);
-      const digest = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(rawBody)));
-      const expected = Array.from(digest, byte => byte.toString(16).padStart(2, "0")).join("");
-      if (!/^[a-f0-9]{128}$/i.test(supplied) || supplied.length !== expected.length) return json({ error: "Invalid webhook signature." }, 401);
-      let signatureMatches = true;
-      for (let i = 0; i < expected.length; i++) signatureMatches = signatureMatches && (expected.charCodeAt(i) === supplied.toLowerCase().charCodeAt(i));
+      if (!/^[a-f0-9]{128}$/i.test(supplied)) return json({ error: "Invalid webhook signature." }, 401);
+      const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-512" }, false, ["verify"]);
+      const signatureBytes = new Uint8Array(supplied.match(/.{2}/g)!.map(byte => Number.parseInt(byte, 16)));
+      const signatureMatches = await crypto.subtle.verify("HMAC", key, signatureBytes, new TextEncoder().encode(rawBody));
       if (!signatureMatches) return json({ error: "Invalid webhook signature." }, 401);
       let event: any;
       try { event = JSON.parse(rawBody); } catch { return json({ error: "Invalid webhook payload." }, 400); }
@@ -1149,7 +1147,7 @@ Deno.serve(async (req) => {
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       const mode = (Deno.env.get("PAYSTACK_MODE") || "test").toLowerCase();
-      if (!secret || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
+      if (!secret || !["test", "live"].includes(mode) || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
         return json({ error: "Payment gateway is not configured for the selected mode.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
       }
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
@@ -1180,7 +1178,7 @@ Deno.serve(async (req) => {
       if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       const mode = (Deno.env.get("PAYSTACK_MODE") || "test").toLowerCase();
-      if (!secret || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
+      if (!secret || !["test", "live"].includes(mode) || (mode === "test" && !secret.startsWith("sk_test_")) || (mode === "live" && !secret.startsWith("sk_live_"))) {
         return json({ error: "Payment gateway is not configured for the selected mode.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
       }
       const { data: existingPayment, error: lookupError } = await db.from("payments")
