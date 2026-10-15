@@ -541,13 +541,32 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public navigation hides admin entry while the private /admin URL opens sign-in', async ({ page }) => {
+test('public navigation hides admin entry and private /admin keeps the OAuth return path', async ({ page }) => {
+  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+
+  // Intercept the OAuth hand-off so this test never signs into a real account.
+  await page.route(authorizeEndpoint + '**', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+    }),
+  );
+
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('button', { name: /^Admin$/ })).toHaveCount(0);
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-  await expect(page).toHaveURL(/\/admin\/?$/);
+  await expect(page).toHaveURL(/\\/admin\\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+
+  const siteOrigin = new URL(page.url()).origin;
+  const authNavigation = page.waitForRequest(
+    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
+  );
+  await page.getByRole('button', { name: /Continue with Google/i }).click();
+  const authUrl = new URL((await authNavigation).url());
+  expect(authUrl.searchParams.get('provider')).toBe('google');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
 });
 
 
