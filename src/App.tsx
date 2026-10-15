@@ -386,19 +386,21 @@ function App() {
     const params = new URLSearchParams(window.location.search);
     const reference = params.get('payment_reference') || params.get('reference');
     if (!reference || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return;
-    // Clear the callback reference from the address bar before verification.
-    params.delete('payment_reference');
-    params.delete('reference');
-    const remaining = params.toString();
-    window.history.replaceState({}, document.title, window.location.pathname + (remaining ? '?' + remaining : '') + window.location.hash);
+    // Keep the reference available for retries/support until payment is confirmed.
+    // A failed verification must not erase the only easy way to reconcile this checkout.
     void api.post('/api/payments/verify', { reference }).then(result => {
       if (result.data?.paid) {
+        params.delete('payment_reference');
+        params.delete('reference');
+        const remaining = params.toString();
+        window.history.replaceState({}, document.title, window.location.pathname + (remaining ? '?' + remaining : '') + window.location.hash);
         showToast('Payment confirmed successfully. Your EDUKEN service request is marked paid.');
       } else {
-        showToast('Payment is not confirmed yet. Your request is saved; check again shortly or contact EDUKEN with your reference.');
+        showToast('Payment is not confirmed yet. Reference: ' + reference + '. Refresh this page to check again, or contact EDUKEN with this reference.');
       }
     }).catch(error => {
-      showToast(error instanceof Error ? error.message : 'Could not confirm payment yet. Please refresh or contact EDUKEN with your payment reference.');
+      const message = error instanceof Error ? error.message : 'Could not confirm payment yet.';
+      showToast(message + ' Payment reference: ' + reference + '. Keep this URL or copy the reference; refresh to retry.');
     });
   }, []);
 
