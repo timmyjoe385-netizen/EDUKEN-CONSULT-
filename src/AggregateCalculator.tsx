@@ -5,6 +5,24 @@ type SchoolKey = 'unilorin' | 'fuhsi' | 'uniben' | 'unilag' | 'ui' | 'oau' | 'cu
 type FormulaStatus = 'official' | 'community';
 const gradePoints: Record<string, number> = { A1: 8, B2: 7, B3: 6, C4: 5, C5: 4, C6: 3 };
 const gradeOptions = Object.keys(gradePoints);
+
+const fuhsiCutoffCategories = ['Merit', 'Osun', 'Oyo', 'Ondo', 'Ogun', 'Ekiti', 'Lagos'] as const;
+type FuhsiCutoffCategory = typeof fuhsiCutoffCategories[number];
+const fuhsiDepartmentCutoffs: Record<string, Record<FuhsiCutoffCategory, number>> = {
+  'Medicine and Surgery (MBBS)': { Merit: 81.3, Osun: 80.3, Oyo: 79.7, Ondo: 79.8, Ogun: 76.1, Ekiti: 79.4, Lagos: 72.2 },
+  'Nursing Science': { Merit: 75.4, Osun: 73.7, Oyo: 71.9, Ondo: 74.5, Ogun: 73.0, Ekiti: 71.3, Lagos: 70.3 },
+  'Doctor of Physiotherapy (DPT)': { Merit: 73.3, Osun: 73.3, Oyo: 71.9, Ondo: 69.7, Ogun: 71.4, Ekiti: 68.0, Lagos: 68.2 },
+  'Medical Laboratory Science': { Merit: 72.2, Osun: 71.4, Oyo: 70.8, Ondo: 69.4, Ogun: 70.8, Ekiti: 70.1, Lagos: 67.6 },
+  'Prosthetics and Orthotics': { Merit: 65.7, Osun: 65.4, Oyo: 63.4, Ondo: 60.1, Ogun: 62.4, Ekiti: 63.7, Lagos: 61.5 },
+  'Audiology': { Merit: 65.5, Osun: 65.1, Oyo: 65.1, Ondo: 63.2, Ogun: 62.5, Ekiti: 64.3, Lagos: 61.4 },
+  'Pharmacology': { Merit: 64.6, Osun: 63.4, Oyo: 63.0, Ondo: 60.8, Ogun: 62.9, Ekiti: 61.5, Lagos: 56.2 },
+  'Human Nutrition & Dietetics': { Merit: 61.8, Osun: 61.2, Oyo: 60.4, Ondo: 55.8, Ogun: 59.6, Ekiti: 59.7, Lagos: 51.4 },
+  'Information Technology & Health Informatics': { Merit: 59.8, Osun: 59.2, Oyo: 58.2, Ondo: 57.2, Ogun: 52.9, Ekiti: 56.5, Lagos: 52.0 },
+  'Environmental Health Science': { Merit: 59.3, Osun: 57.7, Oyo: 58.2, Ondo: 52.2, Ogun: 51.6, Ekiti: 56.0, Lagos: 54.1 },
+  'Biochemistry': { Merit: 50.3, Osun: 50.3, Oyo: 50.3, Ondo: 50.3, Ogun: 50.3, Ekiti: 50.3, Lagos: 50.3 },
+  'Microbiology': { Merit: 50.0, Osun: 50.0, Oyo: 50.0, Ondo: 50.0, Ogun: 50.0, Ekiti: 50.0, Lagos: 50.0 },
+  'Biotechnology & Molecular Biology': { Merit: 50.0, Osun: 50.0, Oyo: 50.0, Ondo: 50.0, Ogun: 50.0, Ekiti: 50.0, Lagos: 50.0 },
+};
 const sources: Partial<Record<SchoolKey, string>> = {
   unilorin: 'https://www.unilorin.edu.ng/wp-content/uploads/2026/06/Pre-admission-screening-2026.pdf',
   fuhsi: 'https://fuhsi.edu.ng/admissions.html',
@@ -70,6 +88,8 @@ export default function AggregateCalculator() {
   const [stateOfOrigin, setStateOfOrigin] = useState('');
   const [targetAggregate, setTargetAggregate] = useState('75');
   const [departmentCutoff, setDepartmentCutoff] = useState('');
+  const [fuhsiCutoffCourse, setFuhsiCutoffCourse] = useState('');
+  const [fuhsiCutoffCategory, setFuhsiCutoffCategory] = useState<FuhsiCutoffCategory>('Merit');
   const [olevelSittings, setOlevelSittings] = useState('1');
 
   const result = useMemo(() => {
@@ -206,7 +226,7 @@ export default function AggregateCalculator() {
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setDepartmentCutoff(''); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setDepartmentCutoff(''); setFuhsiCutoffCourse(''); setFuhsiCutoffCategory('Merit'); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
   };
 
   const filteredDirectory = directory.filter((item) => {
@@ -308,6 +328,32 @@ export default function AggregateCalculator() {
           {Number(olevelWeight) > 0 && <div className="aggregate-field"><label htmlFor="aggregate-olevel">O’Level score / contribution (out of 100)</label><input id="aggregate-olevel" type="number" min="0" max="100" step="any" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter score from the formula you are using" />{olevelPoints !== '' && !validOlevelPoints && <small role="alert">Enter an O’Level score from 0 to 100.</small>}</div>}
           <small>Weights are normalized to 100. When O’Level weight is above zero, enter the O’Level component score out of 100. This is a user-defined estimate, not a verified school formula.</small>
         </>}
+        {school === 'fuhsi' && <div className="aggregate-two-fields">
+          <div className="aggregate-field">
+            <label htmlFor="fuhsi-cutoff-course">FUHSI course (2026/2027 official cut-off)</label>
+            <select id="fuhsi-cutoff-course" value={fuhsiCutoffCourse} onChange={e => {
+              const course = e.target.value;
+              setFuhsiCutoffCourse(course);
+              setDepartmentCutoff(course ? String(fuhsiDepartmentCutoffs[course][fuhsiCutoffCategory]) : '');
+              setShowResult(false);
+            }}>
+              <option value="">Choose course to load official cut-off</option>
+              {Object.keys(fuhsiDepartmentCutoffs).map(course => <option key={course} value={course}>{course}</option>)}
+            </select>
+          </div>
+          <div className="aggregate-field">
+            <label htmlFor="fuhsi-cutoff-category">Admission category</label>
+            <select id="fuhsi-cutoff-category" value={fuhsiCutoffCategory} onChange={e => {
+              const category = e.target.value as FuhsiCutoffCategory;
+              setFuhsiCutoffCategory(category);
+              if (fuhsiCutoffCourse) setDepartmentCutoff(String(fuhsiDepartmentCutoffs[fuhsiCutoffCourse][category]));
+              setShowResult(false);
+            }}>
+              {fuhsiCutoffCategories.map(category => <option key={category} value={category}>{category === 'Merit' ? 'Merit (other states)' : category}</option>)}
+            </select>
+          </div>
+          <p className="aggregate-helper">Official FUHSI 2026/2027 figures. Choose the category matching your admission consideration. The university’s published table does not list all states as catchment categories; if you are unsure which category applies, confirm with FUHSI before relying on this comparison.</p>
+        </div>}
         <div className="aggregate-field">
           <label htmlFor="aggregate-department-cutoff">Departmental cut-off mark (optional, out of 100)</label>
           <input id="aggregate-department-cutoff" type="number" min="0" max="100" step="any" value={departmentCutoff} onChange={e => setDepartmentCutoff(e.target.value)} placeholder="Enter a cut-off from the official admission notice" />
