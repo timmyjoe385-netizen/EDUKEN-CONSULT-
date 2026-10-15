@@ -300,3 +300,16 @@ test("schema recovery instructions use a supported read-only dump and forbid rem
   assert.match(docs, /Do not use `supabase db reset --linked`, `supabase db push`/);
   assert.doesNotMatch(docs, /supabase db dump --schema-only/);
 });
+
+
+test("email-alert deliveries have a leading-column index for opportunity foreign-key lookups", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const migration = await readFile(resolve(here, "../supabase/migrations/20261015120000_add_email_alert_opportunity_index.sql"), "utf8");
+
+  assert.match(migration, /create index if not exists email_alert_deliveries_opportunity_id_idx/i);
+  assert.match(migration, /on public\.email_alert_deliveries\s*\(opportunity_id\)/i);
+  assert.doesNotMatch(migration, /drop index|drop table|truncate|delete from/i);
+});
