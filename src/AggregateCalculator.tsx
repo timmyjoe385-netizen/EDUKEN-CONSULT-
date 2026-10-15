@@ -281,7 +281,7 @@ export default function AggregateCalculator() {
               setJambWeight(presets[nextSchool][0]);
               setPostWeight(presets[nextSchool][1]);
               setOlevelWeight(presets[nextSchool][2]);
-            } else if (nextSchool === 'custom') {
+            } else if (nextSchool === 'custom' || !['unilorin', 'fuhsi', 'uniben', 'unilag'].includes(nextSchool)) {
               setJambWeight('50'); setPostWeight('50'); setOlevelWeight('0');
             }
             setShowResult(false);
