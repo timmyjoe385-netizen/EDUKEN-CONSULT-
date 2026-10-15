@@ -378,8 +378,28 @@ function App() {
 
   const showToast = (message: string) => {
     setToast(message);
-    window.setTimeout(() => setToast(''), 3500);
+    window.setTimeout(() => setToast(''), 5000);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get('payment_reference') || params.get('reference');
+    if (!reference || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return;
+    // Clear the callback reference from the address bar before verification.
+    params.delete('payment_reference');
+    params.delete('reference');
+    const remaining = params.toString();
+    window.history.replaceState({}, document.title, window.location.pathname + (remaining ? '?' + remaining : '') + window.location.hash);
+    void api.post('/api/payments/verify', { reference }).then(result => {
+      if (result.data?.paid) {
+        showToast('Payment confirmed successfully. Your EDUKEN service request is marked paid.');
+      } else {
+        showToast('Payment is not confirmed yet. Your request is saved; check again shortly or contact EDUKEN with your reference.');
+      }
+    }).catch(error => {
+      showToast(error instanceof Error ? error.message : 'Could not confirm payment yet. Please refresh or contact EDUKEN with your payment reference.');
+    });
+  }, []);
 
   const installApp = async () => {
     if (installed) return;
@@ -928,27 +948,46 @@ function App() {
     if (!selectedService || serviceSubmitting) return;
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
+    const email = String(fd.get('email') || '').trim();
+    const hasOnlinePrice = Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0
+      && selectedService.id && !String(selectedService.id).startsWith('fallback-');
+    const quantity = isJambCatalogueService(selectedService)
+      ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))
+      : 1;
     setServiceSubmitting(true);
+    let savedReference = '';
     try {
       const result = await api.post('/api/service-requests', {
         serviceId: selectedService.id && !String(selectedService.id).startsWith('fallback-') ? selectedService.id : null,
         customerName: String(fd.get('customerName') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
-        email: String(fd.get('email') || '').trim(),
+        email,
         details: [
           ...(isJambCatalogueService(selectedService) ? [
-            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))),
-            'Estimated total: ₦' + (Number(selectedService.price) * Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))).toLocaleString('en-NG'),
+            'Number of candidates: ' + String(quantity),
+            'Estimated total: ₦' + (Number(selectedService.price) * quantity).toLocaleString('en-NG'),
           ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
         ].filter(Boolean).join('\n'),
       });
+      savedReference = String(result.data.referenceNumber || 'saved');
+      if (hasOnlinePrice) {
+        if (!email) throw new Error('Your request was saved (' + savedReference + '), but checkout needs an email address. Please submit again with your email.');
+        const payment = await api.post('/api/payments/initialize', {
+          serviceRequestId: result.data.request.id,
+          email,
+          amount: Number(selectedService.price) * quantity,
+        });
+        window.location.assign(String(payment.data.authorizationUrl));
+        return;
+      }
       formElement.reset();
       setSelectedService(null);
-      showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
+      showToast('Request received. Reference: ' + savedReference + '. EDUKEN will follow up about your quote.');
     } catch (error) {
-      showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
+      const message = error instanceof Error ? error.message : 'Could not submit your request. Please try again.';
+      showToast(savedReference ? 'Request saved (' + savedReference + '), but checkout did not start: ' + message : message);
     } finally {
       setServiceSubmitting(false);
     }
@@ -2435,7 +2474,7 @@ function App() {
             })}
           </div>
           {!content.services.some(isJambCatalogueService) ? <div className="admin-empty jamb-catalogue-empty">The JAMB catalogue has not been set up yet. Open Admin → Services and choose “Add JAMB service templates”.</div> : null}
-          <p className="jamb-catalogue-safety">This form collects a service request only; it does not take payment. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
+          <p className="jamb-catalogue-safety">Services with a confirmed price continue to secure online checkout; services without a confirmed price remain quote requests. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
         </section>
 
         <section className="section pale">
@@ -2737,13 +2776,13 @@ function App() {
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
           <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. This form records a request only; no payment is taken here.</p></div>
+              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. {Number(selectedService.price) > 0 && selectedService.id && !String(selectedService.id).startsWith('fallback-') ? 'After submitting your details, you will continue to secure Paystack checkout.' : 'If the price is not confirmed, EDUKEN will follow up with a quote.'}</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
             </div>
             <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
               <input name="customerName" required maxLength={120} placeholder="Your full name" aria-label="Your full name" />
               <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
-              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+              <input name="email" type="email" maxLength={200} required={Number(selectedService.price) > 0 && Boolean(selectedService.id) && !String(selectedService.id).startsWith('fallback-')} placeholder={Number(selectedService.price) > 0 ? 'Email for payment receipt *' : 'Email (optional)'} aria-label="Email address" />
               {isJambCatalogueService(selectedService) ? (
                 <label style={{ display: 'grid', gap: 6 }}>
                   <span style={{ fontWeight: 600 }}>Number of candidates *</span>
@@ -2768,7 +2807,7 @@ function App() {
               <textarea name="details" maxLength={4000} rows={4} placeholder="Additional notes (optional)" aria-label="Additional notes" required={!jambServiceFieldsFor(selectedService).length} />
               <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-                <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>
+                <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Preparing checkout…' : (Number(selectedService.price) > 0 && selectedService.id && !String(selectedService.id).startsWith('fallback-') ? 'Continue to secure payment' : 'Send service request')}</button>
                 <button type="button" className="secondary" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}>Cancel</button>
               </div>
             </form>
