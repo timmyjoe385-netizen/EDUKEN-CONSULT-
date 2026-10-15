@@ -1097,7 +1097,10 @@ test('admin system settings are separate, persisted, and protected by backend au
   expect(route).toContain('await requireAdmin(req)');
   expect(route).toContain('.upsert({ id: "global", settings: incoming, updated_by: user.id');
   expect(route).toContain('typeof incoming[key] !== "boolean"');
-  expect(route).toContain('!incoming.deadlineEmailAlertsEnabled');
+  expect(route).not.toContain('update({ status: "cancelled" }).eq("status", "pending")');
+  expect(handler).toContain('if (!systemSettings.deadlineEmailAlertsEnabled)');
+  expect(handler).toContain('paused: true, processed: 0');
+  expect(handler).toContain('status: "pending",\n              scheduled_for: new Date().toISOString()');
   expect(migration).toContain('alter table public.admin_system_settings enable row level security;');
   expect(migration).toContain('revoke all on table public.admin_system_settings from anon, authenticated;');
   expect(app).toContain("'system-settings'");
