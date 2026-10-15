@@ -953,3 +953,96 @@ test('FUHSI official course and catchment cut-offs populate the comparison safel
   await expect(page.getByLabel('FUHSI course (2026/2027 official cut-off)')).toHaveValue('');
   await expect(cutoff).toHaveValue('');
 });
+
+
+test('aggregate calculator restores the complete original institution list', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  const institution = page.getByLabel('Institution / formula');
+  const expected = [
+    'University of Lagos (UNILAG)',
+    'University of Ibadan (UI)',
+    'Obafemi Awolowo University (OAU)',
+    'University of Nigeria, Nsukka (UNN)',
+    'Ahmadu Bello University (ABU)',
+    'University of Ilorin (UNILORIN)',
+    'University of Port Harcourt (UNIPORT)',
+    'Federal University of Technology, Akure (FUTA)',
+    'FUNAAB',
+    'FUTMinna',
+    'FUTO',
+    'UNIZIK',
+    'UNICAL',
+    'UNIJOS',
+    'BUK',
+    'UNIMAID',
+    'UDUSOK',
+    'Lagos State University (LASU)',
+    'DELSU',
+    'EKSU',
+    'RSU',
+    'IMSU',
+    'AAU',
+    'OOU',
+    'ESUT',
+    'TASUED',
+    'KWASU',
+    'FUOYE',
+    'ABSU',
+    'BSU',
+    'Yaba College of Technology (YABATECH)',
+    'Federal Polytechnic, Ado-Ekiti',
+    'Federal Polytechnic, Bauchi',
+    'Federal Polytechnic, Bida',
+    'Federal Polytechnic, Ilaro',
+    'Federal Polytechnic, Nekede',
+    'Federal Polytechnic, Offa',
+    'Federal Polytechnic, Oko',
+    'Kaduna Polytechnic',
+    'Auchi Polytechnic',
+    'Lagos State Polytechnic / LASPOTECH',
+    'Moshood Abiola Polytechnic (MAPOLY)',
+    'The Polytechnic, Ibadan',
+    'Kwara State Polytechnic',
+    'Delta State Polytechnic'
+  ];
+  for (const label of expected) {
+    await expect(institution.locator('option').filter({ hasText: label }).first()).toBeAttached();
+    await expect(institution.locator('option').filter({ hasText: label }).first()).not.toBeDisabled();
+  }
+  await institution.selectOption('fedpolyado');
+  await expect(page.getByText(/uses editable general weights only/i)).toBeVisible();
+  await expect(page.getByLabel('JAMB UTME score (out of 400)')).toBeVisible();
+  await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
+  await expect(page.getByLabel('UTME weight (%)')).toBeVisible();
+});
+
+
+test('aggregate calculator applies the official UNILORIN 50:30:20 arithmetic', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByLabel(/O’Level contribution \(out of 20\)/).fill('15');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
+});
+
+test('aggregate calculator preloads KWASU official 70:30 weights without inventing grade conversion', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('kwasu');
+  await expect(page.getByLabel('UTME weight (%)')).toHaveValue('70');
+  await expect(page.getByLabel('Post-UTME weight (%)')).toHaveValue('0');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await expect(page.getByText(/KWASU’s official 2026\/2027 notice confirms 70% UTME\/DE/i)).toBeVisible();
+});
+
+
+test('JAMB-only divide-by-eight model reports a 50-point maximum consistently', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('jambonly');
+  await expect(page.getByLabel('Target aggregate (out of 50)')).toHaveAttribute('max', '50');
+  await expect(page.getByLabel('Departmental cut-off mark (optional, out of 50)')).toHaveAttribute('max', '50');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('40.00');
+  await expect(page.locator('.aggregate-result')).toContainText('/ 50');
+});
