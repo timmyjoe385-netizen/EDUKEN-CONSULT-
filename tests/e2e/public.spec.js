@@ -1137,7 +1137,7 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
 test('admin system settings are separate, persisted, and protected by backend authorization', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
-  const migration = readFileSync('supabase/migrations/20261015150000_admin_system_settings.sql', 'utf8');
+  const migration = readFileSync('supabase/migrations/20261015130931_admin_system_settings.sql', 'utf8');
   const start = handler.indexOf('if (path === "/api/admin/system-settings")');
   const end = handler.indexOf('const adminContent = path.match', start);
   const route = handler.slice(start, end);
