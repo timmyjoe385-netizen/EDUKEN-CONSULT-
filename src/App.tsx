@@ -2338,38 +2338,56 @@ function App() {
           </div>
         </section>
 
-        <section className="section" id="jamb-services">
+        <section className="section jamb-catalogue-section" id="jamb-services">
           <div className="section-head">
             <div>
               <span className="kicker">EDUKEN SERVICE PORTAL</span>
               <h2>JAMB Services</h2>
             </div>
-            <p>Choose a service, review the requirements and check availability before requesting assistance. Prices and availability are managed by EDUKEN in the admin dashboard.</p>
+            <p>Choose a service, review its requirements and check availability before requesting assistance. Prices and availability are managed by EDUKEN in the admin dashboard.</p>
           </div>
-          <div className="service-shop-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: 16 }}>
-            {content.services.filter(isJambCatalogueService).map(service => {
+          <div className="jamb-service-grid">
+            {content.services.filter(isJambCatalogueService).map((service, index) => {
               const price = Number(service.price);
               const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
               const available = service.is_available !== false;
               return (
-                <article className="service-shop-card" key={service.id} style={{ border: '1px solid var(--line, #dce6df)', borderRadius: 16, padding: 20, background: 'var(--surface, #fff)', display: 'flex', flexDirection: 'column', gap: 10 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-                    <span className="tag">{service.category || 'JAMB Services'}</span>
-                    <span className="tag" aria-label={available ? 'Available' : 'Unavailable'} style={{ color: available ? '#166534' : '#991b1b', background: available ? '#dcfce7' : '#fee2e2' }}>{available ? 'Available' : 'Unavailable'}</span>
+                <article className={`jamb-service-card ${available ? 'is-available' : 'is-unavailable'}`} key={service.id}>
+                  <div className="jamb-service-card__topline">
+                    <span className="jamb-service-card__category">{service.category || 'JAMB Services'}</span>
+                    <span className={`jamb-service-status ${available ? 'is-available' : 'is-unavailable'}`} aria-label={available ? 'Available' : 'Unavailable'}>
+                      <span className="jamb-service-status__dot" aria-hidden="true" />
+                      {available ? 'Available' : 'Unavailable'}
+                    </span>
                   </div>
-                  <h3 style={{ margin: '4px 0' }}>{service.name}</h3>
-                  {service.description ? <p style={{ margin: 0, lineHeight: 1.55 }}>{service.description}</p> : null}
-                  {service.requirements ? <div style={{ fontSize: 13, lineHeight: 1.55, whiteSpace: 'pre-line' }}><b>Requirements</b><p style={{ margin: '4px 0 0' }}>{service.requirements}</p></div> : null}
-                  <strong style={{ display: 'block', marginTop: 'auto', fontSize: 21 }}>{hasPrice ? '₦' + price.toLocaleString('en-NG') + ' per candidate' : 'Price not set'}</strong>
-                  <button type="button" className="primary" disabled={!available || !hasPrice} onClick={() => { setSelectedService(service); setServiceForm({}); }}>
-                    {!available ? 'Unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
-                  </button>
+                  <div className="jamb-service-card__title-row">
+                    <span className="jamb-service-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <h3>{service.name}</h3>
+                  </div>
+                  {service.description ? <p className="jamb-service-card__description">{service.description}</p> : null}
+                  {service.requirements ? (
+                    <div className="jamb-service-requirements">
+                      <div className="jamb-service-requirements__label"><ShieldCheck size={16} strokeWidth={2.5} /> Before you request</div>
+                      <p>{service.requirements}</p>
+                    </div>
+                  ) : null}
+                  <div className="jamb-service-card__footer">
+                    <div className="jamb-service-price">
+                      <span className="jamb-service-price__label">Service price</span>
+                      <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
+                      {hasPrice ? <span className="jamb-service-price__unit">per candidate</span> : null}
+                    </div>
+                    <button type="button" className="primary jamb-service-request" disabled={!available || !hasPrice} onClick={() => { setSelectedService(service); setServiceForm({}); }}>
+                      {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
+                      {available && hasPrice ? <ArrowRight size={16} aria-hidden="true" /> : null}
+                    </button>
+                  </div>
                 </article>
               );
             })}
           </div>
-          {!content.services.some(isJambCatalogueService) ? <div className="admin-empty" style={{ marginTop: 16 }}>The JAMB catalogue has not been set up yet. Open Admin → Services and choose “Add JAMB service templates”.</div> : null}
-          <p style={{ marginTop: 16, fontSize: 13, opacity: .8 }}>This form collects a service request only; it does not take payment. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
+          {!content.services.some(isJambCatalogueService) ? <div className="admin-empty jamb-catalogue-empty">The JAMB catalogue has not been set up yet. Open Admin → Services and choose “Add JAMB service templates”.</div> : null}
+          <p className="jamb-catalogue-safety">This form collects a service request only; it does not take payment. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
         </section>
 
         <section className="section pale">
