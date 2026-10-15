@@ -146,8 +146,8 @@ const toService = (x: any) => ({ ...x });
 async function publicContent() {
   const [a, b, c, d, e] = await Promise.all([
     db.from("opportunities").select("id, title, slug, category, description, organization, location, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent, content, eligibility, benefits, how_to_apply").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("admissions").select("id, title, slug, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("updates").select("id, title, slug, category, content, source, source_url, is_published, created_at, updated_at, verified, featured, urgent").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("faqs").select("id, question, answer, category, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("services").select("id, name, category, description, requirements, price, is_available, is_catalog_item, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
   ]);
