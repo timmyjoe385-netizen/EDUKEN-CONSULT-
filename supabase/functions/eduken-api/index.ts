@@ -102,6 +102,11 @@ const toAdmission = (x: any) => ({
   link: x.application_url ?? "",
   sourceUrl: x.official_source ?? "",
   details: x.description ?? "",
+  verified: Boolean(x.verified),
+  featured: Boolean(x.featured),
+  urgent: Boolean(x.urgent),
+  slug: x.slug ?? "",
+  notifyOnPublish: Boolean(x.notify_on_publish),
 });
 
 const toUpdate = (x: any) => ({
@@ -109,15 +114,27 @@ const toUpdate = (x: any) => ({
   body: x.content ?? "",
   date: x.created_at ?? "",
   sourceUrl: x.source_url ?? "",
+  verified: Boolean(x.verified),
+  featured: Boolean(x.featured),
+  urgent: Boolean(x.urgent),
+  slug: x.slug ?? "",
+  notifyOnPublish: Boolean(x.notify_on_publish),
 });
+
+const withoutPublishPreference = (item: Record<string, any>) =>
+  Object.fromEntries(
+    Object.entries(item).filter(
+      ([key]) => key !== "notifyOnPublish" && key !== "notify_on_publish",
+    ),
+  );
 
 const toService = (x: any) => ({ ...x });
 
 async function publicContent() {
   const [a, b, c, d, e] = await Promise.all([
     db.from("opportunities").select("id, title, slug, category, description, organization, location, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent, content, eligibility, benefits, how_to_apply").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
-    db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at, verified, slug, featured, urgent").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
+    db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at, verified, slug, featured, urgent").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("faqs").select("id, question, answer, category, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
     db.from("services").select("id, name, category, description, price, is_published, created_at, updated_at").eq("is_published", true).order("created_at", { ascending: false }).limit(100),
   ]);
@@ -126,8 +143,8 @@ async function publicContent() {
   return {
     // Keep the editorial notification preference private to the admin API.
     opportunities: (a.data ?? []).map(publicOpportunity),
-    admissions: (b.data ?? []).map(toAdmission),
-    updates: (c.data ?? []).map(toUpdate),
+    admissions: (b.data ?? []).map((item) => withoutPublishPreference(toAdmission(item))),
+    updates: (c.data ?? []).map((item) => withoutPublishPreference(toUpdate(item))),
     faqs: d.data ?? [],
     services: (e.data ?? []).map(toService),
   };
@@ -174,15 +191,19 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
     if (x.details !== undefined && x.description === undefined) x.description = x.details;
     if (x.link !== undefined && x.application_url === undefined) x.application_url = x.link;
     if (x.sourceUrl !== undefined && x.official_source === undefined) x.official_source = x.sourceUrl;
+    if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined) x.notify_on_publish = x.notifyOnPublish;
     if (x.title === undefined && x.school !== undefined) x.title = x.school;
-    delete x.course; delete x.type; delete x.details; delete x.link; delete x.sourceUrl; delete x.status;
+    if (x.slug) x.slug = slugify(x.slug);
+    else if (!x.slug && x.title) x.slug = slugify(x.title) + "-" + Date.now().toString(36);
+    delete x.course; delete x.type; delete x.details; delete x.link; delete x.sourceUrl; delete x.notifyOnPublish; delete x.status;
   }
   if (table === "updates") {
     if (x.body !== undefined && x.content === undefined) x.content = x.body;
     if (x.sourceUrl !== undefined && x.source_url === undefined) x.source_url = x.sourceUrl;
-    delete x.body; delete x.sourceUrl; delete x.date;
-    // These controls are not columns in the updates table.
-    delete x.verified; delete x.featured; delete x.urgent;
+    if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined) x.notify_on_publish = x.notifyOnPublish;
+    if (x.title && !x.slug) x.slug = slugify(x.title) + "-" + Date.now().toString(36);
+    if (x.slug) x.slug = slugify(x.slug);
+    delete x.body; delete x.sourceUrl; delete x.notifyOnPublish; delete x.date;
   }
   // status is a UI-only field for every non-opportunity content table.
   delete x.status;
