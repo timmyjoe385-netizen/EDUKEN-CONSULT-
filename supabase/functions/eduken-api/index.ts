@@ -346,11 +346,8 @@ async function enqueueOpportunityEmailAlerts(
   options: { queueNew: boolean; rescheduleDeadlines: boolean },
 ) {
   const systemSettings = await readSystemSettings();
-  if (!systemSettings.deadlineEmailAlertsEnabled) {
-    const { error } = await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("opportunity_id", opportunity.id).eq("status", "pending");
-    if (error) throw error;
-    return;
-  }
+  // Preserve queued deliveries while alerts are paused so they can resume when re-enabled.
+  if (!systemSettings.deadlineEmailAlertsEnabled) return;
   const eligible = isEmailAlertOpportunityEligible(opportunity);
   if (!eligible) {
     const { error: cancelError } = await db.from("email_alert_deliveries")
@@ -802,6 +799,13 @@ Deno.serve(async (req) => {
       const config = emailAlertConfiguration();
       if (!config) return json({ error: "Email alerts are not configured." }, 503);
 
+      // Pause dispatch without claiming or cancelling queued work. Re-enabling alerts
+      // allows still-valid reminders to resume; expired deadlines are filtered below.
+      const systemSettings = await readSystemSettings();
+      if (!systemSettings.deadlineEmailAlertsEnabled) {
+        return json({ ok: true, paused: true, processed: 0, sent: 0, failed: 0, skipped: 0 });
+      }
+
       const now = new Date();
       // Keep the private rate-limit table bounded without retaining inactive hashed IP keys indefinitely.
       const rateLimitRetentionBefore = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
@@ -929,6 +933,19 @@ Deno.serve(async (req) => {
             });
             skipped++;
             continue;
+          }
+
+          // Re-check the global pause immediately before the external send. If an
+          // administrator paused alerts while this batch was running, release the
+          // delivery back to pending rather than sending or losing the queued reminder.
+          const latestSystemSettings = await readSystemSettings();
+          if (!latestSystemSettings.deadlineEmailAlertsEnabled) {
+            await updateEmailAlertDelivery(delivery.id, {
+              status: "pending",
+              scheduled_for: new Date().toISOString(),
+              processing_started_at: null,
+            });
+            break;
           }
 
           // Reuse the same provider idempotency key on retries to avoid duplicate messages
@@ -1168,11 +1185,8 @@ Deno.serve(async (req) => {
           .upsert({ id: "global", settings: incoming, updated_by: user.id, updated_at: new Date().toISOString() }, { onConflict: "id" })
           .select("settings,updated_at").single();
         if (error) throw error;
-        if (!incoming.deadlineEmailAlertsEnabled) {
-          const { error: cancelError } = await db.from("email_alert_deliveries")
-            .update({ status: "cancelled" }).eq("status", "pending");
-          if (cancelError) throw cancelError;
-        }
+        // Do not cancel queued deliveries when pausing alerts. The private worker
+        // checks this setting before sending and leaves queued work available to resume.
         return json({ ok: true, settings: data.settings, updated_at: data.updated_at });
       }
       return json({ error: "Method not allowed." }, 405);
