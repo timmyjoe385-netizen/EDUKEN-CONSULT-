@@ -180,7 +180,7 @@ export default function AggregateCalculator() {
       school === 'fuhsi' ? grades.every(Boolean) :
       school === 'unilag' ? validPost && validOlevelPoints :
       school === 'uniben' ? validPost :
-      ((Number(postWeight) <= 0 || validPost) && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
+      ((Number(postWeight) <= 0 || validPost) && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100))));
 
   const plannerPostWeight = school === 'unilorin' ? 30
     : school === 'uniben' ? 50
