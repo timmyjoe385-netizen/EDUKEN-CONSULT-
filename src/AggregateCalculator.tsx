@@ -342,7 +342,7 @@ export default function AggregateCalculator() {
           <input id="aggregate-jamb" type="number" inputMode="numeric" min="0" max="400" step="1" value={jamb} onChange={e => { setJamb(e.target.value); setShowResult(false); }} placeholder="e.g. 250" />
           {jamb !== '' && !validJamb && <small role="alert">Enter a whole-number UTME score from 0 to 400.</small>}
         </div>
-        {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || school === 'custom') && <>
+        {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || isGenericModel) && <>
           <div className="aggregate-field">
             <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
             <input id="aggregate-post" type="number" min="0" max={100} step="1" value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
