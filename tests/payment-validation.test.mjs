@@ -128,3 +128,21 @@ test("payment callback keeps the reference for retry until verification succeeds
   assert.match(callback, /Reference: '\s*\+ reference/);
   assert.match(callback, /refresh to retry/);
 });
+
+test("Paystack initialize, verify, and webhook enforce matching test/live secret prefixes", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  for (const route of [
+    'if (path === "/api/payments/initialize"',
+    'if (path === "/api/payments/verify"',
+    'if (path === "/api/payments/webhook"',
+  ]) {
+    const start = source.indexOf(route);
+    assert.notEqual(start, -1, `expected route exists: ${route}`);
+    const nextRoute = source.indexOf('if (path === "/api/', start + route.length);
+    const block = source.slice(start, nextRoute === -1 ? undefined : nextRoute);
+    assert.match(block, /PAYSTACK_MODE/);
+    assert.match(block, /sk_test_/);
+    assert.match(block, /sk_live_/);
+  }
+});
