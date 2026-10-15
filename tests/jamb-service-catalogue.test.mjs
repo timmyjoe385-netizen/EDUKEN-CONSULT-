@@ -32,6 +32,11 @@ test("each catalogue service has its own required information fields", () => {
   assert.deepEqual(fields("JAMB e-PIN (UTME Without Mock)"), ["candidateFullName", "profileCode"]);
   assert.deepEqual(fields("JAMB Original Result Printing"), ["candidateFullName", "registrationNumber", "jambYear"]);
   assert.deepEqual(fields("JAMB Reprinting"), ["documentType", "candidateFullName", "registrationNumber", "jambYear"]);
-  assert.deepEqual(fields("JAMB Profile Code Retrieval"), ["registrationNumberOrPhone"]);
-  assert.deepEqual(fields("JAMB Registration Number Retrieval"), ["profileCodeOrPhone"]);
+  assert.deepEqual(fields("JAMB Profile Code Retrieval"), ["registrationNumberOrPhone", "jambYear"]);
+  assert.deepEqual(fields("JAMB Registration Number Retrieval"), ["profileCodeOrPhone", "jambYear"]);
+  const profileYear = jambServiceFieldsFor({ name: "JAMB Profile Code Retrieval" }).find(item => item.name === "jambYear");
+  const registrationYear = jambServiceFieldsFor({ name: "JAMB Registration Number Retrieval" }).find(item => item.name === "jambYear");
+  assert.deepEqual(profileYear.options, ["2026", "2025", "2024", "2023", "2022", "2021"]);
+  assert.equal(registrationYear.options.length, 10);
+  assert.equal(registrationYear.options.at(-1), "2017");
 });
