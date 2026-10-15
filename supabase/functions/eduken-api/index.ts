@@ -1150,8 +1150,9 @@ Deno.serve(async (req) => {
     if (path === "/api/admin/system-settings") {
       const user = await requireAdmin(req);
       if (req.method === "GET") {
-        const settings = await readSystemSettings();
-        return json({ settings });
+        const { data, error } = await db.from("admin_system_settings").select("settings,updated_at").eq("id", "global").maybeSingle();
+        if (error) return json({ error: "System settings are not initialized yet. Apply the admin system settings migration, then retry." }, 503);
+        return json({ settings: { ...DEFAULT_SYSTEM_SETTINGS, ...(data?.settings || {}) }, updated_at: data?.updated_at ?? null });
       }
       if (req.method === "PUT") {
         let body: any;
