@@ -541,30 +541,13 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('homepage Admin button starts the Google OAuth flow', async ({ page }) => {
-  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
-
-  // Stub the OAuth navigation so CI verifies the hand-off without logging in
-  // or opening a real Google account.
-  await page.route(authorizeEndpoint + '**', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'text/html',
-      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
-    }),
-  );
-
+test('public navigation hides admin entry while the private /admin URL opens sign-in', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const siteOrigin = new URL(page.url()).origin;
-  const authNavigation = page.waitForRequest(
-    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
-  );
-  await page.getByRole('button', { name: /admin/i }).click();
-  const request = await authNavigation;
-  const authUrl = new URL(request.url());
-
-  expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
+  await expect(page.getByRole('button', { name: /^Admin$/ })).toHaveCount(0);
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveURL(/\/admin\/?$/);
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
 });
 
 
@@ -952,14 +935,4 @@ test('FUHSI official course and catchment cut-offs populate the comparison safel
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
   await expect(page.getByLabel('FUHSI course (2026/2027 official cut-off)')).toHaveValue('');
   await expect(cutoff).toHaveValue('');
-});
-
-
-test('public navigation hides admin entry while the private /admin URL opens sign-in', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('button', { name: /^Admin$/ })).toHaveCount(0);
-  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-  await expect(page).toHaveURL(/\/admin\/?$/);
-  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
 });
