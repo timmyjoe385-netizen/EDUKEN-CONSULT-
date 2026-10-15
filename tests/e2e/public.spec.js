@@ -1085,3 +1085,23 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
   await expect(cutoff).toHaveValue('');
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
+
+test('admin system settings are separate, persisted, and protected by backend authorization', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const migration = readFileSync('supabase/migrations/20261015070000_admin_system_settings.sql', 'utf8');
+  const start = handler.indexOf('if (path === "/api/admin/system-settings")');
+  const end = handler.indexOf('const adminContent = path.match', start);
+  const route = handler.slice(start, end);
+  expect(start).toBeGreaterThan(-1);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('.upsert({ id: "global", settings: incoming, updated_by: user.id');
+  expect(route).toContain('typeof incoming[key] !== "boolean"');
+  expect(route).toContain('!incoming.deadlineEmailAlertsEnabled');
+  expect(migration).toContain('alter table public.admin_system_settings enable row level security;');
+  expect(migration).toContain('revoke all on table public.admin_system_settings from anon, authenticated;');
+  expect(app).toContain("'system-settings'");
+  expect(app).toContain("updateSystemSetting('subscriberNotificationsEnabled'");
+  expect(app).toContain("updateSystemSetting('deadlineEmailAlertsEnabled'");
+  expect(app).toContain("updateSystemSetting('defaultNotifyOnPublish'");
+});
