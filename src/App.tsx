@@ -721,7 +721,7 @@ function App() {
         }
         payload.price = rawPrice ? Number(rawPrice) : null;
         payload.requirements = String(payload.requirements ?? '').trim();
-        payload.is_available = payload.is_available === true || String(payload.is_available).toLowerCase() === 'true';
+        payload.is_available = payload.is_available === undefined ? true : (payload.is_available === true || String(payload.is_available).toLowerCase() === 'true');
       }
       if (table !== 'opportunities') {
         // Keep the database boolean in sync with the editor's Draft/Published
