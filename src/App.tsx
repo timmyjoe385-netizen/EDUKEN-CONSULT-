@@ -984,7 +984,7 @@ function App() {
                       <span className="admin-toggle-control"><input type="checkbox" role="switch" checked={systemSettings.subscriberNotificationsEnabled} disabled={settingsSaving !== null} onChange={event => void updateSystemSetting('subscriberNotificationsEnabled', event.target.checked)} /><span>{settingsSaving === 'subscriberNotificationsEnabled' ? 'SAVING…' : systemSettings.subscriberNotificationsEnabled ? 'ON' : 'OFF'}</span></span>
                     </label>
                     <label className="system-setting-row">
-                      <span className="system-setting-copy"><b>Smart deadline email alerts</b><small>Allow the automated email-alert queue to schedule and reschedule opportunity deadline reminders.</small></span>
+                      <span className="system-setting-copy"><b>Smart Alerts · deadline email reminders</b><small>Allow the automated email-alert queue to schedule and reschedule opportunity deadline reminders.</small></span>
                       <span className="admin-toggle-control"><input type="checkbox" role="switch" checked={systemSettings.deadlineEmailAlertsEnabled} disabled={settingsSaving !== null} onChange={event => void updateSystemSetting('deadlineEmailAlertsEnabled', event.target.checked)} /><span>{settingsSaving === 'deadlineEmailAlertsEnabled' ? 'SAVING…' : systemSettings.deadlineEmailAlertsEnabled ? 'ON' : 'OFF'}</span></span>
                     </label>
                     <label className="system-setting-row">
