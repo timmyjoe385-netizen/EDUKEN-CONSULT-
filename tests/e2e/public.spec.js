@@ -1130,3 +1130,31 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
   await expect(cutoff).toHaveValue('');
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
+
+
+test('admissions and updates expose persisted opportunity-style admin controls', () => {
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const migration = readFileSync(
+    'supabase/migrations/20261015134000_add_admission_update_admin_controls.sql',
+    'utf8',
+  );
+  for (const table of ['admissions', 'updates']) {
+    const start = app.indexOf(`    ${table}: [`);
+    const end = app.indexOf('\n    ],', start);
+    expect(start, `${table} form fields should exist`).toBeGreaterThanOrEqual(0);
+    expect(end).toBeGreaterThan(start);
+    const fields = app.slice(start, end);
+    for (const field of ['verified', 'slug', 'featured', 'urgent', 'notifyOnPublish']) {
+      expect(fields, `${table} form should include ${field}`).toContain(`'${field}'`);
+    }
+  }
+  expect(handler).toContain('if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined)');
+  expect(handler).toContain('async function notifyEditorialSubscribers');
+  expect(handler).not.toContain('// These controls are not columns in the updates table.');
+  expect(migration).toContain('ALTER TABLE public.admissions');
+  expect(migration).toContain('ALTER TABLE public.updates');
+  for (const column of ['verified', 'slug', 'featured', 'urgent', 'notify_on_publish']) {
+    expect(migration).toContain(column);
+  }
+});

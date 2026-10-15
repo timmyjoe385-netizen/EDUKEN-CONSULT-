@@ -174,15 +174,19 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
     if (x.details !== undefined && x.description === undefined) x.description = x.details;
     if (x.link !== undefined && x.application_url === undefined) x.application_url = x.link;
     if (x.sourceUrl !== undefined && x.official_source === undefined) x.official_source = x.sourceUrl;
+    if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined) x.notify_on_publish = x.notifyOnPublish;
     if (x.title === undefined && x.school !== undefined) x.title = x.school;
-    delete x.course; delete x.type; delete x.details; delete x.link; delete x.sourceUrl; delete x.status;
+    if (x.slug) x.slug = slugify(x.slug);
+    else if (!x.slug && x.title) x.slug = slugify(x.title) + "-" + Date.now().toString(36);
+    delete x.course; delete x.type; delete x.details; delete x.link; delete x.sourceUrl; delete x.notifyOnPublish; delete x.status;
   }
   if (table === "updates") {
     if (x.body !== undefined && x.content === undefined) x.content = x.body;
     if (x.sourceUrl !== undefined && x.source_url === undefined) x.source_url = x.sourceUrl;
-    delete x.body; delete x.sourceUrl; delete x.date;
-    // These controls are not columns in the updates table.
-    delete x.verified; delete x.featured; delete x.urgent;
+    if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined) x.notify_on_publish = x.notifyOnPublish;
+    if (x.title && !x.slug) x.slug = slugify(x.title) + "-" + Date.now().toString(36);
+    if (x.slug) x.slug = slugify(x.slug);
+    delete x.body; delete x.sourceUrl; delete x.notifyOnPublish; delete x.date;
   }
   // status is a UI-only field for every non-opportunity content table.
   delete x.status;
@@ -202,6 +206,31 @@ async function notifyOpportunitySubscribers(opportunity: Record<string, any>) {
   if (!recipients.size) return;
   const title = String(opportunity.title || "New EDUKEN opportunity").slice(0, 180);
   const body = [category ? "Category: " + category : "", opportunity.deadline ? "Deadline: " + opportunity.deadline : "", opportunity.slug ? "Open EDUKEN CONSULT to view details." : ""].filter(Boolean).join(" · ").slice(0, 500);
+  const rows = [...recipients].map(user_id => ({ user_id, title, body, read: false }));
+  const { error: insertError } = await db.from("notifications").insert(rows);
+  if (insertError) throw insertError;
+}
+
+async function notifyEditorialSubscribers(table: "admissions" | "updates", item: Record<string, any>) {
+  if (!item.notify_on_publish || !item.is_published) return;
+  const category = String(item.category || "").trim().toLowerCase();
+  const topicAliases = table === "admissions"
+    ? new Set(["admissions", "all admissions", "admission updates"])
+    : new Set(["updates", "all updates", "educational updates", "educational-updates"]);
+  const { data: subscriptions, error } = await db.from("topic_subscriptions").select("user_id,topic");
+  if (error) throw error;
+  const recipients = new Set<string>();
+  for (const subscription of subscriptions ?? []) {
+    const topic = String(subscription.topic || "").trim().toLowerCase();
+    if (topicAliases.has(topic) || (category && topic === category)) recipients.add(subscription.user_id);
+  }
+  if (!recipients.size) return;
+  const title = String(item.title || item.school || (table === "admissions" ? "New admission update" : "New EDUKEN update")).slice(0, 180);
+  const body = [
+    category ? "Category: " + category : "",
+    item.deadline ? "Deadline: " + item.deadline : "",
+    item.slug ? "Open EDUKEN CONSULT to view details." : "",
+  ].filter(Boolean).join(" · ").slice(0, 500);
   const rows = [...recipients].map(user_id => ({ user_id, title, body, read: false }));
   const { error: insertError } = await db.from("notifications").insert(rows);
   if (insertError) throw insertError;
@@ -1140,12 +1169,24 @@ Deno.serve(async (req) => {
           if (data.is_published) {
             await enqueueOpportunityEmailAlerts(data, { queueNew: true, rescheduleDeadlines: true });
           }
+        } else if (table === "admissions" || table === "updates") {
+          await notifyEditorialSubscribers(table, data);
         }
         return json({ id: data.id }, 201);
       }
       if (req.method === "PUT" && id) {
         const b = mapAdminInput(table, await req.json());
         let previousOpportunity: any = null;
+        let previousEditorialItem: any = null;
+        if (table === "admissions" || table === "updates") {
+          const { data: existing, error: readError } = await db.from(table)
+            .select("is_published")
+            .eq("id", id)
+            .maybeSingle();
+          if (readError) throw readError;
+          if (!existing) return json({ error: "Record not found." }, 404);
+          previousEditorialItem = existing;
+        }
         if (table === "opportunities") {
           const { data: existing, error: readError } = await db.from(table)
             .select("is_published,notify_on_publish,verified,official_source,deadline,category")
@@ -1170,6 +1211,12 @@ Deno.serve(async (req) => {
             queueNew: isEligible && (!wasEligible || categoryChanged),
             rescheduleDeadlines: !isEligible || !wasEligible || deadlineChanged || categoryChanged,
           });
+        } else if (
+          (table === "admissions" || table === "updates") &&
+          !previousEditorialItem?.is_published &&
+          data.is_published
+        ) {
+          await notifyEditorialSubscribers(table, data);
         }
         return json({ ok: true });
       }

@@ -261,6 +261,11 @@ function App() {
           details: item.details ?? item.description ?? item.content ?? '',
           link: item.link ?? item.application_url ?? '',
           sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
+          verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+          slug: item.slug ?? '',
+          featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+          urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+          notifyOnPublish: normalizeFlag(item.notifyOnPublish ?? item.notify_on_publish),
           status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
         })),
         updates: (live.updates || []).map((item: Item) => ({
@@ -268,6 +273,10 @@ function App() {
           body: item.body ?? item.content ?? '',
           sourceUrl: item.sourceUrl ?? item.source_url ?? '',
           verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+          slug: item.slug ?? '',
+          featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+          urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+          notifyOnPublish: normalizeFlag(item.notifyOnPublish ?? item.notify_on_publish),
           status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
         })),
         faqs: (live.faqs || []).map((item: Item) => ({
@@ -554,6 +563,11 @@ function App() {
             details: item.details ?? item.description ?? item.content ?? '',
             link: item.link ?? item.application_url ?? '',
             sourceUrl: item.sourceUrl ?? item.source_url ?? item.official_source ?? '',
+            verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+            slug: item.slug ?? '',
+            featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+            urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+            notifyOnPublish: normalizeFlag(item.notifyOnPublish ?? item.notify_on_publish),
           };
         }
         if (table === 'updates') {
@@ -562,6 +576,11 @@ function App() {
             status: published ? 'PUBLISHED' : 'DRAFT',
             body: item.body ?? item.content ?? '',
             sourceUrl: item.sourceUrl ?? item.source_url ?? '',
+            verified: normalizeFlag(item.verified ?? item.is_verified ?? item.isVerified),
+            slug: item.slug ?? '',
+            featured: normalizeFlag(item.featured ?? item.is_featured ?? item.isFeatured),
+            urgent: normalizeFlag(item.urgent ?? item.is_urgent ?? item.isUrgent),
+            notifyOnPublish: normalizeFlag(item.notifyOnPublish ?? item.notify_on_publish),
           };
         }
         return { ...item, status: published ? 'PUBLISHED' : 'DRAFT' };
@@ -882,8 +901,24 @@ function App() {
       'details',
       'link',
       'sourceUrl',
+      'verified',
+      'slug',
+      'featured',
+      'urgent',
+      'notifyOnPublish',
     ],
-    updates: ['category', 'title', 'body', 'sourceUrl', 'status'],
+    updates: [
+      'category',
+      'title',
+      'body',
+      'sourceUrl',
+      'verified',
+      'slug',
+      'featured',
+      'urgent',
+      'notifyOnPublish',
+      'status',
+    ],
     faqs: ['question', 'answer', 'category', 'status'],
     services: ['name', 'category', 'description', 'price', 'status'],
   };
