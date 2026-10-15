@@ -694,7 +694,7 @@ function App() {
     const title = String(item.title || 'EDUKEN educational update').trim();
     const category = String(item.category || 'Educational Update').trim();
     const body = String(item.body || item.content || item.description || '')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim()
       .slice(0, 300);
     const link = window.location.origin + window.location.pathname + '#updates';
@@ -710,7 +710,7 @@ function App() {
       link,
       '',
       '🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
-    ].join('\\n');
+    ].join('\n');
     window.open(
       'https://wa.me/?text=' + encodeURIComponent(message),
       '_blank',
