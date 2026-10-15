@@ -23,6 +23,24 @@ const secretKeys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS")!);
 const db = createClient(url, secretKeys.default);
 const ADMIN_EMAILS = new Set(["timmyjoe385@gmail.com", "edukenconsult00@gmail.com"]);
 const CONTENT_TABLES = new Set(["opportunities", "admissions", "updates", "faqs", "services"]);
+const DEFAULT_SYSTEM_SETTINGS = {
+  subscriberNotificationsEnabled: true,
+  deadlineEmailAlertsEnabled: true,
+  defaultNotifyOnPublish: false,
+};
+type SystemSettings = typeof DEFAULT_SYSTEM_SETTINGS;
+
+async function readSystemSettings(): Promise<SystemSettings> {
+  const { data, error } = await db.from("admin_system_settings").select("settings").eq("id", "global").maybeSingle();
+  // Until the settings migration is applied, preserve the existing notification behavior.
+  if (error) {
+    console.error("Could not read admin system settings; using safe defaults.", error.message);
+    return { ...DEFAULT_SYSTEM_SETTINGS };
+  }
+  return { ...DEFAULT_SYSTEM_SETTINGS, ...(data?.settings || {}) };
+}
+
+
 
 const pathOf = (req: Request) => {
   const pathname = new URL(req.url).pathname;
@@ -191,6 +209,8 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
 
 async function notifyOpportunitySubscribers(opportunity: Record<string, any>) {
   if (!opportunity.notify_on_publish || !opportunity.is_published) return;
+  const systemSettings = await readSystemSettings();
+  if (!systemSettings.subscriberNotificationsEnabled) return;
   const category = String(opportunity.category || "").trim().toLowerCase();
   const { data: subscriptions, error } = await db.from("topic_subscriptions").select("user_id,topic");
   if (error) throw error;
@@ -325,6 +345,12 @@ async function enqueueOpportunityEmailAlerts(
   opportunity: Record<string, any>,
   options: { queueNew: boolean; rescheduleDeadlines: boolean },
 ) {
+  const systemSettings = await readSystemSettings();
+  if (!systemSettings.deadlineEmailAlertsEnabled) {
+    const { error } = await db.from("email_alert_deliveries").update({ status: "cancelled" }).eq("opportunity_id", opportunity.id).eq("status", "pending");
+    if (error) throw error;
+    return;
+  }
   const eligible = isEmailAlertOpportunityEligible(opportunity);
   if (!eligible) {
     const { error: cancelError } = await db.from("email_alert_deliveries")
@@ -1119,6 +1145,31 @@ Deno.serve(async (req) => {
       const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
       if (error) throw error;
       return json({ items: data ?? [] });
+    }
+
+    if (path === "/api/admin/system-settings") {
+      const user = await requireAdmin(req);
+      if (req.method === "GET") {
+        const settings = await readSystemSettings();
+        return json({ settings });
+      }
+      if (req.method === "PUT") {
+        let body: any;
+        try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+        const incoming = body?.settings;
+        const allowedKeys = Object.keys(DEFAULT_SYSTEM_SETTINGS);
+        if (!incoming || typeof incoming !== "object" || Array.isArray(incoming) ||
+            allowedKeys.some((key) => typeof incoming[key] !== "boolean") ||
+            Object.keys(incoming).some((key) => !allowedKeys.includes(key))) {
+          return json({ error: "Provide boolean values for all supported system settings only." }, 400);
+        }
+        const { data, error } = await db.from("admin_system_settings")
+          .upsert({ id: "global", settings: incoming, updated_by: user.id, updated_at: new Date().toISOString() }, { onConflict: "id" })
+          .select("settings,updated_at").single();
+        if (error) throw error;
+        return json({ ok: true, settings: data.settings, updated_at: data.updated_at });
+      }
+      return json({ error: "Method not allowed." }, 405);
     }
 
     const adminContent = path.match(/^\/api\/admin\/content\/([^/]+)(?:\/([^/]+))?$/);
