@@ -112,7 +112,7 @@ test('malformed admission deep links do not crash public page rendering', async 
 
   await page.goto('/#admission/%E0%A4%A', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('body')).toBeVisible();
-  await expect(page.getByRole('heading', { name: /Admissions/i }).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
   expect(pageErrors, 'malformed URL fragments must not throw during hash parsing').toEqual([]);
 });
 
