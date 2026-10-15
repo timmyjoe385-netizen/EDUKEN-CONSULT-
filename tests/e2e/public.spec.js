@@ -919,7 +919,7 @@ test('aggregate calculator compares the result with a user-entered departmental 
 
   await cutoff.fill('101');
   await expect(page.getByRole('alert')).toContainText('departmental cut-off from 0 to 100');
-  await expect(page.getByRole('button', { name: /Calculate aggregate/i })).toBeEnabled();
+  await expect(page.getByRole('button', { name: /Calculate aggregate/i })).toBeDisabled();
 
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
   await expect(cutoff).toHaveValue('');
