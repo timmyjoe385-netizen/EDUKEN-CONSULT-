@@ -78,6 +78,14 @@ const categories = [
   ],
 ];
 
+const DEFAULT_SYSTEM_SETTINGS = {
+  subscriberNotificationsEnabled: true,
+  deadlineEmailAlertsEnabled: true,
+  defaultNotifyOnPublish: false,
+};
+
+type SystemSettings = typeof DEFAULT_SYSTEM_SETTINGS;
+
 const emptyContent: Content = {
   opportunities: [],
   admissions: [],
@@ -98,6 +106,10 @@ function App() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [adminView, setAdminView] = useState(false);
   const [adminTab, setAdminTab] = useState('opportunities');
+  const [systemSettings, setSystemSettings] = useState<SystemSettings>(DEFAULT_SYSTEM_SETTINGS);
+  const [settingsLoading, setSettingsLoading] = useState(false);
+  const [settingsSaving, setSettingsSaving] = useState<string | null>(null);
+  const [settingsError, setSettingsError] = useState('');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
@@ -425,6 +437,36 @@ function App() {
       await auth.signIn();
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Unable to start Google sign-in. Please try again.');
+    }
+  };
+
+  const loadSystemSettings = async () => {
+    setSettingsLoading(true);
+    setSettingsError('');
+    try {
+      const result = await api.get('/api/admin/system-settings');
+      setSystemSettings({ ...DEFAULT_SYSTEM_SETTINGS, ...(result.data.settings || {}) });
+    } catch (error) {
+      setSettingsError(error instanceof Error ? error.message : 'Could not load system settings.');
+    } finally {
+      setSettingsLoading(false);
+    }
+  };
+
+  const updateSystemSetting = async (key: keyof SystemSettings, value: boolean) => {
+    const previous = systemSettings;
+    const next = { ...systemSettings, [key]: value };
+    setSystemSettings(next);
+    setSettingsSaving(key);
+    setSettingsError('');
+    try {
+      await api.put('/api/admin/system-settings', { settings: next });
+      showToast('System setting saved.');
+    } catch (error) {
+      setSystemSettings(previous);
+      setSettingsError(error instanceof Error ? error.message : 'Setting could not be saved. Your previous value was restored.');
+    } finally {
+      setSettingsSaving(null);
     }
   };
 
@@ -880,6 +922,7 @@ function App() {
               'consultations',
               'service-requests',
               'analytics',
+              'system-settings',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -888,6 +931,7 @@ function App() {
                   setAdminTab(tab);
                   setForm({});
                   if (tab === 'analytics') loadAnalytics();
+                  else if (tab === 'system-settings') loadSystemSettings();
                   else loadAdmin(tab);
                 }}
               >
@@ -899,7 +943,9 @@ function App() {
                       ? '🧾 Service Requests'
                       : tab === 'analytics'
                       ? '📊 Analytics & Insights'
-                      : tab[0].toUpperCase() + tab.slice(1)}
+                      : tab === 'system-settings'
+                        ? '⚙️ Manage System'
+                        : tab[0].toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <button
@@ -914,15 +960,41 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && (
-                <button className="primary" onClick={() => setForm({})}>
+              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && adminTab !== 'system-settings' && (
+                <button className="primary" onClick={() => setForm(adminTab === 'opportunities' ? { notifyOnPublish: systemSettings.defaultNotifyOnPublish } : {})}>
                   <Plus size={17} /> New
                 </button>
               )}
             </div>
-            {adminTab === 'analytics' ? (
+            {adminTab === 'system-settings' ? (
+              <section className="system-settings-panel">
+                <div className="system-settings-intro">
+                  <span className="tag">ADMIN ONLY · SAVES IMMEDIATELY</span>
+                  <h2>System-wide preferences</h2>
+                  <p>These controls are separate from creating or publishing content. Changes are saved to the protected settings store; if a save fails, the previous value is restored.</p>
+                </div>
+                {settingsError ? <div className="analytics-error" role="alert"><b>Settings need attention</b><p>{settingsError}</p><button className="secondary" type="button" onClick={() => void loadSystemSettings()}>Retry loading</button></div> : null}
+                {settingsLoading ? <div className="admin-empty">Loading saved system settings…</div> : (
+                  <div className="system-settings-list">
+                    <label className="system-setting-row">
+                      <span className="system-setting-copy"><b>Subscriber notifications</b><small>Allow opted-in subscribers to receive notifications when an opportunity is published.</small></span>
+                      <span className="admin-toggle-control"><input type="checkbox" role="switch" checked={systemSettings.subscriberNotificationsEnabled} disabled={settingsSaving !== null} onChange={event => void updateSystemSetting('subscriberNotificationsEnabled', event.target.checked)} /><span>{settingsSaving === 'subscriberNotificationsEnabled' ? 'SAVING…' : systemSettings.subscriberNotificationsEnabled ? 'ON' : 'OFF'}</span></span>
+                    </label>
+                    <label className="system-setting-row">
+                      <span className="system-setting-copy"><b>Smart deadline email alerts</b><small>Allow the automated email-alert queue to schedule and reschedule opportunity deadline reminders.</small></span>
+                      <span className="admin-toggle-control"><input type="checkbox" role="switch" checked={systemSettings.deadlineEmailAlertsEnabled} disabled={settingsSaving !== null} onChange={event => void updateSystemSetting('deadlineEmailAlertsEnabled', event.target.checked)} /><span>{settingsSaving === 'deadlineEmailAlertsEnabled' ? 'SAVING…' : systemSettings.deadlineEmailAlertsEnabled ? 'ON' : 'OFF'}</span></span>
+                    </label>
+                    <label className="system-setting-row">
+                      <span className="system-setting-copy"><b>Default “Notify on Publish”</b><small>Preselect the notification option when an administrator creates a new opportunity. Existing items are not changed.</small></span>
+                      <span className="admin-toggle-control"><input type="checkbox" role="switch" checked={systemSettings.defaultNotifyOnPublish} disabled={settingsSaving !== null} onChange={event => void updateSystemSetting('defaultNotifyOnPublish', event.target.checked)} /><span>{settingsSaving === 'defaultNotifyOnPublish' ? 'SAVING…' : systemSettings.defaultNotifyOnPublish ? 'ON' : 'OFF'}</span></span>
+                    </label>
+                  </div>
+                )}
+                <p className="system-settings-footnote">Content publishing remains available in its own manager tabs. These settings do not grant admin access; server-side Google-account authorization remains required.</p>
+              </section>
+            ) : adminTab === 'analytics' ? (
               <section className="analytics-panel">
                               <div className="analytics-toolbar">
                                 <div>
