@@ -1997,3 +1997,36 @@ footer {
 .system-setting-row .admin-toggle-control { flex: 0 0 auto; }
 .system-settings-footnote { margin: 0; }
 @media (max-width: 620px) { .system-setting-row { align-items: flex-start; flex-direction: column; } }
+
+
+/* Strong, unmistakable EDUKEN verification badge */
+.verified-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 7px 12px;
+  border: 2px solid #167447;
+  border-radius: 999px;
+  background: #e7f8ee;
+  color: #0b5c35;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  box-shadow: 0 2px 0 rgba(11, 92, 53, 0.12);
+  white-space: normal;
+}
+.verified-pill svg {
+  flex: 0 0 auto;
+  stroke-width: 3;
+}
+@media (max-width: 480px) {
+  .verified-pill {
+    font-size: 11px;
+    padding: 6px 9px;
+    gap: 5px;
+  }
+}

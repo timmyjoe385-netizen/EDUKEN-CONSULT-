@@ -23,6 +23,7 @@ import {
   X,
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
+import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
@@ -94,18 +95,7 @@ const emptyContent: Content = {
   services: [],
 };
 
-const JAMB_SERVICE_TEMPLATES = [
-  { name: 'Check JAMB Admission Status', category: 'JAMB Services', description: 'Guidance on checking admission status through official JAMB channels. EDUKEN will confirm the relevant steps with you.' },
-  { name: "JAMB O'Level Upload Guidance", category: 'JAMB Services', description: 'Guidance on submitting O’Level results through official channels. Do not attach result documents or share passwords in this request form.' },
-  { name: 'JAMB Result Retrieval Guidance', category: 'JAMB Services', description: 'Guidance on obtaining JAMB result information through official channels. Any official fees and eligibility will be confirmed before you proceed.' },
-  { name: 'JAMB Reprinting Guidance', category: 'JAMB Services', description: 'Guidance for locating and reprinting eligible JAMB documents through official channels.' },
-  { name: "JAMB O'Level Confirmation Guidance", category: 'JAMB Services', description: 'Guidance on confirming O’Level result submission status. EDUKEN will confirm the relevant official process.' },
-  { name: 'JAMB Profile Code Support', category: 'JAMB Services', description: 'Guidance for resolving profile-code issues using official JAMB procedures. Never share an OTP, password or account PIN.' },
-  { name: 'JAMB Registration Number Recovery Guidance', category: 'JAMB Services', description: 'Guidance on official options for recovering registration details. Do not submit sensitive identity details in this initial request.' },
-  { name: 'JAMB Original Result Slip Guidance', category: 'JAMB Services', description: 'Guidance on checking eligibility and obtaining an original result slip through official channels.' },
-  { name: 'JAMB Admission Letter Guidance', category: 'JAMB Services', description: 'Guidance on checking eligibility and obtaining an admission letter through official channels.' },
-  { name: 'NECO Result Verification Guidance', category: 'Examination Services', description: 'Guidance on NECO result verification and the official process. Any verification-code cost will be confirmed before you proceed.' },
-];
+
 
 function App() {
   const [menu, setMenu] = useState(false);
@@ -315,6 +305,8 @@ function App() {
         })),
         services: (live.services || []).map((item: Item) => ({
           ...item,
+          is_available: item.is_available === undefined ? true : normalizeFlag(item.is_available),
+          is_catalog_item: normalizeFlag(item.is_catalog_item),
           status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
         })),
       });
@@ -721,6 +713,16 @@ function App() {
     setSavingAdminMode(publishMode);
     try {
       const payload: Record<string, any> = { ...form };
+      if (table === 'services') {
+        const rawPrice = String(payload.price ?? '').trim();
+        if (rawPrice && (!Number.isFinite(Number(rawPrice)) || Number(rawPrice) < 0)) {
+          showToast('Enter a valid non-negative service price.');
+          return;
+        }
+        payload.price = rawPrice ? Number(rawPrice) : null;
+        payload.requirements = String(payload.requirements ?? '').trim();
+        payload.is_available = payload.is_available === undefined ? true : (payload.is_available === true || String(payload.is_available).toLowerCase() === 'true');
+      }
       if (table !== 'opportunities') {
         // Keep the database boolean in sync with the editor's Draft/Published
         // control, including when an existing row is switched to a new state.
@@ -831,33 +833,47 @@ function App() {
     setAddingServiceTemplates(true);
     try {
       const existing = await api.get('/api/admin/content/services');
-      const existingNames = new Set(
-        (existing.data.items || []).map((item: Item) => String(item.name || '').trim().toLowerCase())
-      );
-      const missing = JAMB_SERVICE_TEMPLATES.filter(
-        item => !existingNames.has(item.name.trim().toLowerCase())
-      );
-      if (!missing.length) {
-        showToast('JAMB and examination templates already exist. You can edit them in Services.');
-        return;
+      const existingItems: Item[] = existing.data.items || [];
+      let added = 0;
+      let converted = 0;
+      let alreadyConfigured = 0;
+
+      // Reuse legacy rows where possible so existing service-request references stay intact.
+      // Once a row is marked as a catalogue item, repeat clicks never overwrite admin pricing or availability.
+      for (const template of JAMB_SERVICE_TEMPLATES) {
+        const templateNames = [template.name, ...template.legacyNames].map(name => name.trim().toLowerCase());
+        const match = existingItems.find(item => templateNames.includes(String(item.name || '').trim().toLowerCase()));
+        const { legacyNames, ...templateData } = template;
+        if (match) {
+          const alreadyCatalogueItem = match.is_catalog_item === true || String(match.is_catalog_item).toLowerCase() === 'true';
+          if (alreadyCatalogueItem) {
+            alreadyConfigured += 1;
+            continue;
+          }
+          await api.put('/api/admin/content/services/' + encodeURIComponent(match.id), {
+            ...templateData,
+            is_published: true,
+            status: 'PUBLISHED',
+          });
+          converted += 1;
+        } else {
+          await api.post('/api/admin/content/services', {
+            ...templateData,
+            is_published: true,
+            status: 'PUBLISHED',
+          });
+          added += 1;
+        }
       }
 
-      // Sequential, idempotent inserts avoid duplicate names on retries. Prices stay unset;
-      // the administrator must confirm pricing before publishing commercial terms.
-      let added = 0;
-      for (const item of missing) {
-        await api.post('/api/admin/content/services', { ...item, price: null, is_published: true });
-        added += 1;
-      }
       await loadAdmin('services');
       await loadContent();
-      showToast(`Added ${added} service templates. Review each entry and set its price before sharing pricing with customers.`);
+      showToast(`JAMB catalogue ready: ${added} added, ${converted} existing services configured, ${alreadyConfigured} already set up. Prices and availability can be edited in Services.`);
     } catch (error) {
-      // A partial run can safely be retried because existing names are checked first.
       await loadAdmin('services').catch(() => undefined);
       showToast(error instanceof Error
-        ? 'Some templates may have been added. Review Services and retry to add any missing entries: ' + error.message
-        : 'Some templates may have been added. Review Services before retrying.');
+        ? 'Catalogue setup may be partial. Review Services and retry safely: ' + error.message
+        : 'Catalogue setup may be partial. Review Services before retrying.');
     } finally {
       setAddingServiceTemplates(false);
     }
@@ -885,7 +901,14 @@ function App() {
         customerName: String(fd.get('customerName') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
         email: String(fd.get('email') || '').trim(),
-        details: String(fd.get('details') || '').trim(),
+        details: [
+          ...(isJambCatalogueService(selectedService) ? [
+            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))),
+            'Estimated total: ₦' + (Number(selectedService.price) * Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))).toLocaleString('en-NG'),
+          ] : []),
+          ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
+          String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
+        ].filter(Boolean).join('\n'),
       });
       formElement.reset();
       setSelectedService(null);
@@ -1023,7 +1046,7 @@ function App() {
       'status',
     ],
     faqs: ['question', 'answer', 'category', 'status'],
-    services: ['name', 'category', 'description', 'price', 'status'],
+    services: ['name', 'category', 'description', 'requirements', 'price', 'is_available', 'status'],
   };
 
   if (adminView) {
@@ -1372,12 +1395,14 @@ function App() {
                       'eligibility',
                       'benefits',
                       'howToApply',
+                      'requirements',
                     ].includes(field);
                     const checked =
                       form[field] === true ||
                       String(form[field]).toLowerCase() === 'true' ||
                       String(form[field]) === '1';
                     const fieldLabel = field
+                      .replace(/_/g, ' ')
                       .replace(/([A-Z])/g, ' $1')
                       .replace(/^./, letter => letter.toUpperCase());
                     return (
@@ -1386,7 +1411,15 @@ function App() {
                         className={isBoolean ? 'admin-toggle-field' : undefined}
                       >
                         <span>{fieldLabel}</span>
-                        {field === 'status' ? (
+                        {field === 'is_available' ? (
+                          <select
+                            value={String(form.is_available === undefined ? true : form.is_available).toLowerCase() === 'true' ? 'true' : 'false'}
+                            onChange={e => setForm({ ...form, is_available: e.target.value === 'true' })}
+                          >
+                            <option value="true">Available</option>
+                            <option value="false">Unavailable</option>
+                          </select>
+                        ) : field === 'status' ? (
                           <select
                             value={String(form.status || (form.is_published ? 'PUBLISHED' : 'DRAFT')).toUpperCase() === 'PUBLISHED' ? 'PUBLISHED' : 'DRAFT'}
                             onChange={e => setForm({ ...form, status: e.target.value, is_published: e.target.value === 'PUBLISHED' })}
@@ -1413,6 +1446,15 @@ function App() {
                               setForm({ ...form, [field]: e.target.value })
                             }
                             rows={field === 'content' ? 8 : 5}
+                          />
+                        ) : field === 'price' ? (
+                          <input
+                            type="number"
+                            min="0"
+                            step="1"
+                            inputMode="numeric"
+                            value={form[field] ?? ''}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
                           />
                         ) : (
                           <input
@@ -1954,7 +1996,7 @@ function App() {
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
+                      <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -2036,7 +2078,7 @@ function App() {
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
                     {x.verified ? (
-                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
+                      <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : null}
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
@@ -2232,7 +2274,7 @@ function App() {
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
+                      <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -2296,6 +2338,40 @@ function App() {
           </div>
         </section>
 
+        <section className="section" id="jamb-services">
+          <div className="section-head">
+            <div>
+              <span className="kicker">EDUKEN SERVICE PORTAL</span>
+              <h2>JAMB Services</h2>
+            </div>
+            <p>Choose a service, review the requirements and check availability before requesting assistance. Prices and availability are managed by EDUKEN in the admin dashboard.</p>
+          </div>
+          <div className="service-shop-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: 16 }}>
+            {content.services.filter(isJambCatalogueService).map(service => {
+              const price = Number(service.price);
+              const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
+              const available = service.is_available !== false;
+              return (
+                <article className="service-shop-card" key={service.id} style={{ border: '1px solid var(--line, #dce6df)', borderRadius: 16, padding: 20, background: 'var(--surface, #fff)', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                    <span className="tag">{service.category || 'JAMB Services'}</span>
+                    <span className="tag" aria-label={available ? 'Available' : 'Unavailable'} style={{ color: available ? '#166534' : '#991b1b', background: available ? '#dcfce7' : '#fee2e2' }}>{available ? 'Available' : 'Unavailable'}</span>
+                  </div>
+                  <h3 style={{ margin: '4px 0' }}>{service.name}</h3>
+                  {service.description ? <p style={{ margin: 0, lineHeight: 1.55 }}>{service.description}</p> : null}
+                  {service.requirements ? <div style={{ fontSize: 13, lineHeight: 1.55, whiteSpace: 'pre-line' }}><b>Requirements</b><p style={{ margin: '4px 0 0' }}>{service.requirements}</p></div> : null}
+                  <strong style={{ display: 'block', marginTop: 'auto', fontSize: 21 }}>{hasPrice ? '₦' + price.toLocaleString('en-NG') + ' per candidate' : 'Price not set'}</strong>
+                  <button type="button" className="primary" disabled={!available || !hasPrice} onClick={() => { setSelectedService(service); setServiceForm({}); }}>
+                    {!available ? 'Unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
+                  </button>
+                </article>
+              );
+            })}
+          </div>
+          {!content.services.some(isJambCatalogueService) ? <div className="admin-empty" style={{ marginTop: 16 }}>The JAMB catalogue has not been set up yet. Open Admin → Services and choose “Add JAMB service templates”.</div> : null}
+          <p style={{ marginTop: 16, fontSize: 13, opacity: .8 }}>This form collects a service request only; it does not take payment. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
+        </section>
+
         <section className="section pale">
           <div className="section-head">
             <div>
@@ -2308,7 +2384,7 @@ function App() {
             </p>
           </div>
           <div className="service-list">
-            {(content.services.length ? content.services : [
+            {(content.services.some(s => s.is_catalog_item) ? content.services.filter(s => !s.is_catalog_item) : content.services.length ? content.services : [
               { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
               { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
               { id: 'fallback-jamb', name: 'JAMB Guidance', category: 'JAMB Services', description: 'Ask about JAMB-related guidance and available support.', price: null },
@@ -2595,14 +2671,35 @@ function App() {
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
           <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>We will confirm requirements and pricing before any payment. This form does not take payment.</p></div>
+              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. This form records a request only; no payment is taken here.</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
             </div>
             <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
-              <input name="customerName" required maxLength={120} placeholder="Full name" aria-label="Full name" />
+              <input name="customerName" required maxLength={120} placeholder="Your full name" aria-label="Your full name" />
               <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
               <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
-              <textarea name="details" required maxLength={4000} rows={4} placeholder="Tell us what you need..." aria-label="Request details" />
+              {isJambCatalogueService(selectedService) ? (
+                <label style={{ display: 'grid', gap: 6 }}>
+                  <span style={{ fontWeight: 600 }}>Number of candidates *</span>
+                  <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
+                  <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
+                </label>
+              ) : null}
+              {jambServiceFieldsFor(selectedService).map(field => (
+                <label key={field.name} style={{ display: 'grid', gap: 6 }}>
+                  <span style={{ fontWeight: 600 }}>{field.label} *</span>
+                  {field.options ? (
+                    <select name={'serviceField_' + field.name} required defaultValue="" aria-label={field.label}>
+                      <option value="" disabled>Select {field.label.toLowerCase()}</option>
+                      {field.options.map(option => <option key={option} value={option}>{option}</option>)}
+                    </select>
+                  ) : (
+                    <input name={'serviceField_' + field.name} type={field.type || 'text'} min={field.type === 'number' ? 2000 : undefined} max={field.type === 'number' ? 2026 : undefined} required maxLength={160} placeholder={field.placeholder || field.label} aria-label={field.label} />
+                  )}
+                </label>
+              ))}
+              {selectedService.requirements ? <p style={{ margin: 0, fontSize: 13, whiteSpace: 'pre-line', color: '#526158' }}><b>Before you submit</b>{'\n'}{selectedService.requirements}</p> : null}
+              <textarea name="details" maxLength={4000} rows={4} placeholder="Additional notes (optional)" aria-label="Additional notes" required={!jambServiceFieldsFor(selectedService).length} />
               <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>

@@ -70,6 +70,8 @@ test("service request statuses use a strict allowlist", () => {
 
 test("published service guard accepts only an existing explicitly published service", () => {
   assert.equal(isPublishedService({ id: "service-1", is_published: true }), true);
+  assert.equal(isPublishedService({ id: "service-1", is_published: true, is_available: true }), true);
+  assert.equal(isPublishedService({ id: "service-1", is_published: true, is_available: false }), false);
   assert.equal(isPublishedService({ id: "service-1", is_published: false }), false);
   assert.equal(isPublishedService({ id: "service-1", is_published: null }), false);
   assert.equal(isPublishedService({ id: "service-1", is_published: "true" }), false);

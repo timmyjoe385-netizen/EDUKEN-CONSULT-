@@ -153,7 +153,7 @@ test('service request dialog validates required fields without sending a request
     name: 'Playwright Service Request Check',
   });
   await expect(dialog).toBeVisible();
-  for (const name of ['Full name', 'WhatsApp number', 'Request details']) {
+  for (const name of ['Full name', 'WhatsApp number', 'Additional notes']) {
     await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
     expect(await dialog.getByRole('textbox', { name }).evaluate(element => element.checkValidity())).toBe(false);
   }
@@ -760,7 +760,7 @@ test('public catalogue queries select only reviewed public fields', () => {
     'db.from("faqs").select("id, question, answer, category, created_at, updated_at")',
   );
   expect(publicContent).toContain(
-    'db.from("services").select("id, name, category, description, price, is_published, created_at, updated_at")',
+    'db.from("services").select("id, name, category, description, requirements, price, is_available, is_catalog_item, is_published, created_at, updated_at")',
   );
   expect(publicContent).not.toContain('db.from("opportunities").select("*")');
   expect(publicContent).not.toContain('db.from("admissions").select("*")');
