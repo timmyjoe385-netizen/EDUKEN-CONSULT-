@@ -690,6 +690,34 @@ function App() {
     );
   };
 
+  const shareUpdateOnWhatsApp = (item: Item) => {
+    const title = String(item.title || 'EDUKEN educational update').trim();
+    const category = String(item.category || 'Educational Update').trim();
+    const body = String(item.body || item.content || item.description || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 300);
+    const link = window.location.origin + '/#updates';
+    const message = [
+      '📰 EDUKEN CONSULT UPDATE',
+      '',
+      '📌 ' + title,
+      '🏷️ Category: ' + category,
+      ...(body ? ['', body] : []),
+      ...(item.sourceUrl ? ['', '🔎 Official/source link: ' + String(item.sourceUrl).trim()] : []),
+      '',
+      '👉 Read this update on EDUKEN CONSULT:',
+      link,
+      '',
+      '🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+    ].join('\n');
+    window.open(
+      'https://wa.me/?text=' + encodeURIComponent(message),
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
+
   const saveAdmin = async (publishMode: 'draft' | 'publish' | 'preserve' = 'preserve') => {
     if (savingAdminMode) return;
     const table = adminTab;
@@ -1361,6 +1389,20 @@ function App() {
                               className="secondary"
                               onClick={() => shareAdmissionOnWhatsApp(item)}
                               title="Share this published admission post and its direct EDUKEN link on WhatsApp"
+                            >
+                              <Share2 size={14} /> Share on WhatsApp
+                            </button>
+                          )}
+                        {adminTab === 'updates' &&
+                          (String(item.status || '').toUpperCase() === 'PUBLISHED' ||
+                            item.is_published === true ||
+                            String(item.is_published).toLowerCase() === 'true' ||
+                            String(item.is_published) === '1') && (
+                            <button
+                              type="button"
+                              className="secondary"
+                              onClick={() => shareUpdateOnWhatsApp(item)}
+                              title="Share this published educational update on WhatsApp"
                             >
                               <Share2 size={14} /> Share on WhatsApp
                             </button>

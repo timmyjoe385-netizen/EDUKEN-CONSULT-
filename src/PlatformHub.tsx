@@ -3,7 +3,6 @@ import { api, auth, notifications } from './lib/api';
 import {
   Bell,
   Bookmark,
-  Calculator,
   Check,
   Search,
   Sparkles,
@@ -112,7 +111,6 @@ export default function PlatformHub({
   const [course, setCourse] = useState('');
   const [location, setLocation] = useState('');
   const [jamb, setJamb] = useState('');
-  const [post, setPost] = useState('');
   const [aiQuestion, setAiQuestion] = useState('');
   const [aiAnswer, setAiAnswer] = useState('');
   const [aiSources, setAiSources] = useState<{ title: string; url: string; description?: string }[]>([]);
@@ -415,43 +413,6 @@ export default function PlatformHub({
           ) : (
             <small>No matching published admission records yet.</small>
           )}
-        </div>
-      </div>
-
-      <div className="platform-grid">
-        <div className="platform-card">
-          <div className="platform-icon">
-            <Calculator size={20} />
-          </div>
-          <h3>EDUKEN Score Tool</h3>
-          <p>Quick raw-score calculation. Institutional formulas differ.</p>
-          <div className="finder-inputs two">
-            <input
-              inputMode="numeric"
-              placeholder="JAMB"
-              value={jamb}
-              onChange={e => setJamb(e.target.value)}
-            />
-            <input
-              inputMode="numeric"
-              placeholder="Post-UTME"
-              value={post}
-              onChange={e => setPost(e.target.value)}
-            />
-          </div>
-          <strong>
-            {jamb.trim() && post.trim()
-              ? Number.isFinite(Number(jamb)) &&
-                Number.isFinite(Number(post)) &&
-                Number(jamb) >= 0 &&
-                Number(post) >= 0
-                ? 'Raw combined score: ' + (Number(jamb) + Number(post))
-                : 'Enter valid non-negative numbers'
-              : 'Enter both scores'}
-          </strong>
-          <small>
-            Guidance only. Confirm the official institution's formula.
-          </small>
         </div>
       </div>
 
