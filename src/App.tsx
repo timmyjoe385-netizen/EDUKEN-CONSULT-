@@ -1887,7 +1887,7 @@ function App() {
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified by EDUKEN</span>
+                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -1969,7 +1969,7 @@ function App() {
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
                     {x.verified ? (
-                      <span className="verified-pill">✓ Verified by EDUKEN</span>
+                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
                     ) : null}
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
@@ -2165,7 +2165,7 @@ function App() {
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill">✓ Verified by EDUKEN</span>
+                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -2336,7 +2336,7 @@ function App() {
                 <p>{x.body || 'Open this update for more information.'}</p>
                 {x.verified ? (
                   <span className="verified-pill inline-pill">
-                    ✓ Verified by EDUKEN
+                    <CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN
                   </span>
                 ) : x.sourceUrl ? (
                   <span className="source-pill inline-pill">
