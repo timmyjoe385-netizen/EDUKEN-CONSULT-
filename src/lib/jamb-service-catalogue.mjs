@@ -117,13 +117,13 @@ export function isJambCatalogueService(service) {
 
 export function jambServiceFieldsFor(service) {
   const name = String(service?.name || '').trim().toLowerCase();
-  const field = (name, label, placeholder = label) => ({ name, label, placeholder });
+  const field = (name, label, placeholder = label, type = 'text') => ({ name, label, placeholder, type });
   const fullName = field('candidateFullName', 'Candidate full name (as registered with JAMB)');
   const registrationNumber = field('registrationNumber', 'JAMB registration number');
-  const jambYear = field('jambYear', 'JAMB examination year', 'e.g. 2026');
+  const jambYear = field('jambYear', 'JAMB examination year', 'e.g. 2026', 'number');
   const profileCode = field('profileCode', 'JAMB profile code');
   const phoneNumber = field('registeredPhone', 'Phone number used for JAMB registration');
-  if (name.includes('e-pin')) return [fullName, profileCode, jambYear];
+  if (name.includes('e-pin')) return [fullName, profileCode];
   if (name.includes('original result printing')) return [fullName, registrationNumber, jambYear];
   if (name.includes('admission letter printing')) return [fullName, registrationNumber, jambYear];
   if (name === 'jamb reprinting') return [
@@ -134,7 +134,7 @@ export function jambServiceFieldsFor(service) {
   ];
   if (name.includes('check jamb admission status')) return [fullName, registrationNumber, jambYear];
   if (name.includes("o'level result screenshot")) return [fullName, registrationNumber, jambYear];
-  if (name.includes('profile code retrieval')) return [field('registrationNumberOrPhone', 'JAMB registration number OR registered phone number') , jambYear];
-  if (name.includes('registration number retrieval')) return [field('profileCodeOrPhone', 'JAMB profile code OR registered phone number'), jambYear];
+  if (name.includes('profile code retrieval')) return [field('registrationNumberOrPhone', 'JAMB registration number OR registered phone number')];
+  if (name.includes('registration number retrieval')) return [field('profileCodeOrPhone', 'JAMB profile code OR registered phone number')];
   return [];
 }
