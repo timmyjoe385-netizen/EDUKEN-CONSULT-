@@ -176,7 +176,7 @@ export default function AggregateCalculator() {
       school === 'fuhsi' ? grades.every(Boolean) :
       school === 'unilag' ? validPost && validOlevelPoints :
       school === 'uniben' ? validPost :
-      validPost && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
+      ((Number(postWeight) <= 0 || validPost) && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
 
   const plannerPostWeight = school === 'unilorin' ? 30
     : school === 'uniben' ? 50
@@ -264,7 +264,25 @@ export default function AggregateCalculator() {
       <section className="aggregate-card" aria-labelledby="aggregate-form-title">
         <h2 id="aggregate-form-title">Calculate your score</h2>
         <label className="aggregate-field"><span>Institution / formula</span>
-          <select value={school} onChange={e => { setSchool(e.target.value as SchoolKey); setShowResult(false); }}>
+          <select value={school} onChange={e => {
+            const nextSchool = e.target.value as SchoolKey;
+            setSchool(nextSchool);
+            const presets: Record<string, [string, string, string]> = {
+              unilag50: ['50', '50', '0'], ui-estimate: ['50', '50', '0'], oau-estimate: ['50', '40', '10'],
+              unn50: ['50', '50', '0'], unn90: ['90', '10', '0'], futminna: ['50', '30', '20'],
+              fuoye: ['60', '40', '0'], f50: ['50', '50', '0'], f503020: ['50', '30', '20'],
+              f6040: ['60', '40', '0'], f4060: ['40', '60', '0'], f7525: ['75', '25', '0'],
+              screen: ['70', '0', '30'], jambonly: ['100', '0', '0']
+            };
+            if (presets[nextSchool]) {
+              setJambWeight(presets[nextSchool][0]);
+              setPostWeight(presets[nextSchool][1]);
+              setOlevelWeight(presets[nextSchool][2]);
+            } else if (nextSchool === 'custom') {
+              setJambWeight('50'); setPostWeight('50'); setOlevelWeight('0');
+            }
+            setShowResult(false);
+          }}>
             <option value="unilorin">University of Ilorin (UNILORIN) — 50:30:20 (official 2026/2027)</option>
             <option value="fuhsi">Federal University of Health Sciences, Ila-Orangun (FUHSI) — 70:30 (official 2026/2027)</option>
             <option value="unilag">University of Lagos (UNILAG) — 50:30:20 (historical; current session unverified)</option>
@@ -342,7 +360,7 @@ export default function AggregateCalculator() {
           <input id="aggregate-jamb" type="number" inputMode="numeric" min="0" max="400" step="1" value={jamb} onChange={e => { setJamb(e.target.value); setShowResult(false); }} placeholder="e.g. 250" />
           {jamb !== '' && !validJamb && <small role="alert">Enter a whole-number UTME score from 0 to 400.</small>}
         </div>
-        {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || isGenericModel) && <>
+        {(school === 'unilorin' || school === 'uniben' || school === 'unilag' || school === 'oau' || (isGenericModel && Number(postWeight) > 0)) && <>
           <div className="aggregate-field">
             <label htmlFor="aggregate-post">Post-UTME score (out of 100)</label>
             <input id="aggregate-post" type="number" min="0" max={100} step="1" value={post} onChange={e => { setPost(e.target.value); setShowResult(false); }} placeholder="Enter screening score" />
