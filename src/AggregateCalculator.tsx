@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, Calculator, ExternalLink, GraduationCap, Search, ShieldCheck } from 'lucide-react';
 
-type SchoolKey = 'unilorin' | 'fuhsi' | 'uniben' | 'unilag' | 'ui' | 'oau' | 'custom';
+type SchoolKey = string;
 type FormulaStatus = 'official' | 'community';
 const gradePoints: Record<string, number> = { A1: 8, B2: 7, B3: 6, C4: 5, C5: 4, C6: 3 };
 const gradeOptions = Object.keys(gradePoints);
@@ -102,6 +102,8 @@ export default function AggregateCalculator() {
   const [fuhsiCutoffCategory, setFuhsiCutoffCategory] = useState<FuhsiCutoffCategory>('Merit');
   const [olevelSittings, setOlevelSittings] = useState('1');
 
+  const isGenericModel = !['unilorin', 'fuhsi', 'uniben', 'unilag'].includes(school);
+
   const result = useMemo(() => {
     const utme = clamp(jamb, 400);
     if (school === 'unilorin') {
@@ -164,7 +166,7 @@ export default function AggregateCalculator() {
 
   const validJamb = isValidWholeScore(jamb, 400);
   const validPost = isValidWholeScore(post, 100);
-  const olevelMax = school === 'oau' ? 10 : school === 'custom' ? 100 : 20;
+  const olevelMax = school === 'custom' || isGenericModel ? 100 : 20;
   const validOlevelPoints = isValidScore(olevelPoints, olevelMax);
   const validCustomWeights = isValidScore(jambWeight, 100) && isValidScore(postWeight, 100) &&
     isValidScore(olevelWeight, 100) && Number(jambWeight) + Number(postWeight) + Number(olevelWeight) > 0;
@@ -173,8 +175,6 @@ export default function AggregateCalculator() {
     (school === 'unilorin' ? validPost && validOlevelPoints :
       school === 'fuhsi' ? grades.every(Boolean) :
       school === 'unilag' ? validPost && validOlevelPoints :
-      school === 'oau' ? false :
-      school === 'ui' ? false :
       school === 'uniben' ? validPost :
       validPost && validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100)));
 
@@ -182,7 +182,7 @@ export default function AggregateCalculator() {
     : school === 'uniben' ? 50
     : school === 'unilag' ? 30
     : school === 'oau' ? 0
-    : school === 'custom'
+    : isGenericModel
       ? (Number(postWeight) / (Number(jambWeight) + Number(postWeight) + Number(olevelWeight) || 1)) * 100
       : 0;
   const plannerOtherContribution = result.parts
@@ -195,7 +195,7 @@ export default function AggregateCalculator() {
         ? false
         : school === 'unilorin' || school === 'unilag'
           ? validOlevelPoints
-          : school === 'custom'
+          : isGenericModel
           ? validCustomWeights && (Number(olevelWeight) <= 0 || isValidScore(olevelPoints, 100))
           : true);
   const requiredPostScore = plannerPostWeight > 0
@@ -265,16 +265,77 @@ export default function AggregateCalculator() {
         <h2 id="aggregate-form-title">Calculate your score</h2>
         <label className="aggregate-field"><span>Institution / formula</span>
           <select value={school} onChange={e => { setSchool(e.target.value as SchoolKey); setShowResult(false); }}>
-            <option value="unilorin">University of Ilorin — 50:30:20 (official)</option>
-            <option value="fuhsi">FUHSI, Ila-Orangun — 70:30 (official)</option>
-            <option value="uniben">University of Benin — 50:50 (community-reported)</option>
-            <option value="unilag">University of Lagos — 50:30:20 (historical; current session unverified)</option>
-            <option value="ui" disabled>University of Ibadan — formula under verification</option>
-            <option value="oau" disabled>Obafemi Awolowo University — formula under verification</option>
+            <option value="unilorin">University of Ilorin (UNILORIN) — 50:30:20 (official 2026/2027)</option>
+            <option value="fuhsi">Federal University of Health Sciences, Ila-Orangun (FUHSI) — 70:30 (official 2026/2027)</option>
+            <option value="unilag">University of Lagos (UNILAG) — 50:30:20 (historical; current session unverified)</option>
+            <option value="unilag50">UNILAG — 50:50 model (historical/unverified)</option>
+            <option value="ui-estimate">University of Ibadan (UI) — 50:50 model (unverified estimate)</option>
+            <option value="oau-estimate">Obafemi Awolowo University (OAU) — 50:40:10 model (unverified estimate)</option>
+            <option value="unn50">University of Nigeria, Nsukka (UNN) — average model (unverified estimate)</option>
+            <option value="unn90">UNN — 90:10 model (unverified estimate)</option>
+            <option value="uniben">University of Benin (UNIBEN) — 50:50 (community-reported)</option>
+            <option value="abu">Ahmadu Bello University (ABU), Zaria — formula needs confirmation</option>
+            <option value="uniport">University of Port Harcourt (UNIPORT) — formula needs confirmation</option>
+            <option value="futa">Federal University of Technology, Akure (FUTA) — formula needs confirmation</option>
+            <option value="funaab">Federal University of Agriculture, Abeokuta (FUNAAB) — formula needs confirmation</option>
+            <option value="futminna">Federal University of Technology, Minna (FUTMinna) — 50:30:20 model (unverified)</option>
+            <option value="futo">Federal University of Technology, Owerri (FUTO) — formula needs confirmation</option>
+            <option value="unizik">Nnamdi Azikiwe University (UNIZIK) — current formula needs confirmation</option>
+            <option value="unical">University of Calabar (UNICAL) — formula needs confirmation</option>
+            <option value="unijos">University of Jos (UNIJOS) — formula needs confirmation</option>
+            <option value="buk">Bayero University Kano (BUK) — formula needs confirmation</option>
+            <option value="unimaid">University of Maiduguri (UNIMAID) — formula needs confirmation</option>
+            <option value="udusok">Usmanu Danfodiyo University, Sokoto (UDUSOK) — formula needs confirmation</option>
+            <option value="lasu">Lagos State University (LASU) — JAMB + O’Level points (scale needs confirmation)</option>
+            <option value="delsu">Delta State University (DELSU) — formula needs confirmation</option>
+            <option value="eksu">Ekiti State University (EKSU) — formula needs confirmation</option>
+            <option value="rsu">Rivers State University (RSU) — formula needs confirmation</option>
+            <option value="imsu">Imo State University (IMSU) — formula needs confirmation</option>
+            <option value="aau">Ambrose Alli University (AAU), Ekpoma — formula needs confirmation</option>
+            <option value="oou">Olabisi Onabanjo University (OOU) — formula needs confirmation</option>
+            <option value="esut">Enugu State University of Science and Technology (ESUT) — formula needs confirmation</option>
+            <option value="tasued">Tai Solarin University of Education (TASUED) — formula needs confirmation</option>
+            <option value="kwasu">Kwara State University (KWASU) — 70:30 weighting; grade scale incomplete</option>
+            <option value="fuoye">Federal University Oye-Ekiti (FUOYE) — 60:40 model (unverified)</option>
+            <option value="absu">Abia State University (ABSU) — formula needs confirmation</option>
+            <option value="bsu">Benue State University (BSU) — formula needs confirmation</option>
+            <option value="ae-funai">Alex Ekwueme Federal University, Ndufu-Alike (AE-FUNAI) — formula needs confirmation</option>
+            <option value="fuotuoke">Federal University, Otuoke (FUOTUOKE) — formula needs confirmation</option>
+            <option value="uniosun">Osun State University (UNIOSUN) — formula needs confirmation</option>
+            <option value="bouesti">Bamidele Olumilua University of Education, Science and Technology, Ikere-Ekiti (BOUESTI) — formula needs confirmation</option>
+            <option value="fud">Federal University, Dutse (FUD) — formula needs confirmation</option>
+            <option value="fulafia">Federal University of Lafia (FULAFIA) — formula needs confirmation</option>
+            <option value="fudma">Federal University, Dutsin-Ma (FUDMA) — formula needs confirmation</option>
+            <option value="ndu">Niger Delta University (NDU) — formula needs confirmation</option>
+            <option value="noun">National Open University of Nigeria (NOUN) — admission route differs</option>
+            <option value="yabatech">Yaba College of Technology (YABATECH) — general estimate</option>
+            <option value="fedpolyado">Federal Polytechnic, Ado-Ekiti — general estimate</option>
+            <option value="fedpolybauchi">Federal Polytechnic, Bauchi — general estimate</option>
+            <option value="fedpolybida">Federal Polytechnic, Bida — general estimate</option>
+            <option value="fedpolyilaro">Federal Polytechnic, Ilaro — general estimate</option>
+            <option value="fedpolynekede">Federal Polytechnic, Nekede — general estimate</option>
+            <option value="fedpolyoffa">Federal Polytechnic, Offa — general estimate</option>
+            <option value="fedpolyoko">Federal Polytechnic, Oko — general estimate</option>
+            <option value="kadpoly">Kaduna Polytechnic — general estimate</option>
+            <option value="auchipoly">Auchi Polytechnic — general estimate</option>
+            <option value="lagospoly">Lagos State Polytechnic / LASPOTECH — general estimate</option>
+            <option value="mapoly">Moshood Abiola Polytechnic (MAPOLY) — general estimate</option>
+            <option value="other-state-poly">Other state polytechnics — general estimate</option>
+            <option value="polyibadan">The Polytechnic, Ibadan — general estimate</option>
+            <option value="kwpoly">Kwara State Polytechnic — general estimate</option>
+            <option value="deltapoly">Delta State Polytechnic — general estimate</option>
+            <option value="f50">Generic model — 50% JAMB + 50% Post-UTME</option>
+            <option value="f503020">Generic model — 50% JAMB + 30% Post-UTME + 20% O’Level</option>
+            <option value="f6040">Generic model — 60% JAMB + 40% Post-UTME</option>
+            <option value="f4060">Generic model — 40% JAMB + 60% Post-UTME</option>
+            <option value="f7525">Generic model — 75% JAMB + 25% screening</option>
+            <option value="screen">Generic model — JAMB + O’Level points</option>
+            <option value="jambonly">Generic model — JAMB score ÷ 8</option>
             <option value="custom">Custom UTME + Post-UTME + optional O’Level weights</option>
           </select>
         </label>
-        {(school === 'unilag' || school === 'oau') && <p className="aggregate-helper">This is a provisional model based on previously published or third-party information, not a verified 2026/2027 institutional scoring rule. Confirm the current formula with the university before relying on this result.</p>}
+        {(school === 'unilag' || school === 'unilag50' || school === 'ui-estimate' || school === 'oau-estimate' || school === 'unn50' || school === 'unn90' || school === 'futminna' || school === 'fuoye') && <p className="aggregate-helper">This is a provisional or historical model, not a verified current-session institutional scoring rule. Confirm the current formula with the institution before relying on this result.</p>}
+        {isGenericModel && school !== 'custom' && <p className="aggregate-helper">Your institution remains available in the list. Its current official scoring formula has not been fully verified here, so this calculator uses editable general weights only. Adjust the weights to match an official admission notice; do not treat the default estimate as the institution’s official result.</p>}
         {school === 'uniben' && <p className="aggregate-helper">Multiple education sources report a 50:50 formula for UNIBEN, but we did not find an official university page confirming this weighting for 2026/2027. Treat the result as provisional and verify the current admission instructions.</p>}
         <div className="aggregate-field">
           <label htmlFor="aggregate-jamb">JAMB UTME score (out of 400)</label>
@@ -330,7 +391,7 @@ export default function AggregateCalculator() {
           </div>
           <small>Confirm your subject and eligibility requirements with the institution before relying on this result.</small>
         </>}
-        {school === 'custom' && <>
+        {isGenericModel && <>
           <p className="aggregate-helper">Use only when you know the official weights. Custom mode is a user-defined estimate, not an EDUKEN-verified school formula.</p>
           <div className="aggregate-two-fields">
             <div className="aggregate-field"><label htmlFor="aggregate-jw">UTME weight (%)</label><input id="aggregate-jw" type="number" min="0" max="100" step="any" value={jambWeight} onChange={e => { setJambWeight(e.target.value); setShowResult(false); }} /></div>
