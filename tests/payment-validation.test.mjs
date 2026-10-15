@@ -110,3 +110,21 @@ test("write guard allows only the canonical production origin and keeps preview 
   assert.ok(source.includes("return window.location.origin !== 'https://eduken-consult.workers.dev';"));
   assert.ok(!source.includes("return window.location.origin !== 'https://eduken-consult.timmyjoe385.workers.dev';"));
 });
+
+
+test("payment callback keeps the reference for retry until verification succeeds", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
+  const callback = source.slice(
+    source.indexOf("const reference = params.get('payment_reference')"),
+    source.indexOf("  }, []);", source.indexOf("const reference = params.get('payment_reference')")),
+  );
+  const verifyIndex = callback.indexOf("api.post('/api/payments/verify'");
+  const firstRemovalIndex = callback.indexOf("params.delete('payment_reference')");
+  assert.notEqual(verifyIndex, -1);
+  assert.notEqual(firstRemovalIndex, -1);
+  assert.ok(firstRemovalIndex > callback.indexOf("if (result.data?.paid) {"), "remove the callback reference only after paid verification");
+  assert.ok(firstRemovalIndex > verifyIndex, "do not remove the reference before requesting verification");
+  assert.match(callback, /Reference: '\s*\+ reference/);
+  assert.match(callback, /refresh to retry/);
+});
