@@ -1015,3 +1015,22 @@ test('aggregate calculator restores the complete original institution list', asy
   await expect(page.getByLabel('Post-UTME score (out of 100)')).toBeVisible();
   await expect(page.getByLabel('UTME weight (%)')).toBeVisible();
 });
+
+
+test('aggregate calculator applies the official UNILORIN 50:30:20 arithmetic', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('320');
+  await page.getByLabel('Post-UTME score (out of 100)').fill('80');
+  await page.getByLabel(/O’Level contribution \(out of 20\)/).fill('15');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.getByRole('status').first()).toContainText('79.00');
+});
+
+test('aggregate calculator preloads KWASU official 70:30 weights without inventing grade conversion', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('kwasu');
+  await expect(page.getByLabel('UTME weight (%)')).toHaveValue('70');
+  await expect(page.getByLabel('Post-UTME weight (%)')).toHaveValue('0');
+  await expect(page.getByLabel('O’Level weight (%)')).toHaveValue('30');
+  await expect(page.getByText(/KWASU’s official 2026\/2027 notice confirms 70% UTME\/DE/i)).toBeVisible();
+});
