@@ -2356,7 +2356,7 @@ function App() {
                 <article className="admission-card" id={'admission-' + a.id} key={a.id}>
                   <div className="admission-top">
                     <span>{a.type || 'Admission'}</span>
-                    {a.verified ? <b>✓ Verified by EDUKEN</b> : null}
+                    {a.verified ? <span className="verified-pill"><ShieldCheck size={16} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span> : null}
                   </div>
                   <h3>{a.school}</h3>
                   <p>{a.course}</p>
