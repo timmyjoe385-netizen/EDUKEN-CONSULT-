@@ -1023,7 +1023,7 @@ test('aggregate calculator applies the official UNILORIN 50:30:20 arithmetic', a
   await page.getByLabel('Post-UTME score (out of 100)').fill('80');
   await page.getByLabel(/O’Level contribution \(out of 20\)/).fill('15');
   await page.getByRole('button', { name: /Calculate aggregate/i }).click();
-  await expect(page.getByRole('status').first()).toContainText('79.00');
+  await expect(page.locator('.aggregate-result')).toContainText('79.00');
 });
 
 test('aggregate calculator preloads KWASU official 70:30 weights without inventing grade conversion', async ({ page }) => {
