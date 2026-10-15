@@ -29,9 +29,9 @@ test("catalogue filtering excludes unrelated service records", () => {
 
 test("each catalogue service has its own required information fields", () => {
   const fields = name => jambServiceFieldsFor({ name }).map(item => item.name);
-  assert.deepEqual(fields("JAMB e-PIN (UTME Without Mock)"), ["candidateFullName", "profileCode", "jambYear"]);
+  assert.deepEqual(fields("JAMB e-PIN (UTME Without Mock)"), ["candidateFullName", "profileCode"]);
   assert.deepEqual(fields("JAMB Original Result Printing"), ["candidateFullName", "registrationNumber", "jambYear"]);
   assert.deepEqual(fields("JAMB Reprinting"), ["documentType", "candidateFullName", "registrationNumber", "jambYear"]);
-  assert.deepEqual(fields("JAMB Profile Code Retrieval"), ["registrationNumberOrPhone", "jambYear"]);
-  assert.deepEqual(fields("JAMB Registration Number Retrieval"), ["profileCodeOrPhone", "jambYear"]);
+  assert.deepEqual(fields("JAMB Profile Code Retrieval"), ["registrationNumberOrPhone"]);
+  assert.deepEqual(fields("JAMB Registration Number Retrieval"), ["profileCodeOrPhone"]);
 });
