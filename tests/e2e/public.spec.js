@@ -106,6 +106,16 @@ test('admission deep links scroll directly to the matching published admission p
   await expect(page).toHaveURL(/#admission\/admission-deep-link-check$/);
 });
 
+test('malformed admission deep links do not crash public page rendering', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+
+  await page.goto('/#admission/%E0%A4%A', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('body')).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Admissions/i }).first()).toBeVisible();
+  expect(pageErrors, 'malformed URL fragments must not throw during hash parsing').toEqual([]);
+});
+
 test('service request dialog validates required fields without sending a request', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
