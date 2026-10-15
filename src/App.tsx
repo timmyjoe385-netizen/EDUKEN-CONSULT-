@@ -234,6 +234,7 @@ function App() {
       setUser(result.user);
       setAdminView(true);
       void loadAdmin('opportunities');
+      void loadSystemSettings();
     }).catch((error: unknown) => {
       if (active) setToast(error instanceof Error ? error.message : 'Google sign-in could not be completed.');
     });
