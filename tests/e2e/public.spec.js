@@ -897,3 +897,31 @@ test('O’Level readiness checklist counts named credit grades and resets sittin
   await expect(page.getByLabel('Number of O’Level sittings')).toHaveValue('1');
   await expect(page.locator('.aggregate-extra-grade-row')).toHaveCount(0);
 });
+
+test('aggregate calculator compares the result with a user-entered departmental cut-off', async ({ page }) => {
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  await page.getByLabel('Institution / formula').selectOption('fuhsi');
+  await page.getByLabel('JAMB UTME score (out of 400)').fill('300');
+
+  const coreGrades = ['A1', 'B2', 'B3', 'C4', 'C5'];
+  for (const [index, grade] of coreGrades.entries()) {
+    await page.locator('.aggregate-field').filter({ has: page.locator('span', { hasText: ['English Language', 'Mathematics', 'Physics', 'Chemistry', 'Biology'][index] }) })
+      .locator('select').selectOption(grade);
+  }
+
+  const cutoff = page.getByLabel('Departmental cut-off mark (optional, out of 100)');
+  await expect(cutoff).toBeVisible();
+  await cutoff.fill('70');
+  await page.getByRole('button', { name: /Calculate aggregate/i }).click();
+  await expect(page.locator('.aggregate-result')).toContainText('At or above the cut-off entered');
+  await expect(page.locator('.aggregate-result')).toContainText('5.00 point(s) above');
+  await expect(page.locator('.aggregate-result')).toContainText('not a guarantee of admission');
+
+  await cutoff.fill('101');
+  await expect(page.getByRole('alert')).toContainText('departmental cut-off from 0 to 100');
+  await expect(page.getByRole('button', { name: /Calculate aggregate/i })).toBeEnabled();
+
+  await page.getByRole('button', { name: 'Clear', exact: true }).click();
+  await expect(cutoff).toHaveValue('');
+  await expect(page.locator('.aggregate-result')).toHaveCount(0);
+});
