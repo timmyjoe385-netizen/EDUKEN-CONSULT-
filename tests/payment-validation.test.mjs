@@ -92,3 +92,14 @@ test("payment record is persisted before Paystack initialization and ambiguous o
   assert.match(initializeRoute, /Leave Pending: a timeout can occur after Paystack created the transaction/);
   assert.match(initializeRoute, /db\.from\("payments"\)\.update\(\{ status: "Failed" \}\)/);
 });
+
+test("Paystack callback defaults to the canonical EDUKEN website hostname", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const initializeRoute = source.slice(
+    source.indexOf('if (path === "/api/payments/initialize"'),
+    source.indexOf('if (path === "/api/payments/verify"'),
+  );
+  assert.match(initializeRoute, /PAYSTACK_CALLBACK_URL.*https:\/\/eduken-consult\.workers\.dev\//);
+  assert.doesNotMatch(initializeRoute, /PAYSTACK_CALLBACK_URL.*eduken-consult\.timmyjoe385\.workers\.dev/);
+});
