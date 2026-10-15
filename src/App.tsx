@@ -1384,7 +1384,6 @@ function App() {
                       'featured',
                       'urgent',
                       'notifyOnPublish',
-                      'is_available',
                     ];
                     const isBoolean = booleanFields.includes(field);
                     const isLongText = [
@@ -1412,7 +1411,15 @@ function App() {
                         className={isBoolean ? 'admin-toggle-field' : undefined}
                       >
                         <span>{fieldLabel}</span>
-                        {field === 'status' ? (
+                        {field === 'is_available' ? (
+                          <select
+                            value={String(form.is_available === undefined ? true : form.is_available).toLowerCase() === 'true' ? 'true' : 'false'}
+                            onChange={e => setForm({ ...form, is_available: e.target.value === 'true' })}
+                          >
+                            <option value="true">Available</option>
+                            <option value="false">Unavailable</option>
+                          </select>
+                        ) : field === 'status' ? (
                           <select
                             value={String(form.status || (form.is_published ? 'PUBLISHED' : 'DRAFT')).toUpperCase() === 'PUBLISHED' ? 'PUBLISHED' : 'DRAFT'}
                             onChange={e => setForm({ ...form, status: e.target.value, is_published: e.target.value === 'PUBLISHED' })}
@@ -1989,7 +1996,7 @@ function App() {
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
+                      <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
@@ -2071,7 +2078,7 @@ function App() {
                   <div className="newsroom-top">
                     <span className="tag">{x.category || 'Update'}</span>
                     {x.verified ? (
-                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
+                      <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : null}
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
@@ -2267,7 +2274,7 @@ function App() {
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
                     {o.verified ? (
-                      <span className="verified-pill"><CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN</span>
+                      <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
                       <span className="source-pill">Source available</span>
                     ) : null}
