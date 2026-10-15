@@ -69,6 +69,7 @@ export default function AggregateCalculator() {
   const [intendedCourse, setIntendedCourse] = useState('');
   const [stateOfOrigin, setStateOfOrigin] = useState('');
   const [targetAggregate, setTargetAggregate] = useState('75');
+  const [departmentCutoff, setDepartmentCutoff] = useState('');
   const [olevelSittings, setOlevelSittings] = useState('1');
 
   const result = useMemo(() => {
@@ -205,7 +206,7 @@ export default function AggregateCalculator() {
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setDepartmentCutoff(''); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
   };
 
   const filteredDirectory = directory.filter((item) => {
@@ -307,6 +308,12 @@ export default function AggregateCalculator() {
           {Number(olevelWeight) > 0 && <div className="aggregate-field"><label htmlFor="aggregate-olevel">O’Level score / contribution (out of 100)</label><input id="aggregate-olevel" type="number" min="0" max="100" step="any" value={olevelPoints} onChange={e => { setOlevelPoints(e.target.value); setShowResult(false); }} placeholder="Enter score from the formula you are using" />{olevelPoints !== '' && !validOlevelPoints && <small role="alert">Enter an O’Level score from 0 to 100.</small>}</div>}
           <small>Weights are normalized to 100. When O’Level weight is above zero, enter the O’Level component score out of 100. This is a user-defined estimate, not a verified school formula.</small>
         </>}
+        <div className="aggregate-field">
+          <label htmlFor="aggregate-department-cutoff">Departmental cut-off mark (optional, out of 100)</label>
+          <input id="aggregate-department-cutoff" type="number" min="0" max="100" step="any" value={departmentCutoff} onChange={e => setDepartmentCutoff(e.target.value)} placeholder="Enter a cut-off from the official admission notice" />
+          {departmentCutoff !== '' && !isValidScore(departmentCutoff, 100) && <small role="alert">Enter a departmental cut-off from 0 to 100.</small>}
+          <small>Use the current official cut-off for your course and admission session. EDUKEN does not invent cut-off marks.</small>
+        </div>
         <div className="aggregate-actions">
           <button type="button" className="aggregate-primary" disabled={!ready} onClick={() => setShowResult(true)}>Calculate aggregate <Calculator size={17} /></button>
           <button type="button" className="aggregate-secondary" onClick={clear}>Clear</button>
@@ -315,6 +322,7 @@ export default function AggregateCalculator() {
           <span>YOUR CALCULATED AGGREGATE</span><strong>{result.total.toFixed(2)} <small>/ 100</small></strong>
           <p>This is a calculation of the inputs supplied, not a prediction or guarantee of admission.</p>
           <div className="aggregate-breakdown">{result.parts.map(part => <div key={part.label}><span>{part.label}</span><b>{part.value.toFixed(2)} / {part.max}</b></div>)}</div>
+          {departmentCutoff !== '' && isValidScore(departmentCutoff, 100) && <div className="aggregate-helper" role="status" aria-live="polite"><strong>{result.total >= Number(departmentCutoff) ? 'At or above the cut-off entered' : 'Below the cut-off entered'}</strong><p>{result.total >= Number(departmentCutoff) ? `Your estimated aggregate is ${(result.total - Number(departmentCutoff)).toFixed(2)} point(s) ${result.total === Number(departmentCutoff) ? 'exactly at' : 'above'} the cut-off of ${Number(departmentCutoff).toFixed(2)}.` : `Your estimated aggregate is ${(Number(departmentCutoff) - result.total).toFixed(2)} point(s) below the cut-off of ${Number(departmentCutoff).toFixed(2)}.`} This comparison is not a guarantee of admission; confirm the formula, course requirements and cut-off with the institution.</p></div>}
           {(school === 'uniben' || school === 'oau' || school === 'unilag') && <p><strong>Provisional formula:</strong> this model is not confirmed as the university’s official 2026/2027 formula.</p>}
         </div>}
       </section>
