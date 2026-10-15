@@ -94,6 +94,19 @@ const emptyContent: Content = {
   services: [],
 };
 
+const JAMB_SERVICE_TEMPLATES = [
+  { name: 'Check JAMB Admission Status', category: 'JAMB Services', description: 'Guidance on checking admission status through official JAMB channels. EDUKEN will confirm the relevant steps with you.' },
+  { name: "JAMB O'Level Upload Guidance", category: 'JAMB Services', description: 'Guidance on submitting O’Level results through official channels. Do not attach result documents or share passwords in this request form.' },
+  { name: 'JAMB Result Retrieval Guidance', category: 'JAMB Services', description: 'Guidance on obtaining JAMB result information through official channels. Any official fees and eligibility will be confirmed before you proceed.' },
+  { name: 'JAMB Reprinting Guidance', category: 'JAMB Services', description: 'Guidance for locating and reprinting eligible JAMB documents through official channels.' },
+  { name: "JAMB O'Level Confirmation Guidance", category: 'JAMB Services', description: 'Guidance on confirming O’Level result submission status. EDUKEN will confirm the relevant official process.' },
+  { name: 'JAMB Profile Code Support', category: 'JAMB Services', description: 'Guidance for resolving profile-code issues using official JAMB procedures. Never share an OTP, password or account PIN.' },
+  { name: 'JAMB Registration Number Recovery Guidance', category: 'JAMB Services', description: 'Guidance on official options for recovering registration details. Do not submit sensitive identity details in this initial request.' },
+  { name: 'JAMB Original Result Slip Guidance', category: 'JAMB Services', description: 'Guidance on checking eligibility and obtaining an original result slip through official channels.' },
+  { name: 'JAMB Admission Letter Guidance', category: 'JAMB Services', description: 'Guidance on checking eligibility and obtaining an admission letter through official channels.' },
+  { name: 'NECO Result Verification Guidance', category: 'Examination Services', description: 'Guidance on NECO result verification and the official process. Any verification-code cost will be confirmed before you proceed.' },
+];
+
 function App() {
   const [menu, setMenu] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
@@ -115,6 +128,7 @@ function App() {
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
   const [alertEmail, setAlertEmail] = useState('');
   const [alertTopics, setAlertTopics] = useState<string[]>(['admissions', 'scholarships-grants', 'jobs-internships']);
   const [alertSubmitting, setAlertSubmitting] = useState(false);
@@ -812,6 +826,43 @@ function App() {
     }
   };
 
+  const addJambServiceTemplates = async () => {
+    if (addingServiceTemplates) return;
+    setAddingServiceTemplates(true);
+    try {
+      const existing = await api.get('/api/admin/content/services');
+      const existingNames = new Set(
+        (existing.data.items || []).map((item: Item) => String(item.name || '').trim().toLowerCase())
+      );
+      const missing = JAMB_SERVICE_TEMPLATES.filter(
+        item => !existingNames.has(item.name.trim().toLowerCase())
+      );
+      if (!missing.length) {
+        showToast('JAMB and examination templates already exist. You can edit them in Services.');
+        return;
+      }
+
+      // Sequential, idempotent inserts avoid duplicate names on retries. Prices stay unset;
+      // the administrator must confirm pricing before publishing commercial terms.
+      let added = 0;
+      for (const item of missing) {
+        await api.post('/api/admin/content/services', { ...item, price: null, is_published: true });
+        added += 1;
+      }
+      await loadAdmin('services');
+      await loadContent();
+      showToast(`Added ${added} service templates. Review each entry and set its price before sharing pricing with customers.`);
+    } catch (error) {
+      // A partial run can safely be retried because existing names are checked first.
+      await loadAdmin('services').catch(() => undefined);
+      showToast(error instanceof Error
+        ? 'Some templates may have been added. Review Services and retry to add any missing entries: ' + error.message
+        : 'Some templates may have been added. Review Services before retrying.');
+    } finally {
+      setAddingServiceTemplates(false);
+    }
+  };
+
   const updateServiceRequest = async (item: Item, status: string) => {
     try {
       await api.put('/api/admin/service-requests/' + encodeURIComponent(item.id), { status });
@@ -1092,9 +1143,21 @@ function App() {
                 <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
               {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && adminTab !== 'system-settings' && (
-                <button className="primary" onClick={() => setForm(adminTab === 'opportunities' ? { notifyOnPublish: systemSettings.defaultNotifyOnPublish } : {})}>
-                  <Plus size={17} /> New
-                </button>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                  {adminTab === 'services' && (
+                    <button
+                      className="secondary"
+                      type="button"
+                      disabled={addingServiceTemplates || savingAdminMode !== null}
+                      onClick={() => void addJambServiceTemplates()}
+                    >
+                      {addingServiceTemplates ? 'Adding templates…' : 'Add JAMB service templates'}
+                    </button>
+                  )}
+                  <button className="primary" onClick={() => setForm(adminTab === 'opportunities' ? { notifyOnPublish: systemSettings.defaultNotifyOnPublish } : {})}>
+                    <Plus size={17} /> New
+                  </button>
+                </div>
               )}
             </div>
             {adminTab === 'system-settings' ? (
