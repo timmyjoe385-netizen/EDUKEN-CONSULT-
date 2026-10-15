@@ -107,6 +107,6 @@ test("Paystack callback defaults to the canonical EDUKEN website hostname", asyn
 test("write guard allows only the canonical production origin and keeps preview origins isolated", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("../src/lib/api.ts", import.meta.url), "utf8");
-  assert.match(source, /window\\.location\\.origin !== 'https:\\/\\/eduken-consult\\.workers\\.dev'/);
-  assert.doesNotMatch(source, /window\\.location\\.origin !== 'https:\\/\\/eduken-consult\\.timmyjoe385\\.workers\\.dev'/);
+  assert.ok(source.includes("return window.location.origin !== 'https://eduken-consult.workers.dev';"));
+  assert.ok(!source.includes("return window.location.origin !== 'https://eduken-consult.timmyjoe385.workers.dev';"));
 });
