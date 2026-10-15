@@ -23,6 +23,36 @@ const secretKeys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS")!);
 const db = createClient(url, secretKeys.default);
 const ADMIN_EMAILS = new Set(["timmyjoe385@gmail.com", "edukenconsult00@gmail.com"]);
 const CONTENT_TABLES = new Set(["opportunities", "admissions", "updates", "faqs", "services"]);
+const DEFAULT_SYSTEM_SETTINGS = {
+  subscriberNotificationsEnabled: true,
+  deadlineEmailAlertsEnabled: true,
+  defaultNotifyOnPublish: false,
+};
+type SystemSettings = typeof DEFAULT_SYSTEM_SETTINGS;
+
+async function readSystemSettings(): Promise<SystemSettings> {
+  const { data, error } = await db.from("admin_system_settings").select("settings").eq("id", "global").maybeSingle();
+  // Until the settings migration is applied, preserve the existing notification behavior.
+  if (error) {
+    console.error("Could not read admin system settings.", error.message);
+    // Preserve legacy behavior only when the migration is genuinely absent. For other
+    // read failures, fail closed so a temporary database/permission error cannot
+    // accidentally resume subscriber notifications or deadline email dispatch.
+    const missingSettingsTable =
+      error.code === "42P01" ||
+      error.code === "PGRST205" ||
+      /admin_system_settings.*(does not exist|schema cache)|relation .* does not exist/i.test(error.message || "");
+    if (missingSettingsTable) return { ...DEFAULT_SYSTEM_SETTINGS };
+    return {
+      subscriberNotificationsEnabled: false,
+      deadlineEmailAlertsEnabled: false,
+      defaultNotifyOnPublish: false,
+    };
+  }
+  return { ...DEFAULT_SYSTEM_SETTINGS, ...(data?.settings || {}) };
+}
+
+
 
 const pathOf = (req: Request) => {
   const pathname = new URL(req.url).pathname;
@@ -195,6 +225,8 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
 
 async function notifyOpportunitySubscribers(opportunity: Record<string, any>) {
   if (!opportunity.notify_on_publish || !opportunity.is_published) return;
+  const systemSettings = await readSystemSettings();
+  if (!systemSettings.subscriberNotificationsEnabled) return;
   const category = String(opportunity.category || "").trim().toLowerCase();
   const { data: subscriptions, error } = await db.from("topic_subscriptions").select("user_id,topic");
   if (error) throw error;
@@ -354,6 +386,9 @@ async function enqueueOpportunityEmailAlerts(
   opportunity: Record<string, any>,
   options: { queueNew: boolean; rescheduleDeadlines: boolean },
 ) {
+  const systemSettings = await readSystemSettings();
+  // Preserve queued deliveries while alerts are paused so they can resume when re-enabled.
+  if (!systemSettings.deadlineEmailAlertsEnabled) return;
   const eligible = isEmailAlertOpportunityEligible(opportunity);
   if (!eligible) {
     const { error: cancelError } = await db.from("email_alert_deliveries")
@@ -805,6 +840,13 @@ Deno.serve(async (req) => {
       const config = emailAlertConfiguration();
       if (!config) return json({ error: "Email alerts are not configured." }, 503);
 
+      // Pause dispatch without claiming or cancelling queued work. Re-enabling alerts
+      // allows still-valid reminders to resume; expired deadlines are filtered below.
+      const systemSettings = await readSystemSettings();
+      if (!systemSettings.deadlineEmailAlertsEnabled) {
+        return json({ ok: true, paused: true, processed: 0, sent: 0, failed: 0, skipped: 0 });
+      }
+
       const now = new Date();
       // Keep the private rate-limit table bounded without retaining inactive hashed IP keys indefinitely.
       const rateLimitRetentionBefore = new Date(now.getTime() - 48 * 60 * 60 * 1000).toISOString();
@@ -932,6 +974,19 @@ Deno.serve(async (req) => {
             });
             skipped++;
             continue;
+          }
+
+          // Re-check the global pause immediately before the external send. If an
+          // administrator paused alerts while this batch was running, release the
+          // delivery back to pending rather than sending or losing the queued reminder.
+          const latestSystemSettings = await readSystemSettings();
+          if (!latestSystemSettings.deadlineEmailAlertsEnabled) {
+            await updateEmailAlertDelivery(delivery.id, {
+              status: "pending",
+              scheduled_for: new Date().toISOString(),
+              processing_started_at: null,
+            });
+            break;
           }
 
           // Reuse the same provider idempotency key on retries to avoid duplicate messages
@@ -1148,6 +1203,34 @@ Deno.serve(async (req) => {
       const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
       if (error) throw error;
       return json({ items: data ?? [] });
+    }
+
+    if (path === "/api/admin/system-settings") {
+      const user = await requireAdmin(req);
+      if (req.method === "GET") {
+        const { data, error } = await db.from("admin_system_settings").select("settings,updated_at").eq("id", "global").maybeSingle();
+        if (error) return json({ error: "System settings are not initialized yet. Apply the admin system settings migration, then retry." }, 503);
+        return json({ settings: { ...DEFAULT_SYSTEM_SETTINGS, ...(data?.settings || {}) }, updated_at: data?.updated_at ?? null });
+      }
+      if (req.method === "PUT") {
+        let body: any;
+        try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+        const incoming = body?.settings;
+        const allowedKeys = Object.keys(DEFAULT_SYSTEM_SETTINGS);
+        if (!incoming || typeof incoming !== "object" || Array.isArray(incoming) ||
+            allowedKeys.some((key) => typeof incoming[key] !== "boolean") ||
+            Object.keys(incoming).some((key) => !allowedKeys.includes(key))) {
+          return json({ error: "Provide boolean values for all supported system settings only." }, 400);
+        }
+        const { data, error } = await db.from("admin_system_settings")
+          .upsert({ id: "global", settings: incoming, updated_by: user.id, updated_at: new Date().toISOString() }, { onConflict: "id" })
+          .select("settings,updated_at").single();
+        if (error) throw error;
+        // Do not cancel queued deliveries when pausing alerts. The private worker
+        // checks this setting before sending and leaves queued work available to resume.
+        return json({ ok: true, settings: data.settings, updated_at: data.updated_at });
+      }
+      return json({ error: "Method not allowed." }, 405);
     }
 
     const adminContent = path.match(/^\/api\/admin\/content\/([^/]+)(?:\/([^/]+))?$/);
