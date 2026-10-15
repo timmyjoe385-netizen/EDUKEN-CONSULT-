@@ -106,6 +106,9 @@ export default function AggregateCalculator() {
 
   const result = useMemo(() => {
     const utme = clamp(jamb, 400);
+    if (school === 'jambonly') {
+      return buildAggregateResult([{ label: 'JAMB score ÷ 8 (maximum 50)', value: utme / 8, max: 50 }]);
+    }
     if (school === 'unilorin') {
       const parts = [
         { label: 'UTME contribution', value: weightedContribution(utme, 400, 50), max: 50 },
