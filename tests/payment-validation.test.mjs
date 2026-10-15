@@ -75,3 +75,20 @@ test("only returns HTTPS Paystack-hosted checkout URLs", () => {
   assert.equal(getPaystackAuthorizationUrl({ status: false, data: { authorization_url: "https://checkout.paystack.com/abc" } }), null);
   assert.equal(getPaystackAuthorizationUrl(null), null);
 });
+
+test("payment record is persisted before Paystack initialization and ambiguous outcomes stay reconcilable", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const initializeRoute = source.slice(
+    source.indexOf('if (path === "/api/payments/initialize"'),
+    source.indexOf('if (path === "/api/payments/verify"'),
+  );
+  assert.notEqual(initializeRoute.indexOf('db.from("payments").insert'), -1);
+  assert.ok(
+    initializeRoute.indexOf('db.from("payments").insert') < initializeRoute.indexOf('fetch("https://api.paystack.co/transaction/initialize"'),
+    "store the reference before asking Paystack to initialize the transaction",
+  );
+  assert.match(initializeRoute, /PAYMENT_INITIALIZATION_UNCONFIRMED/);
+  assert.match(initializeRoute, /Leave Pending: a timeout can occur after Paystack created the transaction/);
+  assert.match(initializeRoute, /db\.from\("payments"\)\.update\(\{ status: "Failed" \}\)/);
+});
