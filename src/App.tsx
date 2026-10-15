@@ -118,6 +118,7 @@ function App() {
   const [analyticsError, setAnalyticsError] = useState('');
   const [analyticsDays, setAnalyticsDays] = useState(30);
   const [articleSlug, setArticleSlug] = useState('');
+  const [admissionId, setAdmissionId] = useState('');
   const [shareCopied, setShareCopied] = useState(false);
   const [shareDraft, setShareDraft] = useState('');
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
@@ -132,9 +133,20 @@ function App() {
       .replace(/^-+|-+$/g, '');
 
   const syncArticleFromHash = () => {
-    const match = window.location.hash.match(/^#opportunity\/(.+)$/);
-    setArticleSlug(match ? decodeURIComponent(match[1]) : '');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const hash = window.location.hash;
+    const opportunityMatch = hash.match(/^#opportunity\/(.+)$/);
+    const admissionMatch = hash.match(/^#admission\/(.+)$/);
+    const decodeHashValue = (value: string | undefined) => {
+      if (!value) return '';
+      try {
+        return decodeURIComponent(value);
+      } catch {
+        return '';
+      }
+    };
+    setArticleSlug(decodeHashValue(opportunityMatch?.[1]));
+    setAdmissionId(decodeHashValue(admissionMatch?.[1]));
+    if (!admissionMatch) window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const articleUrl = (slug: string) =>
@@ -142,6 +154,42 @@ function App() {
     window.location.pathname +
     '#opportunity/' +
     encodeURIComponent(slug);
+
+  const admissionUrl = (item: Item) =>
+    window.location.origin + window.location.pathname + '#admission/' + encodeURIComponent(String(item.id));
+
+  const shareAdmissionOnWhatsApp = (item: Item) => {
+    const title = String(item.school || item.title || 'Admission update').trim();
+    const course = String(item.course || item.programme || '').trim();
+    const details = String(item.details || item.description || item.content || '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 240);
+    const deadline = String(item.deadline || '').trim();
+    const link = admissionUrl(item);
+    const headline = course
+      ? '🎓 ADMISSION SPOTLIGHT: ' + title + ' — ' + course
+      : '🎓 ADMISSION SPOTLIGHT: ' + title;
+    const message = [
+      headline,
+      '',
+      '📣 Looking for your next admission opportunity? Check out this update from EDUKEN CONSULT.',
+      ...(details ? ['', details] : []),
+      ...(deadline ? ['', '⏳ Deadline: ' + deadline] : []),
+      '',
+      '👉 READ MORE on EDUKEN CONSULT:',
+      link,
+      '',
+      '🌍 EDUKEN CONSULT — Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
+    ].join('\n');
+    window.open('https://wa.me/?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+  };
+
+  useEffect(() => {
+    if (!admissionId || loading) return;
+    const target = document.getElementById('admission-' + admissionId);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [admissionId, loading, content.admissions]);
 
   const openOpportunity = (item: Item) => {
     trackEvent('opportunity_view', { target: item.title || item.slug || item.id });
@@ -1062,6 +1110,20 @@ function App() {
                               title="Share a teaser with a Read More link on WhatsApp"
                             >
                               <Share2 size={14} /> Share
+                            </button>
+                          )}
+                        {adminTab === 'admissions' &&
+                          (String(item.status || '').toUpperCase() === 'PUBLISHED' ||
+                            item.is_published === true ||
+                            String(item.is_published).toLowerCase() === 'true' ||
+                            String(item.is_published) === '1') && (
+                            <button
+                              type="button"
+                              className="secondary"
+                              onClick={() => shareAdmissionOnWhatsApp(item)}
+                              title="Share this published admission post and its direct EDUKEN link on WhatsApp"
+                            >
+                              <Share2 size={14} /> Share on WhatsApp
                             </button>
                           )}
                         <button onClick={() => setForm(adminTab === 'opportunities' ? { ...item, status: (item.is_published === true || String(item.is_published).toLowerCase() === 'true' || String(item.is_published) === '1') ? 'PUBLISHED' : 'DRAFT' } : item)}>Edit</button>
@@ -1994,7 +2056,7 @@ function App() {
               <p className="empty-state">No matching published admission records yet. Please check back soon.</p>
             ) : (
               filteredAdmissions.map(a => (
-                <article className="admission-card" key={a.id}>
+                <article className="admission-card" id={'admission-' + a.id} key={a.id}>
                   <div className="admission-top">
                     <span>{a.type || 'Admission'}</span>
                     {a.verified ? <b>✓ Verified by EDUKEN</b> : null}
