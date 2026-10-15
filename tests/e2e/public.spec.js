@@ -1078,7 +1078,7 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
   await target.fill('51');
   await expect(page.getByRole('alert')).toContainText('Enter a target from 0 to 50');
   await cutoff.fill('51');
-  await expect(page.getByRole('alert')).toContainText('Enter a departmental cut-off from 0 to 50');
+  await expect(page.getByText('Enter a departmental cut-off from 0 to 50.', { exact: true })).toBeVisible();
 
   await page.getByRole('button', { name: 'Clear', exact: true }).click();
   await expect(target).toHaveValue('40');
