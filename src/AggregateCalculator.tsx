@@ -103,6 +103,7 @@ export default function AggregateCalculator() {
   const [olevelSittings, setOlevelSittings] = useState('1');
 
   const isGenericModel = !['unilorin', 'fuhsi', 'uniben', 'unilag'].includes(school);
+  const aggregateMax = school === 'jambonly' ? 50 : 100;
 
   const result = useMemo(() => {
     const utme = clamp(jamb, 400);
@@ -173,7 +174,7 @@ export default function AggregateCalculator() {
   const validOlevelPoints = isValidScore(olevelPoints, olevelMax);
   const validCustomWeights = isValidScore(jambWeight, 100) && isValidScore(postWeight, 100) &&
     isValidScore(olevelWeight, 100) && Number(jambWeight) + Number(postWeight) + Number(olevelWeight) > 0;
-  const validDepartmentCutoff = departmentCutoff === '' || isValidScore(departmentCutoff, 100);
+  const validDepartmentCutoff = departmentCutoff === '' || isValidScore(departmentCutoff, aggregateMax);
   const ready = validDepartmentCutoff && validJamb &&
     (school === 'unilorin' ? validPost && validOlevelPoints :
       school === 'fuhsi' ? grades.every(Boolean) :
@@ -191,7 +192,7 @@ export default function AggregateCalculator() {
   const plannerOtherContribution = result.parts
     .filter(part => !part.label.toLowerCase().includes('post-utme'))
     .reduce((sum, part) => sum + part.value, 0);
-  const validTarget = isValidScore(targetAggregate, 100);
+  const validTarget = isValidScore(targetAggregate, aggregateMax);
   const plannerHasRequiredInputs = validJamb && validTarget &&
     (school === 'fuhsi' ? grades.every(Boolean) :
       school === 'oau'
@@ -270,6 +271,13 @@ export default function AggregateCalculator() {
           <select value={school} onChange={e => {
             const nextSchool = e.target.value as SchoolKey;
             setSchool(nextSchool);
+            if (nextSchool === 'jambonly') {
+              setTargetAggregate('40');
+              if (Number(departmentCutoff) > 50) setDepartmentCutoff('');
+            } else if (school === 'jambonly') {
+              setTargetAggregate('75');
+              if (Number(departmentCutoff) > 50) setDepartmentCutoff('');
+            }
             const presets: Record<string, [string, string, string]> = {
               unilag50: ['50', '50', '0'], 'ui-estimate': ['50', '50', '0'], 'oau-estimate': ['50', '40', '10'],
               'unn50': ['50', '50', '0'], 'unn90': ['90', '10', '0'], futminna: ['50', '30', '20'],
@@ -451,9 +459,9 @@ export default function AggregateCalculator() {
           <p className="aggregate-helper">Official FUHSI 2026/2027 figures. Choose the category matching your admission consideration. The university’s published table does not list all states as catchment categories; if you are unsure which category applies, confirm with FUHSI before relying on this comparison.</p>
         </div>}
         <div className="aggregate-field">
-          <label htmlFor="aggregate-department-cutoff">Departmental cut-off mark (optional, out of 100)</label>
-          <input id="aggregate-department-cutoff" type="number" min="0" max="100" step="any" value={departmentCutoff} onChange={e => { setDepartmentCutoff(e.target.value); setShowResult(false); }} placeholder="Enter a cut-off from the official admission notice" />
-          {departmentCutoff !== '' && !isValidScore(departmentCutoff, 100) && <small role="alert">Enter a departmental cut-off from 0 to 100.</small>}
+          <label htmlFor="aggregate-department-cutoff">Departmental cut-off mark (optional, out of {aggregateMax})</label>
+          <input id="aggregate-department-cutoff" type="number" min="0" max={aggregateMax} step="any" value={departmentCutoff} onChange={e => { setDepartmentCutoff(e.target.value); setShowResult(false); }} placeholder="Enter a cut-off from the official admission notice" />
+          {departmentCutoff !== '' && !isValidScore(departmentCutoff, aggregateMax) && <small role="alert">Enter a departmental cut-off from 0 to {aggregateMax}.</small>}
           <small>Use the current official cut-off for your course and admission session. EDUKEN does not invent cut-off marks.</small>
         </div>
         <div className="aggregate-actions">
@@ -461,10 +469,10 @@ export default function AggregateCalculator() {
           <button type="button" className="aggregate-secondary" onClick={clear}>Clear</button>
         </div>
         {showResult && <div className="aggregate-result" role="status" aria-live="polite">
-          <span>YOUR CALCULATED AGGREGATE</span><strong>{result.total.toFixed(2)} <small>/ 100</small></strong>
+          <span>YOUR CALCULATED AGGREGATE</span><strong>{result.total.toFixed(2)} <small>/ {aggregateMax}</small></strong>
           <p>This is a calculation of the inputs supplied, not a prediction or guarantee of admission.</p>
           <div className="aggregate-breakdown">{result.parts.map(part => <div key={part.label}><span>{part.label}</span><b>{part.value.toFixed(2)} / {part.max}</b></div>)}</div>
-          {departmentCutoff !== '' && isValidScore(departmentCutoff, 100) && <div className="aggregate-helper" role="status" aria-live="polite"><strong>{result.total >= Number(departmentCutoff) ? 'At or above the cut-off entered' : 'Below the cut-off entered'}</strong><p>{result.total >= Number(departmentCutoff) ? `Your estimated aggregate is ${(result.total - Number(departmentCutoff)).toFixed(2)} point(s) ${result.total === Number(departmentCutoff) ? 'exactly at' : 'above'} the cut-off of ${Number(departmentCutoff).toFixed(2)}.` : `Your estimated aggregate is ${(Number(departmentCutoff) - result.total).toFixed(2)} point(s) below the cut-off of ${Number(departmentCutoff).toFixed(2)}.`} This comparison is not a guarantee of admission; confirm the formula, course requirements and cut-off with the institution.</p></div>}
+          {departmentCutoff !== '' && isValidScore(departmentCutoff, aggregateMax) && <div className="aggregate-helper" role="status" aria-live="polite"><strong>{result.total >= Number(departmentCutoff) ? 'At or above the cut-off entered' : 'Below the cut-off entered'}</strong><p>{result.total >= Number(departmentCutoff) ? `Your estimated aggregate is ${(result.total - Number(departmentCutoff)).toFixed(2)} point(s) ${result.total === Number(departmentCutoff) ? 'exactly at' : 'above'} the cut-off of ${Number(departmentCutoff).toFixed(2)}.` : `Your estimated aggregate is ${(Number(departmentCutoff) - result.total).toFixed(2)} point(s) below the cut-off of ${Number(departmentCutoff).toFixed(2)}.`} This comparison is not a guarantee of admission; confirm the formula, course requirements and cut-off with the institution.</p></div>}
           {(school === 'uniben' || school === 'oau' || school === 'unilag') && <p><strong>Provisional formula:</strong> this model is not confirmed as the university’s official 2026/2027 formula.</p>}
         </div>}
       </section>
@@ -526,9 +534,9 @@ export default function AggregateCalculator() {
             <input id="aggregate-origin" value={stateOfOrigin} onChange={e => setStateOfOrigin(e.target.value)} placeholder="e.g. Niger State" />
           </div>
           <div className="aggregate-field">
-            <label htmlFor="aggregate-target">Target aggregate (out of 100)</label>
-            <input id="aggregate-target" type="number" min="0" max="100" step="any" value={targetAggregate} onChange={e => setTargetAggregate(e.target.value)} />
-            {targetAggregate !== '' && !validTarget && <small role="alert">Enter a target from 0 to 100.</small>}
+            <label htmlFor="aggregate-target">Target aggregate (out of {aggregateMax})</label>
+            <input id="aggregate-target" type="number" min="0" max={aggregateMax} step="any" value={targetAggregate} onChange={e => setTargetAggregate(e.target.value)} />
+            {targetAggregate !== '' && !validTarget && <small role="alert">Enter a target from 0 to {aggregateMax}.</small>}
           </div>
         </div>
         <div className="aggregate-planner-result" aria-live="polite">
