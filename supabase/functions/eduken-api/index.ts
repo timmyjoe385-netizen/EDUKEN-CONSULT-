@@ -1154,19 +1154,35 @@ Deno.serve(async (req) => {
       const callbackBase = Deno.env.get("PAYSTACK_CALLBACK_URL") || "https://eduken-consult.timmyjoe385.workers.dev/";
       const callbackUrl = new URL(callbackBase);
       callbackUrl.searchParams.set("payment_reference", reference);
-      const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
-        method: "POST",
-        headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({ email, amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl.toString(), metadata: { service_request_id: request.id, user_id: user?.id ?? null, reference_number: request.reference_number, quantity } })
-      });
-      let result: any;
-      try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
-      const authorizationUrl = getPaystackAuthorizationUrl(result);
-      if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
-      const { data: payment, error } = await db.from("payments").insert({
+      // Persist the reference before contacting Paystack so every provider transaction
+      // can be reconciled, even if the provider responds but our network drops afterward.
+      const { data: payment, error: paymentInsertError } = await db.from("payments").insert({
         user_id: user?.id ?? null, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
       }).select().single();
-      if (error) throw error;
+      if (paymentInsertError) throw paymentInsertError;
+
+      let paystack: Response;
+      try {
+        paystack = await fetch("https://api.paystack.co/transaction/initialize", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({ email, amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl.toString(), metadata: { service_request_id: request.id, user_id: user?.id ?? null, reference_number: request.reference_number, quantity } })
+        });
+      } catch {
+        // Leave Pending: a timeout can occur after Paystack created the transaction.
+        // The signed webhook or a later verification attempt can reconcile it safely.
+        return json({ error: "Payment initialization could not be confirmed. Check payment status before trying again.", reference, code: "PAYMENT_INITIALIZATION_UNCONFIRMED" }, 502);
+      }
+      let result: any;
+      try { result = await paystack.json(); } catch {
+        return json({ error: "Payment initialization could not be confirmed. Check payment status before trying again.", reference, code: "PAYMENT_INITIALIZATION_UNCONFIRMED" }, 502);
+      }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
+      if (!paystack.ok || !authorizationUrl) {
+        const { error: updateError } = await db.from("payments").update({ status: "Failed" }).eq("id", payment.id).eq("status", "Pending");
+        if (updateError) throw updateError;
+        return json({ error: "Unable to initialize payment. No checkout link was issued.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
+      }
       return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
