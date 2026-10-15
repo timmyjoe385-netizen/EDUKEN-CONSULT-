@@ -18,6 +18,58 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('verified admission and update cards display the prominent EDUKEN badge', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [{
+          id: 'verified-admission-fixture',
+          school: 'Verified Admission Fixture',
+          programme: 'Test programme',
+          category: 'Admission',
+          deadline: 'See details',
+          is_published: true,
+          verified: true,
+        }],
+        updates: [{
+          id: 'verified-update-fixture',
+          title: 'Verified Update Fixture',
+          category: 'Education',
+          content: 'A safe fixture to verify badge rendering.',
+          created_at: '2026-10-15T00:00:00.000Z',
+          is_published: true,
+          verified: true,
+        }],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const admissionBadge = page.locator('#admission-verified-admission-fixture .verified-pill');
+  await expect(admissionBadge).toContainText('Verified by EDUKEN');
+  await expect(admissionBadge.locator('svg')).toBeVisible();
+
+  const updateCard = page.locator('.newsroom-card').filter({
+    has: page.getByRole('heading', { name: 'Verified Update Fixture' }),
+  });
+  const updateBadge = updateCard.locator('.verified-pill');
+  await expect(updateBadge).toContainText('Verified by EDUKEN');
+  await expect(updateBadge.locator('svg')).toBeVisible();
+
+  const badgeStyle = await admissionBadge.evaluate(element => {
+    const style = window.getComputedStyle(element);
+    return { fontWeight: Number(style.fontWeight), borderWidth: style.borderTopWidth };
+  });
+  expect(badgeStyle.fontWeight, 'verification label should be bold').toBeGreaterThanOrEqual(700);
+  expect(badgeStyle.borderWidth, 'verification badge should have a thick visible border').toBe('2px');
+});
+
 test('public content API returns the expected data structure', async ({ request }) => {
   const response = await request.get(publicContentUrl, {
     headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' },
@@ -751,10 +803,10 @@ test('public catalogue queries select only reviewed public fields', () => {
     'db.from("opportunities").select("id, title, slug, category, description, organization, location, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent, content, eligibility, benefits, how_to_apply")',
   );
   expect(publicContent).toContain(
-    'db.from("admissions").select("id, title, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at")',
+    'db.from("admissions").select("id, title, slug, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent")',
   );
   expect(publicContent).toContain(
-    'db.from("updates").select("id, title, category, content, source, source_url, is_published, created_at, updated_at")',
+    'db.from("updates").select("id, title, slug, category, content, source, source_url, is_published, created_at, updated_at, verified, featured, urgent")',
   );
   expect(publicContent).toContain(
     'db.from("faqs").select("id, question, answer, category, created_at, updated_at")',
@@ -1177,6 +1229,10 @@ test('admissions and updates expose persisted opportunity-style admin controls',
       expect(fields, `${table} form should include ${field}`).toContain(`'${field}'`);
     }
   }
+  expect(handler).toContain('db.from("admissions").select("id, title, slug, school, programme, category, description, deadline, application_url, official_source, is_published, created_at, updated_at, verified, featured, urgent")');
+  expect(handler).toContain('db.from("updates").select("id, title, slug, category, content, source, source_url, is_published, created_at, updated_at, verified, featured, urgent")');
+  // Public cards need persisted verification/feature flags, but notification preferences stay private.
+  expect(handler).not.toContain('notify_on_publish, verified');
   expect(handler).toContain('if (x.notifyOnPublish !== undefined && x.notify_on_publish === undefined)');
   expect(handler).toContain('async function notifyEditorialSubscribers');
   expect(handler).not.toContain('// These controls are not columns in the updates table.');
