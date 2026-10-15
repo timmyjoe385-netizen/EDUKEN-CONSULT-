@@ -243,7 +243,7 @@ export default function AggregateCalculator() {
   const assessmentHasSubjects = assessmentSubjects.some(item => item.subject.trim() && item.grade);
 
   const clear = () => {
-    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setOlevelWeight('0'); setShowResult(false); setTargetAggregate('75'); setDepartmentCutoff(''); setFuhsiCutoffCourse(''); setFuhsiCutoffCategory('Merit'); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
+    setJamb(''); setPost(''); setOlevelPoints(''); setGrades(['', '', '', '', '']); setExtraGrades([]); setShowResult(false); setTargetAggregate(school === 'jambonly' ? '40' : '75'); setDepartmentCutoff(''); setFuhsiCutoffCourse(''); setFuhsiCutoffCategory('Merit'); setIntendedCourse(''); setStateOfOrigin(''); setOlevelSittings('1');
   };
 
   const filteredDirectory = directory.filter((item) => {
