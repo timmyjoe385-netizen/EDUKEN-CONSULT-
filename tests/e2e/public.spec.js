@@ -103,7 +103,7 @@ test('admission deep links scroll directly to the matching published admission p
   await expect(card).toContainText('Playwright Admission Deep Link Check');
   await expect(card).toContainText('Linguistics');
   await expect(card).toContainText('31 October 2026');
-  await expect(page).toHaveURL(/#admission\\/admission-deep-link-check$/);
+  await expect(page).toHaveURL(/#admission\/admission-deep-link-check$/);
 });
 
 test('service request dialog validates required fields without sending a request', async ({ page }) => {
