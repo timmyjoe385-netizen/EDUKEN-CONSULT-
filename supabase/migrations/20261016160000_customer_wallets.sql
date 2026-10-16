@@ -120,6 +120,7 @@ begin
       raise exception 'WALLET_DEPOSIT_LEDGER_MISSING';
     end if;
     select * into v_wallet from public.customer_wallets where user_id = v_payment.user_id;
+    if not found then raise exception 'WALLET_DEPOSIT_WALLET_MISSING'; end if;
     return jsonb_build_object('paid', true, 'balance', v_wallet.balance, 'reused', true);
   end if;
 
@@ -191,7 +192,10 @@ begin
 
   if found then
     select balance into v_amount from public.customer_wallets where user_id = p_user_id;
-    return jsonb_build_object('paid', true, 'balance', v_amount, 'reused', true, 'transaction_id', v_existing.id);
+    return jsonb_build_object(
+      'paid', true, 'balance', v_amount, 'reused', true, 'transaction_id', v_existing.id,
+      'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id)
+    );
   end if;
 
   select * into v_request
@@ -203,6 +207,19 @@ begin
     raise exception 'WALLET_SERVICE_REQUEST_NOT_FOUND';
   end if;
   if v_request.status = 'Paid' then
+    -- A concurrent retry may have waited for the first wallet payment to commit.
+    -- Return that committed result instead of reporting a false failure or debiting again.
+    select * into v_existing
+    from public.wallet_transactions
+    where user_id = p_user_id and idempotency_key = p_idempotency_key;
+    if found then
+      select balance into v_amount from public.customer_wallets where user_id = p_user_id;
+      return jsonb_build_object(
+        'paid', true, 'balance', v_amount, 'reused', true,
+        'transaction_id', v_existing.id,
+        'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id)
+      );
+    end if;
     raise exception 'SERVICE_REQUEST_ALREADY_PAID';
   end if;
 
