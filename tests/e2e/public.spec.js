@@ -777,7 +777,7 @@ test('public header exposes customer sign-in and admin login while /admin keeps 
   // Both entry points must be discoverable from the public header.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('link', { name: 'Admin Login' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveAttribute('href', '/admin');
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -820,7 +820,7 @@ test('header customer sign-in starts Google OAuth and returns to the public site
   const authNavigation = page.waitForRequest(
     request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
   );
-  await page.getByRole('button', { name: 'Sign in' }).click();
+  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
   const authUrl = new URL((await authNavigation).url());
   expect(authUrl.searchParams.get('provider')).toBe('google');
   expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
