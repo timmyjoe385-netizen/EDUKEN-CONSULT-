@@ -95,6 +95,19 @@ textarea {
 .nav-links a:hover {
   color: #173f31;
 }
+.calculator-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #285e46 !important;
+  font-weight: 800;
+  white-space: nowrap;
+}
+.calculator-nav-link:focus-visible,
+.aggregate-hero-cta:focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 3px;
+}
 .install-nav {
   display: inline-flex;
   align-items: center;
@@ -606,6 +619,7 @@ textarea {
 }
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin: 30px 0;
 }
