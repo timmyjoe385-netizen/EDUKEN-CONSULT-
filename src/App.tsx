@@ -2130,11 +2130,7 @@ function App() {
             Get Consultation <ArrowRight size={16} />
           </a>
         </nav>
-        <div className="auth-nav-actions">
-          <button type="button" className="header-sign-in" onClick={() => void signIn()}>
-            Sign in
-          </button>
-        </div>
+        {/* Customer authentication stays inside account/wallet flows; keep the public header focused on public content. */}
         <button
           type="button"
           className="menu-btn"
