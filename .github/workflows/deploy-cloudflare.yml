@@ -42,6 +42,13 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build preview website
         run: npm run build
+        env:
+          # These are optional until the isolated Supabase test project is configured.
+          # If either secret is missing, the frontend falls back to production URL but
+          # the preview write guard stays closed.
+          VITE_SUPABASE_URL: ${{ secrets.EDUKEN_TEST_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.EDUKEN_TEST_SUPABASE_PUBLISHABLE_KEY }}
+          VITE_ENABLE_TEST_WRITES: 'true'
       - name: Deploy isolated preview Worker
         run: npx wrangler deploy --env preview
         env:
