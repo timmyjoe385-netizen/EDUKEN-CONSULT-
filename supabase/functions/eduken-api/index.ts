@@ -1065,7 +1065,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/service-requests" && req.method === "GET") {
       const user = await requireUser(req);
-      const { data, error } = await db.from("service_requests").select("*, services(name,price)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
+      const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       return json({ items: data ?? [] });
     }
@@ -1073,7 +1073,7 @@ Deno.serve(async (req) => {
     const serviceRequestMatch = path.match(/^\/api\/service-requests\/([^/]+)$/);
     if (serviceRequestMatch && req.method === "GET") {
       const user = await requireUser(req);
-      const { data, error } = await db.from("service_requests").select("*, services(name,price)").eq("id", serviceRequestMatch[1]).eq("user_id", user.id).maybeSingle();
+      const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").eq("id", serviceRequestMatch[1]).eq("user_id", user.id).maybeSingle();
       if (error) throw error;
       if (!data) return json({ error: "Service request not found." }, 404);
       return json({ request: data });
@@ -1313,7 +1313,7 @@ Deno.serve(async (req) => {
     if (adminRequests) {
       await requireAdmin(req); const id = adminRequests[1];
       if (req.method === "GET") {
-        const { data, error } = await db.from("service_requests").select("*, services(name,price)").order("created_at", { ascending: false }).limit(200);
+        const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").order("created_at", { ascending: false }).limit(200);
         if (error) throw error;
         return json({ items: data ?? [] });
       }
