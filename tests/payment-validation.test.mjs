@@ -90,7 +90,7 @@ test("payment record is persisted before Paystack initialization and ambiguous o
   );
   assert.match(initializeRoute, /PAYMENT_INITIALIZATION_UNCONFIRMED/);
   assert.match(initializeRoute, /Leave Pending: a timeout can occur after Paystack created the transaction/);
-  assert.match(initializeRoute, /db\\.from\\("payments"\\)\\.update\\(\\{ status: "Failed" \\}\\)/);
+  assert.match(initializeRoute, /db\.from\("payments"\)\.update\(\{ status: "Failed" \}\)/);
   const ambiguousResponseGuard = initializeRoute.indexOf("if (paystack.status >= 500 || (paystack.ok && !authorizationUrl))");
   const failedStatusUpdate = initializeRoute.indexOf('db.from("payments").update({ status: "Failed" })');
   assert.notEqual(ambiguousResponseGuard, -1, "ambiguous 5xx and malformed 2xx responses must retain Pending status");
