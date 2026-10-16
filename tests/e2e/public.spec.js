@@ -18,6 +18,31 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('homepage exposes the aggregate calculator from the primary navigation and hero', async ({ page }) => {
+  await page.route(publicContentUrl, route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const navigationLink = page.locator('#primary-navigation a[href="/aggregate-calculator"]');
+  const heroLink = page.locator('.hero-actions a[href="/aggregate-calculator"]');
+  await expect(navigationLink).toContainText('Aggregate Calculator');
+  await expect(navigationLink).toBeVisible();
+  await expect(heroLink).toContainText('Calculate Aggregate');
+  await expect(heroLink).toBeVisible();
+});
+
 test('verified admission and update cards display the prominent EDUKEN badge', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
