@@ -1,3 +1,4 @@
+import { shouldBlockWrite } from './api-safety.js';
 const SUPABASE_URL = 'https://pphxltbkwygqjtjgkhxu.supabase.co';
 const SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
@@ -61,12 +62,6 @@ const validSession = async () => {
   return refreshSession(session);
 };
 
-const isUnisolatedPreview = () => {
-  // Compare the full origin, not only hostname: hostname-only checks would also
-  // allow HTTP and non-standard ports on the production hostname.
-  // This is a client-side safety rail for preview builds, not server authorization.
-  return window.location.origin !== 'https://eduken-consult.timmyjoe385.workers.dev';
-};
 
 const request = async (
   path: string,
@@ -74,7 +69,7 @@ const request = async (
   retry = true
 ): Promise<any> => {
   const method = String(options.method || 'GET').toUpperCase();
-  if (isUnisolatedPreview() && !['GET', 'HEAD', 'OPTIONS'].includes(method)) {
+  if (shouldBlockWrite(window.location.origin, method)) {
     throw new Error('Preview safety mode: saving is disabled until a separate test database is connected. No changes were sent to the live database.');
   }
   const session = await validSession();
