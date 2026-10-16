@@ -1116,6 +1116,9 @@ Deno.serve(async (req) => {
         .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
       if (pendingLookupError) throw pendingLookupError;
       if (pendingPayment) {
+        if (Math.round(Number(pendingPayment.amount) * 100) !== Math.round(trustedAmount * 100)) {
+          return json({ error: "The service price changed after a payment attempt was started. Do not pay using an old checkout link; contact EDUKEN CONSULT with your request reference.", code: "PENDING_PAYMENT_PRICE_CHANGED" }, 409);
+        }
         const savedAuthorizationUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: pendingPayment.authorization_url } });
         if (savedAuthorizationUrl && pendingPayment.payment_reference) {
           return json({ payment: pendingPayment, authorizationUrl: savedAuthorizationUrl, reference: pendingPayment.payment_reference, reused: true });
@@ -1149,7 +1152,7 @@ Deno.serve(async (req) => {
             .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
           if (racedLookupError) throw racedLookupError;
           const racedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: racedPayment?.authorization_url } });
-          if (racedPayment && racedUrl && racedPayment.payment_reference) {
+          if (racedPayment && Math.round(Number(racedPayment.amount) * 100) === Math.round(trustedAmount * 100) && racedUrl && racedPayment.payment_reference) {
             return json({ payment: racedPayment, authorizationUrl: racedUrl, reference: racedPayment.payment_reference, reused: true });
           }
         }
