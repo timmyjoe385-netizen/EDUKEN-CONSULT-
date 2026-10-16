@@ -46,3 +46,13 @@ export function getPaystackAuthorizationUrl(result) {
     return null;
   }
 }
+
+/**
+ * Classify failed initialization responses without losing transactions whose
+ * provider outcome is uncertain. Network exceptions and invalid JSON are handled
+ * as unconfirmed by the caller; this covers HTTP responses.
+ */
+export function getPaystackInitializationFailureDisposition({ ok, status, hasAuthorizationUrl }) {
+  if (status >= 500 || (ok && !hasAuthorizationUrl)) return "unconfirmed";
+  return "failed";
+}
