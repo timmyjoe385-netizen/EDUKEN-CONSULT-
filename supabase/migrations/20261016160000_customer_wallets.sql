@@ -194,7 +194,8 @@ begin
     select balance into v_amount from public.customer_wallets where user_id = p_user_id;
     return jsonb_build_object(
       'paid', true, 'balance', v_amount, 'reused', true, 'transaction_id', v_existing.id,
-      'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id)
+      'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id),
+      'amount', v_existing.amount
     );
   end if;
 
@@ -217,7 +218,8 @@ begin
       return jsonb_build_object(
         'paid', true, 'balance', v_amount, 'reused', true,
         'transaction_id', v_existing.id,
-        'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id)
+        'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id),
+        'amount', v_existing.amount
       );
     end if;
     raise exception 'SERVICE_REQUEST_ALREADY_PAID';
