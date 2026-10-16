@@ -510,7 +510,7 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
-async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request") {
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify") {
   const ip = getEmailAlertClientIp(req.headers);
   if (!ip) return null;
   const policy = emailAlertRateLimitPolicy(action);
