@@ -1081,7 +1081,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/payments/initialize-guest" && req.method === "POST") {
       let rateAllowed: boolean | null;
-      try { rateAllowed = await consumeEmailAlertRateLimit(req, "service-request"); } catch { return json({ error: "Checkout is temporarily unavailable." }, 503); }
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-initialize"); } catch { return json({ error: "Checkout is temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Checkout is temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many checkout attempts. Please wait before trying again." }, 429);
       let b: any;
@@ -1200,7 +1200,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/payments/verify-guest" && req.method === "POST") {
       let rateAllowed: boolean | null;
-      try { rateAllowed = await consumeEmailAlertRateLimit(req, "service-request"); } catch { return json({ error: "Payment verification is temporarily unavailable." }, 503); }
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-verify"); } catch { return json({ error: "Payment verification is temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Payment verification is temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many verification attempts. Please wait before trying again." }, 429);
       let b: any;
