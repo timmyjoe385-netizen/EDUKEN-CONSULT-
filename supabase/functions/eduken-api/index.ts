@@ -1684,7 +1684,10 @@ Deno.serve(async (req) => {
         .eq("payment_reference", reference).eq("service_request_id", serviceRequestId).maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
-      if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
+      if (existingPayment.status === "Paid") {
+        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        return json({ paid: true, payment: existingPayment });
+      }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
@@ -1730,7 +1733,10 @@ Deno.serve(async (req) => {
         .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
-      if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
+      if (existingPayment.status === "Paid") {
+        if (existingPayment.service_request_id) await sendServicePaymentNotifications(existingPayment);
+        return json({ paid: true, payment: existingPayment });
+      }
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
       });
