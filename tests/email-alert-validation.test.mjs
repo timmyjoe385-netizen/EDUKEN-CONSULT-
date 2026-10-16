@@ -335,7 +335,7 @@ test("customer wallet migration keeps balances server-controlled and operations 
     "revoke all on function public.settle_customer_wallet_deposit(uuid, text) from public, anon, authenticated",
     "grant execute on function public.pay_service_from_customer_wallet(uuid, uuid, text, text) to service_role",
     "payment_type in ('service', 'wallet_deposit', 'wallet_service')",
-    "payments_payment_reference_unique",
+    "payments_payment_reference_key",
   ]) assert.ok(migration.includes(required), "wallet migration missing safeguard: " + required);
   assert.ok(migration.includes("insert into public.customer_wallets (user_id)\nselect id from auth.users"), "existing users must receive zero-balance wallets");
   assert.ok((migration.match(/for update/g) || []).length >= 3, "wallet operations must lock rows before changing balances");
