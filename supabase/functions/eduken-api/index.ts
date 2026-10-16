@@ -558,7 +558,14 @@ Deno.serve(async (req) => {
       })) {
         return json({ error: "Provider payment details do not match the stored payment." }, 409);
       }
-      if (existingPayment.status === "Paid") return json({ ok: true, paid: true });
+      if (existingPayment.status === "Paid") {
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", existingPayment.service_request_id);
+          if (requestUpdateError) throw requestUpdateError;
+        }
+        return json({ ok: true, paid: true });
+      }
       const { data: payment, error: updateError } = await db.from("payments").update({
         status: "Paid", paid_at: new Date().toISOString(),
       }).eq("id", existingPayment.id).in("status", ["Pending", "Failed"]).select("id,status,service_request_id").maybeSingle();
