@@ -1145,8 +1145,8 @@ Deno.serve(async (req) => {
       if (!request) return json({ error: "Service request not found for this account/email." }, 404);
       if (String(request.email || "").trim().toLowerCase() !== email.toLowerCase()) return json({ error: "Use the same email address you entered on the service request." }, 400);
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
-      const candidateMatch = String(request.details || "").match(/(?:^|\n)Number of candidates:\s*(\d+)/i);
-      const requestedQuantity = candidateMatch ? Number(candidateMatch[1]) : 1;
+      const candidateMatch = String(request.details || "").match(/(?:^|\n)Number of candidates:\s*([^\r\n]+)/i);
+      const requestedQuantity = candidateMatch ? Number(candidateMatch[1].trim()) : 1;
       if (!Number.isSafeInteger(requestedQuantity) || requestedQuantity < 1 || requestedQuantity > 100) {
         return json({ error: "Candidate quantity must be a whole number from 1 to 100." }, 400);
       }
