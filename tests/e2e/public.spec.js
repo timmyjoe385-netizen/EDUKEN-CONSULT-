@@ -712,6 +712,20 @@ test('authenticated payment initialization uses saved quantity and refuses alrea
   expect(route).not.toContain('.eq("service_request_id", request.id).eq("user_id", user.id).eq("status", "Pending")');
 });
 
+test('guest payment initialization validates saved quantity and catalogue eligibility', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/payments/initialize-guest" && req.method === "POST")');
+  const routeEnd = source.indexOf('if (path === "/api/payments/verify-guest" && req.method === "POST")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = source.slice(routeStart, routeEnd);
+  expect(route).toContain('services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('Number.isInteger(quantity)');
+  expect(route).toContain('quantity < 1 || quantity > 100');
+  expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
+  expect(route).toContain('Number(service?.price) * quantity');
+});
+
 test('database hardening migration removes direct client access to consultation submissions', async () => {
   const migration = readFileSync(
     'supabase/migrations/20261014135746_harden_public_table_grants.sql',
