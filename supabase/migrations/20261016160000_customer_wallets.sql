@@ -49,10 +49,12 @@ create index if not exists wallet_transactions_user_created_idx
 
 alter table public.customer_wallets enable row level security;
 alter table public.wallet_transactions enable row level security;
-revoke all on public.customer_wallets from anon, authenticated;
-revoke all on public.wallet_transactions from anon, authenticated;
-grant select, insert, update, delete on public.customer_wallets to service_role;
-grant select, insert, update, delete on public.wallet_transactions to service_role;
+-- Wallet reads use the server role; all balance and ledger writes go through
+-- the SECURITY DEFINER transaction functions below.
+revoke all on public.customer_wallets from anon, authenticated, service_role;
+revoke all on public.wallet_transactions from anon, authenticated, service_role;
+grant select on public.customer_wallets to service_role;
+grant select on public.wallet_transactions to service_role;
 
 create or replace function public.create_customer_wallet_for_new_user()
 returns trigger
