@@ -4,7 +4,7 @@ const viteEnv = (import.meta as any).env || {};
 const PRODUCTION_SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
 const suppliedSupabaseUrl = String(viteEnv.VITE_SUPABASE_URL || '').trim();
 const suppliedPublishableKey = String(viteEnv.VITE_SUPABASE_PUBLISHABLE_KEY || '').trim();
-const SUPABASE_URL = (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL).replace(/\\/+$/, '');
+const SUPABASE_URL = (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL).replace(/\/+$/, '');
 const SUPABASE_KEY = suppliedPublishableKey || PRODUCTION_SUPABASE_KEY;
 const ALLOW_TEST_WRITES =
   viteEnv.VITE_ENABLE_TEST_WRITES === 'true' &&
