@@ -2375,3 +2375,52 @@ footer {
   .make-payments-summary > div { grid-template-columns: 1fr; gap: 5px; }
   .make-payments-summary dd { text-align: left; }
 }
+
+
+/* Keep the customer sign-in and private admin entry point visible in the header. */
+.auth-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.admin-login-nav,
+.header-sign-in {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 9px 12px;
+  border: 1px solid #cbd8d0;
+  border-radius: 9px;
+  background: #fff;
+  color: #285e46;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.header-sign-in {
+  border-color: #173f31;
+  background: #173f31;
+  color: #fff;
+}
+.admin-login-nav:hover,
+.header-sign-in:hover {
+  filter: brightness(0.96);
+}
+.admin-login-nav:focus-visible,
+.header-sign-in:focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 3px;
+}
+@media (max-width: 900px) {
+  .auth-nav-actions { margin-left: auto; margin-right: 10px; gap: 6px; }
+  .admin-login-nav, .header-sign-in { padding: 8px 9px; font-size: 11px; }
+}
+@media (max-width: 420px) {
+  .auth-nav-actions { gap: 4px; margin-right: 6px; }
+  .admin-login-nav, .header-sign-in { min-height: 34px; padding: 7px 7px; font-size: 10px; }
+  .brand { gap: 6px; font-size: 12px; }
+  .brand-logo { width: 32px; height: 32px; }
+}
