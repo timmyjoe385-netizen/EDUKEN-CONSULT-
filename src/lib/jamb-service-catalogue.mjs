@@ -123,6 +123,14 @@ export function isJambCatalogueService(service) {
   );
 }
 
+export function jambServiceDefaultAvailability(service) {
+  const name = String(service?.name || '').trim().toLowerCase();
+  const template = JAMB_SERVICE_TEMPLATES.find(candidate =>
+    [candidate.name, ...candidate.legacyNames].some(alias => alias.trim().toLowerCase() === name)
+  );
+  return template ? template.is_available === true : true;
+}
+
 export function jambServiceFieldsFor(service) {
   const name = String(service?.name || '').trim().toLowerCase();
   const field = (name, label, placeholder = label, type = 'text') => ({ name, label, placeholder, type });
