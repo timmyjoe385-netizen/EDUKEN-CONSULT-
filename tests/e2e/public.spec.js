@@ -18,6 +18,33 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('system health endpoint is admin-protected and reports safe component statuses', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = handler.indexOf('if (path === "/api/admin/system-health" && req.method === "GET")');
+  const routeEnd = handler.indexOf('if (path === "/api/admin/session" && req.method === "GET")', routeStart);
+  expect(routeStart).toBeGreaterThan(-1);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = handler.slice(routeStart, routeEnd);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('Public website');
+  expect(route).toContain('Database and API');
+  expect(route).toContain('Authentication service');
+  expect(route).toContain('Email alert configuration');
+  expect(route).toContain('Payment safety configuration');
+  expect(route).toContain('RESEND_API_KEY');
+  expect(route).not.toContain('console.log');
+});
+
+test('scheduled health monitor supports recovery email independently of customer alerts', () => {
+  const workflow = readFileSync('.github/workflows/health-check.yml', 'utf8');
+  expect(workflow).toContain('cron: "*/15 * * * *"');
+  expect(workflow).toContain('Detect recovery after a previous failed health check');
+  expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
+  expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
+  expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
+  expect(workflow).not.toContain('/api/email-alerts/subscribe');
+});
+
 test('wallet callback keeps its reference available for verification after sign-in', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const hub = readFileSync(new URL('../../src/PlatformHub.tsx', import.meta.url), 'utf8');
