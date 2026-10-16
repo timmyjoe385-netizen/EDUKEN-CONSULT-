@@ -324,17 +324,21 @@ test("customer wallet migration keeps balances server-controlled and operations 
   const { dirname, resolve } = await import("node:path");
   const here = dirname(fileURLToPath(import.meta.url));
   const migration = await readFile(resolve(here, "../supabase/migrations/20261016160000_customer_wallets.sql"), "utf8");
-  assert.match(migration, /create table if not exists public\\.customer_wallets/);
-  assert.match(migration, /create table if not exists public\\.wallet_transactions/);
-  assert.match(migration, /balance numeric\\(12,2\\) not null default 0 check \\(balance >= 0\\)/);
-  assert.match(migration, /constraint wallet_transactions_user_idempotency_unique unique \\(user_id, idempotency_key\\)/);
-  assert.match(migration, /create trigger auth_user_create_customer_wallet/);
-  assert.match(migration, /insert into public\\.customer_wallets \\(user_id\\)\\s*select id from auth\\.users/);
-  assert.match(migration, /create or replace function public\\.settle_customer_wallet_deposit/);
-  assert.match(migration, /create or replace function public\\.pay_service_from_customer_wallet/);
-  assert.match(migration, /for update/);
-  assert.match(migration, /revoke all on function public\\.settle_customer_wallet_deposit\\(uuid, text\\) from public, anon, authenticated/);
-  assert.match(migration, /grant execute on function public\\.pay_service_from_customer_wallet\\(uuid, uuid, text, text\\) to service_role/);
-  assert.match(migration, /payment_type in \\('service', 'wallet_deposit', 'wallet_service'\\)/);
-  assert.match(migration, /payments_payment_reference_unique/);
+  for (const required of [
+    "create table if not exists public.customer_wallets",
+    "create table if not exists public.wallet_transactions",
+    "balance numeric(12,2) not null default 0 check (balance >= 0)",
+    "constraint wallet_transactions_user_idempotency_unique unique (user_id, idempotency_key)",
+    "create trigger auth_user_create_customer_wallet",
+    "create or replace function public.settle_customer_wallet_deposit",
+    "create or replace function public.pay_service_from_customer_wallet",
+    "revoke all on function public.settle_customer_wallet_deposit(uuid, text) from public, anon, authenticated",
+    "grant execute on function public.pay_service_from_customer_wallet(uuid, uuid, text, text) to service_role",
+    "payment_type in ('service', 'wallet_deposit', 'wallet_service')",
+    "payments_payment_reference_unique",
+  ]) assert.ok(migration.includes(required), "wallet migration missing safeguard: " + required);
+  assert.ok(migration.includes("insert into public.customer_wallets (user_id)\nselect id from auth.users"), "existing users must receive zero-balance wallets");
+  assert.ok((migration.match(/for update/g) || []).length >= 3, "wallet operations must lock rows before changing balances");
+  assert.ok(migration.includes("alter table public.customer_wallets enable row level security"));
+  assert.ok(migration.includes("alter table public.wallet_transactions enable row level security"));
 });
