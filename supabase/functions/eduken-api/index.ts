@@ -1150,12 +1150,19 @@ Deno.serve(async (req) => {
       }
       const tokenHash = await sha256Hex(checkoutToken);
       const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,user_id,service_id,reference_number,email,quantity,checkout_token_hash,services(name,price,is_published,is_available)")
+        .select("id,user_id,service_id,reference_number,email,quantity,checkout_token_hash,services(name,price,is_published,is_available,is_catalog_item)")
         .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Checkout session is invalid or expired. Contact EDUKEN CONSULT with your request reference." }, 404);
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
-      const trustedAmount = Number(service?.price) * Number(request.quantity || 1);
+      const quantity = Number(request.quantity ?? 1);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+        return json({ error: "The saved service quantity is invalid. Please contact EDUKEN CONSULT.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      if (quantity > 1 && service?.is_catalog_item !== true) {
+        return json({ error: "Only catalogue services can be paid for multiple candidates.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      const trustedAmount = Number(service?.price) * quantity;
       if (!service || !service.is_published || service.is_available === false || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
         return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
       }
