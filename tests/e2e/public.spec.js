@@ -1441,7 +1441,7 @@ test('admin sign-in is not linked publicly and remains reachable directly at /ad
     }),
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('footer a[href="/admin"]')).toHaveCount(0);
+  await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
