@@ -1034,6 +1034,7 @@ Deno.serve(async (req) => {
       // Reject stale, deleted, or unpublished service selections before creating a request.
       // A null serviceId remains valid for general enquiries.
       let selectedServiceForRequest: any = null;
+      if (!serviceId && quantity !== 1) return json({ error: "A service must be selected when requesting multiple candidates." }, 400);
       if (serviceId) {
         const { data: service, error: serviceError } = await db
           .from("services")
