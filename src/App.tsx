@@ -2745,22 +2745,31 @@ function App() {
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
           <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. This form records a request only; no payment is taken here.</p></div>
+              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. Submit your details to send a service request. Payment checkout is not connected to this form yet.</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
             </div>
-            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
-              <input name="customerName" required maxLength={120} placeholder="Your full name" aria-label="Your full name" />
-              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
-              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+            <form className="service-request-form" onSubmit={submitServiceRequest}>
+              <label className="service-request-field" htmlFor="service-request-customer-name">
+                <span>Full name <b aria-hidden="true">*</b></span>
+                <input id="service-request-customer-name" name="customerName" required maxLength={120} autoComplete="name" placeholder="Enter your full name" />
+              </label>
+              <label className="service-request-field" htmlFor="service-request-whatsapp">
+                <span>WhatsApp number <b aria-hidden="true">*</b></span>
+                <input id="service-request-whatsapp" name="whatsapp" required maxLength={40} autoComplete="tel" inputMode="tel" placeholder="Enter your WhatsApp number" />
+              </label>
+              <label className="service-request-field" htmlFor="service-request-email">
+                <span>Email address <small>(optional)</small></span>
+                <input id="service-request-email" name="email" type="email" maxLength={200} autoComplete="email" placeholder="Enter your email address" />
+              </label>
               {isJambCatalogueService(selectedService) ? (
-                <label style={{ display: 'grid', gap: 6 }}>
-                  <span style={{ fontWeight: 600 }}>Number of candidates *</span>
+                <label className="service-request-field">
+                  <span>Number of candidates <b aria-hidden="true">*</b></span>
                   <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
                   <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
                 </label>
               ) : null}
               {jambServiceFieldsFor(selectedService).map(field => (
-                <label key={field.name} style={{ display: 'grid', gap: 6 }}>
+                <label key={field.name} className="service-request-field">
                   <span style={{ fontWeight: 600 }}>{field.label} *</span>
                   {field.options ? (
                     <select name={'serviceField_' + field.name} required defaultValue="" aria-label={field.label}>
@@ -2773,7 +2782,10 @@ function App() {
                 </label>
               ))}
               {selectedService.requirements ? <p style={{ margin: 0, fontSize: 13, whiteSpace: 'pre-line', color: '#526158' }}><b>Before you submit</b>{'\n'}{selectedService.requirements}</p> : null}
-              <textarea name="details" maxLength={4000} rows={4} placeholder="Additional notes (optional)" aria-label="Additional notes" required={!jambServiceFieldsFor(selectedService).length} />
+              <label className="service-request-field" htmlFor="service-request-details">
+                <span>Additional details <small>{jambServiceFieldsFor(selectedService).length ? "(optional)" : "(required)"}</small></span>
+                <textarea id="service-request-details" name="details" maxLength={4000} rows={4} placeholder="Tell us what you need help with…" aria-label="Additional details" required={!jambServiceFieldsFor(selectedService).length} />
+              </label>
               <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>
