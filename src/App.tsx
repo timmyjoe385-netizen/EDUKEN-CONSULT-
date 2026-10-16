@@ -2783,8 +2783,8 @@ function App() {
               ))}
               {selectedService.requirements ? <p style={{ margin: 0, fontSize: 13, whiteSpace: 'pre-line', color: '#526158' }}><b>Before you submit</b>{'\n'}{selectedService.requirements}</p> : null}
               <label className="service-request-field" htmlFor="service-request-details">
-                <span>Additional details <small>{jambServiceFieldsFor(selectedService).length ? "(optional)" : "(required)"}</small></span>
-                <textarea id="service-request-details" name="details" maxLength={4000} rows={4} placeholder="Tell us what you need help with…" aria-label="Additional details" required={!jambServiceFieldsFor(selectedService).length} />
+                <span>Additional notes <small>{jambServiceFieldsFor(selectedService).length ? "(optional)" : "(required)"}</small></span>
+                <textarea id="service-request-details" name="details" maxLength={4000} rows={4} placeholder="Tell us what you need help with…" required={!jambServiceFieldsFor(selectedService).length} />
               </label>
               <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
