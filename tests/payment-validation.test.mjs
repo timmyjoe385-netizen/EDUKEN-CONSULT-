@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   getNextPaymentStatus,
   getPaystackAuthorizationUrl,
+  getPaystackCallbackUrl,
   isFinalPaystackFailure,
   isSuccessfulPaystackTransaction,
   matchesStoredPaystackPayment,
@@ -99,4 +100,26 @@ test("Paystack checkout requires explicit test mode and a test secret key", () =
   assert.equal(isPaystackTestModeEnabled(undefined, "sk_test_0123456789abcdef"), false);
   assert.equal(isPaystackTestModeEnabled("test", undefined), false);
   assert.equal(isPaystackTestModeEnabled(" test ", "sk_test_0123456789abcdef"), true);
+});
+
+
+test("Paystack callback URL requires a clean HTTPS site origin and valid payment reference", () => {
+  const reference = "EDK-PAY-1234567890ABCDEF12";
+  assert.equal(
+    getPaystackCallbackUrl("https://eduken-consult.example/", reference),
+    "https://eduken-consult.example/make-payments?reference=EDK-PAY-1234567890ABCDEF12",
+  );
+  for (const siteUrl of [
+    undefined,
+    "",
+    "http://eduken-consult.example/",
+    "https://user:pass@eduken-consult.example/",
+    "https://eduken-consult.example/path",
+    "https://eduken-consult.example/?next=https://evil.example",
+    "https://eduken-consult.example/#fragment",
+    "not a URL",
+  ]) {
+    assert.equal(getPaystackCallbackUrl(siteUrl, reference), null, String(siteUrl));
+  }
+  assert.equal(getPaystackCallbackUrl("https://eduken-consult.example/", "invalid-reference"), null);
 });
