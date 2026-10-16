@@ -323,6 +323,7 @@ begin
 
   if found then
     select * into v_wallet from public.customer_wallets where user_id = v_payment.user_id;
+    if not found then raise exception 'WALLET_REFUND_WALLET_MISSING'; end if;
     return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', true, 'transaction_id', v_existing.id);
   end if;
   if v_payment.status <> 'Paid' then
