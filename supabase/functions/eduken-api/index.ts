@@ -510,6 +510,52 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
+async function sendWalletPaymentNotifications(
+  userId: string,
+  reference: string,
+  amount: number,
+  kind: "deposit" | "service_payment",
+) {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("EMAIL_FROM");
+  if (!apiKey || !from || !userId || !reference || !Number.isFinite(amount) || amount <= 0) {
+    console.error("Wallet payment notification could not be queued because required email configuration or payment data is unavailable.");
+    return;
+  }
+  const { data: authUser, error: userError } = await db.auth.admin.getUserById(userId);
+  if (userError || !authUser?.user?.email) {
+    console.error("Wallet payment notification could not resolve the customer email.");
+    return;
+  }
+  const isDeposit = kind === "deposit";
+  const amountText = "₦" + amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const customerSubject = isDeposit ? "EDUKEN wallet deposit confirmed" : "EDUKEN service payment confirmed";
+  const adminSubject = isDeposit ? "EDUKEN wallet deposit received" : "EDUKEN wallet service payment";
+  const customerText = isDeposit
+    ? "Your EDUKEN wallet deposit of " + amountText + " has been verified and credited. Reference: " + reference + ". Sign in to view your updated balance and transaction history."
+    : "Your EDUKEN wallet payment of " + amountText + " has been confirmed. Reference: " + reference + ". Sign in to view your transaction history.";
+  const adminText = (isDeposit ? "A customer wallet deposit was verified." : "A customer paid for an EDUKEN service from their wallet.")
+    + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account ID: " + userId;
+  const config = { apiKey, from };
+  const messages = [
+    { role: "customer", to: authUser.user.email, subject: customerSubject, text: customerText },
+    ...Array.from(ADMIN_EMAILS).map(to => ({ role: "admin", to, subject: adminSubject, text: adminText })),
+  ];
+  for (const message of messages) {
+    try {
+      const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
+      await sendEmailAlertMessage(
+        config, message.to, message.subject, message.text, html,
+        "eduken-wallet-" + reference + "-" + message.role,
+      );
+    } catch (error) {
+      // Never roll back a verified payment because email is unavailable. The stable
+      // provider idempotency key prevents duplicate sends when the flow is retried.
+      console.error("Wallet payment notification delivery failed.", error instanceof Error ? error.message : "Unknown email error.");
+    }
+  }
+}
+
 async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify" | "wallet-deposit-initialize" | "wallet-deposit-verify") {
   const ip = getEmailAlertClientIp(req.headers);
   if (!ip) return null;
@@ -564,6 +610,7 @@ Deno.serve(async (req) => {
           p_reference: reference,
         });
         if (walletSettlementError) throw walletSettlementError;
+        await sendWalletPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
@@ -1272,6 +1319,7 @@ Deno.serve(async (req) => {
       if (payment.status === "Paid") {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
+        await sendWalletPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1292,6 +1340,7 @@ Deno.serve(async (req) => {
       if (paid) {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
+        await sendWalletPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
       }
       const nextStatus = getNextPaymentStatus(transaction);
@@ -1324,6 +1373,7 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_SERVICE_QUANTITY_INVALID")) return json({ error: "The saved service quantity is invalid for wallet payment.", code: "WALLET_SERVICE_QUANTITY_INVALID" }, 409);
         throw error;
       }
+      await sendWalletPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
       return json({ paid: true, wallet: result });
     }
 
