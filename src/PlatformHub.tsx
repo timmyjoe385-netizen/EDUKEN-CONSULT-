@@ -175,7 +175,16 @@ export default function PlatformHub({
   };
 
   const refresh = async () => {
-    if (!auth.isSignedIn()) return;
+    if (!auth.isSignedIn()) {
+      setUser(null);
+      setSaved([]);
+      setTracker([]);
+      setAlerts([]);
+      setTopics([]);
+      setWallet(null);
+      setWalletTransactions([]);
+      return;
+    }
     try {
       const [me, saves, apps, notices, topicData] = await Promise.all([
         api.get('/api/me'),
@@ -199,7 +208,7 @@ export default function PlatformHub({
   useEffect(() => {
     void refresh();
     const onAuthChanged = () => { void refresh(); void refreshWallet(); };
-    const onWalletUpdated = () => { void refreshWallet(); };
+    const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
     const unsubscribe = auth.isSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
@@ -562,9 +571,10 @@ export default function PlatformHub({
             <form className="service-request-form" onSubmit={startWalletDeposit}>
               <label className="service-request-field" htmlFor="wallet-deposit-amount">
                 <span>Add funds (NGN)</span>
-                <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
+                <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required disabled={walletAction || Boolean(walletDepositKey)} value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
               </label>
               <p className="make-payments-security">Deposits are credited only after EDUKEN verifies successful payment with Paystack. Do not share your card PIN or banking password.</p>
+              {walletDepositKey ? <small>Keep this deposit attempt unchanged until checkout is confirmed. If initialization is uncertain, contact support before starting another deposit.</small> : null}
               {walletMessage ? <p className="make-payments-message" role="status" aria-live="polite">{walletMessage}</p> : null}
               <button className="primary" type="submit" disabled={walletAction}>{walletAction ? 'Preparing deposit…' : 'Add funds with Paystack'}</button>
             </form>
