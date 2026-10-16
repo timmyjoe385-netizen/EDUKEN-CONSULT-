@@ -1819,6 +1819,40 @@ Deno.serve(async (req) => {
       }
     }
 
+    if (path === "/api/admin/system-health" && req.method === "GET") {
+      await requireAdmin(req);
+      const checkedAt = new Date().toISOString();
+      const check = async (name: string, run: () => Promise<boolean>, detail: string) => {
+        try {
+          const ok = await run();
+          return { name, status: ok ? "operational" : "degraded", checkedAt, detail: ok ? "Check passed." : detail };
+        } catch {
+          return { name, status: "down", checkedAt, detail };
+        }
+      };
+      const checks = await Promise.all([
+        check("Public website", async () => {
+          const response = await fetch("https://eduken-consult.timmyjoe385.workers.dev/", { signal: AbortSignal.timeout(8000) });
+          return response.ok && /EDUKEN/i.test(await response.text());
+        }, "Website did not return a healthy EDUKEN page."),
+        check("Database and API", async () => {
+          const { error } = await db.from("opportunities").select("id").limit(1);
+          return !error;
+        }, "Database/API query failed."),
+        check("Authentication service", async () => {
+          const response = await fetch(url + "/auth/v1/health", { headers: { apikey: secretKeys.default }, signal: AbortSignal.timeout(8000) });
+          return response.ok;
+        }, "Authentication health endpoint did not return success."),
+        check("Email alert configuration", async () => Boolean(Deno.env.get("RESEND_API_KEY") && Deno.env.get("EMAIL_FROM")), "Transactional email configuration is incomplete. This checks configuration, not inbox delivery."),
+        check("Payment safety configuration", async () => {
+          const mode = Deno.env.get("PAYSTACK_MODE");
+          const secret = Deno.env.get("PAYSTACK_SECRET_KEY") || "";
+          return mode === "test" && secret.startsWith("sk_test_");
+        }, "Paystack is not configured in test-only mode. No payment was initiated."),
+      ]);
+      return json({ checkedAt, checks });
+    }
+
     if (path === "/api/admin/session" && req.method === "GET") {
       await requireAdmin(req);
       return json({ admin: true });
