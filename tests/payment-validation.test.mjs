@@ -8,6 +8,7 @@ import {
   matchesStoredPaystackPayment,
   normalizePaystackStatus,
   isValidPaystackWebhookSignature,
+  isPaystackTestModeEnabled,
 } from "../supabase/functions/eduken-api/payment-validation.mjs";
 
 test("normalizes provider statuses safely", () => {
@@ -88,4 +89,14 @@ test("Paystack webhook signatures are HMAC-SHA512 verified against the exact bod
   assert.equal(await isValidPaystackWebhookSignature(body + " ", signature, secret), false);
   assert.equal(await isValidPaystackWebhookSignature(body, signature, "wrong-secret"), false);
   assert.equal(await isValidPaystackWebhookSignature(body, "bad-signature", secret), false);
+});
+
+
+test("Paystack checkout requires explicit test mode and a test secret key", () => {
+  assert.equal(isPaystackTestModeEnabled("test", "sk_test_0123456789abcdef"), true);
+  assert.equal(isPaystackTestModeEnabled("live", "sk_test_0123456789abcdef"), false);
+  assert.equal(isPaystackTestModeEnabled("test", "sk_live_0123456789abcdef"), false);
+  assert.equal(isPaystackTestModeEnabled(undefined, "sk_test_0123456789abcdef"), false);
+  assert.equal(isPaystackTestModeEnabled("test", undefined), false);
+  assert.equal(isPaystackTestModeEnabled(" test ", "sk_test_0123456789abcdef"), true);
 });
