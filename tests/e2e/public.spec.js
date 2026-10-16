@@ -796,12 +796,12 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public header exposes customer sign-in but keeps admin access out of public navigation', async ({ page }) => {
+test('public header does not expose sign-in or admin access', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
-  // Customers can sign in, but the admin route is not linked publicly.
+  // Keep public navigation focused on EDUKEN content; account sign-in remains contextual.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible();
+  await expect(page.locator('.header-sign-in')).toHaveCount(0);
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
