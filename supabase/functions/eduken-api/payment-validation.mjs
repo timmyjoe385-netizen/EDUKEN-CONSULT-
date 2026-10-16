@@ -68,3 +68,12 @@ export async function isValidPaystackWebhookSignature(rawBody, signature, secret
   }
   return difference === 0;
 }
+
+
+// Payment initialization must be explicitly enabled for test mode. Never infer mode from a key alone.
+export function isPaystackTestModeEnabled(mode, secretKey) {
+  return typeof mode === "string"
+    && mode.trim().toLowerCase() === "test"
+    && typeof secretKey === "string"
+    && /^sk_test_[A-Za-z0-9]+$/.test(secretKey.trim());
+}
