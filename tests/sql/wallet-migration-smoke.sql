@@ -16,6 +16,23 @@ begin
     raise exception 'EXISTING_USER_WALLET_BACKFILL_FAILED';
   end if;
 
+  if not has_table_privilege('service_role', 'public.customer_wallets', 'SELECT')
+     or not has_table_privilege('service_role', 'public.wallet_transactions', 'SELECT') then
+    raise exception 'WALLET_SERVER_READ_PRIVILEGES_MISSING';
+  end if;
+  if has_table_privilege('service_role', 'public.customer_wallets', 'INSERT')
+     or has_table_privilege('service_role', 'public.customer_wallets', 'UPDATE')
+     or has_table_privilege('service_role', 'public.customer_wallets', 'DELETE')
+     or has_table_privilege('service_role', 'public.wallet_transactions', 'INSERT')
+     or has_table_privilege('service_role', 'public.wallet_transactions', 'UPDATE')
+     or has_table_privilege('service_role', 'public.wallet_transactions', 'DELETE')
+     or has_table_privilege('anon', 'public.customer_wallets', 'SELECT')
+     or has_table_privilege('anon', 'public.wallet_transactions', 'SELECT')
+     or has_table_privilege('authenticated', 'public.customer_wallets', 'SELECT')
+     or has_table_privilege('authenticated', 'public.wallet_transactions', 'SELECT') then
+    raise exception 'WALLET_TABLE_PRIVILEGES_TOO_BROAD';
+  end if;
+
   insert into auth.users (id, email) values (v_new_user, 'new-customer@example.test');
   if not exists (select 1 from public.customer_wallets where user_id = v_new_user and balance = 0) then
     raise exception 'NEW_USER_WALLET_TRIGGER_FAILED';
