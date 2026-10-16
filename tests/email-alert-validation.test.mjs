@@ -341,4 +341,29 @@ test("customer wallet migration keeps balances server-controlled and operations 
   assert.ok((migration.match(/for update/g) || []).length >= 3, "wallet operations must lock rows before changing balances");
   assert.ok(migration.includes("alter table public.customer_wallets enable row level security"));
   assert.ok(migration.includes("alter table public.wallet_transactions enable row level security"));
+  assert.ok(migration.includes("create or replace function public.refund_customer_wallet_service_payment"));
+  assert.ok(migration.includes("grant execute on function public.refund_customer_wallet_service_payment(uuid, text) to service_role"));
+});
+
+test("wallet API requires authenticated, rate-limited, verified payment paths", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const api = await readFile(resolve(here, "../supabase/functions/eduken-api/index.ts"), "utf8");
+  for (const required of [
+    'path === "/api/wallet"',
+    'path === "/api/wallet/deposit/initialize"',
+    'path === "/api/wallet/deposit/verify"',
+    'path === "/api/wallet/pay-service"',
+    'path === "/api/admin/wallet/refund"',
+    'consumeEmailAlertRateLimit(req, "wallet-deposit-initialize")',
+    'consumeEmailAlertRateLimit(req, "wallet-deposit-verify")',
+    'settle_customer_wallet_deposit',
+    'pay_service_from_customer_wallet',
+    'refund_customer_wallet_service_payment',
+    'sendWalletPaymentNotifications',
+    'eduken-wallet-" + reference + "-" + kind + "-" + message.role',
+  ]) assert.ok(api.includes(required), "wallet API missing safeguard: " + required);
+  assert.ok(api.includes('isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)'), "wallet deposits must remain test-mode guarded");
 });
