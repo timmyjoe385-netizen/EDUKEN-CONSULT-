@@ -1197,6 +1197,13 @@ Deno.serve(async (req) => {
       }
       const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || !authorizationUrl) {
+        // A provider 5xx or malformed 2xx response is ambiguous: Paystack may have
+        // created the transaction even though we cannot safely issue its checkout URL.
+        // Keep the reference Pending so verification/webhook reconciliation can resolve it.
+        if (paystack.status >= 500 || (paystack.ok && !authorizationUrl)) {
+          return json({ error: "Payment initialization could not be confirmed. Check payment status before trying again.", reference, code: "PAYMENT_INITIALIZATION_UNCONFIRMED" }, 502);
+        }
+        // A non-5xx HTTP rejection is a definitive initialization failure.
         const { error: updateError } = await db.from("payments").update({ status: "Failed" }).eq("id", payment.id).eq("status", "Pending");
         if (updateError) throw updateError;
         return json({ error: "Unable to initialize payment. No checkout link was issued.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
