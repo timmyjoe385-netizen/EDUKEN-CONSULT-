@@ -3,7 +3,7 @@ import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -534,7 +534,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/payments/webhook" && req.method === "POST") {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured." }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const signature = req.headers.get("x-paystack-signature") || "";
       const rawBody = await req.text();
       if (!await isValidPaystackWebhookSignature(rawBody, signature, secret)) {
@@ -1178,7 +1178,7 @@ Deno.serve(async (req) => {
         return json({ error: "A payment attempt already exists for this request. Please contact EDUKEN CONSULT with your request reference before trying again.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet. Contact EDUKEN CONSULT; no payment has been taken.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
       const callbackUrl = "https://eduken-consult.timmyjoe385.workers.dev/make-payments?reference=" + encodeURIComponent(reference);
       const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
@@ -1236,7 +1236,7 @@ Deno.serve(async (req) => {
         return json({ error: "The service price has changed. Refresh and try again." }, 409);
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
       const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
         method: "POST",
@@ -1281,7 +1281,7 @@ Deno.serve(async (req) => {
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
       });
@@ -1318,7 +1318,7 @@ Deno.serve(async (req) => {
       const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
       if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
         .select("id,amount,currency,status,service_request_id,payment_reference")
         .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
