@@ -288,7 +288,7 @@ test("Paystack webhook verifies the HMAC-SHA512 signature before parsing or touc
   const payloadParse = webhook.indexOf('JSON.parse(rawBody)');
   const paymentLookup = webhook.indexOf('db.from("payments")');
   assert.notEqual(signatureRead, -1);
-  assert.match(webhook, /!\/[\^]?[a-f0-9\]\{128\}/i);
+  assert.ok(webhook.includes("if (!/^[a-f0-9]{128}$/i.test(supplied))"), "reject malformed signature values");
   assert.match(webhook, /hash: "SHA-512"/);
   assert.ok(signatureRead < signatureCheck, "read the supplied signature before verifying it");
   assert.ok(signatureCheck < payloadParse, "reject forged payloads before parsing event data");
