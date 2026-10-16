@@ -70,6 +70,26 @@ export async function isValidPaystackWebhookSignature(rawBody, signature, secret
 }
 
 
+// Payment callback URLs must use a configured, clean HTTPS site origin.
+export function getPaystackCallbackUrl(siteUrl, reference) {
+  if (typeof reference !== "string" || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return null;
+  if (typeof siteUrl !== "string" || !siteUrl.trim()) return null;
+  try {
+    const parsed = new URL(siteUrl.trim());
+    if (
+      parsed.protocol !== "https:"
+      || parsed.username
+      || parsed.password
+      || parsed.pathname !== "/"
+      || parsed.search
+      || parsed.hash
+    ) return null;
+    return new URL("/make-payments?reference=" + encodeURIComponent(reference), parsed.origin).toString();
+  } catch {
+    return null;
+  }
+}
+
 // Payment initialization must be explicitly enabled for test mode. Never infer mode from a key alone.
 export function isPaystackTestModeEnabled(mode, secretKey) {
   return typeof mode === "string"
