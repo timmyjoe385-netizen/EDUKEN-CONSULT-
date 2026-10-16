@@ -170,3 +170,19 @@ test("Paystack webhook does not mark a service request Paid unless stored paymen
   assert.match(webhook, /if \(!paymentConfirmedPaid\) \{[\s\S]*?return json\(\{ error: "Payment status could not be confirmed\./);
   assert.match(webhook, /if \(paymentConfirmedPaid && payment\.service_request_id\)/);
 });
+
+
+test("paid service email is validated before a service request is saved", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
+  const start = source.indexOf("const hasOnlinePrice =");
+  const end = source.indexOf("const submitEmailAlerts", start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const handler = source.slice(start, end);
+  const emailGuard = handler.indexOf("if (hasOnlinePrice && !email)");
+  const saveRequest = handler.indexOf("api.post('/api/service-requests'");
+  assert.notEqual(emailGuard, -1, "paid checkout must reject a missing email");
+  assert.notEqual(saveRequest, -1, "service request submission must exist");
+  assert.ok(emailGuard < saveRequest, "validate email before saving to avoid orphaned requests");
+});
