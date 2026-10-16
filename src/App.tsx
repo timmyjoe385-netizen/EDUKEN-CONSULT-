@@ -909,6 +909,10 @@ function App() {
           }
           await api.put('/api/admin/content/services/' + encodeURIComponent(match.id), {
             ...templateData,
+            // Preserve existing admin-set prices and availability when converting a
+            // legacy service row; catalogue setup must never silently reprice or enable it.
+            price: Object.prototype.hasOwnProperty.call(match, 'price') ? match.price : templateData.price,
+            is_available: Object.prototype.hasOwnProperty.call(match, 'is_available') ? match.is_available : templateData.is_available,
             is_published: true,
             status: 'PUBLISHED',
           });
