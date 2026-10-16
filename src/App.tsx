@@ -1355,9 +1355,7 @@ function App() {
             ))}
             <button
               onClick={() => {
-                window.history.pushState({}, document.title, '/');
-                setLoginOpen(false);
-                setAdminView(false);
+                window.location.assign('/');
               }}
             >
               ← Public site
