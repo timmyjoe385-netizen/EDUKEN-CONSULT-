@@ -168,6 +168,48 @@ test('malformed admission deep links do not crash public page rendering', async 
   expect(pageErrors, 'malformed URL fragments must not throw during hash parsing').toEqual([]);
 });
 
+test('JAMB catalogue setup warning waits for a successful content load', async ({ page }) => {
+  let markRequestStarted;
+  const requestStarted = new Promise(resolve => { markRequestStarted = resolve; });
+  let releaseResponse;
+  const delayedResponse = new Promise(resolve => { releaseResponse = resolve; });
+
+  await page.route('**/functions/v1/eduken-api/public-content', async route => {
+    markRequestStarted();
+    await delayedResponse;
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    });
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await requestStarted;
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+
+  releaseResponse();
+  await expect(page.locator('.jamb-catalogue-empty')).toContainText(
+    'The JAMB catalogue has not been set up yet.',
+  );
+});
+
+test('failed public-content load does not falsely report an unconfigured JAMB catalogue', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: 'temporary test failure' }) }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+  await expect(page.getByText('Unable to load live content. Please refresh.')).toBeVisible();
+});
+
 test('service request dialog validates required fields without sending a request', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
@@ -638,8 +680,12 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public navigation exposes Admin Login and private /admin keeps the OAuth return path', async ({ page }) => {
+test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+
+  // Public navigation must not advertise the admin route.
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
   await page.route(authorizeEndpoint + '**', route =>
@@ -650,10 +696,8 @@ test('public navigation exposes Admin Login and private /admin keeps the OAuth r
     }),
   );
 
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const adminLogin = page.getByRole('link', { name: 'Admin Login' });
-  await expect(adminLogin).toBeVisible();
-  await adminLogin.click();
+  // Direct access to the admin sign-in route remains available.
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL(/\/admin\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
 
