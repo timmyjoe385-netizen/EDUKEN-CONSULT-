@@ -1041,7 +1041,7 @@ Deno.serve(async (req) => {
           .eq("id", serviceId)
           .maybeSingle();
         if (serviceError) throw serviceError;
-        if (!isPublishedService(service)) {
+        if (!service || !isPublishedService(service)) {
           return json({ error: "Please choose an available published service." }, 400);
         }
         if (quantity > 1 && service.is_catalog_item !== true) {
