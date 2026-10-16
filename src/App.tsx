@@ -419,6 +419,9 @@ function App() {
           if (result.data?.paid) {
             setPaymentMessage('Wallet funded successfully. Your updated balance is available in your EDUKEN Wallet.');
             window.dispatchEvent(new Event('eduken-wallet-updated'));
+          } else if (result.data?.status === 'Failed') {
+            setPaymentMessage('Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt from your wallet.');
+            window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else {
             setPaymentMessage('The deposit is not confirmed yet. Do not pay again immediately; open your wallet and check the transaction status.');
           }
