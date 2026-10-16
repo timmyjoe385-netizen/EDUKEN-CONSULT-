@@ -1169,7 +1169,7 @@ Deno.serve(async (req) => {
         return json({ error: "Payment gateway is not configured for the selected mode.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
       }
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
-      const callbackBase = Deno.env.get("PAYSTACK_CALLBACK_URL") || "https://eduken-consult.workers.dev/";
+      const callbackBase = Deno.env.get("PAYSTACK_CALLBACK_URL") || "https://eduken-consult.timmyjoe385.workers.dev/";
       const callbackUrl = new URL(callbackBase);
       callbackUrl.searchParams.set("payment_reference", reference);
       // Persist the reference before contacting Paystack so every provider transaction
