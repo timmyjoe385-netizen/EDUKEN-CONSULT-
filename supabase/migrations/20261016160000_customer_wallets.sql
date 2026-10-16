@@ -13,7 +13,6 @@ alter table public.payments
   check (payment_type in ('service', 'wallet_deposit', 'wallet_service'));
 
 -- The existing payments_payment_reference_key constraint already enforces unique references.
-
 create unique index if not exists payments_user_idempotency_key_unique
   on public.payments (user_id, idempotency_key)
   where idempotency_key is not null;
@@ -60,14 +59,14 @@ returns trigger
 language plpgsql
 security definer
 set search_path = ''
-as $$
+as $fn$
 begin
   insert into public.customer_wallets (user_id)
   values (new.id)
   on conflict (user_id) do nothing;
   return new;
 end;
-$$;
+$fn$;
 
 revoke all on function public.create_customer_wallet_for_new_user() from public, anon, authenticated;
 drop trigger if exists auth_user_create_customer_wallet on auth.users;
@@ -88,7 +87,7 @@ returns jsonb
 language plpgsql
 security definer
 set search_path = ''
-as $$
+as $fn$
 declare
   v_payment public.payments%rowtype;
   v_wallet public.customer_wallets%rowtype;
@@ -154,7 +153,7 @@ begin
 
   return jsonb_build_object('paid', true, 'balance', v_wallet.balance, 'reused', false);
 end;
-$$;
+$fn$;
 
 create or replace function public.pay_service_from_customer_wallet(
   p_user_id uuid,
@@ -166,7 +165,7 @@ returns jsonb
 language plpgsql
 security definer
 set search_path = ''
-as $$
+as $fn$
 declare
   v_request public.service_requests%rowtype;
   v_service public.services%rowtype;
@@ -181,7 +180,7 @@ begin
      or length(p_idempotency_key) < 8
      or length(p_idempotency_key) > 200
      or p_payment_reference is null
-     or p_payment_reference !~ '^EDK-WAL-[A-Z0-9]{18}
+     or p_payment_reference !~ '^EDK-WAL-[A-Z0-9]{18}$' then
     raise exception 'WALLET_PAYMENT_INVALID';
   end if;
 
@@ -192,7 +191,8 @@ begin
   if found then
     select balance into v_amount from public.customer_wallets where user_id = p_user_id;
     return jsonb_build_object(
-      'paid', true, 'balance', v_amount, 'reused', true, 'transaction_id', v_existing.id,
+      'paid', true, 'balance', v_amount, 'reused', true,
+      'transaction_id', v_existing.id,
       'payment_reference', (select payment_reference from public.payments where id = v_existing.payment_id),
       'amount', v_existing.amount
     );
@@ -206,9 +206,10 @@ begin
   if not found or v_request.service_id is null then
     raise exception 'WALLET_SERVICE_REQUEST_NOT_FOUND';
   end if;
+
   if v_request.status = 'Paid' then
     -- A concurrent retry may have waited for the first wallet payment to commit.
-    -- Return that committed result instead of reporting a false failure or debiting again.
+    -- Return that committed result instead of debiting again.
     select * into v_existing
     from public.wallet_transactions
     where user_id = p_user_id and idempotency_key = p_idempotency_key;
@@ -285,7 +286,11 @@ begin
   return jsonb_build_object(
     'paid', true, 'balance', v_wallet.balance, 'reused', false,
     'transaction_id', v_existing.id, 'payment_reference', p_payment_reference,
-    'amou
+    'amount', v_amount
+  );
+end;
+$fn$;
+
 create or replace function public.refund_customer_wallet_service_payment(
   p_payment_id uuid,
   p_reason text
@@ -294,7 +299,7 @@ returns jsonb
 language plpgsql
 security definer
 set search_path = ''
-as $wallet$
+as $fn$
 declare
   v_payment public.payments%rowtype;
   v_wallet public.customer_wallets%rowtype;
@@ -352,7 +357,7 @@ begin
 
   return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', false, 'transaction_id', v_existing.id);
 end;
-$wallet$;
+$fn$;
 
 revoke all on function public.create_customer_wallet_for_new_user() from public, anon, authenticated;
 revoke all on function public.settle_customer_wallet_deposit(uuid, text) from public, anon, authenticated;
