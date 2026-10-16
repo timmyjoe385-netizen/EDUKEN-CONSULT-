@@ -1,4 +1,4 @@
--- Integration smoke test for wallet creation, deposit idempotency, atomic spending, and refunds.
+-- Integration smoke test for wallet creation, deposit idempotency, atomic spending, refunds, and FK indexes.
 do $test$
 declare
   v_user uuid := '11111111-1111-4111-8111-111111111111';
@@ -12,6 +12,13 @@ declare
   v_count integer;
   v_result jsonb;
 begin
+  if to_regclass('public.service_requests_service_id_idx') is null
+     or to_regclass('public.service_requests_user_id_idx') is null
+     or to_regclass('public.wallet_transactions_service_request_id_idx') is null
+     or to_regclass('public.wallet_transactions_wallet_id_idx') is null then
+    raise exception 'WALLET_FOREIGN_KEY_INDEXES_MISSING';
+  end if;
+
   if not exists (select 1 from public.customer_wallets where user_id = v_user and balance = 0) then
     raise exception 'EXISTING_USER_WALLET_BACKFILL_FAILED';
   end if;
