@@ -8,7 +8,7 @@ In Supabase Dashboard → Edge Functions → Secrets (or the project secrets are
 
 - `PAYSTACK_MODE=test`
 - `PAYSTACK_SECRET_KEY` = the **Test Secret Key** from Paystack Dashboard → Settings / API Keys & Webhooks while Test Mode is selected.
-- Optional: `PAYSTACK_CALLBACK_URL=https://eduken-consult.workers.dev/`
+- Optional: `PAYSTACK_CALLBACK_URL=https://eduken-consult.timmyjoe385.workers.dev/`
 
 Never place a Paystack secret key in frontend code, GitHub files, a public environment variable, WhatsApp, or this chat. The API deliberately rejects a live key while `PAYSTACK_MODE=test`.
 
