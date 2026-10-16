@@ -1150,10 +1150,13 @@ Deno.serve(async (req) => {
       }
       const tokenHash = await sha256Hex(checkoutToken);
       const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,user_id,service_id,reference_number,email,quantity,checkout_token_hash,services(name,price,is_published,is_available,is_catalog_item)")
+        .select("id,user_id,service_id,reference_number,email,status,quantity,checkout_token_hash,services(name,price,is_published,is_available,is_catalog_item)")
         .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Checkout session is invalid or expired. Contact EDUKEN CONSULT with your request reference." }, 404);
+      if (request.status === "Paid") {
+        return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      }
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
       const quantity = Number(request.quantity ?? 1);
       if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
