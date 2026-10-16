@@ -341,9 +341,9 @@ test("customer wallet migration keeps balances server-controlled and operations 
   assert.ok((migration.match(/for update/g) || []).length >= 3, "wallet operations must lock rows before changing balances");
   assert.ok(migration.includes("alter table public.customer_wallets enable row level security"));
   assert.ok(migration.includes("alter table public.wallet_transactions enable row level security"));
-  assert.equal((migration.match(/as \\$fn\\$/g) || []).length, 4, "all four PL/pgSQL functions must open a tagged dollar quote");
-  assert.equal((migration.match(/\\n\\$fn\\$;/g) || []).length, 4, "all four PL/pgSQL functions must close their dollar quote");
-  assert.doesNotMatch(migration, /as \\$\\ndeclare/, "single-dollar PL/pgSQL delimiters are invalid");
+  assert.equal(migration.split("as $fn$").length - 1, 4, "all four PL/pgSQL functions must open a tagged dollar quote");
+  assert.equal(migration.split("$fn$;").length - 1, 4, "all four PL/pgSQL functions must close their dollar quote");
+  assert.equal(migration.includes("as $" + "\\n" + "declare"), false, "single-dollar PL/pgSQL delimiters are invalid");
   assert.ok(migration.includes("create or replace function public.refund_customer_wallet_service_payment"));
   assert.ok(migration.includes("grant execute on function public.refund_customer_wallet_service_payment(uuid, text) to service_role"));
 });
