@@ -3,7 +3,7 @@ import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -531,6 +531,51 @@ Deno.serve(async (req) => {
   const path = pathOf(req);
   try {
     if (req.method === "GET" && path === "/health") return json({ ok: true, service: "EDUKEN CONSULT API", version: 4 });
+
+    if (path === "/api/payments/webhook" && req.method === "POST") {
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!secret) return json({ error: "Payment gateway is not configured." }, 503);
+      const signature = req.headers.get("x-paystack-signature") || "";
+      const rawBody = await req.text();
+      if (!await isValidPaystackWebhookSignature(rawBody, signature, secret)) {
+        return json({ error: "Invalid payment provider signature." }, 401);
+      }
+      let event: any;
+      try { event = JSON.parse(rawBody); } catch { return json({ error: "Invalid webhook payload." }, 400); }
+      if (event?.event !== "charge.success") return json({ ok: true, ignored: true });
+      const transaction = event?.data;
+      const reference = typeof transaction?.reference === "string" ? transaction.reference : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference) || !isSuccessfulPaystackTransaction(transaction)) {
+        return json({ error: "Invalid successful payment event." }, 400);
+      }
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference")
+        .eq("payment_reference", reference).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment) return json({ ok: true, ignored: true });
+      if (!matchesStoredPaystackPayment(transaction, {
+        amount: existingPayment.amount, currency: existingPayment.currency, reference,
+      })) {
+        return json({ error: "Provider payment details do not match the stored payment." }, 409);
+      }
+      if (existingPayment.status === "Paid") return json({ ok: true, paid: true });
+      const { data: payment, error: updateError } = await db.from("payments").update({
+        status: "Paid", paid_at: new Date().toISOString(),
+      }).eq("id", existingPayment.id).in("status", ["Pending", "Failed"]).select("id,status,service_request_id").maybeSingle();
+      if (updateError) throw updateError;
+      if (!payment) {
+        const { data: currentPayment, error: currentError } = await db.from("payments")
+          .select("status,service_request_id").eq("id", existingPayment.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently." }, 409);
+      }
+      if (existingPayment.service_request_id) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", existingPayment.service_request_id);
+        if (requestUpdateError) throw requestUpdateError;
+      }
+      return json({ ok: true, paid: true });
+    }
 
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
