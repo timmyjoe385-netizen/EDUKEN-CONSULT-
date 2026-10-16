@@ -188,5 +188,5 @@ jobs:
             ${{ github.event.inputs.test_email == 'true' && 'This is a test email to verify that EDUKEN CONSULT health alert delivery is configured correctly.' || 'An automated live health check for EDUKEN CONSULT has failed.' }}
 
             The check covers the live homepage, public content API, AI endpoint routing, and analytics API routing/access-protection. A manual Ask EDUKEN smoke test is available and uses AI resources.
-            Please open this run to see the failed step and logs:
+            ${{ github.event.inputs.test_email == 'true' && 'This is a test run; no failed step is implied. Open this run to review the completed checks and logs:' || 'Please open this run to see the failed step and logs:' }}
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
