@@ -957,6 +957,11 @@ function App() {
     const quantity = isJambCatalogueService(selectedService)
       ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))
       : 1;
+    // Validate checkout requirements before creating a service request, avoiding orphan/duplicate requests.
+    if (hasOnlinePrice && !email) {
+      showToast('Please enter your email address before submitting this paid service request.');
+      return;
+    }
     setServiceSubmitting(true);
     let savedReference = '';
     try {
@@ -976,7 +981,6 @@ function App() {
       });
       savedReference = String(result.data.referenceNumber || 'saved');
       if (hasOnlinePrice) {
-        if (!email) throw new Error('Your request was saved (' + savedReference + '), but checkout needs an email address. Please submit again with your email.');
         const payment = await api.post('/api/payments/initialize', {
           serviceRequestId: result.data.request.id,
           email,
