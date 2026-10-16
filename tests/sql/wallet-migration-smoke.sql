@@ -80,5 +80,8 @@ begin
   if (select status from public.payments where id = v_wallet_payment_id) <> 'Refunded' then
     raise exception 'WALLET_REFUND_STATUS_NOT_RECORDED';
   end if;
+  if (select status from public.service_requests where id = v_request) <> 'Cancelled' then
+    raise exception 'WALLET_REFUND_SERVICE_REQUEST_NOT_CANCELLED';
+  end if;
 end;
 $test$;
