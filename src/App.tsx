@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
 import PaymentsAdmin from './PaymentsAdmin';
-import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService } from './lib/jamb-service-catalogue.mjs';
+import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
@@ -306,7 +306,7 @@ function App() {
         })),
         services: (live.services || []).map((item: Item) => ({
           ...item,
-          is_available: item.is_available === undefined ? true : normalizeFlag(item.is_available),
+          is_available: item.is_available === undefined ? jambServiceDefaultAvailability(item) : normalizeFlag(item.is_available),
           is_catalog_item: normalizeFlag(item.is_catalog_item),
           status: normalizePublished(item) ? 'PUBLISHED' : 'DRAFT',
         })),
