@@ -1888,9 +1888,6 @@ function App() {
               Install App
             </button>
           )}
-          <a className="nav-cta" href="/admin" onClick={() => setMenu(false)}>
-            Admin Login
-          </a>
           <a className="nav-cta" href={WA} target="_blank" rel="noreferrer">
             Get Consultation <ArrowRight size={16} />
           </a>
