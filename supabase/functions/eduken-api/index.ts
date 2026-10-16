@@ -1030,30 +1030,33 @@ Deno.serve(async (req) => {
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateServiceRequestBody(b);
       if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
-      const { customerName, whatsapp, details, email, serviceId } = validation.data;
+      const { customerName, whatsapp, details, email, serviceId, quantity } = validation.data;
       // Reject stale, deleted, or unpublished service selections before creating a request.
       // A null serviceId remains valid for general enquiries.
       let selectedServiceForRequest: any = null;
       if (serviceId) {
         const { data: service, error: serviceError } = await db
           .from("services")
-          .select("id,is_published,is_available,price,name")
+          .select("id,is_published,is_available,price,name,is_catalog_item")
           .eq("id", serviceId)
           .maybeSingle();
         if (serviceError) throw serviceError;
         if (!isPublishedService(service)) {
           return json({ error: "Please choose an available published service." }, 400);
         }
+        if (quantity > 1 && service.is_catalog_item !== true) {
+          return json({ error: "Only catalogue services can be requested for multiple candidates." }, 400);
+        }
         selectedServiceForRequest = service;
       }
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
-      const onlinePrice = Number(selectedServiceForRequest?.price);
+      const onlinePrice = Number(selectedServiceForRequest?.price) * quantity;
       const checkoutToken = selectedServiceForRequest && Number.isFinite(onlinePrice) && onlinePrice > 0 ? secureRandomToken() : null;
       const checkoutTokenHash = checkoutToken ? await sha256Hex(checkoutToken) : null;
       const { data, error } = await db.from("service_requests").insert({
         user_id: user?.id ?? null, service_id: serviceId, customer_name: customerName,
-        whatsapp, email: email || null, details, checkout_token_hash: checkoutTokenHash,
+        whatsapp, email: email || null, details, quantity, checkout_token_hash: checkoutTokenHash,
         status: "New Requests", reference_number: reference
       }).select("id,reference_number,status,created_at").single();
       if (error) throw error;
@@ -1094,12 +1097,12 @@ Deno.serve(async (req) => {
       }
       const tokenHash = await sha256Hex(checkoutToken);
       const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,user_id,service_id,reference_number,email,checkout_token_hash,services(name,price,is_published,is_available)")
+        .select("id,user_id,service_id,reference_number,email,quantity,checkout_token_hash,services(name,price,is_published,is_available)")
         .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Checkout session is invalid or expired. Contact EDUKEN CONSULT with your request reference." }, 404);
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
-      const trustedAmount = Number(service?.price);
+      const trustedAmount = Number(service?.price) * Number(request.quantity || 1);
       if (!service || !service.is_published || service.is_available === false || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
         return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
       }
