@@ -168,6 +168,48 @@ test('malformed admission deep links do not crash public page rendering', async 
   expect(pageErrors, 'malformed URL fragments must not throw during hash parsing').toEqual([]);
 });
 
+test('JAMB catalogue setup warning waits for a successful content load', async ({ page }) => {
+  let markRequestStarted;
+  const requestStarted = new Promise(resolve => { markRequestStarted = resolve; });
+  let releaseResponse;
+  const delayedResponse = new Promise(resolve => { releaseResponse = resolve; });
+
+  await page.route('**/functions/v1/eduken-api/public-content', async route => {
+    markRequestStarted();
+    await delayedResponse;
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    });
+  });
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await requestStarted;
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+
+  releaseResponse();
+  await expect(page.locator('.jamb-catalogue-empty')).toContainText(
+    'The JAMB catalogue has not been set up yet.',
+  );
+});
+
+test('failed public-content load does not falsely report an unconfigured JAMB catalogue', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: 'temporary test failure' }) }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+  await expect(page.getByText('Unable to load live content. Please refresh.')).toBeVisible();
+});
+
 test('service request dialog validates required fields without sending a request', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
