@@ -2109,6 +2109,14 @@ function App() {
             Get Consultation <ArrowRight size={16} />
           </a>
         </nav>
+        <div className="auth-nav-actions">
+          <a className="admin-login-nav" href="/admin" onClick={() => setMenu(false)}>
+            Admin Login
+          </a>
+          <button type="button" className="header-sign-in" onClick={() => void signIn()}>
+            Google Sign in
+          </button>
+        </div>
         <button
           type="button"
           className="menu-btn"
