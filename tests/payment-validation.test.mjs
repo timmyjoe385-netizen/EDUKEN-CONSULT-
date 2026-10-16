@@ -158,6 +158,25 @@ test("payment verification requires the matching signed-in owner for account-lin
 });
 
 
+test("payment verification reconciles service request status when payment was already Paid", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const start = source.indexOf('if (path === "/api/payments/verify"');
+  const end = source.indexOf('if (path === "/api/payments/webhook"', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const verify = source.slice(start, end);
+  const alreadyPaidStart = verify.indexOf('if (existingPayment.status === "Paid") {');
+  const alreadyPaidEnd = verify.indexOf('return json({ paid: true, payment: existingPayment });', alreadyPaidStart);
+  assert.notEqual(alreadyPaidStart, -1);
+  assert.notEqual(alreadyPaidEnd, -1);
+  const alreadyPaid = verify.slice(alreadyPaidStart, alreadyPaidEnd);
+  assert.match(alreadyPaid, /db\.from\("service_requests"\)\.update\(\{ status: "Paid" \}\)/);
+  assert.match(alreadyPaid, /requestUpdate\.is\("user_id", null\)/);
+  assert.match(alreadyPaid, /requestUpdate\.eq\("user_id", existingPayment\.user_id\)/);
+});
+
+
 test("Paystack webhook does not mark a service request Paid unless stored payment status is confirmed Paid", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
