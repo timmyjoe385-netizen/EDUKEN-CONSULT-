@@ -119,6 +119,7 @@ function App() {
   const [consultations, setConsultations] = useState<Item[]>([]);
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
   const [selectedService, setSelectedService] = useState<Item | null>(null);
+  const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
   const [alertEmail, setAlertEmail] = useState('');
@@ -2811,6 +2812,7 @@ function App() {
             <a href="#services">Consultation</a>
             <a href="#services">Admission Guidance</a>
             <a href="#services">Mentorship</a>
+            <a href="/admin">Admin sign in</a>
           </div>
           <div>
             <b>Stay Connected</b>
