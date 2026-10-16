@@ -5,6 +5,7 @@ import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
+import { normalizeServicePrice } from "./service-price-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -1241,6 +1242,13 @@ Deno.serve(async (req) => {
       if (req.method === "GET") return json({ items: await adminList(table) });
       if (req.method === "POST") {
         const b = mapAdminInput(table, await req.json());
+        if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
+          const normalizedPrice = normalizeServicePrice(b.price);
+          if (!normalizedPrice.valid) {
+            return json({ error: "Service price must be a non-negative whole number, or be left blank for To be confirmed." }, 400);
+          }
+          if (normalizedPrice.provided) b.price = normalizedPrice.value;
+        }
         if (table === "opportunities") {
           const verification = validateOpportunityVerification(b);
           if (!verification.valid) return json({ error: verification.error }, 400);
@@ -1259,6 +1267,13 @@ Deno.serve(async (req) => {
       }
       if (req.method === "PUT" && id) {
         const b = mapAdminInput(table, await req.json());
+        if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
+          const normalizedPrice = normalizeServicePrice(b.price);
+          if (!normalizedPrice.valid) {
+            return json({ error: "Service price must be a non-negative whole number, or be left blank for To be confirmed." }, 400);
+          }
+          if (normalizedPrice.provided) b.price = normalizedPrice.value;
+        }
         let previousOpportunity: any = null;
         let previousEditorialItem: any = null;
         if (table === "admissions" || table === "updates") {
