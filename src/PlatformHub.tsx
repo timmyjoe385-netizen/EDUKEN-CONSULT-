@@ -132,15 +132,39 @@ export default function PlatformHub({
       return;
     }
     setWalletLoading(true);
+    let pendingWalletMessage = '';
+    const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
+    let pendingReference = '';
+    try { pendingReference = window.sessionStorage.getItem(pendingWalletDepositKey) || ''; } catch { pendingReference = ''; }
+    if (pendingReference && !/^EDK-PAY-[A-Z0-9]{18}$/.test(pendingReference)) {
+      try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* ignore unavailable session storage */ }
+      pendingReference = '';
+    }
+    if (pendingReference) {
+      try {
+        const verification = await api.post('/api/wallet/deposit/verify', { reference: pendingReference });
+        if (verification.data?.paid) {
+          try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* preserve the visible result */ }
+          pendingWalletMessage = 'Wallet deposit verified successfully. Your balance has been refreshed.';
+        } else if (verification.data?.status === 'Failed') {
+          try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* preserve the visible result */ }
+          pendingWalletMessage = 'Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt.';
+        } else {
+          pendingWalletMessage = 'This deposit is not confirmed yet. Do not pay again immediately. Saved reference: ' + pendingReference;
+        }
+      } catch {
+        pendingWalletMessage = 'We could not verify the saved wallet deposit yet. Your reference remains saved for another check: ' + pendingReference;
+      }
+    }
     try {
       const result = await api.get('/api/wallet');
       setWallet(result.data.wallet || null);
       setWalletTransactions(result.data.transactions || []);
-      setWalletMessage('');
+      setWalletMessage(pendingWalletMessage);
     } catch {
       setWallet(null);
       setWalletTransactions([]);
-      setWalletMessage('Wallet service is not available yet. It will appear after the wallet release is enabled.');
+      setWalletMessage(pendingWalletMessage || 'Wallet service is not available yet. It will appear after the wallet release is enabled.');
     } finally {
       setWalletLoading(false);
     }
@@ -207,7 +231,7 @@ export default function PlatformHub({
 
   useEffect(() => {
     void refresh();
-    const onAuthChanged = () => { void refresh(); void refreshWallet(); };
+    const onAuthChanged = () => { void refresh(); };
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
