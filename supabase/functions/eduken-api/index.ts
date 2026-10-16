@@ -1213,7 +1213,17 @@ Deno.serve(async (req) => {
         .eq("payment_reference", reference).maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment || (existingPayment.user_id && (!user || existingPayment.user_id !== user.id))) return json({ error: "Payment record not found." }, 404);
-      if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
+      if (existingPayment.status === "Paid") {
+        // Reconcile the linked service request too: a prior payment update may have
+        // succeeded even if its service-request status update failed transiently.
+        if (existingPayment.service_request_id) {
+          let requestUpdate = db.from("service_requests").update({ status: "Paid" }).eq("id", existingPayment.service_request_id);
+          requestUpdate = existingPayment.user_id ? requestUpdate.eq("user_id", existingPayment.user_id) : requestUpdate.is("user_id", null);
+          const { error: requestUpdateError } = await requestUpdate;
+          if (requestUpdateError) throw requestUpdateError;
+        }
+        return json({ paid: true, payment: existingPayment });
+      }
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
       });
