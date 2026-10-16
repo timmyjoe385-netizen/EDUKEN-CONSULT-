@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   getNextPaymentStatus,
+  getPaystackInitializationFailureDisposition,
   getPaystackAuthorizationUrl,
   isFinalPaystackFailure,
   isSuccessfulPaystackTransaction,
@@ -55,6 +56,15 @@ test("rejects invalid or non-positive stored amounts", () => {
   assert.equal(matchesStoredPaystackPayment(transaction, { amount: "not-a-number", reference: "ref" }), false);
 });
 
+test("classifies ambiguous Paystack initialization responses for safe reconciliation", () => {
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 500, hasAuthorizationUrl: false }), "unconfirmed");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 502, hasAuthorizationUrl: false }), "unconfirmed");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: false }), "unconfirmed");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: true }), "failed", "helper is used only when initialization response already failed validation");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 400, hasAuthorizationUrl: false }), "failed");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 401, hasAuthorizationUrl: false }), "failed");
+});
+
 test("only returns HTTPS Paystack-hosted checkout URLs", () => {
   assert.equal(
     getPaystackAuthorizationUrl({ status: true, data: { authorization_url: "https://checkout.paystack.com/abc123" } }),
@@ -91,7 +101,7 @@ test("payment record is persisted before Paystack initialization and ambiguous o
   assert.match(initializeRoute, /PAYMENT_INITIALIZATION_UNCONFIRMED/);
   assert.match(initializeRoute, /Leave Pending: a timeout can occur after Paystack created the transaction/);
   assert.match(initializeRoute, /db\.from\("payments"\)\.update\(\{ status: "Failed" \}\)/);
-  const ambiguousResponseGuard = initializeRoute.indexOf("if (paystack.status >= 500 || (paystack.ok && !authorizationUrl))");
+  const ambiguousResponseGuard = initializeRoute.indexOf("getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, hasAuthorizationUrl: Boolean(authorizationUrl) }) === \"unconfirmed\"");
   const failedStatusUpdate = initializeRoute.indexOf('db.from("payments").update({ status: "Failed" })');
   assert.notEqual(ambiguousResponseGuard, -1, "ambiguous 5xx and malformed 2xx responses must retain Pending status");
   assert.ok(ambiguousResponseGuard < failedStatusUpdate, "resolve ambiguity before marking a payment Failed");
