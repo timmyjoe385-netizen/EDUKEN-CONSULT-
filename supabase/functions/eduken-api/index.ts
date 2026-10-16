@@ -1250,6 +1250,9 @@ Deno.serve(async (req) => {
       if (req.method === "POST") {
         const parsedBody = parseJsonBody(await req.text());
         if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
+        if (!parsedBody.value || typeof parsedBody.value !== "object" || Array.isArray(parsedBody.value)) {
+          return json({ error: "A JSON object request body is required." }, 400);
+        }
         const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
@@ -1277,6 +1280,9 @@ Deno.serve(async (req) => {
       if (req.method === "PUT" && id) {
         const parsedBody = parseJsonBody(await req.text());
         if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
+        if (!parsedBody.value || typeof parsedBody.value !== "object" || Array.isArray(parsedBody.value)) {
+          return json({ error: "A JSON object request body is required." }, 400);
+        }
         const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
@@ -1347,7 +1353,10 @@ Deno.serve(async (req) => {
       if (req.method === "PUT" && id) {
         const parsedBody = parseJsonBody(await req.text());
         if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
-        const b = parsedBody.value;
+        if (!parsedBody.value || typeof parsedBody.value !== "object" || Array.isArray(parsedBody.value)) {
+          return json({ error: "A JSON object request body is required." }, 400);
+        }
+        const b = parsedBody.value as Record<string, unknown>;
         const { data, error } = await db.from("consultations").update(b).eq("id", id).select().maybeSingle();
         if (error) throw error; if (!data) return json({ error: "Consultation not found." }, 404);
         return json({ ok: true });
