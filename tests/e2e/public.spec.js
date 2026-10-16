@@ -1261,7 +1261,7 @@ test('legacy JAMB service rows remain visible without being made available for c
           description: 'Legacy service row fixture.',
           requirements: 'Test fixture only.',
           price: 7128,
-          is_available: false,
+          // Simulate a legacy database row that predates availability/catalogue flags.
           is_catalog_item: false,
           is_published: true,
         }],
