@@ -2066,6 +2066,23 @@ function App() {
     );
   }
 
+  // Keep the admin route visually separate from the public customer website.
+  // The admin workspace is rendered above only after the backend confirms admin access.
+  if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
+    return (
+      <main className="admin-login-page">
+        <div className="login-backdrop">
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
+            <span className="kicker">PRIVATE ADMIN ACCESS</span>
+            <h2 id="admin-login-title">Admin sign in</h2>
+            <p>This private sign-in page is for authorized EDUKEN CONSULT administrators only.</p>
+            <button className="primary login-submit" type="button" onClick={() => void signIn()}><ArrowRight size={17} /> Continue with Google</button>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <div className="site">
       {toast && (
