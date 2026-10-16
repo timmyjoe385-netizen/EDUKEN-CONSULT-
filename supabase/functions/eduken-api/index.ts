@@ -3,7 +3,7 @@ import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, getPaystackAuthorizationUrl, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -1180,25 +1180,17 @@ Deno.serve(async (req) => {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
-      const callbackUrl = "https://eduken-consult.timmyjoe385.workers.dev/make-payments?reference=" + encodeURIComponent(reference);
-      const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
-        method: "POST",
-        headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email, amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl,
-          metadata: { service_request_id: request.id, reference_number: request.reference_number, customer_email: email },
-        })
-      });
-      let result: any;
-      try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
-      const authorizationUrl = getPaystackAuthorizationUrl(result);
-      if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
-      const { data: payment, error } = await db.from("payments").insert({
+      const callbackUrl = getPaystackCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      if (!callbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
+
+      // Reserve the request before contacting Paystack. The partial unique index prevents
+      // concurrent requests from creating multiple provider transactions for one request.
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
         user_id: request.user_id ?? null, service_request_id: request.id, amount: trustedAmount,
-        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: authorizationUrl
+        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: null
       }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").single();
-      if (error) {
-        if (error.code === "23505") {
+      if (reservationError) {
+        if (reservationError.code === "23505") {
           const { data: racedPayment, error: racedLookupError } = await db.from("payments")
             .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
             .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
@@ -1207,8 +1199,57 @@ Deno.serve(async (req) => {
           if (racedPayment && Math.round(Number(racedPayment.amount) * 100) === Math.round(trustedAmount * 100) && racedUrl && racedPayment.payment_reference) {
             return json({ payment: racedPayment, authorizationUrl: racedUrl, reference: racedPayment.payment_reference, reused: true });
           }
+          return json({ error: "A payment attempt is already being prepared or needs support. Do not retry payment; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
         }
-        throw error;
+        throw reservationError;
+      }
+
+      let paystack: Response;
+      try {
+        paystack = await fetch("https://api.paystack.co/transaction/initialize", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email, amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl,
+            metadata: { service_request_id: request.id, reference_number: request.reference_number, customer_email: email },
+          })
+        });
+      } catch {
+        // A network failure can happen after the provider accepted the request. Keep the
+        // reservation Pending so a retry cannot create a duplicate transaction.
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+
+      let result: any;
+      try { result = await paystack.json(); } catch {
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      if (!paystack.ok || result?.status !== true) {
+        const { error: markFailedError } = await db.from("payments").update({ status: "Failed" })
+          .eq("id", reservation.id).eq("status", "Pending");
+        if (markFailedError) {
+          console.error("Could not mark rejected Paystack initialization as failed.", markFailedError.message);
+          return json({ error: "Payment initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
+        }
+        return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
+      }
+
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
+      if (!authorizationUrl) {
+        // The provider may have created a transaction despite an unexpected response shape.
+        // Keep the reservation Pending to prevent duplicate charges on retry.
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+
+      const { data: payment, error: saveUrlError } = await db.from("payments").update({
+        authorization_url: authorizationUrl
+      }).eq("id", reservation.id).eq("status", "Pending")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").maybeSingle();
+      if (saveUrlError || !payment) {
+        // The reserved row remains verifiable by reference/webhook. Return the valid
+        // provider URL to this caller rather than discard a real checkout session.
+        console.error("Paystack initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
+        return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
       }
       return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
@@ -1237,20 +1278,56 @@ Deno.serve(async (req) => {
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+        .eq("service_request_id", request.id).eq("user_id", user.id).eq("status", "Pending").maybeSingle();
+      if (pendingLookupError) throw pendingLookupError;
+      if (pendingPayment) {
+        if (Math.round(Number(pendingPayment.amount) * 100) !== Math.round(trustedAmount * 100)) {
+          return json({ error: "The service price changed after a payment attempt was started. Contact EDUKEN CONSULT before retrying.", code: "PENDING_PAYMENT_PRICE_CHANGED" }, 409);
+        }
+        const savedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: pendingPayment.authorization_url } });
+        if (savedUrl && pendingPayment.payment_reference) return json({ payment: pendingPayment, authorizationUrl: savedUrl, reference: pendingPayment.payment_reference, reused: true });
+        return json({ error: "A payment attempt is already being prepared or needs support. Do not retry payment; contact EDUKEN CONSULT.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+      }
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
-      const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
-        method: "POST",
-        headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
-      });
+      const callbackUrl = getPaystackCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      if (!callbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
+        user_id: user.id, service_request_id: request.id, amount: trustedAmount,
+        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: null
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").single();
+      if (reservationError) {
+        if (reservationError.code === "23505") return json({ error: "A payment attempt already exists. Refresh and check its status before retrying.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+        throw reservationError;
+      }
+      let paystack: Response;
+      try {
+        paystack = await fetch("https://api.paystack.co/transaction/initialize", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
+        });
+      } catch {
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
       let result: any;
-      try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
+      try { result = await paystack.json(); } catch {
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      if (!paystack.ok || result?.status !== true) {
+        const { error: markFailedError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
+        if (markFailedError) return json({ error: "Payment initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
+        return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
+      }
       const authorizationUrl = getPaystackAuthorizationUrl(result);
-      if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
-      const { data: payment, error } = await db.from("payments").insert({
-        user_id: user.id, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
-      }).select().single();
-      if (error) throw error;
+      if (!authorizationUrl) return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      const { data: payment, error: saveUrlError } = await db.from("payments").update({ authorization_url: authorizationUrl })
+        .eq("id", reservation.id).eq("status", "Pending").select().maybeSingle();
+      if (saveUrlError || !payment) {
+        console.error("Paystack initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
+        return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
+      }
       return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
