@@ -1245,9 +1245,20 @@ Deno.serve(async (req) => {
         authorization_url: authorizationUrl
       }).eq("id", reservation.id).eq("status", "Pending")
         .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").maybeSingle();
+      if (!saveUrlError && !payment) {
+        const { data: currentPayment, error: currentPaymentError } = await db.from("payments")
+          .select("status").eq("id", reservation.id).maybeSingle();
+        if (currentPaymentError) throw currentPaymentError;
+        if (currentPayment?.status === "Paid") {
+          return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+        }
+        if (currentPayment?.status !== "Pending") {
+          return json({ error: "Payment state changed while checkout was being prepared. Contact EDUKEN CONSULT before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 409);
+        }
+      }
       if (saveUrlError || !payment) {
-        // The reserved row remains verifiable by reference/webhook. Return the valid
-        // provider URL to this caller rather than discard a real checkout session.
+        // If persistence failed, the reserved row remains verifiable by reference/webhook.
+        // Return the provider URL only when the reservation's status is still unresolved.
         console.error("Paystack initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
         return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
       }
@@ -1324,6 +1335,15 @@ Deno.serve(async (req) => {
       if (!authorizationUrl) return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
       const { data: payment, error: saveUrlError } = await db.from("payments").update({ authorization_url: authorizationUrl })
         .eq("id", reservation.id).eq("status", "Pending").select().maybeSingle();
+      if (!saveUrlError && !payment) {
+        const { data: currentPayment, error: currentPaymentError } = await db.from("payments")
+          .select("status").eq("id", reservation.id).eq("user_id", user.id).maybeSingle();
+        if (currentPaymentError) throw currentPaymentError;
+        if (currentPayment?.status === "Paid") return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+        if (currentPayment?.status !== "Pending") {
+          return json({ error: "Payment state changed while checkout was being prepared. Contact EDUKEN CONSULT before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 409);
+        }
+      }
       if (saveUrlError || !payment) {
         console.error("Paystack initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
         return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
