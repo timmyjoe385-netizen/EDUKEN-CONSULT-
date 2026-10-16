@@ -135,6 +135,9 @@ function App() {
   const [analyticsSummary, setAnalyticsSummary] = useState<any>(null);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
   const [analyticsError, setAnalyticsError] = useState('');
+  const [systemHealth, setSystemHealth] = useState<{ checkedAt: string; checks: Array<{ name: string; status: string; checkedAt: string; detail: string }> } | null>(null);
+  const [systemHealthLoading, setSystemHealthLoading] = useState(false);
+  const [systemHealthError, setSystemHealthError] = useState('');
   const [analyticsDays, setAnalyticsDays] = useState(30);
   const [articleSlug, setArticleSlug] = useState('');
   const [admissionId, setAdmissionId] = useState('');
@@ -551,6 +554,19 @@ function App() {
       await auth.signIn();
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Unable to start Google sign-in. Please try again.');
+    }
+  };
+
+  const loadSystemHealth = async () => {
+    setSystemHealthLoading(true);
+    setSystemHealthError('');
+    try {
+      const result = await api.get('/api/admin/system-health');
+      setSystemHealth(result.data);
+    } catch (error) {
+      setSystemHealthError(error instanceof Error ? error.message : 'System health could not be checked.');
+    } finally {
+      setSystemHealthLoading(false);
     }
   };
 
@@ -1165,6 +1181,7 @@ function App() {
               'service-requests',
               'analytics',
               'system-settings',
+              'system-health',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -1174,6 +1191,7 @@ function App() {
                   setForm({});
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
+                  else if (tab === 'system-health') loadSystemHealth();
                   else loadAdmin(tab);
                 }}
               >
@@ -1187,7 +1205,9 @@ function App() {
                       ? '📊 Analytics & Insights'
                       : tab === 'system-settings'
                         ? '⚙️ Manage System'
-                        : tab[0].toUpperCase() + tab.slice(1)}
+                        : tab === 'system-health'
+                          ? '🩺 System Health'
+                          : tab[0].toUpperCase() + tab.slice(1)}
               </button>
             ))}
             <button
@@ -1202,9 +1222,9 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && adminTab !== 'system-settings' && (
+              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                   {adminTab === 'services' && (
                     <button
@@ -1222,7 +1242,31 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'system-settings' ? (
+            {adminTab === 'system-health' ? (
+              <section className="analytics-panel" aria-label="System health checks">
+                <div className="analytics-toolbar">
+                  <div>
+                    <span className="tag">ADMIN ONLY · READ-ONLY CHECKS</span>
+                    <p>Scheduled monitoring sends separate email alerts. This page runs live checks when opened or refreshed; email configuration status does not guarantee inbox delivery.</p>
+                    {systemHealth?.checkedAt ? <small>Last checked: {new Date(systemHealth.checkedAt).toLocaleString()}</small> : null}
+                  </div>
+                  <button className="primary" type="button" onClick={() => void loadSystemHealth()} disabled={systemHealthLoading}>{systemHealthLoading ? 'Checking…' : '↻ Check again'}</button>
+                </div>
+                {systemHealthError ? <div className="analytics-error" role="alert"><b>Health checks could not load</b><p>{systemHealthError}</p></div> : null}
+                {systemHealthLoading && !systemHealth ? <div className="admin-empty">Checking monitored services…</div> : null}
+                {systemHealth ? (
+                  <div className="system-settings-list">
+                    {systemHealth.checks.map(check => (
+                      <article className="system-setting-row" key={check.name}>
+                        <span className="system-setting-copy"><b>{check.name}</b><small>{check.detail}</small><small>Checked: {new Date(check.checkedAt).toLocaleString()}</small></span>
+                        <span className="tag" role="status">{check.status === 'operational' ? '🟢 OPERATIONAL' : check.status === 'degraded' ? '🟠 DEGRADED' : '🔴 DOWN'}</span>
+                      </article>
+                    ))}
+                  </div>
+                ) : null}
+                <p className="system-settings-footnote">Payment checks verify configuration only; no payment is created. Detailed errors, environment values, and credentials are never shown here.</p>
+              </section>
+            ) : adminTab === 'system-settings' ? (
               <section className="system-settings-panel">
                 <div className="system-settings-intro">
                   <span className="tag">ADMIN ONLY · SAVES IMMEDIATELY</span>
