@@ -343,3 +343,16 @@ test("JAMB template conversion preserves existing price and availability setting
   assert.match(setup, /is_available: Object\.prototype\.hasOwnProperty\.call\(match, 'is_available'\) \? match\.is_available : templateData\.is_available/);
   assert.match(setup, /Once a row is marked as a catalogue item, repeat clicks never overwrite admin pricing or availability/);
 });
+
+
+test("legacy JAMB e-PIN defaults remain unavailable when database availability is missing", async () => {
+  const { jambServiceDefaultAvailability } = await import("../src/lib/jamb-service-catalogue.mjs");
+  assert.equal(jambServiceDefaultAvailability({ name: "JAMB e-PIN (UTME Without Mock)" }), false);
+  assert.equal(jambServiceDefaultAvailability({ name: "JAMB e-PIN (UTME With Mock)" }), false);
+  assert.equal(jambServiceDefaultAvailability({ name: "JAMB e-PIN (Direct Entry)" }), false);
+  assert.equal(jambServiceDefaultAvailability({ name: "JAMB e-PIN (Trial-Testing Mock)" }), false);
+  assert.equal(jambServiceDefaultAvailability({ name: "JAMB Original Result Slip Guidance" }), true);
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
+  assert.match(source, /is_available: item\.is_available === undefined \? jambServiceDefaultAvailability\(item\) : normalizeFlag\(item\.is_available\)/);
+});
