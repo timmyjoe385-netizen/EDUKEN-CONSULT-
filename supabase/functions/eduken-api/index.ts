@@ -1137,7 +1137,7 @@ Deno.serve(async (req) => {
         return json({ error: "Enter a valid email address for your payment receipt." }, 400);
       }
       let requestQuery = db.from("service_requests")
-        .select("id,user_id,service_id,reference_number,email,details,services(name,price,is_published)")
+        .select("id,user_id,service_id,reference_number,email,details,services(name,price,is_published,is_available)")
         .eq("id", b.serviceRequestId);
       requestQuery = user ? requestQuery.eq("user_id", user.id) : requestQuery.is("user_id", null).eq("email", email);
       const { data: request, error: requestError } = await requestQuery.maybeSingle();
@@ -1153,7 +1153,10 @@ Deno.serve(async (req) => {
       const quantity = requestedQuantity;
       const unitAmount = Number(service?.price);
       const trustedAmount = unitAmount * quantity;
-      if (!service || !service.is_published || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+      if (!service || !service.is_published || !service.is_available) {
+        return json({ error: "This service is currently unavailable for online checkout. Please choose another service or contact EDUKEN CONSULT." }, 409);
+      }
+      if (!Number.isFinite(trustedAmount) || trustedAmount <= 0) {
         return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
       }
       // Server-side published catalogue price and validated candidate quantity are authoritative.
