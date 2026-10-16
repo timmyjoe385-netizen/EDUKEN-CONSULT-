@@ -771,14 +771,13 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public header exposes customer sign-in and admin login while /admin keeps its OAuth return path', async ({ page }) => {
+test('public header exposes customer sign-in but keeps admin access out of public navigation', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
-  // Both entry points must be discoverable from the public header.
+  // Customers can sign in, but the admin route is not linked publicly.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Admin Login' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveAttribute('href', '/admin');
+  await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
   await page.route(authorizeEndpoint + '**', route =>
@@ -789,10 +788,12 @@ test('public header exposes customer sign-in and admin login while /admin keeps 
     }),
   );
 
-  // Direct access to the admin sign-in route remains available.
+  // Direct access shows only the private admin sign-in screen, not the public website.
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL(/\/admin\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+  await expect(page.locator('.site')).toHaveCount(0);
+  await expect(page.locator('.admin-shell')).toHaveCount(0);
 
   const siteOrigin = new URL(page.url()).origin;
   const authNavigation = page.waitForRequest(
