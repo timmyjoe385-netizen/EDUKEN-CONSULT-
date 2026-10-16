@@ -162,10 +162,11 @@ test("payment verification reconciles service request status when payment was al
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
   const start = source.indexOf('if (path === "/api/payments/verify"');
-  const end = source.indexOf('if (path === "/api/payments/webhook"', start);
+  const endMarker = 'return json({ paid, payment: payment || existingPayment });';
+  const end = source.indexOf(endMarker, start);
   assert.notEqual(start, -1);
   assert.notEqual(end, -1);
-  const verify = source.slice(start, end);
+  const verify = source.slice(start, end + endMarker.length);
   const alreadyPaidStart = verify.indexOf('if (existingPayment.status === "Paid") {');
   const alreadyPaidEnd = verify.indexOf('return json({ paid: true, payment: existingPayment });', alreadyPaidStart);
   assert.notEqual(alreadyPaidStart, -1);
