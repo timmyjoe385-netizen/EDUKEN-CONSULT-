@@ -29,6 +29,30 @@ test('wallet callback keeps its reference available for verification after sign-
   expect(hub).toContain("window.sessionStorage.removeItem(pendingWalletDepositKey)");
 });
 
+test('wallet notification emails are skipped for idempotent settlement retries', () => {
+  const webhookWallet = handler.slice(
+    handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")'),
+    handler.indexOf('if (existingPayment.status === "Paid")', handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")')),
+  );
+  const walletVerify = handler.slice(
+    handler.indexOf('if (path === "/api/wallet/deposit/verify" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/wallet/pay-service" && req.method === "POST")'),
+  );
+  const walletPay = handler.slice(
+    handler.indexOf('if (path === "/api/wallet/pay-service" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/payments/initialize-guest" && req.method === "POST")'),
+  );
+  const walletRefund = handler.slice(
+    handler.indexOf('if (path === "/api/admin/wallet/refund" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/admin/system-settings")'),
+  );
+
+  expect(webhookWallet).toContain('walletSettlement?.reused !== true');
+  expect(walletVerify).toContain('settled?.reused !== true');
+  expect(walletPay).toContain('result?.reused !== true');
+  expect(walletRefund).toContain('refund?.reused !== true');
+});
+
 test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
