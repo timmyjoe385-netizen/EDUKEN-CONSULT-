@@ -186,3 +186,29 @@ test("paid service email is validated before a service request is saved", async 
   assert.notEqual(saveRequest, -1, "service request submission must exist");
   assert.ok(emailGuard < saveRequest, "validate email before saving to avoid orphaned requests");
 });
+
+
+test("payment ledger migration is reproducible, idempotent, and owner-scoped", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const migration = await readFile(
+    new URL("../supabase/migrations/20261016090000_create_payments_table.sql", import.meta.url),
+    "utf8",
+  );
+  assert.match(migration, /create table if not exists public\\.payments/i);
+  for (const column of [
+    "user_id uuid", "service_request_id uuid", "amount numeric not null",
+    "currency text not null default 'NGN'", "status text not null default 'Pending'",
+    "payment_reference text unique", "paid_at timestamptz", "created_at timestamptz",
+  ]) {
+    assert.ok(migration.includes(column), `Missing payment ledger schema: ${column}`);
+  }
+  assert.match(migration, /references auth\\.users\\(id\\) on delete set null/i);
+  assert.match(migration, /references public\\.service_requests\\(id\\) on delete set null/i);
+  assert.match(migration, /create index if not exists payments_service_request_id_idx/i);
+  assert.match(migration, /create index if not exists payments_user_id_idx/i);
+  assert.match(migration, /alter table public\\.payments enable row level security/i);
+  assert.match(migration, /using \\(\\(select auth\\.uid\\(\\)\\) = user_id\\)/i);
+  assert.match(migration, /grant select on table public\\.payments to authenticated/i);
+  assert.match(migration, /grant select, insert, update on table public\\.payments to service_role/i);
+  assert.doesNotMatch(migration, /insert into public\\.payments/i);
+});
