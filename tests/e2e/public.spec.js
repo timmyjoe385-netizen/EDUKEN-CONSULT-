@@ -30,6 +30,7 @@ test('wallet callback keeps its reference available for verification after sign-
 });
 
 test('wallet notification emails are skipped for idempotent settlement retries', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const webhookWallet = handler.slice(
     handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")'),
     handler.indexOf('if (existingPayment.status === "Paid")', handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")')),
