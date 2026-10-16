@@ -696,6 +696,22 @@ test('admin service request status changes are guarded and payment-confirmed sta
   expect(app).toContain('{item.status === \'Paid\' && <option value="Paid" disabled>Paid (payment confirmed)</option>}');
 });
  
+test('authenticated payment initialization uses saved quantity and refuses already-paid requests', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/payments/initialize" && req.method === "POST")');
+  const routeEnd = source.indexOf('if (path === "/api/payments/verify" && req.method === "POST")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = source.slice(routeStart, routeEnd);
+  expect(route).toContain('status,quantity,services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('request.status === "Paid"');
+  expect(route).toContain('.eq("service_request_id", request.id).eq("status", "Paid").maybeSingle()');
+  expect(route).toContain('Number(service?.price) * quantity');
+  expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
+  expect(route).toContain('.eq("service_request_id", request.id).eq("status", "Pending").maybeSingle()');
+  expect(route).not.toContain('.eq("service_request_id", request.id).eq("user_id", user.id).eq("status", "Pending")');
+});
+
 test('database hardening migration removes direct client access to consultation submissions', async () => {
   const migration = readFileSync(
     'supabase/migrations/20261014135746_harden_public_table_grants.sql',
