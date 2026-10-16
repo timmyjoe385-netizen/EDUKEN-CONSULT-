@@ -1393,7 +1393,7 @@ test('service request form clearly labels and outlines customer detail fields', 
   await expect(dialog.getByLabel('Full name *')).toBeVisible();
   await expect(dialog.getByLabel('WhatsApp number *')).toBeVisible();
   await expect(dialog.getByLabel('Email address (optional)')).toBeVisible();
-  await expect(dialog.getByLabel('Additional details (required)')).toBeVisible();
+  await expect(dialog.getByLabel('Additional notes (required)')).toBeVisible();
 
   const nameInput = dialog.locator('#service-request-customer-name');
   const fieldStyle = await nameInput.evaluate(element => {
