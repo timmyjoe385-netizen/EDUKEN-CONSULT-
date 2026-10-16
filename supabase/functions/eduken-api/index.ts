@@ -3,7 +3,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackInitializationFailureDisposition, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 
 const cors = {
@@ -1200,7 +1200,7 @@ Deno.serve(async (req) => {
         // A provider 5xx or malformed 2xx response is ambiguous: Paystack may have
         // created the transaction even though we cannot safely issue its checkout URL.
         // Keep the reference Pending so verification/webhook reconciliation can resolve it.
-        if (paystack.status >= 500 || (paystack.ok && !authorizationUrl)) {
+        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
           return json({ error: "Payment initialization could not be confirmed. Check payment status before trying again.", reference, code: "PAYMENT_INITIALIZATION_UNCONFIRMED" }, 502);
         }
         // A non-5xx HTTP rejection is a definitive initialization failure.
