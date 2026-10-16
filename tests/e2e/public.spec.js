@@ -1266,7 +1266,9 @@ test('system health endpoint is admin-protected and reports safe component statu
   expect(route).toContain('Public website');
   expect(route).toContain('Database and API');
   expect(route).toContain('Authentication service');
-  expect(route).toContain('Email alert configuration');
+  expect(route).toContain('Transactional email provider');
+  expect(route).toContain('Outage email alerts');
+  expect(route).toContain('not_checked');
   expect(route).toContain('Payment safety configuration');
   expect(route).toContain('RESEND_API_KEY');
   expect(route).not.toContain('console.log');
