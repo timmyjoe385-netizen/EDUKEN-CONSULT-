@@ -121,6 +121,11 @@ function App() {
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
+  const [checkoutSession, setCheckoutSession] = useState<any>(null);
+  const [paymentEmail, setPaymentEmail] = useState('');
+  const [paymentSubmitting, setPaymentSubmitting] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
   const [alertEmail, setAlertEmail] = useState('');
   const [alertTopics, setAlertTopics] = useState<string[]>(['admissions', 'scholarships-grants', 'jobs-internships']);
@@ -377,6 +382,43 @@ function App() {
       window.removeEventListener('beforeinstallprompt', onInstallPrompt);
       window.removeEventListener('appinstalled', onInstalled);
     };
+  }, []);
+
+  useEffect(() => {
+    if (window.location.pathname.replace(/\/+$/, '') !== '/make-payments') return;
+    setPaymentPage(true);
+    let saved: any = null;
+    try {
+      const raw = window.sessionStorage.getItem('eduken_guest_checkout');
+      saved = raw ? JSON.parse(raw) : null;
+    } catch { saved = null; }
+    if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
+      setCheckoutSession(saved);
+      setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
+    }
+    const params = new URLSearchParams(window.location.search);
+    const returnedReference = params.get('reference') || params.get('trxref') || '';
+    if (returnedReference) {
+      window.history.replaceState({}, document.title, '/make-payments');
+      if (!saved?.checkoutToken || !saved?.requestId) {
+        setPaymentMessage('We could not find this checkout session in this browser. Please contact EDUKEN CONSULT with your service request reference before trying again.');
+        return;
+      }
+      setPaymentMessage('Payment returned from the gateway. Verifying the transaction securely…');
+      void api.post('/api/payments/verify-guest', { serviceRequestId: saved.requestId, checkoutToken: saved.checkoutToken, reference: returnedReference })
+        .then((result: any) => {
+          if (result.data?.paid) {
+            const next = { ...saved, paymentStatus: 'Paid', paymentReference: returnedReference };
+            setCheckoutSession(next);
+            setPaymentMessage('Payment confirmed successfully. Your service request is marked as paid. Keep your reference for follow-up.');
+            try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* success remains visible */ }
+          } else {
+            setPaymentMessage('The payment is not confirmed yet. Do not pay again immediately. Refresh this page or contact EDUKEN CONSULT with your payment reference.');
+          }
+        }).catch((error: unknown) => {
+          setPaymentMessage(error instanceof Error ? error.message : 'We could not verify the payment yet. Please contact EDUKEN CONSULT before paying again.');
+        });
+    }
   }, []);
 
   useEffect(() => installAnalyticsTracking(), []);
@@ -949,14 +991,63 @@ function App() {
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
         ].filter(Boolean).join('\n'),
       });
-      formElement.reset();
-      setSelectedService(null);
-      showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
+      const savedRequest = result.data?.request;
+      const checkoutToken = result.data?.checkoutToken;
+      const payableAmount = Number(selectedService.price);
+      if (savedRequest?.id && typeof checkoutToken === 'string' && checkoutToken.length >= 32 && Number.isFinite(payableAmount) && payableAmount > 0) {
+        const nextCheckout = {
+          requestId: String(savedRequest.id), checkoutToken,
+          referenceNumber: String(result.data.referenceNumber || savedRequest.reference_number || ''),
+          serviceName: String(selectedService.name || 'EDUKEN service'), amount: payableAmount,
+          email: String(fd.get('email') || '').trim(), customerName: String(fd.get('customerName') || '').trim(),
+          paymentStatus: 'Not paid',
+        };
+        try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(nextCheckout)); }
+        catch {
+          showToast('Your request was saved, but this browser could not keep the checkout session. Contact EDUKEN CONSULT with reference ' + nextCheckout.referenceNumber + '.');
+          formElement.reset(); setSelectedService(null); return;
+        }
+        formElement.reset();
+        setCheckoutSession(nextCheckout); setPaymentEmail(nextCheckout.email); setPaymentMessage('');
+        setPaymentPage(true); setSelectedService(null);
+        window.history.pushState({}, document.title, '/make-payments');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        formElement.reset(); setSelectedService(null);
+        showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. The service price may need confirmation; EDUKEN will contact you.');
+      }
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
     } finally {
       setServiceSubmitting(false);
     }
+  };
+
+  const submitGuestPayment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
+    const email = paymentEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setPaymentMessage('Enter a valid email address so Paystack can send your payment receipt.');
+      return;
+    }
+    setPaymentSubmitting(true);
+    setPaymentMessage('Preparing secure Paystack checkout…');
+    try {
+      const result = await api.post('/api/payments/initialize-guest', {
+        serviceRequestId: checkoutSession.requestId, checkoutToken: checkoutSession.checkoutToken, email,
+      });
+      const next = { ...checkoutSession, email, paymentReference: result.data.reference, paymentStatus: 'Pending' };
+      setCheckoutSession(next);
+      try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* token remains in memory */ }
+      const authorizationUrl = result.data.authorizationUrl;
+      if (typeof authorizationUrl !== 'string' || !authorizationUrl.startsWith('https://checkout.paystack.com/')) {
+        throw new Error('Paystack returned an invalid checkout address. No payment was started.');
+      }
+      window.location.assign(authorizationUrl);
+    } catch (error) {
+      setPaymentMessage(error instanceof Error ? error.message : 'Could not start payment. Please try again or contact EDUKEN CONSULT.');
+    } finally { setPaymentSubmitting(false); }
   };
 
   const submitEmailAlerts = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -1849,6 +1940,53 @@ function App() {
         <a className="wa-float" href={WA} target="_blank" rel="noreferrer">
           <MessageCircle size={22} />
         </a>
+      </div>
+    );
+  }
+
+  if (paymentPage) {
+    return (
+      <div className="site make-payments-page">
+        <header className="nav">
+          <a className="brand" href="/" onClick={event => { event.preventDefault(); window.history.pushState({}, document.title, '/'); setPaymentPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" />
+            <span>EDUKEN <b>CONSULT</b></span>
+          </a>
+        </header>
+        <main className="make-payments-main">
+          <section className="make-payments-card" aria-labelledby="make-payments-title">
+            <span className="kicker">SECURE CHECKOUT</span>
+            <h1 id="make-payments-title">Make Payments</h1>
+            {!checkoutSession ? (
+              <>
+                <p>There is no active checkout session in this browser. Open the service request again or contact EDUKEN CONSULT if you already submitted a request.</p>
+                <a className="primary make-payments-link" href="/">Back to EDUKEN CONSULT</a>
+              </>
+            ) : (
+              <>
+                <p>Review your service details before continuing to Paystack. Never send your card PIN or banking password in a chat.</p>
+                <dl className="make-payments-summary">
+                  <div><dt>Service</dt><dd>{checkoutSession.serviceName}</dd></div>
+                  <div><dt>Request reference</dt><dd>{checkoutSession.referenceNumber || 'Saved'}</dd></div>
+                  <div><dt>Amount due</dt><dd>₦{Number(checkoutSession.amount).toLocaleString('en-NG')}</dd></div>
+                  <div><dt>Payment status</dt><dd>{checkoutSession.paymentStatus || 'Not paid'}</dd></div>
+                </dl>
+                {checkoutSession.paymentStatus !== 'Paid' ? (
+                  <form className="service-request-form" onSubmit={submitGuestPayment}>
+                    <label className="service-request-field" htmlFor="make-payments-email">
+                      <span>Receipt email <b aria-hidden="true">*</b></span>
+                      <input id="make-payments-email" type="email" autoComplete="email" required maxLength={200} value={paymentEmail} onChange={event => setPaymentEmail(event.target.value)} placeholder="Enter the email for your receipt" />
+                    </label>
+                    <p className="make-payments-security">You’ll complete payment on Paystack’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
+                    {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
+                    <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to Paystack'}</button>
+                  </form>
+                ) : <p className="make-payments-success" role="status">{paymentMessage || 'Payment confirmed. Thank you.'}</p>}
+                <button type="button" className="secondary make-payments-back" onClick={() => { window.history.pushState({}, document.title, '/'); setPaymentPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Back to EDUKEN CONSULT</button>
+              </>
+            )}
+          </section>
+        </main>
       </div>
     );
   }
