@@ -326,6 +326,15 @@ begin
   if found then
     select * into v_wallet from public.customer_wallets where user_id = v_payment.user_id;
     if not found then raise exception 'WALLET_REFUND_WALLET_MISSING'; end if;
+    -- Keep service state consistent when an idempotent refund retry repairs a
+    -- previously refunded wallet payment whose request still says Paid.
+    if v_payment.service_request_id is not null then
+      update public.service_requests
+      set status = 'Cancelled', updated_at = now()
+      where id = v_payment.service_request_id
+        and user_id = v_payment.user_id
+        and status = 'Paid';
+    end if;
     return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', true, 'transaction_id', v_existing.id);
   end if;
 
@@ -354,6 +363,16 @@ begin
   ) returning * into v_existing;
 
   update public.payments set status = 'Refunded' where id = v_payment.id;
+
+  -- A full wallet refund means this service request is no longer paid.
+  -- Cancel it so the admin UI does not leave a refunded request locked as Paid.
+  if v_payment.service_request_id is not null then
+    update public.service_requests
+    set status = 'Cancelled', updated_at = now()
+    where id = v_payment.service_request_id
+      and user_id = v_payment.user_id
+      and status = 'Paid';
+  end if;
 
   return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', false, 'transaction_id', v_existing.id);
 end;
