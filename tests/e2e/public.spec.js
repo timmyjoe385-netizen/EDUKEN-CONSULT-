@@ -656,7 +656,7 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
 
   // Direct access to the admin sign-in route remains available.
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-  await expect(page).toHaveURL(/\\/admin\\/?$/);
+  await expect(page).toHaveURL(/\/admin\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
 
   const siteOrigin = new URL(page.url()).origin;
