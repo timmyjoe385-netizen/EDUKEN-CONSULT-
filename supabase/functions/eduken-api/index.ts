@@ -510,7 +510,7 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
-async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify") {
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify" | "wallet-deposit-initialize" | "wallet-deposit-verify") {
   const ip = getEmailAlertClientIp(req.headers);
   if (!ip) return null;
   const policy = emailAlertRateLimitPolicy(action);
@@ -1155,6 +1155,10 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/wallet/deposit/initialize" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-initialize"); } catch { return json({ error: "Wallet deposits are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Wallet deposits are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many wallet deposit attempts. Please wait before trying again." }, 429);
       const user = await requireUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
@@ -1251,6 +1255,10 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/wallet/deposit/verify" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-verify"); } catch { return json({ error: "Wallet verification is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Wallet verification is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many wallet verification attempts. Please wait before trying again." }, 429);
       const user = await requireUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
