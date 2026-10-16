@@ -347,17 +347,21 @@ function App() {
         token: (verificationToken || unsubscribeToken)!,
       });
     }
-    void auth.completeOAuthCallback().then((result: any) => {
+    void auth.completeOAuthCallback().then(async (result: any) => {
       if (!active || !result) return;
-      const isAdmin = ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'].includes(String(result.user?.email || '').toLowerCase());
-      if (isAdmin) {
+      // Ask the backend whether this account is an authorized administrator.
+      // Never ship the administrator email allowlist in the public frontend bundle.
+      try {
+        const access = await api.get('/api/admin/session');
+        if (access.data?.admin !== true) throw new Error('Admin access is not available.');
+        if (!active) return;
         setUser(result.user);
         setAdminView(true);
         void loadAdmin('opportunities');
         void loadSystemSettings();
-      } else {
-        // Customer sign-in must never open the admin workspace; admin APIs enforce
-        // their own server-side allowlist as a separate security boundary.
+      } catch {
+        if (!active) return;
+        // A normal customer can sign in, but cannot open the admin workspace.
         setUser(null);
         setAdminView(false);
         setToast('You are signed in to your EDUKEN customer account.');
