@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { PRODUCTION_ORIGIN, shouldBlockWrite } from '../src/lib/api-safety.js';
+import { shouldBlockWrite } from '../src/lib/api-safety.js';
 
 test('canonical production origin permits write methods', () => {
   for (const method of ['POST', 'PUT', 'PATCH', 'DELETE']) {
-    assert.equal(shouldBlockWrite(PRODUCTION_ORIGIN, method), false, method);
+    assert.equal(shouldBlockWrite('https://eduken-consult.workers.dev', method), false, method);
   }
 });
 
