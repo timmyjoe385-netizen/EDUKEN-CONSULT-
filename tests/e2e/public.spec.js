@@ -1280,6 +1280,9 @@ test('scheduled health monitor supports recovery email independently of customer
   const workflow = readFileSync('.github/workflows/health-check.yml', 'utf8');
   expect(workflow).toContain('cron: "*/15 * * * *"');
   expect(workflow).toContain('Detect recovery after a previous failed health check');
+  expect(workflow).toContain('listJobsForWorkflowRun');
+  expect(workflow).toContain("step.conclusion === 'failure'");
+  expect(workflow).not.toContain("previous?.conclusion === 'failure'");
   expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
   expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
   expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
