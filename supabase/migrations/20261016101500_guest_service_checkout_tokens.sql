@@ -14,3 +14,14 @@ comment on column public.service_requests.quantity is
 
 comment on column public.service_requests.checkout_token_hash is
   'SHA-256 hash of a high-entropy guest checkout token; never store the raw token.';
+
+-- Reuse the same provider checkout URL for repeated requests and prevent concurrent pending attempts.
+alter table public.payments
+  add column if not exists authorization_url text;
+
+comment on column public.payments.authorization_url is
+  'Paystack checkout URL for a pending payment; only the server returns it after request-token validation.';
+
+create unique index if not exists payments_one_pending_per_service_request_idx
+  on public.payments (service_request_id)
+  where service_request_id is not null and status = 'Pending';
