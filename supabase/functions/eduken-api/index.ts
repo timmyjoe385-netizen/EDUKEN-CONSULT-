@@ -5,7 +5,6 @@ import { isOpportunityVerified, validateOpportunityVerification } from "./opport
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
-import { parseJsonBody } from "./json-body-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -18,6 +17,14 @@ const json = (body: unknown, status = 200) =>
     status,
     headers: { ...cors, "Content-Type": "application/json" },
   });
+
+function parseJsonBody(text: string): { valid: true; value: unknown } | { valid: false; value: undefined } {
+  try {
+    return { valid: true, value: JSON.parse(text) };
+  } catch {
+    return { valid: false, value: undefined };
+  }
+}
 
 const url = Deno.env.get("SUPABASE_URL")!;
 const secretKeys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS")!);
