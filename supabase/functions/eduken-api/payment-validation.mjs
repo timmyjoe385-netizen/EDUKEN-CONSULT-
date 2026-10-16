@@ -46,3 +46,25 @@ export function getPaystackAuthorizationUrl(result) {
     return null;
   }
 }
+
+
+export async function isValidPaystackWebhookSignature(rawBody, signature, secret) {
+  if (typeof rawBody !== "string" || typeof signature !== "string" || typeof secret !== "string" || !secret) return false;
+  if (!/^[a-f0-9]{128}$/i.test(signature)) return false;
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-512" },
+    false,
+    ["sign"],
+  );
+  const digest = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(rawBody)));
+  const expected = Array.from(digest, byte => byte.toString(16).padStart(2, "0")).join("");
+  const provided = signature.toLowerCase();
+  if (expected.length !== provided.length) return false;
+  let difference = 0;
+  for (let index = 0; index < expected.length; index++) {
+    difference |= expected.charCodeAt(index) ^ provided.charCodeAt(index);
+  }
+  return difference === 0;
+}
