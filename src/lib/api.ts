@@ -23,6 +23,7 @@ const readSession = (): Session | null => {
 const writeSession = (session: Session | null) => {
   if (session) localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   else localStorage.removeItem(SESSION_KEY);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('eduken-auth-changed'));
 };
 
 const refreshSession = async (session: Session) => {
@@ -140,16 +141,8 @@ export const auth = {
       writeSession(null);
       throw new Error('Could not verify the Google account.');
     }
-    const allowed = ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'];
-    if (!allowed.includes(String(user.email).toLowerCase())) {
-      writeSession(null);
-      await fetch(SUPABASE_URL + '/auth/v1/logout', {
-        method: 'POST',
-        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
-      }).catch(() => undefined);
-      window.history.replaceState({}, document.title, window.location.pathname);
-      throw new Error('This Google account is not authorized for EDUKEN administration.');
-    }
+    // Customer accounts are allowed to sign in. Admin endpoints independently enforce
+    // the server-side ADMIN_EMAILS allowlist; client-side UI visibility is not authorization.
     const session = {
       access_token: accessToken,
       refresh_token: refreshToken || undefined,
