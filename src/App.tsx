@@ -408,26 +408,32 @@ function App() {
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || '';
     if (returnedReference && params.get('wallet') === '1') {
+      const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
+      // Preserve the non-secret provider reference so a customer who returns signed
+      // out can sign back in and verify the same deposit without paying again.
+      try { window.sessionStorage.setItem(pendingWalletDepositKey, returnedReference); } catch { /* direct verification still works while signed in */ }
       window.history.replaceState({}, document.title, '/make-payments');
       if (!auth.isSignedIn()) {
-        setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit, then verify the payment from your wallet.');
+        setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
         return;
       }
       setPaymentMessage('Wallet deposit returned from Paystack. Verifying securely…');
       void api.post('/api/wallet/deposit/verify', { reference: returnedReference })
         .then((result: any) => {
           if (result.data?.paid) {
+            try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* keep success visible */ }
             setPaymentMessage('Wallet funded successfully. Your updated balance is available in your EDUKEN Wallet.');
             window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else if (result.data?.status === 'Failed') {
+            try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* keep failure visible */ }
             setPaymentMessage('Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt from your wallet.');
             window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else {
-            setPaymentMessage('The deposit is not confirmed yet. Do not pay again immediately; open your wallet and check the transaction status.');
+            setPaymentMessage('The deposit is not confirmed yet. Do not pay again immediately. Its reference is saved so your wallet can check again: ' + returnedReference);
           }
         })
         .catch((error: unknown) => {
-          setPaymentMessage(error instanceof Error ? error.message : 'We could not verify this wallet deposit yet. Do not pay again immediately; contact EDUKEN support with your reference.');
+          setPaymentMessage((error instanceof Error ? error.message : 'We could not verify this wallet deposit yet.') + ' Your reference is saved for another check: ' + returnedReference);
         });
       return;
     }
