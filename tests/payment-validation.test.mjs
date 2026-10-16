@@ -156,3 +156,17 @@ test("payment verification requires the matching signed-in owner for account-lin
     /if \(!existingPayment \|\| \(existingPayment\.user_id && \(!user \|\| existingPayment\.user_id !== user\.id\)\)\) return json\(\{ error: "Payment record not found\." \}, 404\);/,
   );
 });
+
+
+test("Paystack webhook does not mark a service request Paid unless stored payment status is confirmed Paid", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const start = source.indexOf('if (path === "/api/payments/webhook"');
+  const end = source.indexOf('if (req.method === "GET" && (path === "/public-content"', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const webhook = source.slice(start, end);
+  assert.match(webhook, /paymentConfirmedPaid = updatedPayment\?\.status === "Paid"/);
+  assert.match(webhook, /if \(!paymentConfirmedPaid\) \{[\s\S]*?return json\(\{ error: "Payment status could not be confirmed\./);
+  assert.match(webhook, /if \(paymentConfirmedPaid && payment\.service_request_id\)/);
+});
