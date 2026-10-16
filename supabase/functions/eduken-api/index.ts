@@ -1230,7 +1230,8 @@ Deno.serve(async (req) => {
           const response = await fetch(url + "/auth/v1/health", { headers: { apikey: secretKeys.default }, signal: AbortSignal.timeout(8000) });
           return response.ok;
         }, "Authentication health endpoint did not return success."),
-        check("Email alert configuration", async () => Boolean(Deno.env.get("RESEND_API_KEY") && Deno.env.get("EMAIL_FROM")), "Transactional email configuration is incomplete. This checks configuration, not inbox delivery."),
+        check("Transactional email provider", async () => Boolean(Deno.env.get("RESEND_API_KEY") && Deno.env.get("EMAIL_FROM")), "Resend configuration is incomplete. This does not verify outage-alert delivery to Gmail."),
+        { name: "Outage email alerts", status: "not_checked", checkedAt, detail: "GitHub Actions SMTP secrets and Gmail delivery must be verified with the workflow test-email option." },
         check("Payment safety configuration", async () => {
           const mode = Deno.env.get("PAYSTACK_MODE");
           const secret = Deno.env.get("PAYSTACK_SECRET_KEY") || "";
