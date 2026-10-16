@@ -561,12 +561,23 @@ Deno.serve(async (req) => {
         console.error("Paystack webhook amount/currency/reference mismatch.", reference);
         return json({ error: "Payment details do not match the stored payment." }, 409);
       }
-      if (payment.status !== "Paid") {
-        const { error: updateError } = await db.from("payments").update({ status: "Paid", paid_at: new Date().toISOString() })
-          .eq("id", payment.id).in("status", ["Pending", "Failed"]);
+      let paymentConfirmedPaid = payment.status === "Paid";
+      if (!paymentConfirmedPaid) {
+        const { data: updatedPayment, error: updateError } = await db.from("payments").update({ status: "Paid", paid_at: new Date().toISOString() })
+          .eq("id", payment.id).in("status", ["Pending", "Failed"]).select("id,status").maybeSingle();
         if (updateError) throw updateError;
+        paymentConfirmedPaid = updatedPayment?.status === "Paid";
+        if (!paymentConfirmedPaid) {
+          const { data: currentPayment, error: currentPaymentError } = await db.from("payments").select("status").eq("id", payment.id).maybeSingle();
+          if (currentPaymentError) throw currentPaymentError;
+          paymentConfirmedPaid = currentPayment?.status === "Paid";
+        }
+        if (!paymentConfirmedPaid) {
+          console.error("Paystack webhook could not confirm stored payment status.", reference);
+          return json({ error: "Payment status could not be confirmed. Please retry the webhook." }, 409);
+        }
       }
-      if (payment.service_request_id) {
+      if (paymentConfirmedPaid && payment.service_request_id) {
         let requestUpdate = db.from("service_requests").update({ status: "Paid" }).eq("id", payment.service_request_id);
         requestUpdate = payment.user_id ? requestUpdate.eq("user_id", payment.user_id) : requestUpdate.is("user_id", null);
         const { error: requestUpdateError } = await requestUpdate;
