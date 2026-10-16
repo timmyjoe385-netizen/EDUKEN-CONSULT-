@@ -2068,7 +2068,7 @@ function App() {
 
   // Keep the admin route visually separate from the public customer website.
   // The admin workspace is rendered above only after the backend confirms admin access.
-  if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
+  if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
     return (
       <main className="admin-login-page">
         <div className="login-backdrop">
