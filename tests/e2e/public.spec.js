@@ -1281,6 +1281,10 @@ test('scheduled health monitor supports recovery email independently of customer
   expect(workflow).toContain('cron: "*/15 * * * *"');
   expect(workflow).toContain('Detect recovery after a previous failed health check');
   expect(workflow).toContain('listJobsForWorkflowRun');
+  expect(workflow).toContain('const recentRuns = runs.data.workflow_runs');
+  expect(workflow).toContain('latestOutage');
+  expect(workflow).toContain("step.name === 'Send recovery email' && step.conclusion === 'success'");
+  expect(workflow).not.toContain('const previous = runs.data.workflow_runs');
   expect(workflow).toContain("step.conclusion === 'failure'");
   expect(workflow).not.toContain("previous?.conclusion === 'failure'");
   expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
