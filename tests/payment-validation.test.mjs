@@ -274,3 +274,43 @@ test("payment initialization rejects published services that are marked unavaila
     "reject unavailable services before contacting Paystack",
   );
 });
+
+test("Paystack webhook verifies the HMAC-SHA512 signature before parsing or touching payment records", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const start = source.indexOf('if (path === "/api/payments/webhook"');
+  const end = source.indexOf('if (req.method === "GET" && (path === "/public-content"', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const webhook = source.slice(start, end);
+  const signatureRead = webhook.indexOf('req.headers.get("x-paystack-signature")');
+  const signatureCheck = webhook.indexOf('crypto.subtle.verify("HMAC"');
+  const payloadParse = webhook.indexOf('JSON.parse(rawBody)');
+  const paymentLookup = webhook.indexOf('db.from("payments")');
+  assert.notEqual(signatureRead, -1);
+  assert.match(webhook, /!\/[\^]?[a-f0-9\]\{128\}/i);
+  assert.match(webhook, /hash: "SHA-512"/);
+  assert.ok(signatureRead < signatureCheck, "read the supplied signature before verifying it");
+  assert.ok(signatureCheck < payloadParse, "reject forged payloads before parsing event data");
+  assert.ok(signatureCheck < paymentLookup, "reject forged payloads before querying payment records");
+});
+
+test("admin payment list is authorization-gated and renders guest payment details", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const ui = await readFile(new URL("../src/PaymentsAdmin.tsx", import.meta.url), "utf8");
+  const start = source.indexOf('if (path === "/api/admin/payments" && req.method === "GET")');
+  const end = source.indexOf('if (path === "/api/admin/system-settings")', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const route = source.slice(start, end);
+  const authorization = route.indexOf("await requireAdmin(req)");
+  const query = route.indexOf('db.from("payments").select');
+  assert.ok(authorization >= 0, "payment list must require admin authorization");
+  assert.ok(query > authorization, "authorize before reading payment records");
+  assert.match(route, /service_requests\(reference_number,customer_name\)/);
+  assert.match(ui, /api.get\('\/api\/admin\/payments'\)/);
+  assert.match(ui, /Payment reference:/);
+  assert.match(ui, /service_requests\?\.customer_name \|\| 'Student'/);
+  assert.match(ui, /item\.status \|\| 'Pending'/);
+});
