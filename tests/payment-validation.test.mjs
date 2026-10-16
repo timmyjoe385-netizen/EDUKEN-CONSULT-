@@ -232,3 +232,22 @@ test("payment ledger migration is reproducible, idempotent, and owner-scoped", a
   assert.match(migration, /grant select, insert, update on table public\.payments to service_role/i);
   assert.doesNotMatch(migration, /insert into public\.payments/i);
 });
+
+
+test("server rejects out-of-range JAMB candidate quantities instead of silently capping them", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const start = source.indexOf('if (path === "/api/payments/initialize"');
+  const end = source.indexOf('if (path === "/api/payments/verify"', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const initialize = source.slice(start, end);
+  assert.match(initialize, /const requestedQuantity = candidateMatch \? Number\(candidateMatch\[1\]\) : 1/);
+  assert.match(initialize, /!Number\.isSafeInteger\(requestedQuantity\) \|\| requestedQuantity < 1 \|\| requestedQuantity > 100/);
+  assert.match(initialize, /Candidate quantity must be a whole number from 1 to 100/);
+  assert.ok(
+    initialize.indexOf("if (!Number.isSafeInteger(requestedQuantity)") < initialize.indexOf("const trustedAmount = unitAmount * quantity"),
+    "reject invalid quantities before calculating the amount",
+  );
+  assert.doesNotMatch(initialize, /Math\.min\(100, Math\.max\(1, Number\(candidateMatch/);
+});
