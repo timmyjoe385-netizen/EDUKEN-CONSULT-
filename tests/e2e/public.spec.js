@@ -18,6 +18,17 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('wallet callback keeps its reference available for verification after sign-in', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const hub = readFileSync(new URL('../../src/PlatformHub.tsx', import.meta.url), 'utf8');
+
+  expect(app).toContain("eduken_pending_wallet_deposit_reference");
+  expect(app).toContain("window.sessionStorage.setItem(pendingWalletDepositKey, returnedReference)");
+  expect(hub).toContain("eduken_pending_wallet_deposit_reference");
+  expect(hub).toContain("api.post('/api/wallet/deposit/verify', { reference: pendingReference })");
+  expect(hub).toContain("window.sessionStorage.removeItem(pendingWalletDepositKey)");
+});
+
 test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
