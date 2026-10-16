@@ -1,4 +1,5 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
@@ -17,14 +18,6 @@ const json = (body: unknown, status = 200) =>
     status,
     headers: { ...cors, "Content-Type": "application/json" },
   });
-
-function parseJsonBody(text: string): { valid: true; value: unknown } | { valid: false; value: undefined } {
-  try {
-    return { valid: true, value: JSON.parse(text) };
-  } catch {
-    return { valid: false, value: undefined };
-  }
-}
 
 const url = Deno.env.get("SUPABASE_URL")!;
 const secretKeys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS")!);
@@ -1248,11 +1241,8 @@ Deno.serve(async (req) => {
       if (!CONTENT_TABLES.has(table)) return json({ error: "Unknown content type." }, 404);
       if (req.method === "GET") return json({ items: await adminList(table) });
       if (req.method === "POST") {
-        const parsedBody = parseJsonBody(await req.text());
-        if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
-        if (!parsedBody.value || typeof parsedBody.value !== "object" || Array.isArray(parsedBody.value)) {
-          return json({ error: "A JSON object request body is required." }, 400);
-        }
+        const parsedBody = parseJsonObjectBody(await req.text());
+        if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
         const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
@@ -1278,11 +1268,8 @@ Deno.serve(async (req) => {
         return json({ id: data.id }, 201);
       }
       if (req.method === "PUT" && id) {
-        const parsedBody = parseJsonBody(await req.text());
-        if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
-        if (!parsedBody.value || typeof parsedBody.value !== "object" || Array.isArray(parsedBody.value)) {
-          return json({ error: "A JSON object request body is required." }, 400);
-        }
+        const parsedBody = parseJsonObjectBody(await req.text());
+        if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
         const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
@@ -1351,11 +1338,8 @@ Deno.serve(async (req) => {
         if (error) throw error; return json({ items: data ?? [] });
       }
       if (req.method === "PUT" && id) {
-        const parsedBody = parseJsonBody(await req.text());
-        if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
-        if (!parsedBody.value || typeof parsedBody.value !== "object" || Array.isArray(parsedBody.value)) {
-          return json({ error: "A JSON object request body is required." }, 400);
-        }
+        const parsedBody = parseJsonObjectBody(await req.text());
+        if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
         const b = parsedBody.value as Record<string, unknown>;
         const { data, error } = await db.from("consultations").update(b).eq("id", id).select().maybeSingle();
         if (error) throw error; if (!data) return json({ error: "Consultation not found." }, 404);
