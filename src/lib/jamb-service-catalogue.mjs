@@ -112,7 +112,15 @@ export const JAMB_SERVICE_TEMPLATES = [
 ];
 
 export function isJambCatalogueService(service) {
-  return Boolean(service && (service.is_catalog_item === true || String(service.is_catalog_item).toLowerCase() === 'true'));
+  if (!service) return false;
+  if (service.is_catalog_item === true || String(service.is_catalog_item).toLowerCase() === 'true') return true;
+  // Legacy service rows can already exist in the database before they are flagged
+  // as catalogue items. Recognize only exact known names so the public catalogue
+  // does not disappear or show the setup warning while admin config is being migrated.
+  const name = String(service.name || '').trim().toLowerCase();
+  return JAMB_SERVICE_TEMPLATES.some(template =>
+    [template.name, ...template.legacyNames].some(candidate => candidate.trim().toLowerCase() === name)
+  );
 }
 
 export function jambServiceFieldsFor(service) {
