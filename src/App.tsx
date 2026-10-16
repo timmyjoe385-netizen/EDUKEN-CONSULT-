@@ -1260,7 +1260,7 @@ function App() {
                     {systemHealth.checks.map(check => (
                       <article className="system-setting-row" key={check.name}>
                         <span className="system-setting-copy"><b>{check.name}</b><small>{check.detail}</small><small>Checked: {new Date(check.checkedAt).toLocaleString()}</small></span>
-                        <span className="tag" role="status">{check.status === 'operational' ? '🟢 OPERATIONAL' : check.status === 'degraded' ? '🟠 DEGRADED' : '🔴 DOWN'}</span>
+                        <span className="tag" role="status">{check.status === 'operational' ? '🟢 OPERATIONAL' : check.status === 'degraded' ? '🟠 DEGRADED' : check.status === 'down' ? '🔴 DOWN' : '⚪ NOT CHECKED'}</span>
                       </article>
                     ))}
                   </div>
