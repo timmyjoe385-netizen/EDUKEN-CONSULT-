@@ -1811,6 +1811,11 @@ Deno.serve(async (req) => {
       }
     }
 
+    if (path === "/api/admin/session" && req.method === "GET") {
+      await requireAdmin(req);
+      return json({ admin: true });
+    }
+
     if (path === "/api/admin/payments" && req.method === "GET") {
       await requireAdmin(req);
       const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
