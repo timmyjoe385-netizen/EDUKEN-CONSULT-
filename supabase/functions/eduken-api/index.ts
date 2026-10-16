@@ -1110,6 +1110,17 @@ Deno.serve(async (req) => {
         .select("id,status,payment_reference").eq("service_request_id", request.id).eq("status", "Paid").maybeSingle();
       if (paidLookupError) throw paidLookupError;
       if (paidPayment) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+        .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
+      if (pendingLookupError) throw pendingLookupError;
+      if (pendingPayment) {
+        const savedAuthorizationUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: pendingPayment.authorization_url } });
+        if (savedAuthorizationUrl && pendingPayment.payment_reference) {
+          return json({ payment: pendingPayment, authorizationUrl: savedAuthorizationUrl, reference: pendingPayment.payment_reference, reused: true });
+        }
+        return json({ error: "A payment attempt already exists for this request. Please contact EDUKEN CONSULT with your request reference before trying again.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+      }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!secret) return json({ error: "Payment gateway is not configured yet. Contact EDUKEN CONSULT; no payment has been taken.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
@@ -1128,9 +1139,21 @@ Deno.serve(async (req) => {
       if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
       const { data: payment, error } = await db.from("payments").insert({
         user_id: request.user_id ?? null, service_request_id: request.id, amount: trustedAmount,
-        currency: "NGN", status: "Pending", payment_reference: reference
-      }).select("id,amount,currency,status,service_request_id,payment_reference").single();
-      if (error) throw error;
+        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: authorizationUrl
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").single();
+      if (error) {
+        if (error.code === "23505") {
+          const { data: racedPayment, error: racedLookupError } = await db.from("payments")
+            .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+            .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
+          if (racedLookupError) throw racedLookupError;
+          const racedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: racedPayment?.authorization_url } });
+          if (racedPayment && racedUrl && racedPayment.payment_reference) {
+            return json({ payment: racedPayment, authorizationUrl: racedUrl, reference: racedPayment.payment_reference, reused: true });
+          }
+        }
+        throw error;
+      }
       return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
