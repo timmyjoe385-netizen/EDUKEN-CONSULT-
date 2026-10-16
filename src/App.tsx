@@ -1039,9 +1039,18 @@ function App() {
       const result = await api.post('/api/payments/initialize-guest', {
         serviceRequestId: checkoutSession.requestId, checkoutToken: checkoutSession.checkoutToken, email,
       });
-      const next = { ...checkoutSession, email, paymentReference: result.data.reference, paymentStatus: 'Pending' };
+      const confirmedAmount = Number(result.data?.payment?.amount);
+      if (!Number.isFinite(confirmedAmount) || confirmedAmount <= 0) {
+        throw new Error('The server did not return a valid payment amount. No payment was started.');
+      }
+      const priceChanged = Math.round(confirmedAmount * 100) !== Math.round(Number(checkoutSession.amount) * 100);
+      const next = { ...checkoutSession, amount: confirmedAmount, email, paymentReference: result.data.reference, paymentStatus: 'Pending' };
       setCheckoutSession(next);
       try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* token remains in memory */ }
+      if (priceChanged) {
+        setPaymentMessage('The published price changed since this request was opened. The total above has been updated. Review the new amount, then press Continue to Paystack again. No payment has been taken yet.');
+        return;
+      }
       const authorizationUrl = result.data.authorizationUrl;
       if (typeof authorizationUrl !== 'string' || !authorizationUrl.startsWith('https://checkout.paystack.com/')) {
         throw new Error('Paystack returned an invalid checkout address. No payment was started.');
@@ -1970,6 +1979,7 @@ function App() {
                 <dl className="make-payments-summary">
                   <div><dt>Service</dt><dd>{checkoutSession.serviceName}</dd></div>
                   <div><dt>Request reference</dt><dd>{checkoutSession.referenceNumber || 'Saved'}</dd></div>
+                  {Number(checkoutSession.quantity || 1) > 1 ? <div><dt>Quantity</dt><dd>{Number(checkoutSession.quantity)}</dd></div> : null}
                   <div><dt>Amount due</dt><dd>₦{Number(checkoutSession.amount).toLocaleString('en-NG')}</dd></div>
                   <div><dt>Payment status</dt><dd>{checkoutSession.paymentStatus || 'Not paid'}</dd></div>
                 </dl>
