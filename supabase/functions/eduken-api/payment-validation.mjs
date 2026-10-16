@@ -53,6 +53,6 @@ export function getPaystackAuthorizationUrl(result) {
  * as unconfirmed by the caller; this covers HTTP responses.
  */
 export function getPaystackInitializationFailureDisposition({ ok, status, hasAuthorizationUrl }) {
-  if (status >= 500 || (ok && !hasAuthorizationUrl)) return "unconfirmed";
+  if (status === 408 || status >= 500 || (ok && !hasAuthorizationUrl)) return "unconfirmed";
   return "failed";
 }
