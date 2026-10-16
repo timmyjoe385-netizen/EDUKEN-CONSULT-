@@ -606,6 +606,7 @@ test('service request validator rejects invalid payloads before database writes'
     details: 'Please advise',
     email: 'ada@example.com',
     serviceId: null,
+    quantity: 1,
   });
 
   for (const payload of [
