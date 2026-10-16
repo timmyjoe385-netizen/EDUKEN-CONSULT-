@@ -5,6 +5,7 @@ import { isOpportunityVerified, validateOpportunityVerification } from "./opport
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
+import { parseJsonBody } from "./json-body-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -1240,7 +1241,9 @@ Deno.serve(async (req) => {
       if (!CONTENT_TABLES.has(table)) return json({ error: "Unknown content type." }, 404);
       if (req.method === "GET") return json({ items: await adminList(table) });
       if (req.method === "POST") {
-        const b = mapAdminInput(table, await req.json());
+        const parsedBody = parseJsonBody(await req.text());
+        if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
+        const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
           if (!normalizedPrice.valid) {
@@ -1265,7 +1268,9 @@ Deno.serve(async (req) => {
         return json({ id: data.id }, 201);
       }
       if (req.method === "PUT" && id) {
-        const b = mapAdminInput(table, await req.json());
+        const parsedBody = parseJsonBody(await req.text());
+        if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
+        const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
           if (!normalizedPrice.valid) {
@@ -1333,7 +1338,9 @@ Deno.serve(async (req) => {
         if (error) throw error; return json({ items: data ?? [] });
       }
       if (req.method === "PUT" && id) {
-        const b = await req.json();
+        const parsedBody = parseJsonBody(await req.text());
+        if (!parsedBody.valid) return json({ error: "A valid JSON request body is required." }, 400);
+        const b = parsedBody.value;
         const { data, error } = await db.from("consultations").update(b).eq("id", id).select().maybeSingle();
         if (error) throw error; if (!data) return json({ error: "Consultation not found." }, 404);
         return json({ ok: true });
