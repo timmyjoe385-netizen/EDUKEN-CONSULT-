@@ -771,12 +771,14 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
+test('public header exposes customer sign-in and admin login while /admin keeps its OAuth return path', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
-  // Public navigation must not advertise the admin route.
+  // Both entry points must be discoverable from the public header.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Admin Login' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveAttribute('href', '/admin');
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
   await page.route(authorizeEndpoint + '**', route =>
@@ -802,6 +804,27 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
   expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
 });
 
+
+
+test('header customer sign-in starts Google OAuth and returns to the public site', async ({ page }) => {
+  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+  await page.route(authorizeEndpoint + '**', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+    }),
+  );
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const siteOrigin = new URL(page.url()).origin;
+  const authNavigation = page.waitForRequest(
+    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
+  );
+  await page.getByRole('button', { name: 'Sign in' }).click();
+  const authUrl = new URL((await authNavigation).url());
+  expect(authUrl.searchParams.get('provider')).toBe('google');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
+});
 
 test('public AI assistant rejects oversized questions before provider work', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
