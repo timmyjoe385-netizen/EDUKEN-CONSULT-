@@ -720,6 +720,7 @@ test('guest payment initialization validates saved quantity and catalogue eligib
   expect(routeEnd).toBeGreaterThan(routeStart);
   const route = source.slice(routeStart, routeEnd);
   expect(route).toContain('services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('request.status === "Paid"');
   expect(route).toContain('Number.isInteger(quantity)');
   expect(route).toContain('quantity < 1 || quantity > 100');
   expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
