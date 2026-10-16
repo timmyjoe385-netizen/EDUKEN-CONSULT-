@@ -1432,7 +1432,7 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
   expect(pageErrors, 'opening the JAMB request dialog must not throw').toEqual([]);
 });
 
-test('admin sign-in is reachable from the footer and opens directly at /admin', async ({ page }) => {
+test('admin sign-in is not linked publicly and remains reachable directly at /admin', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1441,7 +1441,7 @@ test('admin sign-in is reachable from the footer and opens directly at /admin', 
     }),
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('footer a[href="/admin"]')).toContainText('Admin sign in');
+  await expect(page.locator('footer a[href="/admin"]')).toHaveCount(0);
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
