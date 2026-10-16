@@ -272,7 +272,7 @@ test('service request dialog validates required fields without sending a request
     name: 'Playwright Service Request Check',
   });
   await expect(dialog).toBeVisible();
-  for (const name of ['Full name', 'WhatsApp number', 'Additional notes']) {
+  for (const name of ['Full name', 'WhatsApp number', 'Additional notes (required)']) {
     await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
     expect(await dialog.getByRole('textbox', { name }).evaluate(element => element.checkValidity())).toBe(false);
   }
