@@ -1446,7 +1446,7 @@ test('admin workspace access is decided by server-side authorization, not a publ
   expect(app).not.toContain('edukenconsult00@gmail.com');
 });
 
-test('admin sign-in is not linked publicly and remains reachable directly at /admin', async ({ page }) => {
+test('admin sign-in is not linked publicly and /admin shows only the private sign-in page', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1459,6 +1459,8 @@ test('admin sign-in is not linked publicly and remains reachable directly at /ad
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.locator('.site')).toHaveCount(0);
+  await expect(page.locator('.admin-shell')).toHaveCount(0);
 });
 
 
