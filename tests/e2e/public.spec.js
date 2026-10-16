@@ -1357,3 +1357,57 @@ test('admin sign-in is reachable from the footer and opens directly at /admin', 
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
 });
+
+
+test('service request form clearly labels and outlines customer detail fields', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'service-request-form-fixture',
+          name: 'Service Request Form Fixture',
+          category: 'Consultation',
+          description: 'A safe fixture for checking customer request fields.',
+          price: 2500,
+          is_published: true,
+          is_available: true,
+          is_catalog_item: false,
+          status: 'PUBLISHED',
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const requestButton = page.getByRole('button', { name: /Request this service/i }).last();
+  await expect(requestButton).toBeVisible();
+  await requestButton.click();
+
+  const dialog = page.getByRole('dialog', { name: /Service Request Form Fixture/i });
+  await expect(dialog.getByLabel('Full name *')).toBeVisible();
+  await expect(dialog.getByLabel('WhatsApp number *')).toBeVisible();
+  await expect(dialog.getByLabel('Email address (optional)')).toBeVisible();
+  await expect(dialog.getByLabel('Additional details (required)')).toBeVisible();
+
+  const nameInput = dialog.locator('#service-request-customer-name');
+  const fieldStyle = await nameInput.evaluate(element => {
+    const style = window.getComputedStyle(element);
+    return {
+      borderStyle: style.borderStyle,
+      borderWidth: style.borderTopWidth,
+      borderColor: style.borderTopColor,
+      minHeight: style.minHeight,
+    };
+  });
+  expect(fieldStyle.borderStyle).toBe('solid');
+  expect(fieldStyle.borderWidth).toBe('2px');
+  expect(fieldStyle.minHeight).toBe('48px');
+  expect(fieldStyle.borderColor).not.toBe('rgba(0, 0, 0, 0)');
+  await expect(dialog).toContainText(/checkout is not connected to this form yet/i);
+});
