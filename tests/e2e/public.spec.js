@@ -1242,3 +1242,40 @@ test('admissions and updates expose persisted opportunity-style admin controls',
     expect(migration).toContain(column);
   }
 });
+
+
+test('legacy JAMB service rows remain visible without being made available for checkout', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'legacy-jamb-epin-fixture',
+          name: 'JAMB e-PIN (UTME Without Mock)',
+          category: 'JAMB Services',
+          description: 'Legacy service row fixture.',
+          requirements: 'Test fixture only.',
+          price: 7128,
+          is_available: false,
+          is_catalog_item: false,
+          is_published: true,
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/#jamb-services', { waitUntil: 'domcontentloaded' });
+
+  const card = page.locator('.jamb-service-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB e-PIN (UTME Without Mock)' }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Unavailable');
+  await expect(card.getByRole('button', { name: 'Currently unavailable' })).toBeDisabled();
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+});
