@@ -20,6 +20,7 @@ test("accepts and normalizes a valid service request", () => {
       details: "Please contact me about admission support.",
       email: "ada@example.com",
       serviceId: "550e8400-e29b-41d4-a716-446655440000",
+      quantity: 1,
     },
   });
 });
@@ -77,4 +78,14 @@ test("published service guard accepts only an existing explicitly published serv
   assert.equal(isPublishedService({ id: "service-1", is_published: "true" }), false);
   assert.equal(isPublishedService(null), false);
   assert.equal(isPublishedService(undefined), false);
+});
+
+
+test("accepts a bounded integer quantity for catalogue service requests", () => {
+  const base = { customerName: "Ada", whatsapp: "+2348000000000", details: "Candidate registration" };
+  assert.equal(validateServiceRequestBody({ ...base, quantity: 3 }).data.quantity, 3);
+  assert.equal(validateServiceRequestBody(base).data.quantity, 1);
+  for (const quantity of [0, -1, 1.5, 101, "2", null, true, {}, []]) {
+    assert.ok(validateServiceRequestBody({ ...base, quantity }).error, "Expected quantity rejection for " + String(quantity));
+  }
 });

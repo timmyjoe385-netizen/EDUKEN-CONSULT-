@@ -272,7 +272,7 @@ test('service request dialog validates required fields without sending a request
     name: 'Playwright Service Request Check',
   });
   await expect(dialog).toBeVisible();
-  for (const name of ['Full name', 'WhatsApp number', 'Additional notes']) {
+  for (const name of ['Full name', 'WhatsApp number', 'Additional notes (required)']) {
     await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
     expect(await dialog.getByRole('textbox', { name }).evaluate(element => element.checkValidity())).toBe(false);
   }
@@ -606,6 +606,7 @@ test('service request validator rejects invalid payloads before database writes'
     details: 'Please advise',
     email: 'ada@example.com',
     serviceId: null,
+    quantity: 1,
   });
 
   for (const payload of [
@@ -695,6 +696,37 @@ test('admin service request status changes are guarded and payment-confirmed sta
   expect(app).toContain('{item.status === \'Paid\' && <option value="Paid" disabled>Paid (payment confirmed)</option>}');
 });
  
+test('authenticated payment initialization uses saved quantity and refuses already-paid requests', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/payments/initialize" && req.method === "POST")');
+  const routeEnd = source.indexOf('if (path === "/api/payments/verify" && req.method === "POST")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = source.slice(routeStart, routeEnd);
+  expect(route).toContain('status,quantity,services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('request.status === "Paid"');
+  expect(route).toContain('.eq("service_request_id", request.id).eq("status", "Paid").maybeSingle()');
+  expect(route).toContain('Number(service?.price) * quantity');
+  expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
+  expect(route).toContain('.eq("service_request_id", request.id).eq("status", "Pending").maybeSingle()');
+  expect(route).not.toContain('.eq("service_request_id", request.id).eq("user_id", user.id).eq("status", "Pending")');
+});
+
+test('guest payment initialization validates saved quantity and catalogue eligibility', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/payments/initialize-guest" && req.method === "POST")');
+  const routeEnd = source.indexOf('if (path === "/api/payments/verify-guest" && req.method === "POST")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = source.slice(routeStart, routeEnd);
+  expect(route).toContain('services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('request.status === "Paid"');
+  expect(route).toContain('Number.isInteger(quantity)');
+  expect(route).toContain('quantity < 1 || quantity > 100');
+  expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
+  expect(route).toContain('Number(service?.price) * quantity');
+});
+
 test('database hardening migration removes direct client access to consultation submissions', async () => {
   const migration = readFileSync(
     'supabase/migrations/20261014135746_harden_public_table_grants.sql',
@@ -1356,4 +1388,82 @@ test('admin sign-in is reachable from the footer and opens directly at /admin', 
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+});
+
+
+test('service request form clearly labels and outlines customer detail fields', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'service-request-form-fixture',
+          name: 'Service Request Form Fixture',
+          category: 'Consultation',
+          description: 'A safe fixture for checking customer request fields.',
+          price: 2500,
+          is_published: true,
+          is_available: true,
+          is_catalog_item: false,
+          status: 'PUBLISHED',
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const requestButton = page.getByRole('button', { name: /Request this service/i }).last();
+  await expect(requestButton).toBeVisible();
+  await requestButton.click();
+
+  const dialog = page.getByRole('dialog', { name: /Service Request Form Fixture/i });
+  await expect(dialog.getByLabel('Full name *')).toBeVisible();
+  await expect(dialog.getByLabel('WhatsApp number *')).toBeVisible();
+  await expect(dialog.getByLabel('Email address (optional)')).toBeVisible();
+  await expect(dialog.getByLabel('Additional notes (required)')).toBeVisible();
+
+  const nameInput = dialog.locator('#service-request-customer-name');
+  const fieldStyle = await nameInput.evaluate(element => {
+    const style = window.getComputedStyle(element);
+    return {
+      borderStyle: style.borderStyle,
+      borderWidth: style.borderTopWidth,
+      borderColor: style.borderTopColor,
+      minHeight: style.minHeight,
+    };
+  });
+  expect(fieldStyle.borderStyle).toBe('solid');
+  expect(fieldStyle.borderWidth).toBe('2px');
+  expect(fieldStyle.minHeight).toBe('48px');
+  expect(fieldStyle.borderColor).not.toBe('rgba(0, 0, 0, 0)');
+  await expect(dialog).toContainText(/continue to secure checkout for priced services/i);
+});
+
+
+test('Make Payments page shows the request summary without exposing its checkout token in the URL', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify({
+      requestId: '123e4567-e89b-42d3-a456-426614174000',
+      checkoutToken: 'a'.repeat(64),
+      referenceNumber: 'EDK-20261016-AB12CD34',
+      serviceName: 'Admission Consultation',
+      amount: 2500,
+      email: 'student@example.com',
+      paymentStatus: 'Not paid',
+    }));
+  });
+
+  await page.goto('/make-payments', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Make Payments' })).toBeVisible();
+  await expect(page.getByText('Admission Consultation')).toBeVisible();
+  await expect(page.getByText('EDK-20261016-AB12CD34')).toBeVisible();
+  await expect(page.getByText('₦2,500')).toBeVisible();
+  await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
+  await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
+  expect(page.url()).not.toContain('a'.repeat(64));
 });

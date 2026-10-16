@@ -121,6 +121,11 @@ function App() {
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
+  const [checkoutSession, setCheckoutSession] = useState<any>(null);
+  const [paymentEmail, setPaymentEmail] = useState('');
+  const [paymentSubmitting, setPaymentSubmitting] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
   const [alertEmail, setAlertEmail] = useState('');
   const [alertTopics, setAlertTopics] = useState<string[]>(['admissions', 'scholarships-grants', 'jobs-internships']);
@@ -377,6 +382,43 @@ function App() {
       window.removeEventListener('beforeinstallprompt', onInstallPrompt);
       window.removeEventListener('appinstalled', onInstalled);
     };
+  }, []);
+
+  useEffect(() => {
+    if (window.location.pathname.replace(/\/+$/, '') !== '/make-payments') return;
+    setPaymentPage(true);
+    let saved: any = null;
+    try {
+      const raw = window.sessionStorage.getItem('eduken_guest_checkout');
+      saved = raw ? JSON.parse(raw) : null;
+    } catch { saved = null; }
+    if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
+      setCheckoutSession(saved);
+      setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
+    }
+    const params = new URLSearchParams(window.location.search);
+    const returnedReference = params.get('reference') || params.get('trxref') || '';
+    if (returnedReference) {
+      window.history.replaceState({}, document.title, '/make-payments');
+      if (!saved?.checkoutToken || !saved?.requestId) {
+        setPaymentMessage('We could not find this checkout session in this browser. Please contact EDUKEN CONSULT with your service request reference before trying again.');
+        return;
+      }
+      setPaymentMessage('Payment returned from the gateway. Verifying the transaction securely…');
+      void api.post('/api/payments/verify-guest', { serviceRequestId: saved.requestId, checkoutToken: saved.checkoutToken, reference: returnedReference })
+        .then((result: any) => {
+          if (result.data?.paid) {
+            const next = { ...saved, paymentStatus: 'Paid', paymentReference: returnedReference };
+            setCheckoutSession(next);
+            setPaymentMessage('Payment confirmed successfully. Your service request is marked as paid. Keep your reference for follow-up.');
+            try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* success remains visible */ }
+          } else {
+            setPaymentMessage('The payment is not confirmed yet. Do not pay again immediately. Refresh this page or contact EDUKEN CONSULT with your payment reference.');
+          }
+        }).catch((error: unknown) => {
+          setPaymentMessage(error instanceof Error ? error.message : 'We could not verify the payment yet. Please contact EDUKEN CONSULT before paying again.');
+        });
+    }
   }, []);
 
   useEffect(() => installAnalyticsTracking(), []);
@@ -933,30 +975,90 @@ function App() {
     if (!selectedService || serviceSubmitting) return;
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
+    const requestedQuantity = isJambCatalogueService(selectedService) ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))) : 1;
     setServiceSubmitting(true);
     try {
       const result = await api.post('/api/service-requests', {
         serviceId: selectedService.id && !String(selectedService.id).startsWith('fallback-') ? selectedService.id : null,
+        quantity: requestedQuantity,
         customerName: String(fd.get('customerName') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
         email: String(fd.get('email') || '').trim(),
         details: [
           ...(isJambCatalogueService(selectedService) ? [
-            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))),
-            'Estimated total: ₦' + (Number(selectedService.price) * Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))).toLocaleString('en-NG'),
+            'Number of candidates: ' + String(requestedQuantity),
+            'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG'),
           ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
         ].filter(Boolean).join('\n'),
       });
-      formElement.reset();
-      setSelectedService(null);
-      showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. EDUKEN will contact you.');
+      const savedRequest = result.data?.request;
+      const checkoutToken = result.data?.checkoutToken;
+      const payableAmount = Number(selectedService.price) * requestedQuantity;
+      if (savedRequest?.id && typeof checkoutToken === 'string' && checkoutToken.length >= 32 && Number.isFinite(payableAmount) && payableAmount > 0) {
+        const nextCheckout = {
+          requestId: String(savedRequest.id), checkoutToken,
+          referenceNumber: String(result.data.referenceNumber || savedRequest.reference_number || ''),
+          serviceName: String(selectedService.name || 'EDUKEN service'), amount: payableAmount, quantity: requestedQuantity,
+          email: String(fd.get('email') || '').trim(), customerName: String(fd.get('customerName') || '').trim(),
+          paymentStatus: 'Not paid',
+        };
+        try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(nextCheckout)); }
+        catch {
+          showToast('Your request was saved, but this browser could not keep the checkout session. Contact EDUKEN CONSULT with reference ' + nextCheckout.referenceNumber + '.');
+          formElement.reset(); setSelectedService(null); return;
+        }
+        formElement.reset();
+        setCheckoutSession(nextCheckout); setPaymentEmail(nextCheckout.email); setPaymentMessage('');
+        setPaymentPage(true); setSelectedService(null);
+        window.history.pushState({}, document.title, '/make-payments');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        formElement.reset(); setSelectedService(null);
+        showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. The service price may need confirmation; EDUKEN will contact you.');
+      }
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
     } finally {
       setServiceSubmitting(false);
     }
+  };
+
+  const submitGuestPayment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
+    const email = paymentEmail.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setPaymentMessage('Enter a valid email address so Paystack can send your payment receipt.');
+      return;
+    }
+    setPaymentSubmitting(true);
+    setPaymentMessage('Preparing secure Paystack checkout…');
+    try {
+      const result = await api.post('/api/payments/initialize-guest', {
+        serviceRequestId: checkoutSession.requestId, checkoutToken: checkoutSession.checkoutToken, email,
+      });
+      const confirmedAmount = Number(result.data?.payment?.amount);
+      if (!Number.isFinite(confirmedAmount) || confirmedAmount <= 0) {
+        throw new Error('The server did not return a valid payment amount. No payment was started.');
+      }
+      const priceChanged = Math.round(confirmedAmount * 100) !== Math.round(Number(checkoutSession.amount) * 100);
+      const next = { ...checkoutSession, amount: confirmedAmount, email, paymentReference: result.data.reference, paymentStatus: 'Pending' };
+      setCheckoutSession(next);
+      try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* token remains in memory */ }
+      if (priceChanged) {
+        setPaymentMessage('The published price changed since this request was opened. The total above has been updated. Review the new amount, then press Continue to Paystack again. No payment has been taken yet.');
+        return;
+      }
+      const authorizationUrl = result.data.authorizationUrl;
+      if (typeof authorizationUrl !== 'string' || !authorizationUrl.startsWith('https://checkout.paystack.com/')) {
+        throw new Error('Paystack returned an invalid checkout address. No payment was started.');
+      }
+      window.location.assign(authorizationUrl);
+    } catch (error) {
+      setPaymentMessage(error instanceof Error ? error.message : 'Could not start payment. Please try again or contact EDUKEN CONSULT.');
+    } finally { setPaymentSubmitting(false); }
   };
 
   const submitEmailAlerts = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -1853,6 +1955,54 @@ function App() {
     );
   }
 
+  if (paymentPage) {
+    return (
+      <div className="site make-payments-page">
+        <header className="nav">
+          <a className="brand" href="/" onClick={event => { event.preventDefault(); window.history.pushState({}, document.title, '/'); setPaymentPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+            <img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" />
+            <span>EDUKEN <b>CONSULT</b></span>
+          </a>
+        </header>
+        <main className="make-payments-main">
+          <section className="make-payments-card" aria-labelledby="make-payments-title">
+            <span className="kicker">SECURE CHECKOUT</span>
+            <h1 id="make-payments-title">Make Payments</h1>
+            {!checkoutSession ? (
+              <>
+                <p>There is no active checkout session in this browser. Open the service request again or contact EDUKEN CONSULT if you already submitted a request.</p>
+                <a className="primary make-payments-link" href="/">Back to EDUKEN CONSULT</a>
+              </>
+            ) : (
+              <>
+                <p>Review your service details before continuing to Paystack. Never send your card PIN or banking password in a chat.</p>
+                <dl className="make-payments-summary">
+                  <div><dt>Service</dt><dd>{checkoutSession.serviceName}</dd></div>
+                  <div><dt>Request reference</dt><dd>{checkoutSession.referenceNumber || 'Saved'}</dd></div>
+                  {Number(checkoutSession.quantity || 1) > 1 ? <div><dt>Quantity</dt><dd>{Number(checkoutSession.quantity)}</dd></div> : null}
+                  <div><dt>Amount due</dt><dd>₦{Number(checkoutSession.amount).toLocaleString('en-NG')}</dd></div>
+                  <div><dt>Payment status</dt><dd>{checkoutSession.paymentStatus || 'Not paid'}</dd></div>
+                </dl>
+                {checkoutSession.paymentStatus !== 'Paid' ? (
+                  <form className="service-request-form" onSubmit={submitGuestPayment}>
+                    <label className="service-request-field" htmlFor="make-payments-email">
+                      <span>Receipt email <b aria-hidden="true">*</b></span>
+                      <input id="make-payments-email" type="email" autoComplete="email" required maxLength={200} value={paymentEmail} onChange={event => setPaymentEmail(event.target.value)} placeholder="Enter the email for your receipt" />
+                    </label>
+                    <p className="make-payments-security">You’ll complete payment on Paystack’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
+                    {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
+                    <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to Paystack'}</button>
+                  </form>
+                ) : <p className="make-payments-success" role="status">{paymentMessage || 'Payment confirmed. Thank you.'}</p>}
+                <button type="button" className="secondary make-payments-back" onClick={() => { window.history.pushState({}, document.title, '/'); setPaymentPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Back to EDUKEN CONSULT</button>
+              </>
+            )}
+          </section>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="site">
       {toast && (
@@ -2745,22 +2895,31 @@ function App() {
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
           <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
-              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. This form records a request only; no payment is taken here.</p></div>
+              <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. Submit your details to continue to secure checkout for priced services. If a price needs confirmation, EDUKEN will contact you before payment.</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
             </div>
-            <form onSubmit={submitServiceRequest} style={{ display: 'grid', gap: 12 }}>
-              <input name="customerName" required maxLength={120} placeholder="Your full name" aria-label="Your full name" />
-              <input name="whatsapp" required maxLength={40} placeholder="WhatsApp number" aria-label="WhatsApp number" />
-              <input name="email" type="email" maxLength={200} placeholder="Email (optional)" aria-label="Email (optional)" />
+            <form className="service-request-form" onSubmit={submitServiceRequest}>
+              <label className="service-request-field" htmlFor="service-request-customer-name">
+                <span>Full name <b aria-hidden="true">*</b></span>
+                <input id="service-request-customer-name" name="customerName" required maxLength={120} autoComplete="name" placeholder="Enter your full name" />
+              </label>
+              <label className="service-request-field" htmlFor="service-request-whatsapp">
+                <span>WhatsApp number <b aria-hidden="true">*</b></span>
+                <input id="service-request-whatsapp" name="whatsapp" required maxLength={40} autoComplete="tel" inputMode="tel" placeholder="Enter your WhatsApp number" />
+              </label>
+              <label className="service-request-field" htmlFor="service-request-email">
+                <span>Email address <small>(optional)</small></span>
+                <input id="service-request-email" name="email" type="email" maxLength={200} autoComplete="email" placeholder="Enter your email address" />
+              </label>
               {isJambCatalogueService(selectedService) ? (
-                <label style={{ display: 'grid', gap: 6 }}>
-                  <span style={{ fontWeight: 600 }}>Number of candidates *</span>
+                <label className="service-request-field">
+                  <span>Number of candidates <b aria-hidden="true">*</b></span>
                   <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
                   <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
                 </label>
               ) : null}
               {jambServiceFieldsFor(selectedService).map(field => (
-                <label key={field.name} style={{ display: 'grid', gap: 6 }}>
+                <label key={field.name} className="service-request-field">
                   <span style={{ fontWeight: 600 }}>{field.label} *</span>
                   {field.options ? (
                     <select name={'serviceField_' + field.name} required defaultValue="" aria-label={field.label}>
@@ -2773,7 +2932,10 @@ function App() {
                 </label>
               ))}
               {selectedService.requirements ? <p style={{ margin: 0, fontSize: 13, whiteSpace: 'pre-line', color: '#526158' }}><b>Before you submit</b>{'\n'}{selectedService.requirements}</p> : null}
-              <textarea name="details" maxLength={4000} rows={4} placeholder="Additional notes (optional)" aria-label="Additional notes" required={!jambServiceFieldsFor(selectedService).length} />
+              <label className="service-request-field" htmlFor="service-request-details">
+                <span>Additional notes <small>{jambServiceFieldsFor(selectedService).length ? "(optional)" : "(required)"}</small></span>
+                <textarea id="service-request-details" name="details" maxLength={4000} rows={4} placeholder="Tell us what you need help with…" required={!jambServiceFieldsFor(selectedService).length} />
+              </label>
               <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>

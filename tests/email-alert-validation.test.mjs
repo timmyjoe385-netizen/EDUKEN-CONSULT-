@@ -52,6 +52,8 @@ test("rate-limit policy limits public form spam, confirmation-email abuse and to
   assert.deepEqual(emailAlertRateLimitPolicy("subscribe"), { limit: 5, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("consultation"), { limit: 5, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("service-request"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("guest-payment-initialize"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("guest-payment-verify"), { limit: 20, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("verify"), { limit: 20, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("unsubscribe"), { limit: 20, windowSeconds: 900 });
   assert.equal(emailAlertRateLimitPolicy("unknown"), null);
