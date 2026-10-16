@@ -291,10 +291,73 @@ begin
 end;
 $$;
 
+create or replace function public.refund_customer_wallet_service_payment(
+  p_payment_id uuid,
+  p_reason text
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = ''
+as $
+declare
+  v_payment public.payments%rowtype;
+  v_wallet public.customer_wallets%rowtype;
+  v_existing public.wallet_transactions%rowtype;
+begin
+  if p_payment_id is null or length(trim(coalesce(p_reason, ''))) < 4 or length(trim(coalesce(p_reason, ''))) > 200 then
+    raise exception 'WALLET_REFUND_INVALID';
+  end if;
+
+  select * into v_payment
+  from public.payments
+  where id = p_payment_id
+  for update;
+
+  if not found or v_payment.payment_type <> 'wallet_service' or v_payment.status <> 'Paid' or v_payment.user_id is null then
+    raise exception 'WALLET_REFUND_NOT_ALLOWED';
+  end if;
+
+  select * into v_existing
+  from public.wallet_transactions
+  where user_id = v_payment.user_id
+    and idempotency_key = 'wallet-refund:' || v_payment.id;
+
+  if found then
+    select * into v_wallet from public.customer_wallets where user_id = v_payment.user_id;
+    return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', true, 'transaction_id', v_existing.id);
+  end if;
+
+  select * into v_wallet
+  from public.customer_wallets
+  where user_id = v_payment.user_id
+  for update;
+  if not found then raise exception 'WALLET_REFUND_WALLET_MISSING'; end if;
+
+  update public.customer_wallets
+  set balance = balance + v_payment.amount, updated_at = now()
+  where id = v_wallet.id
+  returning * into v_wallet;
+
+  insert into public.wallet_transactions (
+    wallet_id, user_id, transaction_type, amount, balance_after,
+    idempotency_key, service_request_id, description
+  ) values (
+    v_wallet.id, v_payment.user_id, 'refund', v_payment.amount, v_wallet.balance,
+    'wallet-refund:' || v_payment.id, v_payment.service_request_id,
+    'Wallet refund for ' || coalesce(v_payment.payment_reference, v_payment.id::text) || ': ' || trim(p_reason)
+  ) returning * into v_existing;
+
+  return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', false, 'transaction_id', v_existing.id);
+end;
+$;
+
 revoke all on function public.settle_customer_wallet_deposit(uuid, text) from public, anon, authenticated;
 revoke all on function public.pay_service_from_customer_wallet(uuid, uuid, text, text) from public, anon, authenticated;
+revoke all on function public.refund_customer_wallet_service_payment(uuid, text) from public, anon, authenticated;
 grant execute on function public.settle_customer_wallet_deposit(uuid, text) to service_role;
 grant execute on function public.pay_service_from_customer_wallet(uuid, uuid, text, text) to service_role;
+grant execute on function public.refund_customer_wallet_service_payment(uuid, text) to service_role;
 
 comment on table public.customer_wallets is
   'EDUKEN internal NGN service-credit wallets; balances change only through server-side atomic functions.';
