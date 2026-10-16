@@ -1201,7 +1201,7 @@ Deno.serve(async (req) => {
         .select("id,user_id,amount,currency,status,service_request_id,payment_reference")
         .eq("payment_reference", reference).maybeSingle();
       if (lookupError) throw lookupError;
-      if (!existingPayment || (user && existingPayment.user_id && existingPayment.user_id !== user.id)) return json({ error: "Payment record not found." }, 404);
+      if (!existingPayment || (existingPayment.user_id && (!user || existingPayment.user_id !== user.id))) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
