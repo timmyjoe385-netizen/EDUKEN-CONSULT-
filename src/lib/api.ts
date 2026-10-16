@@ -1,3 +1,4 @@
+import { shouldBlockWrite } from './api-safety.js';
 const SUPABASE_URL = 'https://pphxltbkwygqjtjgkhxu.supabase.co';
 const SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
@@ -61,7 +62,6 @@ const validSession = async () => {
   return refreshSession(session);
 };
 
-import { shouldBlockWrite } from './api-safety.js';
 
 const request = async (
   path: string,
