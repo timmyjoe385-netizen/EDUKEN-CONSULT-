@@ -314,3 +314,32 @@ test("admin payment list is authorization-gated and renders guest payment detail
   assert.match(ui, /service_requests\?\.customer_name \|\| 'Student'/);
   assert.match(ui, /item\.status \|\| 'Pending'/);
 });
+
+
+test("JAMB catalogue recognizes known legacy service names before admin conversion", async () => {
+  const { isJambCatalogueService } = await import("../src/lib/jamb-service-catalogue.mjs");
+  for (const name of [
+    "JAMB e-PIN (UTME Without Mock)",
+    "JAMB e-PIN (UTME With Mock)",
+    "JAMB e-PIN (Direct Entry)",
+    "JAMB e-PIN (Trial-Testing Mock)",
+    "JAMB Original Result Slip Guidance",
+  ]) {
+    assert.equal(isJambCatalogueService({ name, is_catalog_item: false }), true, name);
+  }
+  assert.equal(isJambCatalogueService({ name: "Unrelated service", is_catalog_item: false }), false);
+  assert.equal(isJambCatalogueService({ name: "Unrelated service", is_catalog_item: true }), true);
+});
+
+test("JAMB template conversion preserves existing price and availability settings", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
+  const start = source.indexOf("const addJambServiceTemplates = async () =>");
+  const end = source.indexOf("const updateServiceRequest =", start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const setup = source.slice(start, end);
+  assert.match(setup, /price: Object\.prototype\.hasOwnProperty\.call\(match, 'price'\) \? match\.price : templateData\.price/);
+  assert.match(setup, /is_available: Object\.prototype\.hasOwnProperty\.call\(match, 'is_available'\) \? match\.is_available : templateData\.is_available/);
+  assert.match(setup, /Once a row is marked as a catalogue item, repeat clicks never overwrite admin pricing or availability/);
+});
