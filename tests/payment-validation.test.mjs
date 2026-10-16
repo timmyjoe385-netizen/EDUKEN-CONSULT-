@@ -242,7 +242,8 @@ test("server rejects out-of-range JAMB candidate quantities instead of silently 
   assert.notEqual(start, -1);
   assert.notEqual(end, -1);
   const initialize = source.slice(start, end);
-  assert.match(initialize, /Number of candidates:\\s*\(\[\^\\r\\n\]\+\)\/i);\n  assert.match(initialize, /const requestedQuantity = candidateMatch \\? Number\\(candidateMatch\\[1\\]\\.trim\\(\\)\\) : 1/);
+  assert.ok(initialize.includes('Number of candidates:\\s*([^\\r\\n]+)'), "parse the entire candidate quantity so decimals and malformed values are rejected");
+  assert.ok(initialize.includes("const requestedQuantity = candidateMatch ? Number(candidateMatch[1].trim()) : 1"));
   assert.match(initialize, /!Number\.isSafeInteger\(requestedQuantity\) \|\| requestedQuantity < 1 \|\| requestedQuantity > 100/);
   assert.match(initialize, /Candidate quantity must be a whole number from 1 to 100/);
   assert.ok(
