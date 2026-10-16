@@ -975,17 +975,19 @@ function App() {
     if (!selectedService || serviceSubmitting) return;
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
+    const requestedQuantity = isJambCatalogueService(selectedService) ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))) : 1;
     setServiceSubmitting(true);
     try {
       const result = await api.post('/api/service-requests', {
         serviceId: selectedService.id && !String(selectedService.id).startsWith('fallback-') ? selectedService.id : null,
+        quantity: requestedQuantity,
         customerName: String(fd.get('customerName') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
         email: String(fd.get('email') || '').trim(),
         details: [
           ...(isJambCatalogueService(selectedService) ? [
-            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))),
-            'Estimated total: ₦' + (Number(selectedService.price) * Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1))))).toLocaleString('en-NG'),
+            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(requestedQuantity)),
+            'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG'),
           ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
@@ -993,12 +995,12 @@ function App() {
       });
       const savedRequest = result.data?.request;
       const checkoutToken = result.data?.checkoutToken;
-      const payableAmount = Number(selectedService.price);
+      const payableAmount = Number(selectedService.price) * requestedQuantity;
       if (savedRequest?.id && typeof checkoutToken === 'string' && checkoutToken.length >= 32 && Number.isFinite(payableAmount) && payableAmount > 0) {
         const nextCheckout = {
           requestId: String(savedRequest.id), checkoutToken,
           referenceNumber: String(result.data.referenceNumber || savedRequest.reference_number || ''),
-          serviceName: String(selectedService.name || 'EDUKEN service'), amount: payableAmount,
+          serviceName: String(selectedService.name || 'EDUKEN service'), amount: payableAmount, quantity: requestedQuantity,
           email: String(fd.get('email') || '').trim(), customerName: String(fd.get('customerName') || '').trim(),
           paymentStatus: 'Not paid',
         };
