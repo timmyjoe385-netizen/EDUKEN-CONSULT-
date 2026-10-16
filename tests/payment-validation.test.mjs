@@ -7,6 +7,7 @@ import {
   isSuccessfulPaystackTransaction,
   matchesStoredPaystackPayment,
   normalizePaystackStatus,
+  isValidPaystackWebhookSignature,
 } from "../supabase/functions/eduken-api/payment-validation.mjs";
 
 test("normalizes provider statuses safely", () => {
@@ -74,4 +75,17 @@ test("only returns HTTPS Paystack-hosted checkout URLs", () => {
   }
   assert.equal(getPaystackAuthorizationUrl({ status: false, data: { authorization_url: "https://checkout.paystack.com/abc" } }), null);
   assert.equal(getPaystackAuthorizationUrl(null), null);
+});
+
+
+test("Paystack webhook signatures are HMAC-SHA512 verified against the exact body", async () => {
+  const secret = "test-paystack-secret";
+  const body = JSON.stringify({ event: "charge.success", data: { reference: "EDK-PAY-1234567890ABCDEF12", amount: 125000, currency: "NGN", status: "success" } });
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-512" }, false, ["sign"]);
+  const bytes = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(body)));
+  const signature = Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("");
+  assert.equal(await isValidPaystackWebhookSignature(body, signature, secret), true);
+  assert.equal(await isValidPaystackWebhookSignature(body + " ", signature, secret), false);
+  assert.equal(await isValidPaystackWebhookSignature(body, signature, "wrong-secret"), false);
+  assert.equal(await isValidPaystackWebhookSignature(body, "bad-signature", secret), false);
 });
