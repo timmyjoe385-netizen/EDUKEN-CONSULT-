@@ -1432,6 +1432,20 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
   expect(pageErrors, 'opening the JAMB request dialog must not throw').toEqual([]);
 });
 
+test('admin workspace access is decided by server-side authorization, not a public email allowlist', () => {
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const start = handler.indexOf('if (path === "/api/admin/session" && req.method === "GET")');
+  const end = handler.indexOf('if (path === "/api/admin/payments" && req.method === "GET")', start);
+  const route = handler.slice(start, end);
+  expect(start).toBeGreaterThan(-1);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('return json({ admin: true })');
+  expect(app).toContain("api.get('/api/admin/session')");
+  expect(app).not.toContain('timmyjoe385@gmail.com');
+  expect(app).not.toContain('edukenconsult00@gmail.com');
+});
+
 test('admin sign-in is not linked publicly and remains reachable directly at /admin', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
