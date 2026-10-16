@@ -18,6 +18,29 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const workspace = page.locator('#eduken-platform');
+  await expect(workspace.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
+  await expect(workspace.getByRole('heading', { name: 'EDUKEN Wallet' })).toBeVisible();
+  await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
+});
+
 test('homepage exposes the aggregate calculator from the primary navigation and hero', async ({ page }) => {
   await page.route(publicContentUrl, route =>
     route.fulfill({
