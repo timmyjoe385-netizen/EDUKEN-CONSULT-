@@ -1247,6 +1247,7 @@ function App() {
                 <div className="analytics-toolbar">
                   <div>
                     <span className="tag">ADMIN ONLY · READ-ONLY CHECKS</span>
+                    <p><a href="https://github.com/timmyjoe385-netizen/EDUKEN-CONSULT-/actions/workflows/health-check.yml" target="_blank" rel="noreferrer">Open monitoring run history and alert delivery logs ↗</a></p>
                     <p>Scheduled monitoring sends separate email alerts. This page runs live checks when opened or refreshed; email configuration status does not guarantee inbox delivery.</p>
                     {systemHealth?.checkedAt ? <small>Last checked: {new Date(systemHealth.checkedAt).toLocaleString()}</small> : null}
                   </div>
