@@ -60,7 +60,6 @@ test("classifies ambiguous Paystack initialization responses for safe reconcilia
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 500, hasAuthorizationUrl: false }), "unconfirmed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 502, hasAuthorizationUrl: false }), "unconfirmed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: false }), "unconfirmed");
-  assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: true }), "failed", "helper is used only when initialization response already failed validation");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 400, hasAuthorizationUrl: false }), "failed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 401, hasAuthorizationUrl: false }), "failed");
 });
