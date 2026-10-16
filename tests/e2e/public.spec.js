@@ -832,26 +832,22 @@ test('public header does not expose sign-in or admin access', async ({ page }) =
 
 
 
-test('header customer sign-in starts Google OAuth and returns to the public site', async ({ page }) => {
-  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
-  await page.route(authorizeEndpoint + '**', route =>
+test('public header does not expose generic sign-in while customer wallet sign-in remains available', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
-      contentType: 'text/html',
-      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [], admissions: [], updates: [], faqs: [], services: [],
+      }),
     }),
   );
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const siteOrigin = new URL(page.url()).origin;
-  const authNavigation = page.waitForRequest(
-    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
-  );
-  await page.getByRole('button', { name: 'Sign in', exact: true }).click();
-  const authUrl = new URL((await authNavigation).url());
-  expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
-});
 
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.header-sign-in')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
+});
 test('public AI assistant rejects oversized questions before provider work', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   expect(handler).toContain('typeof b?.question !== "string"');
