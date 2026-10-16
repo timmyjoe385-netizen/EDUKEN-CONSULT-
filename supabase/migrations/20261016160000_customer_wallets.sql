@@ -314,7 +314,7 @@ begin
   where id = p_payment_id
   for update;
 
-  if not found or v_payment.payment_type <> 'wallet_service' or v_payment.status <> 'Paid' or v_payment.user_id is null then
+  if not found or v_payment.payment_type <> 'wallet_service' or v_payment.user_id is null then
     raise exception 'WALLET_REFUND_NOT_ALLOWED';
   end if;
 
@@ -326,6 +326,9 @@ begin
   if found then
     select * into v_wallet from public.customer_wallets where user_id = v_payment.user_id;
     return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', true, 'transaction_id', v_existing.id);
+  end if;
+  if v_payment.status <> 'Paid' then
+    raise exception 'WALLET_REFUND_NOT_ALLOWED';
   end if;
 
   select * into v_wallet
@@ -347,6 +350,8 @@ begin
     'wallet-refund:' || v_payment.id, v_payment.service_request_id,
     'Wallet refund for ' || coalesce(v_payment.payment_reference, v_payment.id::text) || ': ' || trim(p_reason)
   ) returning * into v_existing;
+
+  update public.payments set status = 'Refunded' where id = v_payment.id;
 
   return jsonb_build_object('refunded', true, 'balance', v_wallet.balance, 'reused', false, 'transaction_id', v_existing.id);
 end;
