@@ -12,6 +12,10 @@ alter table public.payments
   add constraint payments_payment_type_check
   check (payment_type in ('service', 'wallet_deposit', 'wallet_service'));
 
+create unique index if not exists payments_payment_reference_unique
+  on public.payments (payment_reference)
+  where payment_reference is not null;
+
 create unique index if not exists payments_user_idempotency_key_unique
   on public.payments (user_id, idempotency_key)
   where idempotency_key is not null;
