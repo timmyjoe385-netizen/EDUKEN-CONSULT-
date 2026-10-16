@@ -362,8 +362,9 @@ test("wallet API requires authenticated, rate-limited, verified payment paths", 
     'settle_customer_wallet_deposit',
     'pay_service_from_customer_wallet',
     'refund_customer_wallet_service_payment',
-    'sendWalletPaymentNotifications',
-    'eduken-wallet-" + reference + "-" + kind + "-" + message.role',
+    'sendPaymentNotifications',
+    'sendServicePaymentNotifications',
+    'eduken-payment-" + reference + "-" + kind + "-" + message.role',
   ]) assert.ok(api.includes(required), "wallet API missing safeguard: " + required);
   assert.ok(api.includes('isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)'), "wallet deposits must remain test-mode guarded");
 });
