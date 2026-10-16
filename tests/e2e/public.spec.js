@@ -1411,3 +1411,27 @@ test('service request form clearly labels and outlines customer detail fields', 
   expect(fieldStyle.borderColor).not.toBe('rgba(0, 0, 0, 0)');
   await expect(dialog).toContainText(/checkout is not connected to this form yet/i);
 });
+
+
+test('Make Payments page shows the request summary without exposing its checkout token in the URL', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify({
+      requestId: '123e4567-e89b-42d3-a456-426614174000',
+      checkoutToken: 'a'.repeat(64),
+      referenceNumber: 'EDK-20261016-AB12CD34',
+      serviceName: 'Admission Consultation',
+      amount: 2500,
+      email: 'student@example.com',
+      paymentStatus: 'Not paid',
+    }));
+  });
+
+  await page.goto('/make-payments', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Make Payments' })).toBeVisible();
+  await expect(page.getByText('Admission Consultation')).toBeVisible();
+  await expect(page.getByText('EDK-20261016-AB12CD34')).toBeVisible();
+  await expect(page.getByText('₦2,500')).toBeVisible();
+  await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
+  await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
+  expect(page.url()).not.toContain('a'.repeat(64));
+});
