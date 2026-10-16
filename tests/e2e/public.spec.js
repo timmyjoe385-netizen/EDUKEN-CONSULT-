@@ -1283,6 +1283,7 @@ test('scheduled health monitor supports recovery email independently of customer
   expect(workflow).toContain('listJobsForWorkflowRun');
   expect(workflow).toContain("step.conclusion === 'failure'");
   expect(workflow).not.toContain("previous?.conclusion === 'failure'");
+  expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
   expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
   expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
   expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
