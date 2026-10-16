@@ -105,6 +105,7 @@ function App() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [content, setContent] = useState<Content>(emptyContent);
   const [loading, setLoading] = useState(true);
+  const [contentLoadFailed, setContentLoadFailed] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loginOpen, setLoginOpen] = useState(false);
   const [adminView, setAdminView] = useState(false);
@@ -259,6 +260,7 @@ function App() {
     try {
       const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store', headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' } }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
       const live = res.data || {};
+      setContentLoadFailed(false);
       const normalizeFlag = (value: unknown) =>
         value === true || String(value).toLowerCase() === 'true' || String(value) === '1';
       const normalizePublished = (item: Item) =>
@@ -311,6 +313,7 @@ function App() {
         })),
       });
     } catch {
+      setContentLoadFailed(true);
       setToast('Unable to load live content. Please refresh.');
     } finally {
       setLoading(false);
@@ -2431,7 +2434,7 @@ function App() {
               );
             })}
           </div>
-          {!content.services.some(isJambCatalogueService) ? <div className="admin-empty jamb-catalogue-empty">The JAMB catalogue has not been set up yet. Open Admin → Services and choose “Add JAMB service templates”.</div> : null}
+          {!loading && !contentLoadFailed && !content.services.some(isJambCatalogueService) ? <div className="admin-empty jamb-catalogue-empty">The JAMB catalogue has not been set up yet. Open Admin → Services and choose “Add JAMB service templates”.</div> : null}
           <p className="jamb-catalogue-safety">This form collects a service request only; it does not take payment. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
         </section>
 
