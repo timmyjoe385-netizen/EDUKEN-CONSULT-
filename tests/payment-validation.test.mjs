@@ -146,3 +146,13 @@ test("Paystack initialize, verify, and webhook enforce matching test/live secret
     assert.match(block, /sk_live_/);
   }
 });
+
+
+test("payment verification requires the matching signed-in owner for account-linked payments while allowing guest references", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  assert.match(
+    source,
+    /if \(!existingPayment \|\| \(existingPayment\.user_id && \(!user \|\| existingPayment\.user_id !== user\.id\)\)\) return json\(\{ error: "Payment record not found\." \}, 404\);/,
+  );
+});
