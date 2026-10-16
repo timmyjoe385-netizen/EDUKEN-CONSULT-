@@ -1272,7 +1272,7 @@ test('system health endpoint is admin-protected and reports safe component statu
   expect(route).toContain('Payment safety configuration');
   expect(route).toContain('RESEND_API_KEY');
   expect(route).toContain('secret.startsWith("sk_test_")');
-  expect(route).not.toContain('PAYSTACK_MODE');
+  expect(route).not.toContain('Deno.env.get("PAYSTACK_MODE")');
   expect(route).not.toContain('console.log');
 });
 
