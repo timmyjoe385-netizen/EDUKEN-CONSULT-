@@ -2110,11 +2110,11 @@ function App() {
           </a>
         </nav>
         <div className="auth-nav-actions">
-          <a className="admin-login-nav" href="/admin" onClick={() => setMenu(false)}>
-            Admin Login
+          <a className="admin-login-nav" href="/admin" aria-label="Admin Login" onClick={() => setMenu(false)}>
+            Admin
           </a>
           <button type="button" className="header-sign-in" onClick={() => void signIn()}>
-            Google Sign in
+            Sign in
           </button>
         </div>
         <button
