@@ -1311,3 +1311,49 @@ test('admissions and updates expose persisted opportunity-style admin controls',
     expect(migration).toContain(column);
   }
 });
+
+
+test('JAMB service request dialog opens without a blank-screen runtime error', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', error => pageErrors.push(error.message));
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [], admissions: [], updates: [], faqs: [],
+        services: [{
+          id: '4d5e6f70-1234-4123-8123-123456789abc',
+          name: 'JAMB e-PIN (UTME Without Mock)',
+          category: 'JAMB Services',
+          description: 'Test-only service fixture.',
+          price: 7128,
+          is_available: true,
+          is_catalog_item: true,
+          is_published: true,
+        }],
+      }),
+    }),
+  );
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Request this service/i }).click();
+  const dialog = page.getByRole('dialog', { name: /JAMB e-PIN \(UTME Without Mock\)/i });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByRole('spinbutton', { name: 'Number of candidates' })).toHaveValue('1');
+  expect(pageErrors, 'opening the JAMB request dialog must not throw').toEqual([]);
+});
+
+test('admin sign-in is reachable from the footer and opens directly at /admin', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+    }),
+  );
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('footer a[href="/admin"]')).toContainText('Admin sign in');
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+});
