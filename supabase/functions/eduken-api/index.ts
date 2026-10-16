@@ -1233,9 +1233,10 @@ Deno.serve(async (req) => {
         check("Transactional email provider", async () => Boolean(Deno.env.get("RESEND_API_KEY") && Deno.env.get("EMAIL_FROM")), "Resend configuration is incomplete. This does not verify outage-alert delivery to Gmail."),
         { name: "Outage email alerts", status: "not_checked", checkedAt, detail: "GitHub Actions SMTP secrets and Gmail delivery must be verified with the workflow test-email option." },
         check("Payment safety configuration", async () => {
-          const mode = Deno.env.get("PAYSTACK_MODE");
           const secret = Deno.env.get("PAYSTACK_SECRET_KEY") || "";
-          return mode === "test" && secret.startsWith("sk_test_");
+          // The existing payment integration identifies test mode from the Paystack key prefix;
+          // do not depend on an unreferenced PAYSTACK_MODE environment variable.
+          return secret.startsWith("sk_test_");
         }, "Paystack is not configured in test-only mode. No payment was initiated."),
       ]);
       return json({ checkedAt, checks });
