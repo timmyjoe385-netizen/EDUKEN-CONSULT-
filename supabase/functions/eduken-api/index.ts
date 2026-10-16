@@ -1833,7 +1833,7 @@ Deno.serve(async (req) => {
         .eq("id", paymentId).maybeSingle();
       if (paymentLookupError) throw paymentLookupError;
       if (!originalPayment) return json({ error: "Payment not found." }, 404);
-      if (originalPayment.payment_type !== "wallet_service" || originalPayment.status !== "Paid" || !originalPayment.user_id) {
+      if (originalPayment.payment_type !== "wallet_service" || !["Paid", "Refunded"].includes(originalPayment.status) || !originalPayment.user_id) {
         return json({ error: "Only confirmed wallet-funded service payments can be refunded to the wallet through this endpoint." }, 409);
       }
       const { data: refund, error: refundError } = await db.rpc("refund_customer_wallet_service_payment", {
