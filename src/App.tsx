@@ -4,6 +4,7 @@ import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
   BookOpen,
+  Calculator,
   BriefcaseBusiness,
   CheckCircle2,
   ChevronDown,
@@ -1880,6 +1881,9 @@ function App() {
               {x}
             </a>
           ))}
+          <a className="calculator-nav-link" href="/aggregate-calculator" onClick={() => setMenu(false)}>
+            <Calculator size={16} aria-hidden="true" /> Aggregate Calculator
+          </a>
           {!installed && (
             <button
               className="install-nav"
@@ -1960,6 +1964,9 @@ function App() {
             <div className="hero-actions">
               <a className="primary" href="#opportunities">
                 Explore Opportunities <ArrowRight size={18} />
+              </a>
+              <a className="secondary aggregate-hero-cta" href="/aggregate-calculator">
+                <Calculator size={18} /> Calculate Aggregate
               </a>
               <a
                 className="secondary"
