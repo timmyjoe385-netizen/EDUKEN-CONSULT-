@@ -349,10 +349,19 @@ function App() {
     }
     void auth.completeOAuthCallback().then((result: any) => {
       if (!active || !result) return;
-      setUser(result.user);
-      setAdminView(true);
-      void loadAdmin('opportunities');
-      void loadSystemSettings();
+      const isAdmin = ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'].includes(String(result.user?.email || '').toLowerCase());
+      if (isAdmin) {
+        setUser(result.user);
+        setAdminView(true);
+        void loadAdmin('opportunities');
+        void loadSystemSettings();
+      } else {
+        // Customer sign-in must never open the admin workspace; admin APIs enforce
+        // their own server-side allowlist as a separate security boundary.
+        setUser(null);
+        setAdminView(false);
+        setToast('You are signed in to your EDUKEN customer account.');
+      }
     }).catch((error: unknown) => {
       if (active) setToast(error instanceof Error ? error.message : 'Google sign-in could not be completed.');
     });
@@ -398,6 +407,27 @@ function App() {
     }
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || '';
+    if (returnedReference && params.get('wallet') === '1') {
+      window.history.replaceState({}, document.title, '/make-payments');
+      if (!auth.isSignedIn()) {
+        setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit, then verify the payment from your wallet.');
+        return;
+      }
+      setPaymentMessage('Wallet deposit returned from Paystack. Verifying securely…');
+      void api.post('/api/wallet/deposit/verify', { reference: returnedReference })
+        .then((result: any) => {
+          if (result.data?.paid) {
+            setPaymentMessage('Wallet funded successfully. Your updated balance is available in your EDUKEN Wallet.');
+            window.dispatchEvent(new Event('eduken-wallet-updated'));
+          } else {
+            setPaymentMessage('The deposit is not confirmed yet. Do not pay again immediately; open your wallet and check the transaction status.');
+          }
+        })
+        .catch((error: unknown) => {
+          setPaymentMessage(error instanceof Error ? error.message : 'We could not verify this wallet deposit yet. Do not pay again immediately; contact EDUKEN support with your reference.');
+        });
+      return;
+    }
     if (returnedReference) {
       window.history.replaceState({}, document.title, '/make-payments');
       if (!saved?.checkoutToken || !saved?.requestId) {
@@ -1022,6 +1052,24 @@ function App() {
       showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
     } finally {
       setServiceSubmitting(false);
+    }
+  };
+
+  const submitWalletServicePayment = async () => {
+    if (!auth.isSignedIn() || !checkoutSession?.requestId || paymentSubmitting) return;
+    setPaymentSubmitting(true);
+    setPaymentMessage('Checking your wallet balance and confirming the service price…');
+    try {
+      const result = await api.post('/api/wallet/pay-service', { serviceRequestId: checkoutSession.requestId });
+      const next = { ...checkoutSession, paymentStatus: 'Paid', paymentReference: result.data?.wallet?.payment_reference || '' };
+      setCheckoutSession(next);
+      setPaymentMessage('Payment completed from your EDUKEN Wallet. Your service request is marked as paid.');
+      try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* visible success is preserved */ }
+      window.dispatchEvent(new Event('eduken-wallet-updated'));
+    } catch (error) {
+      setPaymentMessage(error instanceof Error ? error.message : 'Wallet payment could not be completed. Check your wallet history before retrying.');
+    } finally {
+      setPaymentSubmitting(false);
     }
   };
 
@@ -1970,7 +2018,8 @@ function App() {
             <h1 id="make-payments-title">Make Payments</h1>
             {!checkoutSession ? (
               <>
-                <p>There is no active checkout session in this browser. Open the service request again or contact EDUKEN CONSULT if you already submitted a request.</p>
+                <p>There is no active service checkout session in this browser. Open the service request again or contact EDUKEN CONSULT if you already submitted a request.</p>
+                {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
                 <a className="primary make-payments-link" href="/">Back to EDUKEN CONSULT</a>
               </>
             ) : (
@@ -1991,6 +2040,7 @@ function App() {
                     </label>
                     <p className="make-payments-security">You’ll complete payment on Paystack’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
                     {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
+                    {auth.isSignedIn() ? <button type="button" className="secondary" disabled={paymentSubmitting} onClick={() => void submitWalletServicePayment()}>{paymentSubmitting ? 'Checking payment…' : 'Pay with EDUKEN Wallet'}</button> : null}
                     <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to Paystack'}</button>
                   </form>
                 ) : <p className="make-payments-success" role="status">{paymentMessage || 'Payment confirmed. Thank you.'}</p>}
