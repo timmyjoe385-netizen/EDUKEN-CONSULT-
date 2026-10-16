@@ -647,7 +647,9 @@ Deno.serve(async (req) => {
           p_reference: reference,
         });
         if (walletSettlementError) throw walletSettlementError;
-        await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
+        if (walletSettlement?.reused !== true) {
+          await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
+        }
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
@@ -1358,7 +1360,9 @@ Deno.serve(async (req) => {
       if (payment.status === "Paid") {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        if (settled?.reused !== true) {
+          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        }
         return json({ paid: true, wallet: settled, payment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1379,7 +1383,9 @@ Deno.serve(async (req) => {
       if (paid) {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        if (settled?.reused !== true) {
+          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        }
         return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
       }
       const nextStatus = getNextPaymentStatus(transaction);
@@ -1412,7 +1418,9 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_SERVICE_QUANTITY_INVALID")) return json({ error: "The saved service quantity is invalid for wallet payment.", code: "WALLET_SERVICE_QUANTITY_INVALID" }, 409);
         throw error;
       }
-      await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
+      if (result?.reused !== true) {
+        await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
+      }
       return json({ paid: true, wallet: result });
     }
 
@@ -1852,10 +1860,12 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_REFUND_WALLET_MISSING")) return json({ error: "Customer wallet is unavailable. No refund was processed." }, 503);
         throw refundError;
       }
-      await sendPaymentNotifications(
-        originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
-        Number(originalPayment.amount), "refund",
-      );
+      if (refund?.reused !== true) {
+        await sendPaymentNotifications(
+          originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
+          Number(originalPayment.amount), "refund",
+        );
+      }
       return json({ ok: true, refund });
     }
 
