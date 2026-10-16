@@ -1409,7 +1409,7 @@ test('service request form clearly labels and outlines customer detail fields', 
   expect(fieldStyle.borderWidth).toBe('2px');
   expect(fieldStyle.minHeight).toBe('48px');
   expect(fieldStyle.borderColor).not.toBe('rgba(0, 0, 0, 0)');
-  await expect(dialog).toContainText(/checkout is not connected to this form yet/i);
+  await expect(dialog).toContainText(/continue to secure checkout for priced services/i);
 });
 
 
