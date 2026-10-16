@@ -1,10 +1,11 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
+import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
+import { normalizeServicePrice } from "./service-price-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -1240,7 +1241,16 @@ Deno.serve(async (req) => {
       if (!CONTENT_TABLES.has(table)) return json({ error: "Unknown content type." }, 404);
       if (req.method === "GET") return json({ items: await adminList(table) });
       if (req.method === "POST") {
-        const b = mapAdminInput(table, await req.json());
+        const parsedBody = parseJsonObjectBody(await req.text());
+        if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
+        const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
+        if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
+          const normalizedPrice = normalizeServicePrice(b.price);
+          if (!normalizedPrice.valid) {
+            return json({ error: "Service price must be a non-negative whole number, or be left blank for To be confirmed." }, 400);
+          }
+          if (normalizedPrice.provided) b.price = normalizedPrice.value;
+        }
         if (table === "opportunities") {
           const verification = validateOpportunityVerification(b);
           if (!verification.valid) return json({ error: verification.error }, 400);
@@ -1258,7 +1268,16 @@ Deno.serve(async (req) => {
         return json({ id: data.id }, 201);
       }
       if (req.method === "PUT" && id) {
-        const b = mapAdminInput(table, await req.json());
+        const parsedBody = parseJsonObjectBody(await req.text());
+        if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
+        const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
+        if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
+          const normalizedPrice = normalizeServicePrice(b.price);
+          if (!normalizedPrice.valid) {
+            return json({ error: "Service price must be a non-negative whole number, or be left blank for To be confirmed." }, 400);
+          }
+          if (normalizedPrice.provided) b.price = normalizedPrice.value;
+        }
         let previousOpportunity: any = null;
         let previousEditorialItem: any = null;
         if (table === "admissions" || table === "updates") {
@@ -1319,7 +1338,9 @@ Deno.serve(async (req) => {
         if (error) throw error; return json({ items: data ?? [] });
       }
       if (req.method === "PUT" && id) {
-        const b = await req.json();
+        const parsedBody = parseJsonObjectBody(await req.text());
+        if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
+        const b = parsedBody.value as Record<string, unknown>;
         const { data, error } = await db.from("consultations").update(b).eq("id", id).select().maybeSingle();
         if (error) throw error; if (!data) return json({ error: "Consultation not found." }, 404);
         return json({ ok: true });
