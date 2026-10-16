@@ -514,7 +514,7 @@ async function sendWalletPaymentNotifications(
   userId: string,
   reference: string,
   amount: number,
-  kind: "deposit" | "service_payment",
+  kind: "deposit" | "service_payment" | "refund",
 ) {
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const from = Deno.env.get("EMAIL_FROM");
@@ -528,13 +528,16 @@ async function sendWalletPaymentNotifications(
     return;
   }
   const isDeposit = kind === "deposit";
+  const isRefund = kind === "refund";
   const amountText = "₦" + amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const customerSubject = isDeposit ? "EDUKEN wallet deposit confirmed" : "EDUKEN service payment confirmed";
-  const adminSubject = isDeposit ? "EDUKEN wallet deposit received" : "EDUKEN wallet service payment";
+  const customerSubject = isDeposit ? "EDUKEN wallet deposit confirmed" : isRefund ? "EDUKEN wallet refund credited" : "EDUKEN service payment confirmed";
+  const adminSubject = isDeposit ? "EDUKEN wallet deposit received" : isRefund ? "EDUKEN wallet refund processed" : "EDUKEN wallet service payment";
   const customerText = isDeposit
     ? "Your EDUKEN wallet deposit of " + amountText + " has been verified and credited. Reference: " + reference + ". Sign in to view your updated balance and transaction history."
-    : "Your EDUKEN wallet payment of " + amountText + " has been confirmed. Reference: " + reference + ". Sign in to view your transaction history.";
-  const adminText = (isDeposit ? "A customer wallet deposit was verified." : "A customer paid for an EDUKEN service from their wallet.")
+    : isRefund
+      ? "A wallet refund of " + amountText + " has been credited to your EDUKEN wallet. Reference: " + reference + ". Sign in to view your transaction history."
+      : "Your EDUKEN wallet payment of " + amountText + " has been confirmed. Reference: " + reference + ". Sign in to view your transaction history.";
+  const adminText = (isDeposit ? "A customer wallet deposit was verified." : isRefund ? "A wallet refund was credited to a customer." : "A customer paid for an EDUKEN service from their wallet.")
     + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account ID: " + userId;
   const config = { apiKey, from };
   const messages = [
@@ -546,7 +549,7 @@ async function sendWalletPaymentNotifications(
       const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
       await sendEmailAlertMessage(
         config, message.to, message.subject, message.text, html,
-        "eduken-wallet-" + reference + "-" + message.role,
+        "eduken-wallet-" + reference + "-" + kind + "-" + message.role,
       );
     } catch (error) {
       // Never roll back a verified payment because email is unavailable. The stable
@@ -1769,6 +1772,42 @@ Deno.serve(async (req) => {
       const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
       if (error) throw error;
       return json({ items: data ?? [] });
+    }
+
+    if (path === "/api/admin/wallet/refund" && req.method === "POST") {
+      await requireAdmin(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const paymentId = typeof b?.paymentId === "string" ? b.paymentId : "";
+      const reason = typeof b?.reason === "string" ? b.reason.trim() : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(paymentId)
+        || reason.length < 4 || reason.length > 200) {
+        return json({ error: "Provide a valid wallet service-payment ID and a refund reason of 4–200 characters." }, 400);
+      }
+      const { data: originalPayment, error: paymentLookupError } = await db.from("payments")
+        .select("id,user_id,amount,payment_reference,payment_type,status")
+        .eq("id", paymentId).maybeSingle();
+      if (paymentLookupError) throw paymentLookupError;
+      if (!originalPayment) return json({ error: "Payment not found." }, 404);
+      if (originalPayment.payment_type !== "wallet_service" || originalPayment.status !== "Paid" || !originalPayment.user_id) {
+        return json({ error: "Only confirmed wallet-funded service payments can be refunded to the wallet through this endpoint." }, 409);
+      }
+      const { data: refund, error: refundError } = await db.rpc("refund_customer_wallet_service_payment", {
+        p_payment_id: paymentId,
+        p_reason: reason,
+      });
+      if (refundError) {
+        const message = String(refundError.message || "");
+        if (message.includes("WALLET_REFUND_INVALID")) return json({ error: "The refund details are invalid." }, 400);
+        if (message.includes("WALLET_REFUND_NOT_ALLOWED")) return json({ error: "This payment is not eligible for a wallet refund." }, 409);
+        if (message.includes("WALLET_REFUND_WALLET_MISSING")) return json({ error: "Customer wallet is unavailable. No refund was processed." }, 503);
+        throw refundError;
+      }
+      await sendWalletPaymentNotifications(
+        originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
+        Number(originalPayment.amount), "refund",
+      );
+      return json({ ok: true, refund });
     }
 
     if (path === "/api/admin/system-settings") {
