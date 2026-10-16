@@ -1273,13 +1273,27 @@ Deno.serve(async (req) => {
         return json({ error: "A valid service request is required." }, 400);
       }
       const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,service_id,reference_number,email,services(name,price,is_published)")
+        .select("id,service_id,reference_number,email,status,quantity,services(name,price,is_published,is_available,is_catalog_item)")
         .eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Service request not found." }, 404);
+      if (request.status === "Paid") {
+        return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      }
+      const { data: paidPayment, error: paidLookupError } = await db.from("payments")
+        .select("id,status,payment_reference").eq("service_request_id", request.id).eq("status", "Paid").maybeSingle();
+      if (paidLookupError) throw paidLookupError;
+      if (paidPayment) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
-      const trustedAmount = Number(service?.price);
-      if (!service || !service.is_published || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+      const quantity = Number(request.quantity ?? 1);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+        return json({ error: "The saved service quantity is invalid. Please contact EDUKEN CONSULT.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      if (quantity > 1 && service?.is_catalog_item !== true) {
+        return json({ error: "Only catalogue services can be paid for multiple candidates.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      const trustedAmount = Number(service?.price) * quantity;
+      if (!service || !service.is_published || service.is_available === false || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
         return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
       }
       // If the client sends a display amount, reject stale or tampered values;
@@ -1291,7 +1305,7 @@ Deno.serve(async (req) => {
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
         .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
-        .eq("service_request_id", request.id).eq("user_id", user.id).eq("status", "Pending").maybeSingle();
+        .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
       if (pendingLookupError) throw pendingLookupError;
       if (pendingPayment) {
         if (Math.round(Number(pendingPayment.amount) * 100) !== Math.round(trustedAmount * 100)) {
