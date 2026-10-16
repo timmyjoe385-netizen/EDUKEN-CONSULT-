@@ -986,7 +986,7 @@ function App() {
         email: String(fd.get('email') || '').trim(),
         details: [
           ...(isJambCatalogueService(selectedService) ? [
-            'Number of candidates: ' + String(Math.max(1, Math.min(100, Math.floor(requestedQuantity)),
+            'Number of candidates: ' + String(requestedQuantity),
             'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG'),
           ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
