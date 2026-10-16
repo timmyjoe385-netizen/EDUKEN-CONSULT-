@@ -59,6 +59,7 @@ test("rejects invalid or non-positive stored amounts", () => {
 test("classifies ambiguous Paystack initialization responses for safe reconciliation", () => {
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 500, hasAuthorizationUrl: false }), "unconfirmed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 502, hasAuthorizationUrl: false }), "unconfirmed");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 408, hasAuthorizationUrl: false }), "unconfirmed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: false }), "unconfirmed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 400, hasAuthorizationUrl: false }), "failed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 401, hasAuthorizationUrl: false }), "failed");
