@@ -252,3 +252,25 @@ test("server rejects out-of-range JAMB candidate quantities instead of silently 
   );
   assert.doesNotMatch(initialize, /Math\.min\(100, Math\.max\(1, Number\(candidateMatch/);
 });
+
+
+test("payment initialization rejects published services that are marked unavailable", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const start = source.indexOf('if (path === "/api/payments/initialize"');
+  const end = source.indexOf('if (path === "/api/payments/verify"', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const initialize = source.slice(start, end);
+  assert.match(initialize, /services\(name,price,is_published,is_available\)/);
+  assert.match(initialize, /!service\.is_published \|\| !service\.is_available/);
+  assert.match(initialize, /This service is currently unavailable for online checkout/);
+  assert.ok(
+    initialize.indexOf("!service.is_available") < initialize.indexOf('db.from("payments").insert'),
+    "reject unavailable services before creating a payment record",
+  );
+  assert.ok(
+    initialize.indexOf("!service.is_available") < initialize.indexOf('fetch("https://api.paystack.co/transaction/initialize"'),
+    "reject unavailable services before contacting Paystack",
+  );
+});
