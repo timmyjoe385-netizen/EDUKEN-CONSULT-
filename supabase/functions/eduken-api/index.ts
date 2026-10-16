@@ -510,38 +510,43 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
-async function sendWalletPaymentNotifications(
-  userId: string,
+async function sendPaymentNotifications(
+  userId: string | null,
   reference: string,
   amount: number,
   kind: "deposit" | "service_payment" | "refund",
+  customerEmailOverride?: string | null,
 ) {
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const from = Deno.env.get("EMAIL_FROM");
-  if (!apiKey || !from || !userId || !reference || !Number.isFinite(amount) || amount <= 0) {
-    console.error("Wallet payment notification could not be queued because required email configuration or payment data is unavailable.");
+  if (!apiKey || !from || !reference || !Number.isFinite(amount) || amount <= 0) {
+    console.error("Payment notification could not be sent because required email configuration or payment data is unavailable.");
     return;
   }
-  const { data: authUser, error: userError } = await db.auth.admin.getUserById(userId);
-  if (userError || !authUser?.user?.email) {
-    console.error("Wallet payment notification could not resolve the customer email.");
-    return;
+  let customerEmail = typeof customerEmailOverride === "string" ? customerEmailOverride.trim() : "";
+  if (userId) {
+    try {
+      const { data: authUser, error: userError } = await db.auth.admin.getUserById(userId);
+      if (!userError && authUser?.user?.email) customerEmail = authUser.user.email;
+    } catch {
+      console.error("Payment notification could not resolve the customer account email.");
+    }
   }
   const isDeposit = kind === "deposit";
   const isRefund = kind === "refund";
   const amountText = "₦" + amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const customerSubject = isDeposit ? "EDUKEN wallet deposit confirmed" : isRefund ? "EDUKEN wallet refund credited" : "EDUKEN service payment confirmed";
-  const adminSubject = isDeposit ? "EDUKEN wallet deposit received" : isRefund ? "EDUKEN wallet refund processed" : "EDUKEN wallet service payment";
+  const adminSubject = isDeposit ? "EDUKEN wallet deposit received" : isRefund ? "EDUKEN wallet refund processed" : "EDUKEN service payment received";
   const customerText = isDeposit
     ? "Your EDUKEN wallet deposit of " + amountText + " has been verified and credited. Reference: " + reference + ". Sign in to view your updated balance and transaction history."
     : isRefund
       ? "A wallet refund of " + amountText + " has been credited to your EDUKEN wallet. Reference: " + reference + ". Sign in to view your transaction history."
-      : "Your EDUKEN wallet payment of " + amountText + " has been confirmed. Reference: " + reference + ". Sign in to view your transaction history.";
-  const adminText = (isDeposit ? "A customer wallet deposit was verified." : isRefund ? "A wallet refund was credited to a customer." : "A customer paid for an EDUKEN service from their wallet.")
-    + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account ID: " + userId;
+      : "Your EDUKEN service payment of " + amountText + " has been confirmed. Reference: " + reference + ". Keep this reference for follow-up.";
+  const adminText = (isDeposit ? "A customer wallet deposit was verified." : isRefund ? "A wallet refund was credited to a customer." : "A customer service payment was confirmed.")
+    + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account: " + (userId || "guest checkout");
   const config = { apiKey, from };
   const messages = [
-    { role: "customer", to: authUser.user.email, subject: customerSubject, text: customerText },
+    ...(customerEmail ? [{ role: "customer", to: customerEmail, subject: customerSubject, text: customerText }] : []),
     ...Array.from(ADMIN_EMAILS).map(to => ({ role: "admin", to, subject: adminSubject, text: adminText })),
   ];
   for (const message of messages) {
@@ -549,14 +554,43 @@ async function sendWalletPaymentNotifications(
       const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
       await sendEmailAlertMessage(
         config, message.to, message.subject, message.text, html,
-        "eduken-wallet-" + reference + "-" + kind + "-" + message.role,
+        "eduken-payment-" + reference + "-" + kind + "-" + message.role,
       );
     } catch (error) {
-      // Never roll back a verified payment because email is unavailable. The stable
-      // provider idempotency key prevents duplicate sends when the flow is retried.
-      console.error("Wallet payment notification delivery failed.", error instanceof Error ? error.message : "Unknown email error.");
+      // Payment settlement must not depend on the email provider being available.
+      // Stable provider idempotency keys reduce duplicate notices when a flow retries.
+      console.error("Payment notification delivery failed.", error instanceof Error ? error.message : "Unknown email error.");
     }
   }
+}
+
+async function sendServicePaymentNotifications(payment: {
+  user_id?: string | null;
+  service_request_id?: string | null;
+  payment_reference?: string | null;
+  amount: number | string;
+}) {
+  let userId = payment.user_id || null;
+  let customerEmail: string | null = null;
+  if (payment.service_request_id) {
+    try {
+      const { data: request, error } = await db.from("service_requests")
+        .select("user_id,email").eq("id", payment.service_request_id).maybeSingle();
+      if (!error && request) {
+        userId = userId || request.user_id || null;
+        customerEmail = request.email || null;
+      }
+    } catch {
+      console.error("Service payment receipt could not load the service request contact.");
+    }
+  }
+  await sendPaymentNotifications(
+    userId,
+    String(payment.payment_reference || ""),
+    Number(payment.amount),
+    "service_payment",
+    customerEmail,
+  );
 }
 
 async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify" | "wallet-deposit-initialize" | "wallet-deposit-verify") {
@@ -613,7 +647,7 @@ Deno.serve(async (req) => {
           p_reference: reference,
         });
         if (walletSettlementError) throw walletSettlementError;
-        await sendWalletPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
+        await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
@@ -621,6 +655,7 @@ Deno.serve(async (req) => {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
             .eq("id", existingPayment.service_request_id);
           if (requestUpdateError) throw requestUpdateError;
+          await sendServicePaymentNotifications(existingPayment);
         }
         return json({ ok: true, paid: true });
       }
@@ -638,6 +673,7 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id);
         if (requestUpdateError) throw requestUpdateError;
+        await sendServicePaymentNotifications(existingPayment);
       }
       return json({ ok: true, paid: true });
     }
@@ -1322,7 +1358,7 @@ Deno.serve(async (req) => {
       if (payment.status === "Paid") {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        await sendWalletPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1343,7 +1379,7 @@ Deno.serve(async (req) => {
       if (paid) {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        await sendWalletPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
       }
       const nextStatus = getNextPaymentStatus(transaction);
@@ -1376,7 +1412,7 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_SERVICE_QUANTITY_INVALID")) return json({ error: "The saved service quantity is invalid for wallet payment.", code: "WALLET_SERVICE_QUANTITY_INVALID" }, 409);
         throw error;
       }
-      await sendWalletPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
+      await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
       return json({ paid: true, wallet: result });
     }
 
@@ -1640,7 +1676,7 @@ Deno.serve(async (req) => {
       }
       const tokenHash = await sha256Hex(checkoutToken);
       const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,checkout_token_hash").eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
+        .select("id,checkout_token_hash,email,user_id").eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Checkout session is invalid or expired." }, 404);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
@@ -1676,6 +1712,7 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
         if (requestUpdateError) throw requestUpdateError;
+        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
       }
       return json({ paid, payment: payment || existingPayment });
     }
@@ -1689,7 +1726,7 @@ Deno.serve(async (req) => {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
-        .select("id,amount,currency,status,service_request_id,payment_reference")
+        .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
         .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
@@ -1723,6 +1760,7 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
         if (requestUpdateError) throw requestUpdateError;
+        await sendServicePaymentNotifications(existingPayment);
       }
       return json({ paid, payment: payment || existingPayment });
     }
@@ -1803,7 +1841,7 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_REFUND_WALLET_MISSING")) return json({ error: "Customer wallet is unavailable. No refund was processed." }, 503);
         throw refundError;
       }
-      await sendWalletPaymentNotifications(
+      await sendPaymentNotifications(
         originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
         Number(originalPayment.amount), "refund",
       );
