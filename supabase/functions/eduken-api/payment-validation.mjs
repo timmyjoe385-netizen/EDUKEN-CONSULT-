@@ -46,3 +46,68 @@ export function getPaystackAuthorizationUrl(result) {
     return null;
   }
 }
+
+
+export async function isValidPaystackWebhookSignature(rawBody, signature, secret) {
+  if (typeof rawBody !== "string" || typeof signature !== "string" || typeof secret !== "string" || !secret) return false;
+  if (!/^[a-f0-9]{128}$/i.test(signature)) return false;
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-512" },
+    false,
+    ["sign"],
+  );
+  const digest = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(rawBody)));
+  const expected = Array.from(digest, byte => byte.toString(16).padStart(2, "0")).join("");
+  const provided = signature.toLowerCase();
+  if (expected.length !== provided.length) return false;
+  let difference = 0;
+  for (let index = 0; index < expected.length; index++) {
+    difference |= expected.charCodeAt(index) ^ provided.charCodeAt(index);
+  }
+  return difference === 0;
+}
+
+
+// Payment callback URLs must use a configured, clean HTTPS site origin.
+export function getPaystackCallbackUrl(siteUrl, reference) {
+  if (typeof reference !== "string" || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return null;
+  if (typeof siteUrl !== "string" || !siteUrl.trim()) return null;
+  try {
+    const parsed = new URL(siteUrl.trim());
+    if (
+      parsed.protocol !== "https:"
+      || parsed.username
+      || parsed.password
+      || parsed.pathname !== "/"
+      || parsed.search
+      || parsed.hash
+    ) return null;
+    return new URL("/make-payments?reference=" + encodeURIComponent(reference), parsed.origin).toString();
+  } catch {
+    return null;
+  }
+}
+
+// Payment initialization must be explicitly enabled for test mode. Never infer mode from a key alone.
+export function isPaystackTestModeEnabled(mode, secretKey) {
+  return typeof mode === "string"
+    && mode.trim().toLowerCase() === "test"
+    && typeof secretKey === "string"
+    && /^sk_test_[A-Za-z0-9]+$/.test(secretKey.trim());
+}
+/**
+ * Treat provider initialization failures as definitive only when the HTTP response
+ * clearly rejects the request. Timeouts, server errors, and contradictory success
+ * responses stay Pending so webhook/verification can reconcile without duplicate charges.
+ */
+export function getPaystackInitializationFailureDisposition({ ok, status, providerStatus, hasAuthorizationUrl }) {
+  // A timeout/server error, any 2xx response rejected by the provider-level body,
+  // or a success-shaped provider response over HTTP failure is contradictory.
+  // Keep Pending whenever checkout may have been created; only clear HTTP rejections
+  // with no success indicators are safe to mark Failed.
+  if (status === 408 || status >= 500 || ok || providerStatus === true || hasAuthorizationUrl) return "unconfirmed";
+  return "failed";
+}
+
