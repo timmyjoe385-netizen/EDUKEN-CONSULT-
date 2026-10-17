@@ -36,6 +36,14 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -f /workspace/tests/sql/wallet-migration-fixture.sql
+      - name: Apply payment ledger schema migration in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261016090000_create_payments_table.sql
       - name: Apply guest checkout migration in disposable PostgreSQL
         run: >-
           docker run --rm --network host
