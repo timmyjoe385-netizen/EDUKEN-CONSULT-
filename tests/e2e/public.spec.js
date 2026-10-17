@@ -325,7 +325,11 @@ test('service request dialog validates required fields without sending a request
   });
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.getByRole('button', { name: /Request this service/i }).click();
+  const serviceCard = page.locator('.service-row').filter({
+    has: page.getByText('Playwright Service Request Check', { exact: true }),
+  });
+  await expect(serviceCard).toHaveCount(1);
+  await serviceCard.getByRole('button', { name: 'Request this service', exact: true }).click();
 
   const dialog = page.getByRole('dialog', {
     name: 'Playwright Service Request Check',
@@ -519,57 +523,6 @@ test('homepage remains usable at a mobile viewport', async ({ page }) => {
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
 });
 
-test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
-  await page.addInitScript(() => {
-    // Clear the saved preference only on the first document; keep it during reload assertions.
-    if (window.sessionStorage.getItem('__eduken_theme_test_initialized') !== '1') {
-      window.localStorage.removeItem('eduken-theme');
-      window.sessionStorage.setItem('__eduken_theme_test_initialized', '1');
-    }
-  });
-  await page.emulateMedia({ colorScheme: 'light' });
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  const root = page.locator('html');
-  const toggle = page.locator('.theme-toggle').first();
-  await expect(toggle).toBeVisible();
-  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
-  await expect(toggle).toHaveAttribute('title', 'Appearance: light mode');
-  await expect(root).toHaveAttribute('data-theme', 'light');
-  await expect(root).toHaveCSS('color-scheme', 'light');
-
-  await toggle.click();
-  await expect(toggle).toBeFocused();
-  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is dark mode. Change appearance');
-  await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
-  await expect(root).toHaveAttribute('data-theme', 'dark');
-  await expect(root).toHaveCSS('color-scheme', 'dark');
-  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
-
-  await toggle.click();
-  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is System default. Change appearance');
-  await expect(toggle).toHaveAttribute('title', 'Appearance: System default');
-  await expect(toggle).toContainText('System');
-  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
-  await page.emulateMedia({ colorScheme: 'light' });
-  await expect(root).toHaveAttribute('data-theme', 'light');
-  await expect(root).toHaveCSS('color-scheme', 'light');
-  await page.emulateMedia({ colorScheme: 'dark' });
-  await expect(root).toHaveAttribute('data-theme', 'dark');
-  await expect(root).toHaveCSS('color-scheme', 'dark');
-  await page.reload({ waitUntil: 'domcontentloaded' });
-  await expect(toggle).toContainText('System');
-  await expect(root).toHaveAttribute('data-theme', 'dark');
-  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
-
-  await toggle.click();
-  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
-  await expect(root).toHaveAttribute('data-theme', 'light');
-  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('light');
-  await page.reload({ waitUntil: 'domcontentloaded' });
-  await expect(root).toHaveAttribute('data-theme', 'light');
-});
-
 test('mobile navigation opens and closes accessibly', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -704,6 +657,33 @@ test('service request API keeps private endpoints protected without creating rec
     timeout: 20_000,
   });
   expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
+});
+
+test('wallet reads and spending require customer auth; refunds require admin auth', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeBlock = (start, end) => handler.slice(handler.indexOf(start), handler.indexOf(end));
+
+  const walletRead = routeBlock(
+    'if (path === "/api/wallet" && req.method === "GET")',
+    'if (path === "/api/wallet/deposit/initialize" && req.method === "POST")',
+  );
+  expect(walletRead.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletRead.indexOf('await requireUser(req)')).toBeLessThan(walletRead.indexOf('db.from("customer_wallets")'));
+
+  const walletSpend = routeBlock(
+    'if (path === "/api/wallet/pay-service" && req.method === "POST")',
+    'if (path === "/api/payments/initialize-guest" && req.method === "POST")',
+  );
+  expect(walletSpend.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletSpend.indexOf('await requireUser(req)')).toBeLessThan(walletSpend.indexOf('db.rpc("pay_service_from_customer_wallet"'));
+
+  const refund = routeBlock(
+    'if (path === "/api/admin/wallet/refund" && req.method === "POST")',
+    'if (path === "/api/admin/system-settings")',
+  );
+  expect(refund.indexOf('await requireAdmin(req)')).toBeGreaterThanOrEqual(0);
+  expect(refund.indexOf('await requireAdmin(req)')).toBeLessThan(refund.indexOf('req.json()'));
+  expect(refund.indexOf('await requireAdmin(req)')).toBeLessThan(refund.indexOf('db.from("payments")'));
 });
 
 test('service request validator rejects invalid payloads before database writes', async () => {
@@ -852,7 +832,7 @@ test('public header exposes customer wallet access but not admin access', async 
 
   // Customer wallet access is intentionally visible; admin access must remain private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'My Wallet' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -895,7 +875,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'My Wallet' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
@@ -1612,4 +1592,55 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
   await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
+});
+
+test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
+  await page.addInitScript(() => {
+    // Clear the saved preference only on the first document; keep it during reload assertions.
+    if (window.sessionStorage.getItem('__eduken_theme_test_initialized') !== '1') {
+      window.localStorage.removeItem('eduken-theme');
+      window.sessionStorage.setItem('__eduken_theme_test_initialized', '1');
+    }
+  });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const root = page.locator('html');
+  const toggle = page.locator('.theme-toggle').first();
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: light mode');
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+
+  await toggle.click();
+  await expect(toggle).toBeFocused();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is dark mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is System default. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: System default');
+  await expect(toggle).toContainText('System');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(toggle).toContainText('System');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('light');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
 });
