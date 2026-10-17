@@ -124,6 +124,11 @@ export default function PlatformHub({
   const [walletDepositKey, setWalletDepositKey] = useState('');
   const [walletAction, setWalletAction] = useState(false);
   const [walletMessage, setWalletMessage] = useState('');
+  const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPassword, setCustomerPassword] = useState('');
+  const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
+  const [customerSignInMessage, setCustomerSignInMessage] = useState('');
 
   const refreshWallet = async () => {
     if (!auth.isSignedIn()) {
@@ -249,6 +254,25 @@ export default function PlatformHub({
       await refresh();
     } catch {
       /* cancelled */
+    }
+  };
+
+  const signInCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (customerSignInLoading) return;
+    setCustomerSignInLoading(true);
+    setCustomerSignInMessage('');
+    try {
+      await auth.signInWithPassword(customerEmail, customerPassword);
+      setCustomerPassword('');
+      setCustomerSignInOpen(false);
+      setCustomerSignInMessage('');
+      await refresh();
+      await refreshWallet();
+    } catch (error) {
+      setCustomerSignInMessage(error instanceof Error ? error.message : 'Customer sign-in failed. Please try again.');
+    } finally {
+      setCustomerSignInLoading(false);
     }
   };
 
@@ -457,7 +481,7 @@ export default function PlatformHub({
               <button className="primary" onClick={() => { setWalletMessage(''); setOpen('wallet'); void refreshWallet(); }}>Open Wallet</button>
             </>
           ) : (
-            <button className="secondary" onClick={signIn}><UserRound size={15} /> Sign in to get a wallet</button>
+            <button className="secondary" onClick={() => { setCustomerSignInMessage(''); setCustomerSignInOpen(true); }}><UserRound size={15} /> Sign in to get a wallet</button>
           )}
           {walletMessage && !wallet && user ? <small role="status">{walletMessage}</small> : null}
         </div>
@@ -583,6 +607,39 @@ export default function PlatformHub({
           </div>
         )}
       </div>
+
+      {customerSignInOpen && (
+        <div role="presentation" onClick={event => { if (event.target === event.currentTarget && !customerSignInLoading) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
+            <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
+            <span className="kicker">CUSTOMER ACCOUNT</span>
+            <h2 id="customer-signin-title">Sign in to EDUKEN Wallet</h2>
+            <p>Sign in securely to access your wallet and eligible EDUKEN services.</p>
+            <button
+              className="customer-google-signin"
+              type="button"
+              onClick={() => { setCustomerSignInMessage(''); void auth.signIn(); }}
+              disabled={customerSignInLoading}
+            >
+              <span className="customer-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            <div className="customer-signin-divider"><span>or use email</span></div>
+            <form className="service-request-form" onSubmit={signInCustomer}>
+              <label className="service-request-field" htmlFor="customer-signin-email">
+                <span>Email address</span>
+                <input id="customer-signin-email" type="email" autoComplete="username" required value={customerEmail} onChange={event => setCustomerEmail(event.target.value)} disabled={customerSignInLoading} />
+              </label>
+              <label className="service-request-field" htmlFor="customer-signin-password">
+                <span>Password</span>
+                <input id="customer-signin-password" type="password" autoComplete="current-password" required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
+              </label>
+              {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
+              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? 'Signing in…' : 'Sign in securely'}</button>
+            </form>
+          </section>
+        </div>
+      )}
 
       {open === 'wallet' && (
         <Drawer title="EDUKEN Wallet" close={() => setOpen('')}>
