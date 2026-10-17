@@ -547,6 +547,10 @@ test('appearance preference persists and System mode follows operating-system ch
   await page.emulateMedia({ colorScheme: 'dark' });
   await expect(root).toHaveAttribute('data-theme', 'dark');
   await expect(root).toHaveCSS('color-scheme', 'dark');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(toggle).toContainText('System');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
 
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
