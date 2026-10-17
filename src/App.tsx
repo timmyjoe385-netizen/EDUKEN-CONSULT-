@@ -185,7 +185,7 @@ function App() {
     setThemePreference(current => current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light');
   };
 
-  const ThemeToggle = () => (
+  const themeToggle = (
     <button
       type="button"
       className="theme-toggle"
@@ -1360,7 +1360,7 @@ function App() {
           </div>
           <div className="admin-user">
             <span>{user?.email}</span>
-            <ThemeToggle />
+            {themeToggle}
             <button onClick={logout}>
               <LogOut size={16} /> Sign out
             </button>
@@ -2181,7 +2181,7 @@ function App() {
           </a>
         </nav>
         <div className="auth-nav-actions">
-          <ThemeToggle />
+          {themeToggle}
           <a className="header-sign-in" href="#eduken-platform" onClick={() => setMenu(false)} aria-label="Go to EDUKEN Wallet and customer account">
             My Wallet
           </a>
