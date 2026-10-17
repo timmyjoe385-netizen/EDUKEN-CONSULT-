@@ -1781,7 +1781,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/payments" && req.method === "GET") {
       const user = await requireUser(req);
-      const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
+      const { data, error } = await db.from("payments").select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       return json({ items: data ?? [] });
     }
