@@ -130,6 +130,7 @@ test("ambiguous Paystack initialization responses remain pending for reconciliat
     assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status, hasAuthorizationUrl: false }), "unconfirmed", String(status));
   }
   assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: false }), "unconfirmed");
+  assert.equal(getPaystackInitializationFailureDisposition({ ok: true, status: 200, hasAuthorizationUrl: true }), "unconfirmed", "contradictory 2xx response must not fail a possibly-created checkout");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 400, hasAuthorizationUrl: false }), "failed");
   assert.equal(getPaystackInitializationFailureDisposition({ ok: false, status: 401, hasAuthorizationUrl: false }), "failed");
 });
