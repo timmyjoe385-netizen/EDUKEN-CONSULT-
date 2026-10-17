@@ -879,6 +879,38 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
+
+test('customer password sign-in shows a safe error without exposing provider details', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+    }),
+  );
+  await page.route(url =>
+    url.hostname === 'pphxltbkwygqjtjgkhxu.supabase.co'
+    && url.pathname === '/auth/v1/token'
+    && url.searchParams.get('grant_type') === 'password',
+  route => route.fulfill({
+    status: 400,
+    contentType: 'application/json',
+    body: JSON.stringify({ error: 'invalid_grant', error_description: 'invalid login credentials' }),
+  }));
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN Wallet' });
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel('Email address').fill('student@example.test');
+  await dialog.getByLabel('Password').fill('not-a-real-password');
+  await dialog.getByRole('button', { name: 'Sign in securely' }).click();
+  await expect(dialog.getByRole('alert')).toHaveText(
+    'Email or password was not accepted. Check your test account details and try again.',
+  );
+  await expect(dialog.getByRole('alert')).not.toContainText('invalid login credentials');
+});
+
 test('public AI assistant rejects oversized questions before provider work', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   expect(handler).toContain('typeof b?.question !== "string"');
