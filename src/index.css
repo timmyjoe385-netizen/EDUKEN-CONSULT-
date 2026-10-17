@@ -2712,3 +2712,58 @@ html[data-theme="dark"] .make-payments-message {
   color: #e8f0f8;
 }
 
+/* Keep the student centre, wallet drawer and service trackers consistent in dark mode. */
+html[data-theme="dark"] .platform-card,
+html[data-theme="dark"] .platform-results button,
+html[data-theme="dark"] .drawer,
+html[data-theme="dark"] .drawer-item,
+html[data-theme="dark"] .tracker-row,
+html[data-theme="dark"] .ai-answer {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .platform-card p,
+html[data-theme="dark"] .drawer-item small,
+html[data-theme="dark"] .tracker-row small,
+html[data-theme="dark"] .make-payments-security,
+html[data-theme="dark"] .topic-switch-state {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .platform-icon,
+html[data-theme="dark"] .icon-button {
+  background: #123b36;
+  color: #bff8e5;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .platform-results span,
+html[data-theme="dark"] .platform-results small,
+html[data-theme="dark"] .wallet-card-balance {
+  color: #75e4c1;
+}
+html[data-theme="dark"] .platform-input,
+html[data-theme="dark"] .finder-inputs input,
+html[data-theme="dark"] .tracker-row select,
+html[data-theme="dark"] .tracker-row textarea {
+  background-color: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .platform-input input {
+  background: transparent;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .platform-results button:hover {
+  background: #142b44;
+}
+html[data-theme="dark"] .drawer-backdrop {
+  background: rgba(0, 0, 0, 0.58);
+}
+html[data-theme="dark"] .topic-switch-row {
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .topic-switch-track {
+  background: #31516d;
+}
+
