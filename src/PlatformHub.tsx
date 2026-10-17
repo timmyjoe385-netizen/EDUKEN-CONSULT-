@@ -4,6 +4,7 @@ import {
   Bell,
   Bookmark,
   Check,
+  CreditCard,
   Search,
   Sparkles,
   Target,
@@ -116,9 +117,103 @@ export default function PlatformHub({
   const [aiSources, setAiSources] = useState<{ title: string; url: string; description?: string }[]>([]);
   const [aiResearchStatus, setAiResearchStatus] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [wallet, setWallet] = useState<any>(null);
+  const [walletTransactions, setWalletTransactions] = useState<Item[]>([]);
+  const [walletLoading, setWalletLoading] = useState(false);
+  const [walletAmount, setWalletAmount] = useState('1000');
+  const [walletDepositKey, setWalletDepositKey] = useState('');
+  const [walletAction, setWalletAction] = useState(false);
+  const [walletMessage, setWalletMessage] = useState('');
+  const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPassword, setCustomerPassword] = useState('');
+  const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
+  const [customerSignInMessage, setCustomerSignInMessage] = useState('');
+
+  const refreshWallet = async () => {
+    if (!auth.isSignedIn()) {
+      setWallet(null);
+      setWalletTransactions([]);
+      return;
+    }
+    setWalletLoading(true);
+    let pendingWalletMessage = '';
+    const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
+    let pendingReference = '';
+    try { pendingReference = window.sessionStorage.getItem(pendingWalletDepositKey) || ''; } catch { pendingReference = ''; }
+    if (pendingReference && !/^EDK-PAY-[A-Z0-9]{18}$/.test(pendingReference)) {
+      try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* ignore unavailable session storage */ }
+      pendingReference = '';
+    }
+    if (pendingReference) {
+      try {
+        const verification = await api.post('/api/wallet/deposit/verify', { reference: pendingReference });
+        if (verification.data?.paid) {
+          try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* preserve the visible result */ }
+          pendingWalletMessage = 'Wallet deposit verified successfully. Your balance has been refreshed.';
+        } else if (verification.data?.status === 'Failed') {
+          try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* preserve the visible result */ }
+          pendingWalletMessage = 'Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt.';
+        } else {
+          pendingWalletMessage = 'This deposit is not confirmed yet. Do not pay again immediately. Saved reference: ' + pendingReference;
+        }
+      } catch {
+        pendingWalletMessage = 'We could not verify the saved wallet deposit yet. Your reference remains saved for another check: ' + pendingReference;
+      }
+    }
+    try {
+      const result = await api.get('/api/wallet');
+      setWallet(result.data.wallet || null);
+      setWalletTransactions(result.data.transactions || []);
+      setWalletMessage(pendingWalletMessage);
+    } catch {
+      setWallet(null);
+      setWalletTransactions([]);
+      setWalletMessage(pendingWalletMessage || 'Wallet service is not available yet. It will appear after the wallet release is enabled.');
+    } finally {
+      setWalletLoading(false);
+    }
+  };
+
+  const startWalletDeposit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (walletAction) return;
+    const amount = Number(walletAmount);
+    if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
+      setWalletMessage('Enter a whole-naira amount between ₦100 and ₦500,000.');
+      return;
+    }
+    const idempotencyKey = walletDepositKey || ('wallet-deposit:' + crypto.randomUUID());
+    setWalletDepositKey(idempotencyKey);
+    setWalletAction(true);
+    setWalletMessage('Preparing secure Paystack checkout…');
+    try {
+      const result = await api.post('/api/wallet/deposit/initialize', { amount, idempotencyKey });
+      const authorizationUrl = String(result.data?.authorizationUrl || '');
+      if (!/^https:\/\/checkout\.paystack\.com\/[A-Za-z0-9_-]+/.test(authorizationUrl)) {
+        throw new Error('Paystack did not return a trusted checkout URL. Do not retry immediately; refresh your wallet or contact support.');
+      }
+      window.location.assign(authorizationUrl);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Could not start the wallet deposit.';
+      setWalletMessage(message);
+      if (message.includes('You can safely try again')) setWalletDepositKey('');
+    } finally {
+      setWalletAction(false);
+    }
+  };
 
   const refresh = async () => {
-    if (!auth.isSignedIn()) return;
+    if (!auth.isSignedIn()) {
+      setUser(null);
+      setSaved([]);
+      setTracker([]);
+      setAlerts([]);
+      setTopics([]);
+      setWallet(null);
+      setWalletTransactions([]);
+      return;
+    }
     try {
       const [me, saves, apps, notices, topicData] = await Promise.all([
         api.get('/api/me'),
@@ -132,6 +227,7 @@ export default function PlatformHub({
       setTracker(apps.data.items || []);
       setAlerts(notices.data.items || []);
       setTopics(topicData.data.topics || []);
+      void refreshWallet();
       api.post('/api/user/reminders/check', {}).catch(() => undefined);
     } catch {
       setUser(null);
@@ -139,9 +235,17 @@ export default function PlatformHub({
   };
 
   useEffect(() => {
-    refresh();
-    if (!auth.isSignedIn()) return;
-    return notifications.onMessage(() => refresh());
+    void refresh();
+    const onAuthChanged = () => { void refresh(); };
+    const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
+    window.addEventListener('eduken-auth-changed', onAuthChanged);
+    window.addEventListener('eduken-wallet-updated', onWalletUpdated);
+    const unsubscribe = auth.isSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
+    return () => {
+      window.removeEventListener('eduken-auth-changed', onAuthChanged);
+      window.removeEventListener('eduken-wallet-updated', onWalletUpdated);
+      unsubscribe();
+    };
   }, []);
 
   const signIn = async () => {
@@ -150,6 +254,25 @@ export default function PlatformHub({
       await refresh();
     } catch {
       /* cancelled */
+    }
+  };
+
+  const signInCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (customerSignInLoading) return;
+    setCustomerSignInLoading(true);
+    setCustomerSignInMessage('');
+    try {
+      await auth.signInWithPassword(customerEmail, customerPassword);
+      setCustomerPassword('');
+      setCustomerSignInOpen(false);
+      setCustomerSignInMessage('');
+      await refresh();
+      await refreshWallet();
+    } catch (error) {
+      setCustomerSignInMessage(error instanceof Error ? error.message : 'Customer sign-in failed. Please try again.');
+    } finally {
+      setCustomerSignInLoading(false);
     }
   };
 
@@ -348,6 +471,22 @@ export default function PlatformHub({
         </div>
         <div className="platform-card">
           <div className="platform-icon">
+            <CreditCard size={20} />
+          </div>
+          <h3>EDUKEN Wallet</h3>
+          <p>Keep optional service credit and pay for eligible EDUKEN services without starting a new checkout each time.</p>
+          {user ? (
+            <>
+              <p className="wallet-card-balance">{walletLoading ? 'Loading balance…' : wallet ? 'Balance: ₦' + Number(wallet.balance || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Wallet status unavailable'}</p>
+              <button className="primary" onClick={() => { setWalletMessage(''); setOpen('wallet'); void refreshWallet(); }}>Open Wallet</button>
+            </>
+          ) : (
+            <button className="secondary" onClick={() => { setCustomerSignInMessage(''); setCustomerSignInOpen(true); }}><UserRound size={15} /> Sign in to get a wallet</button>
+          )}
+          {walletMessage && !wallet && user ? <small role="status">{walletMessage}</small> : null}
+        </div>
+        <div className="platform-card">
+          <div className="platform-icon">
             <Target size={20} />
           </div>
           <h3>Application Tracker</h3>
@@ -468,6 +607,83 @@ export default function PlatformHub({
           </div>
         )}
       </div>
+
+      {customerSignInOpen && (
+        <div role="presentation" onClick={event => { if (event.target === event.currentTarget && !customerSignInLoading) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
+            <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
+            <span className="kicker">CUSTOMER ACCOUNT</span>
+            <h2 id="customer-signin-title">Sign in to EDUKEN Wallet</h2>
+            <p>Sign in securely to access your wallet and eligible EDUKEN services.</p>
+            <button
+              className="customer-google-signin"
+              type="button"
+              onClick={() => { setCustomerSignInMessage(''); void auth.signIn(); }}
+              disabled={customerSignInLoading}
+            >
+              <span className="customer-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            <div className="customer-signin-divider"><span>or use email</span></div>
+            <form className="service-request-form" onSubmit={signInCustomer}>
+              <label className="service-request-field" htmlFor="customer-signin-email">
+                <span>Email address</span>
+                <input id="customer-signin-email" type="email" autoComplete="username" required value={customerEmail} onChange={event => setCustomerEmail(event.target.value)} disabled={customerSignInLoading} />
+              </label>
+              <label className="service-request-field" htmlFor="customer-signin-password">
+                <span>Password</span>
+                <input id="customer-signin-password" type="password" autoComplete="current-password" required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
+              </label>
+              {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
+              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? 'Signing in…' : 'Sign in securely'}</button>
+            </form>
+          </section>
+        </div>
+      )}
+
+      {open === 'wallet' && (
+        <Drawer title="EDUKEN Wallet" close={() => setOpen('')}>
+          <div className="drawer-list">
+            <div className="platform-wide">
+              <span className="kicker">AVAILABLE BALANCE</span>
+              <h2>₦{Number(wallet?.balance || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h2>
+              <p>Wallet funds are currently intended for eligible EDUKEN services only. Withdrawals are not enabled.</p>
+            </div>
+            <form className="service-request-form" onSubmit={startWalletDeposit}>
+              <label className="service-request-field" htmlFor="wallet-deposit-amount">
+                <span>Add funds (NGN)</span>
+                <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required disabled={walletAction || Boolean(walletDepositKey)} value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
+              </label>
+              <p className="make-payments-security">Deposits are credited only after EDUKEN verifies successful payment with Paystack. Do not share your card PIN or banking password.</p>
+              {walletDepositKey ? <small>Keep this deposit attempt unchanged until checkout is confirmed. If initialization is uncertain, contact support before starting another deposit.</small> : null}
+              {walletMessage ? <p className="make-payments-message" role="status" aria-live="polite">{walletMessage}</p> : null}
+              <button className="primary" type="submit" disabled={walletAction}>{walletAction ? 'Preparing deposit…' : 'Add funds with Paystack'}</button>
+            </form>
+            <div>
+              <h4>Recent transactions</h4>
+              {walletLoading ? <p>Loading wallet history…</p> : walletTransactions.length ? (
+                walletTransactions.map(transaction => {
+                  const isCredit = transaction.transaction_type === 'deposit' || transaction.transaction_type === 'refund';
+                  const label = transaction.transaction_type === 'deposit' ? 'Wallet deposit' : transaction.transaction_type === 'refund' ? 'Refund' : 'Service payment';
+                  return (
+                    <div className="drawer-item" key={transaction.id}>
+                      <div>
+                        <b>{label}</b>
+                        <small>{transaction.description || new Date(transaction.created_at).toLocaleString()}</small>
+                        <small>{new Date(transaction.created_at).toLocaleString('en-NG')}</small>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <b>{isCredit ? '+' : '−'}₦{Number(transaction.amount || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
+                        <small>Balance: ₦{Number(transaction.balance_after || 0).toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</small>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : <div className="empty">No wallet transactions yet.</div>}
+            </div>
+          </div>
+        </Drawer>
+      )}
 
       {open === 'saved' && (
         <Drawer title="Saved Opportunities" close={() => setOpen('')}>

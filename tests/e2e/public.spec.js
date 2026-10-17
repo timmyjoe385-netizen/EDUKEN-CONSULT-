@@ -18,6 +18,99 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('isolated preview uses test service catalogue while preserving live public education content', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const apiClient = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
+
+  expect(apiClient).toContain('export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;');
+  expect(app).toContain('if (usesIsolatedTestBackend)');
+  expect(app).toContain("const testContent = await api.get('/public-content');");
+  expect(app).toContain('const previewTestService');
+  expect(app).toContain('live.services = [previewTestService];');
+  expect(app).toContain('the checkout API still validates');
+  expect(app).toContain('const testServices = Array.isArray(testContent.data?.services) ? testContent.data.services : [];');
+  expect(app).toContain('service visible if public catalogue loading fails');
+});
+
+test('wallet callback keeps its reference available for verification after sign-in', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const hub = readFileSync(new URL('../../src/PlatformHub.tsx', import.meta.url), 'utf8');
+
+  expect(app).toContain("eduken_pending_wallet_deposit_reference");
+  expect(app).toContain("window.sessionStorage.setItem(pendingWalletDepositKey, returnedReference)");
+  expect(hub).toContain("eduken_pending_wallet_deposit_reference");
+  expect(hub).toContain("api.post('/api/wallet/deposit/verify', { reference: pendingReference })");
+  expect(hub).toContain("window.sessionStorage.removeItem(pendingWalletDepositKey)");
+});
+
+test('wallet notification emails are skipped for idempotent settlement retries', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const webhookWallet = handler.slice(
+    handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")'),
+    handler.indexOf('if (existingPayment.status === "Paid")', handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")')),
+  );
+  const walletVerify = handler.slice(
+    handler.indexOf('if (path === "/api/wallet/deposit/verify" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/wallet/pay-service" && req.method === "POST")'),
+  );
+  const walletPay = handler.slice(
+    handler.indexOf('if (path === "/api/wallet/pay-service" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/payments/initialize-guest" && req.method === "POST")'),
+  );
+  const walletRefund = handler.slice(
+    handler.indexOf('if (path === "/api/admin/wallet/refund" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/admin/system-settings")'),
+  );
+
+  expect(webhookWallet).toContain('walletSettlement?.reused !== true');
+  expect(walletVerify).toContain('settled?.reused !== true');
+  expect(walletPay).toContain('result?.reused !== true');
+  expect(walletRefund).toContain('refund?.reused !== true');
+});
+
+test('service payment webhook retries do not resend notifications after payment is already Paid', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const webhook = handler.slice(
+    handler.indexOf('if (path === "/api/payments/webhook" && req.method === "POST")'),
+    handler.indexOf('if (req.method === "GET" && (path === "/public-content"'),
+  );
+  const alreadyPaid = webhook.slice(
+    webhook.indexOf('if (existingPayment.status === "Paid")'),
+    webhook.indexOf('const { data: payment, error: updateError }'),
+  );
+  const firstSettlement = webhook.slice(
+    webhook.indexOf('const { data: payment, error: updateError }'),
+    webhook.indexOf('return json({ ok: true, paid: true, reused: !payment });'),
+  );
+
+  expect(alreadyPaid).toContain('reused: true');
+  expect(alreadyPaid).not.toContain('sendServicePaymentNotifications');
+  expect(firstSettlement).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+});
+
+test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const workspace = page.locator('#eduken-platform');
+  await expect(workspace.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
+  await expect(workspace.getByRole('heading', { name: 'EDUKEN Wallet' })).toBeVisible();
+  await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
+});
+
 test('homepage exposes the aggregate calculator from the primary navigation and hero', async ({ page }) => {
   await page.route(publicContentUrl, route =>
     route.fulfill({
@@ -266,13 +359,17 @@ test('service request dialog validates required fields without sending a request
   });
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.getByRole('button', { name: /Request this service/i }).click();
+  const serviceCard = page.locator('.service-row').filter({
+    has: page.getByText('Playwright Service Request Check', { exact: true }),
+  });
+  await expect(serviceCard).toHaveCount(1);
+  await serviceCard.getByRole('button', { name: 'Request this service', exact: true }).click();
 
   const dialog = page.getByRole('dialog', {
     name: 'Playwright Service Request Check',
   });
   await expect(dialog).toBeVisible();
-  for (const name of ['Full name', 'WhatsApp number', 'Additional notes']) {
+  for (const name of ['Full name', 'WhatsApp number', 'Additional notes (required)']) {
     await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
     expect(await dialog.getByRole('textbox', { name }).evaluate(element => element.checkValidity())).toBe(false);
   }
@@ -596,6 +693,33 @@ test('service request API keeps private endpoints protected without creating rec
   expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
 });
 
+test('wallet reads and spending require customer auth; refunds require admin auth', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeBlock = (start, end) => handler.slice(handler.indexOf(start), handler.indexOf(end));
+
+  const walletRead = routeBlock(
+    'if (path === "/api/wallet" && req.method === "GET")',
+    'if (path === "/api/wallet/deposit/initialize" && req.method === "POST")',
+  );
+  expect(walletRead.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletRead.indexOf('await requireUser(req)')).toBeLessThan(walletRead.indexOf('db.from("customer_wallets")'));
+
+  const walletSpend = routeBlock(
+    'if (path === "/api/wallet/pay-service" && req.method === "POST")',
+    'if (path === "/api/payments/initialize-guest" && req.method === "POST")',
+  );
+  expect(walletSpend.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletSpend.indexOf('await requireUser(req)')).toBeLessThan(walletSpend.indexOf('db.rpc("pay_service_from_customer_wallet"'));
+
+  const refund = routeBlock(
+    'if (path === "/api/admin/wallet/refund" && req.method === "POST")',
+    'if (path === "/api/admin/system-settings")',
+  );
+  expect(refund.indexOf('await requireAdmin(req)')).toBeGreaterThanOrEqual(0);
+  expect(refund.indexOf('await requireAdmin(req)')).toBeLessThan(refund.indexOf('req.json()'));
+  expect(refund.indexOf('await requireAdmin(req)')).toBeLessThan(refund.indexOf('db.from("payments")'));
+});
+
 test('service request validator rejects invalid payloads before database writes', async () => {
   const valid = { customerName: '  Ada Example  ', whatsapp: '  08012345678 ', details: '  Please advise  ', email: ' ada@example.com ' };
   const result = validateServiceRequestBody(valid);
@@ -606,6 +730,7 @@ test('service request validator rejects invalid payloads before database writes'
     details: 'Please advise',
     email: 'ada@example.com',
     serviceId: null,
+    quantity: 1,
   });
 
   for (const payload of [
@@ -695,6 +820,37 @@ test('admin service request status changes are guarded and payment-confirmed sta
   expect(app).toContain('{item.status === \'Paid\' && <option value="Paid" disabled>Paid (payment confirmed)</option>}');
 });
  
+test('authenticated payment initialization uses saved quantity and refuses already-paid requests', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/payments/initialize" && req.method === "POST")');
+  const routeEnd = source.indexOf('if (path === "/api/payments/verify" && req.method === "POST")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = source.slice(routeStart, routeEnd);
+  expect(route).toContain('status,quantity,services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('request.status === "Paid"');
+  expect(route).toContain('.eq("service_request_id", request.id).eq("status", "Paid").maybeSingle()');
+  expect(route).toContain('Number(service?.price) * quantity');
+  expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
+  expect(route).toContain('.eq("service_request_id", request.id).eq("status", "Pending").maybeSingle()');
+  expect(route).not.toContain('.eq("service_request_id", request.id).eq("user_id", user.id).eq("status", "Pending")');
+});
+
+test('guest payment initialization validates saved quantity and catalogue eligibility', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/payments/initialize-guest" && req.method === "POST")');
+  const routeEnd = source.indexOf('if (path === "/api/payments/verify-guest" && req.method === "POST")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = source.slice(routeStart, routeEnd);
+  expect(route).toContain('services(name,price,is_published,is_available,is_catalog_item)');
+  expect(route).toContain('request.status === "Paid"');
+  expect(route).toContain('Number.isInteger(quantity)');
+  expect(route).toContain('quantity < 1 || quantity > 100');
+  expect(route).toContain('quantity > 1 && service?.is_catalog_item !== true');
+  expect(route).toContain('Number(service?.price) * quantity');
+});
+
 test('database hardening migration removes direct client access to consultation submissions', async () => {
   const migration = readFileSync(
     'supabase/migrations/20261014135746_harden_public_table_grants.sql',
@@ -705,12 +861,13 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
+test('public header exposes customer wallet access but not admin access', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
-  // Public navigation must not advertise the admin route.
+  // Customer wallet access is intentionally visible; admin access must remain private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
+  await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
   await page.route(authorizeEndpoint + '**', route =>
@@ -721,10 +878,12 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
     }),
   );
 
-  // Direct access to the admin sign-in route remains available.
+  // Direct access shows only the private admin sign-in screen, not the public website.
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveURL(/\/admin\/?$/);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+  await expect(page.locator('.site')).toHaveCount(0);
+  await expect(page.locator('.admin-shell')).toHaveCount(0);
 
   const siteOrigin = new URL(page.url()).origin;
   const authNavigation = page.waitForRequest(
@@ -736,6 +895,55 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
   expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
 });
 
+
+
+test('public header does not expose generic sign-in while customer wallet sign-in remains available', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [], admissions: [], updates: [], faqs: [], services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
+});
+
+test('customer password sign-in shows a safe error without exposing provider details', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+    }),
+  );
+  await page.route(url =>
+    url.hostname === 'pphxltbkwygqjtjgkhxu.supabase.co'
+    && url.pathname === '/auth/v1/token'
+    && url.searchParams.get('grant_type') === 'password',
+  route => route.fulfill({
+    status: 400,
+    contentType: 'application/json',
+    body: JSON.stringify({ error: 'invalid_grant', error_description: 'invalid login credentials' }),
+  }));
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN Wallet' });
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel('Email address').fill('student@example.test');
+  await dialog.getByLabel('Password').fill('not-a-real-password');
+  await dialog.getByRole('button', { name: 'Sign in securely' }).click();
+  await expect(dialog.getByRole('alert')).toHaveText(
+    'Email or password was not accepted. Check your test account details and try again.',
+  );
+  await expect(dialog.getByRole('alert')).not.toContainText('invalid login credentials');
+});
 
 test('public AI assistant rejects oversized questions before provider work', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
@@ -1343,7 +1551,21 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
   expect(pageErrors, 'opening the JAMB request dialog must not throw').toEqual([]);
 });
 
-test('admin sign-in is reachable from the footer and opens directly at /admin', async ({ page }) => {
+test('admin workspace access is decided by server-side authorization, not a public email allowlist', () => {
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const start = handler.indexOf('if (path === "/api/admin/session" && req.method === "GET")');
+  const end = handler.indexOf('if (path === "/api/admin/payments" && req.method === "GET")', start);
+  const route = handler.slice(start, end);
+  expect(start).toBeGreaterThan(-1);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('return json({ admin: true })');
+  expect(app).toContain("api.get('/api/admin/session')");
+  expect(app).not.toContain('timmyjoe385@gmail.com');
+  expect(app).not.toContain('edukenconsult00@gmail.com');
+});
+
+test('admin sign-in is not linked publicly and /admin shows only the private sign-in page', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1352,8 +1574,345 @@ test('admin sign-in is reachable from the footer and opens directly at /admin', 
     }),
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('footer a[href="/admin"]')).toContainText('Admin sign in');
+  await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.locator('.site')).toHaveCount(0);
+  await expect(page.locator('.admin-shell')).toHaveCount(0);
+});
+
+
+test('service request form clearly labels and outlines customer detail fields', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'service-request-form-fixture',
+          name: 'Service Request Form Fixture',
+          category: 'Consultation',
+          description: 'A safe fixture for checking customer request fields.',
+          price: 2500,
+          is_published: true,
+          is_available: true,
+          is_catalog_item: false,
+          status: 'PUBLISHED',
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const requestButton = page.getByRole('button', { name: /Request this service/i }).last();
+  await expect(requestButton).toBeVisible();
+  await requestButton.click();
+
+  const dialog = page.getByRole('dialog', { name: /Service Request Form Fixture/i });
+  await expect(dialog.getByLabel('Full name *')).toBeVisible();
+  await expect(dialog.getByLabel('WhatsApp number *')).toBeVisible();
+  await expect(dialog.getByLabel('Email address (optional)')).toBeVisible();
+  await expect(dialog.getByLabel('Additional notes (required)')).toBeVisible();
+
+  const nameInput = dialog.locator('#service-request-customer-name');
+  const fieldStyle = await nameInput.evaluate(element => {
+    const style = window.getComputedStyle(element);
+    return {
+      borderStyle: style.borderStyle,
+      borderWidth: style.borderTopWidth,
+      borderColor: style.borderTopColor,
+      minHeight: style.minHeight,
+    };
+  });
+  expect(fieldStyle.borderStyle).toBe('solid');
+  expect(fieldStyle.borderWidth).toBe('2px');
+  expect(fieldStyle.minHeight).toBe('48px');
+  expect(fieldStyle.borderColor).not.toBe('rgba(0, 0, 0, 0)');
+  await expect(dialog).toContainText(/continue to secure checkout for priced services/i);
+});
+
+
+test('Make Payments page shows the request summary without exposing its checkout token in the URL', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify({
+      requestId: '123e4567-e89b-42d3-a456-426614174000',
+      checkoutToken: 'a'.repeat(64),
+      referenceNumber: 'EDK-20261016-AB12CD34',
+      serviceName: 'Admission Consultation',
+      amount: 2500,
+      email: 'student@example.com',
+      paymentStatus: 'Not paid',
+    }));
+  });
+
+  await page.goto('/make-payments', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Make Payments' })).toBeVisible();
+  await expect(page.getByText('Admission Consultation')).toBeVisible();
+  await expect(page.getByText('EDK-20261016-AB12CD34')).toBeVisible();
+  await expect(page.getByText('₦2,500')).toBeVisible();
+  await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
+  await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
+  expect(page.url()).not.toContain('a'.repeat(64));
+});
+
+test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
+  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+
+  // Public navigation must not advertise the admin route.
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveCount(0);
+
+  // Intercept the OAuth hand-off so this test never signs into a real account.
+  await page.route(authorizeEndpoint + '**', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+    }),
+  );
+
+  // Direct access to the admin sign-in route remains available.
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveURL(/\/admin\/?$/);
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+
+  const siteOrigin = new URL(page.url()).origin;
+  const authNavigation = page.waitForRequest(
+    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
+  );
+  await page.getByRole('button', { name: /Continue with Google/i }).click();
+  const authUrl = new URL((await authNavigation).url());
+  expect(authUrl.searchParams.get('provider')).toBe('google');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
+});
+
+test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
+  await page.addInitScript(() => {
+    // Clear the saved preference only on the first document; keep it during reload assertions.
+    if (window.sessionStorage.getItem('__eduken_theme_test_initialized') !== '1') {
+      window.localStorage.removeItem('eduken-theme');
+      window.sessionStorage.setItem('__eduken_theme_test_initialized', '1');
+    }
+  });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const root = page.locator('html');
+  const toggle = page.locator('.theme-toggle').first();
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: light mode');
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+
+  await toggle.click();
+  await expect(toggle).toBeFocused();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is dark mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(7, 20, 38)');
+  await expect(page.locator('.platform-card').first()).toHaveCSS('background-color', 'rgb(13, 32, 56)');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is System default. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: System default');
+  await expect(toggle).toContainText('System');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(toggle).toContainText('System');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('light');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+});
+
+test('standalone aggregate calculator applies saved light and dark theme with readable contrast', async ({ page }) => {
+  await page.addInitScript(() => {
+    // The init script runs again on reload. Set the initial dark preference only
+    // once per test page so the later light-mode reload can exercise persistence.
+    if (window.sessionStorage.getItem('eduken-theme-test-initialized') !== '1') {
+      window.localStorage.setItem('eduken-theme', 'dark');
+      window.sessionStorage.setItem('eduken-theme-test-initialized', '1');
+    }
+  });
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+
+  const root = page.locator('html');
+  const card = page.locator('.aggregate-card').first();
+  const heading = page.getByRole('heading', { name: 'EDUKEN Aggregate Calculator' });
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveAttribute('data-theme-preference', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await expect(card).toHaveCSS('background-color', 'rgb(13, 32, 56)');
+  await expect(heading).toHaveCSS('color', 'rgb(241, 247, 255)');
+
+  await page.evaluate(() => window.localStorage.setItem('eduken-theme', 'light'));
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveAttribute('data-theme-preference', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+  await expect(card).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(heading).toHaveCSS('color', 'rgb(23, 63, 49)');
+});
+
+test('admin payment records require admin authorization and return only dashboard-safe fields', () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/admin/payments" && req.method === "GET")');
+  const routeEnd = source.indexOf('if (path === "/api/admin/system-settings")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+
+  const route = source.slice(routeStart, routeEnd);
+  const authAt = route.indexOf('await requireAdmin(req)');
+  const queryAt = route.indexOf('db.from("payments").select(');
+  expect(authAt).toBeGreaterThanOrEqual(0);
+  expect(queryAt).toBeGreaterThan(authAt);
+  expect(route).toContain('select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)")');
+  expect(route).not.toContain('select("*,');
+  expect(route).not.toContain('authorization_url');
+
+  const component = readFileSync('src/PaymentsAdmin.tsx', 'utf8');
+  expect(component).toContain("api.get('/api/admin/payments')");
+  expect(component).toContain('item.payment_reference');
+  expect(component).toContain('item.paid_at');
+  expect(component).not.toContain('authorization_url');
+  expect(component).not.toContain('user_id');
+});
+
+test('system health endpoint is admin-protected and reports safe component statuses', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = handler.indexOf('if (path === "/api/admin/system-health" && req.method === "GET")');
+  const routeEnd = handler.indexOf('if (path === "/api/admin/system-settings")', routeStart);
+  expect(routeStart).toBeGreaterThan(-1);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = handler.slice(routeStart, routeEnd);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('Public website');
+  expect(route).toContain('Database and API');
+  expect(route).toContain('Authentication service');
+  expect(route).toContain('Transactional email provider');
+  expect(route).toContain('Outage email alerts');
+  expect(route).toContain('not_checked');
+  expect(route).toContain('Payment safety configuration');
+  expect(route).toContain('RESEND_API_KEY');
+  expect(route).toContain('Deno.env.get("PAYSTACK_MODE")');
+  expect(route).toContain('mode === "test" && /^sk_test_[A-Za-z0-9]+$/.test(secret)');
+  expect(route).not.toContain('secret.startsWith("sk_test_")');
+  expect(route).not.toContain('console.log');
+});
+
+test('scheduled health monitor supports recovery email independently of customer alerts', () => {
+  const workflow = readFileSync('.github/workflows/health-check.yml', 'utf8');
+  expect(workflow).toContain('cron: "*/15 * * * *"');
+  expect(workflow).toContain('Detect recovery after a previous failed health check');
+  expect(workflow).toContain('listJobsForWorkflowRun');
+  expect(workflow).toContain('const recentRuns = runs.data.workflow_runs');
+  expect(workflow).toContain('latestOutage');
+  expect(workflow).toContain("step.name === 'Send recovery email' && step.conclusion === 'success'");
+  expect(workflow).not.toContain('const previous = runs.data.workflow_runs');
+  expect(workflow).toContain("step.conclusion === 'failure'");
+  expect(workflow).not.toContain("previous?.conclusion === 'failure'");
+  expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
+  expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
+  expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
+  expect(workflow).toContain("dawidd6/action-send-mail@v22");
+  expect(workflow).toContain("actions/github-script@v8");
+  expect(workflow).not.toContain("actions/github-script@v7");
+  expect(workflow).not.toContain("dawidd6/action-send-mail@v3");
+  expect(workflow).toContain("runs-on: ubuntu-24.04");
+  expect(workflow).toContain("This is a test run; no failed step is implied.");
+  expect(workflow).toContain("Please open this run to see the failed step and logs:");
+  expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
+  expect(workflow).not.toContain('/api/email-alerts/subscribe');
+});
+
+test('legacy JAMB service rows remain visible without being made available for checkout', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'legacy-jamb-epin-fixture',
+          name: 'JAMB e-PIN (UTME Without Mock)',
+          category: 'JAMB Services',
+          description: 'Legacy service row fixture.',
+          requirements: 'Test fixture only.',
+          price: 7128,
+          // Simulate a legacy database row that predates availability/catalogue flags.
+          is_catalog_item: false,
+          is_published: true,
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/#jamb-services', { waitUntil: 'domcontentloaded' });
+
+  const card = page.locator('.jamb-service-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB e-PIN (UTME Without Mock)' }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Unavailable');
+  await expect(card.getByRole('button', { name: 'Currently unavailable' })).toBeDisabled();
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+});
+
+
+
+test('isolated payment webhook fails closed against a forged success event', async ({ request }) => {
+  const response = await request.post(
+    'https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/api/payments/webhook',
+    {
+      headers: {
+        'content-type': 'application/json',
+        'x-paystack-signature': 'invalid-test-signature',
+      },
+      data: {
+        event: 'charge.success',
+        data: {
+          reference: 'EDK-PAY-19CC6E47E2824EB2BC',
+          amount: 10000,
+          currency: 'NGN',
+          status: 'success',
+        },
+      },
+      timeout: 20_000,
+    },
+  );
+
+  // Report which guard actually rejected the request: 401 verifies the
+  // signature guard; 503 confirms the endpoint is disabled by configuration.
+  const body = await response.json();
+  console.log(
+    `Isolated forged-webhook result: HTTP ${response.status()} — ${String(body.code || body.error || 'no error code')}`,
+  );
+  expect([401, 503], 'forged webhook must never be accepted').toContain(response.status());
+  if (response.status() === 401) {
+    expect(body.error).toMatch(/signature/i);
+  } else {
+    expect(body.code).toBe('PAYSTACK_TEST_MODE_REQUIRED');
+  }
 });

@@ -21,10 +21,11 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   health-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Check live homepage
@@ -80,7 +81,7 @@ jobs:
 
       - name: Check email alert configuration
         id: email_config
-        if: github.event_name != 'pull_request' && (failure() || github.event.inputs.test_email == 'true')
+        if: github.event_name != 'pull_request' && (success() || failure())
         shell: bash
         env:
           ALERT_EMAIL_TO: ${{ secrets.ALERT_EMAIL_TO }}
@@ -94,12 +95,87 @@ jobs:
             echo "enabled=true" >> "$GITHUB_OUTPUT"
           else
             echo "enabled=false" >> "$GITHUB_OUTPUT"
-            echo "::warning::Email alerts are not configured yet. Add the required repository Actions secrets to enable them."
+            if [ "${{ github.event.inputs.test_email }}" = "true" ] || [ "${{ job.status }}" = "failure" ]; then
+              echo "::warning::Email alerts are not configured yet. Add the required repository Actions secrets to enable them."
+            fi
           fi
+
+      - name: Detect recovery after a previous failed health check
+        id: recovery
+        if: github.event_name != 'pull_request' && success()
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'health-check.yml',
+              status: 'completed',
+              per_page: 10
+            });
+            const recentRuns = runs.data.workflow_runs
+              .filter(run => run.id !== context.runId && run.event !== 'pull_request')
+              .sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+            // Inspect recent runs until the most recent actual monitored outage is found.
+            // A later failed SMTP/test-email step must not hide an outage whose recovery email was never delivered.
+            const monitoredSteps = new Set([
+              'Check live homepage',
+              'Check public EDUKEN content API',
+              'Check AI endpoint routing without using AI resources',
+              'Check analytics API routing and access protection',
+              'Optional Ask EDUKEN live smoke test'
+            ]);
+            let latestOutage = null;
+            let recoveryEmailSentAfterOutage = false;
+            for (const run of recentRuns) {
+              const jobs = await github.rest.actions.listJobsForWorkflowRun({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                run_id: run.id,
+                per_page: 100
+              });
+              const runJobs = jobs.data.jobs;
+              if (runJobs.some(job => (job.steps || []).some(step =>
+                step.name === 'Send recovery email' && step.conclusion === 'success'
+              ))) {
+                recoveryEmailSentAfterOutage = true;
+              }
+              const failedChecks = runJobs.flatMap(job =>
+                (job.steps || [])
+                  .filter(step => monitoredSteps.has(step.name) && step.conclusion === 'failure')
+                  .map(step => step.name)
+              );
+              if (failedChecks.length > 0) {
+                latestOutage = { run, failedChecks };
+                break;
+              }
+            }
+            const recovered = Boolean(latestOutage && !recoveryEmailSentAfterOutage);
+            core.setOutput('recovered', recovered ? 'true' : 'false');
+            if (recovered) core.info(`Previous run ${latestOutage.run.id} had failed monitored checks: ${latestOutage.failedChecks.join(', ')}. Current checks passed and no successful recovery email was recorded after that outage.`);
+            else core.info('No unreported monitored outage detected; no recovery alert is needed.');
+
+      - name: Send recovery email
+        if: github.event_name != 'pull_request' && success() && steps.recovery.outputs.recovered == 'true' && steps.email_config.outputs.enabled == 'true'
+        uses: dawidd6/action-send-mail@v22
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: ${{ secrets.SMTP_PORT }}
+          username: ${{ secrets.SMTP_USERNAME }}
+          password: ${{ secrets.SMTP_PASSWORD }}
+          subject: "RECOVERED: EDUKEN CONSULT health checks passed"
+          to: ${{ secrets.ALERT_EMAIL_TO }}
+          from: ${{ secrets.ALERT_EMAIL_FROM }}
+          body: |
+            The latest scheduled EDUKEN CONSULT health check passed after a previous failed check.
+
+            The monitored homepage, public content API, AI endpoint routing, and analytics API routing/access-protection are responding as expected.
+            Review the successful run:
+            ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
       - name: Send email alert
         if: github.event_name != 'pull_request' && (failure() || github.event.inputs.test_email == 'true') && steps.email_config.outputs.enabled == 'true'
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v22
         with:
           server_address: ${{ secrets.SMTP_SERVER }}
           server_port: ${{ secrets.SMTP_PORT }}
@@ -112,5 +188,5 @@ jobs:
             ${{ github.event.inputs.test_email == 'true' && 'This is a test email to verify that EDUKEN CONSULT health alert delivery is configured correctly.' || 'An automated live health check for EDUKEN CONSULT has failed.' }}
 
             The check covers the live homepage, public content API, AI endpoint routing, and analytics API routing/access-protection. A manual Ask EDUKEN smoke test is available and uses AI resources.
-            Please open this run to see the failed step and logs:
+            ${{ github.event.inputs.test_email == 'true' && 'This is a test run; no failed step is implied. Open this run to review the completed checks and logs:' || 'Please open this run to see the failed step and logs:' }}
             ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

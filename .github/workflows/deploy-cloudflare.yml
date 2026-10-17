@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main, feat/customer-wallet-system-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
@@ -40,8 +40,14 @@ jobs:
           node-version: 24
       - name: Install dependencies
         run: npm install --no-audit --no-fund
-      - name: Build preview website
+      - name: Build preview website against the isolated test project
         run: npm run build
+        env:
+          # Publishable frontend key and URL are intentionally public. Keep these
+          # scoped to the preview build so preview never silently falls back to production.
+          VITE_SUPABASE_URL: https://wpktzogarfqrgkirzdpy.supabase.co
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB
+          VITE_ENABLE_TEST_WRITES: 'true'
       - name: Deploy isolated preview Worker
         run: npx wrangler deploy --env preview
         env:
