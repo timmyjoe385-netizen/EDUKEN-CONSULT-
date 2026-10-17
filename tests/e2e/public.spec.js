@@ -539,6 +539,7 @@ test('appearance preference persists and System mode follows operating-system ch
   await expect(root).toHaveCSS('color-scheme', 'light');
 
   await toggle.click();
+  await expect(toggle).toBeFocused();
   await expect(toggle).toHaveAttribute('aria-label', 'Appearance is dark mode. Change appearance');
   await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
   await expect(root).toHaveAttribute('data-theme', 'dark');
