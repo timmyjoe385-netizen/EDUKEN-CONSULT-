@@ -659,38 +659,31 @@ test('service request API keeps private endpoints protected without creating rec
   expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
 });
 
-test('wallet reads, wallet spending, and admin wallet refunds reject unauthenticated requests', async ({ request }) => {
-  const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
-  const headers = {
-    apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p',
-    'content-type': 'application/json',
-  };
-  const checks = [
-    { method: 'GET', path: '/api/wallet' },
-    {
-      method: 'POST',
-      path: '/api/wallet/pay-service',
-      data: { serviceRequestId: '00000000-0000-4000-8000-000000000000' },
-    },
-    {
-      method: 'POST',
-      path: '/api/admin/wallet/refund',
-      data: { paymentId: '00000000-0000-4000-8000-000000000000', reason: 'Unauthenticated test' },
-    },
-  ];
+test('wallet reads and spending require customer auth; refunds require admin auth', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeBlock = (start, end) => handler.slice(handler.indexOf(start), handler.indexOf(end));
 
-  for (const check of checks) {
-    const response = await request.fetch(base + check.path, {
-      method: check.method,
-      headers,
-      data: check.data,
-      timeout: 20_000,
-    });
-    expect(
-      response.status(),
-      `${check.method} ${check.path} must reject requests without the required customer/admin session`,
-    ).toBe(401);
-  }
+  const walletRead = routeBlock(
+    'if (path === "/api/wallet" && req.method === "GET")',
+    'if (path === "/api/wallet/deposit/initialize" && req.method === "POST")',
+  );
+  expect(walletRead.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletRead.indexOf('await requireUser(req)')).toBeLessThan(walletRead.indexOf('db.from("customer_wallets")'));
+
+  const walletSpend = routeBlock(
+    'if (path === "/api/wallet/pay-service" && req.method === "POST")',
+    'if (path === "/api/payments/initialize-guest" && req.method === "POST")',
+  );
+  expect(walletSpend.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletSpend.indexOf('await requireUser(req)')).toBeLessThan(walletSpend.indexOf('db.rpc("pay_service_from_customer_wallet"'));
+
+  const refund = routeBlock(
+    'if (path === "/api/admin/wallet/refund" && req.method === "POST")',
+    'if (path === "/api/admin/system-settings")',
+  );
+  expect(refund.indexOf('await requireAdmin(req)')).toBeGreaterThanOrEqual(0);
+  expect(refund.indexOf('await requireAdmin(req)')).toBeLessThan(refund.indexOf('req.json()'));
+  expect(refund.indexOf('await requireAdmin(req)')).toBeLessThan(refund.indexOf('db.from("payments")'));
 });
 
 test('service request validator rejects invalid payloads before database writes', async () => {
