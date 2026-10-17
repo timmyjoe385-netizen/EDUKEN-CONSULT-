@@ -1649,18 +1649,3 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
   expect(authUrl.searchParams.get('provider')).toBe('google');
   expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
 });
-
-test('admin sign-in is reachable from the footer and opens directly at /admin', async ({ page }) => {
-  await page.route('**/functions/v1/eduken-api/public-content', route =>
-    route.fulfill({
-      status: 200,
-      contentType: 'application/json',
-      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
-    }),
-  );
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('footer a[href="/admin"]')).toContainText('Admin sign in');
-  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
-});
