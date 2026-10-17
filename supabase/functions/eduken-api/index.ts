@@ -1206,6 +1206,42 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/admin/system-health" && req.method === "GET") {
+      await requireAdmin(req);
+      const checkedAt = new Date().toISOString();
+      const check = async (name: string, run: () => Promise<boolean>, detail: string) => {
+        try {
+          const ok = await run();
+          return { name, status: ok ? "operational" : "degraded", checkedAt, detail: ok ? "Check passed." : detail };
+        } catch {
+          return { name, status: "down", checkedAt, detail };
+        }
+      };
+      const checks = await Promise.all([
+        check("Public website", async () => {
+          const response = await fetch("https://eduken-consult.timmyjoe385.workers.dev/", { signal: AbortSignal.timeout(8000) });
+          return response.ok && /EDUKEN/i.test(await response.text());
+        }, "Website did not return a healthy EDUKEN page."),
+        check("Database and API", async () => {
+          const { error } = await db.from("opportunities").select("id").limit(1);
+          return !error;
+        }, "Database/API query failed."),
+        check("Authentication service", async () => {
+          const response = await fetch(url + "/auth/v1/health", { headers: { apikey: secretKeys.default }, signal: AbortSignal.timeout(8000) });
+          return response.ok;
+        }, "Authentication health endpoint did not return success."),
+        check("Transactional email provider", async () => Boolean(Deno.env.get("RESEND_API_KEY") && Deno.env.get("EMAIL_FROM")), "Resend configuration is incomplete. This does not verify outage-alert delivery to Gmail."),
+        { name: "Outage email alerts", status: "not_checked", checkedAt, detail: "GitHub Actions SMTP secrets and Gmail delivery must be verified with the workflow test-email option." },
+        check("Payment safety configuration", async () => {
+          const mode = (Deno.env.get("PAYSTACK_MODE") || "").trim().toLowerCase();
+          const secret = (Deno.env.get("PAYSTACK_SECRET_KEY") || "").trim();
+          // Require both the explicit mode flag and a test secret key, matching checkout initialization safety.
+          return mode === "test" && /^sk_test_[A-Za-z0-9]+$/.test(secret);
+        }, "Paystack is not configured in explicit test-only mode. No payment was initiated."),
+      ]);
+      return json({ checkedAt, checks });
+    }
+
     if (path === "/api/admin/system-settings") {
       const user = await requireAdmin(req);
       if (req.method === "GET") {
