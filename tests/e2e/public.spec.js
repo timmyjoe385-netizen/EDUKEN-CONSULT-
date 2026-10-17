@@ -1291,6 +1291,8 @@ test('scheduled health monitor supports recovery email independently of customer
   expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
   expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
   expect(workflow).toContain("dawidd6/action-send-mail@v22");
+  expect(workflow).toContain("actions/github-script@v8");
+  expect(workflow).not.toContain("actions/github-script@v7");
   expect(workflow).not.toContain("dawidd6/action-send-mail@v3");
   expect(workflow).toContain("runs-on: ubuntu-24.04");
   expect(workflow).toContain("This is a test run; no failed step is implied.");
