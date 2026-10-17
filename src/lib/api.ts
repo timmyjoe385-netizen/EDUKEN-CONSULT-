@@ -11,6 +11,9 @@ const ALLOW_TEST_WRITES =
   Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
   SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
   SUPABASE_KEY !== PRODUCTION_SUPABASE_KEY;
+
+// Expose the resolved backend mode so preview-only UI reads use the same isolated test project as writes.
+export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
 const SESSION_KEY = 'eduken_auth_session';
 
