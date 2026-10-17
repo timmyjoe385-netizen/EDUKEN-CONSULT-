@@ -2883,3 +2883,279 @@ html[data-theme="dark"] .final-cta .kicker,
 html[data-theme="dark"] .platform-hub .kicker {
   color: #9bf2d2;
 }
+
+
+/* EDUKEN ORIGINAL BRAND PALETTE — final consistency and contrast pass (2026-10-17). */
+/* Original agreed direction: clean off-white surfaces, forest-green actions,
+   restrained emerald/mint accents, and dark readable body copy. */
+
+/* Light mode: normalise common surfaces so older component-specific greens do not clash. */
+html[data-theme="light"] body,
+html[data-theme="light"] .site,
+html[data-theme="light"] .article-page {
+  background-color: #f8faf8;
+  color: #17211d;
+}
+html[data-theme="light"] .nav {
+  background: rgba(248, 250, 248, 0.96);
+  border-bottom-color: #e1e9e3;
+}
+html[data-theme="light"] .category-card,
+html[data-theme="light"] .opp-card,
+html[data-theme="light"] .platform-card,
+html[data-theme="light"] .platform-results button,
+html[data-theme="light"] .drawer,
+html[data-theme="light"] .drawer-item,
+html[data-theme="light"] .tracker-row,
+html[data-theme="light"] .analytics-cards article,
+html[data-theme="light"] .analytics-card,
+html[data-theme="light"] .system-setting-row,
+html[data-theme="light"] .system-settings-intro,
+html[data-theme="light"] .analytics-toolbar,
+html[data-theme="light"] .global-search-results,
+html[data-theme="light"] .global-search-result {
+  background-color: #ffffff;
+  color: #17211d;
+  border-color: #dfe8e1;
+}
+html[data-theme="light"] .hero,
+html[data-theme="light"] .trust-section,
+html[data-theme="light"] .contact-section,
+html[data-theme="light"] .more-section,
+html[data-theme="light"] .final-cta,
+html[data-theme="light"] .platform-wide {
+  color: #17211d;
+}
+html[data-theme="light"] .hero p,
+html[data-theme="light"] .trust-section p,
+html[data-theme="light"] .contact-section p,
+html[data-theme="light"] .more-section p,
+html[data-theme="light"] .final-cta p,
+html[data-theme="light"] .platform-card p,
+html[data-theme="light"] .platform-card small,
+html[data-theme="light"] .platform-card label,
+html[data-theme="light"] .platform-card span,
+html[data-theme="light"] .category-card p,
+html[data-theme="light"] .opp-card p {
+  color: #46564c;
+}
+
+/* One forest-green primary action everywhere; white text remains readable. */
+html[data-theme="light"] .primary,
+html[data-theme="light"] button.primary,
+html[data-theme="light"] a.primary,
+html[data-theme="light"] .hero .primary,
+html[data-theme="light"] .final-cta .primary,
+html[data-theme="light"] .platform-hub .primary,
+html[data-theme="light"] .drawer .primary,
+html[data-theme="light"] .service-request-form .primary,
+html[data-theme="dark"] .primary,
+html[data-theme="dark"] button.primary,
+html[data-theme="dark"] a.primary,
+html[data-theme="dark"] .hero .primary,
+html[data-theme="dark"] .final-cta .primary,
+html[data-theme="dark"] .platform-hub .primary,
+html[data-theme="dark"] .drawer .primary,
+html[data-theme="dark"] .service-request-form .primary {
+  background: #173f31 !important;
+  color: #ffffff !important;
+  border-color: #173f31 !important;
+}
+html[data-theme="light"] .primary:hover,
+html[data-theme="light"] button.primary:hover,
+html[data-theme="light"] a.primary:hover,
+html[data-theme="dark"] .primary:hover,
+html[data-theme="dark"] button.primary:hover,
+html[data-theme="dark"] a.primary:hover {
+  background: #285e46 !important;
+  color: #ffffff !important;
+  border-color: #285e46 !important;
+}
+
+/* Consistent secondary mint treatment; avoid several competing bright greens. */
+html[data-theme="light"] .icon-box,
+html[data-theme="light"] .platform-icon,
+html[data-theme="light"] .admission-top b,
+html[data-theme="light"] .jamb-service-card__category,
+html[data-theme="light"] .tag,
+html[data-theme="light"] .filters button.active,
+html[data-theme="light"] .search-result-type,
+html[data-theme="light"] .verified-pill {
+  background-color: #e8f0ea !important;
+  color: #173f31 !important;
+  border-color: #b8d0c0 !important;
+}
+html[data-theme="light"] .kicker,
+html[data-theme="light"] .eyebrow,
+html[data-theme="light"] .admission-top,
+html[data-theme="light"] .calculator-nav-link,
+html[data-theme="light"] .jamb-service-requirements__label,
+html[data-theme="light"] .jamb-service-price strong,
+html[data-theme="light"] .analytics-cards article strong,
+html[data-theme="light"] .platform-results span,
+html[data-theme="light"] .platform-results small,
+html[data-theme="light"] .wallet-card-balance {
+  color: #285e46 !important;
+}
+
+/* Dark mode stays available, but uses one restrained green accent on navy surfaces. */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site,
+html[data-theme="dark"] .article-page {
+  background-color: #071426;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .nav {
+  background: rgba(7, 20, 38, 0.96);
+  border-bottom-color: #294560;
+}
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .opp-card,
+html[data-theme="dark"] .platform-card,
+html[data-theme="dark"] .platform-results button,
+html[data-theme="dark"] .drawer,
+html[data-theme="dark"] .drawer-item,
+html[data-theme="dark"] .tracker-row,
+html[data-theme="dark"] .analytics-cards article,
+html[data-theme="dark"] .analytics-card,
+html[data-theme="dark"] .system-setting-row,
+html[data-theme="dark"] .system-settings-intro,
+html[data-theme="dark"] .analytics-toolbar,
+html[data-theme="dark"] .global-search-results,
+html[data-theme="dark"] .global-search-result,
+html[data-theme="dark"] .floating-card,
+html[data-theme="dark"] .pale,
+html[data-theme="dark"] .jamb-service-requirements,
+html[data-theme="dark"] .jamb-service-price,
+html[data-theme="dark"] .jamb-catalogue-safety {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .hero h1,
+html[data-theme="dark"] .hero h2,
+html[data-theme="dark"] .hero h3,
+html[data-theme="dark"] .final-cta h1,
+html[data-theme="dark"] .final-cta h2,
+html[data-theme="dark"] .final-cta h3,
+html[data-theme="dark"] .trust-section h2,
+html[data-theme="dark"] .trust-section h3,
+html[data-theme="dark"] .contact-section h2,
+html[data-theme="dark"] .contact-section h3,
+html[data-theme="dark"] .more-section h2,
+html[data-theme="dark"] .more-section h3,
+html[data-theme="dark"] .platform-hub h2,
+html[data-theme="dark"] .platform-hub h3,
+html[data-theme="dark"] .platform-wide h2,
+html[data-theme="dark"] .platform-wide h3,
+html[data-theme="dark"] .category-card h2,
+html[data-theme="dark"] .category-card h3,
+html[data-theme="dark"] .opp-card h2,
+html[data-theme="dark"] .opp-card h3,
+html[data-theme="dark"] .drawer h2,
+html[data-theme="dark"] .drawer h3,
+html[data-theme="dark"] .drawer h4 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .hero p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .contact-section p,
+html[data-theme="dark"] .more-section p,
+html[data-theme="dark"] .platform-hub p,
+html[data-theme="dark"] .platform-wide p,
+html[data-theme="dark"] .platform-card p,
+html[data-theme="dark"] .platform-card small,
+html[data-theme="dark"] .platform-card label,
+html[data-theme="dark"] .platform-card span,
+html[data-theme="dark"] .category-card p,
+html[data-theme="dark"] .opp-card p,
+html[data-theme="dark"] .drawer-item small,
+html[data-theme="dark"] .tracker-row small,
+html[data-theme="dark"] .system-setting-row p,
+html[data-theme="dark"] .global-search-result p {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .icon-box,
+html[data-theme="dark"] .platform-icon,
+html[data-theme="dark"] .admission-top b,
+html[data-theme="dark"] .jamb-service-card__category,
+html[data-theme="dark"] .tag,
+html[data-theme="dark"] .filters button.active,
+html[data-theme="dark"] .search-result-type,
+html[data-theme="dark"] .verified-pill {
+  background-color: #173f31 !important;
+  color: #ffffff !important;
+  border-color: #285e46 !important;
+}
+html[data-theme="dark"] .kicker,
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .admission-top,
+html[data-theme="dark"] .jamb-service-requirements__label,
+html[data-theme="dark"] .jamb-service-price strong,
+html[data-theme="dark"] .analytics-cards article strong,
+html[data-theme="dark"] .platform-results span,
+html[data-theme="dark"] .platform-results small,
+html[data-theme="dark"] .wallet-card-balance {
+  color: #b8e1c8 !important;
+}
+
+/* Inputs, placeholders, secondary buttons and feedback must remain legible in both themes. */
+html[data-theme="light"] .service-request-form input:not([type="checkbox"]),
+html[data-theme="light"] .service-request-form select,
+html[data-theme="light"] .service-request-form textarea,
+html[data-theme="light"] .login-dialog input,
+html[data-theme="light"] .login-dialog select,
+html[data-theme="light"] .login-dialog textarea {
+  background-color: #ffffff;
+  color: #17211d;
+  border-color: #b9c9be;
+}
+html[data-theme="dark"] .service-request-form input:not([type="checkbox"]),
+html[data-theme="dark"] .service-request-form select,
+html[data-theme="dark"] .service-request-form textarea,
+html[data-theme="dark"] .login-dialog input,
+html[data-theme="dark"] .login-dialog select,
+html[data-theme="dark"] .login-dialog textarea,
+html[data-theme="dark"] .platform-input,
+html[data-theme="dark"] .finder-inputs input,
+html[data-theme="dark"] .tracker-row select,
+html[data-theme="dark"] .tracker-row textarea {
+  background-color: #091a2d;
+  color: #f1f7ff;
+  border-color: #31516d;
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #b8c8d9;
+  opacity: 1;
+}
+html[data-theme="light"] .secondary,
+html[data-theme="light"] button.secondary,
+html[data-theme="light"] a.secondary {
+  background-color: #ffffff;
+  color: #173f31;
+  border-color: #b8c9be;
+}
+html[data-theme="dark"] .secondary,
+html[data-theme="dark"] button.secondary,
+html[data-theme="dark"] a.secondary {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="light"] .make-payments-message {
+  background-color: #f8faf8;
+  color: #17211d;
+  border-color: #dfe8e1;
+}
+html[data-theme="dark"] .make-payments-message {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .make-payments-success {
+  background-color: #173f31;
+  color: #ffffff !important;
+  border-color: #285e46;
+}
