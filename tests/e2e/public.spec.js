@@ -1619,6 +1619,8 @@ test('appearance preference persists and System mode follows operating-system ch
   await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
   await expect(root).toHaveAttribute('data-theme', 'dark');
   await expect(root).toHaveCSS('color-scheme', 'dark');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(7, 20, 38)');
+  await expect(page.locator('.platform-card').first()).toHaveCSS('background-color', 'rgb(13, 32, 56)');
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
 
   await toggle.click();
