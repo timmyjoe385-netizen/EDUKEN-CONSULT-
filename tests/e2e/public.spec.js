@@ -325,7 +325,7 @@ test('service request dialog validates required fields without sending a request
   });
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const serviceCard = page.locator('.jamb-service-card').filter({
+  const serviceCard = page.locator('.service-row').filter({
     has: page.getByRole('heading', { name: 'Playwright Service Request Check', exact: true }),
   });
   await expect(serviceCard).toHaveCount(1);
