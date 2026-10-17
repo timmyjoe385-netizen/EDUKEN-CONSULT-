@@ -1521,7 +1521,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/admin/payments" && req.method === "GET") {
       await requireAdmin(req);
-      const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
+      const { data, error } = await db.from("payments").select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
       if (error) throw error;
       return json({ items: data ?? [] });
     }
