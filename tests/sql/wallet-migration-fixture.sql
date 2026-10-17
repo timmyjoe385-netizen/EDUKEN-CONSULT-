@@ -32,7 +32,7 @@ create or replace function auth.uid()
 returns uuid
 language sql
 stable
-as $ select null::uuid $;
+as $fn$ select null::uuid $fn$;
 
 create table public.services (
   id uuid primary key default gen_random_uuid(),
