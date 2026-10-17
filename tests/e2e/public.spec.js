@@ -796,12 +796,12 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public header does not expose sign-in or admin access', async ({ page }) => {
+test('public header exposes customer wallet access but not admin access', async ({ page }) => {
   const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
 
-  // Keep public navigation focused on EDUKEN content; account sign-in remains contextual.
+  // Customer wallet access is intentionally visible; admin access must remain private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.header-sign-in')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'My Wallet' })).toBeVisible();
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -844,7 +844,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.header-sign-in')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'My Wallet' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
