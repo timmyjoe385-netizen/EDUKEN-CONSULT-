@@ -323,7 +323,7 @@ test("customer wallet migration keeps balances server-controlled and operations 
   const { fileURLToPath } = await import("node:url");
   const { dirname, resolve } = await import("node:path");
   const here = dirname(fileURLToPath(import.meta.url));
-  const migration = await readFile(resolve(here, "../supabase/migrations/20261017175043_customer_wallets.sql"), "utf8");
+  const migration = await readFile(resolve(here, "../supabase/migrations/20261016160000_customer_wallets.sql"), "utf8");
   for (const required of [
     "create table if not exists public.customer_wallets",
     "create table if not exists public.wallet_transactions",
