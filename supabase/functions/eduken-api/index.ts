@@ -1546,7 +1546,6 @@ Deno.serve(async (req) => {
         }
         return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
       }
-
       if (!authorizationUrl) {
         // The provider may have created a transaction despite an unexpected response shape.
         // Keep the reservation Pending to prevent duplicate charges on retry.
