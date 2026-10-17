@@ -1593,3 +1593,38 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
 });
+test('legacy JAMB service rows remain visible without being made available for checkout', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'legacy-jamb-epin-fixture',
+          name: 'JAMB e-PIN (UTME Without Mock)',
+          category: 'JAMB Services',
+          description: 'Legacy service row fixture.',
+          requirements: 'Test fixture only.',
+          price: 7128,
+          // Simulate a legacy database row that predates availability/catalogue flags.
+          is_catalog_item: false,
+          is_published: true,
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/#jamb-services', { waitUntil: 'domcontentloaded' });
+
+  const card = page.locator('.jamb-service-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB e-PIN (UTME Without Mock)' }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Unavailable');
+  await expect(card.getByRole('button', { name: 'Currently unavailable' })).toBeDisabled();
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
+});
