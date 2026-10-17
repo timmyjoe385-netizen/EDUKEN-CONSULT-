@@ -1860,3 +1860,36 @@ test('legacy JAMB service rows remain visible without being made available for c
   await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
 });
 
+
+
+test('isolated payment webhook rejects a forged success event', async ({ request }) => {
+  const response = await request.post(
+    'https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/api/payments/webhook',
+    {
+      headers: {
+        'content-type': 'application/json',
+        'x-paystack-signature': 'invalid-test-signature',
+      },
+      data: {
+        event: 'charge.success',
+        data: {
+          reference: 'EDK-PAY-19CC6E47E2824EB2BC',
+          amount: 10000,
+          currency: 'NGN',
+          status: 'success',
+        },
+      },
+      timeout: 20_000,
+    },
+  );
+
+  // 401 means the invalid signature was rejected. 503 means the endpoint is
+  // safely disabled because explicit Paystack test mode is not configured.
+  expect([401, 503], 'forged webhook must never be accepted').toContain(response.status());
+  const body = await response.json();
+  if (response.status() === 401) {
+    expect(body.error).toMatch(/signature/i);
+  } else {
+    expect(body.code).toBe('PAYSTACK_TEST_MODE_REQUIRED');
+  }
+});
