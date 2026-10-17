@@ -519,6 +519,35 @@ test('homepage remains usable at a mobile viewport', async ({ page }) => {
   ).toBeLessThanOrEqual(dimensions.viewportWidth + 1);
 });
 
+test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
+  await page.addInitScript(() => window.localStorage.removeItem('eduken-theme'));
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const root = page.locator('html');
+  const toggle = page.locator('.theme-toggle').first();
+  await expect(toggle).toBeVisible();
+  await expect(root).toHaveAttribute('data-theme', 'light');
+
+  await toggle.click();
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
+
+  await toggle.click();
+  await expect(toggle).toContainText('System');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+
+  await toggle.click();
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('light');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+});
+
 test('mobile navigation opens and closes accessibly', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
