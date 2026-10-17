@@ -97,3 +97,13 @@ export function isPaystackTestModeEnabled(mode, secretKey) {
     && typeof secretKey === "string"
     && /^sk_test_[A-Za-z0-9]+$/.test(secretKey.trim());
 }
+
+/**
+ * Treat provider initialization failures as definitive only when the HTTP response
+ * clearly rejects the request. Timeouts, server errors, and contradictory success
+ * responses stay Pending so webhook/verification can reconcile without duplicate charges.
+ */
+export function getPaystackInitializationFailureDisposition({ ok, status, hasAuthorizationUrl }) {
+  if (status === 408 || status >= 500 || (ok && !hasAuthorizationUrl)) return "unconfirmed";
+  return "failed";
+}
