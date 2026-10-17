@@ -119,6 +119,29 @@ export const api = {
 
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
+  signInWithPassword: async (email: string, password: string) => {
+    const response = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
+      method: 'POST',
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email.trim(), password }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.access_token || !result.user?.email) {
+      const reason = String(result.error_description || result.msg || result.message || result.error || '');
+      if (response.status === 400 || response.status === 401) {
+        throw new Error('Email or password was not accepted. Check your test account details and try again.');
+      }
+      throw new Error(reason || 'Customer sign-in is temporarily unavailable. Please try again.');
+    }
+    const session = {
+      access_token: result.access_token,
+      refresh_token: result.refresh_token || undefined,
+      expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
+      user: result.user,
+    };
+    writeSession(session);
+    return { user: result.user, session };
+  },
   signIn: async (_options?: any) => {
     const redirectTo = window.location.origin + window.location.pathname;
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
