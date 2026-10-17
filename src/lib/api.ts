@@ -1,13 +1,13 @@
 import { shouldBlockWrite, PRODUCTION_SUPABASE_URL } from './api-safety.js';
 
-const viteEnv = (import.meta as any).env || {};
+// Use direct Vite env references so the build statically injects preview-scoped values.
 const PRODUCTION_SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
-const suppliedSupabaseUrl = String(viteEnv.VITE_SUPABASE_URL || '').trim();
-const suppliedPublishableKey = String(viteEnv.VITE_SUPABASE_PUBLISHABLE_KEY || '').trim();
+const suppliedSupabaseUrl = String(import.meta.env.VITE_SUPABASE_URL || '').trim();
+const suppliedPublishableKey = String(import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || '').trim();
 const SUPABASE_URL = (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL).replace(/\/+$/, '');
 const SUPABASE_KEY = suppliedPublishableKey || PRODUCTION_SUPABASE_KEY;
 const ALLOW_TEST_WRITES =
-  viteEnv.VITE_ENABLE_TEST_WRITES === 'true' &&
+  import.meta.env.VITE_ENABLE_TEST_WRITES === 'true' &&
   Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
   SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
   SUPABASE_KEY !== PRODUCTION_SUPABASE_KEY;
