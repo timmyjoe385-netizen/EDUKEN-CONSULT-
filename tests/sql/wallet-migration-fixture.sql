@@ -27,6 +27,13 @@ create table auth.users (
   email text
 );
 
+-- Minimal auth.uid() stub for the disposable PostgreSQL test environment.
+create or replace function auth.uid()
+returns uuid
+language sql
+stable
+as $ select null::uuid $;
+
 create table public.services (
   id uuid primary key default gen_random_uuid(),
   name text not null,
@@ -43,18 +50,6 @@ create table public.service_requests (
   quantity integer not null default 1,
   status text not null default 'New Requests',
   updated_at timestamptz not null default now()
-);
-
-create table public.payments (
-  id uuid primary key default gen_random_uuid(),
-  user_id uuid references auth.users(id) on delete set null,
-  service_request_id uuid references public.service_requests(id) on delete set null,
-  amount numeric not null,
-  currency text not null default 'NGN',
-  status text not null default 'Pending',
-  payment_reference text unique,
-  paid_at timestamptz,
-  created_at timestamptz not null default now()
 );
 
 -- Simulate an account that existed before the wallet migration.
