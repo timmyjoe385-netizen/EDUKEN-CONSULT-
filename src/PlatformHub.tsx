@@ -614,7 +614,17 @@ export default function PlatformHub({
             <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
             <span className="kicker">CUSTOMER ACCOUNT</span>
             <h2 id="customer-signin-title">Sign in to EDUKEN Wallet</h2>
-            <p>Use the email and password for your EDUKEN customer account. This is separate from administrator access.</p>
+            <p>Sign in securely to access your wallet and eligible EDUKEN services.</p>
+            <button
+              className="customer-google-signin"
+              type="button"
+              onClick={() => { setCustomerSignInMessage(''); void auth.signIn(); }}
+              disabled={customerSignInLoading}
+            >
+              <span className="customer-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            <div className="customer-signin-divider"><span>or use email</span></div>
             <form className="service-request-form" onSubmit={signInCustomer}>
               <label className="service-request-field" htmlFor="customer-signin-email">
                 <span>Email address</span>
