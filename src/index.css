@@ -2693,6 +2693,11 @@ html[data-theme="dark"] .analytics-error {
   color: #ffd8dc;
   border-color: #713c4b;
 }
+html[data-theme="dark"] .analytics-controls select {
+  background-color: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
 html[data-theme="dark"] .opp-foot,
 html[data-theme="dark"] .line {
   border-color: #294560;
