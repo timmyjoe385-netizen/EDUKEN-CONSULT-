@@ -2646,3 +2646,64 @@ html[data-theme="dark"] .admin-toggle-control {
   border-color: #31516d;
 }
 
+/* Additional dark-theme contrast for utility panels, service catalogue and checkout states. */
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .kicker,
+html[data-theme="dark"] .admission-top,
+html[data-theme="dark"] .opp-foot,
+html[data-theme="dark"] .system-settings-intro,
+html[data-theme="dark"] .analytics-toolbar,
+html[data-theme="dark"] .analytics-controls select {
+  color: #c2d0df;
+  border-color: #294560;
+}
+html[data-theme="dark"] .floating-card,
+html[data-theme="dark"] .pale,
+html[data-theme="dark"] .analytics-toolbar,
+html[data-theme="dark"] .system-settings-intro,
+html[data-theme="dark"] .analytics-error,
+html[data-theme="dark"] .jamb-service-requirements,
+html[data-theme="dark"] .jamb-service-price,
+html[data-theme="dark"] .jamb-catalogue-safety,
+html[data-theme="dark"] .make-payments-message,
+html[data-theme="dark"] .make-payments-success {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .icon-box,
+html[data-theme="dark"] .admission-top b,
+html[data-theme="dark"] .jamb-service-card__category {
+  background: #123b36;
+  color: #bff8e5;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .jamb-service-requirements__label,
+html[data-theme="dark"] .jamb-service-price strong,
+html[data-theme="dark"] .system-settings-intro h2 {
+  color: #75e4c1;
+}
+html[data-theme="dark"] .jamb-service-requirements p,
+html[data-theme="dark"] .jamb-catalogue-safety,
+html[data-theme="dark"] .analytics-toolbar p {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .analytics-error {
+  background: #351d2a;
+  color: #ffd8dc;
+  border-color: #713c4b;
+}
+html[data-theme="dark"] .opp-foot,
+html[data-theme="dark"] .line {
+  border-color: #294560;
+  background-color: transparent;
+}
+html[data-theme="dark"] .make-payments-success {
+  background: #123b36;
+  color: #bff8e5 !important;
+}
+html[data-theme="dark"] .make-payments-message {
+  background: #10243d;
+  color: #e8f0f8;
+}
+
