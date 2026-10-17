@@ -2775,3 +2775,111 @@ html[data-theme="dark"] .tracker-row .secondary {
   border-color: #31516d;
 }
 
+
+
+/* Customer sign-in: keep Google primary and email/password as a clear fallback. */
+.customer-google-signin {
+  width: 100%;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 11px 16px;
+  background: #fff;
+  color: #1f2937;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+.customer-google-signin:hover { background: #f8fafc; border-color: #94a3b8; }
+.customer-google-signin:focus-visible { outline: 3px solid #20b486; outline-offset: 3px; }
+.customer-google-signin:disabled { opacity: .65; cursor: not-allowed; }
+.customer-google-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  color: #4285f4;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1;
+}
+.customer-signin-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 15px 0 4px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 650;
+}
+.customer-signin-divider::before,
+.customer-signin-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: #dbe3eb;
+}
+html[data-theme="dark"] .customer-signin-divider { color: #b8c8d9; }
+html[data-theme="dark"] .customer-signin-divider::before,
+html[data-theme="dark"] .customer-signin-divider::after { background: #31516d; }
+
+/* Dark/green appearance: preserve readable copy and legible CTA labels across sections. */
+html[data-theme="dark"] .primary,
+html[data-theme="dark"] button.primary,
+html[data-theme="dark"] a.primary,
+html[data-theme="dark"] .hero .primary,
+html[data-theme="dark"] .final-cta .primary,
+html[data-theme="dark"] .platform-hub .primary,
+html[data-theme="dark"] .drawer .primary,
+html[data-theme="dark"] .service-request-form .primary {
+  background-color: #087f5b;
+  color: #ffffff !important;
+  border-color: #20b486;
+}
+html[data-theme="dark"] .primary:hover,
+html[data-theme="dark"] button.primary:hover,
+html[data-theme="dark"] a.primary:hover {
+  background-color: #06966b;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .hero h1,
+html[data-theme="dark"] .hero h2,
+html[data-theme="dark"] .hero h3,
+html[data-theme="dark"] .final-cta h1,
+html[data-theme="dark"] .final-cta h2,
+html[data-theme="dark"] .final-cta h3,
+html[data-theme="dark"] .trust-section h2,
+html[data-theme="dark"] .trust-section h3,
+html[data-theme="dark"] .contact-section h2,
+html[data-theme="dark"] .contact-section h3,
+html[data-theme="dark"] .more-section h2,
+html[data-theme="dark"] .more-section h3,
+html[data-theme="dark"] .platform-hub h2,
+html[data-theme="dark"] .platform-hub h3,
+html[data-theme="dark"] .platform-wide h2,
+html[data-theme="dark"] .platform-wide h3 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .hero p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .contact-section p,
+html[data-theme="dark"] .more-section p,
+html[data-theme="dark"] .platform-hub p,
+html[data-theme="dark"] .platform-wide p,
+html[data-theme="dark"] .platform-card small,
+html[data-theme="dark"] .platform-card label,
+html[data-theme="dark"] .platform-card span {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .hero .kicker,
+html[data-theme="dark"] .final-cta .kicker,
+html[data-theme="dark"] .platform-hub .kicker {
+  color: #9bf2d2;
+}
