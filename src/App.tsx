@@ -13,6 +13,9 @@ import {
   LogOut,
   Menu,
   MessageCircle,
+  Monitor,
+  Moon,
+  Sun,
   Plus,
   Search,
   Share2,
@@ -148,6 +151,52 @@ function App() {
   const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
   const [installOpen, setInstallOpen] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [themePreference, setThemePreference] = useState<'light' | 'dark' | 'system'>(() => {
+    try {
+      const saved = window.localStorage.getItem('eduken-theme');
+      return saved === 'dark' || saved === 'system' ? saved : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const media = window.matchMedia('(prefers-color-scheme: dark)');
+    const applyTheme = () => {
+      const resolved = themePreference === 'system' ? (media.matches ? 'dark' : 'light') : themePreference;
+      root.dataset.theme = resolved;
+      root.dataset.themePreference = themePreference;
+      root.style.colorScheme = resolved;
+    };
+    applyTheme();
+    try {
+      window.localStorage.setItem('eduken-theme', themePreference);
+    } catch {
+      // Theme still works for this session if storage is unavailable.
+    }
+    if (themePreference === 'system') {
+      media.addEventListener('change', applyTheme);
+      return () => media.removeEventListener('change', applyTheme);
+    }
+  }, [themePreference]);
+
+  const cycleTheme = () => {
+    setThemePreference(current => current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light');
+  };
+
+  const ThemeToggle = () => (
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={cycleTheme}
+      aria-label={`Appearance is ${themePreference === 'system' ? 'System default' : themePreference + ' mode'}. Change appearance`}
+      title={`Appearance: ${themePreference === 'system' ? 'System default' : themePreference + ' mode'}`}
+    >
+      {themePreference === 'light' ? <Sun size={17} aria-hidden="true" /> : themePreference === 'dark' ? <Moon size={17} aria-hidden="true" /> : <Monitor size={17} aria-hidden="true" />}
+      <span className="theme-toggle-label">{themePreference === 'light' ? 'Light' : themePreference === 'dark' ? 'Dark' : 'System'}</span>
+    </button>
+  );
 
   const makeSlug = (value: string) =>
     value
@@ -1311,6 +1360,7 @@ function App() {
           </div>
           <div className="admin-user">
             <span>{user?.email}</span>
+            <ThemeToggle />
             <button onClick={logout}>
               <LogOut size={16} /> Sign out
             </button>
@@ -2131,6 +2181,7 @@ function App() {
           </a>
         </nav>
         <div className="auth-nav-actions">
+          <ThemeToggle />
           <a className="header-sign-in" href="#eduken-platform" onClick={() => setMenu(false)} aria-label="Go to EDUKEN Wallet and customer account">
             My Wallet
           </a>
