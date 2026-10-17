@@ -18,8 +18,11 @@ if (isAggregateCalculator) {
       : 'light';
     const media = window.matchMedia('(prefers-color-scheme: dark)');
     const applyStandaloneTheme = () => {
-      document.documentElement.dataset.theme =
-        preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+      const root = document.documentElement;
+      const resolved = preference === 'system' ? (media.matches ? 'dark' : 'light') : preference;
+      root.dataset.theme = resolved;
+      root.dataset.themePreference = preference;
+      root.style.colorScheme = resolved;
     };
     applyStandaloneTheme();
     if (preference === 'system') {
