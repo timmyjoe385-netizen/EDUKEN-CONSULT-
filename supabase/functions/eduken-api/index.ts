@@ -653,13 +653,14 @@ Deno.serve(async (req) => {
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
+        // A duplicate provider event may repair request state, but must not resend
+        // service-payment notifications after the original settlement.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
             .eq("id", existingPayment.service_request_id);
           if (requestUpdateError) throw requestUpdateError;
-          await sendServicePaymentNotifications(existingPayment);
         }
-        return json({ ok: true, paid: true });
+        return json({ ok: true, paid: true, reused: true });
       }
       const { data: payment, error: updateError } = await db.from("payments").update({
         status: "Paid", paid_at: new Date().toISOString(),
@@ -675,9 +676,11 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id);
         if (requestUpdateError) throw requestUpdateError;
-        await sendServicePaymentNotifications(existingPayment);
+        // Only the invocation that changed Pending/Failed to Paid sends email.
+        // A concurrent webhook that observes Paid above is an idempotent retry.
+        if (payment) await sendServicePaymentNotifications(existingPayment);
       }
-      return json({ ok: true, paid: true });
+      return json({ ok: true, paid: true, reused: !payment });
     }
 
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
