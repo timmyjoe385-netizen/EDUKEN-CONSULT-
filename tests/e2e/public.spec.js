@@ -1397,6 +1397,53 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
 
+test('system health endpoint is admin-protected and reports safe component statuses', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = handler.indexOf('if (path === "/api/admin/system-health" && req.method === "GET")');
+  const routeEnd = handler.indexOf('if (path === "/api/admin/system-settings")', routeStart);
+  expect(routeStart).toBeGreaterThan(-1);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = handler.slice(routeStart, routeEnd);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('Public website');
+  expect(route).toContain('Database and API');
+  expect(route).toContain('Authentication service');
+  expect(route).toContain('Transactional email provider');
+  expect(route).toContain('Outage email alerts');
+  expect(route).toContain('not_checked');
+  expect(route).toContain('Payment safety configuration');
+  expect(route).toContain('RESEND_API_KEY');
+  expect(route).toContain('Deno.env.get("PAYSTACK_MODE")');
+  expect(route).toContain('mode === "test" && /^sk_test_[A-Za-z0-9]+$/.test(secret)');
+  expect(route).not.toContain('secret.startsWith("sk_test_")');
+  expect(route).not.toContain('console.log');
+});
+
+test('scheduled health monitor supports recovery email independently of customer alerts', () => {
+  const workflow = readFileSync('.github/workflows/health-check.yml', 'utf8');
+  expect(workflow).toContain('cron: "*/15 * * * *"');
+  expect(workflow).toContain('Detect recovery after a previous failed health check');
+  expect(workflow).toContain('listJobsForWorkflowRun');
+  expect(workflow).toContain('const recentRuns = runs.data.workflow_runs');
+  expect(workflow).toContain('latestOutage');
+  expect(workflow).toContain("step.name === 'Send recovery email' && step.conclusion === 'success'");
+  expect(workflow).not.toContain('const previous = runs.data.workflow_runs');
+  expect(workflow).toContain("step.conclusion === 'failure'");
+  expect(workflow).not.toContain("previous?.conclusion === 'failure'");
+  expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
+  expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
+  expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
+  expect(workflow).toContain("dawidd6/action-send-mail@v22");
+  expect(workflow).toContain("actions/github-script@v8");
+  expect(workflow).not.toContain("actions/github-script@v7");
+  expect(workflow).not.toContain("dawidd6/action-send-mail@v3");
+  expect(workflow).toContain("runs-on: ubuntu-24.04");
+  expect(workflow).toContain("This is a test run; no failed step is implied.");
+  expect(workflow).toContain("Please open this run to see the failed step and logs:");
+  expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
+  expect(workflow).not.toContain('/api/email-alerts/subscribe');
+});
+
 test('admin system settings are separate, persisted, and protected by backend authorization', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
