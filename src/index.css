@@ -2767,3 +2767,11 @@ html[data-theme="dark"] .topic-switch-track {
   background: #31516d;
 }
 
+html[data-theme="dark"] .platform-hub .secondary,
+html[data-theme="dark"] .drawer .secondary,
+html[data-theme="dark"] .tracker-row .secondary {
+  background: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+
