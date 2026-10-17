@@ -1530,11 +1530,7 @@ Deno.serve(async (req) => {
         return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
       }
       const authorizationUrl = getPaystackAuthorizationUrl(result);
-      const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || result?.status !== true) {
-        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
-          return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
-        }
         if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
           return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
         }
@@ -1651,7 +1647,11 @@ Deno.serve(async (req) => {
       try { result = await paystack.json(); } catch {
         return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
       }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || result?.status !== true) {
+        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
+          return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+        }
         const { error: markFailedError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
         if (markFailedError) return json({ error: "Payment initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
         return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
