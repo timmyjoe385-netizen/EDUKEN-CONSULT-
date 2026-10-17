@@ -24,6 +24,7 @@ import {
   X,
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
+import PaymentsAdmin from './PaymentsAdmin';
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
@@ -1326,6 +1327,7 @@ function App() {
               'services',
               'consultations',
               'service-requests',
+              'payments',
               'analytics',
               'system-settings',
             ].map(tab => (
@@ -1337,7 +1339,7 @@ function App() {
                   setForm({});
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
-                  else loadAdmin(tab);
+                  else if (tab !== 'payments') loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
@@ -1346,7 +1348,9 @@ function App() {
                     ? '📩 Consultations'
                     : tab === 'service-requests'
                       ? '🧾 Service Requests'
-                      : tab === 'analytics'
+                      : tab === 'payments'
+                        ? '💳 Payments'
+                        : tab === 'analytics'
                       ? '📊 Analytics & Insights'
                       : tab === 'system-settings'
                         ? '⚙️ Manage System'
@@ -1365,9 +1369,9 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'analytics' && adminTab !== 'system-settings' && (
+              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                   {adminTab === 'services' && (
                     <button
@@ -1451,6 +1455,8 @@ function App() {
                                 </>
                               ) : null}
                             </section>
+            ) : adminTab === 'payments' ? (
+              <PaymentsAdmin />
             ) : adminTab === 'service-requests' ? (
               <div className="admin-list">
                 {serviceRequests.length === 0 ? (
