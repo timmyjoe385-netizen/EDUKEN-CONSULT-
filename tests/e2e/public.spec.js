@@ -68,6 +68,32 @@ test('wallet notification emails are skipped for idempotent settlement retries',
   expect(walletRefund).toContain('refund?.reused !== true');
 });
 
+test('guest and authenticated payment verification retries do not resend service receipts', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const guest = handler.slice(
+    handler.indexOf('if (path === "/api/payments/verify-guest" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/payments/verify" && req.method === "POST")'),
+  );
+  const authenticated = handler.slice(
+    handler.indexOf('if (path === "/api/payments/verify" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/payments" && req.method === "GET")'),
+  );
+
+  const guestAlreadyPaid = guest.slice(
+    guest.indexOf('if (existingPayment.status === "Paid")'),
+    guest.indexOf('const secret = Deno.env.get("PAYSTACK_SECRET_KEY")'),
+  );
+  const authenticatedAlreadyPaid = authenticated.slice(
+    authenticated.indexOf('if (existingPayment.status === "Paid")'),
+    authenticated.indexOf('const response = await fetch("https://api.paystack.co/transaction/verify/"'),
+  );
+
+  expect(guestAlreadyPaid).not.toContain('sendPaymentNotifications');
+  expect(authenticatedAlreadyPaid).not.toContain('sendServicePaymentNotifications');
+  expect(guest).toContain('if (payment) await sendPaymentNotifications(');
+  expect(authenticated).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+});
+
 test('service payment webhook retries do not resend notifications after payment is already Paid', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const webhook = handler.slice(
