@@ -3074,6 +3074,7 @@ function App() {
             <a href={WA} target="_blank" rel="noreferrer">
               08129811733
             </a>
+            <a href="/admin">Admin sign in</a>
           </div>
         </div>
         <div className="footer-bottom">
