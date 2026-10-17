@@ -528,17 +528,20 @@ test('appearance preference persists and System mode follows operating-system ch
   const toggle = page.locator('.theme-toggle').first();
   await expect(toggle).toBeVisible();
   await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: light mode');
   await expect(root).toHaveAttribute('data-theme', 'light');
   await expect(root).toHaveCSS('color-scheme', 'light');
 
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-label', 'Appearance is dark mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
   await expect(root).toHaveAttribute('data-theme', 'dark');
   await expect(root).toHaveCSS('color-scheme', 'dark');
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
 
   await toggle.click();
   await expect(toggle).toHaveAttribute('aria-label', 'Appearance is System default. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: System default');
   await expect(toggle).toContainText('System');
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
   await page.emulateMedia({ colorScheme: 'light' });
