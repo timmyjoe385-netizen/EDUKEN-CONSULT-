@@ -549,6 +549,7 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
     ['DELETE', '/api/admin/content/opportunities/playwright-unauthenticated-test'],
     ['GET', '/api/admin/consultations'],
     ['PUT', '/api/admin/consultations/playwright-unauthenticated-test'],
+    ['GET', '/api/admin/payments'],
   ];
 
   for (const [method, path] of checks) {
@@ -694,6 +695,30 @@ test('admin service request status changes are guarded and payment-confirmed sta
   expect(validator).not.toContain('"Paid"');
   expect(app).toContain('disabled={item.status === \'Paid\'}');
   expect(app).toContain('{item.status === \'Paid\' && <option value="Paid" disabled>Paid (payment confirmed)</option>}');
+});
+
+test('admin payment records require admin authorization and return only dashboard-safe fields', () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/admin/payments" && req.method === "GET")');
+  const routeEnd = source.indexOf('if (path === "/api/admin/system-settings")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+
+  const route = source.slice(routeStart, routeEnd);
+  const authAt = route.indexOf('await requireAdmin(req)');
+  const queryAt = route.indexOf('db.from("payments").select(');
+  expect(authAt).toBeGreaterThanOrEqual(0);
+  expect(queryAt).toBeGreaterThan(authAt);
+  expect(route).toContain('select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)")');
+  expect(route).not.toContain('select("*,');
+  expect(route).not.toContain('authorization_url');
+
+  const component = readFileSync('src/PaymentsAdmin.tsx', 'utf8');
+  expect(component).toContain("api.get('/api/admin/payments')");
+  expect(component).toContain('item.payment_reference');
+  expect(component).toContain('item.paid_at');
+  expect(component).not.toContain('authorization_url');
+  expect(component).not.toContain('user_id');
 });
  
 test('authenticated payment initialization uses saved quantity and refuses already-paid requests', async () => {
