@@ -44,7 +44,7 @@ jobs:
           -e PGPASSWORD=postgres
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
-          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261016090000_create_payments_table.sql
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175028_create_payments_table.sql
       - name: Apply guest checkout migration in disposable PostgreSQL
         run: >-
           docker run --rm --network host
@@ -52,7 +52,7 @@ jobs:
           -e PGPASSWORD=postgres
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
-          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261016101500_guest_service_checkout_tokens.sql
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175036_guest_service_checkout_tokens.sql
       - name: Apply wallet migration in disposable PostgreSQL
         run: >-
           docker run --rm --network host
@@ -60,7 +60,7 @@ jobs:
           -e PGPASSWORD=postgres
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
-          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261016160000_customer_wallets.sql
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175043_customer_wallets.sql
       - name: Apply wallet foreign-key indexes migration
         run: >-
           docker run --rm --network host
@@ -68,7 +68,7 @@ jobs:
           -e PGPASSWORD=postgres
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
-          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261016190000_wallet_foreign_key_indexes.sql
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175049_wallet_foreign_key_indexes.sql
       - name: Verify atomic deposits, spending, insufficient funds and refunds
         run: >-
           docker run --rm --network host
