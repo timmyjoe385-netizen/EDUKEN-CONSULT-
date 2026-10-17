@@ -28,7 +28,7 @@ test('isolated preview uses test service catalogue while preserving live public 
   expect(app).toContain('const previewTestService');
   expect(app).toContain('live.services = [previewTestService];');
   expect(app).toContain('the checkout API still validates');
-  expect(app).toContain('const testServices = testContent.data?.services || [];');
+  expect(app).toContain('const testServices = Array.isArray(testContent.data?.services) ? testContent.data.services : [];');
   expect(app).toContain('service visible if public catalogue loading fails');
 });
 
