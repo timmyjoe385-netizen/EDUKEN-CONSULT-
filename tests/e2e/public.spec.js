@@ -1290,6 +1290,11 @@ test('scheduled health monitor supports recovery email independently of customer
   expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
   expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
   expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
+  expect(workflow).toContain("dawidd6/action-send-mail@v22");
+  expect(workflow).not.toContain("dawidd6/action-send-mail@v3");
+  expect(workflow).toContain("runs-on: ubuntu-24.04");
+  expect(workflow).toContain("This is a test run; no failed step is implied.");
+  expect(workflow).toContain("Please open this run to see the failed step and logs:");
   expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
   expect(workflow).not.toContain('/api/email-alerts/subscribe');
 });
