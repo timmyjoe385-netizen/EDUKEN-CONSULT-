@@ -611,6 +611,7 @@ test('admin APIs reject unauthenticated reads and writes', async ({ request }) =
     ['PUT', '/api/admin/content/opportunities/playwright-unauthenticated-test'],
     ['DELETE', '/api/admin/content/opportunities/playwright-unauthenticated-test'],
     ['GET', '/api/admin/consultations'],
+    ['GET', '/api/admin/payments'],
     ['PUT', '/api/admin/consultations/playwright-unauthenticated-test'],
   ];
 
@@ -1397,53 +1398,6 @@ test('JAMB-only calculator clear restores its 40-of-50 target and validates 50-p
   await expect(page.getByRole('alert')).toHaveCount(0);
 });
 
-test('system health endpoint is admin-protected and reports safe component statuses', () => {
-  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
-  const routeStart = handler.indexOf('if (path === "/api/admin/system-health" && req.method === "GET")');
-  const routeEnd = handler.indexOf('if (path === "/api/admin/system-settings")', routeStart);
-  expect(routeStart).toBeGreaterThan(-1);
-  expect(routeEnd).toBeGreaterThan(routeStart);
-  const route = handler.slice(routeStart, routeEnd);
-  expect(route).toContain('await requireAdmin(req)');
-  expect(route).toContain('Public website');
-  expect(route).toContain('Database and API');
-  expect(route).toContain('Authentication service');
-  expect(route).toContain('Transactional email provider');
-  expect(route).toContain('Outage email alerts');
-  expect(route).toContain('not_checked');
-  expect(route).toContain('Payment safety configuration');
-  expect(route).toContain('RESEND_API_KEY');
-  expect(route).toContain('Deno.env.get("PAYSTACK_MODE")');
-  expect(route).toContain('mode === "test" && /^sk_test_[A-Za-z0-9]+$/.test(secret)');
-  expect(route).not.toContain('secret.startsWith("sk_test_")');
-  expect(route).not.toContain('console.log');
-});
-
-test('scheduled health monitor supports recovery email independently of customer alerts', () => {
-  const workflow = readFileSync('.github/workflows/health-check.yml', 'utf8');
-  expect(workflow).toContain('cron: "*/15 * * * *"');
-  expect(workflow).toContain('Detect recovery after a previous failed health check');
-  expect(workflow).toContain('listJobsForWorkflowRun');
-  expect(workflow).toContain('const recentRuns = runs.data.workflow_runs');
-  expect(workflow).toContain('latestOutage');
-  expect(workflow).toContain("step.name === 'Send recovery email' && step.conclusion === 'success'");
-  expect(workflow).not.toContain('const previous = runs.data.workflow_runs');
-  expect(workflow).toContain("step.conclusion === 'failure'");
-  expect(workflow).not.toContain("previous?.conclusion === 'failure'");
-  expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
-  expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
-  expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
-  expect(workflow).toContain("dawidd6/action-send-mail@v22");
-  expect(workflow).toContain("actions/github-script@v8");
-  expect(workflow).not.toContain("actions/github-script@v7");
-  expect(workflow).not.toContain("dawidd6/action-send-mail@v3");
-  expect(workflow).toContain("runs-on: ubuntu-24.04");
-  expect(workflow).toContain("This is a test run; no failed step is implied.");
-  expect(workflow).toContain("Please open this run to see the failed step and logs:");
-  expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
-  expect(workflow).not.toContain('/api/email-alerts/subscribe');
-});
-
 test('admin system settings are separate, persisted, and protected by backend authorization', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
@@ -1639,4 +1593,142 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
   await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
+});
+
+test('admin payment records require admin authorization and return only dashboard-safe fields', () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = source.indexOf('if (path === "/api/admin/payments" && req.method === "GET")');
+  const routeEnd = source.indexOf('if (path === "/api/admin/system-settings")', routeStart);
+  expect(routeStart).toBeGreaterThanOrEqual(0);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+
+  const route = source.slice(routeStart, routeEnd);
+  const authAt = route.indexOf('await requireAdmin(req)');
+  const queryAt = route.indexOf('db.from("payments").select(');
+  expect(authAt).toBeGreaterThanOrEqual(0);
+  expect(queryAt).toBeGreaterThan(authAt);
+  expect(route).toContain('select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)")');
+  expect(route).not.toContain('select("*,');
+  expect(route).not.toContain('authorization_url');
+
+  const component = readFileSync('src/PaymentsAdmin.tsx', 'utf8');
+  expect(component).toContain("api.get('/api/admin/payments')");
+  expect(component).toContain('item.payment_reference');
+  expect(component).toContain('item.paid_at');
+  expect(component).not.toContain('authorization_url');
+  expect(component).not.toContain('user_id');
+});
+
+test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
+  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+
+  // Public navigation must not advertise the admin route.
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveCount(0);
+
+  // Intercept the OAuth hand-off so this test never signs into a real account.
+  await page.route(authorizeEndpoint + '**', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+    }),
+  );
+
+  // Direct access to the admin sign-in route remains available.
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveURL(/\/admin\/?$/);
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+
+  const siteOrigin = new URL(page.url()).origin;
+  const authNavigation = page.waitForRequest(
+    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
+  );
+  await page.getByRole('button', { name: /Continue with Google/i }).click();
+  const authUrl = new URL((await authNavigation).url());
+  expect(authUrl.searchParams.get('provider')).toBe('google');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
+});
+
+test('system health endpoint is admin-protected and reports safe component statuses', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const routeStart = handler.indexOf('if (path === "/api/admin/system-health" && req.method === "GET")');
+  const routeEnd = handler.indexOf('if (path === "/api/admin/system-settings")', routeStart);
+  expect(routeStart).toBeGreaterThan(-1);
+  expect(routeEnd).toBeGreaterThan(routeStart);
+  const route = handler.slice(routeStart, routeEnd);
+  expect(route).toContain('await requireAdmin(req)');
+  expect(route).toContain('Public website');
+  expect(route).toContain('Database and API');
+  expect(route).toContain('Authentication service');
+  expect(route).toContain('Transactional email provider');
+  expect(route).toContain('Outage email alerts');
+  expect(route).toContain('not_checked');
+  expect(route).toContain('Payment safety configuration');
+  expect(route).toContain('RESEND_API_KEY');
+  expect(route).toContain('Deno.env.get("PAYSTACK_MODE")');
+  expect(route).toContain('mode === "test" && /^sk_test_[A-Za-z0-9]+$/.test(secret)');
+  expect(route).not.toContain('secret.startsWith("sk_test_")');
+  expect(route).not.toContain('console.log');
+});
+
+test('scheduled health monitor supports recovery email independently of customer alerts', () => {
+  const workflow = readFileSync('.github/workflows/health-check.yml', 'utf8');
+  expect(workflow).toContain('cron: "*/15 * * * *"');
+  expect(workflow).toContain('Detect recovery after a previous failed health check');
+  expect(workflow).toContain('listJobsForWorkflowRun');
+  expect(workflow).toContain('const recentRuns = runs.data.workflow_runs');
+  expect(workflow).toContain('latestOutage');
+  expect(workflow).toContain("step.name === 'Send recovery email' && step.conclusion === 'success'");
+  expect(workflow).not.toContain('const previous = runs.data.workflow_runs');
+  expect(workflow).toContain("step.conclusion === 'failure'");
+  expect(workflow).not.toContain("previous?.conclusion === 'failure'");
+  expect(workflow).not.toContain("github.event.inputs.test_email != 'true'");
+  expect(workflow).toContain('RECOVERED: EDUKEN CONSULT health checks passed');
+  expect(workflow).toContain('ALERT: EDUKEN CONSULT live health check failed');
+  expect(workflow).toContain("dawidd6/action-send-mail@v22");
+  expect(workflow).toContain("actions/github-script@v8");
+  expect(workflow).not.toContain("actions/github-script@v7");
+  expect(workflow).not.toContain("dawidd6/action-send-mail@v3");
+  expect(workflow).toContain("runs-on: ubuntu-24.04");
+  expect(workflow).toContain("This is a test run; no failed step is implied.");
+  expect(workflow).toContain("Please open this run to see the failed step and logs:");
+  expect(workflow).toContain('secrets.ALERT_EMAIL_TO');
+  expect(workflow).not.toContain('/api/email-alerts/subscribe');
+});
+
+test('legacy JAMB service rows remain visible without being made available for checkout', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [{
+          id: 'legacy-jamb-epin-fixture',
+          name: 'JAMB e-PIN (UTME Without Mock)',
+          category: 'JAMB Services',
+          description: 'Legacy service row fixture.',
+          requirements: 'Test fixture only.',
+          price: 7128,
+          // Simulate a legacy database row that predates availability/catalogue flags.
+          is_catalog_item: false,
+          is_published: true,
+        }],
+      }),
+    }),
+  );
+
+  await page.goto('/#jamb-services', { waitUntil: 'domcontentloaded' });
+
+  const card = page.locator('.jamb-service-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB e-PIN (UTME Without Mock)' }),
+  });
+  await expect(card).toBeVisible();
+  await expect(card).toContainText('Unavailable');
+  await expect(card.getByRole('button', { name: 'Currently unavailable' })).toBeDisabled();
+  await expect(page.locator('.jamb-catalogue-empty')).toHaveCount(0);
 });
