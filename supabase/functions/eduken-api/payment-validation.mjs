@@ -103,7 +103,9 @@ export function isPaystackTestModeEnabled(mode, secretKey) {
  * responses stay Pending so webhook/verification can reconcile without duplicate charges.
  */
 export function getPaystackInitializationFailureDisposition({ ok, status, hasAuthorizationUrl }) {
-  if (status === 408 || status >= 500 || (ok && !hasAuthorizationUrl)) return "unconfirmed";
+  // A 2xx HTTP response with a provider-level rejection is contradictory: the
+  // provider may have created checkout despite its response body. Keep Pending.
+  if (status === 408 || status >= 500 || ok) return "unconfirmed";
   return "failed";
 }
 
