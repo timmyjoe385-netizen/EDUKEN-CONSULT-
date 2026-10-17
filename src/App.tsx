@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { analyticsApi, api, auth } from './lib/api';
+import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
@@ -320,6 +320,16 @@ function App() {
     try {
       const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store', headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' } }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
       const live = res.data || {};
+      // Keep the public education content visible in previews, but never offer production service IDs to the isolated checkout backend.
+      if (usesIsolatedTestBackend) {
+        try {
+          const testContent = await api.get('/public-content');
+          live.services = testContent.data?.services || [];
+        } catch {
+          // Fail closed for checkout services if the test catalogue cannot be loaded.
+          live.services = [];
+        }
+      }
       setContentLoadFailed(false);
       const normalizeFlag = (value: unknown) =>
         value === true || String(value).toLowerCase() === 'true' || String(value) === '1';
