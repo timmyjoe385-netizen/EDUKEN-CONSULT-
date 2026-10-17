@@ -1662,12 +1662,16 @@ test('standalone aggregate calculator applies saved light and dark theme with re
   const card = page.locator('.aggregate-card').first();
   const heading = page.getByRole('heading', { name: 'EDUKEN Aggregate Calculator' });
   await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveAttribute('data-theme-preference', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
   await expect(card).toHaveCSS('background-color', 'rgb(13, 32, 56)');
   await expect(heading).toHaveCSS('color', 'rgb(241, 247, 255)');
 
   await page.evaluate(() => window.localStorage.setItem('eduken-theme', 'light'));
   await page.reload({ waitUntil: 'domcontentloaded' });
   await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveAttribute('data-theme-preference', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
   await expect(card).toHaveCSS('background-color', 'rgb(255, 255, 255)');
   await expect(heading).toHaveCSS('color', 'rgb(23, 63, 49)');
 });
