@@ -2845,7 +2845,8 @@ html[data-theme="dark"] .service-request-form .primary {
 html[data-theme="dark"] .primary:hover,
 html[data-theme="dark"] button.primary:hover,
 html[data-theme="dark"] a.primary:hover {
-  background-color: #06966b;
+  /* Keep white CTA labels above WCAG AA contrast while still showing hover feedback. */
+  background-color: #06734f;
   color: #ffffff !important;
 }
 html[data-theme="dark"] .hero h1,
