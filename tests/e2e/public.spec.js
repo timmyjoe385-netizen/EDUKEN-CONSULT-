@@ -1862,7 +1862,7 @@ test('legacy JAMB service rows remain visible without being made available for c
 
 
 
-test('isolated payment webhook rejects a forged success event', async ({ request }) => {
+test('isolated payment webhook fails closed against a forged success event', async ({ request }) => {
   const response = await request.post(
     'https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/api/payments/webhook',
     {
@@ -1883,10 +1883,13 @@ test('isolated payment webhook rejects a forged success event', async ({ request
     },
   );
 
-  // 401 means the invalid signature was rejected. 503 means the endpoint is
-  // safely disabled because explicit Paystack test mode is not configured.
-  expect([401, 503], 'forged webhook must never be accepted').toContain(response.status());
+  // Report which guard actually rejected the request: 401 verifies the
+  // signature guard; 503 confirms the endpoint is disabled by configuration.
   const body = await response.json();
+  console.log(
+    `Isolated forged-webhook result: HTTP ${response.status()} — ${String(body.code || body.error || 'no error code')}`,
+  );
+  expect([401, 503], 'forged webhook must never be accepted').toContain(response.status());
   if (response.status() === 401) {
     expect(body.error).toMatch(/signature/i);
   } else {
