@@ -18,6 +18,17 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('isolated preview uses test service catalogue while preserving live public education content', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const apiClient = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
+
+  expect(apiClient).toContain('export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;');
+  expect(app).toContain('if (usesIsolatedTestBackend)');
+  expect(app).toContain("const testContent = await api.get('/public-content');");
+  expect(app).toContain('live.services = testContent.data?.services || [];');
+  expect(app).toContain('Fail closed for checkout services if the test catalogue cannot be loaded.');
+});
+
 test('wallet callback keeps its reference available for verification after sign-in', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const hub = readFileSync(new URL('../../src/PlatformHub.tsx', import.meta.url), 'utf8');
