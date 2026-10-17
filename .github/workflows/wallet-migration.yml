@@ -69,6 +69,22 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175049_wallet_foreign_key_indexes.sql
+      - name: Apply admin settings updater index migration
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017193000_admin_system_settings_updated_by_index.sql
+      - name: Verify admin settings updater index exists
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -c "SELECT 1 FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'admin_system_settings' AND indexname = 'admin_system_settings_updated_by_idx" -c "DO \$\$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'admin_system_settings' AND indexname = 'admin_system_settings_updated_by_idx') THEN RAISE EXCEPTION 'admin settings updater index missing'; END IF; END \$\$;"
       - name: Verify atomic deposits, spending, insufficient funds and refunds
         run: >-
           docker run --rm --network host
