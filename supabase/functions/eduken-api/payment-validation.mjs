@@ -102,10 +102,12 @@ export function isPaystackTestModeEnabled(mode, secretKey) {
  * clearly rejects the request. Timeouts, server errors, and contradictory success
  * responses stay Pending so webhook/verification can reconcile without duplicate charges.
  */
-export function getPaystackInitializationFailureDisposition({ ok, status, hasAuthorizationUrl }) {
-  // A 2xx HTTP response with a provider-level rejection is contradictory: the
-  // provider may have created checkout despite its response body. Keep Pending.
-  if (status === 408 || status >= 500 || ok) return "unconfirmed";
+export function getPaystackInitializationFailureDisposition({ ok, status, providerStatus, hasAuthorizationUrl }) {
+  // A timeout/server error, any 2xx response rejected by the provider-level body,
+  // or a success-shaped provider response over HTTP failure is contradictory.
+  // Keep Pending whenever checkout may have been created; only clear HTTP rejections
+  // with no success indicators are safe to mark Failed.
+  if (status === 408 || status >= 500 || ok || providerStatus === true || hasAuthorizationUrl) return "unconfirmed";
   return "failed";
 }
 
