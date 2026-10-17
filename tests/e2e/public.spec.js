@@ -25,8 +25,11 @@ test('isolated preview uses test service catalogue while preserving live public 
   expect(apiClient).toContain('export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;');
   expect(app).toContain('if (usesIsolatedTestBackend)');
   expect(app).toContain("const testContent = await api.get('/public-content');");
-  expect(app).toContain('live.services = testContent.data?.services || [];');
-  expect(app).toContain('Fail closed for checkout services if the test catalogue cannot be loaded.');
+  expect(app).toContain('const previewTestService');
+  expect(app).toContain('live.services = [previewTestService];');
+  expect(app).toContain('the checkout API still validates');
+  expect(app).toContain('const testServices = testContent.data?.services || [];');
+  expect(app).toContain('service visible if public catalogue loading fails');
 });
 
 test('wallet callback keeps its reference available for verification after sign-in', () => {
