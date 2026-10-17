@@ -112,7 +112,22 @@ export const JAMB_SERVICE_TEMPLATES = [
 ];
 
 export function isJambCatalogueService(service) {
-  return Boolean(service && (service.is_catalog_item === true || String(service.is_catalog_item).toLowerCase() === 'true'));
+  if (!service) return false;
+  if (service.is_catalog_item === true || String(service.is_catalog_item).toLowerCase() === 'true') return true;
+  // Legacy service rows may predate the catalogue flag. Recognize exact known names
+  // so the catalogue remains visible without enabling services that are unavailable.
+  const name = String(service.name || '').trim().toLowerCase();
+  return JAMB_SERVICE_TEMPLATES.some(template =>
+    [template.name, ...template.legacyNames].some(candidate => candidate.trim().toLowerCase() === name)
+  );
+}
+
+export function jambServiceDefaultAvailability(service) {
+  const name = String(service?.name || '').trim().toLowerCase();
+  const template = JAMB_SERVICE_TEMPLATES.find(candidate =>
+    [candidate.name, ...candidate.legacyNames].some(alias => alias.trim().toLowerCase() === name)
+  );
+  return template ? template.is_available === true : true;
 }
 
 export function jambServiceFieldsFor(service) {

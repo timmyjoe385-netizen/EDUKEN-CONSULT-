@@ -27,6 +27,10 @@ export function validateServiceRequestBody(body) {
       !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(body.serviceId.trim())) {
     return { error: "Invalid service selection." };
   }
+  const quantity = body.quantity === undefined ? 1 : body.quantity;
+  if (typeof quantity !== "number" || !Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+    return { error: "Quantity must be a whole number from 1 to 100." };
+  }
 
   return {
     data: {
@@ -35,6 +39,7 @@ export function validateServiceRequestBody(body) {
       details,
       email,
       serviceId: body.serviceId?.trim() || null,
+      quantity,
     },
   };
 }

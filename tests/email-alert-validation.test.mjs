@@ -52,6 +52,10 @@ test("rate-limit policy limits public form spam, confirmation-email abuse and to
   assert.deepEqual(emailAlertRateLimitPolicy("subscribe"), { limit: 5, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("consultation"), { limit: 5, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("service-request"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("guest-payment-initialize"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("guest-payment-verify"), { limit: 20, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("wallet-deposit-initialize"), { limit: 5, windowSeconds: 900 });
+  assert.deepEqual(emailAlertRateLimitPolicy("wallet-deposit-verify"), { limit: 20, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("verify"), { limit: 20, windowSeconds: 900 });
   assert.deepEqual(emailAlertRateLimitPolicy("unsubscribe"), { limit: 20, windowSeconds: 900 });
   assert.equal(emailAlertRateLimitPolicy("unknown"), null);
@@ -311,4 +315,59 @@ test("email-alert deliveries have a leading-column index for opportunity foreign
   assert.match(migration, /create index if not exists email_alert_deliveries_opportunity_id_idx/i);
   assert.match(migration, /on public\.email_alert_deliveries\s*\(opportunity_id\)/i);
   assert.doesNotMatch(migration, /drop index|drop table|truncate|delete from/i);
+});
+
+
+test("customer wallet migration keeps balances server-controlled and operations atomic", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const migration = await readFile(resolve(here, "../supabase/migrations/20261017175043_customer_wallets.sql"), "utf8");
+  for (const required of [
+    "create table if not exists public.customer_wallets",
+    "create table if not exists public.wallet_transactions",
+    "balance numeric(12,2) not null default 0 check (balance >= 0)",
+    "constraint wallet_transactions_user_idempotency_unique unique (user_id, idempotency_key)",
+    "create trigger auth_user_create_customer_wallet",
+    "create or replace function public.settle_customer_wallet_deposit",
+    "create or replace function public.pay_service_from_customer_wallet",
+    "revoke all on function public.settle_customer_wallet_deposit(uuid, text) from public, anon, authenticated",
+    "grant execute on function public.pay_service_from_customer_wallet(uuid, uuid, text, text) to service_role",
+    "payment_type in ('service', 'wallet_deposit', 'wallet_service')",
+    "payments_payment_reference_key",
+  ]) assert.ok(migration.includes(required), "wallet migration missing safeguard: " + required);
+  assert.ok(migration.includes("insert into public.customer_wallets (user_id)\nselect id from auth.users"), "existing users must receive zero-balance wallets");
+  assert.ok((migration.match(/for update/g) || []).length >= 3, "wallet operations must lock rows before changing balances");
+  assert.ok(migration.includes("alter table public.customer_wallets enable row level security"));
+  assert.ok(migration.includes("alter table public.wallet_transactions enable row level security"));
+  assert.equal(migration.split("as $fn$").length - 1, 4, "all four PL/pgSQL functions must open a tagged dollar quote");
+  assert.equal(migration.split("$fn$;").length - 1, 4, "all four PL/pgSQL functions must close their dollar quote");
+  assert.equal(migration.includes("as $" + "\n" + "declare"), false, "single-dollar PL/pgSQL delimiters are invalid");
+  assert.ok(migration.includes("create or replace function public.refund_customer_wallet_service_payment"));
+  assert.ok(migration.includes("grant execute on function public.refund_customer_wallet_service_payment(uuid, text) to service_role"));
+});
+
+test("wallet API requires authenticated, rate-limited, verified payment paths", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { fileURLToPath } = await import("node:url");
+  const { dirname, resolve } = await import("node:path");
+  const here = dirname(fileURLToPath(import.meta.url));
+  const api = await readFile(resolve(here, "../supabase/functions/eduken-api/index.ts"), "utf8");
+  for (const required of [
+    'path === "/api/wallet"',
+    'path === "/api/wallet/deposit/initialize"',
+    'path === "/api/wallet/deposit/verify"',
+    'path === "/api/wallet/pay-service"',
+    'path === "/api/admin/wallet/refund"',
+    'consumeEmailAlertRateLimit(req, "wallet-deposit-initialize")',
+    'consumeEmailAlertRateLimit(req, "wallet-deposit-verify")',
+    'settle_customer_wallet_deposit',
+    'pay_service_from_customer_wallet',
+    'refund_customer_wallet_service_payment',
+    'sendPaymentNotifications',
+    'sendServicePaymentNotifications',
+    'eduken-payment-" + reference + "-" + kind + "-" + message.role',
+  ]) assert.ok(api.includes(required), "wallet API missing safeguard: " + required);
+  assert.ok(api.includes('isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)'), "wallet deposits must remain test-mode guarded");
 });

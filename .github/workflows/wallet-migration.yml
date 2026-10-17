@@ -1,0 +1,79 @@
+name: EDUKEN wallet migration SQL integration
+
+on:
+  pull_request:
+    # Run disposable migration integration tests for stacked wallet integration PRs too.
+    branches: [main, feat/customer-wallet-system-20261016]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  wallet-sql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: eduken_wallet_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d eduken_wallet_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Create isolated Supabase-like schema fixture
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/tests/sql/wallet-migration-fixture.sql
+      - name: Apply payment ledger schema migration in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175028_create_payments_table.sql
+      - name: Apply guest checkout migration in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175036_guest_service_checkout_tokens.sql
+      - name: Apply wallet migration in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175043_customer_wallets.sql
+      - name: Apply wallet foreign-key indexes migration
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261017175049_wallet_foreign_key_indexes.sql
+      - name: Verify atomic deposits, spending, insufficient funds and refunds
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/tests/sql/wallet-migration-smoke.sql

@@ -93,3 +93,182 @@
 .aggregate-assessment-check strong{display:block;color:#233b2f;font-size:.94rem}
 .aggregate-assessment-check small{display:block;margin-top:3px;color:#617268;line-height:1.5}
 .aggregate-assessment-disclaimer{margin:14px 0 0;padding:12px 14px;border-radius:10px;background:#f5f7f5;color:#5b685f;font-size:.85rem;line-height:1.65}
+
+/* Theme integration: the calculator is rendered as a standalone route, so its
+   hard-coded component colours must follow the same EDUKEN theme as the main app. */
+html[data-theme="light"] .aggregate-page {
+  background: #f8faf8;
+  color: #17211d;
+}
+html[data-theme="light"] .aggregate-card,
+html[data-theme="light"] .aggregate-source,
+html[data-theme="light"] .aggregate-directory,
+html[data-theme="light"] .aggregate-planner,
+html[data-theme="light"] .aggregate-olevel-assessment {
+  background: #ffffff;
+  color: #17211d;
+  border-color: #dfe8e1;
+}
+html[data-theme="light"] .aggregate-intro h1,
+html[data-theme="light"] .aggregate-card h2,
+html[data-theme="light"] .aggregate-source h2,
+html[data-theme="light"] .aggregate-directory-heading h2,
+html[data-theme="light"] .aggregate-planner-heading h2,
+html[data-theme="light"] .aggregate-olevel-assessment h2,
+html[data-theme="light"] .aggregate-result>strong,
+html[data-theme="light"] .aggregate-assessment-stat strong {
+  color: #173f31;
+}
+html[data-theme="light"] .aggregate-page p,
+html[data-theme="light"] .aggregate-page small,
+html[data-theme="light"] .aggregate-footer,
+html[data-theme="light"] .aggregate-field label,
+html[data-theme="light"] .aggregate-field span,
+html[data-theme="light"] .aggregate-directory-item p,
+html[data-theme="light"] .aggregate-assessment-check small {
+  color: #46564c;
+}
+html[data-theme="light"] .aggregate-field input,
+html[data-theme="light"] .aggregate-field select,
+html[data-theme="light"] .aggregate-directory-search,
+html[data-theme="light"] .aggregate-directory-search input,
+html[data-theme="light"] .aggregate-directory-filters button,
+html[data-theme="light"] .aggregate-secondary,
+html[data-theme="light"] .aggregate-add-grade,
+html[data-theme="light"] .aggregate-remove-grade {
+  background: #ffffff;
+  color: #17211d;
+  border-color: #b9c9be;
+}
+html[data-theme="light"] .aggregate-primary,
+html[data-theme="light"] .aggregate-directory-filters button.active,
+html[data-theme="light"] .aggregate-shortcut {
+  background: #173f31;
+  color: #ffffff;
+  border-color: #173f31;
+}
+html[data-theme="light"] .aggregate-helper,
+html[data-theme="light"] .aggregate-extra-grades,
+html[data-theme="light"] .aggregate-assessment-stat,
+html[data-theme="light"] .aggregate-assessment-check,
+html[data-theme="light"] .aggregate-planner-result {
+  background: #f8faf8;
+  color: #17211d;
+  border-color: #dfe8e1;
+}
+html[data-theme="light"] .aggregate-result {
+  background: #e8f0ea;
+  color: #17211d;
+  border-color: #b8d0c0;
+}
+html[data-theme="light"] .aggregate-result>span,
+html[data-theme="light"] .aggregate-planner-result strong,
+html[data-theme="light"] .aggregate-assessment-check strong {
+  color: #173f31;
+}
+html[data-theme="light"] .aggregate-directory-item {
+  background: #ffffff;
+  border-color: #dfe8e1;
+}
+html[data-theme="light"] .aggregate-directory-item-top strong {
+  color: #17211d;
+}
+html[data-theme="light"] .aggregate-source a,
+html[data-theme="light"] .aggregate-directory-item a {
+  color: #245b40;
+}
+html[data-theme="light"] .aggregate-field input:focus,
+html[data-theme="light"] .aggregate-field select:focus,
+html[data-theme="light"] .aggregate-directory-search:focus-within {
+  outline-color: #5d8c73;
+  border-color: #173f31;
+}
+
+html[data-theme="dark"] .aggregate-page {
+  background: #071426;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .aggregate-card,
+html[data-theme="dark"] .aggregate-source,
+html[data-theme="dark"] .aggregate-directory,
+html[data-theme="dark"] .aggregate-planner,
+html[data-theme="dark"] .aggregate-olevel-assessment,
+html[data-theme="dark"] .aggregate-directory-item {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .aggregate-intro h1,
+html[data-theme="dark"] .aggregate-card h2,
+html[data-theme="dark"] .aggregate-source h2,
+html[data-theme="dark"] .aggregate-directory-heading h2,
+html[data-theme="dark"] .aggregate-planner-heading h2,
+html[data-theme="dark"] .aggregate-olevel-assessment h2,
+html[data-theme="dark"] .aggregate-result>strong,
+html[data-theme="dark"] .aggregate-assessment-stat strong,
+html[data-theme="dark"] .aggregate-directory-item-top strong,
+html[data-theme="dark"] .aggregate-planner-result strong,
+html[data-theme="dark"] .aggregate-assessment-check strong {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .aggregate-page p,
+html[data-theme="dark"] .aggregate-page small,
+html[data-theme="dark"] .aggregate-footer,
+html[data-theme="dark"] .aggregate-field label,
+html[data-theme="dark"] .aggregate-field span,
+html[data-theme="dark"] .aggregate-directory-item p,
+html[data-theme="dark"] .aggregate-assessment-check small {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .aggregate-field input,
+html[data-theme="dark"] .aggregate-field select,
+html[data-theme="dark"] .aggregate-directory-search,
+html[data-theme="dark"] .aggregate-directory-search input,
+html[data-theme="dark"] .aggregate-directory-filters button,
+html[data-theme="dark"] .aggregate-secondary,
+html[data-theme="dark"] .aggregate-add-grade,
+html[data-theme="dark"] .aggregate-remove-grade {
+  background: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .aggregate-primary,
+html[data-theme="dark"] .aggregate-directory-filters button.active,
+html[data-theme="dark"] .aggregate-shortcut {
+  background: #173f31;
+  color: #ffffff;
+  border-color: #285e46;
+}
+html[data-theme="dark"] .aggregate-helper,
+html[data-theme="dark"] .aggregate-extra-grades,
+html[data-theme="dark"] .aggregate-assessment-stat,
+html[data-theme="dark"] .aggregate-assessment-check,
+html[data-theme="dark"] .aggregate-planner-result {
+  background: #10243d;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .aggregate-result {
+  background: #102d25;
+  color: #e8f0f8;
+  border-color: #285e46;
+}
+html[data-theme="dark"] .aggregate-result>span {
+  color: #b8e1c8;
+}
+html[data-theme="dark"] .aggregate-source a,
+html[data-theme="dark"] .aggregate-directory-item a {
+  color: #b8e1c8;
+}
+html[data-theme="dark"] .aggregate-field input::placeholder,
+html[data-theme="dark"] .aggregate-directory-search input::placeholder {
+  color: #b8c8d9;
+  opacity: 1;
+}
+html[data-theme="dark"] .aggregate-field input:focus,
+html[data-theme="dark"] .aggregate-field select:focus,
+html[data-theme="dark"] .aggregate-directory-search:focus-within {
+  outline-color: #5d8c73;
+  border-color: #b8e1c8;
+}
+
