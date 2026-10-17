@@ -29,7 +29,12 @@ if (isAggregateCalculator) {
       media.addEventListener('change', applyStandaloneTheme);
     }
   } catch {
-    document.documentElement.dataset.theme = 'light';
+    // Keep the page and native form controls in the same safe light mode if
+    // storage or system-theme detection is unavailable in this browser.
+    const root = document.documentElement;
+    root.dataset.theme = 'light';
+    root.dataset.themePreference = 'light';
+    root.style.colorScheme = 'light';
   }
 }
 
