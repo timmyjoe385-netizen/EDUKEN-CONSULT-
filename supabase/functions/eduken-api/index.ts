@@ -1649,7 +1649,7 @@ Deno.serve(async (req) => {
       }
       const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || result?.status !== true) {
-        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
+        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, providerStatus: result?.status === true, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
           return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
         }
         const { error: markFailedError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
