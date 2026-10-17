@@ -2130,7 +2130,11 @@ function App() {
             Get Consultation <ArrowRight size={16} />
           </a>
         </nav>
-        {/* Customer authentication stays inside account/wallet flows; keep the public header focused on public content. */}
+        <div className="auth-nav-actions">
+          <a className="header-sign-in" href="#eduken-platform" onClick={() => setMenu(false)} aria-label="Go to EDUKEN Wallet and customer account">
+            My Wallet
+          </a>
+        </div>
         <button
           type="button"
           className="menu-btn"
