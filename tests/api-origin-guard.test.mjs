@@ -34,3 +34,33 @@ test('read-only methods remain allowed on preview origins', () => {
     );
   }
 });
+
+test('preview writes require explicit opt-in and a separate Supabase backend', () => {
+  const preview = 'https://feat-customer-wallet-system-20261016-eduken-consult.timmyjoe385.workers.dev';
+  const testBackend = 'https://wpktzogarfqrgkirzdpy.supabase.co';
+  const productionBackend = 'https://pphxltbkwygqjtjgkhxu.supabase.co';
+
+  assert.equal(
+    shouldBlockWrite(preview, 'POST', { supabaseUrl: testBackend, allowTestWrites: true }),
+    false,
+    'configured test backend may accept preview writes',
+  );
+  assert.equal(
+    shouldBlockWrite(preview, 'POST', { supabaseUrl: testBackend, allowTestWrites: false }),
+    true,
+    'preview writes remain blocked without explicit opt-in',
+  );
+  assert.equal(
+    shouldBlockWrite(preview, 'POST', { supabaseUrl: productionBackend, allowTestWrites: true }),
+    true,
+    'preview can never write to production even if opt-in is set',
+  );
+  assert.equal(
+    shouldBlockWrite('https://eduken-consult.timmyjoe385.workers.dev', 'POST', {
+      supabaseUrl: testBackend,
+      allowTestWrites: true,
+    }),
+    true,
+    'production origin can never write to the test backend',
+  );
+});
