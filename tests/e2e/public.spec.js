@@ -805,7 +805,7 @@ test('public header exposes customer wallet access but not admin access', async 
 
   // Customer wallet access is intentionally visible; admin access must remain private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'My Wallet' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -848,7 +848,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'My Wallet' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
