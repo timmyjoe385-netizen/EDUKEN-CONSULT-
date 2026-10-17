@@ -320,14 +320,29 @@ function App() {
     try {
       const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store', headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' } }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
       const live = res.data || {};
-      // Keep the public education content visible in previews, but never offer production service IDs to the isolated checkout backend.
+      // Preview checkout must use only the isolated test catalogue. Keep a known test-only
+      // service visible if public catalogue loading fails; the checkout API still validates
+      // the service ID and availability against the isolated database before creating a request.
       if (usesIsolatedTestBackend) {
+        const previewTestService = {
+          id: '376b883f-3a8c-490f-a130-ee5adefeaa2b',
+          name: 'EDUKEN TEST CHECKOUT SERVICE — TEST ONLY',
+          category: 'JAMB Services',
+          description: 'TEST ONLY — synthetic ₦100 checkout. No real service will be delivered. Do not enter sensitive personal or banking information.',
+          requirements: 'Use fictional test details only. Never enter NIN, passwords, OTPs or bank details.',
+          price: 100,
+          is_available: true,
+          is_catalog_item: true,
+          is_published: true,
+        };
         try {
           const testContent = await api.get('/public-content');
-          live.services = testContent.data?.services || [];
+          const testServices = Array.isArray(testContent.data?.services) ? testContent.data.services : [];
+          live.services = testServices.some((service: Item) => service.id === previewTestService.id)
+            ? testServices
+            : [previewTestService, ...testServices];
         } catch {
-          // Fail closed for checkout services if the test catalogue cannot be loaded.
-          live.services = [];
+          live.services = [previewTestService];
         }
       }
       setContentLoadFailed(false);
@@ -2200,6 +2215,11 @@ function App() {
         <div className="toast">
           <CheckCircle2 size={18} />
           {toast}
+        </div>
+      )}
+      {usesIsolatedTestBackend && (
+        <div role="status" style={{ background: '#fff3cd', color: '#664d03', border: '1px solid #ffecb5', padding: '12px 18px', textAlign: 'center', fontWeight: 700 }}>
+          TEST PREVIEW ONLY — isolated checkout · synthetic ₦100 service · no real fulfilment or live payments
         </div>
       )}
       <header className="nav">
