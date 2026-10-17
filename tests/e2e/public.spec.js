@@ -1648,7 +1648,14 @@ test('appearance preference persists and System mode follows operating-system ch
 });
 
 test('standalone aggregate calculator applies saved light and dark theme with readable contrast', async ({ page }) => {
-  await page.addInitScript(() => window.localStorage.setItem('eduken-theme', 'dark'));
+  await page.addInitScript(() => {
+    // The init script runs again on reload. Set the initial dark preference only
+    // once per test page so the later light-mode reload can exercise persistence.
+    if (window.sessionStorage.getItem('eduken-theme-test-initialized') !== '1') {
+      window.localStorage.setItem('eduken-theme', 'dark');
+      window.sessionStorage.setItem('eduken-theme-test-initialized', '1');
+    }
+  });
   await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
 
   const root = page.locator('html');
