@@ -2,7 +2,8 @@ name: EDUKEN Playwright browser checks
 
 on:
   pull_request:
-    branches: [main]
+    # Also validate stacked feature PRs whose base is the wallet branch.
+    branches: [main, feat/customer-wallet-system-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
   schedule:
     - cron: '0 6 * * *'
