@@ -3,7 +3,7 @@ import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, getPaystackInitializationFailureDisposition, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -1320,7 +1320,11 @@ Deno.serve(async (req) => {
       try { providerResult = await providerResponse.json(); } catch {
         return json({ error: "Paystack returned an unreadable response. Do not start another deposit yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
       }
+      const authorizationUrl = getPaystackAuthorizationUrl(providerResult);
       if (!providerResponse.ok || providerResult?.status !== true) {
+        if (getPaystackInitializationFailureDisposition({ ok: providerResponse.ok, status: providerResponse.status, providerStatus: providerResult?.status === true, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
+          return json({ error: "Paystack did not confirm whether checkout was created. Do not start another deposit yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN", reference }, 502);
+        }
         const { error: failError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
         if (failError) {
           console.error("Could not mark rejected wallet deposit initialization as failed.", failError.message);
@@ -1328,7 +1332,6 @@ Deno.serve(async (req) => {
         }
         return json({ error: "Unable to initialize wallet deposit. You can safely try again with a new attempt.", code: "WALLET_DEPOSIT_INITIALIZATION_FAILED" }, 502);
       }
-      const authorizationUrl = getPaystackAuthorizationUrl(providerResult);
       if (!authorizationUrl) {
         return json({ error: "Paystack checkout could not be confirmed. Do not retry yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
       }
@@ -1526,7 +1529,11 @@ Deno.serve(async (req) => {
       try { result = await paystack.json(); } catch {
         return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
       }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || result?.status !== true) {
+        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, providerStatus: result?.status === true, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
+          return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+        }
         const { error: markFailedError } = await db.from("payments").update({ status: "Failed" })
           .eq("id", reservation.id).eq("status", "Pending");
         if (markFailedError) {
@@ -1536,7 +1543,6 @@ Deno.serve(async (req) => {
         return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
       }
 
-      const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!authorizationUrl) {
         // The provider may have created a transaction despite an unexpected response shape.
         // Keep the reservation Pending to prevent duplicate charges on retry.
@@ -1642,12 +1648,15 @@ Deno.serve(async (req) => {
       try { result = await paystack.json(); } catch {
         return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
       }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!paystack.ok || result?.status !== true) {
+        if (getPaystackInitializationFailureDisposition({ ok: paystack.ok, status: paystack.status, providerStatus: result?.status === true, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
+          return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+        }
         const { error: markFailedError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
         if (markFailedError) return json({ error: "Payment initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
         return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
       }
-      const authorizationUrl = getPaystackAuthorizationUrl(result);
       if (!authorizationUrl) return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
       const { data: payment, error: saveUrlError } = await db.from("payments").update({ authorization_url: authorizationUrl })
         .eq("id", reservation.id).eq("status", "Pending").select().maybeSingle();
@@ -1781,7 +1790,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/payments" && req.method === "GET") {
       const user = await requireUser(req);
-      const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
+      const { data, error } = await db.from("payments").select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       return json({ items: data ?? [] });
     }
@@ -1826,7 +1835,7 @@ Deno.serve(async (req) => {
 
     if (path === "/api/admin/payments" && req.method === "GET") {
       await requireAdmin(req);
-      const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
+      const { data, error } = await db.from("payments").select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
       if (error) throw error;
       return json({ items: data ?? [] });
     }
