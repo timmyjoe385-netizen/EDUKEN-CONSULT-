@@ -520,7 +520,13 @@ test('homepage remains usable at a mobile viewport', async ({ page }) => {
 });
 
 test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
-  await page.addInitScript(() => window.localStorage.removeItem('eduken-theme'));
+  await page.addInitScript(() => {
+    // Clear the saved preference only on the first document; keep it during reload assertions.
+    if (window.sessionStorage.getItem('__eduken_theme_test_initialized') !== '1') {
+      window.localStorage.removeItem('eduken-theme');
+      window.sessionStorage.setItem('__eduken_theme_test_initialized', '1');
+    }
+  });
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
