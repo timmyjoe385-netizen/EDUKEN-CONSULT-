@@ -68,6 +68,26 @@ test('wallet notification emails are skipped for idempotent settlement retries',
   expect(walletRefund).toContain('refund?.reused !== true');
 });
 
+test('service payment webhook retries do not resend notifications after payment is already Paid', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const webhook = handler.slice(
+    handler.indexOf('if (path === "/api/payments/webhook" && req.method === "POST")'),
+    handler.indexOf('if (req.method === "GET" && (path === "/public-content"'),
+  );
+  const alreadyPaid = webhook.slice(
+    webhook.indexOf('if (existingPayment.status === "Paid")'),
+    webhook.indexOf('const { data: payment, error: updateError }'),
+  );
+  const firstSettlement = webhook.slice(
+    webhook.indexOf('const { data: payment, error: updateError }'),
+    webhook.indexOf('return json({ ok: true, paid: true, reused: !payment });'),
+  );
+
+  expect(alreadyPaid).toContain('reused: true');
+  expect(alreadyPaid).not.toContain('sendServicePaymentNotifications');
+  expect(firstSettlement).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+});
+
 test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
