@@ -659,6 +659,40 @@ test('service request API keeps private endpoints protected without creating rec
   expect(adminUpdate.status(), 'service request status changes must require an authorized admin').toBe(401);
 });
 
+test('wallet reads, wallet spending, and admin wallet refunds reject unauthenticated requests', async ({ request }) => {
+  const base = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api';
+  const headers = {
+    apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p',
+    'content-type': 'application/json',
+  };
+  const checks = [
+    { method: 'GET', path: '/api/wallet' },
+    {
+      method: 'POST',
+      path: '/api/wallet/pay-service',
+      data: { serviceRequestId: '00000000-0000-4000-8000-000000000000' },
+    },
+    {
+      method: 'POST',
+      path: '/api/admin/wallet/refund',
+      data: { paymentId: '00000000-0000-4000-8000-000000000000', reason: 'Unauthenticated test' },
+    },
+  ];
+
+  for (const check of checks) {
+    const response = await request.fetch(base + check.path, {
+      method: check.method,
+      headers,
+      data: check.data,
+      timeout: 20_000,
+    });
+    expect(
+      response.status(),
+      `${check.method} ${check.path} must reject requests without the required customer/admin session`,
+    ).toBe(401);
+  }
+});
+
 test('service request validator rejects invalid payloads before database writes', async () => {
   const valid = { customerName: '  Ada Example  ', whatsapp: '  08012345678 ', details: '  Please advise  ', email: ' ada@example.com ' };
   const result = validateServiceRequestBody(valid);
