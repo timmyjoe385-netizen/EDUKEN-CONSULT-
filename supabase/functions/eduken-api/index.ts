@@ -3,7 +3,7 @@ import { parseJsonObjectBody } from "./json-body-validation.mjs";
 import { isAllowedServiceRequestStatus, isPublishedService, validateServiceRequestBody } from "./service-request-validation.mjs";
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
-import { getNextPaymentStatus, getPaystackAuthorizationUrl, isSuccessfulPaystackTransaction, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -510,7 +510,90 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
-async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request") {
+async function sendPaymentNotifications(
+  userId: string | null,
+  reference: string,
+  amount: number,
+  kind: "deposit" | "service_payment" | "refund",
+  customerEmailOverride?: string | null,
+) {
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("EMAIL_FROM");
+  if (!apiKey || !from || !reference || !Number.isFinite(amount) || amount <= 0) {
+    console.error("Payment notification could not be sent because required email configuration or payment data is unavailable.");
+    return;
+  }
+  let customerEmail = typeof customerEmailOverride === "string" ? customerEmailOverride.trim() : "";
+  if (userId) {
+    try {
+      const { data: authUser, error: userError } = await db.auth.admin.getUserById(userId);
+      if (!userError && authUser?.user?.email) customerEmail = authUser.user.email;
+    } catch {
+      console.error("Payment notification could not resolve the customer account email.");
+    }
+  }
+  const isDeposit = kind === "deposit";
+  const isRefund = kind === "refund";
+  const amountText = "₦" + amount.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const customerSubject = isDeposit ? "EDUKEN wallet deposit confirmed" : isRefund ? "EDUKEN wallet refund credited" : "EDUKEN service payment confirmed";
+  const adminSubject = isDeposit ? "EDUKEN wallet deposit received" : isRefund ? "EDUKEN wallet refund processed" : "EDUKEN service payment received";
+  const customerText = isDeposit
+    ? "Your EDUKEN wallet deposit of " + amountText + " has been verified and credited. Reference: " + reference + ". Sign in to view your updated balance and transaction history."
+    : isRefund
+      ? "A wallet refund of " + amountText + " has been credited to your EDUKEN wallet. Reference: " + reference + ". Sign in to view your transaction history."
+      : "Your EDUKEN service payment of " + amountText + " has been confirmed. Reference: " + reference + ". Keep this reference for follow-up.";
+  const adminText = (isDeposit ? "A customer wallet deposit was verified." : isRefund ? "A wallet refund was credited to a customer." : "A customer service payment was confirmed.")
+    + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account: " + (userId || "guest checkout");
+  const config = { apiKey, from };
+  const messages = [
+    ...(customerEmail ? [{ role: "customer", to: customerEmail, subject: customerSubject, text: customerText }] : []),
+    ...Array.from(ADMIN_EMAILS).map(to => ({ role: "admin", to, subject: adminSubject, text: adminText })),
+  ];
+  for (const message of messages) {
+    try {
+      const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
+      await sendEmailAlertMessage(
+        config, message.to, message.subject, message.text, html,
+        "eduken-payment-" + reference + "-" + kind + "-" + message.role,
+      );
+    } catch (error) {
+      // Payment settlement must not depend on the email provider being available.
+      // Stable provider idempotency keys reduce duplicate notices when a flow retries.
+      console.error("Payment notification delivery failed.", error instanceof Error ? error.message : "Unknown email error.");
+    }
+  }
+}
+
+async function sendServicePaymentNotifications(payment: {
+  user_id?: string | null;
+  service_request_id?: string | null;
+  payment_reference?: string | null;
+  amount: number | string;
+}) {
+  let userId = payment.user_id || null;
+  let customerEmail: string | null = null;
+  if (payment.service_request_id) {
+    try {
+      const { data: request, error } = await db.from("service_requests")
+        .select("user_id,email").eq("id", payment.service_request_id).maybeSingle();
+      if (!error && request) {
+        userId = userId || request.user_id || null;
+        customerEmail = request.email || null;
+      }
+    } catch {
+      console.error("Service payment receipt could not load the service request contact.");
+    }
+  }
+  await sendPaymentNotifications(
+    userId,
+    String(payment.payment_reference || ""),
+    Number(payment.amount),
+    "service_payment",
+    customerEmail,
+  );
+}
+
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify" | "wallet-deposit-initialize" | "wallet-deposit-verify") {
   const ip = getEmailAlertClientIp(req.headers);
   if (!ip) return null;
   const policy = emailAlertRateLimitPolicy(action);
@@ -531,6 +614,71 @@ Deno.serve(async (req) => {
   const path = pathOf(req);
   try {
     if (req.method === "GET" && path === "/health") return json({ ok: true, service: "EDUKEN CONSULT API", version: 4 });
+
+    if (path === "/api/payments/webhook" && req.method === "POST") {
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      const signature = req.headers.get("x-paystack-signature") || "";
+      const rawBody = await req.text();
+      if (!await isValidPaystackWebhookSignature(rawBody, signature, secret)) {
+        return json({ error: "Invalid payment provider signature." }, 401);
+      }
+      let event: any;
+      try { event = JSON.parse(rawBody); } catch { return json({ error: "Invalid webhook payload." }, 400); }
+      if (event?.event !== "charge.success") return json({ ok: true, ignored: true });
+      const transaction = event?.data;
+      const reference = typeof transaction?.reference === "string" ? transaction.reference : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference) || !isSuccessfulPaystackTransaction(transaction)) {
+        return json({ error: "Invalid successful payment event." }, 400);
+      }
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,payment_type,user_id")
+        .eq("payment_reference", reference).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment) return json({ ok: true, ignored: true });
+      if (!matchesStoredPaystackPayment(transaction, {
+        amount: existingPayment.amount, currency: existingPayment.currency, reference,
+      })) {
+        return json({ error: "Provider payment details do not match the stored payment." }, 409);
+      }
+      if (existingPayment.payment_type === "wallet_deposit") {
+        const { data: walletSettlement, error: walletSettlementError } = await db.rpc("settle_customer_wallet_deposit", {
+          p_payment_id: existingPayment.id,
+          p_reference: reference,
+        });
+        if (walletSettlementError) throw walletSettlementError;
+        if (walletSettlement?.reused !== true) {
+          await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
+        }
+        return json({ ok: true, paid: true, wallet: walletSettlement });
+      }
+      if (existingPayment.status === "Paid") {
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", existingPayment.service_request_id);
+          if (requestUpdateError) throw requestUpdateError;
+          await sendServicePaymentNotifications(existingPayment);
+        }
+        return json({ ok: true, paid: true });
+      }
+      const { data: payment, error: updateError } = await db.from("payments").update({
+        status: "Paid", paid_at: new Date().toISOString(),
+      }).eq("id", existingPayment.id).in("status", ["Pending", "Failed"]).select("id,status,service_request_id").maybeSingle();
+      if (updateError) throw updateError;
+      if (!payment) {
+        const { data: currentPayment, error: currentError } = await db.from("payments")
+          .select("status,service_request_id").eq("id", existingPayment.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently." }, 409);
+      }
+      if (existingPayment.service_request_id) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", existingPayment.service_request_id);
+        if (requestUpdateError) throw requestUpdateError;
+        await sendServicePaymentNotifications(existingPayment);
+      }
+      return json({ ok: true, paid: true });
+    }
 
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
@@ -1030,34 +1178,43 @@ Deno.serve(async (req) => {
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const validation = validateServiceRequestBody(b);
       if (validation.error || !validation.data) return json({ error: validation.error || "Invalid request." }, 400);
-      const { customerName, whatsapp, details, email, serviceId } = validation.data;
+      const { customerName, whatsapp, details, email, serviceId, quantity } = validation.data;
       // Reject stale, deleted, or unpublished service selections before creating a request.
       // A null serviceId remains valid for general enquiries.
+      let selectedServiceForRequest: any = null;
+      if (!serviceId && quantity !== 1) return json({ error: "A service must be selected when requesting multiple candidates." }, 400);
       if (serviceId) {
         const { data: service, error: serviceError } = await db
           .from("services")
-          .select("id,is_published,is_available")
+          .select("id,is_published,is_available,price,name,is_catalog_item")
           .eq("id", serviceId)
           .maybeSingle();
         if (serviceError) throw serviceError;
-        if (!isPublishedService(service)) {
+        if (!service || !isPublishedService(service)) {
           return json({ error: "Please choose an available published service." }, 400);
         }
+        if (quantity > 1 && service.is_catalog_item !== true) {
+          return json({ error: "Only catalogue services can be requested for multiple candidates." }, 400);
+        }
+        selectedServiceForRequest = service;
       }
       const user = await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
+      const onlinePrice = Number(selectedServiceForRequest?.price) * quantity;
+      const checkoutToken = selectedServiceForRequest && Number.isFinite(onlinePrice) && onlinePrice > 0 ? secureRandomToken() : null;
+      const checkoutTokenHash = checkoutToken ? await sha256Hex(checkoutToken) : null;
       const { data, error } = await db.from("service_requests").insert({
         user_id: user?.id ?? null, service_id: serviceId, customer_name: customerName,
-        whatsapp, email: email || null, details,
+        whatsapp, email: email || null, details, quantity, checkout_token_hash: checkoutTokenHash,
         status: "New Requests", reference_number: reference
       }).select("id,reference_number,status,created_at").single();
       if (error) throw error;
-      return json({ request: data, referenceNumber: reference }, 201);
+      return json({ request: data, referenceNumber: reference, ...(checkoutToken ? { checkoutToken } : {}) }, 201);
     }
 
     if (path === "/api/service-requests" && req.method === "GET") {
       const user = await requireUser(req);
-      const { data, error } = await db.from("service_requests").select("*, services(name,price)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
+      const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       return json({ items: data ?? [] });
     }
@@ -1065,10 +1222,349 @@ Deno.serve(async (req) => {
     const serviceRequestMatch = path.match(/^\/api\/service-requests\/([^/]+)$/);
     if (serviceRequestMatch && req.method === "GET") {
       const user = await requireUser(req);
-      const { data, error } = await db.from("service_requests").select("*, services(name,price)").eq("id", serviceRequestMatch[1]).eq("user_id", user.id).maybeSingle();
+      const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").eq("id", serviceRequestMatch[1]).eq("user_id", user.id).maybeSingle();
       if (error) throw error;
       if (!data) return json({ error: "Service request not found." }, 404);
       return json({ request: data });
+    }
+
+
+    if (path === "/api/wallet" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data: wallet, error: walletError } = await db.from("customer_wallets")
+        .select("id,balance,currency,created_at,updated_at").eq("user_id", user.id).maybeSingle();
+      if (walletError) throw walletError;
+      if (!wallet) return json({ error: "Wallet is being prepared. Please refresh shortly." }, 503);
+      const { data: transactions, error: transactionError } = await db.from("wallet_transactions")
+        .select("id,transaction_type,amount,balance_after,description,created_at,payment_id,service_request_id")
+        .eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
+      if (transactionError) throw transactionError;
+      return json({ wallet, transactions: transactions ?? [] });
+    }
+
+    if (path === "/api/wallet/deposit/initialize" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-initialize"); } catch { return json({ error: "Wallet deposits are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Wallet deposits are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many wallet deposit attempts. Please wait before trying again." }, 429);
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const amount = Number(b?.amount);
+      const idempotencyKey = typeof b?.idempotencyKey === "string" ? b.idempotencyKey.trim() : "";
+      if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
+        return json({ error: "Enter a whole-naira top-up amount between ₦100 and ₦500,000." }, 400);
+      }
+      if (!/^[A-Za-z0-9:_-]{8,100}$/.test(idempotencyKey)) {
+        return json({ error: "A valid deposit attempt key is required. Please retry." }, 400);
+      }
+      const { data: existing, error: existingError } = await db.from("payments")
+        .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key")
+        .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").maybeSingle();
+      if (existingError) throw existingError;
+      if (existing) {
+        if (existing.status === "Paid") return json({ error: "This deposit attempt is already completed.", code: "WALLET_DEPOSIT_ALREADY_PAID" }, 409);
+        const savedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: existing.authorization_url } });
+        if (savedUrl && existing.payment_reference && Number(existing.amount) === amount) {
+          return json({ payment: existing, authorizationUrl: savedUrl, reference: existing.payment_reference, reused: true });
+        }
+        return json({ error: "This deposit attempt is still being prepared or needs support. Do not start another payment with the same attempt.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
+      }
+
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) {
+        return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      }
+      if (!user.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
+        return json({ error: "Your account needs a valid email address before you can fund your wallet." }, 400);
+      }
+      const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
+      const baseCallbackUrl = getPaystackCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      if (!baseCallbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
+      const callbackUrl = baseCallbackUrl + "&wallet=1";
+
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
+        user_id: user.id, service_request_id: null, amount, currency: "NGN", status: "Pending",
+        payment_reference: reference, authorization_url: null, payment_type: "wallet_deposit",
+        idempotency_key: idempotencyKey,
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_type,idempotency_key").single();
+      if (reservationError) {
+        if (reservationError.code === "23505") {
+          const { data: raced, error: racedError } = await db.from("payments")
+            .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key")
+            .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").maybeSingle();
+          if (racedError) throw racedError;
+          const racedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: raced?.authorization_url } });
+          if (raced && racedUrl && Number(raced.amount) === amount && raced.payment_reference) {
+            return json({ payment: raced, authorizationUrl: racedUrl, reference: raced.payment_reference, reused: true });
+          }
+          return json({ error: "This deposit attempt is already being prepared. Do not pay again; refresh or contact EDUKEN support.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
+        }
+        throw reservationError;
+      }
+
+      let providerResponse: Response;
+      try {
+        providerResponse = await fetch("https://api.paystack.co/transaction/initialize", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: user.email, amount: amount * 100, currency: "NGN", reference, callback_url: callbackUrl,
+            metadata: { type: "wallet_deposit", user_id: user.id, idempotency_key: idempotencyKey },
+          }),
+        });
+      } catch {
+        return json({ error: "Paystack did not confirm whether checkout was created. Do not start another deposit yet; refresh or contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      let providerResult: any;
+      try { providerResult = await providerResponse.json(); } catch {
+        return json({ error: "Paystack returned an unreadable response. Do not start another deposit yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      if (!providerResponse.ok || providerResult?.status !== true) {
+        const { error: failError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
+        if (failError) {
+          console.error("Could not mark rejected wallet deposit initialization as failed.", failError.message);
+          return json({ error: "Wallet deposit initialization needs support before retrying.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 503);
+        }
+        return json({ error: "Unable to initialize wallet deposit. You can safely try again with a new attempt.", code: "WALLET_DEPOSIT_INITIALIZATION_FAILED" }, 502);
+      }
+      const authorizationUrl = getPaystackAuthorizationUrl(providerResult);
+      if (!authorizationUrl) {
+        return json({ error: "Paystack checkout could not be confirmed. Do not retry yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      const { data: savedPayment, error: saveError } = await db.from("payments")
+        .update({ authorization_url: authorizationUrl }).eq("id", reservation.id).eq("status", "Pending")
+        .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key").maybeSingle();
+      if (saveError || !savedPayment) {
+        console.error("Wallet deposit checkout URL persistence needs recovery.", saveError?.message || "Reservation changed.");
+        return json({ error: "Paystack checkout was created but needs recovery. Do not create another deposit; contact support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 503);
+      }
+      return json({ payment: savedPayment, authorizationUrl, reference });
+    }
+
+    if (path === "/api/wallet/deposit/verify" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-verify"); } catch { return json({ error: "Wallet verification is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Wallet verification is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many wallet verification attempts. Please wait before trying again." }, 429);
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid wallet deposit reference is required." }, 400);
+      const { data: payment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,payment_reference,payment_type,user_id")
+        .eq("payment_reference", reference).eq("user_id", user.id).eq("payment_type", "wallet_deposit").maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!payment) return json({ error: "Wallet deposit not found for this account." }, 404);
+      if (payment.status === "Paid") {
+        const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
+        if (settleError) throw settleError;
+        if (settled?.reused !== true) {
+          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        }
+        return json({ paid: true, wallet: settled, payment });
+      }
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) {
+        return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      }
+      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
+        headers: { "Authorization": "Bearer " + secret },
+      });
+      let result: any;
+      try { result = await response.json(); } catch { return json({ error: "Unable to verify deposit with Paystack." }, 502); }
+      if (!response.ok || !result?.status || !result?.data) return json({ error: "Unable to verify deposit with Paystack." }, 502);
+      const transaction = result.data;
+      const paid = isSuccessfulPaystackTransaction(transaction);
+      if (paid && !matchesStoredPaystackPayment(transaction, { amount: payment.amount, currency: payment.currency, reference })) {
+        return json({ error: "Paystack's payment details do not match this deposit. Contact support before retrying." }, 409);
+      }
+      if (paid) {
+        const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
+        if (settleError) throw settleError;
+        if (settled?.reused !== true) {
+          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+        }
+        return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
+      }
+      const nextStatus = getNextPaymentStatus(transaction);
+      const { error: statusError } = await db.from("payments").update({ status: nextStatus }).eq("id", payment.id).in("status", ["Pending", "Failed"]);
+      if (statusError) throw statusError;
+      return json({ paid: false, status: nextStatus });
+    }
+
+    if (path === "/api/wallet/pay-service" && req.method === "POST") {
+      const user = await requireUser(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const serviceRequestId = typeof b?.serviceRequestId === "string" ? b.serviceRequestId : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(serviceRequestId)) {
+        return json({ error: "A valid service request is required." }, 400);
+      }
+      const paymentReference = "EDK-WAL-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
+      const { data: result, error } = await db.rpc("pay_service_from_customer_wallet", {
+        p_user_id: user.id,
+        p_service_request_id: serviceRequestId,
+        p_idempotency_key: "wallet-service:" + serviceRequestId,
+        p_payment_reference: paymentReference,
+      });
+      if (error) {
+        const message = String(error.message || "");
+        if (message.includes("WALLET_INSUFFICIENT_FUNDS")) return json({ error: "Your wallet balance is too low for this service. Add funds or use Paystack checkout.", code: "WALLET_INSUFFICIENT_FUNDS" }, 409);
+        if (message.includes("SERVICE_REQUEST_ALREADY_PAID")) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+        if (message.includes("WALLET_SERVICE_REQUEST_NOT_FOUND")) return json({ error: "This service request was not found for your account.", code: "SERVICE_REQUEST_NOT_FOUND" }, 404);
+        if (message.includes("WALLET_SERVICE_NOT_PAYABLE")) return json({ error: "This service does not have a confirmed online price or is unavailable.", code: "WALLET_SERVICE_NOT_PAYABLE" }, 409);
+        if (message.includes("WALLET_SERVICE_QUANTITY_INVALID")) return json({ error: "The saved service quantity is invalid for wallet payment.", code: "WALLET_SERVICE_QUANTITY_INVALID" }, 409);
+        throw error;
+      }
+      if (result?.reused !== true) {
+        await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
+      }
+      return json({ paid: true, wallet: result });
+    }
+
+    if (path === "/api/payments/initialize-guest" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-initialize"); } catch { return json({ error: "Checkout is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Checkout is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many checkout attempts. Please wait before trying again." }, 429);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const serviceRequestId = typeof b?.serviceRequestId === "string" ? b.serviceRequestId : "";
+      const checkoutToken = typeof b?.checkoutToken === "string" ? b.checkoutToken : "";
+      const email = typeof b?.email === "string" ? b.email.trim() : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(serviceRequestId)
+        || !/^[0-9a-f]{64}$/.test(checkoutToken)
+        || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        || email.length > 200) {
+        return json({ error: "A valid checkout session and receipt email are required." }, 400);
+      }
+      const tokenHash = await sha256Hex(checkoutToken);
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,user_id,service_id,reference_number,email,status,quantity,checkout_token_hash,services(name,price,is_published,is_available,is_catalog_item)")
+        .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "Checkout session is invalid or expired. Contact EDUKEN CONSULT with your request reference." }, 404);
+      if (request.status === "Paid") {
+        return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      }
+      const service = Array.isArray(request.services) ? request.services[0] : request.services;
+      const quantity = Number(request.quantity ?? 1);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+        return json({ error: "The saved service quantity is invalid. Please contact EDUKEN CONSULT.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      if (quantity > 1 && service?.is_catalog_item !== true) {
+        return json({ error: "Only catalogue services can be paid for multiple candidates.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      const trustedAmount = Number(service?.price) * quantity;
+      if (!service || !service.is_published || service.is_available === false || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+        return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
+      }
+      const { data: paidPayment, error: paidLookupError } = await db.from("payments")
+        .select("id,status,payment_reference").eq("service_request_id", request.id).eq("status", "Paid").maybeSingle();
+      if (paidLookupError) throw paidLookupError;
+      if (paidPayment) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+        .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
+      if (pendingLookupError) throw pendingLookupError;
+      if (pendingPayment) {
+        if (Math.round(Number(pendingPayment.amount) * 100) !== Math.round(trustedAmount * 100)) {
+          return json({ error: "The service price changed after a payment attempt was started. Do not pay using an old checkout link; contact EDUKEN CONSULT with your request reference.", code: "PENDING_PAYMENT_PRICE_CHANGED" }, 409);
+        }
+        const savedAuthorizationUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: pendingPayment.authorization_url } });
+        if (savedAuthorizationUrl && pendingPayment.payment_reference) {
+          return json({ payment: pendingPayment, authorizationUrl: savedAuthorizationUrl, reference: pendingPayment.payment_reference, reused: true });
+        }
+        return json({ error: "A payment attempt already exists for this request. Please contact EDUKEN CONSULT with your request reference before trying again.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+      }
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
+      const callbackUrl = getPaystackCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      if (!callbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
+
+      // Reserve the request before contacting Paystack. The partial unique index prevents
+      // concurrent requests from creating multiple provider transactions for one request.
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
+        user_id: request.user_id ?? null, service_request_id: request.id, amount: trustedAmount,
+        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: null
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").single();
+      if (reservationError) {
+        if (reservationError.code === "23505") {
+          const { data: racedPayment, error: racedLookupError } = await db.from("payments")
+            .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+            .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
+          if (racedLookupError) throw racedLookupError;
+          const racedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: racedPayment?.authorization_url } });
+          if (racedPayment && Math.round(Number(racedPayment.amount) * 100) === Math.round(trustedAmount * 100) && racedUrl && racedPayment.payment_reference) {
+            return json({ payment: racedPayment, authorizationUrl: racedUrl, reference: racedPayment.payment_reference, reused: true });
+          }
+          return json({ error: "A payment attempt is already being prepared or needs support. Do not retry payment; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+        }
+        throw reservationError;
+      }
+
+      let paystack: Response;
+      try {
+        paystack = await fetch("https://api.paystack.co/transaction/initialize", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email, amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl,
+            metadata: { service_request_id: request.id, reference_number: request.reference_number, customer_email: email },
+          })
+        });
+      } catch {
+        // A network failure can happen after the provider accepted the request. Keep the
+        // reservation Pending so a retry cannot create a duplicate transaction.
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+
+      let result: any;
+      try { result = await paystack.json(); } catch {
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      if (!paystack.ok || result?.status !== true) {
+        const { error: markFailedError } = await db.from("payments").update({ status: "Failed" })
+          .eq("id", reservation.id).eq("status", "Pending");
+        if (markFailedError) {
+          console.error("Could not mark rejected Paystack initialization as failed.", markFailedError.message);
+          return json({ error: "Payment initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
+        }
+        return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
+      }
+
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
+      if (!authorizationUrl) {
+        // The provider may have created a transaction despite an unexpected response shape.
+        // Keep the reservation Pending to prevent duplicate charges on retry.
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+
+      const { data: payment, error: saveUrlError } = await db.from("payments").update({
+        authorization_url: authorizationUrl
+      }).eq("id", reservation.id).eq("status", "Pending")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").maybeSingle();
+      if (!saveUrlError && !payment) {
+        const { data: currentPayment, error: currentPaymentError } = await db.from("payments")
+          .select("status").eq("id", reservation.id).maybeSingle();
+        if (currentPaymentError) throw currentPaymentError;
+        if (currentPayment?.status === "Paid") {
+          return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+        }
+        if (currentPayment?.status !== "Pending") {
+          return json({ error: "Payment state changed while checkout was being prepared. Contact EDUKEN CONSULT before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 409);
+        }
+      }
+      if (saveUrlError || !payment) {
+        // If persistence failed, the reserved row remains verifiable by reference/webhook.
+        // Return the provider URL only when the reservation's status is still unresolved.
+        console.error("Paystack initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
+        return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
+      }
+      return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
     }
 
     if (path === "/api/payments/initialize" && req.method === "POST") {
@@ -1079,13 +1575,27 @@ Deno.serve(async (req) => {
         return json({ error: "A valid service request is required." }, 400);
       }
       const { data: request, error: requestError } = await db.from("service_requests")
-        .select("id,service_id,reference_number,email,services(name,price,is_published)")
+        .select("id,service_id,reference_number,email,status,quantity,services(name,price,is_published,is_available,is_catalog_item)")
         .eq("id", b.serviceRequestId).eq("user_id", user.id).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "Service request not found." }, 404);
+      if (request.status === "Paid") {
+        return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      }
+      const { data: paidPayment, error: paidLookupError } = await db.from("payments")
+        .select("id,status,payment_reference").eq("service_request_id", request.id).eq("status", "Paid").maybeSingle();
+      if (paidLookupError) throw paidLookupError;
+      if (paidPayment) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
       const service = Array.isArray(request.services) ? request.services[0] : request.services;
-      const trustedAmount = Number(service?.price);
-      if (!service || !service.is_published || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+      const quantity = Number(request.quantity ?? 1);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100) {
+        return json({ error: "The saved service quantity is invalid. Please contact EDUKEN CONSULT.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      if (quantity > 1 && service?.is_catalog_item !== true) {
+        return json({ error: "Only catalogue services can be paid for multiple candidates.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      const trustedAmount = Number(service?.price) * quantity;
+      if (!service || !service.is_published || service.is_available === false || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
         return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
       }
       // If the client sends a display amount, reject stale or tampered values;
@@ -1094,22 +1604,128 @@ Deno.serve(async (req) => {
         return json({ error: "The service price has changed. Refresh and try again." }, 409);
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+        .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
+      if (pendingLookupError) throw pendingLookupError;
+      if (pendingPayment) {
+        if (Math.round(Number(pendingPayment.amount) * 100) !== Math.round(trustedAmount * 100)) {
+          return json({ error: "The service price changed after a payment attempt was started. Contact EDUKEN CONSULT before retrying.", code: "PENDING_PAYMENT_PRICE_CHANGED" }, 409);
+        }
+        const savedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: pendingPayment.authorization_url } });
+        if (savedUrl && pendingPayment.payment_reference) return json({ payment: pendingPayment, authorizationUrl: savedUrl, reference: pendingPayment.payment_reference, reused: true });
+        return json({ error: "A payment attempt is already being prepared or needs support. Do not retry payment; contact EDUKEN CONSULT.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+      }
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
-      const paystack = await fetch("https://api.paystack.co/transaction/initialize", {
-        method: "POST",
-        headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
-        body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
+      const callbackUrl = getPaystackCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      if (!callbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
+        user_id: user.id, service_request_id: request.id, amount: trustedAmount,
+        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: null
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url").single();
+      if (reservationError) {
+        if (reservationError.code === "23505") return json({ error: "A payment attempt already exists. Refresh and check its status before retrying.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+        throw reservationError;
+      }
+      let paystack: Response;
+      try {
+        paystack = await fetch("https://api.paystack.co/transaction/initialize", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({ email: request.email || "edukenconsult00@gmail.com", amount: Math.round(trustedAmount * 100), currency: "NGN", reference, callback_url: callbackUrl, metadata: { service_request_id: request.id, user_id: user.id, reference_number: request.reference_number } })
+        });
+      } catch {
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      let result: any;
+      try { result = await paystack.json(); } catch {
+        return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      }
+      if (!paystack.ok || result?.status !== true) {
+        const { error: markFailedError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
+        if (markFailedError) return json({ error: "Payment initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
+        return json({ error: "Unable to initialize payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
+      }
+      const authorizationUrl = getPaystackAuthorizationUrl(result);
+      if (!authorizationUrl) return json({ error: "Payment initialization could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 502);
+      const { data: payment, error: saveUrlError } = await db.from("payments").update({ authorization_url: authorizationUrl })
+        .eq("id", reservation.id).eq("status", "Pending").select().maybeSingle();
+      if (!saveUrlError && !payment) {
+        const { data: currentPayment, error: currentPaymentError } = await db.from("payments")
+          .select("status").eq("id", reservation.id).eq("user_id", user.id).maybeSingle();
+        if (currentPaymentError) throw currentPaymentError;
+        if (currentPayment?.status === "Paid") return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+        if (currentPayment?.status !== "Pending") {
+          return json({ error: "Payment state changed while checkout was being prepared. Contact EDUKEN CONSULT before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 409);
+        }
+      }
+      if (saveUrlError || !payment) {
+        console.error("Paystack initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
+        return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
+      }
+      return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
+    }
+
+    if (path === "/api/payments/verify-guest" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-verify"); } catch { return json({ error: "Payment verification is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Payment verification is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many verification attempts. Please wait before trying again." }, 429);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const serviceRequestId = typeof b?.serviceRequestId === "string" ? b.serviceRequestId : "";
+      const checkoutToken = typeof b?.checkoutToken === "string" ? b.checkoutToken : "";
+      const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(serviceRequestId)
+        || !/^[0-9a-f]{64}$/.test(checkoutToken)
+        || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) {
+        return json({ error: "A valid checkout session and payment reference are required." }, 400);
+      }
+      const tokenHash = await sha256Hex(checkoutToken);
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,checkout_token_hash,email,user_id").eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "Checkout session is invalid or expired." }, 404);
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
+        .eq("payment_reference", reference).eq("service_request_id", serviceRequestId).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
+      if (existingPayment.status === "Paid") {
+        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        return json({ paid: true, payment: existingPayment });
+      }
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
+      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
+        headers: { "Authorization": "Bearer " + secret }
       });
       let result: any;
-      try { result = await paystack.json(); } catch { return json({ error: "Unable to initialize payment." }, 502); }
-      const authorizationUrl = getPaystackAuthorizationUrl(result);
-      if (!paystack.ok || !authorizationUrl) return json({ error: "Unable to initialize payment." }, 502);
-      const { data: payment, error } = await db.from("payments").insert({
-        user_id: user.id, service_request_id: request.id, amount: trustedAmount, currency: "NGN", status: "Pending", payment_reference: reference
-      }).select().single();
+      try { result = await response.json(); } catch { return json({ error: "Unable to verify payment with the provider." }, 502); }
+      if (!response.ok || !result.status || !result.data) return json({ error: "Unable to verify payment with the provider." }, 502);
+      const transaction = result.data;
+      const paid = isSuccessfulPaystackTransaction(transaction);
+      if (paid && !matchesStoredPaystackPayment(transaction, { amount: existingPayment.amount, currency: existingPayment.currency, reference })) {
+        return json({ error: "The provider's payment details do not match this payment. Please contact support." }, 409);
+      }
+      const nextPaymentStatus = getNextPaymentStatus(transaction);
+      const { data: payment, error } = await db.from("payments").update({
+        status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
+      }).eq("id", existingPayment.id).eq("service_request_id", serviceRequestId).in("status", ["Pending", "Failed"]).select().maybeSingle();
       if (error) throw error;
-      return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
+      if (paid && !payment && existingPayment.status !== "Paid") {
+        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Please refresh and check your payment status." }, 409);
+      }
+      if (paid) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+        if (requestUpdateError) throw requestUpdateError;
+        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+      }
+      return json({ paid, payment: payment || existingPayment });
     }
 
     if (path === "/api/payments/verify" && req.method === "POST") {
@@ -1119,13 +1735,16 @@ Deno.serve(async (req) => {
       const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
       if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!secret) return json({ error: "Payment gateway is not configured yet.", code: "PAYMENT_GATEWAY_NOT_CONFIGURED" }, 503);
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
-        .select("id,amount,currency,status,service_request_id,payment_reference")
+        .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
         .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
-      if (existingPayment.status === "Paid") return json({ paid: true, payment: existingPayment });
+      if (existingPayment.status === "Paid") {
+        if (existingPayment.service_request_id) await sendServicePaymentNotifications(existingPayment);
+        return json({ paid: true, payment: existingPayment });
+      }
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
       });
@@ -1155,6 +1774,7 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
         if (requestUpdateError) throw requestUpdateError;
+        await sendServicePaymentNotifications(existingPayment);
       }
       return json({ paid, payment: payment || existingPayment });
     }
@@ -1170,7 +1790,7 @@ Deno.serve(async (req) => {
     if (adminRequests) {
       await requireAdmin(req); const id = adminRequests[1];
       if (req.method === "GET") {
-        const { data, error } = await db.from("service_requests").select("*, services(name,price)").order("created_at", { ascending: false }).limit(200);
+        const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").order("created_at", { ascending: false }).limit(200);
         if (error) throw error;
         return json({ items: data ?? [] });
       }
@@ -1199,11 +1819,54 @@ Deno.serve(async (req) => {
       }
     }
 
+    if (path === "/api/admin/session" && req.method === "GET") {
+      await requireAdmin(req);
+      return json({ admin: true });
+    }
+
     if (path === "/api/admin/payments" && req.method === "GET") {
       await requireAdmin(req);
       const { data, error } = await db.from("payments").select("*, service_requests(reference_number,customer_name)").order("created_at", { ascending: false }).limit(200);
       if (error) throw error;
       return json({ items: data ?? [] });
+    }
+
+    if (path === "/api/admin/wallet/refund" && req.method === "POST") {
+      await requireAdmin(req);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const paymentId = typeof b?.paymentId === "string" ? b.paymentId : "";
+      const reason = typeof b?.reason === "string" ? b.reason.trim() : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(paymentId)
+        || reason.length < 4 || reason.length > 200) {
+        return json({ error: "Provide a valid wallet service-payment ID and a refund reason of 4–200 characters." }, 400);
+      }
+      const { data: originalPayment, error: paymentLookupError } = await db.from("payments")
+        .select("id,user_id,amount,payment_reference,payment_type,status")
+        .eq("id", paymentId).maybeSingle();
+      if (paymentLookupError) throw paymentLookupError;
+      if (!originalPayment) return json({ error: "Payment not found." }, 404);
+      if (originalPayment.payment_type !== "wallet_service" || !["Paid", "Refunded"].includes(originalPayment.status) || !originalPayment.user_id) {
+        return json({ error: "Only confirmed wallet-funded service payments can be refunded to the wallet through this endpoint." }, 409);
+      }
+      const { data: refund, error: refundError } = await db.rpc("refund_customer_wallet_service_payment", {
+        p_payment_id: paymentId,
+        p_reason: reason,
+      });
+      if (refundError) {
+        const message = String(refundError.message || "");
+        if (message.includes("WALLET_REFUND_INVALID")) return json({ error: "The refund details are invalid." }, 400);
+        if (message.includes("WALLET_REFUND_NOT_ALLOWED")) return json({ error: "This payment is not eligible for a wallet refund." }, 409);
+        if (message.includes("WALLET_REFUND_WALLET_MISSING")) return json({ error: "Customer wallet is unavailable. No refund was processed." }, 503);
+        throw refundError;
+      }
+      if (refund?.reused !== true) {
+        await sendPaymentNotifications(
+          originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
+          Number(originalPayment.amount), "refund",
+        );
+      }
+      return json({ ok: true, refund });
     }
 
     if (path === "/api/admin/system-settings") {

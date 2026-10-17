@@ -1,6 +1,16 @@
-import { shouldBlockWrite } from './api-safety.js';
-const SUPABASE_URL = 'https://pphxltbkwygqjtjgkhxu.supabase.co';
-const SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
+import { shouldBlockWrite, PRODUCTION_SUPABASE_URL } from './api-safety.js';
+
+const viteEnv = (import.meta as any).env || {};
+const PRODUCTION_SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
+const suppliedSupabaseUrl = String(viteEnv.VITE_SUPABASE_URL || '').trim();
+const suppliedPublishableKey = String(viteEnv.VITE_SUPABASE_PUBLISHABLE_KEY || '').trim();
+const SUPABASE_URL = (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL).replace(/\/+$/, '');
+const SUPABASE_KEY = suppliedPublishableKey || PRODUCTION_SUPABASE_KEY;
+const ALLOW_TEST_WRITES =
+  viteEnv.VITE_ENABLE_TEST_WRITES === 'true' &&
+  Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
+  SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
+  SUPABASE_KEY !== PRODUCTION_SUPABASE_KEY;
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
 const SESSION_KEY = 'eduken_auth_session';
 
@@ -23,6 +33,7 @@ const readSession = (): Session | null => {
 const writeSession = (session: Session | null) => {
   if (session) localStorage.setItem(SESSION_KEY, JSON.stringify(session));
   else localStorage.removeItem(SESSION_KEY);
+  if (typeof window !== 'undefined') window.dispatchEvent(new Event('eduken-auth-changed'));
 };
 
 const refreshSession = async (session: Session) => {
@@ -69,7 +80,10 @@ const request = async (
   retry = true
 ): Promise<any> => {
   const method = String(options.method || 'GET').toUpperCase();
-  if (shouldBlockWrite(window.location.origin, method)) {
+  if (shouldBlockWrite(window.location.origin, method, {
+    supabaseUrl: SUPABASE_URL,
+    allowTestWrites: ALLOW_TEST_WRITES,
+  })) {
     throw new Error('Preview safety mode: saving is disabled until a separate test database is connected. No changes were sent to the live database.');
   }
   const session = await validSession();
@@ -140,16 +154,8 @@ export const auth = {
       writeSession(null);
       throw new Error('Could not verify the Google account.');
     }
-    const allowed = ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'];
-    if (!allowed.includes(String(user.email).toLowerCase())) {
-      writeSession(null);
-      await fetch(SUPABASE_URL + '/auth/v1/logout', {
-        method: 'POST',
-        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
-      }).catch(() => undefined);
-      window.history.replaceState({}, document.title, window.location.pathname);
-      throw new Error('This Google account is not authorized for EDUKEN administration.');
-    }
+    // Customer accounts are allowed to sign in. Admin endpoints independently enforce
+    // the server-side ADMIN_EMAILS allowlist; client-side UI visibility is not authorization.
     const session = {
       access_token: accessToken,
       refresh_token: refreshToken || undefined,

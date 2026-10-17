@@ -91,10 +91,14 @@ export function getEmailAlertClientIp(headers) {
 }
 
 export function emailAlertRateLimitPolicy(action) {
-  if (action === "subscribe" || action === "consultation" || action === "service-request") {
+  if (action === "subscribe" || action === "consultation" || action === "service-request" ||
+      action === "guest-payment-initialize" || action === "wallet-deposit-initialize") {
     return Object.freeze({ limit: 5, windowSeconds: 900 });
   }
-  if (action === "verify" || action === "unsubscribe") return Object.freeze({ limit: 20, windowSeconds: 900 });
+  if (action === "verify" || action === "unsubscribe" || action === "guest-payment-verify" ||
+      action === "wallet-deposit-verify") {
+    return Object.freeze({ limit: 20, windowSeconds: 900 });
+  }
   return null;
 }
 
