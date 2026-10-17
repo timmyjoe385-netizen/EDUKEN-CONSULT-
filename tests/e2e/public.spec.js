@@ -1626,6 +1626,37 @@ test('Make Payments page shows the request summary without exposing its checkout
   expect(page.url()).not.toContain('a'.repeat(64));
 });
 
+test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
+  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+
+  // Public navigation must not advertise the admin route.
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: 'Admin Login' })).toHaveCount(0);
+
+  // Intercept the OAuth hand-off so this test never signs into a real account.
+  await page.route(authorizeEndpoint + '**', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'text/html',
+      body: '<!doctype html><title>OAuth hand-off intercepted by Playwright</title>',
+    }),
+  );
+
+  // Direct access to the admin sign-in route remains available.
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveURL(/\/admin\/?$/);
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+
+  const siteOrigin = new URL(page.url()).origin;
+  const authNavigation = page.waitForRequest(
+    request => request.isNavigationRequest() && request.url().startsWith(authorizeEndpoint),
+  );
+  await page.getByRole('button', { name: /Continue with Google/i }).click();
+  const authUrl = new URL((await authNavigation).url());
+  expect(authUrl.searchParams.get('provider')).toBe('google');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
+});
+
 test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
   await page.addInitScript(() => {
     // Clear the saved preference only on the first document; keep it during reload assertions.
