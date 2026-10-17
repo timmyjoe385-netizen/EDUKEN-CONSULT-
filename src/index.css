@@ -2570,3 +2570,79 @@ html[data-theme="dark"] .make-payments-summary { color: #b8c8d9; }
   .theme-toggle { transition: none; }
   .theme-toggle:hover { transform: none; }
 }
+
+/* Dark-theme coverage for the actual homepage and admin component selectors. */
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .opp-card,
+html[data-theme="dark"] .global-search-results,
+html[data-theme="dark"] .global-search-result,
+html[data-theme="dark"] .login-dialog,
+html[data-theme="dark"] .analytics-cards article,
+html[data-theme="dark"] .system-setting-row,
+html[data-theme="dark"] .admin-confirm-dialog,
+html[data-theme="dark"] .share-composer,
+html[data-theme="dark"] .search-clear {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .category-card p,
+html[data-theme="dark"] .opp-card p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .login-dialog p,
+html[data-theme="dark"] .analytics-cards article span,
+html[data-theme="dark"] .system-setting-row p,
+html[data-theme="dark"] .global-search-result p {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .trust-section,
+html[data-theme="dark"] .final-cta {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .filters button.active,
+html[data-theme="dark"] .tag,
+html[data-theme="dark"] .search-result-type,
+html[data-theme="dark"] .verified-pill {
+  background-color: #123b36;
+  color: #bff8e5;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .faq-row,
+html[data-theme="dark"] .faq-row:last-child {
+  border-color: #294560;
+}
+html[data-theme="dark"] .faq-row button,
+html[data-theme="dark"] .analytics-cards article strong {
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .analytics-cards article strong {
+  color: #75e4c1;
+}
+html[data-theme="dark"] .service-request-form .service-request-field {
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .service-request-form input:not([type="checkbox"]),
+html[data-theme="dark"] .service-request-form select,
+html[data-theme="dark"] .service-request-form textarea,
+html[data-theme="dark"] .login-dialog input,
+html[data-theme="dark"] .login-dialog select,
+html[data-theme="dark"] .login-dialog textarea,
+html[data-theme="dark"] .admin-confirm-dialog input,
+html[data-theme="dark"] .admin-confirm-dialog textarea,
+html[data-theme="dark"] .share-composer textarea {
+  background-color: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .service-request-form input::placeholder,
+html[data-theme="dark"] .login-dialog input::placeholder,
+html[data-theme="dark"] .login-dialog textarea::placeholder {
+  color: #9eb2c7;
+}
+html[data-theme="dark"] .admin-toggle-control {
+  border-color: #31516d;
+}
+
