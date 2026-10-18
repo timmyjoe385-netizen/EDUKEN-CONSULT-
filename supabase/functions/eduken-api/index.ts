@@ -510,6 +510,20 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
+async function paymentNotificationIdempotencyKey(
+  reference: string,
+  kind: "deposit" | "service_payment" | "refund",
+  role: string,
+  recipient: string,
+) {
+  // Hash the full identity so each recipient has an independent, bounded-length key.
+  const identity = [reference, kind, role, recipient.trim().toLowerCase()].join("\\0");
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(identity));
+  const suffix = Array.from(new Uint8Array(digest)).slice(0, 16)
+    .map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  return "eduken-payment-" + suffix;
+}
+
 async function sendPaymentNotifications(
   userId: string | null,
   reference: string,
@@ -551,7 +565,7 @@ async function sendPaymentNotifications(
   ];
   for (const message of messages) {
     const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
-    const idempotencyKey = "eduken-payment-" + reference + "-" + kind + "-" + message.role;
+    const idempotencyKey = await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to);
     let delivered = false;
     // Retry transient provider/network failures during this settlement attempt.
     // Reuse the stable key so a timeout after provider acceptance does not create duplicates.
