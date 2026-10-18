@@ -1,6 +1,8 @@
 name: EDUKEN Playwright browser checks
 
 on:
+  push:
+    branches: [feat/combined-premium-wallet-payments-20261017]
   pull_request:
     # Also validate stacked feature PRs whose base is the wallet branch.
     branches: [main, feat/customer-wallet-system-20261016]
