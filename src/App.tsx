@@ -3135,7 +3135,11 @@ function App() {
               {isJambCatalogueService(selectedService) ? (
                 <label className="service-request-field">
                   <span>Number of candidates <b aria-hidden="true">*</b></span>
-                  <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
+                  <div className="candidate-quantity-control">
+                    <button type="button" className="candidate-quantity-button" aria-label="Decrease number of candidates" disabled={Number(serviceForm.candidateCount || 1) <= 1} onClick={() => setServiceForm(current => ({ ...current, candidateCount: String(Math.max(1, Math.min(100, Math.floor(Number(current.candidateCount || 1)) - 1))) }))}>−</button>
+                    <input name="candidateCount" type="number" min="1" max="100" step="1" required inputMode="numeric" value={serviceForm.candidateCount ?? '1'} onChange={e => setServiceForm(current => ({ ...current, candidateCount: e.target.value }))} onBlur={e => setServiceForm(current => ({ ...current, candidateCount: String(Math.max(1, Math.min(100, Math.floor(Number(e.target.value || 1))))) }))} aria-label="Number of candidates" />
+                    <button type="button" className="candidate-quantity-button" aria-label="Increase number of candidates" disabled={Number(serviceForm.candidateCount || 1) >= 100} onClick={() => setServiceForm(current => ({ ...current, candidateCount: String(Math.min(100, Math.max(1, Math.floor(Number(current.candidateCount || 1)) + 1))) }))}>+</button>
+                  </div>
                   <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
                 </label>
               ) : null}
