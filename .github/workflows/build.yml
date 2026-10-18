@@ -2,7 +2,7 @@ name: EDUKEN build check
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/combined-premium-wallet-payments-20261017]
   pull_request:
     branches: [main, feat/customer-wallet-system-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
