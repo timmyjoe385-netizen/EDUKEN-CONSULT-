@@ -3193,3 +3193,41 @@ html[data-theme="dark"] .make-payments-success {
   color: #ffffff !important;
   border-color: #285e46;
 }
+
+
+.candidate-quantity-control {
+  display: grid;
+  grid-template-columns: 48px minmax(72px, 1fr) 48px;
+  gap: 8px;
+  align-items: stretch;
+  width: min(100%, 320px);
+}
+.candidate-quantity-control input {
+  width: 100%;
+  min-width: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.candidate-quantity-button {
+  min-height: 46px;
+  border: 1px solid #cbd8d0;
+  border-radius: 10px;
+  background: #edf4ef;
+  color: #173f31;
+  font-size: 24px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.candidate-quantity-button:active:not(:disabled) {
+  background: #dce9df;
+  transform: scale(0.98);
+}
+.candidate-quantity-button:focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 2px;
+}
+.candidate-quantity-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
