@@ -1705,7 +1705,7 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
-        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        // Verification retries are read-only after settlement; never resend receipts here.
         return json({ paid: true, payment: existingPayment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1735,7 +1735,8 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
         if (requestUpdateError) throw requestUpdateError;
-        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        // Only the invocation that transitions the payment row sends the receipt.
+        if (payment) await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
       }
       return json({ paid, payment: payment || existingPayment });
     }
@@ -1754,7 +1755,7 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
-        if (existingPayment.service_request_id) await sendServicePaymentNotifications(existingPayment);
+        // Verification retries are read-only after settlement; the original settlement sent notifications.
         return json({ paid: true, payment: existingPayment });
       }
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
@@ -1786,7 +1787,8 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
         if (requestUpdateError) throw requestUpdateError;
-        await sendServicePaymentNotifications(existingPayment);
+        // Only the invocation that transitions the payment row sends the receipt.
+        if (payment) await sendServicePaymentNotifications(existingPayment);
       }
       return json({ paid, payment: payment || existingPayment });
     }
