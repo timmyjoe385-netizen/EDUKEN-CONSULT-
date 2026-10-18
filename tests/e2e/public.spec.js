@@ -1544,7 +1544,11 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
     }),
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.getByRole('button', { name: /Request this service/i }).click();
+  const serviceCard = page.locator('.jamb-service-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB e-PIN (UTME Without Mock)' }),
+  });
+  await expect(serviceCard).toBeVisible();
+  await serviceCard.getByRole('button', { name: /Request this service/i }).click();
   const dialog = page.getByRole('dialog', { name: /JAMB e-PIN \(UTME Without Mock\)/i });
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole('spinbutton', { name: 'Number of candidates' })).toHaveValue('1');
