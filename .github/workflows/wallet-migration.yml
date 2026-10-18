@@ -1,6 +1,8 @@
 name: EDUKEN wallet migration SQL integration
 
 on:
+  push:
+    branches: [feat/combined-premium-wallet-payments-20261017]
   pull_request:
     # Run disposable migration integration tests for stacked wallet integration PRs too.
     branches: [main, feat/customer-wallet-system-20261016]
