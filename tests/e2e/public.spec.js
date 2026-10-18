@@ -77,7 +77,10 @@ test('payment notification delivery retries provider failures with a stable idem
   const notification = handler.slice(start, end);
   expect(notification).toContain('for (let attempt = 1; attempt <= 3; attempt++)');
   expect(notification).toContain('attempt * 500');
-  expect(notification).toContain('const idempotencyKey = "eduken-payment-" + reference + "-" + kind + "-" + message.role');
+  expect(handler).toContain('async function paymentNotificationIdempotencyKey(');
+  expect(handler).toContain('recipient.trim().toLowerCase()');
+  expect(handler).toContain('const identity = [reference, kind, role, recipient.trim().toLowerCase()]');
+  expect(notification).toContain('await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to)');
   expect(notification).toContain('after bounded retries');
   expect(notification).toContain('if (!delivered)');
 });
