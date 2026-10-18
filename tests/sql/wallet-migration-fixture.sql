@@ -52,6 +52,12 @@ create table public.service_requests (
   updated_at timestamptz not null default now()
 );
 
+-- Minimal table shape for validating the admin settings updater foreign-key index migration.
+create table public.admin_system_settings (
+  id uuid primary key default gen_random_uuid(),
+  updated_by uuid references auth.users(id) on delete set null
+);
+
 -- Simulate an account that existed before the wallet migration.
 insert into auth.users (id, email)
 values ('11111111-1111-4111-8111-111111111111', 'existing-customer@example.test');
