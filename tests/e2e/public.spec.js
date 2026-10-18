@@ -90,6 +90,8 @@ test('guest and authenticated payment verification retries do not resend service
 
   expect(guestAlreadyPaid).not.toContain('sendPaymentNotifications');
   expect(authenticatedAlreadyPaid).not.toContain('sendServicePaymentNotifications');
+  expect(guestAlreadyPaid).toContain('update({ status: "Paid" })');
+  expect(authenticatedAlreadyPaid).toContain('update({ status: "Paid" })');
   expect(guest).toContain('if (payment) await sendPaymentNotifications(');
   expect(authenticated).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
 });
