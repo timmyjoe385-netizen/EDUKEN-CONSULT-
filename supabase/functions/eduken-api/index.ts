@@ -1705,7 +1705,12 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
-        // Verification retries are read-only after settlement; never resend receipts here.
+        // Repair request state after a prior partial failure, but never resend receipts on verification retries.
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+          if (requestUpdateError) throw requestUpdateError;
+        }
         return json({ paid: true, payment: existingPayment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1755,7 +1760,12 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
-        // Verification retries are read-only after settlement; the original settlement sent notifications.
+        // Repair request state after a prior partial failure, but never resend receipts on verification retries.
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+          if (requestUpdateError) throw requestUpdateError;
+        }
         return json({ paid: true, payment: existingPayment });
       }
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
