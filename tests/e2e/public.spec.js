@@ -68,6 +68,20 @@ test('wallet notification emails are skipped for idempotent settlement retries',
   expect(walletRefund).toContain('refund?.reused !== true');
 });
 
+test('payment notification delivery retries provider failures with a stable idempotency key', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const start = handler.indexOf('async function sendPaymentNotifications(');
+  const end = handler.indexOf('async function sendServicePaymentNotifications(', start);
+  expect(start).toBeGreaterThanOrEqual(0);
+  expect(end).toBeGreaterThan(start);
+  const notification = handler.slice(start, end);
+  expect(notification).toContain('for (let attempt = 1; attempt <= 3; attempt++)');
+  expect(notification).toContain('attempt * 500');
+  expect(notification).toContain('const idempotencyKey = "eduken-payment-" + reference + "-" + kind + "-" + message.role');
+  expect(notification).toContain('after bounded retries');
+  expect(notification).toContain('if (!delivered)');
+});
+
 test('guest and authenticated payment verification retries do not resend service receipts', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const guest = handler.slice(
