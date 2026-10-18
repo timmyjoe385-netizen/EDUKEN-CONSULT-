@@ -2,7 +2,7 @@ name: EDUKEN build and Cloudflare deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, feat/combined-premium-wallet-payments-20261017]
   pull_request:
     branches: [main, feat/customer-wallet-system-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
@@ -27,12 +27,12 @@ jobs:
         run: npm run build
 
   deploy-preview:
-    if: github.event_name == 'pull_request'
+    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/feat/combined-premium-wallet-payments-20261017')
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: Check out pull request branch
+      - name: Check out preview source
         uses: actions/checkout@v7
       - name: Set up Node.js
         uses: actions/setup-node@v7
@@ -63,9 +63,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Build website
