@@ -550,16 +550,26 @@ async function sendPaymentNotifications(
     ...Array.from(ADMIN_EMAILS).map(to => ({ role: "admin", to, subject: adminSubject, text: adminText })),
   ];
   for (const message of messages) {
-    try {
-      const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
-      await sendEmailAlertMessage(
-        config, message.to, message.subject, message.text, html,
-        "eduken-payment-" + reference + "-" + kind + "-" + message.role,
-      );
-    } catch (error) {
-      // Payment settlement must not depend on the email provider being available.
-      // Stable provider idempotency keys reduce duplicate notices when a flow retries.
-      console.error("Payment notification delivery failed.", error instanceof Error ? error.message : "Unknown email error.");
+    const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
+    const idempotencyKey = "eduken-payment-" + reference + "-" + kind + "-" + message.role;
+    let delivered = false;
+    // Retry transient provider/network failures during this settlement attempt.
+    // Reuse the stable key so a timeout after provider acceptance does not create duplicates.
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        await sendEmailAlertMessage(
+          config, message.to, message.subject, message.text, html, idempotencyKey,
+        );
+        delivered = true;
+        break;
+      } catch (error) {
+        if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+        else console.error("Payment notification delivery failed after bounded retries.", error instanceof Error ? error.message : "Unknown email error.");
+      }
+    }
+    if (!delivered) {
+      // Do not fail payment settlement because the email provider is unavailable.
+      // The bounded retry avoids delaying the payment response indefinitely.
     }
   }
 }
