@@ -125,6 +125,7 @@ function App() {
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [serviceRequestMessage, setServiceRequestMessage] = useState('');
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
@@ -1110,6 +1111,7 @@ function App() {
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
     const requestedQuantity = isJambCatalogueService(selectedService) ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))) : 1;
+    setServiceRequestMessage('Submitting your request…');
     setServiceSubmitting(true);
     try {
       const result = await api.post('/api/service-requests', {
@@ -1153,7 +1155,9 @@ function App() {
         showToast('Request received. Reference: ' + String(result.data.referenceNumber || 'saved') + '. The service price may need confirmation; EDUKEN will contact you.');
       }
     } catch (error) {
-      showToast(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
+      const message = error instanceof Error ? error.message : 'Could not submit your request. Please try again.';
+      setServiceRequestMessage(message);
+      showToast(message);
     } finally {
       setServiceSubmitting(false);
     }
@@ -3115,7 +3119,7 @@ function App() {
               <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. Submit your details to continue to secure checkout for priced services. If a price needs confirmation, EDUKEN will contact you before payment.</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
             </div>
-            <form className="service-request-form" onSubmit={submitServiceRequest}>
+            <form className="service-request-form" onSubmit={submitServiceRequest} onInvalidCapture={() => setServiceRequestMessage("Please complete the required fields above before sending your request.")}>
               <label className="service-request-field" htmlFor="service-request-customer-name">
                 <span>Full name <b aria-hidden="true">*</b></span>
                 <input id="service-request-customer-name" name="customerName" required maxLength={120} autoComplete="name" placeholder="Enter your full name" />
@@ -3154,6 +3158,7 @@ function App() {
                 <textarea id="service-request-details" name="details" maxLength={4000} rows={4} placeholder="Tell us what you need help with…" required={!jambServiceFieldsFor(selectedService).length} />
               </label>
               <p>Please do not submit passwords, bank details or sensitive identity documents.</p>
+              {serviceRequestMessage ? <p className="service-request-status" role="status" aria-live="polite">{serviceRequestMessage}</p> : null}
               <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
                 <button type="submit" className="primary" disabled={serviceSubmitting}>{serviceSubmitting ? 'Sending request…' : 'Send service request'}</button>
                 <button type="button" className="secondary" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}>Cancel</button>
