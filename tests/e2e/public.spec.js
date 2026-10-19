@@ -43,7 +43,7 @@ test('wallet callback keeps its reference available for verification after sign-
   expect(hub).toContain("window.sessionStorage.removeItem(pendingWalletDepositKey)");
 });
 
-test('wallet notification emails are skipped for idempotent settlement retries', () => {
+test('wallet notification retries repair missing outbox rows without resetting delivered rows', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const webhookWallet = handler.slice(
     handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")'),
@@ -62,8 +62,8 @@ test('wallet notification emails are skipped for idempotent settlement retries',
     handler.indexOf('if (path === "/api/admin/system-settings")'),
   );
 
-  expect(webhookWallet).toContain('walletSettlement?.reused !== true');
-  expect(walletVerify).toContain('settled?.reused !== true');
+  expect(webhookWallet).toContain('await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit")');
+  expect(walletVerify).toContain('await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit")');
   expect(walletPay).toContain('result?.reused !== true');
   expect(walletRefund).toContain('refund?.reused !== true');
 });
@@ -124,7 +124,7 @@ test('scheduled payment notification retry workflow is dormant without secrets a
   expect(workflow).toContain('curl --fail-with-body');
 });
 
-test('guest and authenticated payment verification retries do not resend service receipts', () => {
+test('settled service verification retries repair missing outbox rows without duplicating delivered receipts', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const guest = handler.slice(
     handler.indexOf('if (path === "/api/payments/verify-guest" && req.method === "POST")'),
@@ -144,15 +144,17 @@ test('guest and authenticated payment verification retries do not resend service
     authenticated.indexOf('const response = await fetch("https://api.paystack.co/transaction/verify/"'),
   );
 
-  expect(guestAlreadyPaid).not.toContain('sendPaymentNotifications');
-  expect(authenticatedAlreadyPaid).not.toContain('sendServicePaymentNotifications');
+  expect(guestAlreadyPaid).toContain('await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null)');
+  expect(authenticatedAlreadyPaid).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(guestAlreadyPaid).not.toContain('sendEmailAlertMessage');
+  expect(authenticatedAlreadyPaid).not.toContain('sendEmailAlertMessage');
   expect(guestAlreadyPaid).toContain('update({ status: "Paid" })');
   expect(authenticatedAlreadyPaid).toContain('update({ status: "Paid" })');
   expect(guest).toContain('if (payment) await sendPaymentNotifications(');
   expect(authenticated).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
 });
 
-test('service payment webhook retries do not resend notifications after payment is already Paid', () => {
+test('service payment webhook retries repair missing outbox rows without duplicating delivered receipts', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const webhook = handler.slice(
     handler.indexOf('if (path === "/api/payments/webhook" && req.method === "POST")'),
@@ -167,8 +169,8 @@ test('service payment webhook retries do not resend notifications after payment 
     webhook.indexOf('return json({ ok: true, paid: true, reused: !payment });'),
   );
 
-  expect(alreadyPaid).toContain('reused: true');
-  expect(alreadyPaid).not.toContain('sendServicePaymentNotifications');
+  expect(alreadyPaid).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(alreadyPaid).not.toContain('sendEmailAlertMessage');
   expect(firstSettlement).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
 });
 
