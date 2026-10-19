@@ -1,0 +1,50 @@
+name: EDUKEN production payment notification retry
+
+# Production-only queue recovery. This never creates, verifies, or refunds payments.
+# It remains dormant until the production GitHub secret is configured and matches
+# the PAYMENT_NOTIFICATIONS_CRON_SECRET Supabase Edge Function secret.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eduken-production-payment-notification-retry
+  cancel-in-progress: false
+
+jobs:
+  retry-pending-notifications:
+    name: Retry production payment notifications
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Check production processor configuration
+        id: config
+        shell: bash
+        env:
+          CRON_SECRET: ${{ secrets.EDUKEN_PRODUCTION_PAYMENT_NOTIFICATIONS_CRON_SECRET }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "Production payment notification retry is dormant: production cron secret is not configured."
+            exit 0
+          fi
+          if [ "${#CRON_SECRET}" -lt 32 ]; then
+            echo "Production cron secret must be at least 32 characters."
+            exit 1
+          fi
+          echo "configured=true" >> "$GITHUB_OUTPUT"
+      - name: Process production pending notifications
+        if: steps.config.outputs.configured == 'true'
+        shell: bash
+        env:
+          CRON_SECRET: ${{ secrets.EDUKEN_PRODUCTION_PAYMENT_NOTIFICATIONS_CRON_SECRET }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 60 \
+            --request POST "https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/api/internal/payment-notifications/process" \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            --header "Content-Type: application/json" \
+            --data '{}'
