@@ -1841,7 +1841,8 @@ Deno.serve(async (req) => {
       if (requestError) throw requestError;
       if (!request) return json({ error: "We could not match this reference to a service checkout. Please contact EDUKEN CONSULT before paying again." }, 404);
       if (existingPayment.status === "Paid") {
-        await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id);
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id);
+        if (requestUpdateError) throw requestUpdateError;
         await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
         return json({ paid: true, recovered: true });
       }
