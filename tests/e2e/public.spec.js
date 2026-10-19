@@ -81,6 +81,7 @@ test('payment notification delivery retries provider failures with a stable idem
   expect(handler).toContain('recipient.trim().toLowerCase()');
   expect(handler).toContain('const identity = [reference, kind, role, recipient.trim().toLowerCase()]');
   expect(notification).toContain('await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to)');
+  expect(notification).toContain('if (!messageId) throw new Error("Transactional email provider returned no message ID.")');
   expect(notification).toContain('after bounded retries');
   expect(notification).toContain('if (!delivered)');
 });
