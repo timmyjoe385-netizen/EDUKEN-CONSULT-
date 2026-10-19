@@ -733,6 +733,7 @@ Deno.serve(async (req) => {
         .from("payment_notification_deliveries")
         .select("payment_reference,notification_kind")
         .eq("status", "pending")
+        .lt("attempt_count", 9) // Do not let exhausted rows starve retryable notifications.
         .order("created_at", { ascending: true })
         .limit(25);
       if (pendingError) throw pendingError;
