@@ -64,8 +64,10 @@ test('wallet notification retries repair missing outbox rows without resetting d
 
   expect(webhookWallet).toContain('await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit")');
   expect(walletVerify).toContain('await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit")');
-  expect(walletPay).toContain('result?.reused !== true');
-  expect(walletRefund).toContain('refund?.reused !== true');
+  expect(walletPay).toContain('await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment")');
+  expect(walletRefund).toContain('await sendPaymentNotifications(');
+  expect(walletPay).not.toContain('result?.reused !== true');
+  expect(walletRefund).not.toContain('refund?.reused !== true');
 });
 
 test('payment notification delivery retries durable pending rows with stable idempotency keys', () => {
@@ -150,8 +152,10 @@ test('settled service verification retries repair missing outbox rows without du
   expect(authenticatedAlreadyPaid).not.toContain('sendEmailAlertMessage');
   expect(guestAlreadyPaid).toContain('update({ status: "Paid" })');
   expect(authenticatedAlreadyPaid).toContain('update({ status: "Paid" })');
-  expect(guest).toContain('if (payment) await sendPaymentNotifications(');
-  expect(authenticated).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+  expect(guest).toContain('await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null)');
+  expect(authenticated).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(guest).not.toContain('if (payment) await sendPaymentNotifications(');
+  expect(authenticated).not.toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
 });
 
 test('service payment webhook retries repair missing outbox rows without duplicating delivered receipts', () => {
@@ -171,7 +175,8 @@ test('service payment webhook retries repair missing outbox rows without duplica
 
   expect(alreadyPaid).toContain('await sendServicePaymentNotifications(existingPayment)');
   expect(alreadyPaid).not.toContain('sendEmailAlertMessage');
-  expect(firstSettlement).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+  expect(firstSettlement).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(firstSettlement).not.toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
 });
 
 test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
