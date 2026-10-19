@@ -93,6 +93,37 @@ test('payment notification delivery retries durable pending rows with stable ide
   expect(handler).toContain('payment_notification_deliveries');
 });
 
+test('scheduled payment notification processor is secret-protected and retries only pending rows', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const start = handler.indexOf('if (path === "/api/internal/payment-notifications/process" && req.method === "POST")');
+  const end = handler.indexOf('if (path === "/api/payments/webhook" && req.method === "POST")', start);
+  expect(start).toBeGreaterThanOrEqual(0);
+  expect(end).toBeGreaterThan(start);
+  const route = handler.slice(start, end);
+  expect(route).toContain('Deno.env.get("PAYMENT_NOTIFICATIONS_CRON_SECRET")');
+  expect(route).toContain('cronSecret.length < 32');
+  expect(route).toContain('req.headers.get("Authorization") !== "Bearer " + cronSecret');
+  expect(route).toContain('.from("payment_notification_deliveries")');
+  expect(route).toContain('.eq("status", "pending")');
+  expect(route).toContain('.limit(25)');
+  expect(route).toContain('batch.size < 3');
+  expect(route).toContain('await deliverPendingPaymentNotifications(reference, kind)');
+  expect(route).toContain('pending_remaining');
+});
+
+test('scheduled payment notification retry workflow is dormant without secrets and validates its endpoint', () => {
+  const workflow = readFileSync('.github/workflows/payment-notification-retry.yml', 'utf8');
+  expect(workflow).toContain('cron: "*/15 * * * *"');
+  expect(workflow).toContain('secrets.EDUKEN_PAYMENT_NOTIFICATIONS_PROCESS_URL');
+  expect(workflow).toContain('secrets.EDUKEN_PAYMENT_NOTIFICATIONS_CRON_SECRET');
+  expect(workflow).toContain('configured=false');
+  expect(workflow).toContain('https');
+  expect(workflow).toContain('/functions/v1/eduken-api/api/internal/payment-notifications/process');
+  expect(workflow).toContain('CRON_SECRET must be at least 32 characters');
+  expect(workflow).toContain('Authorization: Bearer $CRON_SECRET');
+  expect(workflow).toContain('curl --fail-with-body');
+});
+
 test('guest and authenticated payment verification retries do not resend service receipts', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const guest = handler.slice(
