@@ -1866,8 +1866,8 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
         if (requestUpdateError) throw requestUpdateError;
-        // Only the invocation that transitions the payment row sends the receipt.
-        if (payment) await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        // Stable outbox idempotency makes this safe after concurrent or repeated verification.
+        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
       }
       return json({ paid, payment: payment || existingPayment });
     }
@@ -1925,8 +1925,8 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
         if (requestUpdateError) throw requestUpdateError;
-        // Only the invocation that transitions the payment row sends the receipt.
-        if (payment) await sendServicePaymentNotifications(existingPayment);
+        // Stable outbox idempotency makes this safe after concurrent or repeated verification.
+        await sendServicePaymentNotifications(existingPayment);
       }
       return json({ paid, payment: payment || existingPayment });
     }
