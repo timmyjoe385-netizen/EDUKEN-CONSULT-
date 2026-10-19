@@ -85,6 +85,22 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -c "DO \$\$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'admin_system_settings' AND indexname = 'admin_system_settings_updated_by_idx') THEN RAISE EXCEPTION 'admin settings updater index missing'; END IF; END \$\$;"
+      - name: Apply payment notification outbox migration in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261019103000_payment_notification_outbox.sql
+      - name: Verify payment notification outbox is protected
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -c "DO \$\$ BEGIN IF NOT EXISTS (SELECT 1 FROM pg_tables WHERE schemaname = 'public' AND tablename = 'payment_notification_deliveries') THEN RAISE EXCEPTION 'outbox table missing'; END IF; IF NOT EXISTS (SELECT 1 FROM pg_class WHERE oid = 'public.payment_notification_deliveries'::regclass AND relrowsecurity) THEN RAISE EXCEPTION 'outbox RLS disabled'; END IF; IF NOT EXISTS (SELECT 1 FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'payment_notification_deliveries' AND indexname = 'payment_notification_deliveries_pending_idx') THEN RAISE EXCEPTION 'outbox pending index missing'; END IF; END \$\$;"
       - name: Verify atomic deposits, spending, insufficient funds and refunds
         run: >-
           docker run --rm --network host
