@@ -120,6 +120,8 @@ test('scheduled payment notification retry workflow is dormant without secrets a
   expect(workflow).toContain('secrets.EDUKEN_PAYMENT_NOTIFICATIONS_CRON_SECRET');
   expect(workflow).toContain('configured=false');
   expect(workflow).toContain('https');
+  expect(workflow).toContain('expected_host = "wpktzogarfqrgkirzdpy.supabase.co"');
+  expect(workflow).not.toContain('expected_host = "pphxltbkwygqjtjgkhxu.supabase.co"');
   expect(workflow).toContain('/functions/v1/eduken-api/api/internal/payment-notifications/process');
   expect(workflow).toContain('CRON_SECRET must be at least 32 characters');
   expect(workflow).toContain('Authorization: Bearer $CRON_SECRET');
