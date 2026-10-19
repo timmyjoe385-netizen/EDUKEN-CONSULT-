@@ -154,3 +154,22 @@ test("wallet deposit and both service checkout flows classify ambiguous provider
   }
 });
 
+
+
+test("guest payment callback recovery is rate-limited and verifies provider evidence before settlement", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const api = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const routeStart = api.indexOf('if (path === "/api/payments/recover-guest"');
+  const routeEnd = api.indexOf('if (path === "/api/payments/verify-guest"', routeStart);
+  assert.ok(routeStart >= 0 && routeEnd > routeStart, "recovery route must be registered before session-bound verification");
+  const route = api.slice(routeStart, routeEnd);
+  assert.match(route, /consumeEmailAlertRateLimit\(req, "guest-payment-recovery"\)/);
+  assert.match(route, /\^EDK-PAY-\[A-Z0-9\]\{18\}\$/);
+  assert.match(route, /transaction\/verify\//);
+  assert.match(route, /matchesStoredPaystackPayment\(transaction, \{ amount: existingPayment\.amount, currency: existingPayment\.currency, reference \}\)/);
+  assert.match(route, /\.in\("status", \["Pending", "Failed"\]\)/);
+  assert.match(route, /sendPaymentNotifications\(/);
+  const app = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
+  assert.match(app, /api\.post\('\/api\/payments\/recover-guest', \{ reference: returnedReference \}\)/);
+  assert.match(app, /Checkout session not found in this browser\. Checking the payment reference securely with Paystack/);
+});
