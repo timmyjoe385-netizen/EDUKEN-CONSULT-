@@ -775,18 +775,14 @@ Deno.serve(async (req) => {
           p_reference: reference,
         });
         if (walletSettlementError) throw walletSettlementError;
-        if (walletSettlement?.reused !== true) {
-          await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
-        } else {
-          await deliverPendingPaymentNotifications(reference, "deposit");
-        }
+        // Re-enqueue missing rows safely: existing delivered rows are preserved by idempotent upsert.
+        await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
-        // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference, "service_payment");
-        // A duplicate provider event may repair request state, but must not resend
-        // service-payment notifications after the original settlement.
+        // Rebuild any missing outbox rows safely; delivered idempotency keys are not reset.
+        await sendServicePaymentNotifications(existingPayment);
+        // A duplicate provider event may repair request state without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
             .eq("id", existingPayment.service_request_id);
@@ -1496,13 +1492,10 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!payment) return json({ error: "Wallet deposit not found for this account." }, 404);
       if (payment.status === "Paid") {
-        // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference, "deposit");
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        if (settled?.reused !== true) {
-          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
-        }
+        // Re-enqueue missing rows safely; delivered rows remain delivered.
+        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1839,9 +1832,9 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
-        // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference, "service_payment");
-        // Repair request state after a prior partial failure, but never resend receipts on verification retries.
+        // Re-enqueue missing outbox rows; already-delivered receipts are preserved by idempotency.
+        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        // Repair request state after a prior partial failure without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
             .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
@@ -1896,9 +1889,9 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
-        // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference, "service_payment");
-        // Repair request state after a prior partial failure, but never resend receipts on verification retries.
+        // Re-enqueue missing outbox rows; already-delivered receipts are preserved by idempotency.
+        await sendServicePaymentNotifications(existingPayment);
+        // Repair request state after a prior partial failure without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
             .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
