@@ -524,7 +524,10 @@ async function paymentNotificationIdempotencyKey(
   return "eduken-payment-" + suffix;
 }
 
-async function deliverPendingPaymentNotifications(reference: string) {
+async function deliverPendingPaymentNotifications(
+  reference: string,
+  kind?: "deposit" | "service_payment" | "refund",
+) {
   if (!reference) return;
   const apiKey = Deno.env.get("RESEND_API_KEY");
   const from = Deno.env.get("EMAIL_FROM");
@@ -532,11 +535,13 @@ async function deliverPendingPaymentNotifications(reference: string) {
     console.error("Payment notification delivery is pending because email configuration is unavailable.");
     return;
   }
-  const { data: pending, error: lookupError } = await db
+  let pendingQuery = db
     .from("payment_notification_deliveries")
     .select("id, recipient_email, notification_kind, idempotency_key, subject, text_body, attempt_count")
     .eq("payment_reference", reference)
-    .eq("status", "pending")
+    .eq("status", "pending");
+  if (kind) pendingQuery = pendingQuery.eq("notification_kind", kind);
+  const { data: pending, error: lookupError } = await pendingQuery
     .order("created_at", { ascending: true })
     .limit(10);
   if (lookupError) {
@@ -645,7 +650,7 @@ async function sendPaymentNotifications(
       return;
     }
   }
-  await deliverPendingPaymentNotifications(reference);
+  await deliverPendingPaymentNotifications(reference, kind);
 }
 
 async function sendServicePaymentNotifications(payment: {
@@ -733,12 +738,14 @@ Deno.serve(async (req) => {
         if (walletSettlementError) throw walletSettlementError;
         if (walletSettlement?.reused !== true) {
           await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
+        } else {
+          await deliverPendingPaymentNotifications(reference, "deposit");
         }
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
         // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference);
+        await deliverPendingPaymentNotifications(reference, "service_payment");
         // A duplicate provider event may repair request state, but must not resend
         // service-payment notifications after the original settlement.
         if (existingPayment.service_request_id) {
@@ -1451,7 +1458,7 @@ Deno.serve(async (req) => {
       if (!payment) return json({ error: "Wallet deposit not found for this account." }, 404);
       if (payment.status === "Paid") {
         // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference);
+        await deliverPendingPaymentNotifications(reference, "deposit");
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
         if (settled?.reused !== true) {
@@ -1794,7 +1801,7 @@ Deno.serve(async (req) => {
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
         // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference);
+        await deliverPendingPaymentNotifications(reference, "service_payment");
         // Repair request state after a prior partial failure, but never resend receipts on verification retries.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
