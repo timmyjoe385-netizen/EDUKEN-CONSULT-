@@ -524,6 +524,73 @@ async function paymentNotificationIdempotencyKey(
   return "eduken-payment-" + suffix;
 }
 
+async function deliverPendingPaymentNotifications(reference: string) {
+  if (!reference) return;
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("EMAIL_FROM");
+  if (!apiKey || !from) {
+    console.error("Payment notification delivery is pending because email configuration is unavailable.");
+    return;
+  }
+  const { data: pending, error: lookupError } = await db
+    .from("payment_notification_deliveries")
+    .select("id, recipient_email, notification_kind, idempotency_key, subject, text_body, attempt_count")
+    .eq("payment_reference", reference)
+    .eq("status", "pending")
+    .order("created_at", { ascending: true })
+    .limit(10);
+  if (lookupError) {
+    // Do not fall back to untracked sends: that could create duplicates on a later retry.
+    console.error("Could not load durable payment notification queue.", lookupError.message);
+    return;
+  }
+  for (const item of pending ?? []) {
+    const html = "<p>" + String(item.text_body || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
+    let delivered = false;
+    let lastError = "Notification delivery did not complete.";
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      const { error: attemptUpdateError } = await db.from("payment_notification_deliveries")
+        .update({ attempt_count: Number(item.attempt_count || 0) + attempt, last_error: null, updated_at: new Date().toISOString() })
+        .eq("id", item.id).eq("status", "pending");
+      if (attemptUpdateError) {
+        lastError = "Could not persist delivery attempt.";
+        console.error("Could not update payment notification attempt.", attemptUpdateError.message);
+        break;
+      }
+      try {
+        const messageId = await sendEmailAlertMessage(
+          { apiKey, from },
+          item.recipient_email,
+          item.subject,
+          item.text_body,
+          html,
+          item.idempotency_key,
+        );
+        if (!messageId) throw new Error("Transactional email provider returned no message ID.");
+        const { error: deliveredUpdateError } = await db.from("payment_notification_deliveries")
+          .update({ status: "delivered", provider_message_id: messageId, delivered_at: new Date().toISOString(), updated_at: new Date().toISOString(), last_error: null })
+          .eq("id", item.id).eq("status", "pending");
+        if (deliveredUpdateError) {
+          // Provider idempotency key is retained so a later retry can safely reconcile this result.
+          console.error("Provider accepted a payment notification but delivery state update failed.", deliveredUpdateError.message);
+        }
+        delivered = true;
+        break;
+      } catch (error) {
+        lastError = error instanceof Error ? error.message : "Unknown email error.";
+        if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+      }
+    }
+    if (!delivered) {
+      const { error: failureUpdateError } = await db.from("payment_notification_deliveries")
+        .update({ last_error: lastError.slice(0, 240), updated_at: new Date().toISOString() })
+        .eq("id", item.id).eq("status", "pending");
+      if (failureUpdateError) console.error("Could not persist payment notification failure.", failureUpdateError.message);
+      console.error("Payment notification remains queued after bounded retries.");
+    }
+  }
+}
+
 async function sendPaymentNotifications(
   userId: string | null,
   reference: string,
@@ -531,10 +598,8 @@ async function sendPaymentNotifications(
   kind: "deposit" | "service_payment" | "refund",
   customerEmailOverride?: string | null,
 ) {
-  const apiKey = Deno.env.get("RESEND_API_KEY");
-  const from = Deno.env.get("EMAIL_FROM");
-  if (!apiKey || !from || !reference || !Number.isFinite(amount) || amount <= 0) {
-    console.error("Payment notification could not be sent because required email configuration or payment data is unavailable.");
+  if (!reference || !Number.isFinite(amount) || amount <= 0) {
+    console.error("Payment notification could not be queued because payment data is unavailable.");
     return;
   }
   let customerEmail = typeof customerEmailOverride === "string" ? customerEmailOverride.trim() : "";
@@ -558,35 +623,29 @@ async function sendPaymentNotifications(
       : "Your EDUKEN service payment of " + amountText + " has been confirmed. Reference: " + reference + ". Keep this reference for follow-up.";
   const adminText = (isDeposit ? "A customer wallet deposit was verified." : isRefund ? "A wallet refund was credited to a customer." : "A customer service payment was confirmed.")
     + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account: " + (userId || "guest checkout");
-  const config = { apiKey, from };
   const messages = [
     ...(customerEmail ? [{ role: "customer", to: customerEmail, subject: customerSubject, text: customerText }] : []),
     ...Array.from(ADMIN_EMAILS).map(to => ({ role: "admin", to, subject: adminSubject, text: adminText })),
   ];
   for (const message of messages) {
-    const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
     const idempotencyKey = await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to);
-    let delivered = false;
-    // Retry transient provider/network failures during this settlement attempt.
-    // Reuse the stable key so a timeout after provider acceptance does not create duplicates.
-    for (let attempt = 1; attempt <= 3; attempt++) {
-      try {
-        const messageId = await sendEmailAlertMessage(
-          config, message.to, message.subject, message.text, html, idempotencyKey,
-        );
-        if (!messageId) throw new Error("Transactional email provider returned no message ID.");
-        delivered = true;
-        break;
-      } catch (error) {
-        if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, attempt * 500));
-        else console.error("Payment notification delivery failed after bounded retries.", error instanceof Error ? error.message : "Unknown email error.");
-      }
-    }
-    if (!delivered) {
-      // Do not fail payment settlement because the email provider is unavailable.
-      // The bounded retry avoids delaying the payment response indefinitely.
+    const { error: queueError } = await db.from("payment_notification_deliveries").upsert({
+      payment_reference: reference,
+      notification_kind: kind,
+      recipient_role: message.role,
+      recipient_email: message.to,
+      idempotency_key: idempotencyKey,
+      subject: message.subject,
+      text_body: message.text,
+      status: "pending",
+      attempt_count: 0,
+    }, { onConflict: "idempotency_key", ignoreDuplicates: true });
+    if (queueError) {
+      console.error("Payment notification was not sent because durable queue persistence failed.", queueError.message);
+      return;
     }
   }
+  await deliverPendingPaymentNotifications(reference);
 }
 
 async function sendServicePaymentNotifications(payment: {
