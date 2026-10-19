@@ -2178,6 +2178,7 @@ function App() {
                       <input id="make-payments-email" type="email" autoComplete="email" required maxLength={200} value={paymentEmail} onChange={event => setPaymentEmail(event.target.value)} placeholder="Enter the email for your receipt" />
                     </label>
                     <p className="make-payments-security">You’ll complete payment on Paystack’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
+                    <p className="make-payments-security">Email tip: If your receipt or payment notification does not appear in your Inbox, check your Spam or Junk folder. Email delivery does not determine payment status; EDUKEN confirms payment from verified payment records.</p>
                     {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
                     {auth.isSignedIn() ? <button type="button" className="secondary" disabled={paymentSubmitting} onClick={() => void submitWalletServicePayment()}>{paymentSubmitting ? 'Checking payment…' : 'Pay with EDUKEN Wallet'}</button> : null}
                     <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to Paystack'}</button>

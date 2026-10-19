@@ -43,7 +43,7 @@ test('wallet callback keeps its reference available for verification after sign-
   expect(hub).toContain("window.sessionStorage.removeItem(pendingWalletDepositKey)");
 });
 
-test('wallet notification emails are skipped for idempotent settlement retries', () => {
+test('wallet notification retries repair missing outbox rows without resetting delivered rows', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const webhookWallet = handler.slice(
     handler.indexOf('if (existingPayment.payment_type === "wallet_deposit")'),
@@ -62,13 +62,113 @@ test('wallet notification emails are skipped for idempotent settlement retries',
     handler.indexOf('if (path === "/api/admin/system-settings")'),
   );
 
-  expect(webhookWallet).toContain('walletSettlement?.reused !== true');
-  expect(walletVerify).toContain('settled?.reused !== true');
-  expect(walletPay).toContain('result?.reused !== true');
-  expect(walletRefund).toContain('refund?.reused !== true');
+  expect(webhookWallet).toContain('await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit")');
+  expect(walletVerify).toContain('await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit")');
+  expect(walletPay).toContain('await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment")');
+  expect(walletRefund).toContain('await sendPaymentNotifications(');
+  expect(walletPay).not.toContain('result?.reused !== true');
+  expect(walletRefund).not.toContain('refund?.reused !== true');
 });
 
-test('service payment webhook retries do not resend notifications after payment is already Paid', () => {
+test('payment notification delivery retries durable pending rows with stable idempotency keys', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const start = handler.indexOf('async function deliverPendingPaymentNotifications(');
+  const end = handler.indexOf('async function sendPaymentNotifications(', start);
+  expect(start).toBeGreaterThanOrEqual(0);
+  expect(end).toBeGreaterThan(start);
+  const delivery = handler.slice(start, end);
+  const enqueueStart = end;
+  const enqueueEnd = handler.indexOf('async function sendServicePaymentNotifications(', enqueueStart);
+  expect(enqueueEnd).toBeGreaterThan(enqueueStart);
+  const enqueue = handler.slice(enqueueStart, enqueueEnd);
+  expect(delivery).toContain('for (let attempt = 1; attempt <= attemptsThisInvocation; attempt++)');
+  expect(delivery).toContain('attempt * 500');
+  expect(handler).toContain('async function paymentNotificationIdempotencyKey(');
+  expect(handler).toContain('recipient.trim().toLowerCase()');
+  expect(handler).toContain('const identity = [reference, kind, role, recipient.trim().toLowerCase()]');
+  expect(enqueue).toContain('await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to)');
+  expect(delivery).toContain('if (!messageId) throw new Error("Transactional email provider returned no message ID.")');
+  expect(delivery).toContain('after bounded retries');
+  expect(delivery).toContain('if (!delivered)');
+  expect(delivery).toContain('.eq("status", "pending")');
+  expect(delivery).toContain('.lt("attempt_count", 9)');
+  expect(delivery).toContain('.eq("attempt_count", attemptsAlreadyUsed + attempt - 1)');
+  expect(delivery).toContain('.select("id").maybeSingle()');
+  expect(delivery).toContain('if (!claimedAttempt)');
+  expect(delivery).toContain("capped at nine total");
+  expect(delivery).toContain("const attemptsRemaining = Math.max(0, 9 - attemptsAlreadyUsed)");
+  expect(delivery).toContain("const attemptsThisInvocation = Math.min(3, attemptsRemaining)");
+  expect(delivery).toContain('.lt("attempt_count", 9)');
+  expect(enqueue).toContain('onConflict: "idempotency_key", ignoreDuplicates: true');
+  expect(handler).toContain('payment_notification_deliveries');
+});
+
+test('scheduled payment notification processor is secret-protected and retries only pending rows', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const start = handler.indexOf('if (path === "/api/internal/payment-notifications/process" && req.method === "POST")');
+  const end = handler.indexOf('if (path === "/api/payments/webhook" && req.method === "POST")', start);
+  expect(start).toBeGreaterThanOrEqual(0);
+  expect(end).toBeGreaterThan(start);
+  const route = handler.slice(start, end);
+  expect(route).toContain('Deno.env.get("PAYMENT_NOTIFICATIONS_CRON_SECRET")');
+  expect(route).toContain('cronSecret.length < 32');
+  expect(route).toContain('req.headers.get("Authorization") !== "Bearer " + cronSecret');
+  expect(route).toContain('.from("payment_notification_deliveries")');
+  expect(route).toContain('.eq("status", "pending")');
+  expect(route).toContain('.limit(25)');
+  expect(route).toContain('batch.size < 3');
+  expect(route).toContain('await deliverPendingPaymentNotifications(reference, kind)');
+  expect(route).toContain('pending_remaining');
+});
+
+test('scheduled payment notification retry workflow is dormant without secrets and validates its endpoint', () => {
+  const workflow = readFileSync('.github/workflows/payment-notification-retry.yml', 'utf8');
+  expect(workflow).toContain('cron: "*/15 * * * *"');
+  expect(workflow).toContain('secrets.EDUKEN_PAYMENT_NOTIFICATIONS_PROCESS_URL');
+  expect(workflow).toContain('secrets.EDUKEN_PAYMENT_NOTIFICATIONS_CRON_SECRET');
+  expect(workflow).toContain('configured=false');
+  expect(workflow).toContain('https');
+  expect(workflow).toContain('expected_host = "wpktzogarfqrgkirzdpy.supabase.co"');
+  expect(workflow).not.toContain('expected_host = "pphxltbkwygqjtjgkhxu.supabase.co"');
+  expect(workflow).toContain('/functions/v1/eduken-api/api/internal/payment-notifications/process');
+  expect(workflow).toContain('CRON_SECRET must be at least 32 characters');
+  expect(workflow).toContain('Authorization: Bearer $CRON_SECRET');
+  expect(workflow).toContain('curl --fail-with-body');
+});
+
+test('settled service verification retries repair missing outbox rows without duplicating delivered receipts', () => {
+  const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const guest = handler.slice(
+    handler.indexOf('if (path === "/api/payments/verify-guest" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/payments/verify" && req.method === "POST")'),
+  );
+  const authenticated = handler.slice(
+    handler.indexOf('if (path === "/api/payments/verify" && req.method === "POST")'),
+    handler.indexOf('if (path === "/api/payments" && req.method === "GET")'),
+  );
+
+  const guestAlreadyPaid = guest.slice(
+    guest.indexOf('if (existingPayment.status === "Paid")'),
+    guest.indexOf('const secret = Deno.env.get("PAYSTACK_SECRET_KEY")'),
+  );
+  const authenticatedAlreadyPaid = authenticated.slice(
+    authenticated.indexOf('if (existingPayment.status === "Paid")'),
+    authenticated.indexOf('const response = await fetch("https://api.paystack.co/transaction/verify/"'),
+  );
+
+  expect(guestAlreadyPaid).toContain('await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null)');
+  expect(authenticatedAlreadyPaid).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(guestAlreadyPaid).not.toContain('sendEmailAlertMessage');
+  expect(authenticatedAlreadyPaid).not.toContain('sendEmailAlertMessage');
+  expect(guestAlreadyPaid).toContain('update({ status: "Paid" })');
+  expect(authenticatedAlreadyPaid).toContain('update({ status: "Paid" })');
+  expect(guest).toContain('await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null)');
+  expect(authenticated).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(guest).not.toContain('if (payment) await sendPaymentNotifications(');
+  expect(authenticated).not.toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+});
+
+test('service payment webhook retries repair missing outbox rows without duplicating delivered receipts', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const webhook = handler.slice(
     handler.indexOf('if (path === "/api/payments/webhook" && req.method === "POST")'),
@@ -83,9 +183,10 @@ test('service payment webhook retries do not resend notifications after payment 
     webhook.indexOf('return json({ ok: true, paid: true, reused: !payment });'),
   );
 
-  expect(alreadyPaid).toContain('reused: true');
-  expect(alreadyPaid).not.toContain('sendServicePaymentNotifications');
-  expect(firstSettlement).toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
+  expect(alreadyPaid).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(alreadyPaid).not.toContain('sendEmailAlertMessage');
+  expect(firstSettlement).toContain('await sendServicePaymentNotifications(existingPayment)');
+  expect(firstSettlement).not.toContain('if (payment) await sendServicePaymentNotifications(existingPayment)');
 });
 
 test('customer workspace exposes the optional EDUKEN wallet without replacing public education content', async ({ page }) => {
@@ -1544,7 +1645,11 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
     }),
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await page.getByRole('button', { name: /Request this service/i }).click();
+  const serviceCard = page.locator('.jamb-service-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB e-PIN (UTME Without Mock)' }),
+  });
+  await expect(serviceCard).toBeVisible();
+  await serviceCard.getByRole('button', { name: /Request this service/i }).click();
   const dialog = page.getByRole('dialog', { name: /JAMB e-PIN \(UTME Without Mock\)/i });
   await expect(dialog).toBeVisible();
   await expect(dialog.getByRole('spinbutton', { name: 'Number of candidates' })).toHaveValue('1');
@@ -1656,6 +1761,8 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByText('EDK-20261016-AB12CD34')).toBeVisible();
   await expect(page.getByText('₦2,500')).toBeVisible();
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
+  await expect(page.getByText(/check your Spam or Junk folder/i)).toBeVisible();
+  await expect(page.getByText(/payment status.*verified payment records/i)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
 });

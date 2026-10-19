@@ -510,6 +510,106 @@ async function sendEmailAlertMessage(
   return typeof result.id === "string" ? result.id : null;
 }
 
+async function paymentNotificationIdempotencyKey(
+  reference: string,
+  kind: "deposit" | "service_payment" | "refund",
+  role: string,
+  recipient: string,
+) {
+  // Hash the full identity so each recipient has an independent, bounded-length key.
+  const identity = [reference, kind, role, recipient.trim().toLowerCase()].join("\\0");
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(identity));
+  const suffix = Array.from(new Uint8Array(digest)).slice(0, 16)
+    .map((byte) => byte.toString(16).padStart(2, "0")).join("");
+  return "eduken-payment-" + suffix;
+}
+
+async function deliverPendingPaymentNotifications(
+  reference: string,
+  kind?: "deposit" | "service_payment" | "refund",
+) {
+  if (!reference) return;
+  const apiKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("EMAIL_FROM");
+  if (!apiKey || !from) {
+    console.error("Payment notification delivery is pending because email configuration is unavailable.");
+    return;
+  }
+  let pendingQuery = db
+    .from("payment_notification_deliveries")
+    .select("id, recipient_email, notification_kind, idempotency_key, subject, text_body, attempt_count")
+    .eq("payment_reference", reference)
+    .eq("status", "pending")
+    .lt("attempt_count", 9); // Three attempts per invocation, capped at nine total; exhausted rows remain pending for manual recovery.
+  if (kind) pendingQuery = pendingQuery.eq("notification_kind", kind);
+  const { data: pending, error: lookupError } = await pendingQuery
+    .order("created_at", { ascending: true })
+    .limit(10);
+  if (lookupError) {
+    // Do not fall back to untracked sends: that could create duplicates on a later retry.
+    console.error("Could not load durable payment notification queue.", lookupError.message);
+    return;
+  }
+  for (const item of pending ?? []) {
+    const html = "<p>" + String(item.text_body || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
+    let delivered = false;
+    let lastError = "Notification delivery did not complete.";
+    const attemptsAlreadyUsed = Math.max(0, Number(item.attempt_count || 0));
+    const attemptsRemaining = Math.max(0, 9 - attemptsAlreadyUsed);
+    const attemptsThisInvocation = Math.min(3, attemptsRemaining);
+    for (let attempt = 1; attempt <= attemptsThisInvocation; attempt++) {
+      // Compare-and-swap the attempt counter before contacting the provider.
+      // Concurrent workers that read the same count cannot both claim this attempt.
+      const { data: claimedAttempt, error: attemptUpdateError } = await db.from("payment_notification_deliveries")
+        .update({ attempt_count: attemptsAlreadyUsed + attempt, last_error: null, updated_at: new Date().toISOString() })
+        .eq("id", item.id).eq("status", "pending")
+        .eq("attempt_count", attemptsAlreadyUsed + attempt - 1)
+        .lt("attempt_count", 9)
+        .select("id").maybeSingle();
+      if (attemptUpdateError) {
+        lastError = "Could not persist delivery attempt.";
+        console.error("Could not update payment notification attempt.", attemptUpdateError.message);
+        break;
+      }
+      if (!claimedAttempt) {
+        // Another worker advanced this row first. Do not send from a stale read.
+        delivered = true;
+        break;
+      }
+      try {
+        const messageId = await sendEmailAlertMessage(
+          { apiKey, from },
+          item.recipient_email,
+          item.subject,
+          item.text_body,
+          html,
+          item.idempotency_key,
+        );
+        if (!messageId) throw new Error("Transactional email provider returned no message ID.");
+        const { error: deliveredUpdateError } = await db.from("payment_notification_deliveries")
+          .update({ status: "delivered", provider_message_id: messageId, delivered_at: new Date().toISOString(), updated_at: new Date().toISOString(), last_error: null })
+          .eq("id", item.id).eq("status", "pending");
+        if (deliveredUpdateError) {
+          // Provider idempotency key is retained so a later retry can safely reconcile this result.
+          console.error("Provider accepted a payment notification but delivery state update failed.", deliveredUpdateError.message);
+        }
+        delivered = true;
+        break;
+      } catch (error) {
+        lastError = error instanceof Error ? error.message : "Unknown email error.";
+        if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+      }
+    }
+    if (!delivered) {
+      const { error: failureUpdateError } = await db.from("payment_notification_deliveries")
+        .update({ last_error: lastError.slice(0, 240), updated_at: new Date().toISOString() })
+        .eq("id", item.id).eq("status", "pending");
+      if (failureUpdateError) console.error("Could not persist payment notification failure.", failureUpdateError.message);
+      console.error("Payment notification remains queued after bounded retries.");
+    }
+  }
+}
+
 async function sendPaymentNotifications(
   userId: string | null,
   reference: string,
@@ -517,10 +617,8 @@ async function sendPaymentNotifications(
   kind: "deposit" | "service_payment" | "refund",
   customerEmailOverride?: string | null,
 ) {
-  const apiKey = Deno.env.get("RESEND_API_KEY");
-  const from = Deno.env.get("EMAIL_FROM");
-  if (!apiKey || !from || !reference || !Number.isFinite(amount) || amount <= 0) {
-    console.error("Payment notification could not be sent because required email configuration or payment data is unavailable.");
+  if (!reference || !Number.isFinite(amount) || amount <= 0) {
+    console.error("Payment notification could not be queued because payment data is unavailable.");
     return;
   }
   let customerEmail = typeof customerEmailOverride === "string" ? customerEmailOverride.trim() : "";
@@ -544,24 +642,29 @@ async function sendPaymentNotifications(
       : "Your EDUKEN service payment of " + amountText + " has been confirmed. Reference: " + reference + ". Keep this reference for follow-up.";
   const adminText = (isDeposit ? "A customer wallet deposit was verified." : isRefund ? "A wallet refund was credited to a customer." : "A customer service payment was confirmed.")
     + "\nAmount: " + amountText + "\nReference: " + reference + "\nCustomer account: " + (userId || "guest checkout");
-  const config = { apiKey, from };
   const messages = [
     ...(customerEmail ? [{ role: "customer", to: customerEmail, subject: customerSubject, text: customerText }] : []),
     ...Array.from(ADMIN_EMAILS).map(to => ({ role: "admin", to, subject: adminSubject, text: adminText })),
   ];
   for (const message of messages) {
-    try {
-      const html = "<p>" + message.text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
-      await sendEmailAlertMessage(
-        config, message.to, message.subject, message.text, html,
-        "eduken-payment-" + reference + "-" + kind + "-" + message.role,
-      );
-    } catch (error) {
-      // Payment settlement must not depend on the email provider being available.
-      // Stable provider idempotency keys reduce duplicate notices when a flow retries.
-      console.error("Payment notification delivery failed.", error instanceof Error ? error.message : "Unknown email error.");
+    const idempotencyKey = await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to);
+    const { error: queueError } = await db.from("payment_notification_deliveries").upsert({
+      payment_reference: reference,
+      notification_kind: kind,
+      recipient_role: message.role,
+      recipient_email: message.to,
+      idempotency_key: idempotencyKey,
+      subject: message.subject,
+      text_body: message.text,
+      status: "pending",
+      attempt_count: 0,
+    }, { onConflict: "idempotency_key", ignoreDuplicates: true });
+    if (queueError) {
+      console.error("Payment notification was not sent because durable queue persistence failed.", queueError.message);
+      return;
     }
   }
+  await deliverPendingPaymentNotifications(reference, kind);
 }
 
 async function sendServicePaymentNotifications(payment: {
@@ -615,6 +718,46 @@ Deno.serve(async (req) => {
   try {
     if (req.method === "GET" && path === "/health") return json({ ok: true, service: "EDUKEN CONSULT API", version: 4 });
 
+    if (path === "/api/internal/payment-notifications/process" && req.method === "POST") {
+      const cronSecret = Deno.env.get("PAYMENT_NOTIFICATIONS_CRON_SECRET");
+      if (!cronSecret || cronSecret.length < 32) {
+        return json({ error: "Payment notification processing is not configured." }, 503);
+      }
+      if (req.headers.get("Authorization") !== "Bearer " + cronSecret) {
+        return json({ error: "Unauthorized." }, 401);
+      }
+      if (!Deno.env.get("RESEND_API_KEY") || !Deno.env.get("EMAIL_FROM")) {
+        return json({ error: "Transactional email delivery is not configured." }, 503);
+      }
+      const { data: pendingRows, error: pendingError } = await db
+        .from("payment_notification_deliveries")
+        .select("payment_reference,notification_kind")
+        .eq("status", "pending")
+        .lt("attempt_count", 9) // Do not let exhausted rows starve retryable notifications.
+        .order("created_at", { ascending: true })
+        .limit(25);
+      if (pendingError) throw pendingError;
+      const batch = new Map<string, { reference: string; kind: "deposit" | "service_payment" | "refund" }>();
+      for (const row of pendingRows ?? []) {
+        if (!row.payment_reference || !["deposit", "service_payment", "refund"].includes(row.notification_kind)) continue;
+        const reference = String(row.payment_reference);
+        const kind = row.notification_kind as "deposit" | "service_payment" | "refund";
+        const key = reference + "\\0" + kind;
+        if (!batch.has(key) && batch.size < 3) batch.set(key, { reference, kind });
+      }
+      let attemptedGroups = 0;
+      for (const { reference, kind } of batch.values()) {
+        await deliverPendingPaymentNotifications(reference, kind);
+        attemptedGroups++;
+      }
+      const { count: remaining, error: remainingError } = await db
+        .from("payment_notification_deliveries")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "pending");
+      if (remainingError) throw remainingError;
+      return json({ ok: true, groups_attempted: attemptedGroups, pending_remaining: remaining ?? 0 });
+    }
+
     if (path === "/api/payments/webhook" && req.method === "POST") {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
@@ -647,14 +790,14 @@ Deno.serve(async (req) => {
           p_reference: reference,
         });
         if (walletSettlementError) throw walletSettlementError;
-        if (walletSettlement?.reused !== true) {
-          await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
-        }
+        // Re-enqueue missing rows safely: existing delivered rows are preserved by idempotent upsert.
+        await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
-        // A duplicate provider event may repair request state, but must not resend
-        // service-payment notifications after the original settlement.
+        // Rebuild any missing outbox rows safely; delivered idempotency keys are not reset.
+        await sendServicePaymentNotifications(existingPayment);
+        // A duplicate provider event may repair request state without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
             .eq("id", existingPayment.service_request_id);
@@ -676,9 +819,8 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id);
         if (requestUpdateError) throw requestUpdateError;
-        // Only the invocation that changed Pending/Failed to Paid sends email.
-        // A concurrent webhook that observes Paid above is an idempotent retry.
-        if (payment) await sendServicePaymentNotifications(existingPayment);
+        // Queueing is idempotent, so retries can recover missing receipts without duplicating delivered notices.
+        await sendServicePaymentNotifications(existingPayment);
       }
       return json({ ok: true, paid: true, reused: !payment });
     }
@@ -1366,9 +1508,8 @@ Deno.serve(async (req) => {
       if (payment.status === "Paid") {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        if (settled?.reused !== true) {
-          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
-        }
+        // Re-enqueue missing rows safely; delivered rows remain delivered.
+        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1389,9 +1530,8 @@ Deno.serve(async (req) => {
       if (paid) {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        if (settled?.reused !== true) {
-          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
-        }
+        // Idempotent enqueue repairs a notification missed by an earlier partial failure.
+        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
       }
       const nextStatus = getNextPaymentStatus(transaction);
@@ -1424,9 +1564,8 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_SERVICE_QUANTITY_INVALID")) return json({ error: "The saved service quantity is invalid for wallet payment.", code: "WALLET_SERVICE_QUANTITY_INVALID" }, 409);
         throw error;
       }
-      if (result?.reused !== true) {
-        await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
-      }
+      // Re-enqueue safely even for an idempotent wallet-payment retry.
+      await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
       return json({ paid: true, wallet: result });
     }
 
@@ -1705,7 +1844,14 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
+        // Re-enqueue missing outbox rows; already-delivered receipts are preserved by idempotency.
         await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        // Repair request state after a prior partial failure without duplicating delivered receipts.
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+          if (requestUpdateError) throw requestUpdateError;
+        }
         return json({ paid: true, payment: existingPayment });
       }
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
@@ -1735,6 +1881,7 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
         if (requestUpdateError) throw requestUpdateError;
+        // Stable outbox idempotency makes this safe after concurrent or repeated verification.
         await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
       }
       return json({ paid, payment: payment || existingPayment });
@@ -1754,7 +1901,14 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
-        if (existingPayment.service_request_id) await sendServicePaymentNotifications(existingPayment);
+        // Re-enqueue missing outbox rows; already-delivered receipts are preserved by idempotency.
+        await sendServicePaymentNotifications(existingPayment);
+        // Repair request state after a prior partial failure without duplicating delivered receipts.
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+          if (requestUpdateError) throw requestUpdateError;
+        }
         return json({ paid: true, payment: existingPayment });
       }
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
@@ -1786,6 +1940,7 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
         if (requestUpdateError) throw requestUpdateError;
+        // Stable outbox idempotency makes this safe after concurrent or repeated verification.
         await sendServicePaymentNotifications(existingPayment);
       }
       return json({ paid, payment: payment || existingPayment });
@@ -1872,12 +2027,11 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_REFUND_WALLET_MISSING")) return json({ error: "Customer wallet is unavailable. No refund was processed." }, 503);
         throw refundError;
       }
-      if (refund?.reused !== true) {
-        await sendPaymentNotifications(
-          originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
-          Number(originalPayment.amount), "refund",
-        );
-      }
+      // Re-enqueue safely if the refund settled but the first notification attempt was interrupted.
+      await sendPaymentNotifications(
+        originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
+        Number(originalPayment.amount), "refund",
+      );
       return json({ ok: true, refund });
     }
 
