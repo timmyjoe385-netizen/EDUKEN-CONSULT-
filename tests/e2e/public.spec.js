@@ -93,6 +93,9 @@ test('payment notification delivery retries durable pending rows with stable ide
   expect(delivery).toContain('.eq("status", "pending")');
   expect(delivery).toContain('.lt("attempt_count", 9)');
   expect(delivery).toContain("capped at nine total");
+  expect(delivery).toContain("const attemptsRemaining = Math.max(0, 9 - attemptsAlreadyUsed)");
+  expect(delivery).toContain("const attemptsThisInvocation = Math.min(3, attemptsRemaining)");
+  expect(delivery).toContain('.lt("attempt_count", 9)');
   expect(enqueue).toContain('onConflict: "idempotency_key", ignoreDuplicates: true');
   expect(handler).toContain('payment_notification_deliveries');
 });
