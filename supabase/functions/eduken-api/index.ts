@@ -571,9 +571,10 @@ async function sendPaymentNotifications(
     // Reuse the stable key so a timeout after provider acceptance does not create duplicates.
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
-        await sendEmailAlertMessage(
+        const messageId = await sendEmailAlertMessage(
           config, message.to, message.subject, message.text, html, idempotencyKey,
         );
+        if (!messageId) throw new Error("Transactional email provider returned no message ID.");
         delivered = true;
         break;
       } catch (error) {
