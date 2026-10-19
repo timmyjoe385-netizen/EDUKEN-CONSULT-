@@ -804,9 +804,8 @@ Deno.serve(async (req) => {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
           .eq("id", existingPayment.service_request_id);
         if (requestUpdateError) throw requestUpdateError;
-        // Only the invocation that changed Pending/Failed to Paid sends email.
-        // A concurrent webhook that observes Paid above is an idempotent retry.
-        if (payment) await sendServicePaymentNotifications(existingPayment);
+        // Queueing is idempotent, so retries can recover missing receipts without duplicating delivered notices.
+        await sendServicePaymentNotifications(existingPayment);
       }
       return json({ ok: true, paid: true, reused: !payment });
     }
@@ -1516,9 +1515,8 @@ Deno.serve(async (req) => {
       if (paid) {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        if (settled?.reused !== true) {
-          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
-        }
+        // Idempotent enqueue repairs a notification missed by an earlier partial failure.
+        await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
       }
       const nextStatus = getNextPaymentStatus(transaction);
@@ -1551,9 +1549,8 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_SERVICE_QUANTITY_INVALID")) return json({ error: "The saved service quantity is invalid for wallet payment.", code: "WALLET_SERVICE_QUANTITY_INVALID" }, 409);
         throw error;
       }
-      if (result?.reused !== true) {
-        await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
-      }
+      // Re-enqueue safely even for an idempotent wallet-payment retry.
+      await sendPaymentNotifications(user.id, String(result?.payment_reference || paymentReference), Number(result?.amount || 0), "service_payment");
       return json({ paid: true, wallet: result });
     }
 
@@ -2015,12 +2012,11 @@ Deno.serve(async (req) => {
         if (message.includes("WALLET_REFUND_WALLET_MISSING")) return json({ error: "Customer wallet is unavailable. No refund was processed." }, 503);
         throw refundError;
       }
-      if (refund?.reused !== true) {
-        await sendPaymentNotifications(
-          originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
-          Number(originalPayment.amount), "refund",
-        );
-      }
+      // Re-enqueue safely if the refund settled but the first notification attempt was interrupted.
+      await sendPaymentNotifications(
+        originalPayment.user_id, String(originalPayment.payment_reference || originalPayment.id),
+        Number(originalPayment.amount), "refund",
+      );
       return json({ ok: true, refund });
     }
 
