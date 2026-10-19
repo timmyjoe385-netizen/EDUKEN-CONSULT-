@@ -1,0 +1,70 @@
+name: EDUKEN payment notification retry
+
+# The scheduled worker is dormant until both repository secrets are configured.
+# It processes only durable pending rows and never creates or verifies payments.
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: eduken-payment-notification-retry
+  cancel-in-progress: false
+
+jobs:
+  retry-pending-notifications:
+    name: Retry pending payment notifications
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Check secure processor configuration
+        id: config
+        shell: bash
+        env:
+          PROCESS_URL: ${{ secrets.EDUKEN_PAYMENT_NOTIFICATIONS_PROCESS_URL }}
+          CRON_SECRET: ${{ secrets.EDUKEN_PAYMENT_NOTIFICATIONS_CRON_SECRET }}
+        run: |
+          if [ -z "$PROCESS_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "Payment notification retry is dormant: repository secrets are not configured."
+            exit 0
+          fi
+          python3 - <<'PY'
+          import os
+          from urllib.parse import urlsplit
+
+          url = urlsplit(os.environ["PROCESS_URL"])
+          expected_host = "pphxltbkwygqjtjgkhxu.supabase.co"
+          expected_path = "/functions/v1/eduken-api/api/internal/payment-notifications/process"
+          if (
+              url.scheme != "https"
+              or url.hostname != expected_host
+              or url.port is not None
+              or url.username is not None
+              or url.password is not None
+              or url.path.rstrip("/") != expected_path
+              or url.query
+              or url.fragment
+          ):
+              raise SystemExit("PROCESS_URL must be the HTTPS EDUKEN payment notification processor endpoint.")
+          PY
+          if [ "${#CRON_SECRET}" -lt 32 ]; then
+            echo "CRON_SECRET must be at least 32 characters."
+            exit 1
+          fi
+          echo "configured=true" >> "$GITHUB_OUTPUT"
+      - name: Process pending notifications
+        if: steps.config.outputs.configured == 'true'
+        shell: bash
+        env:
+          PROCESS_URL: ${{ secrets.EDUKEN_PAYMENT_NOTIFICATIONS_PROCESS_URL }}
+          CRON_SECRET: ${{ secrets.EDUKEN_PAYMENT_NOTIFICATIONS_CRON_SECRET }}
+        run: |
+          curl --fail-with-body --silent --show-error --max-time 60 \
+            --request POST "$PROCESS_URL" \
+            --header "Authorization: Bearer $CRON_SECRET" \
+            --header "Content-Type: application/json" \
+            --data '{}'
