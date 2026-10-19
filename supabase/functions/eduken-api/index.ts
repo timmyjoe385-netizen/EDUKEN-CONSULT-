@@ -1858,7 +1858,7 @@ Deno.serve(async (req) => {
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
         // Retry only previously queued pending notices; delivered rows are never resent.
-        await deliverPendingPaymentNotifications(reference);
+        await deliverPendingPaymentNotifications(reference, "service_payment");
         // Repair request state after a prior partial failure, but never resend receipts on verification retries.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
