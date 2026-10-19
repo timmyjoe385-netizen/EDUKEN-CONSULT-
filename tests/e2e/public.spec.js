@@ -81,7 +81,7 @@ test('payment notification delivery retries durable pending rows with stable ide
   const enqueueEnd = handler.indexOf('async function sendServicePaymentNotifications(', enqueueStart);
   expect(enqueueEnd).toBeGreaterThan(enqueueStart);
   const enqueue = handler.slice(enqueueStart, enqueueEnd);
-  expect(delivery).toContain('for (let attempt = 1; attempt <= 3; attempt++)');
+  expect(delivery).toContain('for (let attempt = 1; attempt <= attemptsThisInvocation; attempt++)');
   expect(delivery).toContain('attempt * 500');
   expect(handler).toContain('async function paymentNotificationIdempotencyKey(');
   expect(handler).toContain('recipient.trim().toLowerCase()');
