@@ -704,6 +704,45 @@ Deno.serve(async (req) => {
   try {
     if (req.method === "GET" && path === "/health") return json({ ok: true, service: "EDUKEN CONSULT API", version: 4 });
 
+    if (path === "/api/internal/payment-notifications/process" && req.method === "POST") {
+      const cronSecret = Deno.env.get("PAYMENT_NOTIFICATIONS_CRON_SECRET");
+      if (!cronSecret || cronSecret.length < 32) {
+        return json({ error: "Payment notification processing is not configured." }, 503);
+      }
+      if (req.headers.get("Authorization") !== "Bearer " + cronSecret) {
+        return json({ error: "Unauthorized." }, 401);
+      }
+      if (!Deno.env.get("RESEND_API_KEY") || !Deno.env.get("EMAIL_FROM")) {
+        return json({ error: "Transactional email delivery is not configured." }, 503);
+      }
+      const { data: pendingRows, error: pendingError } = await db
+        .from("payment_notification_deliveries")
+        .select("payment_reference,notification_kind")
+        .eq("status", "pending")
+        .order("created_at", { ascending: true })
+        .limit(25);
+      if (pendingError) throw pendingError;
+      const batch = new Map<string, { reference: string; kind: "deposit" | "service_payment" | "refund" }>();
+      for (const row of pendingRows ?? []) {
+        if (!row.payment_reference || !["deposit", "service_payment", "refund"].includes(row.notification_kind)) continue;
+        const reference = String(row.payment_reference);
+        const kind = row.notification_kind as "deposit" | "service_payment" | "refund";
+        const key = reference + "\\0" + kind;
+        if (!batch.has(key) && batch.size < 3) batch.set(key, { reference, kind });
+      }
+      let attemptedGroups = 0;
+      for (const { reference, kind } of batch.values()) {
+        await deliverPendingPaymentNotifications(reference, kind);
+        attemptedGroups++;
+      }
+      const { count: remaining, error: remainingError } = await db
+        .from("payment_notification_deliveries")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "pending");
+      if (remainingError) throw remainingError;
+      return json({ ok: true, groups_attempted: attemptedGroups, pending_remaining: remaining ?? 0 });
+    }
+
     if (path === "/api/payments/webhook" && req.method === "POST") {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
