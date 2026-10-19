@@ -539,7 +539,8 @@ async function deliverPendingPaymentNotifications(
     .from("payment_notification_deliveries")
     .select("id, recipient_email, notification_kind, idempotency_key, subject, text_body, attempt_count")
     .eq("payment_reference", reference)
-    .eq("status", "pending");
+    .eq("status", "pending")
+    .lt("attempt_count", 9); // Three attempts per invocation, capped at nine total; exhausted rows remain pending for manual recovery.
   if (kind) pendingQuery = pendingQuery.eq("notification_kind", kind);
   const { data: pending, error: lookupError } = await pendingQuery
     .order("created_at", { ascending: true })
