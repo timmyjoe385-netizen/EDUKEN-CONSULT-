@@ -57,7 +57,7 @@ jobs:
         if: github.event_name == 'pull_request' && github.head_ref == 'fix/guest-payment-return-recovery-20261019'
         env:
           TEST_SUPABASE_URL: https://wpktzogarfqrgkirzdpy.supabase.co
-          TEST_SUPABASE_PUBLISHABLE_KEY: ${{ vars.EDUKEN_TEST_SUPABASE_PUBLISHABLE_KEY }}
+          TEST_SUPABASE_PUBLISHABLE_KEY: sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB
         run: |
           node --input-type=module <<'NODE'
           const base = process.env.TEST_SUPABASE_URL;
