@@ -46,4 +46,36 @@ begin
 end;
 $test$;
 
+-- Model two workers that both read attempt_count=0. The first compare-and-swap
+-- claims the attempt; the stale second worker must affect zero rows.
+insert into public.payment_notification_deliveries
+  (payment_reference, notification_kind, recipient_role, recipient_email, idempotency_key, subject, text_body)
+values
+  ('outbox-cas-reference', 'service_payment', 'customer', 'cas@example.test',
+   'outbox-cas-idempotency-key', 'EDUKEN payment confirmed', 'Test body')
+on conflict (idempotency_key) do nothing;
+
+do $test$
+declare
+  first_claim integer;
+  stale_claim integer;
+begin
+  update public.payment_notification_deliveries
+  set attempt_count = 1
+  where idempotency_key = 'outbox-cas-idempotency-key'
+    and status = 'pending' and attempt_count = 0;
+  get diagnostics first_claim = row_count;
+
+  update public.payment_notification_deliveries
+  set attempt_count = 1
+  where idempotency_key = 'outbox-cas-idempotency-key'
+    and status = 'pending' and attempt_count = 0;
+  get diagnostics stale_claim = row_count;
+
+  if first_claim <> 1 or stale_claim <> 0 then
+    raise exception 'compare-and-swap retry claim did not reject a stale worker';
+  end if;
+end;
+$test$;
+
 rollback;
