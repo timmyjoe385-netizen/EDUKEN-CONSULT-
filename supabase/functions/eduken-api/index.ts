@@ -737,6 +737,8 @@ Deno.serve(async (req) => {
         return json({ ok: true, paid: true, wallet: walletSettlement });
       }
       if (existingPayment.status === "Paid") {
+        // Retry only previously queued pending notices; delivered rows are never resent.
+        await deliverPendingPaymentNotifications(reference);
         // A duplicate provider event may repair request state, but must not resend
         // service-payment notifications after the original settlement.
         if (existingPayment.service_request_id) {
@@ -1448,6 +1450,8 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!payment) return json({ error: "Wallet deposit not found for this account." }, 404);
       if (payment.status === "Paid") {
+        // Retry only previously queued pending notices; delivered rows are never resent.
+        await deliverPendingPaymentNotifications(reference);
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
         if (settled?.reused !== true) {
@@ -1789,6 +1793,8 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
+        // Retry only previously queued pending notices; delivered rows are never resent.
+        await deliverPendingPaymentNotifications(reference);
         // Repair request state after a prior partial failure, but never resend receipts on verification retries.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
@@ -1844,6 +1850,8 @@ Deno.serve(async (req) => {
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
+        // Retry only previously queued pending notices; delivered rows are never resent.
+        await deliverPendingPaymentNotifications(reference);
         // Repair request state after a prior partial failure, but never resend receipts on verification retries.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
