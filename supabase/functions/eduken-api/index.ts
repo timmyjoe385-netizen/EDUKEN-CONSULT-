@@ -558,13 +558,22 @@ async function deliverPendingPaymentNotifications(
     const attemptsRemaining = Math.max(0, 9 - attemptsAlreadyUsed);
     const attemptsThisInvocation = Math.min(3, attemptsRemaining);
     for (let attempt = 1; attempt <= attemptsThisInvocation; attempt++) {
-      const { error: attemptUpdateError } = await db.from("payment_notification_deliveries")
+      // Compare-and-swap the attempt counter before contacting the provider.
+      // Concurrent workers that read the same count cannot both claim this attempt.
+      const { data: claimedAttempt, error: attemptUpdateError } = await db.from("payment_notification_deliveries")
         .update({ attempt_count: attemptsAlreadyUsed + attempt, last_error: null, updated_at: new Date().toISOString() })
         .eq("id", item.id).eq("status", "pending")
-        .lt("attempt_count", 9);
+        .eq("attempt_count", attemptsAlreadyUsed + attempt - 1)
+        .lt("attempt_count", 9)
+        .select("id").maybeSingle();
       if (attemptUpdateError) {
         lastError = "Could not persist delivery attempt.";
         console.error("Could not update payment notification attempt.", attemptUpdateError.message);
+        break;
+      }
+      if (!claimedAttempt) {
+        // Another worker advanced this row first. Do not send from a stale read.
+        delivered = true;
         break;
       }
       try {
