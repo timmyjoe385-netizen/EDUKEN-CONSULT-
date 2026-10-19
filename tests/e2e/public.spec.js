@@ -68,22 +68,29 @@ test('wallet notification emails are skipped for idempotent settlement retries',
   expect(walletRefund).toContain('refund?.reused !== true');
 });
 
-test('payment notification delivery retries provider failures with a stable idempotency key', () => {
+test('payment notification delivery retries durable pending rows with stable idempotency keys', () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
-  const start = handler.indexOf('async function sendPaymentNotifications(');
-  const end = handler.indexOf('async function sendServicePaymentNotifications(', start);
+  const start = handler.indexOf('async function deliverPendingPaymentNotifications(');
+  const end = handler.indexOf('async function sendPaymentNotifications(', start);
   expect(start).toBeGreaterThanOrEqual(0);
   expect(end).toBeGreaterThan(start);
-  const notification = handler.slice(start, end);
-  expect(notification).toContain('for (let attempt = 1; attempt <= 3; attempt++)');
-  expect(notification).toContain('attempt * 500');
+  const delivery = handler.slice(start, end);
+  const enqueueStart = end;
+  const enqueueEnd = handler.indexOf('async function sendServicePaymentNotifications(', enqueueStart);
+  expect(enqueueEnd).toBeGreaterThan(enqueueStart);
+  const enqueue = handler.slice(enqueueStart, enqueueEnd);
+  expect(delivery).toContain('for (let attempt = 1; attempt <= 3; attempt++)');
+  expect(delivery).toContain('attempt * 500');
   expect(handler).toContain('async function paymentNotificationIdempotencyKey(');
   expect(handler).toContain('recipient.trim().toLowerCase()');
   expect(handler).toContain('const identity = [reference, kind, role, recipient.trim().toLowerCase()]');
-  expect(notification).toContain('await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to)');
-  expect(notification).toContain('if (!messageId) throw new Error("Transactional email provider returned no message ID.")');
-  expect(notification).toContain('after bounded retries');
-  expect(notification).toContain('if (!delivered)');
+  expect(enqueue).toContain('await paymentNotificationIdempotencyKey(reference, kind, message.role, message.to)');
+  expect(delivery).toContain('if (!messageId) throw new Error("Transactional email provider returned no message ID.")');
+  expect(delivery).toContain('after bounded retries');
+  expect(delivery).toContain('if (!delivered)');
+  expect(delivery).toContain('.eq("status", "pending")');
+  expect(enqueue).toContain('onConflict: "idempotency_key", ignoreDuplicates: true');
+  expect(handler).toContain('payment_notification_deliveries');
 });
 
 test('guest and authenticated payment verification retries do not resend service receipts', () => {
