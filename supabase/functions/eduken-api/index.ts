@@ -554,10 +554,14 @@ async function deliverPendingPaymentNotifications(
     const html = "<p>" + String(item.text_body || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
     let delivered = false;
     let lastError = "Notification delivery did not complete.";
-    for (let attempt = 1; attempt <= 3; attempt++) {
+    const attemptsAlreadyUsed = Math.max(0, Number(item.attempt_count || 0));
+    const attemptsRemaining = Math.max(0, 9 - attemptsAlreadyUsed);
+    const attemptsThisInvocation = Math.min(3, attemptsRemaining);
+    for (let attempt = 1; attempt <= attemptsThisInvocation; attempt++) {
       const { error: attemptUpdateError } = await db.from("payment_notification_deliveries")
-        .update({ attempt_count: Number(item.attempt_count || 0) + attempt, last_error: null, updated_at: new Date().toISOString() })
-        .eq("id", item.id).eq("status", "pending");
+        .update({ attempt_count: attemptsAlreadyUsed + attempt, last_error: null, updated_at: new Date().toISOString() })
+        .eq("id", item.id).eq("status", "pending")
+        .lt("attempt_count", 9);
       if (attemptUpdateError) {
         lastError = "Could not persist delivery attempt.";
         console.error("Could not update payment notification attempt.", attemptUpdateError.message);
