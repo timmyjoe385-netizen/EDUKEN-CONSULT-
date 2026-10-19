@@ -37,7 +37,7 @@ jobs:
           from urllib.parse import urlsplit
 
           url = urlsplit(os.environ["PROCESS_URL"])
-          expected_host = "pphxltbkwygqjtjgkhxu.supabase.co"
+          expected_host = "wpktzogarfqrgkirzdpy.supabase.co"
           expected_path = "/functions/v1/eduken-api/api/internal/payment-notifications/process"
           if (
               url.scheme != "https"
@@ -49,7 +49,7 @@ jobs:
               or url.query
               or url.fragment
           ):
-              raise SystemExit("PROCESS_URL must be the HTTPS EDUKEN payment notification processor endpoint.")
+              raise SystemExit("PROCESS_URL must be the HTTPS isolated-test EDUKEN payment notification processor endpoint.")
           PY
           if [ "${#CRON_SECRET}" -lt 32 ]; then
             echo "CRON_SECRET must be at least 32 characters."
