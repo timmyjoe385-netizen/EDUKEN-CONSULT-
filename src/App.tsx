@@ -896,6 +896,7 @@ function App() {
   const shareOpportunityOnWhatsApp = (item: Item) => {
     const slug = item.slug || makeSlug(item.title || item.id);
     const link = shortArticleUrl(slug);
+    const location = String(item.location || '').replace(/\s+/g, ' ').trim();
     const teaser = String(item.description || item.content || '')
       .split(/\r?\n/)[0]
       .trim()
@@ -903,14 +904,14 @@ function App() {
     const message = [
       '📢 ' + (item.title || 'EDUKEN CONSULT Update'),
       '',
-      teaser,
+      ...(location ? ['Location: ' + location] : teaser ? [teaser] : []),
       '',
       '🔗 READ MORE HERE 👇',
       link,
       '',
       '🎓 EDUKEN CONSULT',
       'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
-    ].filter(Boolean).join('\n');
+    ].join('\n');
     window.open(
       'https://wa.me/?text=' + encodeURIComponent(message),
       '_blank',
@@ -1347,6 +1348,7 @@ function App() {
       'title',
       'category',
       'description',
+      'location',
       'deadline',
       'link',
       'status',
