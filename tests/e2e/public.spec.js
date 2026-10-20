@@ -1708,3 +1708,39 @@ test('standalone aggregate calculator applies saved light and dark theme with re
   await expect(heading).toHaveCSS('color', 'rgb(23, 63, 49)');
 });
 
+test('public opportunity hub hides expired deadlines but keeps current opportunities', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [
+          {
+            id: 'expired-opportunity-fixture',
+            title: 'Expired Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A test-only opportunity whose deadline has passed.',
+            deadline: '15 October 2026',
+            is_published: true,
+          },
+          {
+            id: 'current-opportunity-fixture',
+            title: 'Current Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A test-only opportunity that remains open.',
+            deadline: '30 October 2026',
+            is_published: true,
+          },
+        ],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/#opportunities', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
+  await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
+});
