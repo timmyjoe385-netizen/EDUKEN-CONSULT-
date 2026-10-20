@@ -113,6 +113,9 @@ function App() {
   const [contentLoadFailed, setContentLoadFailed] = useState(false);
   const [user, setUser] = useState<any>(null);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [adminDeviceShortcut, setAdminDeviceShortcut] = useState(() => {
+    try { return window.localStorage.getItem('eduken-admin-device-shortcut') === 'true'; } catch { return false; }
+  });
   const [adminView, setAdminView] = useState(false);
   const [adminTab, setAdminTab] = useState('opportunities');
   const [systemSettings, setSystemSettings] = useState<SystemSettings>(DEFAULT_SYSTEM_SETTINGS);
@@ -407,10 +410,14 @@ function App() {
 
   useEffect(() => {
     let active = true;
-    // Admin entry is intentionally not linked from public navigation.
-    // Owners can open /admin directly; OAuth returns to this same path.
-    if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
+    // Keep the admin entrance off public navigation. An owner can opt this browser into
+    // an admin shortcut; only this browser profile remembers that preference.
+    if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
       setLoginOpen(true);
+    } else {
+      try {
+        if (window.localStorage.getItem('eduken-admin-device-shortcut') === 'true') setLoginOpen(true);
+      } catch { /* Private browsing may disable storage; /admin still works directly. */ }
     }
     const params = new URLSearchParams(window.location.search);
     const verificationToken = params.get('email_alert_verify');
@@ -2249,6 +2256,22 @@ function App() {
             <span className="kicker">PRIVATE ADMIN ACCESS</span>
             <h2 id="admin-login-title">Admin sign in</h2>
             <p>This private sign-in page is for authorized EDUKEN CONSULT administrators only.</p>
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: 9, margin: '14px 0 18px', fontSize: 13, lineHeight: 1.45, color: '#53605a', cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={adminDeviceShortcut}
+                onChange={event => {
+                  const enabled = event.target.checked;
+                  setAdminDeviceShortcut(enabled);
+                  try {
+                    if (enabled) window.localStorage.setItem('eduken-admin-device-shortcut', 'true');
+                    else window.localStorage.removeItem('eduken-admin-device-shortcut');
+                  } catch { /* The direct /admin entrance remains available without storage. */ }
+                }}
+                style={{ marginTop: 3, accentColor: '#285e46' }}
+              />
+              <span>Remember this device: show me the admin sign-in when I open EDUKEN CONSULT on this browser.</span>
+            </label>
             <button className="primary login-submit" type="button" onClick={() => void signIn()}><ArrowRight size={17} /> Continue with Google</button>
           </section>
         </div>
