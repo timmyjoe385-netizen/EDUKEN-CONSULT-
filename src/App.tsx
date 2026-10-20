@@ -430,7 +430,7 @@ function App() {
       // OAuth can also be used by customers from the public wallet. Completing that
       // callback establishes their customer session, but must never switch the public
       // homepage into the admin dashboard merely because their email is admin-allowlisted.
-      if (window.location.pathname.replace(/\\/+$/, '') !== '/admin') {
+      if (window.location.pathname.replace(/\/+$/, '') !== '/admin') {
         setUser(null);
         setAdminView(false);
         return;
