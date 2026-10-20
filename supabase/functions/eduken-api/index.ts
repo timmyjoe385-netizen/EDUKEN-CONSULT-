@@ -696,7 +696,7 @@ async function sendServicePaymentNotifications(payment: {
   );
 }
 
-async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify" | "wallet-deposit-initialize" | "wallet-deposit-verify") {
+async function consumeEmailAlertRateLimit(req: Request, action: "subscribe" | "verify" | "unsubscribe" | "consultation" | "service-request" | "guest-payment-initialize" | "guest-payment-verify" | "guest-payment-recovery" | "wallet-deposit-initialize" | "wallet-deposit-verify") {
   const ip = getEmailAlertClientIp(req.headers);
   if (!ip) return null;
   const policy = emailAlertRateLimitPolicy(action);
@@ -1816,6 +1816,75 @@ Deno.serve(async (req) => {
         return json({ payment: reservation, authorizationUrl, accessCode: result.data.access_code, reference, recoveryRequired: true });
       }
       return json({ payment, authorizationUrl, accessCode: result.data.access_code, reference });
+    }
+
+    if (path === "/api/payments/recover-guest" && req.method === "POST") {
+      // Safe callback recovery when the browser lost sessionStorage: the high-entropy
+      // EDUKEN reference is only a lookup key; Paystack remains the source of truth.
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-recovery"); } catch { return json({ error: "Payment recovery is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Payment recovery is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many recovery attempts. Please wait before trying again." }, 429);
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid payment reference is required." }, 400);
+      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
+      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack verification is temporarily unavailable." }, 503);
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
+        .eq("payment_reference", reference).maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment || !existingPayment.service_request_id) return json({ error: "We could not match this reference to a service checkout. Please contact EDUKEN CONSULT before paying again." }, 404);
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,email,user_id").eq("id", existingPayment.service_request_id).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "We could not match this reference to a service checkout. Please contact EDUKEN CONSULT before paying again." }, 404);
+      // Even when our database already says Paid, recovery must verify the provider
+      // and match the stored amount/currency/reference before reporting confirmation.
+      // Do not resend payment notifications merely because a customer revisits the callback.
+      const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
+        headers: { "Authorization": "Bearer " + secret }
+      });
+      let result: any;
+      try { result = await response.json(); } catch { return json({ error: "Unable to verify payment with the provider yet. Do not pay again immediately." }, 502); }
+      if (!response.ok || !result.status || !result.data) return json({ error: "Unable to verify payment with the provider yet. Do not pay again immediately." }, 502);
+      const transaction = result.data;
+      // The provider response must correspond to the exact reference we asked to verify,
+      // even when the provider reports a non-success status. Never mutate a local payment
+      // based on a contradictory transaction response.
+      if (String(transaction.reference || "") !== reference) {
+        return json({ error: "The provider returned a different payment reference. Please contact support before taking further action." }, 409);
+      }
+      const paid = isSuccessfulPaystackTransaction(transaction);
+      if (paid && !matchesStoredPaystackPayment(transaction, { amount: existingPayment.amount, currency: existingPayment.currency, reference })) {
+        return json({ error: "The provider's payment details do not match this checkout. Please contact support." }, 409);
+      }
+      // Never report a previously-Paid database row as Failed/Pending if the provider
+      // response conflicts. Preserve the stored state and require support investigation.
+      if (existingPayment.status === "Paid" && !paid) {
+        return json({ error: "The stored payment status conflicts with the provider response. Please contact support before taking further action." }, 409);
+      }
+      const nextPaymentStatus = getNextPaymentStatus(transaction);
+      const { data: payment, error: updateError } = await db.from("payments").update({
+        status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
+      }).eq("id", existingPayment.id).eq("payment_reference", reference).in("status", ["Pending", "Failed"]).select("id,status").maybeSingle();
+      if (updateError) throw updateError;
+      if (paid && !payment) {
+        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Please refresh and check again." }, 409);
+      }
+      if (paid) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id);
+        if (requestUpdateError) throw requestUpdateError;
+        // Notify only on the successful Pending/Failed -> Paid transition performed
+        // by this request. A repeated recovery of an already-Paid row is read/repair-only.
+        if (payment) {
+          await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        }
+      }
+      return json({ paid, recovered: true, status: paid ? "Paid" : nextPaymentStatus });
     }
 
     if (path === "/api/payments/verify-guest" && req.method === "POST") {

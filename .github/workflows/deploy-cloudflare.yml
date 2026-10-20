@@ -53,6 +53,27 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 6c2433e899d3005cdf82b8eaa98de61f
+      - name: Smoke-test isolated guest payment recovery endpoint
+        if: github.event_name == 'pull_request' && (github.head_ref == 'fix/guest-payment-return-recovery-20261019' || github.head_ref == 'integration/main-release-candidate-20261020')
+        env:
+          TEST_SUPABASE_URL: https://wpktzogarfqrgkirzdpy.supabase.co
+          TEST_SUPABASE_PUBLISHABLE_KEY: sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB
+        run: |
+          node --input-type=module <<'NODE'
+          const base = process.env.TEST_SUPABASE_URL;
+          const key = process.env.TEST_SUPABASE_PUBLISHABLE_KEY;
+          if (!base || !key) throw new Error('Isolated test Supabase URL/publishable key is not configured.');
+          const response = await fetch(`${base}/functions/v1/eduken-api/api/payments/recover-guest`, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', apikey: key },
+            body: JSON.stringify({ reference: 'EDK-PAY-AAAAAAAAAAAAAAAAAA' }),
+          });
+          const body = await response.json().catch(() => ({}));
+          if (response.status !== 404 || !String(body.error || '').includes('could not match this reference')) {
+            throw new Error(`Expected safe 404 for nonexistent test reference; got HTTP ${response.status}: ${JSON.stringify(body)}`);
+          }
+          console.log('Recovery endpoint reached isolated database and safely rejected a nonexistent reference (HTTP 404). No payment was initiated.');
+          NODE
 
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
