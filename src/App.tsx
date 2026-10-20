@@ -103,6 +103,9 @@ const emptyContent: Content = {
 
 
 function App() {
+  // Test checkout UI is opt-in on the isolated preview only; never inject test products into ordinary browsing.
+  const testCheckoutRequested = new URLSearchParams(window.location.search).get('testCheckout') === '1' || window.location.pathname.replace(/\/+$/, '') === '/make-payments';
+  const showTestPreviewUi = usesIsolatedTestBackend && testCheckoutRequested;
   const [menu, setMenu] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [search, setSearch] = useState('');
@@ -326,7 +329,7 @@ function App() {
       // Preview checkout must use only the isolated test catalogue. Keep a known test-only
       // service visible if public catalogue loading fails; the checkout API still validates
       // the service ID and availability against the isolated database before creating a request.
-      if (usesIsolatedTestBackend) {
+      if (showTestPreviewUi) {
         const previewTestService = {
           id: '376b883f-3a8c-490f-a130-ee5adefeaa2b',
           name: 'EDUKEN TEST CHECKOUT SERVICE — TEST ONLY',
@@ -2406,7 +2409,7 @@ function App() {
           {toast}
         </div>
       )}
-      {usesIsolatedTestBackend && (
+      {showTestPreviewUi && (
         <div role="status" style={{ background: '#fff3cd', color: '#664d03', border: '1px solid #ffecb5', padding: '12px 18px', textAlign: 'center', fontWeight: 700 }}>
           TEST PREVIEW ONLY — isolated checkout · synthetic ₦100 service · no real fulfilment or live payments
         </div>
