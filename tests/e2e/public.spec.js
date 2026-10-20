@@ -18,6 +18,20 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('opportunity WhatsApp sharing includes the saved location and branded read-more link', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const shareStart = app.indexOf('const shareOpportunityOnWhatsApp = (item: Item) => {');
+  const shareEnd = app.indexOf('const shareUpdateOnWhatsApp = (item: Item) => {', shareStart);
+  expect(shareStart).toBeGreaterThanOrEqual(0);
+  expect(shareEnd).toBeGreaterThan(shareStart);
+  const share = app.slice(shareStart, shareEnd);
+  expect(share).toContain("const location = String(item.location || '')");
+  expect(share).toContain("'Location: ' + location");
+  expect(share).toContain("'🔗 READ MORE HERE 👇'");
+  expect(share).toContain("'🎓 EDUKEN CONSULT'");
+  expect(app).toContain("      'location',");
+});
+
 test('isolated preview uses test service catalogue while preserving live public education content', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const apiClient = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
