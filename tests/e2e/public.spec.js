@@ -33,8 +33,8 @@ test('opportunity WhatsApp sharing uses a category heading, bold title, saved lo
   expect(share).toContain("'📢 *' + title + '*'");
   expect(share).toContain("const location = String(item.location || '')");
   expect(share).toContain("'📍 Location: ' + location");
-  expect(share).toContain("'🔗 READ MORE HERE 👇'");
-  expect(share).toContain("'🎓 EDUKEN CONSULT'");
+  expect(share).toContain("'🔗 *READ FULL DETAILS & APPLY 👇*'");
+  expect(share).toContain("'🎓 *EDUKEN CONSULT*'");
   expect(app).toContain("      'location',");
 });
 
