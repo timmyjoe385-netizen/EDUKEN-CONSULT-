@@ -896,22 +896,46 @@ function App() {
   const shareOpportunityOnWhatsApp = (item: Item) => {
     const slug = item.slug || makeSlug(item.title || item.id);
     const link = shortArticleUrl(slug);
+    const category = String(item.category || '').trim();
     const location = String(item.location || '').replace(/\s+/g, ' ').trim();
-    const teaser = String(item.description || item.content || '')
-      .split(/\r?\n/)[0]
-      .trim()
-      .slice(0, 240);
+    const context = [category, item.title, item.description, item.content]
+      .filter(Boolean)
+      .join(' ');
+    const categoryHeading = /scholarship|grant|bursar|funding|fellowship/i.test(category)
+      ? '🎓 *SCHOLARSHIPS & GRANTS*'
+      : /admission|post.?utme|ijmb|jupeb|pre.?degree/i.test(category)
+        ? '🎓 *ADMISSION OPPORTUNITIES*'
+        : /remote/i.test(category)
+          ? '🌍 *REMOTE OPPORTUNITIES*'
+          : /job|employment|vacanc|internship|graduate trainee/i.test(category) ||
+              (!category && /job|employment|vacanc|internship|graduate trainee|class teacher|teacher vacancy/i.test(context))
+            ? '💼 *JOB OPPORTUNITIES*'
+            : /career|mentor/i.test(category)
+              ? '🌱 *CAREER & MENTORSHIP*'
+              : /education|update|announcement|exam/i.test(category)
+                ? '📢 *EDUCATIONAL UPDATES*'
+                : /scholarship|grant|bursar|funding|fellowship/i.test(context)
+                  ? '🎓 *SCHOLARSHIPS & GRANTS*'
+                  : /admission|post.?utme|ijmb|jupeb|pre.?degree/i.test(context)
+                    ? '🎓 *ADMISSION OPPORTUNITIES*'
+                    : /remote/i.test(context)
+                      ? '🌍 *REMOTE OPPORTUNITIES*'
+                      : /job|employment|vacanc|internship|graduate trainee|class teacher|teacher vacancy/i.test(context)
+                        ? '💼 *JOB OPPORTUNITIES*'
+                        : '📢 *EDUKEN OPPORTUNITIES*';
+    const title = String(item.title || 'EDUKEN CONSULT Opportunity').trim();
     const message = [
-      '📢 ' + (item.title || 'EDUKEN CONSULT Update'),
+      categoryHeading,
       '',
-      ...(location ? ['Location: ' + location] : teaser ? [teaser] : []),
+      '📢 *' + title + '*',
+      ...(location ? ['📍 Location: ' + location] : []),
       '',
       '🔗 READ MORE HERE 👇',
       link,
       '',
       '🎓 EDUKEN CONSULT',
       'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
-    ].join('\n');
+    ].join('\\n');
     window.open(
       'https://wa.me/?text=' + encodeURIComponent(message),
       '_blank',
