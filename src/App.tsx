@@ -3118,7 +3118,7 @@ function App() {
 
       {pendingEmailAction && (
         <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1100, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16 }}>
-          <section role="dialog" aria-modal="true" aria-labelledby="email-alert-action-title" style={{ width: '100%', maxWidth: 480, background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+          <section className="email-alert-action-dialog" role="dialog" aria-modal="true" aria-labelledby="email-alert-action-title" style={{ width: '100%', maxWidth: 480, borderRadius: 18, padding: 22 }}>
             <span className="kicker">EDUKEN EMAIL ALERTS</span>
             <h2 id="email-alert-action-title">{pendingEmailAction.type === 'verify' ? 'Confirm your email alerts?' : 'Unsubscribe from email alerts?'}</h2>
             <p>{pendingEmailAction.type === 'verify'
@@ -3146,7 +3146,7 @@ function App() {
       )}
       {selectedService && (
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
-          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+          <section className="service-request-dialog" role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', borderRadius: 18, padding: 22 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
               <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. Submit your details to continue to secure checkout for priced services. If a price needs confirmation, EDUKEN will contact you before payment.</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
