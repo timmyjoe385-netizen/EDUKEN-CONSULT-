@@ -3282,3 +3282,91 @@ html[data-theme="dark"] .jamb-service-status.is-unavailable {
   color: #ffb4b8;
   border-color: #74353d;
 }
+
+
+/* Visual QA polish: make catalogue cards readable and price/status treatments
+   consistent at phone and tablet widths without changing service behaviour. */
+.jamb-catalogue-section .jamb-service-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 16px;
+}
+.jamb-catalogue-section .jamb-service-card {
+  border-radius: 16px;
+  padding: clamp(15px, 2vw, 20px);
+}
+.jamb-catalogue-section .jamb-service-card__description {
+  color: #405449;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.jamb-catalogue-section .jamb-service-requirements {
+  background: #f3f8f4;
+  border-color: #d6e5da;
+}
+.jamb-catalogue-section .jamb-service-requirements p {
+  color: #344d3d;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.jamb-catalogue-section .jamb-service-price,
+.jamb-catalogue-section .jamb-service-card.is-unavailable .jamb-service-price {
+  background: #edf5ef;
+  border: 1px solid #d9e8dd;
+}
+.jamb-catalogue-section .jamb-service-price__label,
+.jamb-catalogue-section .jamb-service-price__unit {
+  color: #425d4b;
+}
+.jamb-catalogue-section .jamb-service-card.is-unavailable .jamb-service-price strong {
+  color: #244b37;
+}
+@media (max-width: 760px) {
+  .jamb-catalogue-section .jamb-service-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+    gap: 13px;
+  }
+  .jamb-catalogue-section .jamb-service-card {
+    gap: 13px;
+  }
+  .jamb-catalogue-section .jamb-service-card__description {
+    font-size: 14px;
+  }
+}
+@media (max-width: 560px) {
+  .jamb-catalogue-section .jamb-service-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .jamb-catalogue-section .jamb-service-card {
+    padding: 16px;
+  }
+  .jamb-catalogue-section .jamb-service-price {
+    column-gap: 6px;
+    padding: 12px;
+  }
+  .jamb-catalogue-section .jamb-service-price strong {
+    font-size: clamp(18px, 5vw, 22px);
+  }
+}
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-requirements {
+  background: #10243d;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-requirements__label {
+  color: #b8e1c8;
+}
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-requirements p,
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-card__description {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-price,
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-card.is-unavailable .jamb-service-price {
+  background: #102c2b;
+  border-color: #285e46;
+}
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-price__label,
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-price__unit {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .jamb-catalogue-section .jamb-service-card.is-unavailable .jamb-service-price strong {
+  color: #b8e1c8;
+}
