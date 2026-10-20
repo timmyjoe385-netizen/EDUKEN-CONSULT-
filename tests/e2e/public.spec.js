@@ -928,11 +928,13 @@ test('student service deliverables require ownership and published state and use
   const listStart = source.indexOf('if (path === "/api/service-deliverables" && req.method === "GET")');
   const downloadStart = source.indexOf('if (path.startsWith("/api/service-deliverables/")');
   const adminUploadStart = source.indexOf('if (path === "/api/admin/service-deliverables/upload-url" && req.method === "POST")');
+  const adminRequestsStart = source.indexOf('const adminRequests = path.match(');
   expect(listStart).toBeGreaterThanOrEqual(0);
   expect(downloadStart).toBeGreaterThan(listStart);
   expect(adminUploadStart).toBeGreaterThanOrEqual(0);
+  expect(adminRequestsStart).toBeGreaterThan(downloadStart);
   const listRoute = source.slice(listStart, downloadStart);
-  const downloadRoute = source.slice(downloadStart, adminUploadStart);
+  const downloadRoute = source.slice(downloadStart, adminRequestsStart);
   const adminRoute = source.slice(adminUploadStart, listStart);
   expect(listRoute).toContain('await requireUser(req)');
   expect(listRoute).toContain('.eq("user_id", user.id)');
