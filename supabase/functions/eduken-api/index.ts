@@ -1854,6 +1854,11 @@ Deno.serve(async (req) => {
       if (paid && !matchesStoredPaystackPayment(transaction, { amount: existingPayment.amount, currency: existingPayment.currency, reference })) {
         return json({ error: "The provider's payment details do not match this checkout. Please contact support." }, 409);
       }
+      // Never report a previously-Paid database row as Failed/Pending if the provider
+      // response conflicts. Preserve the stored state and require support investigation.
+      if (existingPayment.status === "Paid" && !paid) {
+        return json({ error: "The stored payment status conflicts with the provider response. Please contact support before taking further action." }, 409);
+      }
       const nextPaymentStatus = getNextPaymentStatus(transaction);
       const { data: payment, error: updateError } = await db.from("payments").update({
         status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
