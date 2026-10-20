@@ -1670,7 +1670,7 @@ test('admin workspace access is decided by server-side authorization, not a publ
   expect(app).not.toContain('edukenconsult00@gmail.com');
 });
 
-test('admin sign-in is not linked publicly and /admin shows only the private sign-in page', async ({ page }) => {
+test('admin sign-in is not linked publicly and /admin offers an opt-in device shortcut', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1680,9 +1680,27 @@ test('admin sign-in is not linked publicly and /admin shows only the private sig
   );
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
+  await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toHaveCount(0);
   await page.goto('/admin', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  const remember = page.getByRole('checkbox', { name: /Remember this device/i });
+  await expect(remember).not.toBeChecked();
+  await remember.check();
+  await expect.poll(() => page.evaluate(() => localStorage.getItem('eduken-admin-device-shortcut'))).toBe('true');
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+  await expect(page.locator('.site')).toBeVisible();
+  await page.getByRole('button', { name: 'Close sign-in' }).click();
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toBeVisible();
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('checkbox', { name: /Remember this device/i }).uncheck();
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toHaveCount(0);
+  await expect(page.locator('.site')).toBeVisible();
+  await page.goto('/admin', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('dialog', { name: 'Admin sign in' })).toBeVisible();
   await expect(page.locator('.site')).toHaveCount(0);
   await expect(page.locator('.admin-shell')).toHaveCount(0);
 });
