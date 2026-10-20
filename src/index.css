@@ -3370,3 +3370,121 @@ html[data-theme="dark"] .jamb-catalogue-section .jamb-service-price__unit {
 html[data-theme="dark"] .jamb-catalogue-section .jamb-service-card.is-unavailable .jamb-service-price strong {
   color: #b8e1c8;
 }
+
+
+/* Student workspace visual correction: tighter section rhythm, clearer copy,
+   and consistent card proportions on small screens. Scoped to the workspace. */
+.platform-hub.section {
+  padding-top: clamp(44px, 6vw, 76px);
+  padding-bottom: clamp(44px, 6vw, 76px);
+}
+.platform-hub .section-head {
+  align-items: flex-start;
+  gap: clamp(18px, 3vw, 34px);
+  margin-bottom: clamp(22px, 3vw, 32px);
+}
+.platform-hub .section-head h2 {
+  max-width: 620px;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+}
+.platform-hub .section-head > p {
+  margin: 4px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #52645a;
+}
+.platform-hub .platform-grid {
+  gap: 16px;
+  align-items: stretch;
+}
+.platform-hub .platform-card {
+  align-content: start;
+  gap: 13px;
+  padding: clamp(18px, 2.4vw, 26px);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(23, 63, 49, 0.045);
+}
+.platform-hub .platform-card h3 {
+  font-size: clamp(17px, 1.6vw, 19px);
+  line-height: 1.3;
+}
+.platform-hub .platform-card p {
+  color: #52645a;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.platform-hub .platform-wide {
+  margin-top: 18px;
+  border-radius: 16px;
+}
+.platform-hub .finder-box {
+  padding: clamp(18px, 2.4vw, 26px);
+}
+.platform-hub .finder-box p,
+.platform-hub .finder-results,
+.platform-hub .finder-results small {
+  color: #52645a;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.platform-hub .platform-input,
+.platform-hub .finder-inputs input {
+  min-height: 44px;
+  border-radius: 10px;
+}
+.platform-hub :is(button, input, select, textarea):focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 3px;
+}
+html[data-theme="dark"] .platform-hub .section-head > p,
+html[data-theme="dark"] .platform-hub .platform-card p,
+html[data-theme="dark"] .platform-hub .finder-box p,
+html[data-theme="dark"] .platform-hub .finder-results,
+html[data-theme="dark"] .platform-hub .finder-results small {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .platform-hub .platform-card {
+  background: #0d2038;
+  border-color: #294560;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+}
+html[data-theme="dark"] .platform-hub .platform-icon {
+  background: #123b36;
+  color: #b8e1c8;
+}
+html[data-theme="dark"] .platform-hub .platform-results button {
+  background: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .platform-hub .platform-results span,
+html[data-theme="dark"] .platform-hub .platform-results small {
+  color: #b8e1c8;
+}
+@media (max-width: 700px) {
+  .platform-hub.section {
+    padding: 42px 5% 48px;
+  }
+  .platform-hub .section-head {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .platform-hub .section-head h2 {
+    font-size: clamp(29px, 8vw, 38px);
+  }
+  .platform-hub .section-head > p {
+    font-size: 14px;
+  }
+  .platform-hub .platform-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .platform-hub .platform-card {
+    padding: 18px;
+  }
+  .platform-hub .platform-wide {
+    margin-top: 12px;
+  }
+}
