@@ -427,8 +427,16 @@ function App() {
     }
     void auth.completeOAuthCallback().then(async (result: any) => {
       if (!active || !result) return;
-      // Ask the backend whether this account is an authorized administrator.
-      // Never ship the administrator email allowlist in the public frontend bundle.
+      // OAuth can also be used by customers from the public wallet. Completing that
+      // callback establishes their customer session, but must never switch the public
+      // homepage into the admin dashboard merely because their email is admin-allowlisted.
+      if (window.location.pathname.replace(/\\/+$/, '') !== '/admin') {
+        setUser(null);
+        setAdminView(false);
+        return;
+      }
+      // Only the private /admin route may transition into the admin workspace.
+      // The server remains the authority for whether this account is an administrator.
       try {
         const access = await api.get('/api/admin/session');
         if (access.data?.admin !== true) throw new Error('Admin access is not available.');
