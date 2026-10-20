@@ -1329,6 +1329,9 @@ function App() {
     await auth.signOut();
     setUser(null);
     setAdminView(false);
+    // Keep the owner on the private /admin entrance with the sign-in prompt ready,
+    // so signing out never strands them on a blank or public view.
+    setLoginOpen(true);
   };
 
   const adminFields: Record<string, string[]> = {
