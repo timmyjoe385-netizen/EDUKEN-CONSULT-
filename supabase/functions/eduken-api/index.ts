@@ -2022,6 +2022,121 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/admin/service-deliverables/upload-url" && req.method === "POST") {
+      await requireAdmin(req);
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const requestId = typeof body?.serviceRequestId === "string" ? body.serviceRequestId : "";
+      const title = typeof body?.title === "string" ? body.title.trim() : "";
+      const description = typeof body?.description === "string" ? body.description.trim() : "";
+      const filename = typeof body?.filename === "string" ? body.filename.trim().replace(/[\\/\\r\\n\\0]/g, "_") : "";
+      const mimeType = typeof body?.mimeType === "string" ? body.mimeType.trim().toLowerCase() : "";
+      const size = Number(body?.fileSizeBytes);
+      const allowedMimeTypes = new Set([
+        "application/pdf", "image/jpeg", "image/png", "image/webp", "text/plain",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      ]);
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestId) ||
+          title.length < 1 || title.length > 160 || description.length > 3000 ||
+          filename.length < 1 || filename.length > 255 ||
+          !allowedMimeTypes.has(mimeType) || !Number.isSafeInteger(size) || size < 1 || size > 15728640) {
+        return json({ error: "Provide a valid request, title, filename, supported file type and file size up to 15 MB." }, 400);
+      }
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,user_id,status").eq("id", requestId).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "Service request not found." }, 404);
+      if (!request.user_id || !["Paid", "In Progress", "Completed"].includes(String(request.status))) {
+        return json({ error: "Documents can only be prepared for an account-linked, payment-confirmed service request." }, 409);
+      }
+      const extension = filename.includes(".") ? filename.split(".").pop()!.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 10) : "bin";
+      const objectPath = request.user_id + "/" + request.id + "/" + crypto.randomUUID() + "." + extension;
+      const { data: signedUpload, error: uploadError } = await db.storage
+        .from("eduken-service-deliverables").createSignedUploadUrl(objectPath, { upsert: false });
+      if (uploadError || !signedUpload?.signedUrl || !signedUpload?.token) {
+        console.error("Could not create admin deliverable upload URL.", uploadError?.message);
+        return json({ error: "Secure upload is unavailable. Confirm the private storage bucket migration has been applied in the isolated test environment." }, 503);
+      }
+      return json({
+        uploadUrl: signedUpload.signedUrl,
+        uploadToken: signedUpload.token,
+        storagePath: objectPath,
+        serviceRequestId: request.id,
+        userId: request.user_id,
+        title,
+        description: description || null,
+        originalFilename: filename,
+        mimeType,
+        fileSizeBytes: size,
+        expiresInSeconds: 120,
+      }, 201);
+    }
+
+    if (path === "/api/admin/service-deliverables" && req.method === "POST") {
+      const admin = await requireAdmin(req);
+      let body: any;
+      try { body = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const requestId = typeof body?.serviceRequestId === "string" ? body.serviceRequestId : "";
+      const storagePath = typeof body?.storagePath === "string" ? body.storagePath : "";
+      const title = typeof body?.title === "string" ? body.title.trim() : "";
+      const description = typeof body?.description === "string" ? body.description.trim() : "";
+      const filename = typeof body?.originalFilename === "string" ? body.originalFilename.trim() : "";
+      const mimeType = typeof body?.mimeType === "string" ? body.mimeType.trim().toLowerCase() : "";
+      const size = Number(body?.fileSizeBytes);
+      const publish = body?.publish === true;
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestId) ||
+          title.length < 1 || title.length > 160 || description.length > 3000 ||
+          filename.length < 1 || filename.length > 255 || !Number.isSafeInteger(size) || size < 1 || size > 15728640 ||
+          !storagePath.startsWith("") || !mimeType) {
+        return json({ error: "Deliverable metadata is invalid." }, 400);
+      }
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,user_id,status").eq("id", requestId).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "Service request not found." }, 404);
+      if (!request.user_id || !["Paid", "In Progress", "Completed"].includes(String(request.status))) {
+        return json({ error: "Documents can only be published for an account-linked, payment-confirmed service request." }, 409);
+      }
+      // Object paths are generated by the upload-url endpoint; constrain the path to this exact student's request.
+      const pathPrefix = request.user_id + "/" + request.id + "/";
+      if (!storagePath.startsWith(pathPrefix) || storagePath.includes("..") || storagePath.includes("\\\\")) {
+        return json({ error: "Upload path does not match this student's service request." }, 400);
+      }
+      const folder = pathPrefix;
+      const basename = storagePath.slice(folder.length);
+      if (!basename || basename.includes("/")) return json({ error: "Upload path is invalid." }, 400);
+      const { data: storedObjects, error: objectError } = await db.storage.from("eduken-service-deliverables")
+        .list(folder, { search: basename, limit: 10 });
+      if (objectError) {
+        console.error("Could not verify uploaded deliverable object.", objectError.message);
+        return json({ error: "Uploaded file could not be verified. Please retry the upload." }, 503);
+      }
+      const storedObject = (storedObjects ?? []).find((item: any) => item.name === basename);
+      if (!storedObject) return json({ error: "The file upload has not completed. Upload the file before saving its details." }, 409);
+      const actualSize = Number(storedObject.metadata?.size ?? 0);
+      if (actualSize !== size || (storedObject.metadata?.mimetype && storedObject.metadata.mimetype !== mimeType)) {
+        return json({ error: "Uploaded file details do not match the supplied metadata." }, 409);
+      }
+      const { data: created, error: createError } = await db.from("service_deliverables").insert({
+        service_request_id: request.id,
+        user_id: request.user_id,
+        title,
+        description: description || null,
+        storage_path: storagePath,
+        original_filename: filename,
+        mime_type: mimeType,
+        file_size_bytes: size,
+        published_at: publish ? new Date().toISOString() : null,
+        published_by: publish ? admin.id : null,
+      }).select("id,title,published_at,created_at").single();
+      if (createError) {
+        if (createError.code === "23505") return json({ error: "This uploaded file has already been registered." }, 409);
+        throw createError;
+      }
+      return json({ ok: true, deliverable: created }, 201);
+    }
+
     if (path === "/api/service-deliverables" && req.method === "GET") {
       const user = await requireUser(req);
       const { data, error } = await db.from("service_deliverables")
