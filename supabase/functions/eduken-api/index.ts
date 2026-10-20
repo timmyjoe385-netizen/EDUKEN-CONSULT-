@@ -1840,12 +1840,9 @@ Deno.serve(async (req) => {
         .select("id,email,user_id").eq("id", existingPayment.service_request_id).maybeSingle();
       if (requestError) throw requestError;
       if (!request) return json({ error: "We could not match this reference to a service checkout. Please contact EDUKEN CONSULT before paying again." }, 404);
-      if (existingPayment.status === "Paid") {
-        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id);
-        if (requestUpdateError) throw requestUpdateError;
-        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
-        return json({ paid: true, recovered: true });
-      }
+      // Even when our database already says Paid, recovery must verify the provider
+      // and match the stored amount/currency/reference before reporting confirmation.
+      // Do not resend payment notifications merely because a customer revisits the callback.
       const response = await fetch("https://api.paystack.co/transaction/verify/" + encodeURIComponent(reference), {
         headers: { "Authorization": "Bearer " + secret }
       });
@@ -1870,7 +1867,11 @@ Deno.serve(async (req) => {
       if (paid) {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id);
         if (requestUpdateError) throw requestUpdateError;
-        await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        // Notify only on the successful Pending/Failed -> Paid transition performed
+        // by this request. A repeated recovery of an already-Paid row is read/repair-only.
+        if (payment) {
+          await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
+        }
       }
       return json({ paid, recovered: true, status: paid ? "Paid" : nextPaymentStatus });
     }
