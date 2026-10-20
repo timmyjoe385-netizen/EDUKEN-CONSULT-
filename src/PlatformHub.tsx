@@ -230,7 +230,7 @@ export default function PlatformHub({
       const result = await api.post('/api/service-deliverables/' + encodeURIComponent(item.id) + '/download', {});
       const downloadUrl = String(result.data?.url || '');
       if (!downloadUrl.startsWith('https://')) throw new Error('A secure download link was not returned.');
-      window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+      window.location.assign(downloadUrl);
     } catch (error) {
       setDeliverablesMessage(error instanceof Error ? error.message : 'Could not prepare this download.');
     }
@@ -270,6 +270,7 @@ export default function PlatformHub({
 
   useEffect(() => {
     void refresh();
+    void refreshDeliverables();
     const onAuthChanged = () => { void refresh(); };
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
