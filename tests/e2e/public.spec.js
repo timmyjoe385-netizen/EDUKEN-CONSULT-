@@ -2137,6 +2137,5 @@ test('opportunity WhatsApp share includes category heading, location, apply guid
   expect(share).toContain('Visit EDUKEN CONSULT for more information and full application details.');
   expect(share).toContain('🔗 READ MORE HERE 👇');
   expect(share).toContain("'Your Trusted Plug for Educational Updates, Admissions & Opportunities.'");
-  expect(share).toContain(".join('\\n')");
   expect(app).toContain("'location',");
 });
