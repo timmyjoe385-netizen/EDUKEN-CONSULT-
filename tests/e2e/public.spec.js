@@ -512,7 +512,7 @@ test('preview safety mode blocks email alert subscriptions without sending a req
   await page.getByLabel('Remote opportunities').check();
   await page.getByRole('button', { name: /Subscribe to free email alerts/i }).click();
 
-  await expect(page.locator('.toast').filter({ hasText: /Preview safety mode: saving is disabled until a separate test database is connected\./ })).toBeVisible();
+  await expect(page.locator('form').filter({ has: page.getByRole('button', { name: /Subscribe to free email alerts/i }) }).getByRole('status')).toContainText(/Preview safety mode: saving is disabled until a separate test database is connected\./);
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
@@ -536,7 +536,7 @@ test('opening an email verification link requires an explicit user confirmation'
   expect(page.url()).toMatch(/#admissions$/);
 
   await page.getByRole('button', { name: 'Confirm email alerts' }).click();
-  await expect(page.locator('.toast').filter({ hasText: /Preview safety mode: saving is disabled until a separate test database is connected\./ })).toBeVisible();
+  await expect(page.locator('form').filter({ has: page.getByRole('button', { name: /Subscribe to free email alerts/i }) }).getByRole('status')).toContainText(/Preview safety mode: saving is disabled until a separate test database is connected\./);
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
@@ -560,7 +560,7 @@ test('opening an email unsubscribe link requires an explicit user confirmation',
   expect(page.url()).toMatch(/#admissions$/);
 
   await page.getByRole('button', { name: 'Yes, unsubscribe' }).click();
-  await expect(page.locator('.toast').filter({ hasText: /Preview safety mode: saving is disabled until a separate test database is connected\./ })).toBeVisible();
+  await expect(page.locator('form').filter({ has: page.getByRole('button', { name: /Subscribe to free email alerts/i }) }).getByRole('status')).toContainText(/Preview safety mode: saving is disabled until a separate test database is connected\./);
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
