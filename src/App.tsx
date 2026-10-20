@@ -924,20 +924,22 @@ function App() {
                         ? '💼 *JOB OPPORTUNITIES*'
                         : '📢 *EDUKEN OPPORTUNITIES*';
     const title = String(item.title || 'EDUKEN CONSULT Opportunity').trim();
+    const deadline = String(item.deadline || item.expires_at || item.application_deadline || '').replace(/\s+/g, ' ').trim();
+    const compensation = String(item.salary || item.compensation || item.benefits || '').replace(/\s+/g, ' ').trim();
     const howToApply = String(item.howToApply || item.how_to_apply || '').replace(/\s+/g, ' ').trim();
     const message = [
       categoryHeading,
       '',
       '📢 *' + title + '*',
       ...(location ? ['📍 Location: ' + location] : []),
-      ...(howToApply ? ['', '📝 HOW TO APPLY', howToApply] : []),
+      ...(deadline ? ['📅 Deadline: ' + deadline] : []),
+      ...(compensation ? ['💼 Salary / Benefits: ' + compensation] : []),
+      ...(howToApply ? ['', '📝 *HOW TO APPLY*', howToApply] : []),
       '',
-      '🔗 READ MORE HERE 👇',
+      '🔗 *READ FULL DETAILS & APPLY 👇*',
       link,
       '',
-      '👉 Visit EDUKEN CONSULT for more information and full application details.',
-      '',
-      '🎓 EDUKEN CONSULT',
+      '🎓 *EDUKEN CONSULT*',
       'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
     ].join('\n');
     window.open(
