@@ -522,7 +522,18 @@ function App() {
     if (returnedReference) {
       window.history.replaceState({}, document.title, '/make-payments');
       if (!saved?.checkoutToken || !saved?.requestId) {
-        setPaymentMessage('We could not find this checkout session in this browser. Please contact EDUKEN CONSULT with your service request reference before trying again.');
+        setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely with Paystack…');
+        void api.post('/api/payments/recover-guest', { reference: returnedReference })
+          .then((result: any) => {
+            if (result.data?.paid) {
+              setPaymentMessage('Payment confirmed successfully. Your service request is marked as paid. Keep your reference for follow-up.');
+            } else {
+              setPaymentMessage('The provider has not confirmed this payment yet. Do not pay again immediately. Refresh this page later or contact EDUKEN CONSULT with your payment reference.');
+            }
+          })
+          .catch((error: unknown) => {
+            setPaymentMessage(error instanceof Error ? error.message : 'We could not verify this payment yet. Please contact EDUKEN CONSULT with your reference before paying again.');
+          });
         return;
       }
       setPaymentMessage('Payment returned from the gateway. Verifying the transaction securely…');

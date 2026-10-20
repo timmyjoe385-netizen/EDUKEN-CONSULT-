@@ -95,7 +95,7 @@ export function emailAlertRateLimitPolicy(action) {
       action === "guest-payment-initialize" || action === "wallet-deposit-initialize") {
     return Object.freeze({ limit: 5, windowSeconds: 900 });
   }
-  if (action === "verify" || action === "unsubscribe" || action === "guest-payment-verify" ||
+  if (action === "verify" || action === "unsubscribe" || action === "guest-payment-verify" || action === "guest-payment-recovery" ||
       action === "wallet-deposit-verify") {
     return Object.freeze({ limit: 20, windowSeconds: 900 });
   }
