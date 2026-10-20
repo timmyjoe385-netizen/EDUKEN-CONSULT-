@@ -18,15 +18,21 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
-test('opportunity WhatsApp sharing includes the saved location and branded read-more link', () => {
+test('opportunity WhatsApp sharing uses a category heading, bold title, saved location and branded read-more link', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const shareStart = app.indexOf('const shareOpportunityOnWhatsApp = (item: Item) => {');
   const shareEnd = app.indexOf('const shareUpdateOnWhatsApp = (item: Item) => {', shareStart);
   expect(shareStart).toBeGreaterThanOrEqual(0);
   expect(shareEnd).toBeGreaterThan(shareStart);
   const share = app.slice(shareStart, shareEnd);
+  expect(share).toContain("const category = String(item.category || '').trim()");
+  expect(share).toContain("'💼 *JOB OPPORTUNITIES*'");
+  expect(share).toContain("'🎓 *SCHOLARSHIPS & GRANTS*'");
+  expect(share).toContain("'🎓 *ADMISSION OPPORTUNITIES*'");
+  expect(share).toContain("'🌍 *REMOTE OPPORTUNITIES*'");
+  expect(share).toContain("'📢 *' + title + '*'");
   expect(share).toContain("const location = String(item.location || '')");
-  expect(share).toContain("'Location: ' + location");
+  expect(share).toContain("'📍 Location: ' + location");
   expect(share).toContain("'🔗 READ MORE HERE 👇'");
   expect(share).toContain("'🎓 EDUKEN CONSULT'");
   expect(app).toContain("      'location',");
