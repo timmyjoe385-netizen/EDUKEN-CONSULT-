@@ -121,6 +121,7 @@ function App() {
   const [settingsError, setSettingsError] = useState('');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
+  const [consultationView, setConsultationView] = useState<'active' | 'completed' | 'archived' | 'all'>('active');
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
@@ -1072,7 +1073,11 @@ function App() {
     try {
       await api.put('/api/admin/consultations/' + item.id, { status });
       await loadAdmin('consultations');
-      showToast('Consultation status updated.');
+      showToast(status === 'Completed'
+        ? 'Consultation marked completed and moved out of the active list. You can find it under Completed.'
+        : status === 'Archived'
+          ? 'Consultation archived and moved out of the active list.'
+          : 'Consultation status updated.');
     } catch {
       showToast('Could not update consultation.');
     }
@@ -1632,35 +1637,81 @@ function App() {
                 ))}
               </div>
             ) : adminTab === 'consultations' ? (
-              <div className="admin-list">
-                {consultations.length === 0 ? (
-                  <div className="admin-empty">
-                    No consultation requests yet.
-                  </div>
-                ) : (
-                  consultations.map(item => (
-                    <article className="admin-item" key={item.id}>
-                      <div>
-                        <span className="tag">{item.status}</span>
-                        <h3>{item.name}</h3>
-                        <p>{item.message}</p>
-                        <small>
-                          {item.whatsapp} • {item.email || 'No email'} •{' '}
-                          {item.createdAt}
-                        </small>
-                      </div>
-                      <select
-                        value={item.status || 'New'}
-                        onChange={e => updateConsultation(item, e.target.value)}
-                      >
-                        <option>New</option>
-                        <option>Contacted</option>
-                        <option>Completed</option>
-                        <option>Archived</option>
-                      </select>
-                    </article>
-                  ))
-                )}
+              <div>
+                <div className="consultation-view-filters" role="group" aria-label="Filter consultations" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+                  {([
+                    ['active', 'Active'],
+                    ['completed', 'Completed'],
+                    ['archived', 'Archived'],
+                    ['all', 'All records'],
+                  ] as const).map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={consultationView === value ? 'primary' : 'secondary'}
+                      aria-pressed={consultationView === value}
+                      onClick={() => setConsultationView(value)}
+                    >
+                      {label}{' '}
+                      ({consultations.filter(item => {
+                        const status = String(item.status || 'New').trim().toLowerCase();
+                        if (value === 'active') return !['completed', 'archived', 'cancelled'].includes(status);
+                        if (value === 'completed') return status === 'completed';
+                        if (value === 'archived') return status === 'archived';
+                        return true;
+                      }).length})
+                    </button>
+                  ))}
+                </div>
+                <div className="admin-list">
+                  {consultations.filter(item => {
+                    const status = String(item.status || 'New').trim().toLowerCase();
+                    if (consultationView === 'active') return !['completed', 'archived', 'cancelled'].includes(status);
+                    if (consultationView === 'completed') return status === 'completed';
+                    if (consultationView === 'archived') return status === 'archived';
+                    return true;
+                  }).length === 0 ? (
+                    <div className="admin-empty">
+                      {consultationView === 'active'
+                        ? 'No active consultations. Completed and archived records are kept separately.'
+                        : consultationView === 'completed'
+                          ? 'No completed consultations.'
+                          : consultationView === 'archived'
+                            ? 'No archived consultations.'
+                            : 'No consultation requests yet.'}
+                    </div>
+                  ) : (
+                    consultations.filter(item => {
+                      const status = String(item.status || 'New').trim().toLowerCase();
+                      if (consultationView === 'active') return !['completed', 'archived', 'cancelled'].includes(status);
+                      if (consultationView === 'completed') return status === 'completed';
+                      if (consultationView === 'archived') return status === 'archived';
+                      return true;
+                    }).map(item => (
+                      <article className="admin-item" key={item.id}>
+                        <div>
+                          <span className="tag">{item.status || 'New'}</span>
+                          <h3>{item.name}</h3>
+                          <p>{item.message}</p>
+                          <small>
+                            {item.whatsapp} • {item.email || 'No email'} •{' '}
+                            {item.createdAt}
+                          </small>
+                        </div>
+                        <select
+                          aria-label={'Status for consultation from ' + (item.name || 'customer')}
+                          value={item.status || 'New'}
+                          onChange={e => updateConsultation(item, e.target.value)}
+                        >
+                          <option>New</option>
+                          <option>Contacted</option>
+                          <option>Completed</option>
+                          <option>Archived</option>
+                        </select>
+                      </article>
+                    ))
+                  )}
+                </div>
               </div>
             ) : (
               <div className="admin-grid">
