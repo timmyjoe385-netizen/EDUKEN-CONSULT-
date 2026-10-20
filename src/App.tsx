@@ -2234,7 +2234,7 @@ function App() {
 
   // Keep the admin route visually separate from the public customer website.
   // Surface OAuth and authorization failures here so the owner can act on them.
-  if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
+  if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
     return (
       <main className="admin-login-page">
         {toast && (
