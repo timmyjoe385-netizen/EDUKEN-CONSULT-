@@ -3160,3 +3160,58 @@ html[data-theme="dark"] .make-payments-success {
   color: #ffffff !important;
   border-color: #285e46;
 }
+
+
+/* Theme parity fixes: avoid hard-coded white modal surfaces in dark mode.
+   Keep light mode aligned with the agreed off-white canvas and white cards. */
+html[data-theme="light"] .email-alert-action-dialog,
+html[data-theme="light"] .service-request-dialog {
+  background-color: #ffffff;
+  color: #17211d;
+  border: 1px solid #dfe8e1;
+}
+html[data-theme="dark"] .email-alert-action-dialog,
+html[data-theme="dark"] .service-request-dialog {
+  background-color: #0d2038 !important;
+  color: #e8f0f8 !important;
+  border: 1px solid #294560;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+}
+html[data-theme="dark"] .email-alert-action-dialog h2,
+html[data-theme="dark"] .service-request-dialog h2 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .email-alert-action-dialog p,
+html[data-theme="dark"] .service-request-dialog p,
+html[data-theme="dark"] .service-request-dialog .service-request-field > span,
+html[data-theme="dark"] .service-request-dialog .service-request-field small {
+  color: #c5d3e2 !important;
+}
+html[data-theme="dark"] .email-alert-action-dialog .kicker,
+html[data-theme="dark"] .service-request-dialog .kicker {
+  color: #b8e1c8;
+}
+html[data-theme="light"] .email-alert-action-dialog button.secondary,
+html[data-theme="light"] .service-request-dialog button.secondary {
+  background-color: #ffffff;
+  color: #173f31;
+  border-color: #b8c9be;
+}
+html[data-theme="dark"] .email-alert-action-dialog button.secondary,
+html[data-theme="dark"] .service-request-dialog button.secondary {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="light"] .email-alert-action-dialog :is(button, a, input, select, textarea):focus-visible,
+html[data-theme="light"] .service-request-dialog :is(button, a, input, select, textarea):focus-visible,
+html[data-theme="dark"] .email-alert-action-dialog :is(button, a, input, select, textarea):focus-visible,
+html[data-theme="dark"] .service-request-dialog :is(button, a, input, select, textarea):focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 3px;
+}
+html[data-theme="dark"] .service-request-dialog button:not(.primary):not(.secondary) {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border: 1px solid #31516d;
+}
