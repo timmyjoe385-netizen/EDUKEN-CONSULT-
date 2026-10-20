@@ -3488,3 +3488,84 @@ html[data-theme="dark"] .platform-hub .platform-results small {
     margin-top: 12px;
   }
 }
+
+
+/* Dark-mode completeness pass: override legacy hard-coded light surfaces that
+   otherwise remain white after switching themes. Inputs intentionally retain
+   their own dark-theme treatment; semantic status colours stay distinct. */
+html[data-theme="dark"] :is(
+  .install-sheet, .admin-header, .admin-login, .admin-user button,
+  .admin-item, .admin-actions button, .admin-editor, .admin-empty,
+  .article-body, .floating-card, .category-card, .opp-card, .admission-card,
+  .update-card, .platform-card, .drawer, .analytics-toolbar,
+  .analytics-cards article, .analytics-card, .admin-confirm-dialog,
+  .share-composer, .global-search-results, .global-search-result,
+  .system-settings-intro, .system-setting-row, .make-payments-card
+) {
+  background-color: #0d2038 !important;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] :is(
+  .admin-header, .admin-item, .admin-editor, .article-body, .category-card,
+  .opp-card, .admission-card, .update-card, .platform-card, .drawer,
+  .analytics-toolbar, .analytics-cards article, .analytics-card,
+  .admin-confirm-dialog, .share-composer, .global-search-results,
+  .global-search-result, .system-settings-intro, .system-setting-row,
+  .make-payments-card
+) :is(h1, h2, h3, h4, h5, b, strong, label) {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] :is(
+  .admin-item, .admin-editor, .article-body, .category-card, .opp-card,
+  .admission-card, .update-card, .platform-card, .drawer, .analytics-toolbar,
+  .analytics-cards article, .analytics-card, .admin-confirm-dialog,
+  .share-composer, .global-search-results, .global-search-result,
+  .system-settings-intro, .system-setting-row, .make-payments-card
+) :is(p, small, li, .muted, .description, .meta) {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] :is(
+  .admin-actions button, .admin-user button, .admin-login,
+  .analytics-controls select, .menu-btn, .header-sign-in,
+  .admin-login-nav, .customer-google-signin
+) {
+  background-color: #10243d !important;
+  color: #e8f0f8 !important;
+  border-color: #31516d !important;
+}
+html[data-theme="dark"] .analytics-error {
+  background-color: #3a2028;
+  color: #ffd8dc;
+  border-color: #74353d;
+}
+html[data-theme="dark"] .global-search-results :is(input, button),
+html[data-theme="dark"] .global-search-result {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .system-setting-copy :is(b, strong) {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .system-settings-intro :is(p, small),
+html[data-theme="dark"] .system-setting-copy :is(span, p) {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .install-sheet :is(p, small) {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .floating-card small {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .admin-empty {
+  color: #c5d3e2;
+  border-style: dashed;
+}
+html[data-theme="dark"] .article-body a,
+html[data-theme="dark"] .drawer a {
+  color: #b8e1c8;
+}
+html[data-theme="dark"] .topic-switch-thumb {
+  background-color: #e8f0f8;
+}
