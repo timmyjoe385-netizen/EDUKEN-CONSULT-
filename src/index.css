@@ -3569,3 +3569,27 @@ html[data-theme="dark"] .drawer a {
 html[data-theme="dark"] .topic-switch-thumb {
   background-color: #e8f0f8;
 }
+
+
+/* Student service deliverables — responsive, theme-aware private download panel. */
+.student-deliverables { display: grid; gap: 14px; }
+.student-deliverables-heading .kicker { display: inline-flex; align-items: center; gap: 7px; }
+.student-deliverables-heading h3 { margin: 8px 0 5px; }
+.student-deliverables-heading p, .student-deliverable-copy p { margin: 0; line-height: 1.6; }
+.student-deliverables-actions { display: flex; justify-content: flex-end; }
+.student-deliverable-row {
+  display: flex; align-items: center; gap: 12px; padding: 14px;
+  border: 1px solid var(--border, #d7e2d9); border-radius: 12px;
+  background: var(--surface, #fff); min-width: 0;
+}
+.student-deliverable-icon {
+  display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px;
+  border-radius: 10px; background: var(--soft-green, #e8f0ea); color: var(--forest-green, #173f31);
+}
+.student-deliverable-copy { display: grid; gap: 5px; flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.student-deliverable-copy small { color: var(--muted, #53645b); line-height: 1.45; }
+@media (max-width: 560px) {
+  .student-deliverable-row { align-items: flex-start; flex-wrap: wrap; }
+  .student-deliverable-copy { flex-basis: calc(100% - 60px); }
+  .student-deliverable-row > button { width: 100%; justify-content: center; }
+}
