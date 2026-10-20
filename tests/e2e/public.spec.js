@@ -18,6 +18,26 @@ test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   expect(uncaughtErrors, 'page should not throw uncaught JavaScript errors').toEqual([]);
 });
 
+test('opportunity WhatsApp sharing uses a category heading, bold title, saved location and branded read-more link', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const shareStart = app.indexOf('const shareOpportunityOnWhatsApp = (item: Item) => {');
+  const shareEnd = app.indexOf('const shareUpdateOnWhatsApp = (item: Item) => {', shareStart);
+  expect(shareStart).toBeGreaterThanOrEqual(0);
+  expect(shareEnd).toBeGreaterThan(shareStart);
+  const share = app.slice(shareStart, shareEnd);
+  expect(share).toContain("const category = String(item.category || '').trim()");
+  expect(share).toContain("'💼 *JOB OPPORTUNITIES*'");
+  expect(share).toContain("'🎓 *SCHOLARSHIPS & GRANTS*'");
+  expect(share).toContain("'🎓 *ADMISSION OPPORTUNITIES*'");
+  expect(share).toContain("'🌍 *REMOTE OPPORTUNITIES*'");
+  expect(share).toContain("'📢 *' + title + '*'");
+  expect(share).toContain("const location = String(item.location || '')");
+  expect(share).toContain("'📍 Location: ' + location");
+  expect(share).toContain("'🔗 *READ FULL DETAILS & APPLY 👇*'");
+  expect(share).toContain("'🎓 *EDUKEN CONSULT*'");
+  expect(app).toContain("      'location',");
+});
+
 test('isolated preview uses test service catalogue while preserving live public education content', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const apiClient = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
@@ -2101,4 +2121,23 @@ test('admin content deadline validation and calendar picker are wired for create
   expect(app).toContain('/(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field)');
   expect(app).toContain("'datetime-local' : 'date'");
   expect(app).toContain("aria-label={field.replace(/_/g, ' ') + ' (optional)'}");
+});
+
+
+test('opportunity WhatsApp share includes dynamic category, location, deadline, benefits, application guidance and EDUKEN CTA', () => {
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const shareStart = app.indexOf('const shareOpportunityOnWhatsApp = (item: Item) =>');
+  const shareEnd = app.indexOf('const shareUpdateOnWhatsApp = (item: Item) =>', shareStart);
+  expect(shareStart).toBeGreaterThanOrEqual(0);
+  expect(shareEnd).toBeGreaterThan(shareStart);
+  const share = app.slice(shareStart, shareEnd);
+  expect(share).toContain('💼 *JOB OPPORTUNITIES*');
+  expect(share).toContain('📍 Location: ');
+  expect(share).toContain('📅 Deadline: ');
+  expect(share).toContain('💼 Salary / Benefits: ');
+  expect(share).toContain('📝 *HOW TO APPLY*');
+  expect(share).toContain('🔗 *READ FULL DETAILS & APPLY 👇*');
+  expect(share).toContain("'Your Trusted Plug for Educational Updates, Admissions & Opportunities.'");
+  expect(share).not.toContain('Visit EDUKEN CONSULT for more information and full application details.');
+  expect(app).toContain("'location',");
 });

@@ -896,21 +896,52 @@ function App() {
   const shareOpportunityOnWhatsApp = (item: Item) => {
     const slug = item.slug || makeSlug(item.title || item.id);
     const link = shortArticleUrl(slug);
-    const teaser = String(item.description || item.content || '')
-      .split(/\r?\n/)[0]
-      .trim()
-      .slice(0, 240);
+    const category = String(item.category || '').trim();
+    const location = String(item.location || '').replace(/\s+/g, ' ').trim();
+    const context = [category, item.title, item.description, item.content]
+      .filter(Boolean)
+      .join(' ');
+    const categoryHeading = /scholarship|grant|bursar|funding|fellowship/i.test(category)
+      ? '🎓 *SCHOLARSHIPS & GRANTS*'
+      : /admission|post.?utme|ijmb|jupeb|pre.?degree/i.test(category)
+        ? '🎓 *ADMISSION OPPORTUNITIES*'
+        : /remote/i.test(category)
+          ? '🌍 *REMOTE OPPORTUNITIES*'
+          : /job|employment|vacanc|internship|graduate trainee/i.test(category) ||
+              (!category && /job|employment|vacanc|internship|graduate trainee|class teacher|teacher vacancy/i.test(context))
+            ? '💼 *JOB OPPORTUNITIES*'
+            : /career|mentor/i.test(category)
+              ? '🌱 *CAREER & MENTORSHIP*'
+              : /education|update|announcement|exam/i.test(category)
+                ? '📢 *EDUCATIONAL UPDATES*'
+                : /scholarship|grant|bursar|funding|fellowship/i.test(context)
+                  ? '🎓 *SCHOLARSHIPS & GRANTS*'
+                  : /admission|post.?utme|ijmb|jupeb|pre.?degree/i.test(context)
+                    ? '🎓 *ADMISSION OPPORTUNITIES*'
+                    : /remote/i.test(context)
+                      ? '🌍 *REMOTE OPPORTUNITIES*'
+                      : /job|employment|vacanc|internship|graduate trainee|class teacher|teacher vacancy/i.test(context)
+                        ? '💼 *JOB OPPORTUNITIES*'
+                        : '📢 *EDUKEN OPPORTUNITIES*';
+    const title = String(item.title || 'EDUKEN CONSULT Opportunity').trim();
+    const deadline = String(item.deadline || item.expires_at || item.application_deadline || '').replace(/\s+/g, ' ').trim();
+    const compensation = String(item.salary || item.compensation || item.benefits || '').replace(/\s+/g, ' ').trim();
+    const howToApply = String(item.howToApply || item.how_to_apply || '').replace(/\s+/g, ' ').trim();
     const message = [
-      '📢 ' + (item.title || 'EDUKEN CONSULT Update'),
+      categoryHeading,
       '',
-      teaser,
+      '📢 *' + title + '*',
+      ...(location ? ['📍 Location: ' + location] : []),
+      ...(deadline ? ['📅 Deadline: ' + deadline] : []),
+      ...(compensation ? ['💼 Salary / Benefits: ' + compensation] : []),
+      ...(howToApply ? ['', '📝 *HOW TO APPLY*', howToApply] : []),
       '',
-      '🔗 READ MORE HERE 👇',
+      '🔗 *READ FULL DETAILS & APPLY 👇*',
       link,
       '',
-      '🎓 EDUKEN CONSULT',
+      '🎓 *EDUKEN CONSULT*',
       'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
-    ].filter(Boolean).join('\n');
+    ].join('\n');
     window.open(
       'https://wa.me/?text=' + encodeURIComponent(message),
       '_blank',
@@ -1347,6 +1378,7 @@ function App() {
       'title',
       'category',
       'description',
+      'location',
       'deadline',
       'link',
       'status',
