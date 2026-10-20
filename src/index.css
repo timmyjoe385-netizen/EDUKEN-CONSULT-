@@ -3215,3 +3215,31 @@ html[data-theme="dark"] .service-request-dialog button:not(.primary):not(.second
   color: #e8f0f8;
   border: 1px solid #31516d;
 }
+
+
+/* Close remaining theme gaps on compact navigation and topic controls. */
+html[data-theme="dark"] .menu-btn,
+html[data-theme="dark"] .header-sign-in {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .login-close {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .topic-row,
+html[data-theme="dark"] .alert-row {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .topic-row.active,
+html[data-theme="dark"] .alert-row.active {
+  background-color: #123b36;
+  color: #e8f0f8;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .admin-login-page {
+  background-color: #071426;
+  color: #e8f0f8;
+}
