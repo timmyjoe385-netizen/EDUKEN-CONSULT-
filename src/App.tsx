@@ -924,7 +924,7 @@ function App() {
                         ? '💼 *JOB OPPORTUNITIES*'
                         : '📢 *EDUKEN OPPORTUNITIES*';
     const title = String(item.title || 'EDUKEN CONSULT Opportunity').trim();
-    const howToApply = String(item.howToApply || item.how_to_apply || '').replace(/\\s+/g, ' ').trim();
+    const howToApply = String(item.howToApply || item.how_to_apply || '').replace(/\s+/g, ' ').trim();
     const message = [
       categoryHeading,
       '',
@@ -939,7 +939,7 @@ function App() {
       '',
       '🎓 EDUKEN CONSULT',
       'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
-    ].join('\\n');
+    ].join('\n');
     window.open(
       'https://wa.me/?text=' + encodeURIComponent(message),
       '_blank',
