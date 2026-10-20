@@ -2424,3 +2424,739 @@ footer {
   .brand { gap: 6px; font-size: 12px; }
   .brand-logo { width: 32px; height: 32px; }
 }
+
+
+/* EDUKEN appearance controls and dark theme foundation. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #cbd8d0;
+  border-radius: 10px;
+  background: #fff;
+  color: #234c3c;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+.theme-toggle:hover { transform: translateY(-1px); }
+.theme-toggle:focus-visible { outline: 3px solid #20b486; outline-offset: 3px; }
+.theme-toggle-label { line-height: 1; }
+.admin-user .theme-toggle { margin-right: 2px; }
+@media (max-width: 620px) {
+  .theme-toggle { min-height: 34px; padding: 7px 8px; gap: 5px; }
+  .theme-toggle-label { font-size: 11px; }
+}
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site,
+html[data-theme="dark"] .article-page {
+  background: #071426;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .nav {
+  background: rgba(7, 20, 38, 0.92);
+  border-bottom-color: #1e3550;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .nav-links { color: #c2d0df; }
+html[data-theme="dark"] .nav-links a:hover,
+html[data-theme="dark"] .brand,
+html[data-theme="dark"] .calculator-nav-link { color: #75e4c1 !important; }
+html[data-theme="dark"] .theme-toggle {
+  background: #10243d;
+  color: #bff8e5;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .install-nav,
+html[data-theme="dark"] .admin-login,
+html[data-theme="dark"] .admin-user button {
+  background: #10243d;
+  color: #dce8f4;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] .section,
+html[data-theme="dark"] .opportunities-section,
+html[data-theme="dark"] .admissions-section,
+html[data-theme="dark"] .updates-section,
+html[data-theme="dark"] .services-section,
+html[data-theme="dark"] .faq-section,
+html[data-theme="dark"] .contact-section,
+html[data-theme="dark"] .more-section {
+  background-color: #071426;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .hero p,
+html[data-theme="dark"] .section p,
+html[data-theme="dark"] .article-hero > p,
+html[data-theme="dark"] .article-body p,
+html[data-theme="dark"] .article-meta,
+html[data-theme="dark"] .nav-links {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .article-body,
+html[data-theme="dark"] .article-note,
+html[data-theme="dark"] .admin-item,
+html[data-theme="dark"] .admin-editor,
+html[data-theme="dark"] .admin-empty,
+html[data-theme="dark"] .install-sheet,
+html[data-theme="dark"] .faq-item,
+html[data-theme="dark"] .opportunity-card,
+html[data-theme="dark"] .service-card,
+html[data-theme="dark"] .admission-card,
+html[data-theme="dark"] .update-card,
+html[data-theme="dark"] .content-card,
+html[data-theme="dark"] .feature-card,
+html[data-theme="dark"] .stat-card {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #203b58;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.18);
+}
+html[data-theme="dark"] .article-body p,
+html[data-theme="dark"] .admin-item p,
+html[data-theme="dark"] .admin-item small,
+html[data-theme="dark"] .admin-editor label,
+html[data-theme="dark"] .install-sheet p,
+html[data-theme="dark"] .install-sheet ol {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .article-note { background: #142b44; }
+html[data-theme="dark"] .article-back { color: #8de8cb; }
+html[data-theme="dark"] .admin-shell { background: #071426; color: #e8f0f8; }
+html[data-theme="dark"] .admin-header { background: #0b1c31; border-bottom-color: #203b58; }
+html[data-theme="dark"] .admin-side { background: #06101f; }
+html[data-theme="dark"] .admin-side button { color: #a9bfd4; }
+html[data-theme="dark"] .admin-side button.active,
+html[data-theme="dark"] .admin-side button:hover { background: #0c5b4d; color: #fff; }
+html[data-theme="dark"] .admin-user { color: #b8c8d9; }
+html[data-theme="dark"] .admin-actions button,
+html[data-theme="dark"] .admin-editor input,
+html[data-theme="dark"] .admin-editor textarea {
+  background: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .install-sheet { border-color: #294560; }
+html[data-theme="dark"] .install-badge { background: #087e66; }
+html[data-theme="dark"] .article-apply { background: #063c37; }
+html[data-theme="dark"] .article-body p.lead { color: #e8f0f8; }
+html[data-theme="dark"] .footer,
+html[data-theme="dark"] footer {
+  background-color: #06101f;
+  color: #c8d6e5;
+  border-color: #203b58;
+}
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+  color-scheme: dark;
+}
+html[data-theme="dark"] .make-payments-main { color: #e8f0f8; }
+html[data-theme="dark"] .make-payments-card {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #203b58;
+}
+html[data-theme="dark"] .make-payments-card p,
+html[data-theme="dark"] .make-payments-summary { color: #b8c8d9; }
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle { transition: none; }
+  .theme-toggle:hover { transform: none; }
+}
+
+/* Dark-theme coverage for the actual homepage and admin component selectors. */
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .opp-card,
+html[data-theme="dark"] .global-search-results,
+html[data-theme="dark"] .global-search-result,
+html[data-theme="dark"] .login-dialog,
+html[data-theme="dark"] .analytics-cards article,
+html[data-theme="dark"] .system-setting-row,
+html[data-theme="dark"] .admin-confirm-dialog,
+html[data-theme="dark"] .share-composer,
+html[data-theme="dark"] .search-clear {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .category-card p,
+html[data-theme="dark"] .opp-card p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .login-dialog p,
+html[data-theme="dark"] .analytics-cards article span,
+html[data-theme="dark"] .system-setting-row p,
+html[data-theme="dark"] .global-search-result p {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .trust-section,
+html[data-theme="dark"] .final-cta {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .filters button.active,
+html[data-theme="dark"] .tag,
+html[data-theme="dark"] .search-result-type,
+html[data-theme="dark"] .verified-pill {
+  background-color: #123b36;
+  color: #bff8e5;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .faq-row,
+html[data-theme="dark"] .faq-row:last-child {
+  border-color: #294560;
+}
+html[data-theme="dark"] .faq-row button,
+html[data-theme="dark"] .analytics-cards article strong {
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .analytics-cards article strong {
+  color: #75e4c1;
+}
+html[data-theme="dark"] .service-request-form .service-request-field {
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .service-request-form input:not([type="checkbox"]),
+html[data-theme="dark"] .service-request-form select,
+html[data-theme="dark"] .service-request-form textarea,
+html[data-theme="dark"] .login-dialog input,
+html[data-theme="dark"] .login-dialog select,
+html[data-theme="dark"] .login-dialog textarea,
+html[data-theme="dark"] .admin-confirm-dialog input,
+html[data-theme="dark"] .admin-confirm-dialog textarea,
+html[data-theme="dark"] .share-composer textarea {
+  background-color: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .service-request-form input::placeholder,
+html[data-theme="dark"] .login-dialog input::placeholder,
+html[data-theme="dark"] .login-dialog textarea::placeholder {
+  color: #9eb2c7;
+}
+html[data-theme="dark"] .admin-toggle-control {
+  border-color: #31516d;
+}
+
+/* Additional dark-theme contrast for utility panels, service catalogue and checkout states. */
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .kicker,
+html[data-theme="dark"] .admission-top,
+html[data-theme="dark"] .opp-foot,
+html[data-theme="dark"] .system-settings-intro,
+html[data-theme="dark"] .analytics-toolbar,
+html[data-theme="dark"] .analytics-controls select {
+  color: #c2d0df;
+  border-color: #294560;
+}
+html[data-theme="dark"] .floating-card,
+html[data-theme="dark"] .pale,
+html[data-theme="dark"] .analytics-toolbar,
+html[data-theme="dark"] .system-settings-intro,
+html[data-theme="dark"] .analytics-error,
+html[data-theme="dark"] .jamb-service-requirements,
+html[data-theme="dark"] .jamb-service-price,
+html[data-theme="dark"] .jamb-catalogue-safety,
+html[data-theme="dark"] .make-payments-message,
+html[data-theme="dark"] .make-payments-success {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .icon-box,
+html[data-theme="dark"] .admission-top b,
+html[data-theme="dark"] .jamb-service-card__category {
+  background: #123b36;
+  color: #bff8e5;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .jamb-service-requirements__label,
+html[data-theme="dark"] .jamb-service-price strong,
+html[data-theme="dark"] .system-settings-intro h2 {
+  color: #75e4c1;
+}
+html[data-theme="dark"] .jamb-service-requirements p,
+html[data-theme="dark"] .jamb-catalogue-safety,
+html[data-theme="dark"] .analytics-toolbar p {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .analytics-error {
+  background: #351d2a;
+  color: #ffd8dc;
+  border-color: #713c4b;
+}
+html[data-theme="dark"] .analytics-controls select {
+  background-color: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .opp-foot,
+html[data-theme="dark"] .line {
+  border-color: #294560;
+  background-color: transparent;
+}
+html[data-theme="dark"] .make-payments-success {
+  background: #123b36;
+  color: #bff8e5 !important;
+}
+html[data-theme="dark"] .make-payments-message {
+  background: #10243d;
+  color: #e8f0f8;
+}
+
+/* Keep the student centre, wallet drawer and service trackers consistent in dark mode. */
+html[data-theme="dark"] .platform-card,
+html[data-theme="dark"] .platform-results button,
+html[data-theme="dark"] .drawer,
+html[data-theme="dark"] .drawer-item,
+html[data-theme="dark"] .tracker-row,
+html[data-theme="dark"] .ai-answer {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .platform-card p,
+html[data-theme="dark"] .drawer-item small,
+html[data-theme="dark"] .tracker-row small,
+html[data-theme="dark"] .make-payments-security,
+html[data-theme="dark"] .topic-switch-state {
+  color: #b8c8d9;
+}
+html[data-theme="dark"] .platform-icon,
+html[data-theme="dark"] .icon-button {
+  background: #123b36;
+  color: #bff8e5;
+  border-color: #2a7767;
+}
+html[data-theme="dark"] .platform-results span,
+html[data-theme="dark"] .platform-results small,
+html[data-theme="dark"] .wallet-card-balance {
+  color: #75e4c1;
+}
+html[data-theme="dark"] .platform-input,
+html[data-theme="dark"] .finder-inputs input,
+html[data-theme="dark"] .tracker-row select,
+html[data-theme="dark"] .tracker-row textarea {
+  background-color: #091a2d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .platform-input input {
+  background: transparent;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .platform-results button:hover {
+  background: #142b44;
+}
+html[data-theme="dark"] .drawer-backdrop {
+  background: rgba(0, 0, 0, 0.58);
+}
+html[data-theme="dark"] .topic-switch-row {
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .topic-switch-track {
+  background: #31516d;
+}
+
+html[data-theme="dark"] .platform-hub .secondary,
+html[data-theme="dark"] .drawer .secondary,
+html[data-theme="dark"] .tracker-row .secondary {
+  background: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+
+
+
+/* Customer sign-in: keep Google primary and email/password as a clear fallback. */
+.customer-google-signin {
+  width: 100%;
+  min-height: 46px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 11px 16px;
+  background: #fff;
+  color: #1f2937;
+  font: inherit;
+  font-weight: 750;
+  cursor: pointer;
+}
+.customer-google-signin:hover { background: #f8fafc; border-color: #94a3b8; }
+.customer-google-signin:focus-visible { outline: 3px solid #20b486; outline-offset: 3px; }
+.customer-google-signin:disabled { opacity: .65; cursor: not-allowed; }
+.customer-google-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  color: #4285f4;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1;
+}
+.customer-signin-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 15px 0 4px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 650;
+}
+.customer-signin-divider::before,
+.customer-signin-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: #dbe3eb;
+}
+html[data-theme="dark"] .customer-signin-divider { color: #b8c8d9; }
+html[data-theme="dark"] .customer-signin-divider::before,
+html[data-theme="dark"] .customer-signin-divider::after { background: #31516d; }
+
+/* Dark/green appearance: preserve readable copy and legible CTA labels across sections. */
+html[data-theme="dark"] .primary,
+html[data-theme="dark"] button.primary,
+html[data-theme="dark"] a.primary,
+html[data-theme="dark"] .hero .primary,
+html[data-theme="dark"] .final-cta .primary,
+html[data-theme="dark"] .platform-hub .primary,
+html[data-theme="dark"] .drawer .primary,
+html[data-theme="dark"] .service-request-form .primary {
+  background-color: #087f5b;
+  color: #ffffff !important;
+  border-color: #20b486;
+}
+html[data-theme="dark"] .primary:hover,
+html[data-theme="dark"] button.primary:hover,
+html[data-theme="dark"] a.primary:hover {
+  /* Keep white CTA labels above WCAG AA contrast while still showing hover feedback. */
+  background-color: #06734f;
+  color: #ffffff !important;
+}
+html[data-theme="dark"] .hero h1,
+html[data-theme="dark"] .hero h2,
+html[data-theme="dark"] .hero h3,
+html[data-theme="dark"] .final-cta h1,
+html[data-theme="dark"] .final-cta h2,
+html[data-theme="dark"] .final-cta h3,
+html[data-theme="dark"] .trust-section h2,
+html[data-theme="dark"] .trust-section h3,
+html[data-theme="dark"] .contact-section h2,
+html[data-theme="dark"] .contact-section h3,
+html[data-theme="dark"] .more-section h2,
+html[data-theme="dark"] .more-section h3,
+html[data-theme="dark"] .platform-hub h2,
+html[data-theme="dark"] .platform-hub h3,
+html[data-theme="dark"] .platform-wide h2,
+html[data-theme="dark"] .platform-wide h3 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .hero p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .contact-section p,
+html[data-theme="dark"] .more-section p,
+html[data-theme="dark"] .platform-hub p,
+html[data-theme="dark"] .platform-wide p,
+html[data-theme="dark"] .platform-card small,
+html[data-theme="dark"] .platform-card label,
+html[data-theme="dark"] .platform-card span {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .hero .kicker,
+html[data-theme="dark"] .final-cta .kicker,
+html[data-theme="dark"] .platform-hub .kicker {
+  color: #9bf2d2;
+}
+
+
+/* EDUKEN ORIGINAL BRAND PALETTE — final consistency and contrast pass (2026-10-17). */
+/* Original agreed direction: clean off-white surfaces, forest-green actions,
+   restrained emerald/mint accents, and dark readable body copy. */
+
+/* Light mode: normalise common surfaces so older component-specific greens do not clash. */
+html[data-theme="light"] body,
+html[data-theme="light"] .site,
+html[data-theme="light"] .article-page {
+  background-color: #f8faf8;
+  color: #17211d;
+}
+html[data-theme="light"] .nav {
+  background: rgba(248, 250, 248, 0.96);
+  border-bottom-color: #e1e9e3;
+}
+html[data-theme="light"] .category-card,
+html[data-theme="light"] .opp-card,
+html[data-theme="light"] .platform-card,
+html[data-theme="light"] .platform-results button,
+html[data-theme="light"] .drawer,
+html[data-theme="light"] .drawer-item,
+html[data-theme="light"] .tracker-row,
+html[data-theme="light"] .analytics-cards article,
+html[data-theme="light"] .analytics-card,
+html[data-theme="light"] .system-setting-row,
+html[data-theme="light"] .system-settings-intro,
+html[data-theme="light"] .analytics-toolbar,
+html[data-theme="light"] .global-search-results,
+html[data-theme="light"] .global-search-result {
+  background-color: #ffffff;
+  color: #17211d;
+  border-color: #dfe8e1;
+}
+html[data-theme="light"] .hero,
+html[data-theme="light"] .trust-section,
+html[data-theme="light"] .contact-section,
+html[data-theme="light"] .more-section,
+html[data-theme="light"] .final-cta,
+html[data-theme="light"] .platform-wide {
+  color: #17211d;
+}
+html[data-theme="light"] .hero p,
+html[data-theme="light"] .trust-section p,
+html[data-theme="light"] .contact-section p,
+html[data-theme="light"] .more-section p,
+html[data-theme="light"] .final-cta p,
+html[data-theme="light"] .platform-card p,
+html[data-theme="light"] .platform-card small,
+html[data-theme="light"] .platform-card label,
+html[data-theme="light"] .platform-card span,
+html[data-theme="light"] .category-card p,
+html[data-theme="light"] .opp-card p {
+  color: #46564c;
+}
+
+/* One forest-green primary action everywhere; white text remains readable. */
+html[data-theme="light"] .primary,
+html[data-theme="light"] button.primary,
+html[data-theme="light"] a.primary,
+html[data-theme="light"] .hero .primary,
+html[data-theme="light"] .final-cta .primary,
+html[data-theme="light"] .platform-hub .primary,
+html[data-theme="light"] .drawer .primary,
+html[data-theme="light"] .service-request-form .primary,
+html[data-theme="dark"] .primary,
+html[data-theme="dark"] button.primary,
+html[data-theme="dark"] a.primary,
+html[data-theme="dark"] .hero .primary,
+html[data-theme="dark"] .final-cta .primary,
+html[data-theme="dark"] .platform-hub .primary,
+html[data-theme="dark"] .drawer .primary,
+html[data-theme="dark"] .service-request-form .primary {
+  background: #173f31 !important;
+  color: #ffffff !important;
+  border-color: #173f31 !important;
+}
+html[data-theme="light"] .primary:hover,
+html[data-theme="light"] button.primary:hover,
+html[data-theme="light"] a.primary:hover,
+html[data-theme="dark"] .primary:hover,
+html[data-theme="dark"] button.primary:hover,
+html[data-theme="dark"] a.primary:hover {
+  background: #285e46 !important;
+  color: #ffffff !important;
+  border-color: #285e46 !important;
+}
+
+/* Consistent secondary mint treatment; avoid several competing bright greens. */
+html[data-theme="light"] .icon-box,
+html[data-theme="light"] .platform-icon,
+html[data-theme="light"] .admission-top b,
+html[data-theme="light"] .jamb-service-card__category,
+html[data-theme="light"] .tag,
+html[data-theme="light"] .filters button.active,
+html[data-theme="light"] .search-result-type,
+html[data-theme="light"] .verified-pill {
+  background-color: #e8f0ea !important;
+  color: #173f31 !important;
+  border-color: #b8d0c0 !important;
+}
+html[data-theme="light"] .kicker,
+html[data-theme="light"] .eyebrow,
+html[data-theme="light"] .admission-top,
+html[data-theme="light"] .calculator-nav-link,
+html[data-theme="light"] .jamb-service-requirements__label,
+html[data-theme="light"] .jamb-service-price strong,
+html[data-theme="light"] .analytics-cards article strong,
+html[data-theme="light"] .platform-results span,
+html[data-theme="light"] .platform-results small,
+html[data-theme="light"] .wallet-card-balance {
+  color: #285e46 !important;
+}
+
+/* Dark mode stays available, but uses one restrained green accent on navy surfaces. */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site,
+html[data-theme="dark"] .article-page {
+  background-color: #071426;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .nav {
+  background: rgba(7, 20, 38, 0.96);
+  border-bottom-color: #294560;
+}
+html[data-theme="dark"] .category-card,
+html[data-theme="dark"] .opp-card,
+html[data-theme="dark"] .platform-card,
+html[data-theme="dark"] .platform-results button,
+html[data-theme="dark"] .drawer,
+html[data-theme="dark"] .drawer-item,
+html[data-theme="dark"] .tracker-row,
+html[data-theme="dark"] .analytics-cards article,
+html[data-theme="dark"] .analytics-card,
+html[data-theme="dark"] .system-setting-row,
+html[data-theme="dark"] .system-settings-intro,
+html[data-theme="dark"] .analytics-toolbar,
+html[data-theme="dark"] .global-search-results,
+html[data-theme="dark"] .global-search-result,
+html[data-theme="dark"] .floating-card,
+html[data-theme="dark"] .pale,
+html[data-theme="dark"] .jamb-service-requirements,
+html[data-theme="dark"] .jamb-service-price,
+html[data-theme="dark"] .jamb-catalogue-safety {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .hero h1,
+html[data-theme="dark"] .hero h2,
+html[data-theme="dark"] .hero h3,
+html[data-theme="dark"] .final-cta h1,
+html[data-theme="dark"] .final-cta h2,
+html[data-theme="dark"] .final-cta h3,
+html[data-theme="dark"] .trust-section h2,
+html[data-theme="dark"] .trust-section h3,
+html[data-theme="dark"] .contact-section h2,
+html[data-theme="dark"] .contact-section h3,
+html[data-theme="dark"] .more-section h2,
+html[data-theme="dark"] .more-section h3,
+html[data-theme="dark"] .platform-hub h2,
+html[data-theme="dark"] .platform-hub h3,
+html[data-theme="dark"] .platform-wide h2,
+html[data-theme="dark"] .platform-wide h3,
+html[data-theme="dark"] .category-card h2,
+html[data-theme="dark"] .category-card h3,
+html[data-theme="dark"] .opp-card h2,
+html[data-theme="dark"] .opp-card h3,
+html[data-theme="dark"] .drawer h2,
+html[data-theme="dark"] .drawer h3,
+html[data-theme="dark"] .drawer h4 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .hero p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .contact-section p,
+html[data-theme="dark"] .more-section p,
+html[data-theme="dark"] .platform-hub p,
+html[data-theme="dark"] .platform-wide p,
+html[data-theme="dark"] .platform-card p,
+html[data-theme="dark"] .platform-card small,
+html[data-theme="dark"] .platform-card label,
+html[data-theme="dark"] .platform-card span,
+html[data-theme="dark"] .category-card p,
+html[data-theme="dark"] .opp-card p,
+html[data-theme="dark"] .drawer-item small,
+html[data-theme="dark"] .tracker-row small,
+html[data-theme="dark"] .system-setting-row p,
+html[data-theme="dark"] .global-search-result p {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .icon-box,
+html[data-theme="dark"] .platform-icon,
+html[data-theme="dark"] .admission-top b,
+html[data-theme="dark"] .jamb-service-card__category,
+html[data-theme="dark"] .tag,
+html[data-theme="dark"] .filters button.active,
+html[data-theme="dark"] .search-result-type,
+html[data-theme="dark"] .verified-pill {
+  background-color: #173f31 !important;
+  color: #ffffff !important;
+  border-color: #285e46 !important;
+}
+html[data-theme="dark"] .kicker,
+html[data-theme="dark"] .eyebrow,
+html[data-theme="dark"] .admission-top,
+html[data-theme="dark"] .jamb-service-requirements__label,
+html[data-theme="dark"] .jamb-service-price strong,
+html[data-theme="dark"] .analytics-cards article strong,
+html[data-theme="dark"] .platform-results span,
+html[data-theme="dark"] .platform-results small,
+html[data-theme="dark"] .wallet-card-balance {
+  color: #b8e1c8 !important;
+}
+
+/* Inputs, placeholders, secondary buttons and feedback must remain legible in both themes. */
+html[data-theme="light"] .service-request-form input:not([type="checkbox"]),
+html[data-theme="light"] .service-request-form select,
+html[data-theme="light"] .service-request-form textarea,
+html[data-theme="light"] .login-dialog input,
+html[data-theme="light"] .login-dialog select,
+html[data-theme="light"] .login-dialog textarea {
+  background-color: #ffffff;
+  color: #17211d;
+  border-color: #b9c9be;
+}
+html[data-theme="dark"] .service-request-form input:not([type="checkbox"]),
+html[data-theme="dark"] .service-request-form select,
+html[data-theme="dark"] .service-request-form textarea,
+html[data-theme="dark"] .login-dialog input,
+html[data-theme="dark"] .login-dialog select,
+html[data-theme="dark"] .login-dialog textarea,
+html[data-theme="dark"] .platform-input,
+html[data-theme="dark"] .finder-inputs input,
+html[data-theme="dark"] .tracker-row select,
+html[data-theme="dark"] .tracker-row textarea {
+  background-color: #091a2d;
+  color: #f1f7ff;
+  border-color: #31516d;
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder {
+  color: #b8c8d9;
+  opacity: 1;
+}
+html[data-theme="light"] .secondary,
+html[data-theme="light"] button.secondary,
+html[data-theme="light"] a.secondary {
+  background-color: #ffffff;
+  color: #173f31;
+  border-color: #b8c9be;
+}
+html[data-theme="dark"] .secondary,
+html[data-theme="dark"] button.secondary,
+html[data-theme="dark"] a.secondary {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="light"] .make-payments-message {
+  background-color: #f8faf8;
+  color: #17211d;
+  border-color: #dfe8e1;
+}
+html[data-theme="dark"] .make-payments-message {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .make-payments-success {
+  background-color: #173f31;
+  color: #ffffff !important;
+  border-color: #285e46;
+}

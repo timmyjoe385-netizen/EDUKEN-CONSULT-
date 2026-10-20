@@ -879,6 +879,38 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
+
+test('customer password sign-in shows a safe error without exposing provider details', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+    }),
+  );
+  await page.route(url =>
+    url.hostname === 'pphxltbkwygqjtjgkhxu.supabase.co'
+    && url.pathname === '/auth/v1/token'
+    && url.searchParams.get('grant_type') === 'password',
+  route => route.fulfill({
+    status: 400,
+    contentType: 'application/json',
+    body: JSON.stringify({ error: 'invalid_grant', error_description: 'invalid login credentials' }),
+  }));
+
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN Wallet' });
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel('Email address').fill('student@example.test');
+  await dialog.getByLabel('Password').fill('not-a-real-password');
+  await dialog.getByRole('button', { name: 'Sign in securely' }).click();
+  await expect(dialog.getByRole('alert')).toHaveText(
+    'Email or password was not accepted. Check your test account details and try again.',
+  );
+  await expect(dialog.getByRole('alert')).not.toContainText('invalid login credentials');
+});
+
 test('public AI assistant rejects oversized questions before provider work', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   expect(handler).toContain('typeof b?.question !== "string"');
@@ -1592,4 +1624,123 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
   await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
+});
+
+test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
+  await page.addInitScript(() => {
+    // Clear the saved preference only on the first document; keep it during reload assertions.
+    if (window.sessionStorage.getItem('__eduken_theme_test_initialized') !== '1') {
+      window.localStorage.removeItem('eduken-theme');
+      window.sessionStorage.setItem('__eduken_theme_test_initialized', '1');
+    }
+  });
+  await page.emulateMedia({ colorScheme: 'light' });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  const root = page.locator('html');
+  const toggle = page.locator('.theme-toggle').first();
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: light mode');
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+
+  await toggle.click();
+  await expect(toggle).toBeFocused();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is dark mode. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: dark mode');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(7, 20, 38)');
+  await expect(page.locator('.platform-card').first()).toHaveCSS('background-color', 'rgb(13, 32, 56)');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is System default. Change appearance');
+  await expect(toggle).toHaveAttribute('title', 'Appearance: System default');
+  await expect(toggle).toContainText('System');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+  await page.emulateMedia({ colorScheme: 'light' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(toggle).toContainText('System');
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('system');
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute('aria-label', 'Appearance is light mode. Change appearance');
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('light');
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+});
+
+test('standalone aggregate calculator applies saved light and dark theme with readable contrast', async ({ page }) => {
+  await page.addInitScript(() => {
+    // The init script runs again on reload. Set the initial dark preference only
+    // once per test page so the later light-mode reload can exercise persistence.
+    if (window.sessionStorage.getItem('eduken-theme-test-initialized') !== '1') {
+      window.localStorage.setItem('eduken-theme', 'dark');
+      window.sessionStorage.setItem('eduken-theme-test-initialized', '1');
+    }
+  });
+  await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+
+  const root = page.locator('html');
+  const card = page.locator('.aggregate-card').first();
+  const heading = page.getByRole('heading', { name: 'EDUKEN Aggregate Calculator' });
+  await expect(root).toHaveAttribute('data-theme', 'dark');
+  await expect(root).toHaveAttribute('data-theme-preference', 'dark');
+  await expect(root).toHaveCSS('color-scheme', 'dark');
+  await expect(card).toHaveCSS('background-color', 'rgb(13, 32, 56)');
+  await expect(heading).toHaveCSS('color', 'rgb(241, 247, 255)');
+
+  await page.evaluate(() => window.localStorage.setItem('eduken-theme', 'light'));
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await expect(root).toHaveAttribute('data-theme', 'light');
+  await expect(root).toHaveAttribute('data-theme-preference', 'light');
+  await expect(root).toHaveCSS('color-scheme', 'light');
+  await expect(card).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(heading).toHaveCSS('color', 'rgb(23, 63, 49)');
+});
+
+test('public opportunity hub hides expired deadlines but keeps current opportunities', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [
+          {
+            id: 'expired-opportunity-fixture',
+            title: 'Expired Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A test-only opportunity whose deadline has passed.',
+            deadline: '15 October 2026',
+            is_published: true,
+          },
+          {
+            id: 'current-opportunity-fixture',
+            title: 'Current Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A test-only opportunity that remains open.',
+            deadline: '30 October 2026',
+            is_published: true,
+          },
+        ],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/#opportunities', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
+  await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
 });
