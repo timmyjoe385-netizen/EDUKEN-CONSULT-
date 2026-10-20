@@ -3243,3 +3243,42 @@ html[data-theme="dark"] .admin-login-page {
   background-color: #071426;
   color: #e8f0f8;
 }
+
+
+/* Final theme-parity pass: keep remaining shared surfaces and sign-in controls
+   consistent with the light off-white/green and dark navy palettes. */
+html[data-theme="dark"] .whatsapp-cta {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .whatsapp-cta h2 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .whatsapp-cta p {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .admin-editor .admin-toggle-field {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .customer-google-signin {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .customer-google-signin:hover {
+  background-color: #17334f;
+  border-color: #54728e;
+}
+html[data-theme="dark"] .admin-login-nav {
+  background-color: #10243d;
+  color: #e8f0f8;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .jamb-service-status.is-unavailable {
+  background-color: #3a2028;
+  color: #ffb4b8;
+  border-color: #74353d;
+}
