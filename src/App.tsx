@@ -1839,6 +1839,31 @@ function App() {
                             }
                             rows={field === 'content' ? 8 : 5}
                           />
+                        ) : /(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field) ? (
+                          <input
+                            type={/(_at|datetime|scheduled_at|publish_at)$/i.test(field) ? 'datetime-local' : 'date'}
+                            value={(() => {
+                              const raw = String(form[field] ?? '').trim();
+                              if (!raw) return '';
+                              if (/(_at|datetime|scheduled_at|publish_at)$/i.test(field)) {
+                                const parsed = new Date(raw);
+                                if (Number.isNaN(parsed.getTime())) return '';
+                                const local = new Date(parsed.getTime() - parsed.getTimezoneOffset() * 60000);
+                                return local.toISOString().slice(0, 16);
+                              }
+                              const iso = raw.match(/^(\\d{4}-\\d{2}-\\d{2})/);
+                              if (iso) return iso[1];
+                              const human = raw.match(/\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+([A-Za-z]+)\\s+(\\d{4})\\b/i);
+                              if (!human) return '';
+                              const month = Date.parse(human[2] + ' 1, 2000');
+                              if (Number.isNaN(month)) return '';
+                              const date = new Date(Number(human[3]), new Date(month).getMonth(), Number(human[1]));
+                              if (date.getFullYear() !== Number(human[3]) || date.getMonth() !== new Date(month).getMonth() || date.getDate() !== Number(human[1])) return '';
+                              return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+                            })()}
+                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                            aria-label={field.replace(/_/g, ' ') + ' (optional)'}
+                          />
                         ) : field === 'price' ? (
                           <input
                             type="number"
