@@ -800,7 +800,7 @@ Deno.serve(async (req) => {
         // A duplicate provider event may repair request state without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
-            .eq("id", existingPayment.service_request_id);
+            .eq("id", existingPayment.service_request_id).in("status", ["New Requests", "Contacted", "Paid"]);
           if (requestUpdateError) throw requestUpdateError;
         }
         return json({ ok: true, paid: true, reused: true });
