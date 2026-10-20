@@ -23,7 +23,10 @@ test('isolated preview uses test service catalogue while preserving live public 
   const apiClient = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
 
   expect(apiClient).toContain('export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;');
-  expect(app).toContain('if (usesIsolatedTestBackend)');
+  expect(app).toContain("new URLSearchParams(window.location.search).get('testCheckout') === '1'");
+  expect(app).toContain('const showTestPreviewUi = usesIsolatedTestBackend && testCheckoutRequested;');
+  expect(app).toContain('if (showTestPreviewUi)');
+  expect(app).toContain('{showTestPreviewUi && (');
   expect(app).toContain("const testContent = await api.get('/public-content');");
   expect(app).toContain('const previewTestService');
   expect(app).toContain('live.services = [previewTestService];');
