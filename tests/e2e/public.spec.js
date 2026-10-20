@@ -1229,9 +1229,14 @@ test('aggregate calculator scores only the five FUHSI core subjects and clears e
   await expect(page.getByLabel('JAMB UTME score (out of 400)')).toHaveValue('');
 });
 
-test('aggregate calculator directory search and mobile layout work', async ({ page }) => {
+test('aggregate calculator keeps verification directory collapsed until requested and search works on mobile', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  const directory = page.locator('.aggregate-directory-details');
+  await expect(directory).not.toHaveAttribute('open', '');
+  await expect(page.locator('.aggregate-directory-list')).toBeHidden();
+  await page.getByText('Other universities — verification in progress').click();
+  await expect(page.locator('.aggregate-directory-list')).toBeVisible();
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Benin');
   await expect(page.locator('.aggregate-directory-list')).toContainText('University of Benin (UNIBEN)');
   await expect(page.locator('.aggregate-directory-list')).not.toContainText('University of Lagos (UNILAG)');
@@ -1258,6 +1263,7 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
 
   await expect(page.getByLabel('Institution / formula').locator('option[value="ui-estimate"]')).toContainText('unverified estimate');
+  await page.getByText('Other universities — verification in progress').click();
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
   await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
