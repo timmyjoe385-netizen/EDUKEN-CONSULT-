@@ -169,6 +169,12 @@ test("guest payment callback recovery is rate-limited and verifies provider evid
   assert.match(route, /matchesStoredPaystackPayment\(transaction, \{ amount: existingPayment\.amount, currency: existingPayment\.currency, reference \}\)/);
   assert.match(route, /\.in\("status", \["Pending", "Failed"\]\)/);
   assert.match(route, /sendPaymentNotifications\(/);
+  // Recovery must not trust a stored Paid flag without fresh provider evidence.
+  const providerVerification = route.indexOf('fetch("https://api.paystack.co/transaction/verify/"');
+  const storedPaidShortcut = route.indexOf('if (existingPayment.status === "Paid")');
+  assert.ok(providerVerification >= 0, "recovery must verify with Paystack");
+  assert.equal(storedPaidShortcut, -1, "stored Paid state must not bypass provider verification");
+  assert.match(route, /if \(payment\) \{\s*await sendPaymentNotifications/);
   const app = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
   assert.match(app, /api\.post\('\/api\/payments\/recover-guest', \{ reference: returnedReference \}\)/);
   assert.match(app, /Checkout session not found in this browser\. Checking the payment reference securely with Paystack/);
