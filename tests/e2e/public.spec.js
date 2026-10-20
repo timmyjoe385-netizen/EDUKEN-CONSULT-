@@ -2122,3 +2122,21 @@ test('admin content deadline validation and calendar picker are wired for create
   expect(app).toContain("'datetime-local' : 'date'");
   expect(app).toContain("aria-label={field.replace(/_/g, ' ') + ' (optional)'}");
 });
+
+
+test('opportunity WhatsApp share includes category heading, location, apply guidance and EDUKEN call to action', () => {
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const shareStart = app.indexOf('const shareOpportunityOnWhatsApp = (item: Item) =>');
+  const shareEnd = app.indexOf('const shareUpdateOnWhatsApp = (item: Item) =>', shareStart);
+  expect(shareStart).toBeGreaterThanOrEqual(0);
+  expect(shareEnd).toBeGreaterThan(shareStart);
+  const share = app.slice(shareStart, shareEnd);
+  expect(share).toContain('💼 *JOB OPPORTUNITIES*');
+  expect(share).toContain('📍 Location: ');
+  expect(share).toContain('📝 HOW TO APPLY');
+  expect(share).toContain('Visit EDUKEN CONSULT for more information and full application details.');
+  expect(share).toContain('🔗 READ MORE HERE 👇');
+  expect(share).toContain("'Your Trusted Plug for Educational Updates, Admissions & Opportunities.'");
+  expect(share).toContain(".join('\\n')");
+  expect(app).toContain("'location',");
+});
