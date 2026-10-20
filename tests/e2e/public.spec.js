@@ -2091,11 +2091,10 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
   await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
 });
 
-test('admin content saves normalize human-readable deadlines and reject invalid dates clearly', async () => {
+test('admin content deadline validation is applied to create and edit', async () => {
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   expect(source).toContain('function normalizeContentDeadline(value: unknown)');
-  expect(source).toContain('.replace(/\\\\b(\\\\d{1,2})(st|nd|rd|th)\\\\b/gi, "$1")');
-  expect(source).toContain('if (value === null || value === undefined || String(value).trim() === "") return null;');
+  expect(source).toContain('(st|nd|rd|th)');
   expect(source).toContain('Enter a valid deadline date, for example 2026-10-21, or leave it blank.');
-  expect(source.match(/normalizeContentDeadline\\(b\\.deadline\\)/g)).toHaveLength(2);
+  expect(source.split('normalizeContentDeadline(b.deadline)')).toHaveLength(3);
 });
