@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:e2e": "playwright test",
-    "test:validation": "node --test tests/email-alert-validation.test.mjs tests/service-request-validation.test.mjs tests/consultation-validation.test.mjs tests/opportunity-verification-validation.test.mjs tests/payment-validation.test.mjs tests/jamb-service-catalogue.test.mjs tests/api-origin-guard.test.mjs tests/service-price-validation.test.mjs tests/json-body-validation.test.mjs tests/payment-notification-retry-workflow.test.mjs"
+    "test:validation": "node --test tests/email-alert-validation.test.mjs tests/service-request-validation.test.mjs tests/consultation-validation.test.mjs tests/opportunity-verification-validation.test.mjs tests/payment-validation.test.mjs tests/jamb-service-catalogue.test.mjs tests/api-origin-guard.test.mjs tests/service-price-validation.test.mjs tests/json-body-validation.test.mjs tests/payment-notification-retry-workflow.test.mjs tests/service-deliverables-security.test.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.469.0",

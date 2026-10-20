@@ -103,6 +103,9 @@ const emptyContent: Content = {
 
 
 function App() {
+  // Test checkout UI is opt-in on the isolated preview only; never inject test products into ordinary browsing.
+  const testCheckoutRequested = new URLSearchParams(window.location.search).get('testCheckout') === '1' || window.location.pathname.replace(/\/+$/, '') === '/make-payments';
+  const showTestPreviewUi = usesIsolatedTestBackend && testCheckoutRequested;
   const [menu, setMenu] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [search, setSearch] = useState('');
@@ -123,6 +126,8 @@ function App() {
   const [consultations, setConsultations] = useState<Item[]>([]);
   const [consultationView, setConsultationView] = useState<'active' | 'completed' | 'archived' | 'all'>('active');
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
+  const [uploadingDeliverableFor, setUploadingDeliverableFor] = useState<string | null>(null);
+  const [deliverableAdminMessage, setDeliverableAdminMessage] = useState('');
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
@@ -324,7 +329,7 @@ function App() {
       // Preview checkout must use only the isolated test catalogue. Keep a known test-only
       // service visible if public catalogue loading fails; the checkout API still validates
       // the service ID and availability against the isolated database before creating a request.
-      if (usesIsolatedTestBackend) {
+      if (showTestPreviewUi) {
         const previewTestService = {
           id: '376b883f-3a8c-490f-a130-ee5adefeaa2b',
           name: 'EDUKEN TEST CHECKOUT SERVICE — TEST ONLY',
@@ -1144,6 +1149,73 @@ function App() {
     }
   };
 
+  const uploadServiceDeliverable = async (e: React.FormEvent<HTMLFormElement>, request: Item) => {
+    e.preventDefault();
+    if (uploadingDeliverableFor) return;
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
+    const file = fd.get('deliverableFile');
+    const title = String(fd.get('deliverableTitle') || '').trim();
+    const description = String(fd.get('deliverableDescription') || '').trim();
+    const publish = fd.get('publishDeliverable') === 'on';
+    if (!(file instanceof File) || !file.size) {
+      setDeliverableAdminMessage('Choose a document to upload.');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      setDeliverableAdminMessage('The document must be 15 MB or smaller.');
+      return;
+    }
+    if (!title || title.length > 160 || description.length > 3000) {
+      setDeliverableAdminMessage('Enter a title (up to 160 characters) and a description no longer than 3,000 characters.');
+      return;
+    }
+    setUploadingDeliverableFor(request.id);
+    setDeliverableAdminMessage('');
+    try {
+      const prepared = await api.post('/api/admin/service-deliverables/upload-url', {
+        serviceRequestId: request.id,
+        title,
+        description,
+        filename: file.name,
+        mimeType: file.type,
+        fileSizeBytes: file.size,
+      });
+      const uploadUrl = String(prepared.data?.uploadUrl || '');
+      const storagePath = String(prepared.data?.storagePath || '');
+      if (!uploadUrl.startsWith('https://') || !storagePath) {
+        throw new Error('The secure upload service did not return a valid upload URL.');
+      }
+      const uploaded = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type, 'x-upsert': 'false' },
+        body: file,
+      });
+      if (!uploaded.ok) {
+        throw new Error('The file upload failed. Check the file type and try again; no document was published.');
+      }
+      await api.post('/api/admin/service-deliverables', {
+        serviceRequestId: request.id,
+        storagePath,
+        title,
+        description,
+        originalFilename: file.name,
+        mimeType: file.type,
+        fileSizeBytes: file.size,
+        publish,
+      });
+      formElement.reset();
+      setDeliverableAdminMessage(publish
+        ? 'Document uploaded and published to the student account.'
+        : 'Document uploaded as a draft. It is not visible to the student yet.');
+      await loadAdmin('service-requests');
+    } catch (error) {
+      setDeliverableAdminMessage(error instanceof Error ? error.message : 'Could not upload this document.');
+    } finally {
+      setUploadingDeliverableFor(null);
+    }
+  };
+
   const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedService || serviceSubmitting) return;
@@ -1629,10 +1701,43 @@ function App() {
                       <p>{item.details}</p>
                       <small>{item.customer_name} • {item.whatsapp} • {item.email || 'No email'} • {item.created_at ? new Date(item.created_at).toLocaleString() : ''}</small>
                     </div>
-                    <select aria-label={'Status for ' + (item.reference_number || 'service request')} value={item.status || 'New Requests'} disabled={item.status === 'Paid'} onChange={e => updateServiceRequest(item, e.target.value)}>
+                    <select aria-label={'Status for ' + (item.reference_number || 'service request')} value={item.status || 'New Requests'} disabled={item.status === 'Completed'} onChange={e => updateServiceRequest(item, e.target.value)}>
                       {item.status === 'Paid' && <option value="Paid" disabled>Paid (payment confirmed)</option>}
-                      <option>New Requests</option><option>Contacted</option><option>In Progress</option><option>Completed</option><option>Cancelled</option>
+                      {item.status === 'In Progress' && <option value="In Progress" disabled>In Progress</option>}
+                      {item.status === 'Completed' && <option value="Completed" disabled>Completed (locked)</option>}
+                      {item.status !== 'Paid' && item.status !== 'In Progress' && item.status !== 'Completed' ? <><option>New Requests</option><option>Contacted</option><option>Cancelled</option></> : null}
+                      {item.status === 'Paid' ? <><option>In Progress</option><option>Completed</option></> : null}
+                      {item.status === 'In Progress' ? <option>Completed</option> : null}
                     </select>
+                    <details className="admin-deliverable-upload">
+                      <summary>Upload result / document</summary>
+                      {item.user_id ? (
+                        <form className="service-request-form" onSubmit={e => void uploadServiceDeliverable(e, item)}>
+                          <label className="service-request-field">
+                            <span>Document title</span>
+                            <input name="deliverableTitle" maxLength={160} required placeholder="e.g. Admission result letter" />
+                          </label>
+                          <label className="service-request-field">
+                            <span>Short description (optional)</span>
+                            <textarea name="deliverableDescription" maxLength={3000} rows={2} placeholder="Tell the student what this file contains." />
+                          </label>
+                          <label className="service-request-field">
+                            <span>File (PDF, image, TXT, DOCX or XLSX; max 15 MB)</span>
+                            <input name="deliverableFile" type="file" required accept=".pdf,.jpg,.jpeg,.png,.webp,.txt,.docx,.xlsx,application/pdf,image/jpeg,image/png,image/webp,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                          </label>
+                          <label className="admin-deliverable-publish">
+                            <input type="checkbox" name="publishDeliverable" defaultChecked />
+                            Publish immediately to the student's account
+                          </label>
+                          <button className="primary" type="submit" disabled={uploadingDeliverableFor === item.id}>
+                            {uploadingDeliverableFor === item.id ? 'Uploading securely…' : 'Upload document'}
+                          </button>
+                          {deliverableAdminMessage ? <p role="status" aria-live="polite">{deliverableAdminMessage}</p> : null}
+                        </form>
+                      ) : (
+                        <p>This request is not linked to a signed-in student account, so secure account delivery is unavailable. Do not link it using email alone.</p>
+                      )}
+                    </details>
                   </article>
                 ))}
               </div>
@@ -2304,7 +2409,7 @@ function App() {
           {toast}
         </div>
       )}
-      {usesIsolatedTestBackend && (
+      {showTestPreviewUi && (
         <div role="status" style={{ background: '#fff3cd', color: '#664d03', border: '1px solid #ffecb5', padding: '12px 18px', textAlign: 'center', fontWeight: 700 }}>
           TEST PREVIEW ONLY — isolated checkout · synthetic ₦100 service · no real fulfilment or live payments
         </div>
