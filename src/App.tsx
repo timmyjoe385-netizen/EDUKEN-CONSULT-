@@ -1839,12 +1839,19 @@ function App() {
                             }
                             rows={field === 'content' ? 8 : 5}
                           />
-                        ) : field === 'deadline' && (adminTab === 'opportunities' || adminTab === 'admissions') ? (
+                        ) : /(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field) ? (
                           <input
-                            type="date"
+                            type={/(_at|datetime|scheduled_at|publish_at)$/i.test(field) ? 'datetime-local' : 'date'}
                             value={(() => {
                               const raw = String(form[field] ?? '').trim();
-                              const iso = raw.match(/^(\\d{4}-\\d{2}-\\d{2})$/);
+                              if (!raw) return '';
+                              if (/(_at|datetime|scheduled_at|publish_at)$/i.test(field)) {
+                                const parsed = new Date(raw);
+                                if (Number.isNaN(parsed.getTime())) return '';
+                                const local = new Date(parsed.getTime() - parsed.getTimezoneOffset() * 60000);
+                                return local.toISOString().slice(0, 16);
+                              }
+                              const iso = raw.match(/^(\\d{4}-\\d{2}-\\d{2})/);
                               if (iso) return iso[1];
                               const human = raw.match(/\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+([A-Za-z]+)\\s+(\\d{4})\\b/i);
                               if (!human) return '';
@@ -1855,7 +1862,7 @@ function App() {
                               return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
                             })()}
                             onChange={e => setForm({ ...form, [field]: e.target.value })}
-                            aria-label="Application deadline (optional)"
+                            aria-label={field.replace(/_/g, ' ') + ' (optional)'}
                           />
                         ) : field === 'price' ? (
                           <input
