@@ -2242,6 +2242,13 @@ Deno.serve(async (req) => {
         const parsedBody = parseJsonObjectBody(await req.text());
         if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
         const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
+        if ((table === "opportunities" || table === "admissions") && Object.prototype.hasOwnProperty.call(b, "deadline")) {
+          const normalizedDeadline = normalizeContentDeadline(b.deadline);
+          if (normalizedDeadline === undefined) {
+            return json({ error: "Enter a valid deadline date, for example 2026-10-21, or leave it blank." }, 400);
+          }
+          b.deadline = normalizedDeadline;
+        }
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
           if (!normalizedPrice.valid) {
