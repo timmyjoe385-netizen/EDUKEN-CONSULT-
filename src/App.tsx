@@ -437,15 +437,19 @@ function App() {
         setAdminView(true);
         void loadAdmin('opportunities');
         void loadSystemSettings();
-      } catch {
+      } catch (error) {
         if (!active) return;
-        // A normal customer can sign in, but cannot open the admin workspace.
         setUser(null);
         setAdminView(false);
-        setToast('You are signed in to your EDUKEN customer account.');
+        const message = error instanceof Error ? error.message : '';
+        setToast(
+          /403|admin access required/i.test(message)
+            ? 'This Google account is not authorized for the EDUKEN admin dashboard. Please use an authorized administrator account.'
+            : 'Google sign-in completed, but EDUKEN could not verify admin access. Please try again. If this continues, the admin access check needs investigation.'
+        );
       }
     }).catch((error: unknown) => {
-      if (active) setToast(error instanceof Error ? error.message : 'Google sign-in could not be completed.');
+      if (active) setToast(error instanceof Error ? error.message : 'Google sign-in could not be completed. Please try again.');
     });
     loadContent();
     syncArticleFromHash();
@@ -2229,10 +2233,17 @@ function App() {
   }
 
   // Keep the admin route visually separate from the public customer website.
-  // The admin workspace is rendered above only after the backend confirms admin access.
-  if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
+  // Surface OAuth and authorization failures here so the owner can act on them.
+  if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
     return (
       <main className="admin-login-page">
+        {toast && (
+          <div className="toast" role="alert" aria-live="assertive">
+            <CheckCircle2 size={18} />
+            <span>{toast}</span>
+            <button type="button" aria-label="Dismiss notification" onClick={() => setToast('')}><X size={16} /></button>
+          </div>
+        )}
         <div className="login-backdrop">
           <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="admin-login-title">
             <span className="kicker">PRIVATE ADMIN ACCESS</span>
