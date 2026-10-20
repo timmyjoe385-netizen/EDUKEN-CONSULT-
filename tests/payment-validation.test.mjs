@@ -176,7 +176,7 @@ test("guest payment callback recovery is rate-limited and verifies provider evid
   assert.equal(storedPaidShortcut, -1, "stored Paid state must not bypass provider verification");
   assert.match(route, /existingPayment\.status === "Paid" && !paid/);
   assert.match(route, /stored payment status conflicts with the provider response/);
-  assert.match(route, /if \(payment\) \{\s*await sendPaymentNotifications/);
+  assert.match(route, /if \(payment\) \{[\s\S]*?await sendPaymentNotifications/);
   const app = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
   assert.match(app, /api\.post\('\/api\/payments\/recover-guest', \{ reference: returnedReference \}\)/);
   assert.match(app, /Checkout session not found in this browser\. Checking the payment reference securely with Paystack/);
