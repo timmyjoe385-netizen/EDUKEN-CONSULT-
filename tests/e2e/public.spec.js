@@ -889,7 +889,7 @@ test('service request route validates before inserting into the database', async
   expect(source).toContain('isAllowedServiceRequestStatus(b.status)');
 });
 
-test('admin service request status changes are guarded and payment-confirmed status is read-only', async () => {
+test('paid service requests progress safely through fulfilment without payment verification resetting status', async () => {
   const handler = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const adminStart = handler.indexOf('const adminRequests = path.match(');
   const adminEnd = handler.indexOf('if (path === "/api/admin/payments" && req.method === "GET")', adminStart);
@@ -900,27 +900,53 @@ test('admin service request status changes are guarded and payment-confirmed sta
   const requireAdminAt = adminRoute.indexOf('await requireAdmin(req)');
   const listAt = adminRoute.indexOf('db.from("service_requests").select');
   const statusValidationAt = adminRoute.indexOf('isAllowedServiceRequestStatus(b.status)');
-  const paidGuardAt = adminRoute.indexOf('existing.status === "Paid"');
-  const paidWriteGuardAt = adminRoute.indexOf('.neq("status", "Paid")');
+  const paidGuardAt = adminRoute.indexOf('currentStatus === "Paid"');
   const updateAt = adminRoute.indexOf('.update({ status: b.status })');
   expect(requireAdminAt).toBeGreaterThanOrEqual(0);
   expect(listAt).toBeGreaterThan(requireAdminAt);
   expect(statusValidationAt).toBeGreaterThan(requireAdminAt);
   expect(paidGuardAt).toBeGreaterThan(statusValidationAt);
   expect(updateAt).toBeGreaterThan(paidGuardAt);
-  expect(paidWriteGuardAt).toBeGreaterThan(updateAt);
-  expect(adminRoute.slice(updateAt, updateAt + 80)).toContain('.update({ status: b.status })');
-  expect(adminRoute).toContain('Payment-confirmed service requests cannot be changed through the status manager.');
+  expect(adminRoute.slice(updateAt, updateAt + 100)).toContain('.update({ status: b.status })');
+  expect(adminRoute).toContain('currentStatus === "Completed"');
+  expect(adminRoute).toContain('["In Progress", "Completed"].includes(b.status)');
+  expect(adminRoute).toContain('.eq("id", id).eq("status", currentStatus)');
   expect(adminRoute).toContain('return json({ error: "Service request status could not be updated." }, 409);');
 
   const validator = readFileSync('supabase/functions/eduken-api/service-request-validation.mjs', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
   expect(validator).toContain('"Completed",\n  "Cancelled"');
   expect(validator).not.toContain('"Paid"');
-  expect(app).toContain('disabled={item.status === \'Paid\'}');
+  expect(app).not.toContain('disabled={item.status === \'Paid\'}');
   expect(app).toContain('{item.status === \'Paid\' && <option value="Paid" disabled>Paid (payment confirmed)</option>}');
+  expect(handler).toContain('.in("status", ["New Requests", "Contacted", "Paid"])');
 });
  
+
+test('student service deliverables require ownership and published state and use short-lived private signed downloads', async () => {
+  const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const listStart = source.indexOf('if (path === "/api/service-deliverables" && req.method === "GET")');
+  const downloadStart = source.indexOf('if (path.startsWith("/api/service-deliverables/")');
+  const adminUploadStart = source.indexOf('if (path === "/api/admin/service-deliverables/upload-url" && req.method === "POST")');
+  expect(listStart).toBeGreaterThanOrEqual(0);
+  expect(downloadStart).toBeGreaterThan(listStart);
+  expect(adminUploadStart).toBeGreaterThanOrEqual(0);
+  const listRoute = source.slice(listStart, downloadStart);
+  const downloadRoute = source.slice(downloadStart, adminUploadStart);
+  const adminRoute = source.slice(adminUploadStart, listStart);
+  expect(listRoute).toContain('await requireUser(req)');
+  expect(listRoute).toContain('.eq("user_id", user.id)');
+  expect(listRoute).toContain('.not("published_at", "is", null)');
+  expect(downloadRoute).toContain('await requireUser(req)');
+  expect(downloadRoute).toContain('.eq("user_id", user.id)');
+  expect(downloadRoute).toContain('.not("published_at", "is", null)');
+  expect(downloadRoute).toContain('.createSignedUrl(item.storage_path, 60');
+  expect(adminRoute).toContain('await requireAdmin(req)');
+  expect(adminRoute).toContain('createSignedUploadUrl');
+  expect(adminRoute).toContain('published_at: publish ? new Date().toISOString() : null');
+  expect(adminRoute).toContain('actualSize !== size');
+});
+
 test('authenticated payment initialization uses saved quantity and refuses already-paid requests', async () => {
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
   const routeStart = source.indexOf('if (path === "/api/payments/initialize" && req.method === "POST")');
