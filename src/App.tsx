@@ -407,8 +407,8 @@ function App() {
 
   useEffect(() => {
     let active = true;
-    // Admin entry is intentionally not linked from public navigation.
-    // Owners can open /admin directly; OAuth returns to this same path.
+    // Admin entry stays off the public homepage and navigation.
+    // Owners can always open /admin directly, including after signing out.
     if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
       setLoginOpen(true);
     }
@@ -427,8 +427,16 @@ function App() {
     }
     void auth.completeOAuthCallback().then(async (result: any) => {
       if (!active || !result) return;
-      // Ask the backend whether this account is an authorized administrator.
-      // Never ship the administrator email allowlist in the public frontend bundle.
+      // OAuth can also be used by customers from the public wallet. Completing that
+      // callback establishes their customer session, but must never switch the public
+      // homepage into the admin dashboard merely because their email is admin-allowlisted.
+      if (window.location.pathname.replace(/\/+$/, '') !== '/admin') {
+        setUser(null);
+        setAdminView(false);
+        return;
+      }
+      // Only the private /admin route may transition into the admin workspace.
+      // The server remains the authority for whether this account is an administrator.
       try {
         const access = await api.get('/api/admin/session');
         if (access.data?.admin !== true) throw new Error('Admin access is not available.');
@@ -1329,6 +1337,9 @@ function App() {
     await auth.signOut();
     setUser(null);
     setAdminView(false);
+    // Keep the owner on the private /admin entrance with the sign-in prompt ready,
+    // so signing out never strands them on a blank or public view.
+    setLoginOpen(true);
   };
 
   const adminFields: Record<string, string[]> = {
