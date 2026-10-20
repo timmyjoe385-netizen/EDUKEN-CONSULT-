@@ -166,6 +166,8 @@ test("guest payment callback recovery is rate-limited and verifies provider evid
   assert.match(route, /consumeEmailAlertRateLimit\(req, "guest-payment-recovery"\)/);
   assert.match(route, /\^EDK-PAY-\[A-Z0-9\]\{18\}\$/);
   assert.match(route, /transaction\/verify\//);
+  assert.match(route, /String\(transaction\.reference \|\| ""\) !== reference/);
+  assert.match(route, /different payment reference/);
   assert.match(route, /matchesStoredPaystackPayment\(transaction, \{ amount: existingPayment\.amount, currency: existingPayment\.currency, reference \}\)/);
   assert.match(route, /\.in\("status", \["Pending", "Failed"\]\)/);
   assert.match(route, /sendPaymentNotifications\(/);
