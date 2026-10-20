@@ -1876,7 +1876,7 @@ Deno.serve(async (req) => {
         if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Please refresh and check again." }, 409);
       }
       if (paid) {
-        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id);
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" }).eq("id", request.id).in("status", ["New Requests", "Contacted", "Paid"]);
         if (requestUpdateError) throw requestUpdateError;
         // Notify only on the successful Pending/Failed -> Paid transition performed
         // by this request. A repeated recovery of an already-Paid row is read/repair-only.
@@ -1918,7 +1918,7 @@ Deno.serve(async (req) => {
         // Repair request state after a prior partial failure without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
-            .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+            .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).in("status", ["New Requests", "Contacted", "Paid"]);
           if (requestUpdateError) throw requestUpdateError;
         }
         return json({ paid: true, payment: existingPayment });
@@ -1948,7 +1948,7 @@ Deno.serve(async (req) => {
       }
       if (paid) {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
-          .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+          .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).in("status", ["New Requests", "Contacted", "Paid"]);
         if (requestUpdateError) throw requestUpdateError;
         // Stable outbox idempotency makes this safe after concurrent or repeated verification.
         await sendPaymentNotifications(request.user_id || existingPayment.user_id || null, reference, Number(existingPayment.amount), "service_payment", request.email || null);
@@ -1975,7 +1975,7 @@ Deno.serve(async (req) => {
         // Repair request state after a prior partial failure without duplicating delivered receipts.
         if (existingPayment.service_request_id) {
           const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
-            .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+            .eq("id", existingPayment.service_request_id).eq("user_id", user.id).in("status", ["New Requests", "Contacted", "Paid"]);
           if (requestUpdateError) throw requestUpdateError;
         }
         return json({ paid: true, payment: existingPayment });
@@ -2007,7 +2007,7 @@ Deno.serve(async (req) => {
       }
       if (paid && existingPayment.service_request_id) {
         const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
-          .eq("id", existingPayment.service_request_id).eq("user_id", user.id);
+          .eq("id", existingPayment.service_request_id).eq("user_id", user.id).in("status", ["New Requests", "Contacted", "Paid"]);
         if (requestUpdateError) throw requestUpdateError;
         // Stable outbox idempotency makes this safe after concurrent or repeated verification.
         await sendServicePaymentNotifications(existingPayment);
@@ -2195,12 +2195,18 @@ Deno.serve(async (req) => {
         const { data: existing, error: existingError } = await db.from("service_requests").select("id,status").eq("id", id).maybeSingle();
         if (existingError) throw existingError;
         if (!existing) return json({ error: "Service request not found." }, 404);
-        if (existing.status === "Paid") return json({ error: "Payment-confirmed service requests cannot be changed through the status manager." }, 409);
+        const currentStatus = String(existing.status || "New Requests");
+        if (currentStatus === "Completed" ||
+            (currentStatus === "Paid" && !["In Progress", "Completed"].includes(b.status)) ||
+            (currentStatus === "In Progress" && !["In Progress", "Completed"].includes(b.status))) {
+          return json({ error: "Payment-confirmed requests can only progress from Paid to In Progress to Completed. Completed requests are locked." }, 409);
+        }
 
-        // Keep the protection in the database update predicate as well as the
-        // pre-check, so a request becoming Paid between the read and write is
-        // not overwritten by an admin status change.
-        const { data, error } = await db.from("service_requests").update({ status: b.status }).eq("id", id).neq("status", "Paid").select("id,status").maybeSingle();
+        // Compare-and-set against the status read above. Payment verification only
+        // writes Paid while a request is in New Requests/Contacted/Paid, so it cannot
+        // overwrite In Progress or Completed, and admin updates cannot race over payment.
+        const { data, error } = await db.from("service_requests").update({ status: b.status })
+          .eq("id", id).eq("status", currentStatus).select("id,status").maybeSingle();
         if (error) throw error;
         if (!data) {
           const { data: current, error: currentError } = await db.from("service_requests").select("id,status").eq("id", id).maybeSingle();
