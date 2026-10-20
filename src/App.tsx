@@ -1883,9 +1883,9 @@ function App() {
                                 const local = new Date(parsed.getTime() - parsed.getTimezoneOffset() * 60000);
                                 return local.toISOString().slice(0, 16);
                               }
-                              const iso = raw.match(/^(\\d{4}-\\d{2}-\\d{2})/);
+                              const iso = raw.match(/^(\d{4}-\d{2}-\d{2})/);
                               if (iso) return iso[1];
-                              const human = raw.match(/\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+([A-Za-z]+)\\s+(\\d{4})\\b/i);
+                              const human = raw.match(/\b(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4})\b/i);
                               if (!human) return '';
                               const month = Date.parse(human[2] + ' 1, 2000');
                               if (Number.isNaN(month)) return '';

@@ -2,6 +2,14 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from '../../supabase/functions/eduken-api/service-request-validation.mjs';
 
+test('admin date editor parses ISO and human-readable deadlines for the native picker', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  expect(app).toContain('raw.match(/^(\\d{4}-\\d{2}-\\d{2})/)');
+  expect(app).toContain('raw.match(/\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+([A-Za-z]+)\\s+(\\d{4})\\b/i)');
+  expect(app).not.toContain('raw.match(/^(\\\\d{4}-\\\\d{2}-\\\\d{2})/)');
+  expect(app).not.toContain('raw.match(/\\\\b(\\\\d{1,2})(?:st|nd|rd|th)?\\\\s+([A-Za-z]+)\\\\s+(\\\\d{4})\\\\b/i)');
+});
+
 const publicContentUrl =
   'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content';
 
