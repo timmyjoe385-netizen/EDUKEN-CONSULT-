@@ -998,6 +998,32 @@ test('public header exposes customer wallet access but not admin access', async 
 
 
 
+test('customer Google sign-in on the public homepage never opens the admin dashboard', async ({ page }) => {
+  await page.route('**/auth/v1/user', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ id: 'test-admin-user', email: 'timmyjoe385@gmail.com', app_metadata: { provider: 'google' } }),
+  }));
+  await page.route('**/functions/v1/eduken-api/public-content', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+  }));
+  await page.route('**/functions/v1/eduken-api/api/admin/session', route => {
+    throw new Error('Public customer OAuth must not request the admin session endpoint.');
+  });
+  await page.route('**/functions/v1/eduken-api/api/me', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ user: { email: 'timmyjoe385@gmail.com' } }),
+  }));
+  await page.addInitScript(() => {
+    localStorage.removeItem('eduken_auth_session');
+  });
+  await page.goto('/#access_token=synthetic-customer-token&refresh_token=synthetic-refresh-token&expires_in=3600&token_type=bearer', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.site')).toBeVisible();
+  await expect(page.locator('.admin-shell')).toHaveCount(0);
+  await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toHaveCount(0);
+});
+
 test('public header does not expose generic sign-in while customer wallet sign-in remains available', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
