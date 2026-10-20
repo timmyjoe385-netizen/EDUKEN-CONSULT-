@@ -2022,6 +2022,49 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/service-deliverables" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.from("service_deliverables")
+        .select("id,service_request_id,title,description,original_filename,mime_type,file_size_bytes,published_at,created_at,service_requests(reference_number,service_id,status,services(name))")
+        .eq("user_id", user.id).not("published_at", "is", null)
+        .order("published_at", { ascending: false }).limit(100);
+      if (error) {
+        if (error.code === "42P01" || error.code === "PGRST205") {
+          return json({ error: "Student document delivery is not enabled on this environment yet.", code: "DELIVERABLES_NOT_CONFIGURED" }, 503);
+        }
+        throw error;
+      }
+      return json({ items: data ?? [] });
+    }
+
+    if (path.startsWith("/api/service-deliverables/") && path.endsWith("/download") && req.method === "POST") {
+      const user = await requireUser(req);
+      const segments = path.split("/").filter(Boolean);
+      const deliverableId = segments.length === 4 ? segments[2] : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(deliverableId)) {
+        return json({ error: "A valid document ID is required." }, 400);
+      }
+      const { data: item, error } = await db.from("service_deliverables")
+        .select("id,storage_path,original_filename,mime_type")
+        .eq("id", deliverableId).eq("user_id", user.id)
+        .not("published_at", "is", null).maybeSingle();
+      if (error) {
+        if (error.code === "42P01" || error.code === "PGRST205") {
+          return json({ error: "Student document delivery is not enabled on this environment yet.", code: "DELIVERABLES_NOT_CONFIGURED" }, 503);
+        }
+        throw error;
+      }
+      if (!item) return json({ error: "Published document not found." }, 404);
+      const { data: signed, error: signError } = await db.storage
+        .from("eduken-service-deliverables")
+        .createSignedUrl(item.storage_path, 60, { download: item.original_filename });
+      if (signError || !signed?.signedUrl) {
+        console.error("Could not create student deliverable download URL.", signError?.message);
+        return json({ error: "This document cannot be downloaded right now. Please try again later." }, 503);
+      }
+      return json({ url: signed.signedUrl, expiresInSeconds: 60 });
+    }
+
     const adminRequests = path.match(/^\/api\/admin\/service-requests(?:\/([^/]+))?$/);
     if (adminRequests) {
       await requireAdmin(req); const id = adminRequests[1];
