@@ -924,14 +924,18 @@ function App() {
                         ? '💼 *JOB OPPORTUNITIES*'
                         : '📢 *EDUKEN OPPORTUNITIES*';
     const title = String(item.title || 'EDUKEN CONSULT Opportunity').trim();
+    const howToApply = String(item.howToApply || item.how_to_apply || '').replace(/\\s+/g, ' ').trim();
     const message = [
       categoryHeading,
       '',
       '📢 *' + title + '*',
       ...(location ? ['📍 Location: ' + location] : []),
+      ...(howToApply ? ['', '📝 HOW TO APPLY', howToApply] : []),
       '',
       '🔗 READ MORE HERE 👇',
       link,
+      '',
+      '👉 Visit EDUKEN CONSULT for more information and full application details.',
       '',
       '🎓 EDUKEN CONSULT',
       'Your Trusted Plug for Educational Updates, Admissions & Opportunities.',
