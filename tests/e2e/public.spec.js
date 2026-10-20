@@ -2090,3 +2090,19 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
   await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
   await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
 });
+
+test('admin sign-out clears the admin session and restores a usable private sign-in entrance', () => {
+  const app = readFileSync('src/App.tsx', 'utf8');
+  const start = app.indexOf('const logout = async () => {');
+  const end = app.indexOf('\n  };', start);
+  expect(start, 'admin logout handler should exist').toBeGreaterThanOrEqual(0);
+  expect(end, 'admin logout handler should have a closing boundary').toBeGreaterThan(start);
+  const logout = app.slice(start, end);
+  expect(logout).toContain('await auth.signOut()');
+  expect(logout).toContain('setUser(null)');
+  expect(logout).toContain('setAdminView(false)');
+  expect(logout).toContain('setLoginOpen(true)');
+  expect(app).toContain("if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {");
+  expect(app).toContain('<h2 id="admin-login-title">Admin sign in</h2>');
+  expect(app).toContain('onClick={() => void signIn()}');
+});
