@@ -412,7 +412,7 @@ function App() {
     let active = true;
     // Keep the admin entrance off public navigation. An owner can opt this browser into
     // an admin shortcut; only this browser profile remembers that preference.
-    if (window.location.pathname.replace(/\\/+$/, '') === '/admin') {
+    if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
       setLoginOpen(true);
     } else {
       try {
