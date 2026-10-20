@@ -224,6 +224,36 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
   return x;
 }
 
+
+/**
+ * Convert editorial deadline text into the date-only format required by Postgres.
+ * Accepts ISO dates and common human-readable dates (including ordinal suffixes
+ * and notes such as "(tomorrow)"). Empty optional deadlines are stored as NULL.
+ */
+function normalizeContentDeadline(value: unknown): string | null | undefined {
+  if (value === null || value === undefined || String(value).trim() === "") return null;
+  const raw = String(value).trim();
+  const iso = raw.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);
+  if (iso) {
+    const year = Number(iso[1]), month = Number(iso[2]), day = Number(iso[3]);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return date.getUTCFullYear() === year && date.getUTCMonth() === month - 1 && date.getUTCDate() === day
+      ? raw
+      : undefined;
+  }
+  const cleaned = raw
+    .replace(/\\([^)]*\\)/g, " ")
+    .replace(/\\b(\\d{1,2})(st|nd|rd|th)\\b/gi, "$1")
+    .replace(/\\s+/g, " ")
+    .trim();
+  const timestamp = Date.parse(cleaned);
+  if (!Number.isFinite(timestamp)) return undefined;
+  const date = new Date(timestamp);
+  return date.getUTCFullYear().toString().padStart(4, "0") + "-" +
+    (date.getUTCMonth() + 1).toString().padStart(2, "0") + "-" +
+    date.getUTCDate().toString().padStart(2, "0");
+}
+
 async function notifyOpportunitySubscribers(opportunity: Record<string, any>) {
   if (!opportunity.notify_on_publish || !opportunity.is_published) return;
   const systemSettings = await readSystemSettings();
@@ -2178,6 +2208,13 @@ Deno.serve(async (req) => {
         const parsedBody = parseJsonObjectBody(await req.text());
         if (!parsedBody.valid) return json({ error: parsedBody.error }, 400);
         const b = mapAdminInput(table, parsedBody.value as Record<string, unknown>);
+        if ((table === "opportunities" || table === "admissions") && Object.prototype.hasOwnProperty.call(b, "deadline")) {
+          const normalizedDeadline = normalizeContentDeadline(b.deadline);
+          if (normalizedDeadline === undefined) {
+            return json({ error: "Enter a valid deadline date, for example 2026-10-21, or leave it blank." }, 400);
+          }
+          b.deadline = normalizedDeadline;
+        }
         if (table === "services" && Object.prototype.hasOwnProperty.call(b, "price")) {
           const normalizedPrice = normalizeServicePrice(b.price);
           if (!normalizedPrice.valid) {
