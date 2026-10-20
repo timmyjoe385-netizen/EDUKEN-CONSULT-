@@ -1850,6 +1850,12 @@ Deno.serve(async (req) => {
       try { result = await response.json(); } catch { return json({ error: "Unable to verify payment with the provider yet. Do not pay again immediately." }, 502); }
       if (!response.ok || !result.status || !result.data) return json({ error: "Unable to verify payment with the provider yet. Do not pay again immediately." }, 502);
       const transaction = result.data;
+      // The provider response must correspond to the exact reference we asked to verify,
+      // even when the provider reports a non-success status. Never mutate a local payment
+      // based on a contradictory transaction response.
+      if (String(transaction.reference || "") !== reference) {
+        return json({ error: "The provider returned a different payment reference. Please contact support before taking further action." }, 409);
+      }
       const paid = isSuccessfulPaystackTransaction(transaction);
       if (paid && !matchesStoredPaystackPayment(transaction, { amount: existingPayment.amount, currency: existingPayment.currency, reference })) {
         return json({ error: "The provider's payment details do not match this checkout. Please contact support." }, 409);
