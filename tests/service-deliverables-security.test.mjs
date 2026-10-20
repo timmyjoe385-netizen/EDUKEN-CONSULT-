@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 const source = readFileSync("supabase/functions/eduken-api/index.ts", "utf8");
+const app = readFileSync("src/App.tsx", "utf8");
 const migration = readFileSync("supabase/migrations/20261020170000_student_service_deliverables.sql", "utf8");
 
 test("student deliverables listing requires authentication and restricts rows to published files owned by the caller", () => {
@@ -17,7 +18,7 @@ test("student deliverables listing requires authentication and restricts rows to
 
 test("download route scopes lookup by user and published state and creates a short-lived signed URL", () => {
   const start = source.indexOf('if (path.startsWith("/api/service-deliverables/")');
-  const end = source.indexOf('const adminRequests = path.match(', start);
+  const end = source.indexOf("const adminRequests = path.match(", start);
   assert.ok(start >= 0 && end > start, "student download route must exist");
   const route = source.slice(start, end);
   assert.match(route, /await requireUser\(req\)/);
@@ -33,10 +34,24 @@ test("admin upload endpoints require admin authorization and enforce request/pay
   const route = source.slice(start, end);
   assert.match(route, /await requireAdmin\(req\)/);
   assert.match(route, /createSignedUploadUrl/);
+  assert.match(route, /signedUpload\.signedUrl/);
+  assert.match(route, /signedUpload\.token/);
   assert.match(route, /fileSizeBytes/);
   assert.match(route, /15728640|15 \* 1024 \* 1024/);
   assert.match(route, /actualSize !== size/);
   assert.match(route, /payment|Paid|In Progress|Completed/i);
+});
+
+test("browser uploads directly to the token-bearing signed URL with PUT and only registers metadata after upload succeeds", () => {
+  const start = app.indexOf("const uploadServiceDeliverable = async");
+  const end = app.indexOf("const submitServiceRequest = async", start);
+  assert.ok(start >= 0 && end > start, "admin upload handler must exist");
+  const handler = app.slice(start, end);
+  assert.match(handler, /prepared\.data\?\.uploadUrl/);
+  assert.match(handler, /fetch\(uploadUrl,\s*\{\s*method:\s*'PUT'/);
+  assert.match(handler, /'Content-Type': file\.type/);
+  assert.match(handler, /if \(!uploaded\.ok\)/);
+  assert.ok(handler.indexOf("if (!uploaded.ok)") < handler.indexOf("api.post('/api/admin/service-deliverables'"), "metadata must not be registered before the storage upload succeeds");
 });
 
 test("database migration keeps deliverables private with student ownership RLS and an allowlisted private bucket", () => {
