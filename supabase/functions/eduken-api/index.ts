@@ -2088,7 +2088,7 @@ Deno.serve(async (req) => {
       if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(requestId) ||
           title.length < 1 || title.length > 160 || description.length > 3000 ||
           filename.length < 1 || filename.length > 255 || !Number.isSafeInteger(size) || size < 1 || size > 15728640 ||
-          !storagePath.startsWith("") || !mimeType) {
+          !["application/pdf", "image/jpeg", "image/png", "image/webp", "text/plain", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].includes(mimeType)) {
         return json({ error: "Deliverable metadata is invalid." }, 400);
       }
       const { data: request, error: requestError } = await db.from("service_requests")
@@ -2103,8 +2103,8 @@ Deno.serve(async (req) => {
       if (!storagePath.startsWith(pathPrefix) || storagePath.includes("..") || storagePath.includes("\\\\")) {
         return json({ error: "Upload path does not match this student's service request." }, 400);
       }
-      const folder = pathPrefix;
-      const basename = storagePath.slice(folder.length);
+      const folder = request.user_id + "/" + request.id;
+      const basename = storagePath.slice(pathPrefix.length);
       if (!basename || basename.includes("/")) return json({ error: "Upload path is invalid." }, 400);
       const { data: storedObjects, error: objectError } = await db.storage.from("eduken-service-deliverables")
         .list(folder, { search: basename, limit: 10 });
