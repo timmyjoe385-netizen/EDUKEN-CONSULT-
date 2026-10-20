@@ -2098,7 +2098,7 @@ test('admin content deadline validation and calendar picker are wired for create
   expect(source).toContain('(st|nd|rd|th)');
   expect(source).toContain('Enter a valid deadline date, for example 2026-10-21, or leave it blank.');
   expect(source.split('normalizeContentDeadline(b.deadline)')).toHaveLength(3);
-  expect(app).toContain("field === 'deadline' && (adminTab === 'opportunities' || adminTab === 'admissions')");
-  expect(app).toContain('type="date"');
-  expect(app).toContain('Application deadline (optional)');
+  expect(app).toContain('/(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field)');
+  expect(app).toContain("'datetime-local' : 'date'");
+  expect(app).toContain("aria-label={field.replace(/_/g, ' ') + ' (optional)'}");
 });
