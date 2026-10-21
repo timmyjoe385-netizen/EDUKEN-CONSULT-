@@ -1283,9 +1283,14 @@ test('aggregate calculator scores only the five FUHSI core subjects and clears e
   await expect(page.getByLabel('JAMB UTME score (out of 400)')).toHaveValue('');
 });
 
-test('aggregate calculator directory search and mobile layout work', async ({ page }) => {
+test('aggregate calculator keeps verification directory collapsed until requested and search works on mobile', async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 800 });
   await page.goto('/aggregate-calculator', { waitUntil: 'domcontentloaded' });
+  const directory = page.locator('.aggregate-directory-details');
+  await expect(directory).not.toHaveAttribute('open', '');
+  await expect(page.locator('.aggregate-directory-list')).toBeHidden();
+  await page.getByText('Other universities — verification in progress').click();
+  await expect(page.locator('.aggregate-directory-list')).toBeVisible();
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Benin');
   await expect(page.locator('.aggregate-directory-list')).toContainText('University of Benin (UNIBEN)');
   await expect(page.locator('.aggregate-directory-list')).not.toContainText('University of Lagos (UNILAG)');
@@ -1312,6 +1317,7 @@ test('aggregate calculator applies the added provisional school-specific formula
   await expect(page.locator('.aggregate-result')).toContainText('not confirmed as the university’s official 2026/2027 formula');
 
   await expect(page.getByLabel('Institution / formula').locator('option[value="ui-estimate"]')).toContainText('unverified estimate');
+  await page.getByText('Other universities — verification in progress').click();
   await page.getByRole('textbox', { name: 'Search university directory' }).fill('University of Ibadan');
   await expect(page.locator('.aggregate-directory-list')).toContainText('aggregate formula and score conversion are not published on the page reviewed');
 
@@ -1874,6 +1880,7 @@ test('appearance preference persists and System mode follows operating-system ch
   await expect(toggle).toHaveAttribute('title', 'Appearance: light mode');
   await expect(root).toHaveAttribute('data-theme', 'light');
   await expect(root).toHaveCSS('color-scheme', 'light');
+  await expect(page.locator('.whatsapp-cta')).toHaveCSS('background-color', 'rgb(241, 247, 242)');
 
   await toggle.click();
   await expect(toggle).toBeFocused();
@@ -1883,6 +1890,9 @@ test('appearance preference persists and System mode follows operating-system ch
   await expect(root).toHaveCSS('color-scheme', 'dark');
   await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(7, 20, 38)');
   await expect(page.locator('.platform-card').first()).toHaveCSS('background-color', 'rgb(13, 32, 56)');
+  await expect(page.locator('.whatsapp-cta')).toHaveCSS('background-color', 'rgb(13, 32, 56)');
+  await expect(page.locator('.whatsapp-cta h2')).toHaveCSS('color', 'rgb(241, 247, 255)');
+  await expect(page.locator('.whatsapp-cta p')).toHaveCSS('color', 'rgb(197, 211, 226)');
   await expect.poll(() => page.evaluate(() => window.localStorage.getItem('eduken-theme'))).toBe('dark');
 
   await toggle.click();
