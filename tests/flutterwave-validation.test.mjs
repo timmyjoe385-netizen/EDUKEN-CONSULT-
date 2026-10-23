@@ -5,6 +5,7 @@ import {
   getFlutterwaveCheckoutUrl,
   getNextFlutterwavePaymentStatus,
   isFinalFlutterwaveFailure,
+  isFlutterwaveModeEnabled,
   isFlutterwaveTestModeEnabled,
   isSuccessfulFlutterwaveTransaction,
   isValidFlutterwaveWebhookSignature,
@@ -71,14 +72,19 @@ test("Flutterwave webhook secret-hash header must match exactly", () => {
   assert.equal(isValidFlutterwaveWebhookSignature(null, "my-secret-hash"), false);
 });
 
-test("Flutterwave initialization requires explicit test mode and a test secret key", () => {
+test("Flutterwave mode must explicitly match the configured secret-key type", () => {
+  assert.equal(isFlutterwaveModeEnabled("test", "FLWSECK_TEST-0123456789abcdef"), true);
+  assert.equal(isFlutterwaveModeEnabled(" TEST ", "FLWSECK_TEST-abc_DEF-123"), true);
+  assert.equal(isFlutterwaveModeEnabled("live", "FLWSECK-0123456789abcdef"), true);
+  assert.equal(isFlutterwaveModeEnabled(" LIVE ", "FLWSECK-abc_DEF-123"), true);
+  assert.equal(isFlutterwaveModeEnabled("live", "FLWSECK_TEST-0123456789abcdef"), false);
+  assert.equal(isFlutterwaveModeEnabled("test", "FLWSECK-0123456789abcdef"), false);
+  assert.equal(isFlutterwaveModeEnabled("test", "FLWSECK_LIVE-0123456789abcdef"), false);
+  assert.equal(isFlutterwaveModeEnabled("production", "FLWSECK-0123456789abcdef"), false);
+  assert.equal(isFlutterwaveModeEnabled(undefined, "FLWSECK_TEST-0123456789abcdef"), false);
+  assert.equal(isFlutterwaveModeEnabled("test", undefined), false);
   assert.equal(isFlutterwaveTestModeEnabled("test", "FLWSECK_TEST-0123456789abcdef"), true);
-  assert.equal(isFlutterwaveTestModeEnabled(" TEST ", "FLWSECK_TEST-abc_DEF-123"), true);
-  assert.equal(isFlutterwaveTestModeEnabled("live", "FLWSECK_TEST-0123456789abcdef"), false);
-  assert.equal(isFlutterwaveTestModeEnabled("test", "FLWSECK-0123456789abcdef"), false);
-  assert.equal(isFlutterwaveTestModeEnabled("test", "FLWSECK_LIVE-0123456789abcdef"), false);
-  assert.equal(isFlutterwaveTestModeEnabled(undefined, "FLWSECK_TEST-0123456789abcdef"), false);
-  assert.equal(isFlutterwaveTestModeEnabled("test", undefined), false);
+  assert.equal(isFlutterwaveTestModeEnabled("live", "FLWSECK-0123456789abcdef"), false);
 });
 
 test("Flutterwave callback URL requires a clean HTTPS origin and a valid EDUKEN reference", () => {
@@ -93,7 +99,7 @@ test("Flutterwave callback URL requires a clean HTTPS origin and a valid EDUKEN 
   assert.equal(getFlutterwaveCallbackUrl("https://eduken-consult.example/", "invalid-reference"), null);
 });
 
-test("Flutterwave routes stay separate, test-only guarded, and provider-scoped", async () => {
+test("Flutterwave routes stay separate, mode-guarded, and provider-scoped", async () => {
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
   for (const route of [
@@ -103,6 +109,7 @@ test("Flutterwave routes stay separate, test-only guarded, and provider-scoped",
     'if (path === "/api/flutterwave/payments/recover-guest" && req.method === "POST")',
   ]) assert.ok(source.includes(route), "missing Flutterwave route: " + route);
   assert.ok(source.includes('Deno.env.get("FLUTTERWAVE_MODE")'));
+  assert.ok(source.includes("isFlutterwaveModeEnabled(Deno.env.get(\"FLUTTERWAVE_MODE\"), secret)"), "each Flutterwave route must require a mode/key match");
   assert.ok(source.includes('Deno.env.get("FLUTTERWAVE_WEBHOOK_HASH")'));
   assert.ok(source.includes('.eq("payment_provider", "flutterwave")'));
   assert.ok(source.includes('.eq("payment_provider", "paystack")'), "Paystack lookups must not settle Flutterwave records");
