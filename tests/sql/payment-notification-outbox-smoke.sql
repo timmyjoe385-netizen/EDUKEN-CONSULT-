@@ -46,6 +46,21 @@ begin
 end;
 $test$;
 
+-- Permanent provider rejections are terminal and are excluded from pending retries.
+insert into public.payment_notification_deliveries
+  (payment_reference, notification_kind, recipient_role, recipient_email, idempotency_key, subject, text_body, status, last_error)
+values
+  ('outbox-failed-reference', 'service_payment', 'admin', 'admin@example.test',
+   'outbox-failed-idempotency-key', 'EDUKEN payment alert', 'Test body', 'failed', 'HTTP 403');
+do $test$
+begin
+  if exists (select 1 from public.payment_notification_deliveries
+             where idempotency_key = 'outbox-failed-idempotency-key' and status = 'pending') then
+    raise exception 'permanent provider rejection was left in automatic retry queue';
+  end if;
+end;
+$test$;
+
 -- Model two workers that both read attempt_count=0. The first compare-and-swap
 -- claims the attempt; the stale second worker must affect zero rows.
 insert into public.payment_notification_deliveries
