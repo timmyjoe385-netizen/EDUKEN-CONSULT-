@@ -640,7 +640,7 @@ async function deliverPendingPaymentNotifications(
         break;
       } catch (error) {
         lastError = error instanceof Error ? error.message : "Unknown email error.";
-        const statusMatch = lastError.match(/\\(HTTP (\\d{3})/);
+        const statusMatch = lastError.match(/\(HTTP (\d{3})/);
         const providerStatus = statusMatch ? Number(statusMatch[1]) : 0;
         // A permanent 4xx (for example an unverified sender/recipient restriction)
         // cannot be fixed by retrying. Keep 429 retryable; require configuration repair
