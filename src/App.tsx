@@ -499,6 +499,7 @@ function App() {
     if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
       setCheckoutSession(saved);
       setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
+      setPaymentProvider(saved.paymentProvider === 'flutterwave' ? 'flutterwave' : 'paystack');
     }
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || params.get('tx_ref') || '';
