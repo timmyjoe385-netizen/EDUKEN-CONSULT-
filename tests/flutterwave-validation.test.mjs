@@ -88,3 +88,27 @@ test("Flutterwave callback URL requires a clean HTTPS origin and a valid EDUKEN 
   }
   assert.equal(getFlutterwaveCallbackUrl("https://eduken-consult.example/", "invalid-reference"), null);
 });
+
+test("Flutterwave routes stay separate, test-only guarded, and provider-scoped", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  for (const route of [
+    'if (path === "/api/flutterwave/payments/webhook" && req.method === "POST")',
+    'if (path === "/api/flutterwave/payments/initialize-guest" && req.method === "POST")',
+    'if (path === "/api/flutterwave/payments/verify-guest" && req.method === "POST")',
+    'if (path === "/api/flutterwave/payments/recover-guest" && req.method === "POST")',
+  ]) assert.ok(source.includes(route), "missing Flutterwave route: " + route);
+  assert.ok(source.includes('Deno.env.get("FLUTTERWAVE_MODE")'));
+  assert.ok(source.includes('Deno.env.get("FLUTTERWAVE_WEBHOOK_HASH")'));
+  assert.ok(source.includes('.eq("payment_provider", "flutterwave")'));
+  assert.ok(source.includes('.eq("payment_provider", "paystack")'), "Paystack lookups must not settle Flutterwave records");
+  assert.ok(source.includes('matchesStoredFlutterwavePayment(transaction'), "Flutterwave settlement must verify amount/currency/reference");
+  assert.ok(source.includes('isValidFlutterwaveWebhookSignature(providedHash, webhookHash)'), "webhook signature must be checked before processing");
+});
+
+test("provider migration preserves Paystack as the default and constrains supported providers", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const migration = await readFile(new URL("../supabase/migrations/20261023120000_add_payment_provider.sql", import.meta.url), "utf8");
+  assert.match(migration, /add column if not exists payment_provider text not null default 'paystack'/);
+  assert.match(migration, /check \(payment_provider in \('paystack', 'flutterwave'\)\)/);
+});
