@@ -534,8 +534,19 @@ async function sendEmailAlertMessage(
     body: JSON.stringify({ from: config.from, to: [to], subject, text: textBody, html: htmlBody }),
   });
   if (!response.ok) {
-    // Keep provider response bodies and subscriber data out of public error messages.
-    throw new Error("Transactional email provider rejected the message.");
+    // Record only the HTTP status and a constrained provider error code; never store
+    // provider messages, email addresses, or other potentially sensitive response data.
+    let providerCode = "";
+    try {
+      const payload = await response.clone().json();
+      const candidate = payload?.name ?? payload?.code;
+      if (typeof candidate === "string" && /^[A-Za-z0-9_.-]{1,48}$/.test(candidate)) {
+        providerCode = "; provider_code=" + candidate;
+      }
+    } catch {
+      // Some provider failures return non-JSON bodies; the HTTP status is still useful.
+    }
+    throw new Error("Transactional email provider rejected the message (HTTP " + response.status + providerCode + ").");
   }
   const result = await response.json();
   return typeof result.id === "string" ? result.id : null;
