@@ -1684,6 +1684,115 @@ Deno.serve(async (req) => {
       return json({ paid: true, wallet: result });
     }
 
+    if (path === "/api/flutterwave/payments/initialize-guest" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-initialize"); } catch { return json({ error: "Checkout is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Checkout is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many checkout attempts. Please wait before trying again." }, 429);
+      const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
+      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+        return json({ error: "Flutterwave is disabled unless FLUTTERWAVE_MODE=test and a test secret key is configured.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
+      }
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const serviceRequestId = typeof b?.serviceRequestId === "string" ? b.serviceRequestId : "";
+      const checkoutToken = typeof b?.checkoutToken === "string" ? b.checkoutToken : "";
+      const email = typeof b?.email === "string" ? b.email.trim() : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(serviceRequestId)
+        || !/^[0-9a-f]{64}$/.test(checkoutToken)
+        || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        || email.length > 200) {
+        return json({ error: "A valid checkout session and receipt email are required." }, 400);
+      }
+      const tokenHash = await sha256Hex(checkoutToken);
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,user_id,service_id,reference_number,email,status,quantity,checkout_token_hash,services(name,price,is_published,is_available,is_catalog_item)")
+        .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "Checkout session is invalid or expired. Contact EDUKEN CONSULT with your request reference." }, 404);
+      if (request.status === "Paid") return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      const service = Array.isArray(request.services) ? request.services[0] : request.services;
+      const quantity = Number(request.quantity ?? 1);
+      if (!Number.isInteger(quantity) || quantity < 1 || quantity > 100 || (quantity > 1 && service?.is_catalog_item !== true)) {
+        return json({ error: "The saved service quantity is invalid. Please contact EDUKEN CONSULT.", code: "INVALID_SERVICE_QUANTITY" }, 409);
+      }
+      const trustedAmount = Number(service?.price) * quantity;
+      if (!service || !service.is_published || service.is_available === false || !Number.isFinite(trustedAmount) || trustedAmount <= 0) {
+        return json({ error: "This service does not have a confirmed online price. Please contact EDUKEN CONSULT for a quote." }, 409);
+      }
+      const { data: paidPayment, error: paidLookupError } = await db.from("payments")
+        .select("id,status,payment_reference").eq("service_request_id", request.id).eq("status", "Paid").maybeSingle();
+      if (paidLookupError) throw paidLookupError;
+      if (paidPayment) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
+      const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_provider")
+        .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
+      if (pendingLookupError) throw pendingLookupError;
+      if (pendingPayment) {
+        if (pendingPayment.payment_provider !== "flutterwave") {
+          return json({ error: "A Paystack payment attempt already exists for this request. Continue that checkout or contact EDUKEN CONSULT before switching providers.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+        }
+        const savedUrl = getFlutterwaveCheckoutUrl({ status: "success", data: { link: pendingPayment.authorization_url } });
+        if (savedUrl && pendingPayment.payment_reference && Math.round(Number(pendingPayment.amount) * 100) === Math.round(trustedAmount * 100)) {
+          return json({ payment: pendingPayment, authorizationUrl: savedUrl, reference: pendingPayment.payment_reference, provider: "flutterwave", reused: true });
+        }
+        return json({ error: "A Flutterwave payment attempt is still being prepared or needs support. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 409);
+      }
+      const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
+      const callbackUrl = getFlutterwaveCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      if (!callbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
+        user_id: request.user_id ?? null, service_request_id: request.id, amount: trustedAmount,
+        currency: "NGN", status: "Pending", payment_reference: reference, authorization_url: null,
+        payment_provider: "flutterwave",
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_provider").single();
+      if (reservationError) {
+        if (reservationError.code === "23505") {
+          return json({ error: "A payment attempt is already being prepared or needs support. Do not retry payment; contact EDUKEN CONSULT with your request reference.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
+        }
+        throw reservationError;
+      }
+      let providerResponse: Response;
+      try {
+        providerResponse = await fetch("https://api.flutterwave.com/v3/payments", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+          body: JSON.stringify({
+            tx_ref: reference, amount: trustedAmount, currency: "NGN", redirect_url: callbackUrl,
+            customer: { email },
+            customizations: { title: "EDUKEN CONSULT", description: "Education service payment" },
+            meta: { service_request_id: request.id, reference_number: request.reference_number, customer_email: email },
+          }),
+        });
+      } catch {
+        return json({ error: "Flutterwave could not confirm whether checkout was created. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+      }
+      let providerResult: any;
+      try { providerResult = await providerResponse.json(); } catch {
+        return json({ error: "Flutterwave returned an unreadable response. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+      }
+      const authorizationUrl = getFlutterwaveCheckoutUrl(providerResult);
+      if (!providerResponse.ok || providerResult?.status !== "success") {
+        const definitiveRejection = providerResponse.status >= 400 && providerResponse.status < 500 && providerResponse.status !== 408 && providerResult?.status !== "success";
+        if (definitiveRejection) {
+          const { error: markFailedError } = await db.from("payments").update({ status: "Failed" })
+            .eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending");
+          if (markFailedError) return json({ error: "Flutterwave initialization failed and needs support before retrying.", code: "PAYMENT_ATTEMPT_REQUIRES_SUPPORT" }, 503);
+          return json({ error: "Unable to initialize Flutterwave payment. You can safely try again.", code: "PAYMENT_INITIALIZATION_FAILED" }, 502);
+        }
+        return json({ error: "Flutterwave could not confirm whether checkout was created. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+      }
+      if (!authorizationUrl) return json({ error: "Flutterwave checkout could not be confirmed. Do not retry yet; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
+      const { data: payment, error: saveUrlError } = await db.from("payments").update({ authorization_url: authorizationUrl })
+        .eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_provider").maybeSingle();
+      if (saveUrlError || !payment) {
+        console.error("Flutterwave initialized but checkout URL persistence needs recovery.", saveUrlError?.message || "Payment reservation changed.");
+        return json({ payment: reservation, authorizationUrl, reference, provider: "flutterwave", recoveryRequired: true });
+      }
+      return json({ payment, authorizationUrl, reference, provider: "flutterwave" });
+    }
+
     if (path === "/api/payments/initialize-guest" && req.method === "POST") {
       let rateAllowed: boolean | null;
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-initialize"); } catch { return json({ error: "Checkout is temporarily unavailable." }, 503); }
