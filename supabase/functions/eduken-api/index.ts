@@ -537,16 +537,27 @@ async function sendEmailAlertMessage(
     // Record only the HTTP status and a constrained provider error code; never store
     // provider messages, email addresses, or other potentially sensitive response data.
     let providerCode = "";
+    let providerReason = "";
     try {
       const payload = await response.clone().json();
       const candidate = payload?.name ?? payload?.code;
       if (typeof candidate === "string" && /^[A-Za-z0-9_.-]{1,48}$/.test(candidate)) {
         providerCode = "; provider_code=" + candidate;
       }
+      // Keep only allow-listed diagnostic categories; never persist raw provider text,
+      // which can contain recipient addresses or other sensitive details.
+      const message = typeof payload?.message === "string" ? payload.message.toLowerCase() : "";
+      if (message.includes("only send testing emails to your own email address")) {
+        providerReason = "; provider_reason=testing_recipient_restriction";
+      } else if (message.includes("domain") && message.includes("not verified")) {
+        providerReason = "; provider_reason=sender_domain_unverified";
+      } else if (message.includes("api key") && (message.includes("invalid") || message.includes("missing"))) {
+        providerReason = "; provider_reason=api_key_invalid_or_missing";
+      }
     } catch {
       // Some provider failures return non-JSON bodies; the HTTP status is still useful.
     }
-    throw new Error("Transactional email provider rejected the message (HTTP " + response.status + providerCode + ").");
+    throw new Error("Transactional email provider rejected the message (HTTP " + response.status + providerCode + providerReason + ").");
   }
   const result = await response.json();
   return typeof result.id === "string" ? result.id : null;
