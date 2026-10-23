@@ -116,6 +116,7 @@ test("Flutterwave payment settlement and notification enqueue remain idempotent"
   const outbox = await readFile(new URL("../supabase/migrations/20261019003835_payment_notification_outbox.sql", import.meta.url), "utf8");
   const walletFix = await readFile(new URL("../supabase/migrations/20261023180000_provider_aware_wallet_deposits.sql", import.meta.url), "utf8");
   const terminalNotificationMigration = await readFile(new URL("../supabase/migrations/20261023190000_terminal_notification_failures.sql", import.meta.url), "utf8");
+  const legacyWalletMigration = await readFile(new URL("../supabase/migrations/20261023200000_wallet_deposit_legacy_idempotency.sql", import.meta.url), "utf8");
 
   assert.match(source, /if \(existingPayment\.status === "Paid"\)/, "duplicate successful webhook must reuse the existing payment");
   assert.match(source, /\.in\("status", \["Pending", "Failed"\]\)/, "settlement updates must be conditional to prevent racing double settlement");
@@ -128,6 +129,7 @@ test("Flutterwave payment settlement and notification enqueue remain idempotent"
   assert.match(source, /providerStatus >= 400 && providerStatus < 500 && providerStatus !== 429/, "permanent email 4xx failures must not be retried");
   assert.match(source, /status: permanentFailure \? "failed" : "pending"/, "permanent email provider failures must be marked terminal");
   assert.match(terminalNotificationMigration, /status in \('pending', 'delivered', 'failed'\)/, "outbox schema must permit terminal failures");
+  assert.match(legacyWalletMigration, /idempotency_key in \(v_provider_prefix \|\| p_reference, 'paystack:' \|\| p_reference\)/, "already-settled legacy deposits must be recognized without double-crediting");
 });
 
 test("provider migration preserves Paystack as the default and constrains supported providers", async () => {
