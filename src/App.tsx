@@ -1309,7 +1309,7 @@ function App() {
       const authorizationUrl = result.data.authorizationUrl;
       const validCheckoutUrl = typeof authorizationUrl === 'string' && (
         paymentProvider === 'flutterwave'
-          ? authorizationUrl.startsWith('https://checkout.flutterwave.com/')
+          ? (authorizationUrl.startsWith('https://checkout.flutterwave.com/') || authorizationUrl.startsWith('https://checkout-v2.dev-flutterwave.com/'))
           : authorizationUrl.startsWith('https://checkout.paystack.com/')
       );
       if (!validCheckoutUrl) {
