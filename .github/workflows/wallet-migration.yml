@@ -93,6 +93,14 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261019003835_payment_notification_outbox.sql
+      - name: Allow permanent notification failures in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261023190000_terminal_notification_failures.sql
       - name: Verify payment notification outbox is protected
         run: >-
           docker run --rm --network host
