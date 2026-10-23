@@ -109,6 +109,22 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -f /workspace/tests/sql/payment-notification-outbox-smoke.sql
+      - name: Add payment provider discriminator in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261023120000_add_payment_provider.sql
+      - name: Apply provider-aware wallet deposit settlement in disposable PostgreSQL
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/supabase/migrations/20261023180000_provider_aware_wallet_deposits.sql
       - name: Verify atomic deposits, spending, insufficient funds and refunds
         run: >-
           docker run --rm --network host
