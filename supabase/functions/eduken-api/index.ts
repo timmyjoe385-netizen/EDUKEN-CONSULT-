@@ -1733,8 +1733,39 @@ Deno.serve(async (req) => {
           return json({ error: "A Paystack payment attempt already exists for this request. Continue that checkout or contact EDUKEN CONSULT before switching providers.", code: "PAYMENT_ATTEMPT_EXISTS" }, 409);
         }
         const savedUrl = getFlutterwaveCheckoutUrl({ status: "success", data: { link: pendingPayment.authorization_url } });
-        if (savedUrl && pendingPayment.payment_reference && Math.round(Number(pendingPayment.amount) * 100) === Math.round(trustedAmount * 100)) {
+        const amountMatches = pendingPayment.payment_reference && Math.round(Number(pendingPayment.amount) * 100) === Math.round(trustedAmount * 100);
+        if (savedUrl && amountMatches) {
           return json({ payment: pendingPayment, authorizationUrl: savedUrl, reference: pendingPayment.payment_reference, provider: "flutterwave", reused: true });
+        }
+        if (amountMatches && !pendingPayment.authorization_url) {
+          // Recover an uncertain initialization by checking Flutterwave first. Never create a
+          // second provider attempt while the original reference may already exist.
+          let verifyResponse: Response;
+          try {
+            const verifyUrl = new URL("https://api.flutterwave.com/v3/transactions/verify_by_reference");
+            verifyUrl.searchParams.set("tx_ref", pendingPayment.payment_reference);
+            verifyResponse = await fetch(verifyUrl, {
+              method: "GET",
+              headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+            });
+          } catch {
+            return json({ error: "Flutterwave is still checking the earlier attempt. Do not start another payment; try again later or contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 409);
+          }
+          let verifyResult: any = null;
+          try { verifyResult = await verifyResponse.json(); } catch { /* handled as uncertain below */ }
+          if (verifyResponse.ok && verifyResult?.status === "success" && verifyResult?.data) {
+            return json({ error: "Flutterwave found a transaction for this reference. Do not start another payment; contact EDUKEN CONSULT for recovery.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference: pendingPayment.payment_reference }, 409);
+          }
+          // Flutterwave v3 returns 400 when no transaction matches the reference.
+          // Only in that case is it safe to release the orphaned reservation for a fresh attempt.
+          if (verifyResponse.status === 400) {
+            const { error: releaseError } = await db.from("payments").update({ status: "Failed" })
+              .eq("id", pendingPayment.id).eq("payment_provider", "flutterwave").eq("status", "Pending")
+              .is("authorization_url", null);
+            if (releaseError) throw releaseError;
+            return json({ error: "No Flutterwave transaction was found for the earlier attempt. Refresh the checkout and try again.", code: "PAYMENT_INITIALIZATION_FAILED", reference: pendingPayment.payment_reference }, 409);
+          }
+          return json({ error: "Flutterwave could not verify the earlier attempt yet. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference: pendingPayment.payment_reference }, 409);
         }
         return json({ error: "A Flutterwave payment attempt is still being prepared or needs support. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN" }, 409);
       }
