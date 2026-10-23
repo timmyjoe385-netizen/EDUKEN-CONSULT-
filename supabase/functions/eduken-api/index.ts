@@ -891,7 +891,7 @@ Deno.serve(async (req) => {
       }
       const { data: existingPayment, error: lookupError } = await db.from("payments")
         .select("id,amount,currency,status,service_request_id,payment_reference,payment_type,user_id")
-        .eq("payment_reference", reference).maybeSingle();
+        .eq("payment_reference", reference).eq("payment_provider", "paystack").maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ ok: true, ignored: true });
       if (!matchesStoredPaystackPayment(transaction, {
@@ -1520,7 +1520,7 @@ Deno.serve(async (req) => {
       }
       const { data: existing, error: existingError } = await db.from("payments")
         .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key")
-        .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").maybeSingle();
+        .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "paystack").maybeSingle();
       if (existingError) throw existingError;
       if (existing) {
         if (existing.status === "Paid") return json({ error: "This deposit attempt is already completed.", code: "WALLET_DEPOSIT_ALREADY_PAID" }, 409);
@@ -1552,7 +1552,7 @@ Deno.serve(async (req) => {
         if (reservationError.code === "23505") {
           const { data: raced, error: racedError } = await db.from("payments")
             .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key")
-            .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").maybeSingle();
+            .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "paystack").maybeSingle();
           if (racedError) throw racedError;
           const racedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: raced?.authorization_url } });
           if (raced && racedUrl && Number(raced.amount) === amount && raced.payment_reference) {
@@ -1617,7 +1617,7 @@ Deno.serve(async (req) => {
       if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid wallet deposit reference is required." }, 400);
       const { data: payment, error: lookupError } = await db.from("payments")
         .select("id,amount,currency,status,payment_reference,payment_type,user_id")
-        .eq("payment_reference", reference).eq("user_id", user.id).eq("payment_type", "wallet_deposit").maybeSingle();
+        .eq("payment_reference", reference).eq("user_id", user.id).eq("payment_type", "wallet_deposit").eq("payment_provider", "paystack").maybeSingle();
       if (lookupError) throw lookupError;
       if (!payment) return json({ error: "Wallet deposit not found for this account." }, 404);
       if (payment.status === "Paid") {
@@ -1835,7 +1835,7 @@ Deno.serve(async (req) => {
       if (paidLookupError) throw paidLookupError;
       if (paidPayment) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
       const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
-        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_provider")
         .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
       if (pendingLookupError) throw pendingLookupError;
       if (pendingPayment) {
@@ -1978,7 +1978,7 @@ Deno.serve(async (req) => {
       const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const { data: pendingPayment, error: pendingLookupError } = await db.from("payments")
-        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url")
+        .select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_provider")
         .eq("service_request_id", request.id).eq("status", "Pending").maybeSingle();
       if (pendingLookupError) throw pendingLookupError;
       if (pendingPayment) {
@@ -2117,7 +2117,7 @@ Deno.serve(async (req) => {
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack verification is temporarily unavailable." }, 503);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
         .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
-        .eq("payment_reference", reference).maybeSingle();
+        .eq("payment_reference", reference).eq("payment_provider", "paystack").maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment || !existingPayment.service_request_id) return json({ error: "We could not match this reference to a service checkout. Please contact EDUKEN CONSULT before paying again." }, 404);
       const { data: request, error: requestError } = await db.from("service_requests")
@@ -2152,7 +2152,7 @@ Deno.serve(async (req) => {
       const nextPaymentStatus = getNextPaymentStatus(transaction);
       const { data: payment, error: updateError } = await db.from("payments").update({
         status: nextPaymentStatus, paid_at: paid ? new Date().toISOString() : null
-      }).eq("id", existingPayment.id).eq("payment_reference", reference).in("status", ["Pending", "Failed"]).select("id,status").maybeSingle();
+      }).eq("id", existingPayment.id).eq("payment_reference", reference).eq("payment_provider", "paystack").in("status", ["Pending", "Failed"]).select("id,status").maybeSingle();
       if (updateError) throw updateError;
       if (paid && !payment) {
         const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", existingPayment.id).maybeSingle();
@@ -2269,7 +2269,7 @@ Deno.serve(async (req) => {
       if (!request) return json({ error: "Checkout session is invalid or expired." }, 404);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
         .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
-        .eq("payment_reference", reference).eq("service_request_id", serviceRequestId).maybeSingle();
+        .eq("payment_reference", reference).eq("service_request_id", serviceRequestId).eq("payment_provider", "paystack").maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found for this service request." }, 404);
       if (existingPayment.status === "Paid") {
@@ -2326,7 +2326,7 @@ Deno.serve(async (req) => {
       if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       const { data: existingPayment, error: lookupError } = await db.from("payments")
         .select("id,amount,currency,status,service_request_id,payment_reference,user_id")
-        .eq("payment_reference", reference).eq("user_id", user.id).maybeSingle();
+        .eq("payment_reference", reference).eq("user_id", user.id).eq("payment_provider", "paystack").maybeSingle();
       if (lookupError) throw lookupError;
       if (!existingPayment) return json({ error: "Payment record not found." }, 404);
       if (existingPayment.status === "Paid") {
