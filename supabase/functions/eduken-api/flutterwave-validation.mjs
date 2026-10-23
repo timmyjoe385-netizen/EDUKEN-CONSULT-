@@ -57,12 +57,21 @@ export function isValidFlutterwaveWebhookSignature(providedHash, configuredHash)
   return difference === 0;
 }
 
-// Require an explicit test-mode flag and a Flutterwave test secret key.
+// Require an explicit mode that matches the credential type. Live keys can never
+// accidentally enable test mode, and test keys can never enable live mode.
+export function isFlutterwaveModeEnabled(mode, secretKey) {
+  if (typeof mode !== "string" || typeof secretKey !== "string") return false;
+  const normalizedMode = mode.trim().toLowerCase();
+  const key = secretKey.trim();
+  if (normalizedMode === "test") return /^FLWSECK_TEST-[A-Za-z0-9_-]+$/.test(key);
+  if (normalizedMode === "live") return /^FLWSECK-(?!TEST-)[A-Za-z0-9_-]+$/.test(key);
+  return false;
+}
+
 export function isFlutterwaveTestModeEnabled(mode, secretKey) {
   return typeof mode === "string"
     && mode.trim().toLowerCase() === "test"
-    && typeof secretKey === "string"
-    && /^FLWSECK_TEST-[A-Za-z0-9_-]+$/.test(secretKey.trim());
+    && isFlutterwaveModeEnabled(mode, secretKey);
 }
 
 export function getFlutterwaveCallbackUrl(siteUrl, reference) {
