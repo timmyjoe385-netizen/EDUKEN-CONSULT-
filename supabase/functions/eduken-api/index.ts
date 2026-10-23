@@ -4,7 +4,7 @@ import { isAllowedServiceRequestStatus, isPublishedService, validateServiceReque
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, getPaystackInitializationFailureDisposition, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
-import { getFlutterwaveCheckoutUrl, getFlutterwaveCallbackUrl, getNextFlutterwavePaymentStatus, isFlutterwaveTestModeEnabled, isSuccessfulFlutterwaveTransaction, isValidFlutterwaveWebhookSignature, matchesStoredFlutterwavePayment } from "./flutterwave-validation.mjs";
+import { getFlutterwaveCheckoutUrl, getFlutterwaveCallbackUrl, getNextFlutterwavePaymentStatus, isFlutterwaveModeEnabled, isSuccessfulFlutterwaveTransaction, isValidFlutterwaveWebhookSignature, matchesStoredFlutterwavePayment } from "./flutterwave-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -813,8 +813,8 @@ Deno.serve(async (req) => {
     if (path === "/api/flutterwave/payments/webhook" && req.method === "POST") {
       const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
       const webhookHash = Deno.env.get("FLUTTERWAVE_WEBHOOK_HASH");
-      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret) || !webhookHash) {
-        return json({ error: "Flutterwave test webhook is not configured.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
+      if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret) || !webhookHash) {
+        return json({ error: "Flutterwave webhook is not configured for the selected mode.", code: "FLUTTERWAVE_MODE_OR_KEY_MISMATCH" }, 503);
       }
       const providedHash = req.headers.get("verif-hash") || "";
       if (!isValidFlutterwaveWebhookSignature(providedHash, webhookHash)) {
@@ -1711,8 +1711,8 @@ Deno.serve(async (req) => {
       if (rateAllowed === null) return json({ error: "Checkout is temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many checkout attempts. Please wait before trying again." }, 429);
       const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
-      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
-        return json({ error: "Flutterwave is disabled unless FLUTTERWAVE_MODE=test and a test secret key is configured.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
+      if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+        return json({ error: "Flutterwave is disabled unless FLUTTERWAVE_MODE explicitly matches the configured secret key type.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
       }
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
@@ -2120,7 +2120,7 @@ Deno.serve(async (req) => {
       if (rateAllowed === null) return json({ error: "Payment recovery is temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many recovery attempts. Please wait before trying again." }, 429);
       const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
-      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+      if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
         return json({ error: "Flutterwave verification is temporarily unavailable.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
       }
       let b: any;
@@ -2249,8 +2249,8 @@ Deno.serve(async (req) => {
       if (rateAllowed === null) return json({ error: "Payment verification is temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many verification attempts. Please wait before trying again." }, 429);
       const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
-      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
-        return json({ error: "Flutterwave test verification is temporarily unavailable.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
+      if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+        return json({ error: "Flutterwave verification is temporarily unavailable for the selected mode.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
       }
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
