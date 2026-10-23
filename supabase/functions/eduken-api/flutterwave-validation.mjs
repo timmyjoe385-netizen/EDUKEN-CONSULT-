@@ -33,7 +33,7 @@ export function getFlutterwaveCheckoutUrl(result) {
     const url = new URL(result.data.link);
     if (
       url.protocol !== "https:"
-      || url.hostname !== "checkout.flutterwave.com"
+      || !["checkout.flutterwave.com", "checkout-v2.dev-flutterwave.com"].includes(url.hostname)
       || url.port
       || url.username
       || url.password
