@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
+import { analyticsApi, api, auth, isFlutterwaveLiveUiEnabled, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
@@ -499,11 +499,11 @@ function App() {
     if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
       setCheckoutSession(saved);
       setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
-      setPaymentProvider(usesIsolatedTestBackend && saved.paymentProvider === 'flutterwave' ? 'flutterwave' : 'paystack');
+      setPaymentProvider((usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && saved.paymentProvider === 'flutterwave' ? 'flutterwave' : 'paystack');
     }
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || params.get('tx_ref') || '';
-    const returnedProvider = usesIsolatedTestBackend && (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
+    const returnedProvider = (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
     const returnedTransactionId = params.get('transaction_id') || '';
     if (returnedReference && params.get('wallet') === '1') {
       const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
@@ -2328,6 +2328,20 @@ function App() {
                           </button>
                         </div>
                         <p className="payment-provider-warning" role="status"><strong>TEST CHECKOUT ONLY</strong><span>This isolated preview cannot accept real payments or fulfil services.</span></p>
+                      </div>
+                    ) : isFlutterwaveLiveUiEnabled ? (
+                      <div className="service-request-field">
+                        <span id="make-payments-provider-label">Choose a payment method</span>
+                        <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
+                          <button type="button" className={`payment-provider-option ${paymentProvider === 'paystack' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'paystack'} onClick={() => setPaymentProvider('paystack')} disabled={paymentSubmitting}>
+                            <strong>Paystack</strong>
+                            <small>Existing payment option</small>
+                          </button>
+                          <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
+                            <strong>Flutterwave</strong>
+                            <small>Secure checkout</small>
+                          </button>
+                        </div>
                       </div>
                     ) : (
                       <div className="service-request-field">
