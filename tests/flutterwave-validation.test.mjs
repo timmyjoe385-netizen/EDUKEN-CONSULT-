@@ -110,6 +110,22 @@ test("Flutterwave routes stay separate, test-only guarded, and provider-scoped",
   assert.ok(source.includes('isValidFlutterwaveWebhookSignature(providedHash, webhookHash)'), "webhook signature must be checked before processing");
 });
 
+test("Flutterwave payment settlement and notification enqueue remain idempotent", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const outbox = await readFile(new URL("../supabase/migrations/20261019003835_payment_notification_outbox.sql", import.meta.url), "utf8");
+  const walletFix = await readFile(new URL("../supabase/migrations/20261023180000_provider_aware_wallet_deposits.sql", import.meta.url), "utf8");
+
+  assert.match(source, /if \(existingPayment\.status === "Paid"\)/, "duplicate successful webhook must reuse the existing payment");
+  assert.match(source, /\.in\("status", \["Pending", "Failed"\]\)/, "settlement updates must be conditional to prevent racing double settlement");
+  assert.match(source, /matchesStoredFlutterwavePayment\(transaction/, "provider amount, currency and reference must be checked before settlement");
+  assert.match(source, /settle_customer_wallet_deposit/, "wallet deposits must settle through the atomic database function");
+  assert.match(source, /paymentNotificationIdempotencyKey/, "payment notifications must have deterministic idempotency keys");
+  assert.match(source, /constraint idempotency key|idempotency_key text not null unique/i, "notification outbox must enforce unique idempotency keys");
+  assert.match(walletFix, /v_provider_prefix := v_payment\.payment_provider \|\| ':'/, "wallet deposit ledger keys must include the actual provider");
+  assert.match(walletFix, /'Wallet deposit via ' \|\| v_provider_label/, "wallet deposit ledger descriptions must identify the actual provider");
+});
+
 test("provider migration preserves Paystack as the default and constrains supported providers", async () => {
   const { readFile } = await import("node:fs/promises");
   const migration = await readFile(new URL("../supabase/migrations/20261023120000_add_payment_provider.sql", import.meta.url), "utf8");
