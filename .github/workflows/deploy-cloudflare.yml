@@ -25,6 +25,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build website
         run: npm run build
+        env:
+          VITE_ENABLE_FLUTTERWAVE_LIVE: ${{ vars.VITE_ENABLE_FLUTTERWAVE_LIVE }}
 
   deploy-preview:
     if: github.event_name == 'pull_request'
@@ -91,6 +93,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build website
         run: npm run build
+        env:
+          VITE_ENABLE_FLUTTERWAVE_LIVE: ${{ vars.VITE_ENABLE_FLUTTERWAVE_LIVE }}
       - name: Deploy Worker and assets to Cloudflare
         run: npx wrangler deploy
         env:
