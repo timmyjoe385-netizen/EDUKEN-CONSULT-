@@ -1795,14 +1795,34 @@ Deno.serve(async (req) => {
             meta: { service_request_id: request.id, reference_number: request.reference_number, customer_email: email },
           }),
         });
-      } catch {
+      } catch (error) {
+        console.error("Flutterwave checkout initialization request failed.", {
+          reference,
+          error: error instanceof Error ? error.message : "Unknown fetch error",
+        });
         return json({ error: "Flutterwave could not confirm whether checkout was created. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
       }
       let providerResult: any;
       try { providerResult = await providerResponse.json(); } catch {
+        console.error("Flutterwave returned an unreadable checkout initialization response.", {
+          reference, httpStatus: providerResponse.status,
+        });
         return json({ error: "Flutterwave returned an unreadable response. Do not start another payment; contact EDUKEN CONSULT.", code: "PAYMENT_INITIALIZATION_UNCERTAIN", reference }, 502);
       }
       const authorizationUrl = getFlutterwaveCheckoutUrl(providerResult);
+      if (!providerResponse.ok || providerResult?.status !== "success" || !authorizationUrl) {
+        let returnedLinkHost: string | null = null;
+        try { returnedLinkHost = typeof providerResult?.data?.link === "string" ? new URL(providerResult.data.link).hostname : null; } catch { /* malformed link */ }
+        console.error("Flutterwave checkout initialization was rejected or returned an invalid link.", {
+          reference,
+          httpStatus: providerResponse.status,
+          providerStatus: typeof providerResult?.status === "string" ? providerResult.status : null,
+          providerMessage: typeof providerResult?.message === "string" ? providerResult.message.slice(0, 200) : null,
+          hasLink: typeof providerResult?.data?.link === "string",
+          returnedLinkHost,
+          linkAccepted: Boolean(authorizationUrl),
+        });
+      }
       if (!providerResponse.ok || providerResult?.status !== "success") {
         const definitiveRejection = providerResponse.status >= 400 && providerResponse.status < 500 && providerResponse.status !== 408 && providerResult?.status !== "success";
         if (definitiveRejection) {
