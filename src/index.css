@@ -3160,3 +3160,54 @@ html[data-theme="dark"] .make-payments-success {
   color: #ffffff !important;
   border-color: #285e46;
 }
+
+
+/* Make both checkout providers visible so customers can choose before continuing. */
+.payment-provider-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.payment-provider-option {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+  min-height: 88px;
+  padding: 14px;
+  border: 1px solid #cbd8d0;
+  border-radius: 12px;
+  background: #fff;
+  color: #17251d;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+.payment-provider-option strong {
+  font-size: 14px;
+  font-weight: 800;
+}
+.payment-provider-option small {
+  color: #526158;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.payment-provider-option.is-selected {
+  border: 2px solid #24724d;
+  padding: 13px;
+  background: #f0f8f2;
+  box-shadow: 0 0 0 2px rgba(36, 114, 77, 0.08);
+}
+.payment-provider-option:focus-visible {
+  outline: 3px solid #8dc9a5;
+  outline-offset: 2px;
+}
+.payment-provider-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+@media (max-width: 420px) {
+  .payment-provider-picker { grid-template-columns: minmax(0, 1fr); }
+  .payment-provider-option { min-height: 72px; }
+}
