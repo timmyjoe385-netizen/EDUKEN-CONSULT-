@@ -44,6 +44,10 @@ test("only returns HTTPS Flutterwave-hosted checkout URLs", () => {
     getFlutterwaveCheckoutUrl({ status: "success", data: { link: "https://checkout.flutterwave.com/v3/hosted/pay/abc" } }),
     "https://checkout.flutterwave.com/v3/hosted/pay/abc",
   );
+  assert.equal(
+    getFlutterwaveCheckoutUrl({ status: "success", data: { link: "https://checkout-v2.dev-flutterwave.com/pay/abc" } }),
+    "https://checkout-v2.dev-flutterwave.com/pay/abc",
+  );
   for (const link of [
     "http://checkout.flutterwave.com/abc",
     "https://example.com/fake-checkout",
