@@ -3211,3 +3211,49 @@ html[data-theme="dark"] .make-payments-success {
   .payment-provider-picker { grid-template-columns: minmax(0, 1fr); }
   .payment-provider-option { min-height: 72px; }
 }
+
+
+/* Explicitly block Paystack in the isolated preview while approval is pending. */
+.payment-provider-unavailable {
+  border: 2px solid #dc2626;
+  background: #fff1f2;
+  color: #991b1b;
+  cursor: not-allowed;
+}
+.payment-provider-unavailable strong {
+  color: #b91c1c;
+  font-size: 14px;
+  font-weight: 900;
+}
+.payment-provider-unavailable small {
+  color: #991b1b;
+  font-weight: 700;
+}
+.payment-provider-warning {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 14px;
+  border: 2px solid #dc2626;
+  border-radius: 10px;
+  background: #fff1f2;
+  color: #991b1b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.payment-provider-warning strong {
+  color: #b91c1c;
+  font-size: 15px;
+  font-weight: 900;
+}
+html[data-theme="dark"] .payment-provider-unavailable,
+html[data-theme="dark"] .payment-provider-warning {
+  background: #3b1018;
+  border-color: #f87171;
+  color: #fee2e2;
+}
+html[data-theme="dark"] .payment-provider-unavailable strong,
+html[data-theme="dark"] .payment-provider-unavailable small,
+html[data-theme="dark"] .payment-provider-warning strong {
+  color: #fecaca;
+}
