@@ -4,6 +4,7 @@ import { isAllowedServiceRequestStatus, isPublishedService, validateServiceReque
 import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, getPaystackInitializationFailureDisposition, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
+import { getFlutterwaveCheckoutUrl, getFlutterwaveCallbackUrl, getNextFlutterwavePaymentStatus, isFlutterwaveTestModeEnabled, isSuccessfulFlutterwaveTransaction, isValidFlutterwaveWebhookSignature, matchesStoredFlutterwavePayment } from "./flutterwave-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 
@@ -786,6 +787,90 @@ Deno.serve(async (req) => {
         .eq("status", "pending");
       if (remainingError) throw remainingError;
       return json({ ok: true, groups_attempted: attemptedGroups, pending_remaining: remaining ?? 0 });
+    }
+
+    if (path === "/api/flutterwave/payments/webhook" && req.method === "POST") {
+      const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
+      const webhookHash = Deno.env.get("FLUTTERWAVE_WEBHOOK_HASH");
+      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret) || !webhookHash) {
+        return json({ error: "Flutterwave test webhook is not configured.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
+      }
+      const providedHash = req.headers.get("verif-hash") || "";
+      if (!isValidFlutterwaveWebhookSignature(providedHash, webhookHash)) {
+        return json({ error: "Invalid payment provider signature." }, 401);
+      }
+      let event: any;
+      try { event = await req.json(); } catch { return json({ error: "Invalid webhook payload." }, 400); }
+      const eventName = String(event?.event || "").trim().toLowerCase();
+      if (!["charge.completed", "charge.success"].includes(eventName)) return json({ ok: true, ignored: true });
+      const transactionId = event?.data?.id;
+      if (!(typeof transactionId === "string" || (typeof transactionId === "number" && Number.isFinite(transactionId)))) {
+        return json({ error: "Invalid Flutterwave transaction identifier." }, 400);
+      }
+      let verificationResponse: Response;
+      try {
+        verificationResponse = await fetch("https://api.flutterwave.com/v3/transactions/" + encodeURIComponent(String(transactionId)) + "/verify", {
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+        });
+      } catch {
+        return json({ error: "Flutterwave transaction verification is temporarily unavailable." }, 502);
+      }
+      let verification: any;
+      try { verification = await verificationResponse.json(); } catch { return json({ error: "Flutterwave returned an unreadable verification response." }, 502); }
+      if (!verificationResponse.ok || verification?.status !== "success" || !verification?.data) {
+        return json({ error: "Unable to verify the Flutterwave transaction." }, 502);
+      }
+      const transaction = verification.data;
+      const reference = typeof transaction?.tx_ref === "string" ? transaction.tx_ref : "";
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference) || !isSuccessfulFlutterwaveTransaction(transaction)) {
+        return json({ error: "Invalid successful Flutterwave payment event." }, 400);
+      }
+      const { data: existingPayment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,payment_type,payment_provider,user_id")
+        .eq("payment_reference", reference).eq("payment_provider", "flutterwave").maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!existingPayment) return json({ ok: true, ignored: true });
+      if (!matchesStoredFlutterwavePayment(transaction, {
+        amount: existingPayment.amount, currency: existingPayment.currency, reference,
+      })) {
+        return json({ error: "Provider payment details do not match the stored payment." }, 409);
+      }
+      if (existingPayment.payment_type === "wallet_deposit") {
+        const { data: walletSettlement, error: walletSettlementError } = await db.rpc("settle_customer_wallet_deposit", {
+          p_payment_id: existingPayment.id,
+          p_reference: reference,
+        });
+        if (walletSettlementError) throw walletSettlementError;
+        await sendPaymentNotifications(existingPayment.user_id, reference, Number(existingPayment.amount), "deposit");
+        return json({ ok: true, paid: true, wallet: walletSettlement });
+      }
+      if (existingPayment.status === "Paid") {
+        if (existingPayment.service_request_id) {
+          const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+            .eq("id", existingPayment.service_request_id);
+          if (requestUpdateError) throw requestUpdateError;
+          await sendServicePaymentNotifications(existingPayment);
+        }
+        return json({ ok: true, paid: true, reused: true });
+      }
+      const { data: payment, error: updateError } = await db.from("payments").update({
+        status: "Paid", paid_at: new Date().toISOString(),
+      }).eq("id", existingPayment.id).eq("payment_provider", "flutterwave")
+        .in("status", ["Pending", "Failed"]).select("id,status,service_request_id").maybeSingle();
+      if (updateError) throw updateError;
+      if (!payment) {
+        const { data: currentPayment, error: currentError } = await db.from("payments")
+          .select("status,service_request_id").eq("id", existingPayment.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently." }, 409);
+      }
+      if (existingPayment.service_request_id) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", existingPayment.service_request_id);
+        if (requestUpdateError) throw requestUpdateError;
+        await sendServicePaymentNotifications(existingPayment);
+      }
+      return json({ ok: true, paid: true, reused: !payment });
     }
 
     if (path === "/api/payments/webhook" && req.method === "POST") {
