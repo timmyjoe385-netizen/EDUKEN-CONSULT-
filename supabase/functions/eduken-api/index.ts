@@ -2111,6 +2111,82 @@ Deno.serve(async (req) => {
       return json({ paid, recovered: true, status: paid ? "Paid" : nextPaymentStatus });
     }
 
+    if (path === "/api/flutterwave/payments/verify-guest" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-verify"); } catch { return json({ error: "Payment verification is temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Payment verification is temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many verification attempts. Please wait before trying again." }, 429);
+      const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
+      if (!isFlutterwaveTestModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+        return json({ error: "Flutterwave test verification is temporarily unavailable.", code: "FLUTTERWAVE_TEST_MODE_REQUIRED" }, 503);
+      }
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const serviceRequestId = typeof b?.serviceRequestId === "string" ? b.serviceRequestId : "";
+      const checkoutToken = typeof b?.checkoutToken === "string" ? b.checkoutToken : "";
+      const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
+      const transactionId = typeof b?.transactionId === "string" || typeof b?.transactionId === "number" ? String(b.transactionId) : "";
+      if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(serviceRequestId)
+        || !/^[0-9a-f]{64}$/.test(checkoutToken)
+        || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)
+        || !/^\d{1,30}$/.test(transactionId)) {
+        return json({ error: "A valid checkout session, payment reference and Flutterwave transaction ID are required." }, 400);
+      }
+      const tokenHash = await sha256Hex(checkoutToken);
+      const { data: request, error: requestError } = await db.from("service_requests")
+        .select("id,checkout_token_hash,email,user_id").eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash).maybeSingle();
+      if (requestError) throw requestError;
+      if (!request) return json({ error: "Checkout session is invalid or expired." }, 404);
+      const { data: payment, error: lookupError } = await db.from("payments")
+        .select("id,amount,currency,status,service_request_id,payment_reference,payment_provider,user_id")
+        .eq("payment_reference", reference).eq("service_request_id", serviceRequestId).eq("payment_provider", "flutterwave").maybeSingle();
+      if (lookupError) throw lookupError;
+      if (!payment) return json({ error: "Flutterwave payment record not found for this service request." }, 404);
+      if (payment.status === "Paid") {
+        await sendPaymentNotifications(request.user_id || payment.user_id || null, reference, Number(payment.amount), "service_payment", request.email || null);
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+        if (requestUpdateError) throw requestUpdateError;
+        return json({ paid: true, status: "Paid", recovered: true });
+      }
+      let response: Response;
+      try {
+        response = await fetch("https://api.flutterwave.com/v3/transactions/" + encodeURIComponent(transactionId) + "/verify", {
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
+        });
+      } catch { return json({ error: "Unable to verify payment with Flutterwave yet. Do not pay again immediately." }, 502); }
+      let result: any;
+      try { result = await response.json(); } catch { return json({ error: "Unable to verify payment with Flutterwave yet." }, 502); }
+      if (!response.ok || result?.status !== "success" || !result?.data) return json({ error: "Unable to verify payment with Flutterwave yet." }, 502);
+      const transaction = result.data;
+      if (String(transaction.tx_ref || "") !== reference) {
+        return json({ error: "Flutterwave returned a different payment reference. Contact EDUKEN CONSULT before taking further action." }, 409);
+      }
+      const paid = isSuccessfulFlutterwaveTransaction(transaction);
+      if (paid && !matchesStoredFlutterwavePayment(transaction, { amount: payment.amount, currency: payment.currency, reference })) {
+        return json({ error: "Flutterwave payment details do not match this checkout. Contact EDUKEN CONSULT." }, 409);
+      }
+      if (payment.status === "Paid" && !paid) return json({ error: "Stored payment status conflicts with Flutterwave. Contact EDUKEN CONSULT." }, 409);
+      const nextStatus = getNextFlutterwavePaymentStatus(transaction);
+      const { data: updatedPayment, error: updateError } = await db.from("payments").update({
+        status: nextStatus, paid_at: paid ? new Date().toISOString() : null,
+      }).eq("id", payment.id).eq("payment_provider", "flutterwave").in("status", ["Pending", "Failed"])
+        .select("id,status").maybeSingle();
+      if (updateError) throw updateError;
+      if (paid && !updatedPayment) {
+        const { data: currentPayment, error: currentError } = await db.from("payments").select("status").eq("id", payment.id).maybeSingle();
+        if (currentError) throw currentError;
+        if (currentPayment?.status !== "Paid") return json({ error: "Payment status changed concurrently. Refresh and check again." }, 409);
+      }
+      if (paid) {
+        const { error: requestUpdateError } = await db.from("service_requests").update({ status: "Paid" })
+          .eq("id", serviceRequestId).eq("checkout_token_hash", tokenHash);
+        if (requestUpdateError) throw requestUpdateError;
+        if (updatedPayment) await sendPaymentNotifications(request.user_id || payment.user_id || null, reference, Number(payment.amount), "service_payment", request.email || null);
+      }
+      return json({ paid, status: nextStatus, recovered: true });
+    }
+
     if (path === "/api/payments/verify-guest" && req.method === "POST") {
       let rateAllowed: boolean | null;
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "guest-payment-verify"); } catch { return json({ error: "Payment verification is temporarily unavailable." }, 503); }
