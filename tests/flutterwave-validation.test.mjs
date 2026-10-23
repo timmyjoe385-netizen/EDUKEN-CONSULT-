@@ -135,6 +135,9 @@ test("Flutterwave payment settlement and notification enqueue remain idempotent"
   assert.match(walletFix, /'Wallet deposit via ' \|\| v_provider_label/, "wallet deposit ledger descriptions must identify the actual provider");
   assert.match(source, /providerStatus >= 400 && providerStatus < 500 && providerStatus !== 429/, "permanent email 4xx failures must not be retried");
   assert.match(source, /status: permanentFailure \? "failed" : "pending"/, "permanent email provider failures must be marked terminal");
+  assert.match(source, /provider_reason=testing_recipient_restriction/, "Resend test-sender recipient restrictions must be diagnosable without storing raw provider messages");
+  assert.match(source, /provider_reason=sender_domain_unverified/, "unverified sender domains must be diagnosable without storing raw provider messages");
+  assert.match(source, /provider_reason=api_key_invalid_or_missing/, "missing or invalid email credentials must be diagnosable without storing raw provider messages");
   assert.match(terminalNotificationMigration, /status in \('pending', 'delivered', 'failed'\)/, "outbox schema must permit terminal failures");
   assert.match(legacyWalletMigration, /idempotency_key in \(v_provider_prefix \|\| p_reference, 'paystack:' \|\| p_reference\)/, "already-settled legacy deposits must be recognized without double-crediting");
 });
