@@ -115,6 +115,7 @@ test("Flutterwave payment settlement and notification enqueue remain idempotent"
   const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
   const outbox = await readFile(new URL("../supabase/migrations/20261019003835_payment_notification_outbox.sql", import.meta.url), "utf8");
   const walletFix = await readFile(new URL("../supabase/migrations/20261023180000_provider_aware_wallet_deposits.sql", import.meta.url), "utf8");
+  const terminalNotificationMigration = await readFile(new URL("../supabase/migrations/20261023190000_terminal_notification_failures.sql", import.meta.url), "utf8");
 
   assert.match(source, /if \(existingPayment\.status === "Paid"\)/, "duplicate successful webhook must reuse the existing payment");
   assert.match(source, /\.in\("status", \["Pending", "Failed"\]\)/, "settlement updates must be conditional to prevent racing double settlement");
@@ -124,6 +125,9 @@ test("Flutterwave payment settlement and notification enqueue remain idempotent"
   assert.match(outbox, /idempotency_key text not null unique/i, "notification outbox must enforce unique idempotency keys");
   assert.match(walletFix, /v_provider_prefix := v_payment\.payment_provider \|\| ':'/, "wallet deposit ledger keys must include the actual provider");
   assert.match(walletFix, /'Wallet deposit via ' \|\| v_provider_label/, "wallet deposit ledger descriptions must identify the actual provider");
+  assert.match(source, /providerStatus >= 400 && providerStatus < 500 && providerStatus !== 429/, "permanent email 4xx failures must not be retried");
+  assert.match(source, /status: permanentFailure \? "failed" : "pending"/, "permanent email provider failures must be marked terminal");
+  assert.match(terminalNotificationMigration, /status in \('pending', 'delivered', 'failed'\)/, "outbox schema must permit terminal failures");
 });
 
 test("provider migration preserves Paystack as the default and constrains supported providers", async () => {
