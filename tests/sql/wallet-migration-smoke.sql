@@ -64,6 +64,19 @@ begin
     raise exception 'FLUTTERWAVE_WALLET_DEPOSIT_IDEMPOTENCY_OR_LABEL_FAILED: balance %, ledger rows %', v_balance, v_count;
   end if;
 
+  -- Simulate an already-credited legacy row, then ensure the upgraded function
+  -- recognizes it and does not credit the same successful payment a second time.
+  update public.wallet_transactions
+  set idempotency_key = 'paystack:EDK-PAY-FFFFFFFFFFFFFFFFFF'
+  where payment_id = v_flutterwave_deposit_id;
+  v_result := public.settle_customer_wallet_deposit(v_flutterwave_deposit_id, 'EDK-PAY-FFFFFFFFFFFFFFFFFF');
+  select balance into v_balance from public.customer_wallets where user_id = v_new_user;
+  select count(*) into v_count from public.wallet_transactions
+    where user_id = v_new_user and payment_id = v_flutterwave_deposit_id;
+  if v_balance <> 250 or v_count <> 1 then
+    raise exception 'LEGACY_FLUTTERWAVE_DEPOSIT_REPLAY_DOUBLE_CREDITED: balance %, ledger rows %', v_balance, v_count;
+  end if;
+
   insert into public.services (id, name, price, is_published, is_available, is_catalog_item)
   values (v_service, 'Test JAMB service', 400, true, true, true);
 
