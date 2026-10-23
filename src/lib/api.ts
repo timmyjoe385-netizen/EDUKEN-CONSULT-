@@ -14,6 +14,8 @@ const ALLOW_TEST_WRITES =
 
 // Expose the resolved backend mode so preview-only UI reads use the same isolated test project as writes.
 export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;
+// Production Flutterwave UI is opt-in at build time and never enabled in the isolated test preview.
+export const isFlutterwaveLiveUiEnabled = import.meta.env.VITE_ENABLE_FLUTTERWAVE_LIVE === 'true' && !ALLOW_TEST_WRITES;
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
 const SESSION_KEY = 'eduken_auth_session';
 
