@@ -128,7 +128,7 @@ function App() {
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
-  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>('paystack');
+  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>('flutterwave');
   const [paymentSubmitting, setPaymentSubmitting] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
@@ -2315,17 +2315,18 @@ function App() {
                       <input id="make-payments-email" type="email" autoComplete="email" required maxLength={200} value={paymentEmail} onChange={event => setPaymentEmail(event.target.value)} placeholder="Enter the email for your receipt" />
                     </label>
                     <div className="service-request-field">
-                      <span id="make-payments-provider-label">Choose payment method</span>
+                      <span id="make-payments-provider-label">Choose an available payment method</span>
                       <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
-                        <button type="button" className={`payment-provider-option ${paymentProvider === 'paystack' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'paystack'} onClick={() => setPaymentProvider('paystack')} disabled={paymentSubmitting}>
-                          <strong>Paystack</strong>
-                          <small>Pay by card or supported bank methods</small>
-                        </button>
+                        <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
+                          <strong>Paystack — NOT AVAILABLE</strong>
+                          <small>Temporarily unavailable. Please do not attempt payment through Paystack.</small>
+                        </div>
                         <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
                           <strong>Flutterwave</strong>
-                          <small>Alternative secure checkout</small>
+                          <small>Available alternative for this test checkout</small>
                         </button>
                       </div>
+                      <p className="payment-provider-warning" role="alert"><strong>PAYSTACK TEMPORARILY UNAVAILABLE</strong><span>Payments through Paystack are currently disabled on this checkout. Do not attempt payment through that option. Choose Flutterwave instead.</span></p>
                     </div>
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
                     <p className="make-payments-security">Email tip: If your receipt or payment notification does not appear in your Inbox, check your Spam or Junk folder. Email delivery does not determine payment status; EDUKEN confirms payment from verified payment records.</p>
