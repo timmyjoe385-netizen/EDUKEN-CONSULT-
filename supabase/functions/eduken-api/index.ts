@@ -595,6 +595,7 @@ async function deliverPendingPaymentNotifications(
   for (const item of pending ?? []) {
     const html = "<p>" + String(item.text_body || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>") + "</p>";
     let delivered = false;
+    let permanentFailure = false;
     let lastError = "Notification delivery did not complete.";
     const attemptsAlreadyUsed = Math.max(0, Number(item.attempt_count || 0));
     const attemptsRemaining = Math.max(0, 9 - attemptsAlreadyUsed);
@@ -639,12 +640,21 @@ async function deliverPendingPaymentNotifications(
         break;
       } catch (error) {
         lastError = error instanceof Error ? error.message : "Unknown email error.";
+        const statusMatch = lastError.match(/\\(HTTP (\\d{3})/);
+        const providerStatus = statusMatch ? Number(statusMatch[1]) : 0;
+        // A permanent 4xx (for example an unverified sender/recipient restriction)
+        // cannot be fixed by retrying. Keep 429 retryable; require configuration repair
+        // and an explicit requeue for other 4xx failures.
+        if (providerStatus >= 400 && providerStatus < 500 && providerStatus !== 429) {
+          permanentFailure = true;
+          break;
+        }
         if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, attempt * 500));
       }
     }
     if (!delivered) {
       const { error: failureUpdateError } = await db.from("payment_notification_deliveries")
-        .update({ last_error: lastError.slice(0, 240), updated_at: new Date().toISOString() })
+        .update({ status: permanentFailure ? "failed" : "pending", last_error: lastError.slice(0, 240), updated_at: new Date().toISOString() })
         .eq("id", item.id).eq("status", "pending");
       if (failureUpdateError) console.error("Could not persist payment notification failure.", failureUpdateError.message);
       console.error("Payment notification remains queued after bounded retries.");
