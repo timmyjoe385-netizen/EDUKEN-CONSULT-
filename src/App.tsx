@@ -2314,13 +2314,19 @@ function App() {
                       <span>Receipt email <b aria-hidden="true">*</b></span>
                       <input id="make-payments-email" type="email" autoComplete="email" required maxLength={200} value={paymentEmail} onChange={event => setPaymentEmail(event.target.value)} placeholder="Enter the email for your receipt" />
                     </label>
-                    <label className="service-request-field" htmlFor="make-payments-provider">
-                      <span>Payment method</span>
-                      <select id="make-payments-provider" value={paymentProvider} onChange={event => setPaymentProvider(event.target.value === 'flutterwave' ? 'flutterwave' : 'paystack')} disabled={paymentSubmitting}>
-                        <option value="paystack">Paystack</option>
-                        <option value="flutterwave">Flutterwave</option>
-                      </select>
-                    </label>
+                    <div className="service-request-field">
+                      <span id="make-payments-provider-label">Choose payment method</span>
+                      <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
+                        <button type="button" className={`payment-provider-option ${paymentProvider === 'paystack' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'paystack'} onClick={() => setPaymentProvider('paystack')} disabled={paymentSubmitting}>
+                          <strong>Paystack</strong>
+                          <small>Pay by card or supported bank methods</small>
+                        </button>
+                        <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
+                          <strong>Flutterwave</strong>
+                          <small>Alternative secure checkout</small>
+                        </button>
+                      </div>
+                    </div>
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
                     <p className="make-payments-security">Email tip: If your receipt or payment notification does not appear in your Inbox, check your Spam or Junk folder. Email delivery does not determine payment status; EDUKEN confirms payment from verified payment records.</p>
                     {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
