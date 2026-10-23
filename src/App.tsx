@@ -538,7 +538,16 @@ function App() {
       window.history.replaceState({}, document.title, '/make-payments');
       if (!saved?.checkoutToken || !saved?.requestId) {
         if (returnedProvider === 'flutterwave') {
-          setPaymentMessage('Flutterwave returned, but this browser no longer has the checkout session needed to verify it safely. Do not pay again; contact EDUKEN CONSULT with reference ' + returnedReference + '.');
+          setPaymentMessage('Checkout session not found. Checking the Flutterwave reference securely…');
+          void api.post('/api/flutterwave/payments/recover-guest', { reference: returnedReference, transactionId: returnedTransactionId })
+            .then((result: any) => {
+              setPaymentMessage(result.data?.paid
+                ? 'Payment confirmed successfully. Your service request is marked as paid. Keep your reference for follow-up.'
+                : 'Flutterwave has not confirmed this payment yet. Do not pay again immediately. Contact EDUKEN CONSULT with reference ' + returnedReference + '.');
+            })
+            .catch((error: unknown) => {
+              setPaymentMessage((error instanceof Error ? error.message : 'We could not verify the Flutterwave payment yet.') + ' Reference: ' + returnedReference);
+            });
           return;
         }
         setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely with Paystack…');
@@ -2308,7 +2317,7 @@ function App() {
                       <span>Payment method</span>
                       <select id="make-payments-provider" value={paymentProvider} onChange={event => setPaymentProvider(event.target.value === 'flutterwave' ? 'flutterwave' : 'paystack')} disabled={paymentSubmitting}>
                         <option value="paystack">Paystack</option>
-                        <option value="flutterwave">Flutterwave (test integration)</option>
+                        <option value="flutterwave">Flutterwave</option>
                       </select>
                     </label>
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
