@@ -11,6 +11,7 @@ declare
   v_balance numeric(12,2);
   v_count integer;
   v_result jsonb;
+  v_flutterwave_deposit_id uuid;
 begin
   if to_regclass('public.service_requests_service_id_idx') is null
      or to_regclass('public.service_requests_user_id_idx') is null
@@ -43,6 +44,24 @@ begin
   insert into auth.users (id, email) values (v_new_user, 'new-customer@example.test');
   if not exists (select 1 from public.customer_wallets where user_id = v_new_user and balance = 0) then
     raise exception 'NEW_USER_WALLET_TRIGGER_FAILED';
+  end if;
+
+  -- Flutterwave wallet deposits must use provider-specific ledger keys and labels,
+  -- and a repeated settlement must not credit the wallet twice.
+  insert into public.payments (user_id, amount, currency, status, payment_reference, payment_type, payment_provider)
+  values (v_new_user, 250, 'NGN', 'Pending', 'EDK-PAY-FFFFFFFFFFFFFFFFFF', 'wallet_deposit', 'flutterwave')
+  returning id into v_flutterwave_deposit_id;
+
+  v_result := public.settle_customer_wallet_deposit(v_flutterwave_deposit_id, 'EDK-PAY-FFFFFFFFFFFFFFFFFF');
+  v_result := public.settle_customer_wallet_deposit(v_flutterwave_deposit_id, 'EDK-PAY-FFFFFFFFFFFFFFFFFF');
+
+  select balance into v_balance from public.customer_wallets where user_id = v_new_user;
+  select count(*) into v_count from public.wallet_transactions
+    where user_id = v_new_user and payment_id = v_flutterwave_deposit_id
+      and idempotency_key = 'flutterwave:EDK-PAY-FFFFFFFFFFFFFFFFFF'
+      and description = 'Wallet deposit via Flutterwave';
+  if v_balance <> 250 or v_count <> 1 then
+    raise exception 'FLUTTERWAVE_WALLET_DEPOSIT_IDEMPOTENCY_OR_LABEL_FAILED: balance %, ledger rows %', v_balance, v_count;
   end if;
 
   insert into public.services (id, name, price, is_published, is_available, is_catalog_item)
