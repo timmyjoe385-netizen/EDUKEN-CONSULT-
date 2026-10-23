@@ -121,7 +121,7 @@ test("Flutterwave payment settlement and notification enqueue remain idempotent"
   assert.match(source, /matchesStoredFlutterwavePayment\(transaction/, "provider amount, currency and reference must be checked before settlement");
   assert.match(source, /settle_customer_wallet_deposit/, "wallet deposits must settle through the atomic database function");
   assert.match(source, /paymentNotificationIdempotencyKey/, "payment notifications must have deterministic idempotency keys");
-  assert.match(source, /constraint idempotency key|idempotency_key text not null unique/i, "notification outbox must enforce unique idempotency keys");
+  assert.match(outbox, /idempotency_key text not null unique/i, "notification outbox must enforce unique idempotency keys");
   assert.match(walletFix, /v_provider_prefix := v_payment\.payment_provider \|\| ':'/, "wallet deposit ledger keys must include the actual provider");
   assert.match(walletFix, /'Wallet deposit via ' \|\| v_provider_label/, "wallet deposit ledger descriptions must identify the actual provider");
 });
