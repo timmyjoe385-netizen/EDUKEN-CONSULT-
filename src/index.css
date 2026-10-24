@@ -3160,3 +3160,100 @@ html[data-theme="dark"] .make-payments-success {
   color: #ffffff !important;
   border-color: #285e46;
 }
+
+
+/* Make both checkout providers visible so customers can choose before continuing. */
+.payment-provider-picker {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.payment-provider-option {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+  min-height: 88px;
+  padding: 14px;
+  border: 1px solid #cbd8d0;
+  border-radius: 12px;
+  background: #fff;
+  color: #17251d;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, box-shadow 140ms ease;
+}
+.payment-provider-option strong {
+  font-size: 14px;
+  font-weight: 800;
+}
+.payment-provider-option small {
+  color: #526158;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+.payment-provider-option.is-selected {
+  border: 2px solid #24724d;
+  padding: 13px;
+  background: #f0f8f2;
+  box-shadow: 0 0 0 2px rgba(36, 114, 77, 0.08);
+}
+.payment-provider-option:focus-visible {
+  outline: 3px solid #8dc9a5;
+  outline-offset: 2px;
+}
+.payment-provider-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+@media (max-width: 420px) {
+  .payment-provider-picker { grid-template-columns: minmax(0, 1fr); }
+  .payment-provider-option { min-height: 72px; }
+}
+
+
+/* Explicitly block Paystack in the isolated preview while approval is pending. */
+.payment-provider-unavailable {
+  border: 2px solid #dc2626;
+  background: #fff1f2;
+  color: #991b1b;
+  cursor: not-allowed;
+}
+.payment-provider-unavailable strong {
+  color: #b91c1c;
+  font-size: 14px;
+  font-weight: 900;
+}
+.payment-provider-unavailable small {
+  color: #991b1b;
+  font-weight: 700;
+}
+.payment-provider-warning {
+  display: grid;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 14px;
+  border: 2px solid #dc2626;
+  border-radius: 10px;
+  background: #fff1f2;
+  color: #991b1b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.payment-provider-warning strong {
+  color: #b91c1c;
+  font-size: 15px;
+  font-weight: 900;
+}
+html[data-theme="dark"] .payment-provider-unavailable,
+html[data-theme="dark"] .payment-provider-warning {
+  background: #3b1018;
+  border-color: #f87171;
+  color: #fee2e2;
+}
+html[data-theme="dark"] .payment-provider-unavailable strong,
+html[data-theme="dark"] .payment-provider-unavailable small,
+html[data-theme="dark"] .payment-provider-warning strong {
+  color: #fecaca;
+}

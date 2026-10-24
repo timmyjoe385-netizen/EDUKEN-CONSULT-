@@ -25,6 +25,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build website
         run: npm run build
+        env:
+          VITE_ENABLE_FLUTTERWAVE_LIVE: ${{ vars.VITE_ENABLE_FLUTTERWAVE_LIVE }}
 
   deploy-preview:
     if: github.event_name == 'pull_request'
@@ -54,7 +56,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 6c2433e899d3005cdf82b8eaa98de61f
       - name: Smoke-test isolated guest payment recovery endpoint
-        if: github.event_name == 'pull_request' && (github.head_ref == 'fix/guest-payment-return-recovery-20261019' || github.head_ref == 'integration/main-release-candidate-20261020')
+        if: github.event_name == 'pull_request' && (github.head_ref == 'fix/guest-payment-return-recovery-20261019' || github.head_ref == 'integration/main-release-candidate-20261020' || github.head_ref == 'feat/flutterwave-test-integration')
         env:
           TEST_SUPABASE_URL: https://wpktzogarfqrgkirzdpy.supabase.co
           TEST_SUPABASE_PUBLISHABLE_KEY: sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB
@@ -91,6 +93,8 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Build website
         run: npm run build
+        env:
+          VITE_ENABLE_FLUTTERWAVE_LIVE: ${{ vars.VITE_ENABLE_FLUTTERWAVE_LIVE }}
       - name: Deploy Worker and assets to Cloudflare
         run: npx wrangler deploy
         env:

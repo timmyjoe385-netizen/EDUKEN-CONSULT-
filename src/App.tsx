@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
+import { analyticsApi, api, auth, isFlutterwaveLiveUiEnabled, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
@@ -128,6 +128,7 @@ function App() {
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
+  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => usesIsolatedTestBackend ? 'flutterwave' : 'paystack');
   const [paymentSubmitting, setPaymentSubmitting] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
@@ -498,9 +499,12 @@ function App() {
     if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
       setCheckoutSession(saved);
       setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
+      setPaymentProvider((usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && saved.paymentProvider === 'flutterwave' ? 'flutterwave' : 'paystack');
     }
     const params = new URLSearchParams(window.location.search);
-    const returnedReference = params.get('reference') || params.get('trxref') || '';
+    const returnedReference = params.get('reference') || params.get('trxref') || params.get('tx_ref') || '';
+    const returnedProvider = (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
+    const returnedTransactionId = params.get('transaction_id') || '';
     if (returnedReference && params.get('wallet') === '1') {
       const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
       // Preserve the non-secret provider reference so a customer who returns signed
@@ -534,6 +538,19 @@ function App() {
     if (returnedReference) {
       window.history.replaceState({}, document.title, '/make-payments');
       if (!saved?.checkoutToken || !saved?.requestId) {
+        if (returnedProvider === 'flutterwave') {
+          setPaymentMessage('Checkout session not found. Checking the Flutterwave reference securely…');
+          void api.post('/api/flutterwave/payments/recover-guest', { reference: returnedReference, transactionId: returnedTransactionId })
+            .then((result: any) => {
+              setPaymentMessage(result.data?.paid
+                ? 'Payment confirmed successfully. Your service request is marked as paid. Keep your reference for follow-up.'
+                : 'Flutterwave has not confirmed this payment yet. Do not pay again immediately. Contact EDUKEN CONSULT with reference ' + returnedReference + '.');
+            })
+            .catch((error: unknown) => {
+              setPaymentMessage((error instanceof Error ? error.message : 'We could not verify the Flutterwave payment yet.') + ' Reference: ' + returnedReference);
+            });
+          return;
+        }
         setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely with Paystack…');
         void api.post('/api/payments/recover-guest', { reference: returnedReference })
           .then((result: any) => {
@@ -549,8 +566,12 @@ function App() {
         return;
       }
       setPaymentMessage('Payment returned from the gateway. Verifying the transaction securely…');
-      void api.post('/api/payments/verify-guest', { serviceRequestId: saved.requestId, checkoutToken: saved.checkoutToken, reference: returnedReference })
-        .then((result: any) => {
+      const verificationRequest = returnedProvider === 'flutterwave'
+        ? api.post('/api/flutterwave/payments/verify-guest', {
+            serviceRequestId: saved.requestId, checkoutToken: saved.checkoutToken, reference: returnedReference, transactionId: returnedTransactionId,
+          })
+        : api.post('/api/payments/verify-guest', { serviceRequestId: saved.requestId, checkoutToken: saved.checkoutToken, reference: returnedReference });
+      void verificationRequest.then((result: any) => {
           if (result.data?.paid) {
             const next = { ...saved, paymentStatus: 'Paid', paymentReference: returnedReference };
             setCheckoutSession(next);
@@ -1260,30 +1281,39 @@ function App() {
     if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
     const email = paymentEmail.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setPaymentMessage('Enter a valid email address so Paystack can send your payment receipt.');
+      setPaymentMessage('Enter a valid email address so your payment receipt can be sent.');
       return;
     }
     setPaymentSubmitting(true);
-    setPaymentMessage('Preparing secure Paystack checkout…');
+    setPaymentMessage(paymentProvider === 'flutterwave' ? 'Preparing secure Flutterwave checkout…' : 'Preparing secure Paystack checkout…');
     try {
-      const result = await api.post('/api/payments/initialize-guest', {
-        serviceRequestId: checkoutSession.requestId, checkoutToken: checkoutSession.checkoutToken, email,
-      });
+      const result = paymentProvider === 'flutterwave'
+        ? await api.post('/api/flutterwave/payments/initialize-guest', {
+            serviceRequestId: checkoutSession.requestId, checkoutToken: checkoutSession.checkoutToken, email,
+          })
+        : await api.post('/api/payments/initialize-guest', {
+            serviceRequestId: checkoutSession.requestId, checkoutToken: checkoutSession.checkoutToken, email,
+          });
       const confirmedAmount = Number(result.data?.payment?.amount);
       if (!Number.isFinite(confirmedAmount) || confirmedAmount <= 0) {
         throw new Error('The server did not return a valid payment amount. No payment was started.');
       }
       const priceChanged = Math.round(confirmedAmount * 100) !== Math.round(Number(checkoutSession.amount) * 100);
-      const next = { ...checkoutSession, amount: confirmedAmount, email, paymentReference: result.data.reference, paymentStatus: 'Pending' };
+      const next = { ...checkoutSession, amount: confirmedAmount, email, paymentReference: result.data.reference, paymentProvider, paymentStatus: 'Pending' };
       setCheckoutSession(next);
       try { window.sessionStorage.setItem('eduken_guest_checkout', JSON.stringify(next)); } catch { /* token remains in memory */ }
       if (priceChanged) {
-        setPaymentMessage('The published price changed since this request was opened. The total above has been updated. Review the new amount, then press Continue to Paystack again. No payment has been taken yet.');
+        setPaymentMessage('The published price changed since this request was opened. The total above has been updated. Review the new amount, then continue to ' + (paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack') + ' again. No payment has been taken yet.');
         return;
       }
       const authorizationUrl = result.data.authorizationUrl;
-      if (typeof authorizationUrl !== 'string' || !authorizationUrl.startsWith('https://checkout.paystack.com/')) {
-        throw new Error('Paystack returned an invalid checkout address. No payment was started.');
+      const validCheckoutUrl = typeof authorizationUrl === 'string' && (
+        paymentProvider === 'flutterwave'
+          ? (authorizationUrl.startsWith('https://checkout.flutterwave.com/') || authorizationUrl.startsWith('https://checkout-v2.dev-flutterwave.com/'))
+          : authorizationUrl.startsWith('https://checkout.paystack.com/')
+      );
+      if (!validCheckoutUrl) {
+        throw new Error((paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack') + ' returned an invalid checkout address. No payment was started.');
       }
       window.location.assign(authorizationUrl);
     } catch (error) {
@@ -2270,7 +2300,7 @@ function App() {
               </>
             ) : (
               <>
-                <p>Review your service details before continuing to Paystack. Never send your card PIN or banking password in a chat.</p>
+                <p>Review your service details before continuing to secure checkout. Never send your card PIN or banking password in a chat.</p>
                 <dl className="make-payments-summary">
                   <div><dt>Service</dt><dd>{checkoutSession.serviceName}</dd></div>
                   <div><dt>Request reference</dt><dd>{checkoutSession.referenceNumber || 'Saved'}</dd></div>
@@ -2284,11 +2314,51 @@ function App() {
                       <span>Receipt email <b aria-hidden="true">*</b></span>
                       <input id="make-payments-email" type="email" autoComplete="email" required maxLength={200} value={paymentEmail} onChange={event => setPaymentEmail(event.target.value)} placeholder="Enter the email for your receipt" />
                     </label>
-                    <p className="make-payments-security">You’ll complete payment on Paystack’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
+                    {usesIsolatedTestBackend ? (
+                      <div className="service-request-field">
+                        <span id="make-payments-provider-label">Choose an available test payment method</span>
+                        <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
+                          <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
+                            <strong>Paystack — NOT AVAILABLE IN TEST PREVIEW</strong>
+                            <small>Paystack is preserved for production; this isolated checkout uses Flutterwave test mode.</small>
+                          </div>
+                          <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
+                            <strong>Flutterwave Test</strong>
+                            <small>Sandbox only — no real payment</small>
+                          </button>
+                        </div>
+                        <p className="payment-provider-warning" role="status"><strong>TEST CHECKOUT ONLY</strong><span>This isolated preview cannot accept real payments or fulfil services.</span></p>
+                      </div>
+                    ) : isFlutterwaveLiveUiEnabled ? (
+                      <div className="service-request-field">
+                        <span id="make-payments-provider-label">Choose a payment method</span>
+                        <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
+                          <button type="button" className={`payment-provider-option ${paymentProvider === 'paystack' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'paystack'} onClick={() => setPaymentProvider('paystack')} disabled={paymentSubmitting}>
+                            <strong>Paystack</strong>
+                            <small>Existing payment option</small>
+                          </button>
+                          <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
+                            <strong>Flutterwave</strong>
+                            <small>Secure checkout</small>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="service-request-field">
+                        <span>Payment method</span>
+                        <div className="payment-provider-picker" role="group" aria-label="Available payment method">
+                          <div className="payment-provider-option is-selected" aria-disabled="true">
+                            <strong>Paystack</strong>
+                            <small>Existing production payment provider</small>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
                     <p className="make-payments-security">Email tip: If your receipt or payment notification does not appear in your Inbox, check your Spam or Junk folder. Email delivery does not determine payment status; EDUKEN confirms payment from verified payment records.</p>
                     {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
                     {auth.isSignedIn() ? <button type="button" className="secondary" disabled={paymentSubmitting} onClick={() => void submitWalletServicePayment()}>{paymentSubmitting ? 'Checking payment…' : 'Pay with EDUKEN Wallet'}</button> : null}
-                    <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to Paystack'}</button>
+                    <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to ' + (paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack')}</button>
                   </form>
                 ) : <p className="make-payments-success" role="status">{paymentMessage || 'Payment confirmed. Thank you.'}</p>}
                 <button type="button" className="secondary make-payments-back" onClick={() => { window.history.pushState({}, document.title, '/'); setPaymentPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Back to EDUKEN CONSULT</button>
