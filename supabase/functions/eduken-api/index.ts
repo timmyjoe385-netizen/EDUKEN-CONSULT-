@@ -1595,7 +1595,7 @@ Deno.serve(async (req) => {
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
       const baseCallbackUrl = getFlutterwaveCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
       if (!baseCallbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
-      const callbackUrl = baseCallbackUrl + "&wallet=1";
+      const callbackUrl = baseCallbackUrl;
       const { data: reservation, error: reservationError } = await db.from("payments").insert({
         user_id: user.id, service_request_id: null, amount, currency: "NGN", status: "Pending",
         payment_reference: reference, authorization_url: null, payment_type: "wallet_deposit",
