@@ -1534,62 +1534,75 @@ Deno.serve(async (req) => {
       return json({ wallet, transactions: transactions ?? [] });
     }
 
-    if (path === "/api/wallet/deposit/initialize" && req.method === "POST") {
+    if (path === "/api/wallet/deposit/initialize-flutterwave" && req.method === "POST") {
       let rateAllowed: boolean | null;
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-initialize"); } catch { return json({ error: "Wallet deposits are temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Wallet deposits are temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many wallet deposit attempts. Please wait before trying again." }, 429);
       const user = await requireUser(req);
+      const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
+      if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+        return json({ error: "Flutterwave wallet deposits are not enabled for the configured key and mode.", code: "FLUTTERWAVE_MODE_OR_KEY_MISMATCH" }, 503);
+      }
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const amount = Number(b?.amount);
-      const idempotencyKey = typeof b?.idempotencyKey === "string" ? b.idempotencyKey.trim() : "";
+      const clientKey = typeof b?.idempotencyKey === "string" ? b.idempotencyKey.trim() : "";
       if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
         return json({ error: "Enter a whole-naira top-up amount between ₦100 and ₦500,000." }, 400);
       }
-      if (!/^[A-Za-z0-9:_-]{8,100}$/.test(idempotencyKey)) {
+      if (!/^[A-Za-z0-9:_-]{8,100}$/.test(clientKey)) {
         return json({ error: "A valid deposit attempt key is required. Please retry." }, 400);
-      }
-      const { data: existing, error: existingError } = await db.from("payments")
-        .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key")
-        .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "paystack").maybeSingle();
-      if (existingError) throw existingError;
-      if (existing) {
-        if (existing.status === "Paid") return json({ error: "This deposit attempt is already completed.", code: "WALLET_DEPOSIT_ALREADY_PAID" }, 409);
-        const savedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: existing.authorization_url } });
-        if (savedUrl && existing.payment_reference && Number(existing.amount) === amount) {
-          return json({ payment: existing, authorizationUrl: savedUrl, reference: existing.payment_reference, reused: true });
-        }
-        return json({ error: "This deposit attempt is still being prepared or needs support. Do not start another payment with the same attempt.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
-      }
-
-      const secret = Deno.env.get("PAYSTACK_SECRET_KEY");
-      if (!isPaystackTestModeEnabled(Deno.env.get("PAYSTACK_MODE"), secret)) {
-        return json({ error: "Paystack is disabled unless PAYSTACK_MODE=test and a sk_test_ key is configured.", code: "PAYSTACK_TEST_MODE_REQUIRED" }, 503);
       }
       if (!user.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) {
         return json({ error: "Your account needs a valid email address before you can fund your wallet." }, 400);
       }
+      const idempotencyKey = "flutterwave:" + clientKey;
+      const { data: existing, error: existingError } = await db.from("payments")
+        .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key,payment_provider")
+        .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "flutterwave").maybeSingle();
+      if (existingError) throw existingError;
+      if (existing) {
+        if (existing.status === "Paid") return json({ error: "This deposit attempt is already completed.", code: "WALLET_DEPOSIT_ALREADY_PAID" }, 409);
+        const savedUrl = getFlutterwaveCheckoutUrl({ status: "success", data: { link: existing.authorization_url } });
+        if (savedUrl && existing.payment_reference && Number(existing.amount) === amount) {
+          return json({ payment: existing, authorizationUrl: savedUrl, reference: existing.payment_reference, provider: "flutterwave", reused: true });
+        }
+        if (existing.status === "Pending" && !existing.authorization_url && existing.payment_reference && Number(existing.amount) === amount) {
+          let recoveryResponse: Response;
+          try {
+            const verifyUrl = new URL("https://api.flutterwave.com/v3/transactions/verify_by_reference");
+            verifyUrl.searchParams.set("tx_ref", existing.payment_reference);
+            recoveryResponse = await fetch(verifyUrl, { headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" } });
+          } catch {
+            return json({ error: "Flutterwave is still checking the earlier attempt. Do not start another payment; try again later or contact EDUKEN CONSULT.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 409);
+          }
+          let recoveryResult: any = null;
+          try { recoveryResult = await recoveryResponse.json(); } catch { /* remain conservative */ }
+          if (recoveryResponse.ok && recoveryResult?.status === "success" && recoveryResult?.data) {
+            return json({ error: "Flutterwave found a transaction for the earlier reference. Do not start another payment; refresh your wallet or contact EDUKEN CONSULT for recovery.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN", reference: existing.payment_reference }, 409);
+          }
+          if (recoveryResponse.status === 400) {
+            const { error: releaseError } = await db.from("payments").update({ status: "Failed" })
+              .eq("id", existing.id).eq("payment_provider", "flutterwave").eq("status", "Pending").is("authorization_url", null);
+            if (releaseError) throw releaseError;
+            return json({ error: "No Flutterwave transaction was found for the earlier attempt. Refresh and start a new deposit.", code: "WALLET_DEPOSIT_INITIALIZATION_FAILED" }, 409);
+          }
+        }
+        return json({ error: "This deposit attempt is still being prepared or needs support. Do not start another payment with the same attempt.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
+      }
+
       const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
-      const baseCallbackUrl = getPaystackCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
+      const baseCallbackUrl = getFlutterwaveCallbackUrl(Deno.env.get("PUBLIC_SITE_URL"), reference);
       if (!baseCallbackUrl) return json({ error: "Secure payment callback configuration is missing.", code: "PAYMENT_CALLBACK_NOT_CONFIGURED" }, 503);
       const callbackUrl = baseCallbackUrl + "&wallet=1";
-
       const { data: reservation, error: reservationError } = await db.from("payments").insert({
         user_id: user.id, service_request_id: null, amount, currency: "NGN", status: "Pending",
         payment_reference: reference, authorization_url: null, payment_type: "wallet_deposit",
-        idempotency_key: idempotencyKey,
-      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_type,idempotency_key").single();
+        payment_provider: "flutterwave", idempotency_key: idempotencyKey,
+      }).select("id,amount,currency,status,service_request_id,payment_reference,authorization_url,payment_type,idempotency_key,payment_provider").single();
       if (reservationError) {
         if (reservationError.code === "23505") {
-          const { data: raced, error: racedError } = await db.from("payments")
-            .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key")
-            .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "paystack").maybeSingle();
-          if (racedError) throw racedError;
-          const racedUrl = getPaystackAuthorizationUrl({ status: true, data: { authorization_url: raced?.authorization_url } });
-          if (raced && racedUrl && Number(raced.amount) === amount && raced.payment_reference) {
-            return json({ payment: raced, authorizationUrl: racedUrl, reference: raced.payment_reference, reused: true });
-          }
           return json({ error: "This deposit attempt is already being prepared. Do not pay again; refresh or contact EDUKEN support.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
         }
         throw reservationError;
@@ -1597,44 +1610,42 @@ Deno.serve(async (req) => {
 
       let providerResponse: Response;
       try {
-        providerResponse = await fetch("https://api.paystack.co/transaction/initialize", {
+        providerResponse = await fetch("https://api.flutterwave.com/v3/payments", {
           method: "POST",
           headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: user.email, amount: amount * 100, currency: "NGN", reference, callback_url: callbackUrl,
-            metadata: { type: "wallet_deposit", user_id: user.id, idempotency_key: idempotencyKey },
+            tx_ref: reference, amount, currency: "NGN", redirect_url: callbackUrl,
+            customer: { email: user.email },
+            customizations: { title: "EDUKEN CONSULT", description: "EDUKEN Wallet deposit" },
+            meta: { type: "wallet_deposit", user_id: user.id, idempotency_key: idempotencyKey },
           }),
         });
       } catch {
-        return json({ error: "Paystack did not confirm whether checkout was created. Do not start another deposit yet; refresh or contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
+        return json({ error: "Flutterwave could not confirm whether checkout was created. Do not start another deposit; contact EDUKEN support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN", reference }, 502);
       }
       let providerResult: any;
       try { providerResult = await providerResponse.json(); } catch {
-        return json({ error: "Paystack returned an unreadable response. Do not start another deposit yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
+        return json({ error: "Flutterwave returned an unreadable response. Do not start another deposit; contact EDUKEN support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN", reference }, 502);
       }
-      const authorizationUrl = getPaystackAuthorizationUrl(providerResult);
-      if (!providerResponse.ok || providerResult?.status !== true) {
-        if (getPaystackInitializationFailureDisposition({ ok: providerResponse.ok, status: providerResponse.status, providerStatus: providerResult?.status === true, hasAuthorizationUrl: Boolean(authorizationUrl) }) === "unconfirmed") {
-          return json({ error: "Paystack did not confirm whether checkout was created. Do not start another deposit yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN", reference }, 502);
+      const authorizationUrl = getFlutterwaveCheckoutUrl(providerResult);
+      if (!providerResponse.ok || providerResult?.status !== "success" || !authorizationUrl) {
+        const definitiveRejection = providerResponse.status >= 400 && providerResponse.status < 500
+          && providerResponse.status !== 408 && providerResponse.status !== 429 && providerResult?.status !== "success";
+        if (definitiveRejection) {
+          const { error: failError } = await db.from("payments").update({ status: "Failed" })
+            .eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending");
+          if (failError) return json({ error: "Flutterwave rejected the deposit but its state needs support before retrying.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 503);
+          return json({ error: "Unable to initialize Flutterwave deposit. You can safely start a new attempt.", code: "WALLET_DEPOSIT_INITIALIZATION_FAILED" }, 502);
         }
-        const { error: failError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("status", "Pending");
-        if (failError) {
-          console.error("Could not mark rejected wallet deposit initialization as failed.", failError.message);
-          return json({ error: "Wallet deposit initialization needs support before retrying.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 503);
-        }
-        return json({ error: "Unable to initialize wallet deposit. You can safely try again with a new attempt.", code: "WALLET_DEPOSIT_INITIALIZATION_FAILED" }, 502);
+        return json({ error: "Flutterwave could not confirm whether checkout was created. Do not start another deposit; contact EDUKEN support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN", reference }, 502);
       }
-      if (!authorizationUrl) {
-        return json({ error: "Paystack checkout could not be confirmed. Do not retry yet; contact support.", code: "WALLET_DEPOSIT_INITIALIZATION_UNCERTAIN" }, 502);
-      }
-      const { data: savedPayment, error: saveError } = await db.from("payments")
-        .update({ authorization_url: authorizationUrl }).eq("id", reservation.id).eq("status", "Pending")
-        .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key").maybeSingle();
+      const { data: savedPayment, error: saveError } = await db.from("payments").update({ authorization_url: authorizationUrl })
+        .eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending")
+        .select("id,amount,currency,status,payment_reference,authorization_url,payment_type,idempotency_key,payment_provider").maybeSingle();
       if (saveError || !savedPayment) {
-        console.error("Wallet deposit checkout URL persistence needs recovery.", saveError?.message || "Reservation changed.");
-        return json({ error: "Paystack checkout was created but needs recovery. Do not create another deposit; contact support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 503);
+        return json({ error: "Flutterwave checkout was created but needs recovery. Do not start another deposit; contact EDUKEN support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 503);
       }
-      return json({ payment: savedPayment, authorizationUrl, reference });
+      return json({ payment: savedPayment, authorizationUrl, reference, provider: "flutterwave" });
     }
 
     if (path === "/api/wallet/deposit/verify" && req.method === "POST") {
@@ -1648,14 +1659,50 @@ Deno.serve(async (req) => {
       const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
       if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) return json({ error: "A valid wallet deposit reference is required." }, 400);
       const { data: payment, error: lookupError } = await db.from("payments")
-        .select("id,amount,currency,status,payment_reference,payment_type,user_id")
-        .eq("payment_reference", reference).eq("user_id", user.id).eq("payment_type", "wallet_deposit").eq("payment_provider", "paystack").maybeSingle();
+        .select("id,amount,currency,status,payment_reference,payment_type,payment_provider,user_id")
+        .eq("payment_reference", reference).eq("user_id", user.id).eq("payment_type", "wallet_deposit").maybeSingle();
       if (lookupError) throw lookupError;
-      if (!payment) return json({ error: "Wallet deposit not found for this account." }, 404);
+      if (!payment || !["paystack", "flutterwave"].includes(payment.payment_provider)) return json({ error: "Wallet deposit not found for this account." }, 404);
+
+      if (payment.payment_provider === "flutterwave") {
+        const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
+        if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+          return json({ error: "Flutterwave verification is not enabled for the configured key and mode.", code: "FLUTTERWAVE_MODE_OR_KEY_MISMATCH" }, 503);
+        }
+        let response: Response;
+        try {
+          const verifyUrl = new URL("https://api.flutterwave.com/v3/transactions/verify_by_reference");
+          verifyUrl.searchParams.set("tx_ref", reference);
+          response = await fetch(verifyUrl, { headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json" } });
+        } catch {
+          return json({ error: "Unable to verify the Flutterwave deposit yet. Do not pay again immediately." }, 502);
+        }
+        let result: any;
+        try { result = await response.json(); } catch { return json({ error: "Unable to verify the Flutterwave deposit yet." }, 502); }
+        if (!response.ok || result?.status !== "success" || !result?.data) return json({ error: "Unable to verify the Flutterwave deposit yet. Do not pay again immediately." }, 502);
+        const transaction = result.data;
+        if (String(transaction.tx_ref || "") !== reference) return json({ error: "Flutterwave returned a different reference. Contact support before taking further action." }, 409);
+        const paid = isSuccessfulFlutterwaveTransaction(transaction);
+        if (paid && !matchesStoredFlutterwavePayment(transaction, { amount: payment.amount, currency: payment.currency, reference })) {
+          return json({ error: "Flutterwave payment details do not match this deposit. Contact EDUKEN CONSULT." }, 409);
+        }
+        if (payment.status === "Paid" && !paid) return json({ error: "Stored deposit status conflicts with Flutterwave. Contact support before taking further action." }, 409);
+        const nextStatus = getNextFlutterwavePaymentStatus(transaction);
+        if (paid) {
+          const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
+          if (settleError) throw settleError;
+          await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
+          return json({ paid: true, status: "Paid", wallet: settled, payment: { ...payment, status: "Paid" } });
+        }
+        const { error: statusError } = await db.from("payments").update({ status: nextStatus, paid_at: null })
+          .eq("id", payment.id).eq("payment_provider", "flutterwave").in("status", ["Pending", "Failed"]);
+        if (statusError) throw statusError;
+        return json({ paid: false, status: nextStatus });
+      }
+
       if (payment.status === "Paid") {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        // Re-enqueue missing rows safely; delivered rows remain delivered.
         await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment });
       }
@@ -1670,19 +1717,21 @@ Deno.serve(async (req) => {
       try { result = await response.json(); } catch { return json({ error: "Unable to verify deposit with Paystack." }, 502); }
       if (!response.ok || !result?.status || !result?.data) return json({ error: "Unable to verify deposit with Paystack." }, 502);
       const transaction = result.data;
+      if (String(transaction.reference || "") !== reference) return json({ error: "Paystack returned a different reference. Contact support before taking further action." }, 409);
       const paid = isSuccessfulPaystackTransaction(transaction);
       if (paid && !matchesStoredPaystackPayment(transaction, { amount: payment.amount, currency: payment.currency, reference })) {
         return json({ error: "Paystack's payment details do not match this deposit. Contact support before retrying." }, 409);
       }
+      if (payment.status === "Paid" && !paid) return json({ error: "Stored deposit status conflicts with Paystack. Contact support before taking further action." }, 409);
       if (paid) {
         const { data: settled, error: settleError } = await db.rpc("settle_customer_wallet_deposit", { p_payment_id: payment.id, p_reference: reference });
         if (settleError) throw settleError;
-        // Idempotent enqueue repairs a notification missed by an earlier partial failure.
         await sendPaymentNotifications(user.id, reference, Number(payment.amount), "deposit");
         return json({ paid: true, wallet: settled, payment: { ...payment, status: "Paid" } });
       }
       const nextStatus = getNextPaymentStatus(transaction);
-      const { error: statusError } = await db.from("payments").update({ status: nextStatus }).eq("id", payment.id).in("status", ["Pending", "Failed"]);
+      const { error: statusError } = await db.from("payments").update({ status: nextStatus, paid_at: null })
+        .eq("id", payment.id).eq("payment_provider", "paystack").in("status", ["Pending", "Failed"]);
       if (statusError) throw statusError;
       return json({ paid: false, status: nextStatus });
     }
