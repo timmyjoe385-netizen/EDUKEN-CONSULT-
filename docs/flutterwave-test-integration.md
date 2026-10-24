@@ -1,29 +1,24 @@
-# Flutterwave test integration — staged plan
+# Flutterwave checkout integration — production rollout
 
-This branch adds a separately guarded Flutterwave test path. Paystack remains the existing provider and must continue to work unchanged.
+This integration adds guarded Flutterwave checkout while preserving Paystack as the existing payment provider and fallback. The frontend exposes live Flutterwave only when the GitHub Actions repository variable `VITE_ENABLE_FLUTTERWAVE_LIVE=true` is available at build time.
 
-## Safety rules
+## Production safeguards
 
-- Use only Flutterwave **test** credentials and the isolated Supabase project `wpktzogarfqrgkirzdpy`.
-- Never put provider secrets or the webhook secret hash in source control, frontend code, screenshots, or chat.
-- Keep Flutterwave webhook configuration on the Test webhooks tab. Do not change Live webhooks.
-- Do not deploy to production, merge this branch, run real charges, or apply schema changes to production.
-- Only a verified Flutterwave transaction matching the stored reference, NGN amount and currency can mark a payment paid.
-- Preserve the existing payment record, service request, wallet-settlement RPC, and notification outbox. Do not create a second wallet settlement path.
+- Keep provider secret keys and the Flutterwave webhook hash in Supabase Edge Function secrets only. Never commit or share their values.
+- Production webhook endpoint: `/functions/v1/eduken-api/api/flutterwave/payments/webhook`.
+- The handler must validate the configured webhook hash, verify transactions with Flutterwave, and match the stored reference, NGN amount, currency, and provider before marking a payment paid.
+- Preserve existing Paystack checkout and settlement behavior.
+- Do not run a real charge as a smoke test. Use safe negative probes and isolated synthetic test records where possible.
+- Do not apply additional production migrations without explicit review and approval.
 
-## Implementation sequence
+## Required deployment configuration
 
-1. Add and test provider-specific validation helpers.
-2. Add a nullable provider marker to the payment schema in a migration, with existing rows defaulting to Paystack.
-3. Add separate Flutterwave test initialization, verification and webhook routes; keep existing Paystack routes intact.
-4. Add frontend provider selection only after backend routes and callback handling are ready.
-5. Configure secrets only in the isolated Supabase project's Edge Function secrets, then deploy and test using provider test tools.
-6. Confirm duplicate webhook delivery, mismatched amounts/references, pending transactions, and failure recovery before any production discussion.
+- GitHub Actions repository variable: `VITE_ENABLE_FLUTTERWAVE_LIVE=true`.
+- Supabase Edge Function secrets are configured directly in the production project; secret values must never be stored in this repository.
+- The website build reads the feature flag during `npm run build`; changing the variable alone does not rebuild already-deployed frontend assets. A new successful Cloudflare deployment is required.
 
-## Secret names reserved for the isolated test project
+## Verification status
 
-- `FLUTTERWAVE_MODE=test`
-- `FLUTTERWAVE_SECRET_KEY` (test secret key only)
-- `FLUTTERWAVE_WEBHOOK_HASH` (test webhook secret hash only)
-
-These values belong in Supabase Edge Function secrets, not in this repository.
+- Flutterwave and Paystack backend routes are deployed.
+- CI build, wallet migration integration checks, and Playwright browser checks passed for the integration release.
+- A successful real Flutterwave transaction has not been performed or verified. Do not describe live payment processing as end-to-end verified until a safe provider-approved verification plan is completed.
