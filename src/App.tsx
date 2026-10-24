@@ -128,7 +128,7 @@ function App() {
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
-  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => usesIsolatedTestBackend ? 'flutterwave' : 'paystack');
+  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
   const [paymentSubmitting, setPaymentSubmitting] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
@@ -2331,15 +2331,15 @@ function App() {
                       </div>
                     ) : isFlutterwaveLiveUiEnabled ? (
                       <div className="service-request-field">
-                        <span id="make-payments-provider-label">Choose a payment method</span>
+                        <span id="make-payments-provider-label">Choose an available payment method</span>
                         <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
-                          <button type="button" className={`payment-provider-option ${paymentProvider === 'paystack' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'paystack'} onClick={() => setPaymentProvider('paystack')} disabled={paymentSubmitting}>
-                            <strong>Paystack</strong>
-                            <small>Existing payment option</small>
-                          </button>
+                          <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
+                            <strong>Paystack — TEMPORARILY UNAVAILABLE</strong>
+                            <small>Paystack is still under account review. Please do not select it or retry a Paystack payment.</small>
+                          </div>
                           <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
                             <strong>Flutterwave</strong>
-                            <small>Secure checkout</small>
+                            <small>Secure checkout — payment is confirmed before service processing</small>
                           </button>
                         </div>
                       </div>
@@ -3316,8 +3316,12 @@ function App() {
               {isJambCatalogueService(selectedService) ? (
                 <label className="service-request-field">
                   <span>Number of candidates <b aria-hidden="true">*</b></span>
-                  <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
-                  <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
+                  <div className="candidate-count-stepper" style={{ display: 'flex', alignItems: 'center', gap: 10, maxWidth: 320 }}>
+                    <button type="button" aria-label="Decrease number of candidates" disabled={Number(serviceForm.candidateCount || 1) <= 1} onClick={() => setServiceForm({ ...serviceForm, candidateCount: String(Math.max(1, Math.floor(Number(serviceForm.candidateCount || 1)) - 1)) })} style={{ minWidth: 44, minHeight: 44, borderRadius: 10, border: '1px solid #b7c9bd', background: '#f3f8f4', color: '#174c35', fontSize: 24, fontWeight: 700 }}>−</button>
+                    <input name="candidateCount" type="number" inputMode="numeric" min="1" max="100" step="1" required value={serviceForm.candidateCount || '1'} onChange={e => { const raw = e.target.value; const parsed = Number.parseInt(raw, 10); setServiceForm({ ...serviceForm, candidateCount: raw === '' ? '' : String(Math.min(100, Math.max(1, Number.isFinite(parsed) ? parsed : 1))) }); }} aria-label="Number of candidates" style={{ flex: 1, minWidth: 0, textAlign: 'center' }} />
+                    <button type="button" aria-label="Increase number of candidates" disabled={Number(serviceForm.candidateCount || 1) >= 100} onClick={() => setServiceForm({ ...serviceForm, candidateCount: String(Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)) + 1)) })} style={{ minWidth: 44, minHeight: 44, borderRadius: 10, border: '1px solid #b7c9bd', background: '#f3f8f4', color: '#174c35', fontSize: 24, fontWeight: 700 }}>+</button>
+                  </div>
+                  <span style={{ fontSize: 13, color: '#526158' }}>Choose 1–100 candidates. Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
                 </label>
               ) : null}
               {jambServiceFieldsFor(selectedService).map(field => (

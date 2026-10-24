@@ -148,3 +148,20 @@ test("provider migration preserves Paystack as the default and constrains suppor
   assert.match(migration, /add column if not exists payment_provider text not null default 'paystack'/);
   assert.match(migration, /check \(payment_provider in \('paystack', 'flutterwave'\)\)/);
 });
+
+test("wallet deposits are connected to Flutterwave end-to-end without changing the Paystack fallback route", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+  const ui = await readFile(new URL("../src/PlatformHub.tsx", import.meta.url), "utf8");
+  assert.ok(source.includes('if (path === "/api/wallet/deposit/initialize-flutterwave" && req.method === "POST")'));
+  assert.ok(source.includes('if (path === "/api/wallet/deposit/verify" && req.method === "POST")'));
+  assert.ok(source.includes('.eq("payment_type", "wallet_deposit").eq("payment_provider", "flutterwave")'));
+  assert.ok(source.includes('db.rpc("settle_customer_wallet_deposit"'));
+  assert.ok(source.includes('if (existingPayment.payment_type === "wallet_deposit")'), "verified webhook events must settle wallet deposits atomically");
+  assert.ok(source.includes('matchesStoredFlutterwavePayment(transaction'), "deposit verification must match amount, currency and reference");
+  assert.ok(source.includes('idempotencyKey = "flutterwave:" + clientKey'), "wallet attempts must be scoped to Flutterwave");
+  assert.ok(ui.includes("/api/wallet/deposit/initialize-flutterwave"));
+  assert.ok(ui.includes("Add funds with Flutterwave"));
+  assert.ok(ui.includes("successful Flutterwave payment"));
+  assert.ok(!ui.includes("Deposits are credited only after EDUKEN verifies successful payment with Paystack"));
+});

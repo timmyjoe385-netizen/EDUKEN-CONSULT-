@@ -153,7 +153,7 @@ export default function PlatformHub({
           pendingWalletMessage = 'Wallet deposit verified successfully. Your balance has been refreshed.';
         } else if (verification.data?.status === 'Failed') {
           try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* preserve the visible result */ }
-          pendingWalletMessage = 'Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt.';
+          pendingWalletMessage = 'The payment provider did not complete this deposit. No wallet credit was added. You can start a new deposit attempt.';
         } else {
           pendingWalletMessage = 'This deposit is not confirmed yet. Do not pay again immediately. Saved reference: ' + pendingReference;
         }
@@ -186,18 +186,23 @@ export default function PlatformHub({
     const idempotencyKey = walletDepositKey || ('wallet-deposit:' + crypto.randomUUID());
     setWalletDepositKey(idempotencyKey);
     setWalletAction(true);
-    setWalletMessage('Preparing secure Paystack checkout…');
+    setWalletMessage('Preparing secure Flutterwave checkout…');
     try {
-      const result = await api.post('/api/wallet/deposit/initialize', { amount, idempotencyKey });
+      const result = await api.post('/api/wallet/deposit/initialize-flutterwave', { amount, idempotencyKey });
       const authorizationUrl = String(result.data?.authorizationUrl || '');
-      if (!/^https:\/\/checkout\.paystack\.com\/[A-Za-z0-9_-]+/.test(authorizationUrl)) {
-        throw new Error('Paystack did not return a trusted checkout URL. Do not retry immediately; refresh your wallet or contact support.');
+      if (!/^https:\/\/(?:checkout\.flutterwave\.com|checkout-v2\.dev-flutterwave\.com)\/[A-Za-z0-9/_-]+(?:\?[^\s]*)?$/.test(authorizationUrl)) {
+        throw new Error('Flutterwave did not return a trusted checkout URL. Do not retry immediately; refresh your wallet or contact support.');
       }
+      const reference = String(result.data?.reference || '');
+      if (!/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) {
+        throw new Error('Flutterwave checkout reference could not be confirmed. Do not retry immediately; contact support.');
+      }
+      try { window.sessionStorage.setItem('eduken_pending_wallet_deposit_reference', reference); } catch { /* callback verification can be resumed from the account */ }
       window.location.assign(authorizationUrl);
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Could not start the wallet deposit.';
       setWalletMessage(message);
-      if (message.includes('You can safely try again')) setWalletDepositKey('');
+      if (message.includes('You can safely start a new attempt')) setWalletDepositKey('');
     } finally {
       setWalletAction(false);
     }
@@ -654,10 +659,10 @@ export default function PlatformHub({
                 <span>Add funds (NGN)</span>
                 <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required disabled={walletAction || Boolean(walletDepositKey)} value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
               </label>
-              <p className="make-payments-security">Deposits are credited only after EDUKEN verifies successful payment with Paystack. Do not share your card PIN or banking password.</p>
+              <p className="make-payments-security">Deposits are credited only after EDUKEN verifies a successful Flutterwave payment. Do not share your card PIN or banking password.</p>
               {walletDepositKey ? <small>Keep this deposit attempt unchanged until checkout is confirmed. If initialization is uncertain, contact support before starting another deposit.</small> : null}
               {walletMessage ? <p className="make-payments-message" role="status" aria-live="polite">{walletMessage}</p> : null}
-              <button className="primary" type="submit" disabled={walletAction}>{walletAction ? 'Preparing deposit…' : 'Add funds with Paystack'}</button>
+              <button className="primary" type="submit" disabled={walletAction}>{walletAction ? 'Preparing deposit…' : 'Add funds with Flutterwave'}</button>
             </form>
             <div>
               <h4>Recent transactions</h4>

@@ -1706,8 +1706,15 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
   await serviceCard.getByRole('button', { name: /Request this service/i }).click();
   const dialog = page.getByRole('dialog', { name: /JAMB e-PIN \(UTME Without Mock\)/i });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('spinbutton', { name: 'Number of candidates' })).toHaveValue('1');
-  expect(pageErrors, 'opening the JAMB request dialog must not throw').toEqual([]);
+  const candidateCount = dialog.getByRole('spinbutton', { name: 'Number of candidates' });
+  await expect(candidateCount).toHaveValue('1');
+  await dialog.getByRole('button', { name: 'Increase number of candidates' }).click();
+  await expect(candidateCount).toHaveValue('2');
+  await expect(dialog).toContainText('₦14,256');
+  await dialog.getByRole('button', { name: 'Decrease number of candidates' }).click();
+  await expect(candidateCount).toHaveValue('1');
+  await expect(dialog.getByRole('button', { name: 'Decrease number of candidates' })).toBeDisabled();
+  expect(pageErrors, 'opening and using the JAMB request dialog must not throw').toEqual([]);
 });
 
 test('admin workspace access is decided by server-side authorization, not a public email allowlist', () => {
