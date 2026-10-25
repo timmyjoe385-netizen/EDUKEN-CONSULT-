@@ -7,6 +7,7 @@ import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackU
 import { getFlutterwaveCheckoutUrl, getFlutterwaveCallbackUrl, getNextFlutterwavePaymentStatus, isFlutterwaveModeEnabled, isSuccessfulFlutterwaveTransaction, isValidFlutterwaveWebhookSignature, matchesStoredFlutterwavePayment } from "./flutterwave-validation.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
+import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -234,7 +235,7 @@ function mapAdminInput(table: string, raw: Record<string, unknown>) {
 function normalizeContentDeadline(value: unknown): string | null | undefined {
   if (value === null || value === undefined || String(value).trim() === "") return null;
   const raw = String(value).trim();
-  const iso = raw.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);
+  const iso = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
   if (iso) {
     const year = Number(iso[1]), month = Number(iso[2]), day = Number(iso[3]);
     const date = new Date(Date.UTC(year, month - 1, day));
@@ -243,9 +244,9 @@ function normalizeContentDeadline(value: unknown): string | null | undefined {
       : undefined;
   }
   const cleaned = raw
-    .replace(/\\([^)]*\\)/g, " ")
-    .replace(/\\b(\\d{1,2})(st|nd|rd|th)\\b/gi, "$1")
-    .replace(/\\s+/g, " ")
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/\b(\d{1,2})(st|nd|rd|th)\b/gi, "$1")
+    .replace(/\s+/g, " ")
     .trim();
   const timestamp = Date.parse(cleaned);
   if (!Number.isFinite(timestamp)) return undefined;
@@ -2793,15 +2794,31 @@ Deno.serve(async (req) => {
         }
         const { data, error } = await db.from(table).insert(b).select().single();
         if (error) throw error;
+        let warnings: string[] = [];
         if (table === "opportunities") {
-          await notifyOpportunitySubscribers(data);
+          const tasks: { run: () => Promise<unknown>; errorLabel: string; warning: string }[] = [
+            {
+              run: () => notifyOpportunitySubscribers(data),
+              errorLabel: "Opportunity was saved, but subscriber notifications failed.",
+              warning: "Subscriber notifications could not be completed.",
+            },
+          ];
           if (data.is_published) {
-            await enqueueOpportunityEmailAlerts(data, { queueNew: true, rescheduleDeadlines: true });
+            tasks.push({
+              run: () => enqueueOpportunityEmailAlerts(data, { queueNew: true, rescheduleDeadlines: true }),
+              errorLabel: "Opportunity was saved, but email alert scheduling failed.",
+              warning: "Email alert scheduling could not be completed.",
+            });
           }
+          warnings = await runContentSaveSideEffects(tasks);
         } else if (table === "admissions" || table === "updates") {
-          await notifyEditorialSubscribers(table, data);
+          warnings = await runContentSaveSideEffects([{
+            run: () => notifyEditorialSubscribers(table, data),
+            errorLabel: "Editorial content was saved, but subscriber notifications failed.",
+            warning: "Subscriber notifications could not be completed.",
+          }]);
         }
-        return json({ id: data.id }, 201);
+        return json({ id: data.id, ...(warnings.length ? { warnings } : {}) }, 201);
       }
       if (req.method === "PUT" && id) {
         const parsedBody = parseJsonObjectBody(await req.text());
@@ -2846,24 +2863,41 @@ Deno.serve(async (req) => {
         const { data, error } = await db.from(table).update(b).eq("id", id).select().maybeSingle();
         if (error) throw error;
         if (!data) return json({ error: "Record not found." }, 404);
+        let warnings: string[] = [];
         if (table === "opportunities") {
-          if (!previousOpportunity.is_published && data.is_published) await notifyOpportunitySubscribers(data);
+          const tasks: { run: () => Promise<unknown>; errorLabel: string; warning: string }[] = [];
+          if (!previousOpportunity.is_published && data.is_published) {
+            tasks.push({
+              run: () => notifyOpportunitySubscribers(data),
+              errorLabel: "Opportunity was saved, but subscriber notifications failed.",
+              warning: "Subscriber notifications could not be completed.",
+            });
+          }
           const wasEligible = Boolean(previousOpportunity.is_published && previousOpportunity.notify_on_publish && previousOpportunity.verified && (!String(previousOpportunity.official_source || "").trim() || safeHttpUrl(previousOpportunity.official_source)));
           const isEligible = Boolean(data.is_published && data.notify_on_publish && data.verified && (!String(data.official_source || "").trim() || safeHttpUrl(data.official_source)));
           const deadlineChanged = previousOpportunity.deadline !== data.deadline;
           const categoryChanged = previousOpportunity.category !== data.category;
-          await enqueueOpportunityEmailAlerts(data, {
-            queueNew: isEligible && (!wasEligible || categoryChanged),
-            rescheduleDeadlines: !isEligible || !wasEligible || deadlineChanged || categoryChanged,
+          tasks.push({
+            run: () => enqueueOpportunityEmailAlerts(data, {
+              queueNew: isEligible && (!wasEligible || categoryChanged),
+              rescheduleDeadlines: !isEligible || !wasEligible || deadlineChanged || categoryChanged,
+            }),
+            errorLabel: "Opportunity was saved, but email alert scheduling failed.",
+            warning: "Email alert scheduling could not be completed.",
           });
+          warnings = await runContentSaveSideEffects(tasks);
         } else if (
           (table === "admissions" || table === "updates") &&
           !previousEditorialItem?.is_published &&
           data.is_published
         ) {
-          await notifyEditorialSubscribers(table, data);
+          warnings = await runContentSaveSideEffects([{
+            run: () => notifyEditorialSubscribers(table, data),
+            errorLabel: "Editorial content was saved, but subscriber notifications failed.",
+            warning: "Subscriber notifications could not be completed.",
+          }]);
         }
-        return json({ ok: true });
+        return json({ ok: true, ...(warnings.length ? { warnings } : {}) });
       }
       if (req.method === "DELETE" && id) {
         const { error } = await db.from(table).delete().eq("id", id);
