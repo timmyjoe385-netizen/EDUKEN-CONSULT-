@@ -124,6 +124,8 @@ export default function PlatformHub({
   const [walletDepositKey, setWalletDepositKey] = useState('');
   const [walletAction, setWalletAction] = useState(false);
   const [walletMessage, setWalletMessage] = useState('');
+  const [walletTransferKey, setWalletTransferKey] = useState('');
+  const [walletTransferInfo, setWalletTransferInfo] = useState<{ accountNumber: string; bankName: string; amount: number; expiresAt: string | null; reference: string } | null>(null);
   const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerPassword, setCustomerPassword] = useState('');
