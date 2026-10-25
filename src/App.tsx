@@ -3104,21 +3104,24 @@ function App() {
               opportunities, get structured guidance without the noise.
             </p>
           </div>
-          <div className="service-list">
-            {(content.services.some(s => s.is_catalog_item) ? content.services.filter(s => !s.is_catalog_item) : content.services.length ? content.services : [
-              { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
-              { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
-              { id: 'fallback-jamb', name: 'JAMB Guidance', category: 'JAMB Services', description: 'Ask about JAMB-related guidance and available support.', price: null },
-              { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
-              { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
-            ]).map((s, i) => (
-              <article className="service-row" key={s.id || s.name} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
-                <span>{String(i + 1).padStart(2, '0')}</span>
-                <div style={{ flex: '1 1 220px', minWidth: 0 }}>
-                  <b style={{ display: 'block', marginBottom: 6 }}>{s.name}</b>
-                  {s.category && <small style={{ display: 'block', opacity: 0.75, marginBottom: 6 }}>{s.category}</small>}
-                  {s.description && <p style={{ margin: '0 0 8px', lineHeight: 1.55 }}>{s.description}</p>}
-                  <strong style={{ display: 'block', marginBottom: 8 }}>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
+          <div className="general-service-grid">
+            {(content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).length
+              ? content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s))
+              : [
+                { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
+                { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
+                { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
+                { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
+              ]).map((s, i) => (
+              <article className="general-service-card" key={s.id || s.name}>
+                <div className="general-service-card__topline">
+                  <span className="general-service-card__number">{String(i + 1).padStart(2, '0')}</span>
+                  {s.category ? <span className="general-service-card__category">{s.category}</span> : null}
+                </div>
+                <h3>{s.name}</h3>
+                {s.description ? <p>{s.description}</p> : null}
+                <div className="general-service-card__footer">
+                  <strong>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
                   <button type="button" className="primary" onClick={() => setSelectedService(s)}>Request this service <ArrowRight size={15} /></button>
                 </div>
               </article>
