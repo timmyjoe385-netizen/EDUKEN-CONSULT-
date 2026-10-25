@@ -1469,7 +1469,9 @@ Deno.serve(async (req) => {
         }
         selectedServiceForRequest = service;
       }
-      const user = await currentUser(req);
+      // Selected service requests must belong to a signed-in customer account so payment
+      // and deliverables can be tied to that student. General enquiries without serviceId stay public.
+      const user = serviceId ? await requireUser(req) : await currentUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
       const onlinePrice = Number(selectedServiceForRequest?.price) * quantity;
       const checkoutToken = selectedServiceForRequest && Number.isFinite(onlinePrice) && onlinePrice > 0 ? secureRandomToken() : null;
