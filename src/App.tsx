@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
 import PaymentsAdmin from './PaymentsAdmin';
-import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability } from './lib/jamb-service-catalogue.mjs';
+import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
@@ -3069,6 +3069,7 @@ function App() {
               const price = Number(service.price);
               const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
               const available = service.is_available !== false;
+              const publicRequirements = jambServicePublicRequirements(service);
               return (
                 <article className={`jamb-service-card ${available ? 'is-available' : 'is-unavailable'}`} key={service.id}>
                   <div className="jamb-service-card__topline">
@@ -3083,10 +3084,10 @@ function App() {
                     <h3>{service.name}</h3>
                   </div>
                   {service.description ? <p className="jamb-service-card__description">{service.description}</p> : null}
-                  {service.requirements ? (
+                  {publicRequirements ? (
                     <div className="jamb-service-requirements">
                       <div className="jamb-service-requirements__label"><ShieldCheck size={16} strokeWidth={2.5} /> Before you request</div>
-                      <p>{service.requirements}</p>
+                      <p>{publicRequirements}</p>
                     </div>
                   ) : null}
                   <div className="jamb-service-card__footer">
