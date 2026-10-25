@@ -3471,3 +3471,103 @@ html[data-theme="dark"] textarea:focus-visible {
     animation-duration: 0.01ms !important;
   }
 }
+
+
+/* Light-theme refinement: clearer section rhythm, card boundaries and readable
+   secondary text. Scoped to light mode so dark-theme styling is unchanged. */
+html[data-theme="light"] body,
+html[data-theme="light"] .site {
+  background: #f6f8f6;
+  color: #17211d;
+}
+html[data-theme="light"] .nav {
+  background: rgba(246, 248, 246, 0.97);
+  border-bottom-color: #dce5de;
+}
+html[data-theme="light"] .hero {
+  background: radial-gradient(circle at 80% 35%, #e0eee5 0, transparent 34%), #f6f8f6;
+}
+html[data-theme="light"] .section:not(.dark-section):not(.consult-section):not(.pale) {
+  background-color: #f6f8f6;
+}
+html[data-theme="light"] .pale,
+html[data-theme="light"] .platform-wide,
+html[data-theme="light"] .more-section {
+  background-color: #edf3ee;
+}
+html[data-theme="light"] .category-card,
+html[data-theme="light"] .admission-card,
+html[data-theme="light"] .update-card,
+html[data-theme="light"] .platform-card,
+html[data-theme="light"] .platform-results button,
+html[data-theme="light"] .tracker-row,
+html[data-theme="light"] .analytics-cards article,
+html[data-theme="light"] .analytics-card,
+html[data-theme="light"] .system-setting-row,
+html[data-theme="light"] .system-settings-intro,
+html[data-theme="light"] .analytics-toolbar,
+html[data-theme="light"] .global-search-results,
+html[data-theme="light"] .global-search-result,
+html[data-theme="light"] .drawer,
+html[data-theme="light"] .drawer-item {
+  background-color: #ffffff;
+  border-color: #d8e2da;
+  box-shadow: 0 2px 8px rgba(23, 63, 49, 0.035);
+}
+html[data-theme="light"] .category-card p,
+html[data-theme="light"] .admission-card p,
+html[data-theme="light"] .opp-card p,
+html[data-theme="light"] .update-card p,
+html[data-theme="light"] .section-head p,
+html[data-theme="light"] .hero p,
+html[data-theme="light"] .platform-card p,
+html[data-theme="light"] .platform-card small,
+html[data-theme="light"] .platform-card label,
+html[data-theme="light"] .platform-card span,
+html[data-theme="light"] .drawer-item small,
+html[data-theme="light"] .tracker-row small,
+html[data-theme="light"] .system-setting-row p,
+html[data-theme="light"] .global-search-result p {
+  color: #46564c;
+}
+html[data-theme="light"] .opp-foot span,
+html[data-theme="light"] .admission-card small,
+html[data-theme="light"] .update-card small,
+html[data-theme="light"] .floating-card small {
+  color: #526158;
+}
+html[data-theme="light"] .secondary,
+html[data-theme="light"] button.secondary,
+html[data-theme="light"] a.secondary {
+  border-color: #bdcec2;
+  box-shadow: 0 1px 2px rgba(23, 63, 49, 0.04);
+}
+html[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]),
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+  accent-color: #285e46;
+}
+html[data-theme="light"] :is(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 2px;
+}
+@media (max-width: 620px) {
+  html[data-theme="light"] .hero {
+    padding: 42px 5% 34px;
+  }
+  html[data-theme="light"] .hero h1 {
+    font-size: clamp(42px, 12vw, 58px);
+    line-height: 0.98;
+  }
+  html[data-theme="light"] .hero-visual {
+    min-height: 390px;
+  }
+  html[data-theme="light"] .section {
+    padding: 64px 5%;
+  }
+  html[data-theme="light"] .category-grid,
+  html[data-theme="light"] .admission-grid,
+  html[data-theme="light"] .update-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
