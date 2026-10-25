@@ -99,9 +99,11 @@ function AiFormattedAnswer({ text }: { text: string }) {
 export default function PlatformHub({
   opportunities,
   admissions,
+  customerSignInRequest = 0,
 }: {
   opportunities: Item[];
   admissions: Item[];
+  customerSignInRequest?: number;
 }) {
   const [user, setUser] = useState<any>(null);
   const [saved, setSaved] = useState<Item[]>([]);
@@ -133,6 +135,7 @@ export default function PlatformHub({
   const [customerPassword, setCustomerPassword] = useState('');
   const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
+  const [customerAuthMode, setCustomerAuthMode] = useState<'signin' | 'signup'>('signin');
 
   const refreshWallet = async () => {
     if (!auth.isSignedIn()) {
@@ -287,6 +290,14 @@ export default function PlatformHub({
     };
   }, []);
 
+  useEffect(() => {
+    if (customerSignInRequest > 0) {
+      setCustomerAuthMode('signin');
+      setCustomerSignInMessage('');
+      setCustomerSignInOpen(true);
+    }
+  }, [customerSignInRequest]);
+
   const signIn = async () => {
     try {
       await auth.signIn({ scope: 'openid email profile offline_access' });
@@ -310,6 +321,30 @@ export default function PlatformHub({
       await refreshWallet();
     } catch (error) {
       setCustomerSignInMessage(error instanceof Error ? error.message : 'Customer sign-in failed. Please try again.');
+    } finally {
+      setCustomerSignInLoading(false);
+    }
+  };
+
+  const signUpCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (customerSignInLoading) return;
+    setCustomerSignInLoading(true);
+    setCustomerSignInMessage('');
+    try {
+      const result = await auth.signUpWithPassword(customerEmail, customerPassword);
+      setCustomerPassword('');
+      if (result.session) {
+        setCustomerSignInOpen(false);
+        setCustomerAuthMode('signin');
+        await refresh();
+        await refreshWallet();
+      } else {
+        setCustomerSignInMessage('Account created. Check your email to confirm your account, then return here to sign in before submitting the service request.');
+        setCustomerAuthMode('signin');
+      }
+    } catch (error) {
+      setCustomerSignInMessage(error instanceof Error ? error.message : 'Account creation failed. Please try again.');
     } finally {
       setCustomerSignInLoading(false);
     }
@@ -685,8 +720,8 @@ export default function PlatformHub({
           <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
             <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
             <span className="kicker">CUSTOMER ACCOUNT</span>
-            <h2 id="customer-signin-title">Sign in to EDUKEN Wallet</h2>
-            <p>Sign in securely to access your wallet and eligible EDUKEN services.</p>
+            <h2 id="customer-signin-title">{customerAuthMode === 'signup' ? 'Create your EDUKEN account' : 'Sign in to EDUKEN'}</h2>
+            <p>Use your student account to submit service requests and receive your documents securely.</p>
             <button
               className="customer-google-signin"
               type="button"
@@ -697,17 +732,18 @@ export default function PlatformHub({
               Continue with Google
             </button>
             <div className="customer-signin-divider"><span>or use email</span></div>
-            <form className="service-request-form" onSubmit={signInCustomer}>
+            <form className="service-request-form" onSubmit={customerAuthMode === 'signup' ? signUpCustomer : signInCustomer}>
               <label className="service-request-field" htmlFor="customer-signin-email">
                 <span>Email address</span>
                 <input id="customer-signin-email" type="email" autoComplete="username" required value={customerEmail} onChange={event => setCustomerEmail(event.target.value)} disabled={customerSignInLoading} />
               </label>
               <label className="service-request-field" htmlFor="customer-signin-password">
-                <span>Password</span>
-                <input id="customer-signin-password" type="password" autoComplete="current-password" required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
+                <span>Password {customerAuthMode === 'signup' ? '(at least 8 characters)' : ''}</span>
+                <input id="customer-signin-password" type="password" autoComplete={customerAuthMode === 'signup' ? 'new-password' : 'current-password'} minLength={customerAuthMode === 'signup' ? 8 : undefined} required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
               </label>
               {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
-              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? 'Signing in…' : 'Sign in securely'}</button>
+              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? (customerAuthMode === 'signup' ? 'Creating account…' : 'Signing in…') : (customerAuthMode === 'signup' ? 'Create account' : 'Sign in securely')}</button>
+              <button className="secondary" type="button" disabled={customerSignInLoading} onClick={() => { setCustomerAuthMode(customerAuthMode === 'signup' ? 'signin' : 'signup'); setCustomerSignInMessage(''); setCustomerPassword(''); }}>{customerAuthMode === 'signup' ? 'Already have an account? Sign in' : 'New here? Create an account'}</button>
             </form>
           </section>
         </div>
