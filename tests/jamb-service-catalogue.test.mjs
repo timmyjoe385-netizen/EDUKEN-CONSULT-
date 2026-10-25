@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { JAMB_SERVICE_TEMPLATES, isJambCatalogueService, jambServiceFieldsFor } from "../src/lib/jamb-service-catalogue.mjs";
+import { JAMB_SERVICE_TEMPLATES, isJambCatalogueService, jambServiceFieldsFor, jambServicePublicRequirements } from "../src/lib/jamb-service-catalogue.mjs";
 
 test("catalogue contains the exact eleven services and initial prices supplied by the owner", () => {
   assert.equal(JAMB_SERVICE_TEMPLATES.length, 11);
@@ -39,4 +39,20 @@ test("each catalogue service has its own required information fields", () => {
   assert.deepEqual(profileYear.options, ["2026", "2025", "2024", "2023", "2022", "2021"]);
   assert.equal(registrationYear.options.length, 10);
   assert.equal(registrationYear.options.at(-1), "2017");
+});
+
+
+test("public JAMB retrieval requirements never expose BuyCard wording, including legacy database rows", () => {
+  const profile = jambServicePublicRequirements({
+    name: "JAMB Profile Code Retrieval",
+    requirements: "JAMB registration number OR the phone number used for JAMB registration; JAMB year (BuyCard lists 2021–2026). Never submit your NIN, OTP or password.",
+  });
+  const registration = jambServicePublicRequirements({
+    name: "JAMB Registration Number Retrieval",
+    requirements: "JAMB profile code OR the phone number used for registration; JAMB year (BuyCard lists 2017–2026). Never submit your NIN, OTP or password.",
+  });
+  assert.equal(profile, "JAMB registration number OR the phone number used for JAMB registration; JAMB year (2021–2026). Never submit your NIN, OTP or password.");
+  assert.equal(registration, "JAMB profile code OR the phone number used for registration; JAMB year (2017–2026). Never submit your NIN, OTP or password.");
+  assert.ok(!/buycard/i.test(profile + registration));
+  assert.ok(JAMB_SERVICE_TEMPLATES.filter(item => /retrieval/i.test(item.name)).every(item => !/buycard/i.test(item.requirements)));
 });
