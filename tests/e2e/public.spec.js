@@ -1092,7 +1092,7 @@ test('customer password sign-in shows a safe error without exposing provider det
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
-  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN Wallet' });
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
   await dialog.getByLabel('Email address').fill('student@example.test');
   await dialog.getByLabel('Password').fill('not-a-real-password');
