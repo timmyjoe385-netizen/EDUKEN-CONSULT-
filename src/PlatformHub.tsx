@@ -210,6 +210,39 @@ export default function PlatformHub({
     }
   };
 
+
+  const startWalletTransfer = async () => {
+    if (walletAction) return;
+    const amount = Number(walletAmount);
+    if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
+      setWalletMessage('Enter a whole-naira amount between ₦100 and ₦500,000.');
+      return;
+    }
+    const idempotencyKey = walletTransferKey || ('wallet-transfer:' + crypto.randomUUID());
+    setWalletTransferKey(idempotencyKey);
+    setWalletAction(true);
+    setWalletMessage('Preparing secure bank-transfer details…');
+    setWalletTransferInfo(null);
+    try {
+      const result = await api.post('/api/wallet/deposit/initialize-flutterwave-transfer', { amount, idempotencyKey });
+      const account = result.data?.transferAccount;
+      const accountNumber = String(account?.accountNumber || '');
+      const bankName = String(account?.bankName || '');
+      const transferAmount = Number(account?.amount);
+      const reference = String(result.data?.reference || '');
+      if (!/^\d{8,20}$/.test(accountNumber) || !bankName || !Number.isFinite(transferAmount) || transferAmount <= 0 || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) {
+        throw new Error('Bank-transfer details could not be confirmed. Do not transfer; contact EDUKEN support.');
+      }
+      setWalletTransferInfo({ accountNumber, bankName, amount: transferAmount, expiresAt: typeof account.expiresAt === 'string' ? account.expiresAt : null, reference });
+      try { window.sessionStorage.setItem('eduken_pending_wallet_deposit_reference', reference); } catch { /* account details remain visible for this session */ }
+      setWalletMessage('Transfer the exact amount shown below before the account expires. Your wallet is credited only after Flutterwave confirms payment.');
+    } catch (error) {
+      setWalletMessage(error instanceof Error ? error.message : 'Could not prepare bank-transfer details.');
+    } finally {
+      setWalletAction(false);
+    }
+  };
+
   const refresh = async () => {
     if (!auth.isSignedIn()) {
       setUser(null);
