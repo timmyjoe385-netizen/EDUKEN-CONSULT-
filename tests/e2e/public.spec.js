@@ -2121,9 +2121,10 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
 
 test('admin content deadline validation and calendar picker are wired for create and edit', async () => {
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
+  const deadline = readFileSync('supabase/functions/eduken-api/content-deadline-validation.mjs', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
-  expect(source).toContain('function normalizeContentDeadline(value: unknown)');
-  expect(source).toContain('(st|nd|rd|th)');
+  expect(deadline).toContain('export function normalizeContentDeadline(value)');
+  expect(deadline).toContain('(st|nd|rd|th)');
   expect(source).toContain('Enter a valid deadline date, for example 2026-10-21, or leave it blank.');
   expect(source.split('normalizeContentDeadline(b.deadline)')).toHaveLength(3);
   expect(app).toContain('/(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field)');
