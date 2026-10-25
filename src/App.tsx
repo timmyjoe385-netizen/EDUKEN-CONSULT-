@@ -128,7 +128,7 @@ function App() {
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
-  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => usesIsolatedTestBackend ? 'flutterwave' : 'paystack');
+  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
   const [paymentSubmitting, setPaymentSubmitting] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
@@ -499,7 +499,7 @@ function App() {
     if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
       setCheckoutSession(saved);
       setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
-      setPaymentProvider((usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && saved.paymentProvider === 'flutterwave' ? 'flutterwave' : 'paystack');
+      setPaymentProvider((usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
     }
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || params.get('tx_ref') || '';
