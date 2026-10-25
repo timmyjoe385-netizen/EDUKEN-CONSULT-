@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { analyticsApi, api, auth, isFlutterwaveLiveUiEnabled, usesIsolatedTestBackend } from './lib/api';
+import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
@@ -128,7 +128,7 @@ function App() {
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
-  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
+  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>('flutterwave');
   const [paymentSubmitting, setPaymentSubmitting] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
@@ -499,11 +499,11 @@ function App() {
     if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
       setCheckoutSession(saved);
       setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
-      setPaymentProvider((usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
+      setPaymentProvider('flutterwave');
     }
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || params.get('tx_ref') || '';
-    const returnedProvider = (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
+    const returnedProvider = (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
     const returnedTransactionId = params.get('transaction_id') || '';
     if (returnedReference && params.get('wallet') === '1') {
       const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
@@ -2334,7 +2334,7 @@ function App() {
                         </div>
                         <p className="payment-provider-warning" role="status"><strong>TEST CHECKOUT ONLY</strong><span>This isolated preview cannot accept real payments or fulfil services.</span></p>
                       </div>
-                    ) : isFlutterwaveLiveUiEnabled ? (
+                    ) : (
                       <div className="service-request-field">
                         <span id="make-payments-provider-label">Choose a payment method</span>
                         <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
@@ -2348,17 +2348,6 @@ function App() {
                           </button>
                         </div>
                         <p className="payment-provider-warning" role="status"><strong>PAYSTACK TEMPORARILY UNAVAILABLE</strong><span>Use Flutterwave instead. Never retry or send money through Paystack while this notice is displayed.</span></p>
-                      </div>
-                    ) : (
-                      <div className="service-request-field">
-                        <span>Payment method</span>
-                        <div className="payment-provider-picker" role="group" aria-label="Available payment method">
-                          <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
-                            <strong>Paystack — TEMPORARILY UNAVAILABLE</strong>
-                            <small>Paystack is awaiting account approval. Please do not attempt payment through Paystack until EDUKEN announces that it is available.</small>
-                          </div>
-                        </div>
-                        <p className="payment-provider-warning" role="status"><strong>NO PAYMENT AVAILABLE THROUGH PAYSTACK</strong><span>Return later or contact EDUKEN CONSULT for an update. Do not send money through Paystack.</span></p>
                       </div>
                     )}
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>

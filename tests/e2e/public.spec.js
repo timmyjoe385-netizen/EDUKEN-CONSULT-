@@ -1821,7 +1821,7 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
   await expect(page.getByText(/check your Spam or Junk folder/i)).toBeVisible();
   await expect(page.getByText(/payment status.*verified payment records/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Continue to Flutterwave' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
 });
 
@@ -2151,19 +2151,15 @@ test('opportunity WhatsApp share includes dynamic category, location, deadline, 
   expect(app).toContain("'location',");
 });
 
-test('production checkout clearly blocks Paystack while Flutterwave is available and selected', () => {
+test('production checkout defaults to Flutterwave and blocks Paystack regardless of feature-flag state', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
-  const liveProviderStart = app.indexOf(") : isFlutterwaveLiveUiEnabled ? (");
-  const liveProviderEnd = app.indexOf(") : (", liveProviderStart);
-  expect(liveProviderStart).toBeGreaterThanOrEqual(0);
-  expect(liveProviderEnd).toBeGreaterThan(liveProviderStart);
-  const liveProvider = app.slice(liveProviderStart, liveProviderEnd);
-  expect(liveProvider).toContain('Paystack — TEMPORARILY UNAVAILABLE');
-  expect(liveProvider).toContain('awaiting account approval');
-  expect(liveProvider).toContain('payment-provider-warning');
-  expect(liveProvider).toContain("setPaymentProvider('flutterwave')");
-  expect(liveProvider).not.toContain("setPaymentProvider('paystack')");
-  expect(app).toContain("(usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack'");
+  expect(app).toContain("useState<'paystack' | 'flutterwave'>('flutterwave')");
+  expect(app).toContain('Paystack — TEMPORARILY UNAVAILABLE');
+  expect(app).toContain('awaiting account approval');
+  expect(app).toContain('Available checkout');
+  expect(app).toContain("setPaymentProvider('flutterwave')");
+  expect(app).not.toContain('isFlutterwaveLiveUiEnabled');
+  expect(app).not.toContain("(usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack'");
 });
 
 test('JAMB candidate quantity has visible increment/decrement controls and bounded entry', () => {
