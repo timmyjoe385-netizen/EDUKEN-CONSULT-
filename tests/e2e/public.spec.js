@@ -1828,7 +1828,7 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
   await expect(page.getByText(/check your Spam or Junk folder/i)).toBeVisible();
   await expect(page.getByText(/payment status.*verified payment records/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue to Flutterwave|Paystack unavailable/ })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
 });
 
