@@ -3845,23 +3845,6 @@ html[data-theme="dark"] .admin-deliverable-upload summary {
 }
 
 
-.jamb-buycard-note {
-  margin: 0 0 22px;
-  padding: 14px 16px;
-  border: 1px solid #cfe3d5;
-  border-left: 4px solid #28734e;
-  border-radius: 12px;
-  background: #f4faf5;
-  color: #203b2d;
-  line-height: 1.6;
-}
-.jamb-buycard-note a {
-  color: #17633f;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
 /* General service cards keep non-JAMB support visually separate from the JAMB catalogue. */
 .general-service-grid {
   display: grid;
