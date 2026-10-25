@@ -704,7 +704,7 @@ export default function PlatformHub({
                   <p>Bank: <b>{walletTransferInfo.bankName}</b></p>
                   <p>Account number: <b>{walletTransferInfo.accountNumber}</b></p>
                   <p>Transfer exactly: <b>₦{walletTransferInfo.amount.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
-                  {walletTransferInfo.expiresAt ? <p>Expires: <b>{new Date(walletTransferInfo.expiresAt).toLocaleString('en-NG')}</b> : null}
+                  {walletTransferInfo.expiresAt ? <p>Expires: <b>{new Date(walletTransferInfo.expiresAt).toLocaleString('en-NG')}</b></p> : null}
                   <p>Reference: <b>{walletTransferInfo.reference}</b></p>
                   <small>Do not transfer after expiry. Your wallet balance updates only after verified confirmation; bank transfers may take a few minutes.</small>
                 </div>
