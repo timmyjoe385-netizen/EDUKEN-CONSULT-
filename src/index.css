@@ -3257,3 +3257,41 @@ html[data-theme="dark"] .payment-provider-unavailable small,
 html[data-theme="dark"] .payment-provider-warning strong {
   color: #fecaca;
 }
+
+
+/* Large, touch-friendly candidate quantity controls for mobile browsers. */
+.candidate-count-control {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) 52px;
+  gap: 10px;
+  align-items: stretch;
+  width: 100%;
+}
+.candidate-count-control input {
+  min-width: 0;
+  min-height: 48px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+.candidate-count-button {
+  min-width: 48px;
+  min-height: 48px;
+  border: 1px solid #b8cfc0;
+  border-radius: 12px;
+  background: #edf6ef;
+  color: #173f31;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.candidate-count-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.candidate-count-button:focus-visible {
+  outline: 3px solid #8dc9a5;
+  outline-offset: 2px;
+}

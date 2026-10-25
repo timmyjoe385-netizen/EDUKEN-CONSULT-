@@ -1279,6 +1279,10 @@ function App() {
   const submitGuestPayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
+    if (paymentProvider !== 'flutterwave' && !usesIsolatedTestBackend) {
+      setPaymentMessage('Paystack is temporarily unavailable while account approval is pending. Please do not attempt payment through Paystack.');
+      return;
+    }
     const email = paymentEmail.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setPaymentMessage('Enter a valid email address so your payment receipt can be sent.');
@@ -2333,10 +2337,10 @@ function App() {
                       <div className="service-request-field">
                         <span id="make-payments-provider-label">Choose a payment method</span>
                         <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
-                          <button type="button" className={`payment-provider-option ${paymentProvider === 'paystack' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'paystack'} onClick={() => setPaymentProvider('paystack')} disabled={paymentSubmitting}>
-                            <strong>Paystack</strong>
-                            <small>Existing payment option</small>
-                          </button>
+                          <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
+                            <strong>Paystack — TEMPORARILY UNAVAILABLE</strong>
+                            <small>Our Paystack account is still under review. Please do not select Paystack or attempt payment through it.</small>
+                          </div>
                           <button type="button" className={`payment-provider-option ${paymentProvider === 'flutterwave' ? 'is-selected' : ''}`} aria-pressed={paymentProvider === 'flutterwave'} onClick={() => setPaymentProvider('flutterwave')} disabled={paymentSubmitting}>
                             <strong>Flutterwave</strong>
                             <small>Secure checkout</small>
@@ -2346,19 +2350,20 @@ function App() {
                     ) : (
                       <div className="service-request-field">
                         <span>Payment method</span>
-                        <div className="payment-provider-picker" role="group" aria-label="Available payment method">
-                          <div className="payment-provider-option is-selected" aria-disabled="true">
-                            <strong>Paystack</strong>
-                            <small>Existing production payment provider</small>
+                        <div className="payment-provider-picker" role="group" aria-label="Payment availability">
+                          <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
+                            <strong>Paystack — TEMPORARILY UNAVAILABLE</strong>
+                            <small>Our account is still under review. Do not attempt payment through Paystack.</small>
                           </div>
                         </div>
+                        <p className="payment-provider-warning" role="status"><strong>PAYMENT NOTICE</strong><span>Paystack is temporarily unavailable while account approval is pending. Flutterwave checkout is not currently enabled on this site. Please contact EDUKEN CONSULT before paying.</span></p>
                       </div>
                     )}
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
                     <p className="make-payments-security">Email tip: If your receipt or payment notification does not appear in your Inbox, check your Spam or Junk folder. Email delivery does not determine payment status; EDUKEN confirms payment from verified payment records.</p>
                     {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
                     {auth.isSignedIn() ? <button type="button" className="secondary" disabled={paymentSubmitting} onClick={() => void submitWalletServicePayment()}>{paymentSubmitting ? 'Checking payment…' : 'Pay with EDUKEN Wallet'}</button> : null}
-                    <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to ' + (paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack')}</button>
+                    <button type="submit" className="primary" disabled={paymentSubmitting || (paymentProvider !== 'flutterwave' && !usesIsolatedTestBackend)}>{paymentSubmitting ? 'Preparing checkout…' : paymentProvider === 'flutterwave' ? 'Continue to Flutterwave' : usesIsolatedTestBackend ? 'Continue to Paystack' : 'Paystack unavailable'}</button>
                   </form>
                 ) : <p className="make-payments-success" role="status">{paymentMessage || 'Payment confirmed. Thank you.'}</p>}
                 <button type="button" className="secondary make-payments-back" onClick={() => { window.history.pushState({}, document.title, '/'); setPaymentPage(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>Back to EDUKEN CONSULT</button>
@@ -3316,7 +3321,11 @@ function App() {
               {isJambCatalogueService(selectedService) ? (
                 <label className="service-request-field">
                   <span>Number of candidates <b aria-hidden="true">*</b></span>
-                  <input name="candidateCount" type="number" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => setServiceForm({ ...serviceForm, candidateCount: e.target.value })} aria-label="Number of candidates" />
+                  <div className="candidate-count-control">
+                    <button type="button" className="candidate-count-button" aria-label="Decrease number of candidates" disabled={Number(serviceForm.candidateCount || 1) <= 1} onClick={() => setServiceForm(current => ({ ...current, candidateCount: String(Math.max(1, Math.floor(Number(current.candidateCount || 1)) - 1)) }))}>−</button>
+                    <input name="candidateCount" type="number" inputMode="numeric" min="1" max="100" required value={serviceForm.candidateCount || '1'} onChange={e => { const raw = e.target.value; setServiceForm(current => ({ ...current, candidateCount: raw === '' ? '' : String(Math.max(1, Math.min(100, Math.floor(Number(raw) || 1))) ) })); }} aria-label="Number of candidates" />
+                    <button type="button" className="candidate-count-button" aria-label="Increase number of candidates" disabled={Number(serviceForm.candidateCount || 1) >= 100} onClick={() => setServiceForm(current => ({ ...current, candidateCount: String(Math.min(100, Math.floor(Number(current.candidateCount || 1)) + 1)) }))}>+</button>
+                  </div>
                   <span style={{ fontSize: 13, color: '#526158' }}>Estimated total: {Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0 && Number(serviceForm.candidateCount || 1) >= 1 ? '₦' + (Number(selectedService.price) * Math.min(100, Math.floor(Number(serviceForm.candidateCount || 1)))).toLocaleString('en-NG') : 'To be confirmed'}</span>
                 </label>
               ) : null}
