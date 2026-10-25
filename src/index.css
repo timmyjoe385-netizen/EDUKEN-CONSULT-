@@ -3721,3 +3721,67 @@ html[data-theme="dark"] :is(a, button, input, select, textarea):focus-visible {
   outline: 3px solid #a8d8bb;
   outline-offset: 2px;
 }
+
+
+/* Admission Finder — restore the light-theme surface and accessible contrast. */
+html:not([data-theme="dark"]) .finder-box {
+  background: #f5f8f5;
+  color: #17211d;
+  border: 1px solid #dce7df;
+  box-shadow: 0 8px 24px rgba(23, 63, 49, 0.06);
+}
+html:not([data-theme="dark"]) .finder-box .kicker {
+  color: #285e46;
+}
+html:not([data-theme="dark"]) .finder-box h3 {
+  color: #17211d;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+html:not([data-theme="dark"]) .finder-box p {
+  color: #5b6b62;
+  line-height: 1.55;
+}
+html:not([data-theme="dark"]) .finder-box .finder-inputs input {
+  background: #fff;
+  border-color: #cbd8d0;
+  color: #17211d;
+  min-height: 44px;
+}
+html:not([data-theme="dark"]) .finder-box .finder-inputs input::placeholder {
+  color: #68776f;
+  opacity: 1;
+}
+html:not([data-theme="dark"]) .finder-box .finder-inputs input:focus-visible {
+  border-color: #2c694c;
+  outline: 3px solid rgba(44, 105, 76, 0.18);
+  outline-offset: 1px;
+}
+html:not([data-theme="dark"]) .finder-results div {
+  background: #fff;
+  border-color: #dce7df;
+  color: #17211d;
+}
+html:not([data-theme="dark"]) .finder-results span {
+  color: #52675b;
+}
+html:not([data-theme="dark"]) .finder-results small {
+  color: #52675b;
+}
+@media (max-width: 760px) {
+  html:not([data-theme="dark"]) .finder-box {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 18px;
+    gap: 12px;
+  }
+  html:not([data-theme="dark"]) .finder-box h3 {
+    font-size: clamp(21px, 5vw, 25px);
+  }
+  html:not([data-theme="dark"]) .finder-inputs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html:not([data-theme="dark"]) .finder-results div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
