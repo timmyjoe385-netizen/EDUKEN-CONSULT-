@@ -1279,6 +1279,10 @@ function App() {
   const submitGuestPayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
+    if (paymentProvider !== 'flutterwave' && !usesIsolatedTestBackend) {
+      setPaymentMessage('Paystack is temporarily unavailable while account approval is pending. Please do not attempt payment through Paystack.');
+      return;
+    }
     const email = paymentEmail.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setPaymentMessage('Enter a valid email address so your payment receipt can be sent.');
