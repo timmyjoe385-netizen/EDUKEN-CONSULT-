@@ -2149,3 +2149,30 @@ test('opportunity WhatsApp share includes dynamic category, location, deadline, 
   expect(share).not.toContain('Visit EDUKEN CONSULT for more information and full application details.');
   expect(app).toContain("'location',");
 });
+
+test('production checkout clearly blocks Paystack while Flutterwave is available and selected', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const liveProviderStart = app.indexOf(") : isFlutterwaveLiveUiEnabled ? (");
+  const liveProviderEnd = app.indexOf(") : (", liveProviderStart);
+  expect(liveProviderStart).toBeGreaterThanOrEqual(0);
+  expect(liveProviderEnd).toBeGreaterThan(liveProviderStart);
+  const liveProvider = app.slice(liveProviderStart, liveProviderEnd);
+  expect(liveProvider).toContain('Paystack — TEMPORARILY UNAVAILABLE');
+  expect(liveProvider).toContain('awaiting account approval');
+  expect(liveProvider).toContain('payment-provider-warning');
+  expect(liveProvider).toContain("setPaymentProvider('flutterwave')");
+  expect(liveProvider).not.toContain("setPaymentProvider('paystack')");
+  expect(app).toContain("(usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack'");
+});
+
+test('JAMB candidate quantity has visible increment/decrement controls and bounded entry', () => {
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const css = readFileSync(new URL('../../src/index.css', import.meta.url), 'utf8');
+  expect(app).toContain('candidate-quantity-control');
+  expect(app).toContain('aria-label="Decrease number of candidates"');
+  expect(app).toContain('aria-label="Increase number of candidates"');
+  expect(app).toContain('min="1" max="100" step="1"');
+  expect(app).toContain('candidate-quantity-total');
+  expect(css).toContain('.candidate-quantity-control');
+  expect(css).toContain('.candidate-quantity-button:focus-visible');
+});

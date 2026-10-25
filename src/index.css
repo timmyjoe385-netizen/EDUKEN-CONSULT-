@@ -3257,3 +3257,60 @@ html[data-theme="dark"] .payment-provider-unavailable small,
 html[data-theme="dark"] .payment-provider-warning strong {
   color: #fecaca;
 }
+
+
+/* Accessible mobile-friendly candidate quantity controls. */
+.candidate-quantity-control {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 8px;
+  align-items: stretch;
+  width: min(100%, 360px);
+  margin-top: 4px;
+}
+.candidate-quantity-control input {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.candidate-quantity-button {
+  min-height: 48px;
+  border: 1px solid #b9cfc1;
+  border-radius: 9px;
+  background: #edf4ef;
+  color: #173f31;
+  font-size: 25px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.candidate-quantity-button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.candidate-quantity-button:focus-visible,
+.candidate-quantity-control input:focus-visible {
+  outline: 3px solid #6b927e;
+  outline-offset: 2px;
+}
+.candidate-quantity-hint {
+  color: #526158;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.candidate-quantity-total {
+  color: #173f31;
+  font-size: 14px;
+  font-weight: 800;
+}
+html[data-theme="dark"] .candidate-quantity-button {
+  background: #203d30;
+  border-color: #547b65;
+  color: #e4f1e8;
+}
+html[data-theme="dark"] .candidate-quantity-total {
+  color: #c7e5d1;
+}
