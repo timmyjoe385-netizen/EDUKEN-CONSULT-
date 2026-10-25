@@ -5,6 +5,7 @@ import { validateConsultationBody } from "./consultation-validation.mjs";
 import { isOpportunityVerified, validateOpportunityVerification } from "./opportunity-verification-validation.mjs";
 import { getNextPaymentStatus, getPaystackAuthorizationUrl, getPaystackCallbackUrl, getPaystackInitializationFailureDisposition, isPaystackTestModeEnabled, isSuccessfulPaystackTransaction, isValidPaystackWebhookSignature, matchesStoredPaystackPayment } from "./payment-validation.mjs";
 import { getFlutterwaveCheckoutUrl, getFlutterwaveCallbackUrl, getNextFlutterwavePaymentStatus, isFlutterwaveModeEnabled, isSuccessfulFlutterwaveTransaction, isValidFlutterwaveWebhookSignature, matchesStoredFlutterwavePayment } from "./flutterwave-validation.mjs";
+import { parseFlutterwaveVirtualAccount } from "./flutterwave-virtual-account.mjs";
 import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientIp, isEmailAlertAttemptExhausted, isEmailAlertOpportunityEligible, isWithinEmailAlertCooldown, validateEmailAlertSubscription } from "./email-alert-validation.mjs";
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
@@ -1728,6 +1729,87 @@ Deno.serve(async (req) => {
         return json({ error: "Flutterwave checkout was created but needs recovery. Do not start another deposit; contact EDUKEN support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 503);
       }
       return json({ payment: savedPayment, authorizationUrl, reference, provider: "flutterwave" });
+    }
+
+
+    if (path === "/api/wallet/deposit/initialize-flutterwave-transfer" && req.method === "POST") {
+      let rateAllowed: boolean | null;
+      try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-transfer-initialize"); } catch { return json({ error: "Wallet bank transfers are temporarily unavailable." }, 503); }
+      if (rateAllowed === null) return json({ error: "Wallet bank transfers are temporarily unavailable." }, 503);
+      if (!rateAllowed) return json({ error: "Too many wallet transfer attempts. Please wait before trying again." }, 429);
+      const user = await requireUser(req);
+      const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
+      if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
+        return json({ error: "Flutterwave wallet transfers are not enabled for the configured key and mode.", code: "FLUTTERWAVE_MODE_OR_KEY_MISMATCH" }, 503);
+      }
+      let b: any;
+      try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
+      const amount = Number(b?.amount);
+      const clientKey = typeof b?.idempotencyKey === "string" ? b.idempotencyKey.trim() : "";
+      if (!Number.isInteger(amount) || amount < 100 || amount > 500000) return json({ error: "Enter a whole-naira top-up amount between ₦100 and ₦500,000." }, 400);
+      if (!/^[A-Za-z0-9:_-]{8,100}$/.test(clientKey)) return json({ error: "A valid deposit attempt key is required. Please retry." }, 400);
+      if (!user.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) return json({ error: "Your account needs a valid email address before you can fund your wallet." }, 400);
+      const idempotencyKey = "flutterwave-transfer:" + clientKey;
+      const { data: existing, error: existingError } = await db.from("payments")
+        .select("id,amount,status,payment_reference,payment_type,idempotency_key,payment_provider,flutterwave_account_number,flutterwave_bank_name,flutterwave_account_expires_at,flutterwave_transfer_amount")
+        .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "flutterwave").maybeSingle();
+      if (existingError) throw existingError;
+      if (existing) {
+        if (existing.status === "Paid") return json({ error: "This deposit attempt is already completed.", code: "WALLET_DEPOSIT_ALREADY_PAID" }, 409);
+        if (existing.flutterwave_account_number && existing.flutterwave_bank_name && existing.payment_reference && Number(existing.amount) === amount) {
+          return json({ reference: existing.payment_reference, transferAccount: { accountNumber: existing.flutterwave_account_number, bankName: existing.flutterwave_bank_name, amount: Number(existing.flutterwave_transfer_amount || existing.amount), expiresAt: existing.flutterwave_account_expires_at }, provider: "flutterwave", reused: true });
+        }
+        return json({ error: "This bank-transfer attempt is still being prepared or needs support. Do not start another attempt.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
+      }
+      const reference = "EDK-PAY-" + crypto.randomUUID().replace(/-/g, "").slice(0, 18).toUpperCase();
+      const { data: reservation, error: reservationError } = await db.from("payments").insert({
+        user_id: user.id, service_request_id: null, amount, currency: "NGN", status: "Pending",
+        payment_reference: reference, authorization_url: null, payment_type: "wallet_deposit",
+        payment_provider: "flutterwave", idempotency_key: idempotencyKey,
+      }).select("id,payment_reference").single();
+      if (reservationError) {
+        if (reservationError.code === "23505") return json({ error: "This bank-transfer attempt is already being prepared. Refresh or contact EDUKEN support.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
+        throw reservationError;
+      }
+      const metadata = user.user_metadata || {};
+      const displayName = String(metadata.full_name || metadata.name || metadata.display_name || "").trim();
+      const nameParts = displayName.split(/\s+/).filter(Boolean);
+      let providerResponse: Response;
+      try {
+        providerResponse = await fetch("https://api.flutterwave.com/v3/virtual-account-numbers", {
+          method: "POST",
+          headers: { "Authorization": "Bearer " + secret, "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            email: user.email, amount, currency: "NGN", tx_ref: reference,
+            firstname: (nameParts[0] || "EDUKEN").slice(0, 80),
+            lastname: (nameParts.slice(1).join(" ") || "Customer").slice(0, 80),
+            narration: "EDUKEN Wallet Top-up", expires: "3600",
+          }),
+        });
+      } catch {
+        return json({ error: "Flutterwave could not confirm whether bank details were created. Do not start another deposit; contact EDUKEN support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 502);
+      }
+      let providerResult: any;
+      try { providerResult = await providerResponse.json(); } catch {
+        return json({ error: "Flutterwave returned an unreadable response. Do not start another deposit; contact EDUKEN support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 502);
+      }
+      const account = parseFlutterwaveVirtualAccount(providerResult);
+      if (!providerResponse.ok || providerResult?.status !== "success" || !account) {
+        const rejected = providerResponse.status >= 400 && providerResponse.status < 500 && providerResponse.status !== 408 && providerResponse.status !== 429 && providerResult?.status !== "success";
+        if (rejected) {
+          const { error: failError } = await db.from("payments").update({ status: "Failed" }).eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending");
+          if (failError) return json({ error: "Flutterwave rejected the transfer but its state needs support before retrying.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 503);
+          return json({ error: "Flutterwave could not create bank-transfer details. You can safely start a new attempt.", code: "WALLET_DEPOSIT_INITIALIZATION_FAILED" }, 502);
+        }
+        return json({ error: "Flutterwave could not confirm bank-transfer details. Do not start another deposit; contact support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 502);
+      }
+      const { data: savedPayment, error: saveError } = await db.from("payments").update({
+        flutterwave_account_number: account.accountNumber, flutterwave_bank_name: account.bankName,
+        flutterwave_account_expires_at: account.expiresAt, flutterwave_transfer_amount: account.transferAmount,
+      }).eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending")
+        .select("id,payment_reference,flutterwave_account_number,flutterwave_bank_name,flutterwave_account_expires_at,flutterwave_transfer_amount").maybeSingle();
+      if (saveError || !savedPayment) return json({ error: "Flutterwave created bank details but saving them needs recovery. Do not transfer yet; contact support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 503);
+      return json({ reference, provider: "flutterwave", transferAccount: { accountNumber: savedPayment.flutterwave_account_number, bankName: savedPayment.flutterwave_bank_name, amount: Number(savedPayment.flutterwave_transfer_amount || amount), expiresAt: savedPayment.flutterwave_account_expires_at } });
     }
 
     if (path === "/api/wallet/deposit/verify" && req.method === "POST") {
