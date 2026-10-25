@@ -40,6 +40,9 @@ test("admin upload endpoints require admin authorization and enforce request/pay
   assert.match(route, /15728640|15 \* 1024 \* 1024/);
   assert.match(route, /actualSize !== size/);
   assert.match(route, /payment|Paid|In Progress|Completed/i);
+  assert.equal((route.match(/from\(["']payments["']\)/g) || []).length, 2, "both upload preparation and publication must query confirmed payments");
+  assert.equal((route.match(/eq\(["']service_request_id["'], request\.id\)/g) || []).length, 2, "payment must match the exact service request");
+  assert.equal((route.match(/eq\(["']status["'], ["']Paid["']\)/g) || []).length, 2, "payment status must be confirmed as Paid");
 });
 
 test("browser uploads directly to the token-bearing signed URL with PUT and only registers metadata after upload succeeds", () => {
