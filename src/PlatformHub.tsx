@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, auth, notifications } from './lib/api';
+import { FileText, Download, RefreshCw } from 'lucide-react';
 import {
   Bell,
   Bookmark,
@@ -117,6 +118,9 @@ export default function PlatformHub({
   const [aiSources, setAiSources] = useState<{ title: string; url: string; description?: string }[]>([]);
   const [aiResearchStatus, setAiResearchStatus] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [deliverables, setDeliverables] = useState<Item[]>([]);
+  const [deliverablesLoading, setDeliverablesLoading] = useState(false);
+  const [deliverablesMessage, setDeliverablesMessage] = useState('');
   const [wallet, setWallet] = useState<any>(null);
   const [walletTransactions, setWalletTransactions] = useState<Item[]>([]);
   const [walletLoading, setWalletLoading] = useState(false);
@@ -205,6 +209,35 @@ export default function PlatformHub({
       if (message.includes('You can safely start a new attempt')) setWalletDepositKey('');
     } finally {
       setWalletAction(false);
+    }
+  };
+
+  const refreshDeliverables = async () => {
+    if (!auth.isSignedIn()) {
+      setDeliverables([]);
+      setDeliverablesMessage('Sign in to view documents EDUKEN has published for your service requests.');
+      return;
+    }
+    setDeliverablesLoading(true);
+    try {
+      const result = await api.get('/api/service-deliverables');
+      setDeliverables(result.data.items || []);
+      setDeliverablesMessage((result.data.items || []).length ? '' : 'No documents have been published to your account yet.');
+    } catch (error) {
+      setDeliverablesMessage(error instanceof Error ? error.message : 'Documents are temporarily unavailable.');
+    } finally {
+      setDeliverablesLoading(false);
+    }
+  };
+
+  const downloadDeliverable = async (item: Item) => {
+    try {
+      const result = await api.post('/api/service-deliverables/' + encodeURIComponent(item.id) + '/download', {});
+      const downloadUrl = String(result.data?.url || '');
+      if (!downloadUrl.startsWith('https://')) throw new Error('A secure download link was not returned.');
+      window.location.assign(downloadUrl);
+    } catch (error) {
+      setDeliverablesMessage(error instanceof Error ? error.message : 'Could not prepare this download.');
     }
   };
 
@@ -518,6 +551,39 @@ export default function PlatformHub({
             <Bell size={15} /> Manage alerts
           </button>
         </div>
+      </div>
+
+      <div className="platform-wide student-deliverables" aria-labelledby="student-deliverables-title">
+        <div className="student-deliverables-heading">
+          <span className="kicker"><FileText size={15} /> MY SERVICE DOCUMENTS</span>
+          <h3 id="student-deliverables-title">Results and deliverables</h3>
+          <p>Download documents that EDUKEN has securely published to your account. Only your own published files are shown.</p>
+        </div>
+        <div className="student-deliverables-actions">
+          <button className="secondary" type="button" onClick={() => void refreshDeliverables()} disabled={deliverablesLoading}>
+            <RefreshCw size={15} /> {deliverablesLoading ? 'Refreshing…' : 'Refresh'}
+          </button>
+        </div>
+        {deliverablesMessage ? <p role="status" aria-live="polite">{deliverablesMessage}</p> : null}
+        {deliverablesLoading && !deliverables.length ? <p>Loading your documents…</p> : null}
+        {deliverables.map(item => (
+          <article className="student-deliverable-row" key={item.id}>
+            <div className="student-deliverable-icon"><FileText size={20} /></div>
+            <div className="student-deliverable-copy">
+              <strong>{item.title}</strong>
+              {item.description ? <p>{item.description}</p> : null}
+              <small>
+                {item.service_requests?.reference_number ? 'Request ' + item.service_requests.reference_number : 'Service request'}
+                {item.service_requests?.services?.name ? ' · ' + item.service_requests.services.name : ''}
+                {item.published_at ? ' · Published ' + new Date(item.published_at).toLocaleDateString('en-NG') : ''}
+              </small>
+              <small>{item.original_filename} · {Math.max(1, Math.ceil(Number(item.file_size_bytes || 0) / 1024))} KB</small>
+            </div>
+            <button className="secondary" type="button" onClick={() => void downloadDeliverable(item)} aria-label={'Download ' + item.title}>
+              <Download size={15} /> Download
+            </button>
+          </article>
+        ))}
       </div>
 
       <div className="platform-wide finder-box">
