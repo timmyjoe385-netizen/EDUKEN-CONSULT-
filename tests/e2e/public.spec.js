@@ -488,10 +488,12 @@ test('service request dialog validates required fields without sending a request
   });
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const serviceCard = page.locator('.service-row').filter({
+  const serviceCard = page.locator('.general-service-card').filter({
     has: page.getByText('Playwright Service Request Check', { exact: true }),
   });
   await expect(serviceCard).toHaveCount(1);
+  await expect(page.locator('.service-row')).toHaveCount(0);
+  await expect(page.locator('.general-service-grid')).toBeVisible();
   await serviceCard.getByRole('button', { name: 'Request this service', exact: true }).click();
 
   const dialog = page.getByRole('dialog', {

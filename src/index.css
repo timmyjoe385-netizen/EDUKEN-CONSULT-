@@ -3861,3 +3861,91 @@ html[data-theme="dark"] .admin-deliverable-upload summary {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
+
+/* General service cards keep non-JAMB support visually separate from the JAMB catalogue. */
+.general-service-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 245px), 1fr));
+  gap: 18px;
+  align-items: stretch;
+}
+.general-service-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #d7e4da;
+  border-radius: 18px;
+  background: #fff;
+  color: #24392d;
+  box-shadow: 0 8px 24px rgba(25, 65, 43, 0.06);
+}
+.general-service-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.general-service-card__number {
+  display: inline-grid;
+  place-items: center;
+  min-width: 38px;
+  min-height: 38px;
+  border-radius: 12px;
+  background: #eaf5ed;
+  color: #246341;
+  font-size: 12px;
+  font-weight: 800;
+}
+.general-service-card__category {
+  color: #47725a;
+  font-size: 12px;
+  font-weight: 700;
+}
+.general-service-card h3 {
+  margin: 0 0 10px;
+  color: #173f31;
+  font-size: 19px;
+  line-height: 1.35;
+}
+.general-service-card p {
+  margin: 0 0 20px;
+  color: #58695f;
+  line-height: 1.6;
+}
+.general-service-card__footer {
+  display: grid;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid #e4ece6;
+}
+.general-service-card__footer strong {
+  color: #1c5c3a;
+  font-size: 15px;
+}
+.general-service-card__footer .primary {
+  width: 100%;
+  justify-content: center;
+}
+html[data-theme="dark"] .general-service-card {
+  background: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .general-service-card h3,
+html[data-theme="dark"] .general-service-card__footer strong {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .general-service-card p,
+html[data-theme="dark"] .general-service-card__category {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .general-service-card__number {
+  background: #173f31;
+  color: #d7f7e2;
+}
+html[data-theme="dark"] .general-service-card__footer {
+  border-color: #294560;
+}
