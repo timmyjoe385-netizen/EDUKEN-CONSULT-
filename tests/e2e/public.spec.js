@@ -1685,6 +1685,7 @@ test('JAMB services section keeps the heading clean without external reference o
   await expect(page.locator('.jamb-buycard-note')).toHaveCount(0);
   await expect(page.getByText('Prices and availability are managed by EDUKEN in the admin dashboard.')).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'BuyCard' })).toHaveCount(0);
+  await expect(page.locator('.jamb-catalogue-section')).not.toContainText(/BuyCard/i);
 });
 
 test('JAMB service request dialog opens without a blank-screen runtime error', async ({ page }) => {
