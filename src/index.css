@@ -3785,3 +3785,61 @@ html:not([data-theme="dark"]) .finder-results small {
     align-items: flex-start;
   }
 }
+
+
+/* Student service deliverables — responsive, theme-aware private download panel. */
+.student-deliverables { display: grid; gap: 14px; }
+.student-deliverables-heading .kicker { display: inline-flex; align-items: center; gap: 7px; }
+.student-deliverables-heading h3 { margin: 8px 0 5px; }
+.student-deliverables-heading p, .student-deliverable-copy p { margin: 0; line-height: 1.6; }
+.student-deliverables-actions { display: flex; justify-content: flex-end; }
+.student-deliverable-row {
+  display: flex; align-items: center; gap: 12px; padding: 14px;
+  border: 1px solid var(--border, #d7e2d9); border-radius: 12px;
+  background: var(--surface, #fff); min-width: 0;
+}
+.student-deliverable-icon {
+  display: grid; place-items: center; flex: 0 0 42px; width: 42px; height: 42px;
+  border-radius: 10px; background: var(--soft-green, #e8f0ea); color: var(--forest-green, #173f31);
+}
+.student-deliverable-copy { display: grid; gap: 5px; flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.student-deliverable-copy small { color: var(--muted, #53645b); line-height: 1.45; }
+@media (max-width: 560px) {
+  .student-deliverable-row { align-items: flex-start; flex-wrap: wrap; }
+  .student-deliverable-copy { flex-basis: calc(100% - 60px); }
+  .student-deliverable-row > button { width: 100%; justify-content: center; }
+}
+
+
+/* Admin deliverable upload form. */
+.admin-deliverable-upload {
+  flex: 1 0 100%;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border, #d7e2d9);
+  border-radius: 12px;
+  background: var(--surface, #fff);
+}
+.admin-deliverable-upload summary {
+  cursor: pointer;
+  color: var(--forest-green, #173f31);
+  font-weight: 650;
+  padding: 4px 0;
+}
+.admin-deliverable-upload .service-request-form {
+  margin-top: 12px;
+}
+.admin-deliverable-publish {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  line-height: 1.5;
+}
+.admin-deliverable-publish input {
+  margin-top: 4px;
+  flex: 0 0 auto;
+}
+html[data-theme="dark"] .admin-deliverable-upload summary {
+  color: var(--text, #e8f0f8);
+}
