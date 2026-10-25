@@ -1065,19 +1065,21 @@ function App() {
         if (!payload.description)
           payload.description = (payload.content || '').split(/\r?\n/)[0].slice(0, 180);
       }
-      if (form.id)
-        await api.put('/api/admin/content/' + table + '/' + form.id, payload);
-      else
-        await api.post('/api/admin/content/' + table, payload);
+      const saveResponse = form.id
+        ? await api.put('/api/admin/content/' + table + '/' + form.id, payload)
+        : await api.post('/api/admin/content/' + table, payload);
+      const saveWarnings: string[] = Array.isArray(saveResponse?.data?.warnings)
+        ? saveResponse.data.warnings
+        : [];
 
       setForm({});
       await loadAdmin(table);
       await loadContent();
 
       if (publishMode === 'draft') {
-        showToast('Saved as draft successfully.');
+        showToast(saveWarnings.length ? 'Saved as draft, but some notifications could not be completed.' : 'Saved as draft successfully.');
       } else if (publishMode === 'publish') {
-        showToast('Published successfully.');
+        showToast(saveWarnings.length ? 'Published successfully, but some notifications could not be completed.' : 'Published successfully.');
         if (['opportunities', 'admissions', 'updates'].includes(table)) {
           const title = String(payload.title || payload.school || payload.name || 'EDUKEN CONSULT Update').trim();
           const summary = String(payload.description || payload.body || payload.details || payload.content || '')
@@ -1107,7 +1109,7 @@ function App() {
           ].join('\n'));
         }
       } else {
-        showToast('Changes saved successfully.');
+        showToast(saveWarnings.length ? 'Changes saved, but some notifications could not be completed.' : 'Changes saved successfully.');
       }
     } catch (error) {
       showToast(error instanceof Error ? 'Could not save this item: ' + error.message : 'Could not save this item. Please try again.');
@@ -1923,7 +1925,10 @@ function App() {
                               if (date.getFullYear() !== Number(human[3]) || date.getMonth() !== new Date(month).getMonth() || date.getDate() !== Number(human[1])) return '';
                               return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
                             })()}
-                            onChange={e => setForm({ ...form, [field]: e.target.value })}
+                            onChange={e => {
+                              const selectedDate = e.target.value;
+                              setForm(current => ({ ...current, [field]: selectedDate }));
+                            }}
                             aria-label={field.replace(/_/g, ' ') + ' (optional)'}
                           />
                         ) : field === 'price' ? (
