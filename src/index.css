@@ -3314,3 +3314,160 @@ html[data-theme="dark"] .candidate-quantity-button {
 html[data-theme="dark"] .candidate-quantity-total {
   color: #c7e5d1;
 }
+
+
+/* Dark-theme accessibility pass: cover sections and components that previously
+   kept light-theme text colours on dark surfaces. Keep the original light theme
+   untouched and scope every override to the explicit dark preference. */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  background: #071426;
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .site,
+html[data-theme="dark"] main,
+html[data-theme="dark"] section,
+html[data-theme="dark"] .contact-section,
+html[data-theme="dark"] .more-section,
+html[data-theme="dark"] .trust-section,
+html[data-theme="dark"] .newsroom,
+html[data-theme="dark"] .news-section,
+html[data-theme="dark"] .consultation-section,
+html[data-theme="dark"] .final-cta {
+  color: #e8f0f8;
+}
+html[data-theme="dark"] .contact-section,
+html[data-theme="dark"] .more-section,
+html[data-theme="dark"] .trust-section,
+html[data-theme="dark"] .newsroom,
+html[data-theme="dark"] .news-section,
+html[data-theme="dark"] .consultation-section {
+  background-color: #0a192b;
+}
+html[data-theme="dark"] .contact-section h1,
+html[data-theme="dark"] .contact-section h2,
+html[data-theme="dark"] .contact-section h3,
+html[data-theme="dark"] .more-section h1,
+html[data-theme="dark"] .more-section h2,
+html[data-theme="dark"] .more-section h3,
+html[data-theme="dark"] .trust-section h1,
+html[data-theme="dark"] .trust-section h2,
+html[data-theme="dark"] .trust-section h3,
+html[data-theme="dark"] .newsroom h1,
+html[data-theme="dark"] .newsroom h2,
+html[data-theme="dark"] .newsroom h3,
+html[data-theme="dark"] .news-section h1,
+html[data-theme="dark"] .news-section h2,
+html[data-theme="dark"] .news-section h3,
+html[data-theme="dark"] .consultation-section h1,
+html[data-theme="dark"] .consultation-section h2,
+html[data-theme="dark"] .consultation-section h3,
+html[data-theme="dark"] .final-cta h1,
+html[data-theme="dark"] .final-cta h2,
+html[data-theme="dark"] .final-cta h3 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .contact-section p,
+html[data-theme="dark"] .more-section p,
+html[data-theme="dark"] .trust-section p,
+html[data-theme="dark"] .newsroom p,
+html[data-theme="dark"] .news-section p,
+html[data-theme="dark"] .consultation-section p,
+html[data-theme="dark"] .final-cta p,
+html[data-theme="dark"] .contact-section label,
+html[data-theme="dark"] .consultation-section label,
+html[data-theme="dark"] .newsroom small,
+html[data-theme="dark"] .news-section small {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .contact-section em,
+html[data-theme="dark"] .consultation-section em,
+html[data-theme="dark"] .more-section em,
+html[data-theme="dark"] .final-cta em {
+  color: #a8d8bb;
+}
+html[data-theme="dark"] .news-card,
+html[data-theme="dark"] .news-item,
+html[data-theme="dark"] .update-card,
+html[data-theme="dark"] .article-card,
+html[data-theme="dark"] .newsroom article,
+html[data-theme="dark"] .news-section article {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .news-card h1,
+html[data-theme="dark"] .news-card h2,
+html[data-theme="dark"] .news-card h3,
+html[data-theme="dark"] .news-item h1,
+html[data-theme="dark"] .news-item h2,
+html[data-theme="dark"] .news-item h3,
+html[data-theme="dark"] .update-card h1,
+html[data-theme="dark"] .update-card h2,
+html[data-theme="dark"] .update-card h3,
+html[data-theme="dark"] .article-card h1,
+html[data-theme="dark"] .article-card h2,
+html[data-theme="dark"] .article-card h3,
+html[data-theme="dark"] .newsroom article h1,
+html[data-theme="dark"] .newsroom article h2,
+html[data-theme="dark"] .newsroom article h3,
+html[data-theme="dark"] .news-section article h1,
+html[data-theme="dark"] .news-section article h2,
+html[data-theme="dark"] .news-section article h3 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .news-card p,
+html[data-theme="dark"] .news-item p,
+html[data-theme="dark"] .update-card p,
+html[data-theme="dark"] .article-card p,
+html[data-theme="dark"] .newsroom article p,
+html[data-theme="dark"] .news-section article p {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .contact-section input:not([type="checkbox"]),
+html[data-theme="dark"] .contact-section select,
+html[data-theme="dark"] .contact-section textarea,
+html[data-theme="dark"] .consultation-section input:not([type="checkbox"]),
+html[data-theme="dark"] .consultation-section select,
+html[data-theme="dark"] .consultation-section textarea,
+html[data-theme="dark"] .newsletter-form input {
+  background: #091a2d;
+  color: #f1f7ff;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .contact-section input::placeholder,
+html[data-theme="dark"] .contact-section textarea::placeholder,
+html[data-theme="dark"] .consultation-section input::placeholder,
+html[data-theme="dark"] .consultation-section textarea::placeholder,
+html[data-theme="dark"] .newsletter-form input::placeholder {
+  color: #b8c8d9;
+  opacity: 1;
+}
+html[data-theme="dark"] .nav-links,
+html[data-theme="dark"] .nav-links a,
+html[data-theme="dark"] .brand,
+html[data-theme="dark"] .footer,
+html[data-theme="dark"] .footer-main,
+html[data-theme="dark"] footer {
+  color: #c5d3e2;
+}
+html[data-theme="dark"] .nav-links a:hover,
+html[data-theme="dark"] footer a:hover {
+  color: #b8e1c8;
+}
+html[data-theme="dark"] a:focus-visible,
+html[data-theme="dark"] button:focus-visible,
+html[data-theme="dark"] input:focus-visible,
+html[data-theme="dark"] select:focus-visible,
+html[data-theme="dark"] textarea:focus-visible {
+  outline-color: #a8d8bb;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme="dark"] *,
+  html[data-theme="dark"] *::before,
+  html[data-theme="dark"] *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
