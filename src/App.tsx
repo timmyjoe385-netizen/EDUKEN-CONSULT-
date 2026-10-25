@@ -3046,8 +3046,7 @@ function App() {
               <span className="kicker">EDUKEN SERVICE PORTAL</span>
               <h2>JAMB Services</h2>
             </div>
-            <p>Choose a service, review its requirements and check availability before requesting assistance. Prices and availability are managed by EDUKEN in the admin dashboard.</p>
-            <p className="jamb-buycard-note"><strong>Did you know?</strong> You can also review JAMB service information and current availability on <a href="https://www.buycard.ng/" target="_blank" rel="noreferrer">BuyCard</a>. EDUKEN CONSULT provides independent guidance and service-request assistance; it is not an authorized JAMB agent.</p>
+            <p>Choose a service, review its requirements and check availability before requesting assistance.</p>
           </div>
           <div className="jamb-service-grid">
             {content.services.filter(isJambCatalogueService).map((service, index) => {
