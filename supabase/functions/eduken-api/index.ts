@@ -1835,7 +1835,7 @@ Deno.serve(async (req) => {
       });
       if (error) {
         const message = String(error.message || "");
-        if (message.includes("WALLET_INSUFFICIENT_FUNDS")) return json({ error: "Your wallet balance is too low for this service. Add funds or use Paystack checkout.", code: "WALLET_INSUFFICIENT_FUNDS" }, 409);
+        if (message.includes("WALLET_INSUFFICIENT_FUNDS")) return json({ error: "Your wallet balance is too low for this service. Add funds or use an available checkout method.", code: "WALLET_INSUFFICIENT_FUNDS" }, 409);
         if (message.includes("SERVICE_REQUEST_ALREADY_PAID")) return json({ error: "This service request is already paid.", code: "SERVICE_REQUEST_ALREADY_PAID" }, 409);
         if (message.includes("WALLET_SERVICE_REQUEST_NOT_FOUND")) return json({ error: "This service request was not found for your account.", code: "SERVICE_REQUEST_NOT_FOUND" }, 404);
         if (message.includes("WALLET_SERVICE_NOT_PAYABLE")) return json({ error: "This service does not have a confirmed online price or is unavailable.", code: "WALLET_SERVICE_NOT_PAYABLE" }, 409);
