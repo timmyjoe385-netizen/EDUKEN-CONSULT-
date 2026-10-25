@@ -274,7 +274,8 @@ export default function PlatformHub({
 
   useEffect(() => {
     void refresh();
-    const onAuthChanged = () => { void refresh(); };
+    void refreshDeliverables();
+    const onAuthChanged = () => { void refresh(); void refreshDeliverables(); };
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
