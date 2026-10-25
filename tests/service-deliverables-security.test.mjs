@@ -64,3 +64,18 @@ test("database migration keeps deliverables private with student ownership RLS a
   assert.match(migration, /'eduken-service-deliverables',[\s\S]*?false,[\s\S]*?15728640/);
   assert.match(migration, /application\/pdf/);
 });
+
+
+test("selected service requests require a customer account while general enquiries remain available to guests", () => {
+  const start = source.indexOf('if (path === "/api/service-requests" && req.method === "POST")');
+  const end = source.indexOf('if (path === "/api/service-requests" && req.method === "GET")', start);
+  assert.ok(start >= 0 && end > start, "service request route must exist");
+  const route = source.slice(start, end);
+  assert.match(route, /const user = serviceId \? await requireUser\(req\) : await currentUser\(req\)/);
+  assert.match(app, /if \(!auth\.isSignedIn\(\)\)[\s\S]*setCustomerSignInRequest\(current => current \+ 1\)/);
+  assert.match(app, /customerSignInRequest=\{customerSignInRequest\}/);
+  const hub = readFileSync("src/PlatformHub.tsx", "utf8");
+  assert.match(hub, /auth\.signUpWithPassword\(customerEmail, customerPassword\)/);
+  assert.match(hub, /New here\? Create an account/);
+  assert.match(hub, /Check your email to confirm your account/);
+});
