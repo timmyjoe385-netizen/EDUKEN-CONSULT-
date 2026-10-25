@@ -515,7 +515,7 @@ function App() {
         setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
         return;
       }
-      setPaymentMessage('Wallet deposit returned from Paystack. Verifying securely…');
+      setPaymentMessage('Wallet deposit returned. Verifying securely…');
       void api.post('/api/wallet/deposit/verify', { reference: returnedReference })
         .then((result: any) => {
           if (result.data?.paid) {
@@ -524,7 +524,7 @@ function App() {
             window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else if (result.data?.status === 'Failed') {
             try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* keep failure visible */ }
-            setPaymentMessage('Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt from your wallet.');
+            setPaymentMessage('The payment provider did not complete this deposit. No wallet credit was added. You can start a new deposit attempt from your wallet.');
             window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else {
             setPaymentMessage('The deposit is not confirmed yet. Do not pay again immediately. Its reference is saved so your wallet can check again: ' + returnedReference);
@@ -551,7 +551,7 @@ function App() {
             });
           return;
         }
-        setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely with Paystack…');
+        setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely…');
         void api.post('/api/payments/recover-guest', { reference: returnedReference })
           .then((result: any) => {
             if (result.data?.paid) {
