@@ -127,6 +127,7 @@ function App() {
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [customerSignInRequest, setCustomerSignInRequest] = useState(0);
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
@@ -1277,6 +1278,11 @@ function App() {
   const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedService || serviceSubmitting) return;
+    if (!auth.isSignedIn()) {
+      setCustomerSignInRequest(current => current + 1);
+      setToast('Please sign in or create a student account before submitting this service request. Your details will remain in the form.');
+      return;
+    }
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
     const requestedQuantity = isJambCatalogueService(selectedService) ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))) : 1;
@@ -2678,6 +2684,7 @@ function App() {
         <PlatformHub
           opportunities={content.opportunities}
           admissions={content.admissions}
+          customerSignInRequest={customerSignInRequest}
         />
 
         {featuredOpps.length > 0 && (
