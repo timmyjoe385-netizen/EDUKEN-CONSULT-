@@ -1670,6 +1670,15 @@ test('admissions and updates expose persisted opportunity-style admin controls',
 });
 
 
+test('JAMB services section includes the BuyCard reference and clarifies EDUKEN is not a JAMB agent', async ({ page }) => {
+  await page.goto('/#jamb-services', { waitUntil: 'domcontentloaded' });
+  const note = page.locator('.jamb-buycard-note');
+  await expect(note).toBeVisible();
+  await expect(note).toContainText('Did you know?');
+  await expect(note.getByRole('link', { name: 'BuyCard' })).toHaveAttribute('href', 'https://www.buycard.ng/');
+  await expect(note).toContainText('not an authorized JAMB agent');
+});
+
 test('JAMB service request dialog opens without a blank-screen runtime error', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', error => pageErrors.push(error.message));
