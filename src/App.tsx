@@ -3042,9 +3042,18 @@ function App() {
 
         <section className="section jamb-catalogue-section" id="jamb-services">
           <div className="section-head">
-            <div>
-              <span className="kicker">EDUKEN SERVICE PORTAL</span>
-              <h2>JAMB Services</h2>
+            <div className="jamb-section-heading">
+              <img
+                className="jamb-section-logo"
+                src="https://www.jamb.gov.ng/assets/layouts/layout3/img/banner.png"
+                alt="Joint Admissions and Matriculation Board (JAMB) logo"
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <span className="kicker">EDUKEN SERVICE PORTAL</span>
+                <h2>JAMB Services</h2>
+              </div>
             </div>
             <p>Choose a service, review its requirements and check availability before requesting assistance.</p>
           </div>

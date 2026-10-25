@@ -447,6 +447,13 @@ test('JAMB catalogue setup warning waits for a successful content load', async (
   );
 });
 
+test('JAMB services section displays the official JAMB logo', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const logo = page.locator('.jamb-section-logo');
+  await expect(logo).toHaveAttribute('alt', 'Joint Admissions and Matriculation Board (JAMB) logo');
+  await expect(logo).toHaveAttribute('src', 'https://www.jamb.gov.ng/assets/layouts/layout3/img/banner.png');
+});
+
 test('failed public-content load does not falsely report an unconfigured JAMB catalogue', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: 'temporary test failure' }) }),

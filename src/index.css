@@ -2048,6 +2048,25 @@ footer {
 
 /* JAMB catalogue: clear service titles, status and pricing hierarchy */
 .jamb-catalogue-section { --jamb-green: #087443; --jamb-green-dark: #075b36; --jamb-green-pale: #effaf3; --jamb-blue: #2459c4; --jamb-blue-pale: #f2f6ff; }
+.jamb-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+.jamb-section-logo {
+  display: block;
+  width: clamp(76px, 11vw, 124px);
+  max-height: 78px;
+  object-fit: contain;
+  object-position: center;
+  flex: 0 0 auto;
+}
+.jamb-section-heading > div { min-width: 0; }
+@media (max-width: 560px) {
+  .jamb-section-heading { gap: 11px; }
+  .jamb-section-logo { width: 76px; max-height: 58px; }
+}
 .jamb-service-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 285px), 1fr));
