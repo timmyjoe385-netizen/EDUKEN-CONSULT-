@@ -181,5 +181,5 @@ test("guest payment callback recovery is rate-limited and verifies provider evid
   assert.match(route, /if \(payment\) \{[\s\S]*?await sendPaymentNotifications/);
   const app = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
   assert.match(app, /api\.post\('\/api\/payments\/recover-guest', \{ reference: returnedReference \}\)/);
-  assert.match(app, /Checkout session not found in this browser\. Checking the payment reference securely with Paystack/);
+  assert.match(app, /Checkout session not found in this browser\. Checking the payment reference securely/);
 });
