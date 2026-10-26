@@ -57,6 +57,18 @@ const deadlineState = (value: unknown) => {
   return { label: '⏳ ' + days + ' days left', tone: 'open' };
 };
 
+function formatWalletTransferCountdown(expiresAt: string | null, now: number): string | null {
+  if (!expiresAt) return null;
+  const expiresAtMs = new Date(expiresAt).getTime();
+  if (!Number.isFinite(expiresAtMs)) return null;
+  const remainingSeconds = Math.max(0, Math.floor((expiresAtMs - now) / 1000));
+  if (remainingSeconds <= 0) return 'Expired';
+  const hours = Math.floor(remainingSeconds / 3600);
+  const minutes = Math.floor((remainingSeconds % 3600) / 60);
+  const seconds = remainingSeconds % 60;
+  return [hours, minutes, seconds].map(value => String(value).padStart(2, '0')).join(':');
+}
+
 function renderAiInline(text: string): React.ReactNode[] {
   return text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g).filter(Boolean).map((part, index) => {
     if (part.startsWith('**') && part.endsWith('**')) {
@@ -132,6 +144,25 @@ export default function PlatformHub({
   const [walletMessage, setWalletMessage] = useState('');
   const [walletTransferKey, setWalletTransferKey] = useState('');
   const [walletTransferInfo, setWalletTransferInfo] = useState<{ accountNumber: string; bankName: string; amount: number; expiresAt: string | null; reference: string } | null>(null);
+  const [walletTransferNow, setWalletTransferNow] = useState(Date.now());
+  useEffect(() => {
+    if (!walletTransferInfo?.expiresAt) return;
+    const expiresAtMs = new Date(walletTransferInfo.expiresAt).getTime();
+    if (!Number.isFinite(expiresAtMs)) return;
+    const updateCountdown = () => {
+      const now = Date.now();
+      setWalletTransferNow(now);
+      if (now >= expiresAtMs) {
+        setWalletTransferInfo(null);
+        setWalletTransferKey('');
+        setWalletMessage('These bank-transfer details have expired. Request fresh details before making a transfer.');
+      }
+    };
+    updateCountdown();
+    const timer = window.setInterval(updateCountdown, 1000);
+    return () => window.clearInterval(timer);
+  }, [walletTransferInfo?.expiresAt]);
+  const walletTransferCountdown = formatWalletTransferCountdown(walletTransferInfo?.expiresAt ?? null, walletTransferNow);
   const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerPassword, setCustomerPassword] = useState('');
@@ -806,7 +837,13 @@ export default function PlatformHub({
                   <p>Bank: <b>{walletTransferInfo.bankName}</b></p>
                   <p>Account number: <b>{walletTransferInfo.accountNumber}</b></p>
                   <p>Transfer exactly: <b>₦{walletTransferInfo.amount.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
-                  {walletTransferInfo.expiresAt ? <p>Expires: <b>{new Date(walletTransferInfo.expiresAt).toLocaleString('en-NG')}</b></p> : null}
+                  {walletTransferInfo.expiresAt ? (
+                    <div role="timer" aria-live="off" style={{ margin: '12px 0', padding: '10px 12px', borderRadius: 10, background: walletTransferCountdown === 'Expired' ? '#fff0f0' : '#eef8f1', color: walletTransferCountdown === 'Expired' ? '#9b1c1c' : '#14532d' }}>
+                      <span style={{ display: 'block', fontSize: 13, fontWeight: 600 }}>Time remaining</span>
+                      <strong style={{ fontSize: 24, fontVariantNumeric: 'tabular-nums' }}>{walletTransferCountdown ?? 'Checking expiry…'}</strong>
+                      <small style={{ display: 'block', marginTop: 4 }}>Expires: {new Date(walletTransferInfo.expiresAt).toLocaleString('en-NG')}</small>
+                    </div>
+                  ) : <p><b>Expiry time was not supplied by the bank. Confirm validity before transferring.</b></p>}
                   <p>Reference: <b>{walletTransferInfo.reference}</b></p>
                   <small>Do not transfer after expiry. Your wallet balance updates only after verified confirmation; bank transfers may take a few minutes.</small>
                 </div>
