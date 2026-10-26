@@ -3050,12 +3050,13 @@ function App() {
         <section className="section jamb-catalogue-section" id="jamb-services">
           <div className="section-head">
             <div className="jamb-section-heading">
-              <svg className="jamb-section-logo" viewBox="0 0 96 48" role="img" aria-label="JAMB logo" xmlns="http://www.w3.org/2000/svg">
-  <rect x="1" y="1" width="94" height="46" rx="7" fill="#fff" stroke="#d7dee7" strokeWidth="2"/>
-  <path d="M8 8h80v7H8z" fill="#c62828"/>
-  <path d="M8 33h80v7H8z" fill="#174a8b"/>
-  <text x="48" y="29" textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize="22" fontWeight="800" letterSpacing="1" fill="#173b70">JAMB</text>
-</svg>
+              <img
+                className="jamb-section-logo"
+                src="https://centres.jamb.gov.ng/assets/images/icon/jamblogo.png"
+                alt="Official Joint Admissions and Matriculation Board (JAMB) logo"
+                loading="eager"
+                decoding="async"
+              />
               <div>
                 <span className="kicker">EDUKEN SERVICE PORTAL</span>
                 <h2>JAMB Services</h2>
@@ -3080,12 +3081,13 @@ function App() {
                   </div>
                   <div className="jamb-service-card__title-row">
                     <span className="jamb-service-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-                    <svg className="jamb-service-card__logo" viewBox="0 0 96 48" role="img" aria-label="JAMB logo" xmlns="http://www.w3.org/2000/svg">
-  <rect x="1" y="1" width="94" height="46" rx="7" fill="#fff" stroke="#d7dee7" strokeWidth="2"/>
-  <path d="M8 8h80v7H8z" fill="#c62828"/>
-  <path d="M8 33h80v7H8z" fill="#174a8b"/>
-  <text x="48" y="29" textAnchor="middle" fontFamily="Arial,Helvetica,sans-serif" fontSize="22" fontWeight="800" letterSpacing="1" fill="#173b70">JAMB</text>
-</svg>
+                    <img
+                className="jamb-service-card__logo"
+                src="https://centres.jamb.gov.ng/assets/images/icon/jamblogo.png"
+                alt="Official Joint Admissions and Matriculation Board (JAMB) logo"
+                loading="lazy"
+                decoding="async"
+              />
                     <h3>{service.name}</h3>
                   </div>
                   {service.description ? <p className="jamb-service-card__description">{service.description}</p> : null}
