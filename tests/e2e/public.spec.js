@@ -450,8 +450,8 @@ test('JAMB catalogue setup warning waits for a successful content load', async (
 test('JAMB services section displays a compact official JAMB logo', async ({ page }) => {
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const logo = page.locator('.jamb-section-logo');
-  await expect(logo).toHaveAttribute('alt', 'Joint Admissions and Matriculation Board (JAMB) logo');
-  await expect(logo).toHaveAttribute('src', 'https://www.jamb.gov.ng/assets/layouts/layout3/img/banner.png');
+  await expect(logo).toHaveAttribute('alt', 'Official Joint Admissions and Matriculation Board (JAMB) logo');
+  await expect(logo).toHaveAttribute('src', 'https://centres.jamb.gov.ng/assets/images/icon/jamblogo.png');
   const logoWidth = await logo.evaluate(element => Number.parseFloat(getComputedStyle(element).width));
   expect(logoWidth, 'JAMB logo should be compact rather than a large banner').toBeGreaterThanOrEqual(50);
   expect(logoWidth, 'JAMB logo should not dominate the section heading').toBeLessThanOrEqual(80);
