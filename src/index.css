@@ -2051,22 +2051,23 @@ footer {
 .jamb-section-heading {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   min-width: 0;
 }
 .jamb-section-logo {
   display: block;
-  width: clamp(190px, 25vw, 280px);
-  height: clamp(38px, 6vw, 78px);
-  max-height: 78px;
+  width: 68px;
+  height: 48px;
+  max-width: 68px;
+  max-height: 48px;
   object-fit: contain;
-  object-position: left center;
-  flex: 0 1 auto;
+  object-position: center;
+  flex: 0 0 68px;
 }
 .jamb-section-heading > div { min-width: 0; }
 @media (max-width: 560px) {
-  .jamb-section-heading { gap: 11px; flex-wrap: wrap; }
-  .jamb-section-logo { width: clamp(165px, 48vw, 220px); height: 52px; max-height: 58px; }
+  .jamb-section-heading { gap: 10px; flex-wrap: nowrap; }
+  .jamb-section-logo { width: 56px; height: 44px; max-width: 56px; max-height: 44px; flex-basis: 56px; }
 }
 .jamb-service-grid {
   display: grid;
