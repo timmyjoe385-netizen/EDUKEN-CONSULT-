@@ -143,7 +143,7 @@ export default function PlatformHub({
   const [walletAction, setWalletAction] = useState(false);
   const [walletMessage, setWalletMessage] = useState('');
   const [walletTransferKey, setWalletTransferKey] = useState('');
-  const [walletTransferInfo, setWalletTransferInfo] = useState<{ accountNumber: string; bankName: string; amount: number; expiresAt: string | null; reference: string } | null>(null);
+  const [walletTransferInfo, setWalletTransferInfo] = useState<{ accountNumber: string; bankName: string; accountName: string | null; amount: number; expiresAt: string | null; reference: string } | null>(null);
   const [walletTransferNow, setWalletTransferNow] = useState(Date.now());
   useEffect(() => {
     if (!walletTransferInfo?.expiresAt) return;
@@ -270,7 +270,7 @@ export default function PlatformHub({
       if (!/^\d{8,20}$/.test(accountNumber) || !bankName || !Number.isFinite(transferAmount) || transferAmount <= 0 || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) {
         throw new Error('Bank-transfer details could not be confirmed. Do not transfer; contact EDUKEN support.');
       }
-      setWalletTransferInfo({ accountNumber, bankName, amount: transferAmount, expiresAt: typeof account.expiresAt === 'string' ? account.expiresAt : null, reference });
+      setWalletTransferInfo({ accountNumber, bankName, accountName: typeof account.accountName === 'string' && account.accountName.trim() ? account.accountName.trim() : null, amount: transferAmount, expiresAt: typeof account.expiresAt === 'string' ? account.expiresAt : null, reference });
       try { window.sessionStorage.setItem('eduken_pending_wallet_deposit_reference', reference); } catch { /* account details remain visible for this session */ }
       setWalletMessage('Transfer the exact amount shown below before the account expires. Your wallet is credited only after Flutterwave confirms payment.');
     } catch (error) {
@@ -835,6 +835,7 @@ export default function PlatformHub({
                 <div className="platform-wide" style={{ marginTop: 12, padding: 14, border: '1px solid #cbded2', borderRadius: 12 }}>
                   <strong>Flutterwave bank transfer</strong>
                   <p>Bank: <b>{walletTransferInfo.bankName}</b></p>
+                  <p>Account name: <b>{walletTransferInfo.accountName || 'Not supplied by Flutterwave — confirm the beneficiary name in your banking app before transferring.'}</b></p>
                   <p>Account number: <b>{walletTransferInfo.accountNumber}</b></p>
                   <p>Transfer exactly: <b>₦{walletTransferInfo.amount.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
                   {walletTransferInfo.expiresAt ? (
