@@ -94,7 +94,7 @@ export const JAMB_SERVICE_TEMPLATES = [
     legacyNames: ['JAMB Profile Code Support'],
     category: 'JAMB Services',
     description: 'Request help retrieving your JAMB profile code using the official process.',
-    requirements: 'JAMB registration number OR the phone number used for JAMB registration; JAMB year (BuyCard lists 2021–2026). Never submit your NIN, OTP or password.',
+    requirements: 'JAMB registration number OR the phone number used for JAMB registration; JAMB year (2021–2026). Never submit your NIN, OTP or password.',
     price: 500,
     is_available: true,
     is_catalog_item: true,
@@ -104,7 +104,7 @@ export const JAMB_SERVICE_TEMPLATES = [
     legacyNames: ['JAMB Registration Number Recovery Guidance'],
     category: 'JAMB Services',
     description: 'Request help retrieving your JAMB registration number using the official process.',
-    requirements: 'JAMB profile code OR the phone number used for registration; JAMB year (BuyCard lists 2017–2026). Never submit your NIN, OTP or password.',
+    requirements: 'JAMB profile code OR the phone number used for registration; JAMB year (2017–2026). Never submit your NIN, OTP or password.',
     price: 500,
     is_available: true,
     is_catalog_item: true,
@@ -158,4 +158,17 @@ export function jambServiceFieldsFor(service) {
     { name: 'jambYear', label: 'JAMB year (2017–2026)', options: yearOptions(2017, 2026) },
   ];
   return [];
+}
+
+// Prefer current, user-facing wording for these two services even when an older
+// database row still contains legacy provider-specific instructions.
+export function jambServicePublicRequirements(service) {
+  const name = String(service?.name || '').trim().toLowerCase();
+  if (name.includes('profile code retrieval')) {
+    return 'JAMB registration number OR the phone number used for JAMB registration; JAMB year (2021–2026). Never submit your NIN, OTP or password.';
+  }
+  if (name.includes('registration number retrieval')) {
+    return 'JAMB profile code OR the phone number used for registration; JAMB year (2017–2026). Never submit your NIN, OTP or password.';
+  }
+  return String(service?.requirements || '').replace(/\s*\(?BuyCard lists?\s+\d{4}[–-]\d{4}\)?/gi, '').trim();
 }

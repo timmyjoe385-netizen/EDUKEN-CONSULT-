@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { analyticsApi, api, auth, isFlutterwaveLiveUiEnabled, usesIsolatedTestBackend } from './lib/api';
+import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
@@ -28,7 +28,7 @@ import {
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
 import PaymentsAdmin from './PaymentsAdmin';
-import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability } from './lib/jamb-service-catalogue.mjs';
+import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
 const channel = 'https://whatsapp.com/channel/0029VbCwMut3WHTfyxih1U0g';
@@ -122,13 +122,16 @@ function App() {
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
+  const [uploadingDeliverableFor, setUploadingDeliverableFor] = useState<string | null>(null);
+  const [deliverableAdminMessage, setDeliverableAdminMessage] = useState('');
   const [selectedService, setSelectedService] = useState<Item | null>(null);
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
+  const [customerSignInRequest, setCustomerSignInRequest] = useState(0);
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
-  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>(() => (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
+  const [paymentProvider, setPaymentProvider] = useState<'paystack' | 'flutterwave'>('flutterwave');
   const [paymentSubmitting, setPaymentSubmitting] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState('');
   const [addingServiceTemplates, setAddingServiceTemplates] = useState(false);
@@ -499,11 +502,11 @@ function App() {
     if (saved && typeof saved === 'object' && typeof saved.checkoutToken === 'string' && typeof saved.requestId === 'string') {
       setCheckoutSession(saved);
       setPaymentEmail(typeof saved.email === 'string' ? saved.email : '');
-      setPaymentProvider((usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack');
+      setPaymentProvider('flutterwave');
     }
     const params = new URLSearchParams(window.location.search);
     const returnedReference = params.get('reference') || params.get('trxref') || params.get('tx_ref') || '';
-    const returnedProvider = (usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) && (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
+    const returnedProvider = (params.get('provider') === 'flutterwave' || saved?.paymentProvider === 'flutterwave') ? 'flutterwave' : 'paystack';
     const returnedTransactionId = params.get('transaction_id') || '';
     if (returnedReference && params.get('wallet') === '1') {
       const pendingWalletDepositKey = 'eduken_pending_wallet_deposit_reference';
@@ -515,7 +518,7 @@ function App() {
         setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
         return;
       }
-      setPaymentMessage('Wallet deposit returned from Paystack. Verifying securely…');
+      setPaymentMessage('Wallet deposit returned. Verifying securely…');
       void api.post('/api/wallet/deposit/verify', { reference: returnedReference })
         .then((result: any) => {
           if (result.data?.paid) {
@@ -524,7 +527,7 @@ function App() {
             window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else if (result.data?.status === 'Failed') {
             try { window.sessionStorage.removeItem(pendingWalletDepositKey); } catch { /* keep failure visible */ }
-            setPaymentMessage('Paystack did not complete this deposit. No wallet credit was added. You can start a new deposit attempt from your wallet.');
+            setPaymentMessage('The payment provider did not complete this deposit. No wallet credit was added. You can start a new deposit attempt from your wallet.');
             window.dispatchEvent(new Event('eduken-wallet-updated'));
           } else {
             setPaymentMessage('The deposit is not confirmed yet. Do not pay again immediately. Its reference is saved so your wallet can check again: ' + returnedReference);
@@ -551,7 +554,7 @@ function App() {
             });
           return;
         }
-        setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely with Paystack…');
+        setPaymentMessage('Checkout session not found in this browser. Checking the payment reference securely…');
         void api.post('/api/payments/recover-guest', { reference: returnedReference })
           .then((result: any) => {
             if (result.data?.paid) {
@@ -1205,9 +1208,81 @@ function App() {
     }
   };
 
+  const uploadServiceDeliverable = async (e: React.FormEvent<HTMLFormElement>, request: Item) => {
+    e.preventDefault();
+    if (uploadingDeliverableFor) return;
+    const formElement = e.currentTarget;
+    const fd = new FormData(formElement);
+    const file = fd.get('deliverableFile');
+    const title = String(fd.get('deliverableTitle') || '').trim();
+    const description = String(fd.get('deliverableDescription') || '').trim();
+    const publish = fd.get('publishDeliverable') === 'on';
+    if (!(file instanceof File) || !file.size) {
+      setDeliverableAdminMessage('Choose a document to upload.');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      setDeliverableAdminMessage('The document must be 15 MB or smaller.');
+      return;
+    }
+    if (!title || title.length > 160 || description.length > 3000) {
+      setDeliverableAdminMessage('Enter a title (up to 160 characters) and a description no longer than 3,000 characters.');
+      return;
+    }
+    setUploadingDeliverableFor(request.id);
+    setDeliverableAdminMessage('');
+    try {
+      const prepared = await api.post('/api/admin/service-deliverables/upload-url', {
+        serviceRequestId: request.id,
+        title,
+        description,
+        filename: file.name,
+        mimeType: file.type,
+        fileSizeBytes: file.size,
+      });
+      const uploadUrl = String(prepared.data?.uploadUrl || '');
+      const storagePath = String(prepared.data?.storagePath || '');
+      if (!uploadUrl.startsWith('https://') || !storagePath) {
+        throw new Error('The secure upload service did not return a valid upload URL.');
+      }
+      const uploaded = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: { 'Content-Type': file.type, 'x-upsert': 'false' },
+        body: file,
+      });
+      if (!uploaded.ok) {
+        throw new Error('The file upload failed. Check the file type and try again; no document was published.');
+      }
+      await api.post('/api/admin/service-deliverables', {
+        serviceRequestId: request.id,
+        storagePath,
+        title,
+        description,
+        originalFilename: file.name,
+        mimeType: file.type,
+        fileSizeBytes: file.size,
+        publish,
+      });
+      formElement.reset();
+      setDeliverableAdminMessage(publish
+        ? 'Document uploaded and published to the student account.'
+        : 'Document uploaded as a draft. It is not visible to the student yet.');
+      await loadAdmin('service-requests');
+    } catch (error) {
+      setDeliverableAdminMessage(error instanceof Error ? error.message : 'Could not upload this document.');
+    } finally {
+      setUploadingDeliverableFor(null);
+    }
+  };
+
   const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedService || serviceSubmitting) return;
+    if (!auth.isSignedIn()) {
+      setCustomerSignInRequest(current => current + 1);
+      setToast('Please sign in or create a student account before submitting this service request. Your details will remain in the form.');
+      return;
+    }
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
     const requestedQuantity = isJambCatalogueService(selectedService) ? Math.max(1, Math.min(100, Math.floor(Number(fd.get('candidateCount') || 1)))) : 1;
@@ -1707,6 +1782,35 @@ function App() {
                       {item.status === 'Paid' && <option value="Paid" disabled>Paid (payment confirmed)</option>}
                       <option>New Requests</option><option>Contacted</option><option>In Progress</option><option>Completed</option><option>Cancelled</option>
                     </select>
+                    <details className="admin-deliverable-upload">
+                      <summary>Upload result / document</summary>
+                      {item.user_id ? (
+                        <form className="service-request-form" onSubmit={e => void uploadServiceDeliverable(e, item)}>
+                          <label className="service-request-field">
+                            <span>Document title</span>
+                            <input name="deliverableTitle" maxLength={160} required placeholder="e.g. Admission result letter" />
+                          </label>
+                          <label className="service-request-field">
+                            <span>Short description (optional)</span>
+                            <textarea name="deliverableDescription" maxLength={3000} rows={2} placeholder="Tell the student what this file contains." />
+                          </label>
+                          <label className="service-request-field">
+                            <span>File (PDF, image, TXT, DOCX or XLSX; max 15 MB)</span>
+                            <input name="deliverableFile" type="file" required accept=".pdf,.jpg,.jpeg,.png,.webp,.txt,.docx,.xlsx,application/pdf,image/jpeg,image/png,image/webp,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                          </label>
+                          <label className="admin-deliverable-publish">
+                            <input type="checkbox" name="publishDeliverable" defaultChecked />
+                            Publish immediately to the student's account
+                          </label>
+                          <button className="primary" type="submit" disabled={uploadingDeliverableFor === item.id}>
+                            {uploadingDeliverableFor === item.id ? 'Uploading securely…' : 'Upload document'}
+                          </button>
+                          {deliverableAdminMessage ? <p role="status" aria-live="polite">{deliverableAdminMessage}</p> : null}
+                        </form>
+                      ) : (
+                        <p>This request is not linked to a signed-in student account, so secure account delivery is unavailable. Do not link it using email alone.</p>
+                      )}
+                    </details>
                   </article>
                 ))}
               </div>
@@ -2334,7 +2438,7 @@ function App() {
                         </div>
                         <p className="payment-provider-warning" role="status"><strong>TEST CHECKOUT ONLY</strong><span>This isolated preview cannot accept real payments or fulfil services.</span></p>
                       </div>
-                    ) : isFlutterwaveLiveUiEnabled ? (
+                    ) : (
                       <div className="service-request-field">
                         <span id="make-payments-provider-label">Choose a payment method</span>
                         <div className="payment-provider-picker" role="group" aria-labelledby="make-payments-provider-label">
@@ -2348,17 +2452,6 @@ function App() {
                           </button>
                         </div>
                         <p className="payment-provider-warning" role="status"><strong>PAYSTACK TEMPORARILY UNAVAILABLE</strong><span>Use Flutterwave instead. Never retry or send money through Paystack while this notice is displayed.</span></p>
-                      </div>
-                    ) : (
-                      <div className="service-request-field">
-                        <span>Payment method</span>
-                        <div className="payment-provider-picker" role="group" aria-label="Available payment method">
-                          <div className="payment-provider-option payment-provider-unavailable" aria-disabled="true">
-                            <strong>Paystack — TEMPORARILY UNAVAILABLE</strong>
-                            <small>Paystack is awaiting account approval. Please do not attempt payment through Paystack until EDUKEN announces that it is available.</small>
-                          </div>
-                        </div>
-                        <p className="payment-provider-warning" role="status"><strong>NO PAYMENT AVAILABLE THROUGH PAYSTACK</strong><span>Return later or contact EDUKEN CONSULT for an update. Do not send money through Paystack.</span></p>
                       </div>
                     )}
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
@@ -2591,6 +2684,7 @@ function App() {
         <PlatformHub
           opportunities={content.opportunities}
           admissions={content.admissions}
+          customerSignInRequest={customerSignInRequest}
         />
 
         {featuredOpps.length > 0 && (
@@ -2955,17 +3049,27 @@ function App() {
 
         <section className="section jamb-catalogue-section" id="jamb-services">
           <div className="section-head">
-            <div>
-              <span className="kicker">EDUKEN SERVICE PORTAL</span>
-              <h2>JAMB Services</h2>
+            <div className="jamb-section-heading">
+              <img
+                className="jamb-section-logo"
+                src="https://centres.jamb.gov.ng/assets/images/icon/jamblogo.png"
+                alt="Official Joint Admissions and Matriculation Board (JAMB) logo"
+                loading="eager"
+                decoding="async"
+              />
+              <div>
+                <span className="kicker">EDUKEN SERVICE PORTAL</span>
+                <h2>JAMB Services</h2>
+              </div>
             </div>
-            <p>Choose a service, review its requirements and check availability before requesting assistance. Prices and availability are managed by EDUKEN in the admin dashboard.</p>
+            <p>Choose a service, review its requirements and check availability before requesting assistance.</p>
           </div>
           <div className="jamb-service-grid">
             {content.services.filter(isJambCatalogueService).map((service, index) => {
               const price = Number(service.price);
               const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
               const available = service.is_available !== false;
+              const publicRequirements = jambServicePublicRequirements(service);
               return (
                 <article className={`jamb-service-card ${available ? 'is-available' : 'is-unavailable'}`} key={service.id}>
                   <div className="jamb-service-card__topline">
@@ -2977,13 +3081,20 @@ function App() {
                   </div>
                   <div className="jamb-service-card__title-row">
                     <span className="jamb-service-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <img
+                className="jamb-service-card__logo"
+                src="https://centres.jamb.gov.ng/assets/images/icon/jamblogo.png"
+                alt="Official Joint Admissions and Matriculation Board (JAMB) logo"
+                loading="lazy"
+                decoding="async"
+              />
                     <h3>{service.name}</h3>
                   </div>
                   {service.description ? <p className="jamb-service-card__description">{service.description}</p> : null}
-                  {service.requirements ? (
+                  {publicRequirements ? (
                     <div className="jamb-service-requirements">
                       <div className="jamb-service-requirements__label"><ShieldCheck size={16} strokeWidth={2.5} /> Before you request</div>
-                      <p>{service.requirements}</p>
+                      <p>{publicRequirements}</p>
                     </div>
                   ) : null}
                   <div className="jamb-service-card__footer">
@@ -3016,21 +3127,24 @@ function App() {
               opportunities, get structured guidance without the noise.
             </p>
           </div>
-          <div className="service-list">
-            {(content.services.some(s => s.is_catalog_item) ? content.services.filter(s => !s.is_catalog_item) : content.services.length ? content.services : [
-              { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
-              { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
-              { id: 'fallback-jamb', name: 'JAMB Guidance', category: 'JAMB Services', description: 'Ask about JAMB-related guidance and available support.', price: null },
-              { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
-              { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
-            ]).map((s, i) => (
-              <article className="service-row" key={s.id || s.name} style={{ alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
-                <span>{String(i + 1).padStart(2, '0')}</span>
-                <div style={{ flex: '1 1 220px', minWidth: 0 }}>
-                  <b style={{ display: 'block', marginBottom: 6 }}>{s.name}</b>
-                  {s.category && <small style={{ display: 'block', opacity: 0.75, marginBottom: 6 }}>{s.category}</small>}
-                  {s.description && <p style={{ margin: '0 0 8px', lineHeight: 1.55 }}>{s.description}</p>}
-                  <strong style={{ display: 'block', marginBottom: 8 }}>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
+          <div className="general-service-grid">
+            {(content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).length
+              ? content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s))
+              : [
+                { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
+                { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
+                { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
+                { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
+              ]).map((s, i) => (
+              <article className="general-service-card" key={s.id || s.name}>
+                <div className="general-service-card__topline">
+                  <span className="general-service-card__number">{String(i + 1).padStart(2, '0')}</span>
+                  {s.category ? <span className="general-service-card__category">{s.category}</span> : null}
+                </div>
+                <h3>{s.name}</h3>
+                {s.description ? <p>{s.description}</p> : null}
+                <div className="general-service-card__footer">
+                  <strong>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
                   <button type="button" className="primary" onClick={() => setSelectedService(s)}>Request this service <ArrowRight size={15} /></button>
                 </div>
               </article>
