@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { api, auth, notifications } from './lib/api';
+import { FileText, Download, RefreshCw } from 'lucide-react';
 import {
   Bell,
   Bookmark,
@@ -98,9 +99,11 @@ function AiFormattedAnswer({ text }: { text: string }) {
 export default function PlatformHub({
   opportunities,
   admissions,
+  customerSignInRequest = 0,
 }: {
   opportunities: Item[];
   admissions: Item[];
+  customerSignInRequest?: number;
 }) {
   const [user, setUser] = useState<any>(null);
   const [saved, setSaved] = useState<Item[]>([]);
@@ -117,6 +120,9 @@ export default function PlatformHub({
   const [aiSources, setAiSources] = useState<{ title: string; url: string; description?: string }[]>([]);
   const [aiResearchStatus, setAiResearchStatus] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
+  const [deliverables, setDeliverables] = useState<Item[]>([]);
+  const [deliverablesLoading, setDeliverablesLoading] = useState(false);
+  const [deliverablesMessage, setDeliverablesMessage] = useState('');
   const [wallet, setWallet] = useState<any>(null);
   const [walletTransactions, setWalletTransactions] = useState<Item[]>([]);
   const [walletLoading, setWalletLoading] = useState(false);
@@ -131,6 +137,7 @@ export default function PlatformHub({
   const [customerPassword, setCustomerPassword] = useState('');
   const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
+  const [customerAuthMode, setCustomerAuthMode] = useState<'signin' | 'signup'>('signin');
 
   const refreshWallet = async () => {
     if (!auth.isSignedIn()) {
@@ -210,7 +217,6 @@ export default function PlatformHub({
     }
   };
 
-
   const startWalletTransfer = async () => {
     if (walletAction) return;
     const amount = Number(walletAmount);
@@ -240,6 +246,35 @@ export default function PlatformHub({
       setWalletMessage(error instanceof Error ? error.message : 'Could not prepare bank-transfer details.');
     } finally {
       setWalletAction(false);
+    }
+  };
+
+  const refreshDeliverables = async () => {
+    if (!auth.isSignedIn()) {
+      setDeliverables([]);
+      setDeliverablesMessage('Sign in to view documents EDUKEN has published for your service requests.');
+      return;
+    }
+    setDeliverablesLoading(true);
+    try {
+      const result = await api.get('/api/service-deliverables');
+      setDeliverables(result.data.items || []);
+      setDeliverablesMessage((result.data.items || []).length ? '' : 'No documents have been published to your account yet.');
+    } catch (error) {
+      setDeliverablesMessage(error instanceof Error ? error.message : 'Documents are temporarily unavailable.');
+    } finally {
+      setDeliverablesLoading(false);
+    }
+  };
+
+  const downloadDeliverable = async (item: Item) => {
+    try {
+      const result = await api.post('/api/service-deliverables/' + encodeURIComponent(item.id) + '/download', {});
+      const downloadUrl = String(result.data?.url || '');
+      if (!downloadUrl.startsWith('https://')) throw new Error('A secure download link was not returned.');
+      window.location.assign(downloadUrl);
+    } catch (error) {
+      setDeliverablesMessage(error instanceof Error ? error.message : 'Could not prepare this download.');
     }
   };
 
@@ -276,7 +311,8 @@ export default function PlatformHub({
 
   useEffect(() => {
     void refresh();
-    const onAuthChanged = () => { void refresh(); };
+    void refreshDeliverables();
+    const onAuthChanged = () => { void refresh(); void refreshDeliverables(); };
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
@@ -287,6 +323,14 @@ export default function PlatformHub({
       unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (customerSignInRequest > 0) {
+      setCustomerAuthMode('signin');
+      setCustomerSignInMessage('');
+      setCustomerSignInOpen(true);
+    }
+  }, [customerSignInRequest]);
 
   const signIn = async () => {
     try {
@@ -311,6 +355,30 @@ export default function PlatformHub({
       await refreshWallet();
     } catch (error) {
       setCustomerSignInMessage(error instanceof Error ? error.message : 'Customer sign-in failed. Please try again.');
+    } finally {
+      setCustomerSignInLoading(false);
+    }
+  };
+
+  const signUpCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (customerSignInLoading) return;
+    setCustomerSignInLoading(true);
+    setCustomerSignInMessage('');
+    try {
+      const result = await auth.signUpWithPassword(customerEmail, customerPassword);
+      setCustomerPassword('');
+      if (result.session) {
+        setCustomerSignInOpen(false);
+        setCustomerAuthMode('signin');
+        await refresh();
+        await refreshWallet();
+      } else {
+        setCustomerSignInMessage('Account created. Check your email to confirm your account, then return here to sign in before submitting the service request.');
+        setCustomerAuthMode('signin');
+      }
+    } catch (error) {
+      setCustomerSignInMessage(error instanceof Error ? error.message : 'Account creation failed. Please try again.');
     } finally {
       setCustomerSignInLoading(false);
     }
@@ -555,6 +623,39 @@ export default function PlatformHub({
         </div>
       </div>
 
+      <div className="platform-wide student-deliverables" aria-labelledby="student-deliverables-title">
+        <div className="student-deliverables-heading">
+          <span className="kicker"><FileText size={15} /> MY SERVICE DOCUMENTS</span>
+          <h3 id="student-deliverables-title">Results and deliverables</h3>
+          <p>Download documents that EDUKEN has securely published to your account. Only your own published files are shown.</p>
+        </div>
+        <div className="student-deliverables-actions">
+          <button className="secondary" type="button" onClick={() => void refreshDeliverables()} disabled={deliverablesLoading}>
+            <RefreshCw size={15} /> {deliverablesLoading ? 'Refreshing…' : 'Refresh'}
+          </button>
+        </div>
+        {deliverablesMessage ? <p role="status" aria-live="polite">{deliverablesMessage}</p> : null}
+        {deliverablesLoading && !deliverables.length ? <p>Loading your documents…</p> : null}
+        {deliverables.map(item => (
+          <article className="student-deliverable-row" key={item.id}>
+            <div className="student-deliverable-icon"><FileText size={20} /></div>
+            <div className="student-deliverable-copy">
+              <strong>{item.title}</strong>
+              {item.description ? <p>{item.description}</p> : null}
+              <small>
+                {item.service_requests?.reference_number ? 'Request ' + item.service_requests.reference_number : 'Service request'}
+                {item.service_requests?.services?.name ? ' · ' + item.service_requests.services.name : ''}
+                {item.published_at ? ' · Published ' + new Date(item.published_at).toLocaleDateString('en-NG') : ''}
+              </small>
+              <small>{item.original_filename} · {Math.max(1, Math.ceil(Number(item.file_size_bytes || 0) / 1024))} KB</small>
+            </div>
+            <button className="secondary" type="button" onClick={() => void downloadDeliverable(item)} aria-label={'Download ' + item.title}>
+              <Download size={15} /> Download
+            </button>
+          </article>
+        ))}
+      </div>
+
       <div className="platform-wide finder-box">
         <div>
           <span className="kicker">🎓 ADMISSION FINDER</span>
@@ -653,8 +754,8 @@ export default function PlatformHub({
           <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
             <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
             <span className="kicker">CUSTOMER ACCOUNT</span>
-            <h2 id="customer-signin-title">Sign in to EDUKEN Wallet</h2>
-            <p>Sign in securely to access your wallet and eligible EDUKEN services.</p>
+            <h2 id="customer-signin-title">{customerAuthMode === 'signup' ? 'Create your EDUKEN account' : 'Sign in to EDUKEN'}</h2>
+            <p>Use your student account to submit service requests and receive your documents securely.</p>
             <button
               className="customer-google-signin"
               type="button"
@@ -665,17 +766,18 @@ export default function PlatformHub({
               Continue with Google
             </button>
             <div className="customer-signin-divider"><span>or use email</span></div>
-            <form className="service-request-form" onSubmit={signInCustomer}>
+            <form className="service-request-form" onSubmit={customerAuthMode === 'signup' ? signUpCustomer : signInCustomer}>
               <label className="service-request-field" htmlFor="customer-signin-email">
                 <span>Email address</span>
                 <input id="customer-signin-email" type="email" autoComplete="username" required value={customerEmail} onChange={event => setCustomerEmail(event.target.value)} disabled={customerSignInLoading} />
               </label>
               <label className="service-request-field" htmlFor="customer-signin-password">
-                <span>Password</span>
-                <input id="customer-signin-password" type="password" autoComplete="current-password" required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
+                <span>Password {customerAuthMode === 'signup' ? '(at least 8 characters)' : ''}</span>
+                <input id="customer-signin-password" type="password" autoComplete={customerAuthMode === 'signup' ? 'new-password' : 'current-password'} minLength={customerAuthMode === 'signup' ? 8 : undefined} required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
               </label>
               {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
-              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? 'Signing in…' : 'Sign in securely'}</button>
+              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? (customerAuthMode === 'signup' ? 'Creating account…' : 'Signing in…') : (customerAuthMode === 'signup' ? 'Create account' : 'Sign in securely')}</button>
+              <button className="secondary" type="button" disabled={customerSignInLoading} onClick={() => { setCustomerAuthMode(customerAuthMode === 'signup' ? 'signin' : 'signup'); setCustomerSignInMessage(''); setCustomerPassword(''); }}>{customerAuthMode === 'signup' ? 'Already have an account? Sign in' : 'New here? Create an account'}</button>
             </form>
           </section>
         </div>
@@ -694,7 +796,7 @@ export default function PlatformHub({
                 <span>Add funds (NGN)</span>
                 <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required disabled={walletAction || Boolean(walletDepositKey) || Boolean(walletTransferKey)} value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
               </label>
-              <p className="make-payments-security">Wallet deposits are credited only after Flutterwave confirms payment. Never share your PIN or banking password.</p>
+              <p className="make-payments-security">Deposits are credited only after EDUKEN verifies a successful Flutterwave payment. Do not share your card PIN or banking password.</p>
               {walletDepositKey ? <small>Keep this checkout attempt unchanged until payment is confirmed. If initialization is uncertain, contact support before retrying.</small> : null}
               {walletTransferKey && !walletTransferInfo ? <small>Keep this bank-transfer attempt unchanged while details are being checked. Do not start another attempt.</small> : null}
               {walletMessage ? <p className="make-payments-message" role="status" aria-live="polite">{walletMessage}</p> : null}
