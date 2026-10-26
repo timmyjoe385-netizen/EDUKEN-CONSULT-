@@ -5,10 +5,11 @@ import { parseFlutterwaveVirtualAccount } from "../supabase/functions/eduken-api
 test("accepts a valid dynamic NGN virtual account and transfer amount", () => {
   assert.deepEqual(parseFlutterwaveVirtualAccount({
     status: "success",
-    data: { response_code: "02", account_number: "9519802749", bank_name: "Flutterwave MFB", amount: "102.00", expiry_date: "2026-10-25 10:00:00" },
+    data: { response_code: "02", account_number: "9519802749", bank_name: "Flutterwave MFB", account_name: "EDUKEN CONSULT", amount: "102.00", expiry_date: "2026-10-25 10:00:00" },
   }), {
     accountNumber: "9519802749",
     bankName: "Flutterwave MFB",
+    accountName: "EDUKEN CONSULT",
     transferAmount: 102,
     expiresAt: new Date("2026-10-25 10:00:00").toISOString(),
   });
