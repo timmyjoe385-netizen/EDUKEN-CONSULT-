@@ -3217,3 +3217,17 @@ html[data-theme="dark"] .make-payments-success {
 html[data-theme="dark"] .admin-deliverable-upload summary {
   color: var(--text, #e8f0f8);
 }
+
+
+/* Keep the WhatsApp CTA consistent with the dark appearance palette. */
+html[data-theme="dark"] .whatsapp-cta {
+  background-color: #0d2038;
+  color: #f1f7ff;
+  border-color: #31516d;
+}
+html[data-theme="dark"] .whatsapp-cta h2 {
+  color: #f1f7ff;
+}
+html[data-theme="dark"] .whatsapp-cta p {
+  color: #c5d3e2;
+}
