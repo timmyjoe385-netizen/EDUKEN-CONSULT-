@@ -1752,13 +1752,13 @@ Deno.serve(async (req) => {
       if (!user.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(user.email)) return json({ error: "Your account needs a valid email address before you can fund your wallet." }, 400);
       const idempotencyKey = "flutterwave-transfer:" + clientKey;
       const { data: existing, error: existingError } = await db.from("payments")
-        .select("id,amount,status,payment_reference,payment_type,idempotency_key,payment_provider,flutterwave_account_number,flutterwave_bank_name,flutterwave_account_expires_at,flutterwave_transfer_amount")
+        .select("id,amount,status,payment_reference,payment_type,idempotency_key,payment_provider,flutterwave_account_number,flutterwave_bank_name,flutterwave_account_name,flutterwave_account_expires_at,flutterwave_transfer_amount")
         .eq("user_id", user.id).eq("idempotency_key", idempotencyKey).eq("payment_type", "wallet_deposit").eq("payment_provider", "flutterwave").maybeSingle();
       if (existingError) throw existingError;
       if (existing) {
         if (existing.status === "Paid") return json({ error: "This deposit attempt is already completed.", code: "WALLET_DEPOSIT_ALREADY_PAID" }, 409);
         if (existing.flutterwave_account_number && existing.flutterwave_bank_name && existing.payment_reference && Number(existing.amount) === amount) {
-          return json({ reference: existing.payment_reference, transferAccount: { accountNumber: existing.flutterwave_account_number, bankName: existing.flutterwave_bank_name, amount: Number(existing.flutterwave_transfer_amount || existing.amount), expiresAt: existing.flutterwave_account_expires_at }, provider: "flutterwave", reused: true });
+          return json({ reference: existing.payment_reference, transferAccount: { accountNumber: existing.flutterwave_account_number, bankName: existing.flutterwave_bank_name, accountName: existing.flutterwave_account_name || null, amount: Number(existing.flutterwave_transfer_amount || existing.amount), expiresAt: existing.flutterwave_account_expires_at }, provider: "flutterwave", reused: true });
         }
         return json({ error: "This bank-transfer attempt is still being prepared or needs support. Do not start another attempt.", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN" }, 409);
       }
@@ -1805,12 +1805,12 @@ Deno.serve(async (req) => {
         return json({ error: "Flutterwave could not confirm bank-transfer details. Do not start another deposit; contact support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 502);
       }
       const { data: savedPayment, error: saveError } = await db.from("payments").update({
-        flutterwave_account_number: account.accountNumber, flutterwave_bank_name: account.bankName,
+        flutterwave_account_number: account.accountNumber, flutterwave_bank_name: account.bankName, flutterwave_account_name: account.accountName || null,
         flutterwave_account_expires_at: account.expiresAt, flutterwave_transfer_amount: account.transferAmount,
       }).eq("id", reservation.id).eq("payment_provider", "flutterwave").eq("status", "Pending")
-        .select("id,payment_reference,flutterwave_account_number,flutterwave_bank_name,flutterwave_account_expires_at,flutterwave_transfer_amount").maybeSingle();
+        .select("id,payment_reference,flutterwave_account_number,flutterwave_bank_name,flutterwave_account_name,flutterwave_account_expires_at,flutterwave_transfer_amount").maybeSingle();
       if (saveError || !savedPayment) return json({ error: "Flutterwave created bank details but saving them needs recovery. Do not transfer yet; contact support with reference " + reference + ".", code: "WALLET_DEPOSIT_ATTEMPT_UNCERTAIN", reference }, 503);
-      return json({ reference, provider: "flutterwave", transferAccount: { accountNumber: savedPayment.flutterwave_account_number, bankName: savedPayment.flutterwave_bank_name, amount: Number(savedPayment.flutterwave_transfer_amount || amount), expiresAt: savedPayment.flutterwave_account_expires_at } });
+      return json({ reference, provider: "flutterwave", transferAccount: { accountNumber: savedPayment.flutterwave_account_number, bankName: savedPayment.flutterwave_bank_name, accountName: savedPayment.flutterwave_account_name || null, amount: Number(savedPayment.flutterwave_transfer_amount || amount), expiresAt: savedPayment.flutterwave_account_expires_at } });
     }
 
     if (path === "/api/wallet/deposit/verify" && req.method === "POST") {
