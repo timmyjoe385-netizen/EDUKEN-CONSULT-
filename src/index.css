@@ -2056,16 +2056,17 @@ footer {
 }
 .jamb-section-logo {
   display: block;
-  width: clamp(76px, 11vw, 124px);
+  width: clamp(190px, 25vw, 280px);
+  height: clamp(38px, 6vw, 78px);
   max-height: 78px;
   object-fit: contain;
-  object-position: center;
-  flex: 0 0 auto;
+  object-position: left center;
+  flex: 0 1 auto;
 }
 .jamb-section-heading > div { min-width: 0; }
 @media (max-width: 560px) {
-  .jamb-section-heading { gap: 11px; }
-  .jamb-section-logo { width: 76px; max-height: 58px; }
+  .jamb-section-heading { gap: 11px; flex-wrap: wrap; }
+  .jamb-section-logo { width: clamp(165px, 48vw, 220px); height: 52px; max-height: 58px; }
 }
 .jamb-service-grid {
   display: grid;
