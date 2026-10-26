@@ -3054,8 +3054,11 @@ function App() {
                 className="jamb-section-logo"
                 src="https://www.jamb.gov.ng/assets/layouts/layout3/img/banner.png"
                 alt="Joint Admissions and Matriculation Board (JAMB) logo"
-                loading="lazy"
+                loading="eager"
                 decoding="async"
+                onError={event => {
+                  event.currentTarget.style.display = 'none';
+                }}
               />
               <div>
                 <span className="kicker">EDUKEN SERVICE PORTAL</span>
@@ -3081,6 +3084,16 @@ function App() {
                   </div>
                   <div className="jamb-service-card__title-row">
                     <span className="jamb-service-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                    <img
+                      className="jamb-service-card__logo"
+                      src="https://www.jamb.gov.ng/assets/layouts/layout3/img/banner.png"
+                      alt="JAMB"
+                      loading="lazy"
+                      decoding="async"
+                      onError={event => {
+                        event.currentTarget.style.display = 'none';
+                      }}
+                    />
                     <h3>{service.name}</h3>
                   </div>
                   {service.description ? <p className="jamb-service-card__description">{service.description}</p> : null}
