@@ -130,6 +130,8 @@ export default function PlatformHub({
   const [walletDepositKey, setWalletDepositKey] = useState('');
   const [walletAction, setWalletAction] = useState(false);
   const [walletMessage, setWalletMessage] = useState('');
+  const [walletTransferKey, setWalletTransferKey] = useState('');
+  const [walletTransferInfo, setWalletTransferInfo] = useState<{ accountNumber: string; bankName: string; amount: number; expiresAt: string | null; reference: string } | null>(null);
   const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerPassword, setCustomerPassword] = useState('');
@@ -210,6 +212,38 @@ export default function PlatformHub({
       const message = error instanceof Error ? error.message : 'Could not start the wallet deposit.';
       setWalletMessage(message);
       if (message.includes('You can safely start a new attempt')) setWalletDepositKey('');
+    } finally {
+      setWalletAction(false);
+    }
+  };
+
+  const startWalletTransfer = async () => {
+    if (walletAction) return;
+    const amount = Number(walletAmount);
+    if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
+      setWalletMessage('Enter a whole-naira amount between ₦100 and ₦500,000.');
+      return;
+    }
+    const idempotencyKey = walletTransferKey || ('wallet-transfer:' + crypto.randomUUID());
+    setWalletTransferKey(idempotencyKey);
+    setWalletAction(true);
+    setWalletMessage('Preparing secure bank-transfer details…');
+    setWalletTransferInfo(null);
+    try {
+      const result = await api.post('/api/wallet/deposit/initialize-flutterwave-transfer', { amount, idempotencyKey });
+      const account = result.data?.transferAccount;
+      const accountNumber = String(account?.accountNumber || '');
+      const bankName = String(account?.bankName || '');
+      const transferAmount = Number(account?.amount);
+      const reference = String(result.data?.reference || '');
+      if (!/^\d{8,20}$/.test(accountNumber) || !bankName || !Number.isFinite(transferAmount) || transferAmount <= 0 || !/^EDK-PAY-[A-Z0-9]{18}$/.test(reference)) {
+        throw new Error('Bank-transfer details could not be confirmed. Do not transfer; contact EDUKEN support.');
+      }
+      setWalletTransferInfo({ accountNumber, bankName, amount: transferAmount, expiresAt: typeof account.expiresAt === 'string' ? account.expiresAt : null, reference });
+      try { window.sessionStorage.setItem('eduken_pending_wallet_deposit_reference', reference); } catch { /* account details remain visible for this session */ }
+      setWalletMessage('Transfer the exact amount shown below before the account expires. Your wallet is credited only after Flutterwave confirms payment.');
+    } catch (error) {
+      setWalletMessage(error instanceof Error ? error.message : 'Could not prepare bank-transfer details.');
     } finally {
       setWalletAction(false);
     }
@@ -760,12 +794,27 @@ export default function PlatformHub({
             <form className="service-request-form" onSubmit={startWalletDeposit}>
               <label className="service-request-field" htmlFor="wallet-deposit-amount">
                 <span>Add funds (NGN)</span>
-                <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required disabled={walletAction || Boolean(walletDepositKey)} value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
+                <input id="wallet-deposit-amount" type="number" min="100" max="500000" step="1" required disabled={walletAction || Boolean(walletDepositKey) || Boolean(walletTransferKey)} value={walletAmount} onChange={event => setWalletAmount(event.target.value)} />
               </label>
               <p className="make-payments-security">Deposits are credited only after EDUKEN verifies a successful Flutterwave payment. Do not share your card PIN or banking password.</p>
-              {walletDepositKey ? <small>Keep this deposit attempt unchanged until checkout is confirmed. If initialization is uncertain, contact support before starting another deposit.</small> : null}
+              {walletDepositKey ? <small>Keep this checkout attempt unchanged until payment is confirmed. If initialization is uncertain, contact support before retrying.</small> : null}
+              {walletTransferKey && !walletTransferInfo ? <small>Keep this bank-transfer attempt unchanged while details are being checked. Do not start another attempt.</small> : null}
               {walletMessage ? <p className="make-payments-message" role="status" aria-live="polite">{walletMessage}</p> : null}
-              <button className="primary" type="submit" disabled={walletAction}>{walletAction ? 'Preparing deposit…' : 'Add funds with Flutterwave'}</button>
+              {walletTransferInfo ? (
+                <div className="platform-wide" style={{ marginTop: 12, padding: 14, border: '1px solid #cbded2', borderRadius: 12 }}>
+                  <strong>Flutterwave bank transfer</strong>
+                  <p>Bank: <b>{walletTransferInfo.bankName}</b></p>
+                  <p>Account number: <b>{walletTransferInfo.accountNumber}</b></p>
+                  <p>Transfer exactly: <b>₦{walletTransferInfo.amount.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
+                  {walletTransferInfo.expiresAt ? <p>Expires: <b>{new Date(walletTransferInfo.expiresAt).toLocaleString('en-NG')}</b></p> : null}
+                  <p>Reference: <b>{walletTransferInfo.reference}</b></p>
+                  <small>Do not transfer after expiry. Your wallet balance updates only after verified confirmation; bank transfers may take a few minutes.</small>
+                </div>
+              ) : null}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                <button className="primary" type="submit" disabled={walletAction || Boolean(walletTransferKey)}>{walletAction ? 'Preparing…' : 'Pay with Flutterwave checkout'}</button>
+                <button className="primary" type="button" disabled={walletAction || Boolean(walletDepositKey) || Boolean(walletTransferKey)} onClick={() => void startWalletTransfer()}>{walletAction ? 'Preparing…' : 'Get bank-transfer details'}</button>
+              </div>
             </form>
             <div>
               <h4>Recent transactions</h4>

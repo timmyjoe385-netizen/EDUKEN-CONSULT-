@@ -92,7 +92,7 @@ export function getEmailAlertClientIp(headers) {
 
 export function emailAlertRateLimitPolicy(action) {
   if (action === "subscribe" || action === "consultation" || action === "service-request" ||
-      action === "guest-payment-initialize" || action === "wallet-deposit-initialize") {
+      action === "guest-payment-initialize" || action === "wallet-deposit-initialize" || action === "wallet-transfer-initialize") {
     return Object.freeze({ limit: 5, windowSeconds: 900 });
   }
   if (action === "verify" || action === "unsubscribe" || action === "guest-payment-verify" || action === "guest-payment-recovery" ||
