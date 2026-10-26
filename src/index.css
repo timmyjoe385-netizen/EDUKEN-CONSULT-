@@ -2057,7 +2057,7 @@ footer {
 .jamb-section-logo {
   display: block;
   width: clamp(190px, 25vw, 280px);
-  height: auto;
+  height: clamp(38px, 6vw, 78px);
   max-height: 78px;
   object-fit: contain;
   object-position: left center;
@@ -2066,7 +2066,7 @@ footer {
 .jamb-section-heading > div { min-width: 0; }
 @media (max-width: 560px) {
   .jamb-section-heading { gap: 11px; flex-wrap: wrap; }
-  .jamb-section-logo { width: clamp(165px, 48vw, 220px); max-height: 58px; }
+  .jamb-section-logo { width: clamp(165px, 48vw, 220px); height: 52px; max-height: 58px; }
 }
 .jamb-service-grid {
   display: grid;
