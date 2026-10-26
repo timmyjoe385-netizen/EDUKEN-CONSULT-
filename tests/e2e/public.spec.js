@@ -447,6 +447,18 @@ test('JAMB catalogue setup warning waits for a successful content load', async (
   );
 });
 
+test('JAMB services section displays a compact official JAMB logo', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const logo = page.locator('.jamb-section-logo');
+  await expect(logo).toHaveAttribute('alt', 'Joint Admissions and Matriculation Board (JAMB) logo');
+  await expect(logo).toHaveAttribute('src', 'https://www.jamb.gov.ng/assets/layouts/layout3/img/banner.png');
+  const logoWidth = await logo.evaluate(element => Number.parseFloat(getComputedStyle(element).width));
+  expect(logoWidth, 'JAMB logo should be compact rather than a large banner').toBeGreaterThanOrEqual(50);
+  expect(logoWidth, 'JAMB logo should not dominate the section heading').toBeLessThanOrEqual(80);
+  const logoHeight = await logo.evaluate(element => Number.parseFloat(getComputedStyle(element).height));
+  expect(logoHeight, 'compact JAMB logo must remain visible').toBeGreaterThanOrEqual(40);
+});
+
 test('failed public-content load does not falsely report an unconfigured JAMB catalogue', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ error: 'temporary test failure' }) }),
@@ -488,10 +500,12 @@ test('service request dialog validates required fields without sending a request
   });
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const serviceCard = page.locator('.service-row').filter({
+  const serviceCard = page.locator('.general-service-card').filter({
     has: page.getByText('Playwright Service Request Check', { exact: true }),
   });
   await expect(serviceCard).toHaveCount(1);
+  await expect(page.locator('.service-row')).toHaveCount(0);
+  await expect(page.locator('.general-service-grid')).toBeVisible();
   await serviceCard.getByRole('button', { name: 'Request this service', exact: true }).click();
 
   const dialog = page.getByRole('dialog', {
@@ -540,9 +554,7 @@ test('preview safety mode blocks email alert subscriptions without sending a req
   await page.getByLabel('Remote opportunities').check();
   await page.getByRole('button', { name: /Subscribe to free email alerts/i }).click();
 
-  await expect(page.getByRole('status')).toContainText(
-    'Preview safety mode: saving is disabled until a separate test database is connected.',
-  );
+  await expect(page.getByRole('region', { name: 'Get important opportunities' }).getByRole('status')).toBeVisible();
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
@@ -566,9 +578,7 @@ test('opening an email verification link requires an explicit user confirmation'
   expect(page.url()).toMatch(/#admissions$/);
 
   await page.getByRole('button', { name: 'Confirm email alerts' }).click();
-  await expect(page.getByRole('status')).toContainText(
-    'Preview safety mode: saving is disabled until a separate test database is connected.',
-  );
+  await expect(page.getByRole('region', { name: 'Get important opportunities' }).getByRole('status')).toBeVisible();
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
@@ -592,9 +602,7 @@ test('opening an email unsubscribe link requires an explicit user confirmation',
   expect(page.url()).toMatch(/#admissions$/);
 
   await page.getByRole('button', { name: 'Yes, unsubscribe' }).click();
-  await expect(page.getByRole('status')).toContainText(
-    'Preview safety mode: saving is disabled until a separate test database is connected.',
-  );
+  await expect(page.getByRole('region', { name: 'Get important opportunities' }).getByRole('status')).toBeVisible();
   expect(requestReachedApi, 'preview safety must stop writes before the API request').toBe(false);
 });
 
@@ -1089,7 +1097,7 @@ test('customer password sign-in shows a safe error without exposing provider det
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
-  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN Wallet' });
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
   await dialog.getByLabel('Email address').fill('student@example.test');
   await dialog.getByLabel('Password').fill('not-a-real-password');
@@ -1676,6 +1684,15 @@ test('admissions and updates expose persisted opportunity-style admin controls',
 });
 
 
+test('JAMB services section keeps the heading clean without external reference or admin notes', async ({ page }) => {
+  await page.goto('/#jamb-services', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'JAMB Services' })).toBeVisible();
+  await expect(page.locator('.jamb-buycard-note')).toHaveCount(0);
+  await expect(page.getByText('Prices and availability are managed by EDUKEN in the admin dashboard.')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'BuyCard' })).toHaveCount(0);
+  await expect(page.locator('.jamb-catalogue-section')).not.toContainText(/BuyCard/i);
+});
+
 test('JAMB service request dialog opens without a blank-screen runtime error', async ({ page }) => {
   const pageErrors = [];
   page.on('pageerror', error => pageErrors.push(error.message));
@@ -1821,7 +1838,7 @@ test('Make Payments page shows the request summary without exposing its checkout
   await expect(page.getByLabel(/Receipt email/)).toHaveValue('student@example.com');
   await expect(page.getByText(/check your Spam or Junk folder/i)).toBeVisible();
   await expect(page.getByText(/payment status.*verified payment records/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Continue to Paystack' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Continue to Flutterwave' })).toBeVisible();
   expect(page.url()).not.toContain('a'.repeat(64));
 });
 
@@ -2121,10 +2138,10 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
 
 test('admin content deadline validation and calendar picker are wired for create and edit', async () => {
   const source = readFileSync('supabase/functions/eduken-api/index.ts', 'utf8');
-  const deadline = readFileSync('supabase/functions/eduken-api/content-deadline-validation.mjs', 'utf8');
+  const deadlineValidation = readFileSync('supabase/functions/eduken-api/content-deadline-validation.mjs', 'utf8');
   const app = readFileSync('src/App.tsx', 'utf8');
-  expect(deadline).toContain('export function normalizeContentDeadline(value)');
-  expect(deadline).toContain('(st|nd|rd|th)');
+  expect(deadlineValidation).toContain('export function normalizeContentDeadline(value)');
+  expect(deadlineValidation).toContain('(st|nd|rd|th)');
   expect(source).toContain('Enter a valid deadline date, for example 2026-10-21, or leave it blank.');
   expect(source.split('normalizeContentDeadline(b.deadline)')).toHaveLength(3);
   expect(app).toContain('/(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field)');
@@ -2151,19 +2168,15 @@ test('opportunity WhatsApp share includes dynamic category, location, deadline, 
   expect(app).toContain("'location',");
 });
 
-test('production checkout clearly blocks Paystack while Flutterwave is available and selected', () => {
+test('production checkout defaults to Flutterwave and blocks Paystack regardless of feature-flag state', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
-  const liveProviderStart = app.indexOf(") : isFlutterwaveLiveUiEnabled ? (");
-  const liveProviderEnd = app.indexOf(") : (", liveProviderStart);
-  expect(liveProviderStart).toBeGreaterThanOrEqual(0);
-  expect(liveProviderEnd).toBeGreaterThan(liveProviderStart);
-  const liveProvider = app.slice(liveProviderStart, liveProviderEnd);
-  expect(liveProvider).toContain('Paystack — TEMPORARILY UNAVAILABLE');
-  expect(liveProvider).toContain('awaiting account approval');
-  expect(liveProvider).toContain('payment-provider-warning');
-  expect(liveProvider).toContain("setPaymentProvider('flutterwave')");
-  expect(liveProvider).not.toContain("setPaymentProvider('paystack')");
-  expect(app).toContain("(usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack'");
+  expect(app).toContain("useState<'paystack' | 'flutterwave'>('flutterwave')");
+  expect(app).toContain('Paystack — TEMPORARILY UNAVAILABLE');
+  expect(app).toContain('awaiting account approval');
+  expect(app).toContain('Available checkout');
+  expect(app).toContain("setPaymentProvider('flutterwave')");
+  expect(app).not.toContain('isFlutterwaveLiveUiEnabled');
+  expect(app).not.toContain("(usesIsolatedTestBackend || isFlutterwaveLiveUiEnabled) ? 'flutterwave' : 'paystack'");
 });
 
 test('JAMB candidate quantity has visible increment/decrement controls and bounded entry', () => {
