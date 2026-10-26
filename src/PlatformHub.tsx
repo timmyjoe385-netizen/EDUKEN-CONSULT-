@@ -835,7 +835,7 @@ export default function PlatformHub({
                 <div className="platform-wide" style={{ marginTop: 12, padding: 14, border: '1px solid #cbded2', borderRadius: 12 }}>
                   <strong>Flutterwave bank transfer</strong>
                   <p>Bank: <b>{walletTransferInfo.bankName}</b></p>
-                  <p>Account name: <b>{walletTransferInfo.accountName || 'Not supplied by Flutterwave — confirm the beneficiary name in your banking app before transferring.'}</b></p>
+                  <p>Account name: <b>{walletTransferInfo.accountName || 'EDUKEN WALLET TOPUP (confirm this name in your banking app before transferring)'}</b></p>
                   <p>Account number: <b>{walletTransferInfo.accountNumber}</b></p>
                   <p>Transfer exactly: <b>₦{walletTransferInfo.amount.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p>
                   {walletTransferInfo.expiresAt ? (
