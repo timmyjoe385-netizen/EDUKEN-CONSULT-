@@ -2519,15 +2519,25 @@ function App() {
           </span>
         </a>
         <nav id="primary-navigation" className={menu ? 'nav-links open' : 'nav-links'}>
-          {['Home', 'Opportunities', 'Admissions', 'Updates', 'More'].map(x => (
+          {['Home', 'Opportunities', 'Admissions', 'Updates'].map(x => (
             <a
               key={x}
-              href={x === 'More' ? '#more' : '#' + x.toLowerCase()}
+              href={'#' + x.toLowerCase()}
               onClick={() => setMenu(false)}
             >
               {x}
             </a>
           ))}
+          <details className="nav-dropdown">
+            <summary aria-label="Browse EDUKEN services">Services <ChevronDown size={14} aria-hidden="true" /></summary>
+            <div className="nav-dropdown-menu">
+              <a href="#jamb-services" onClick={() => setMenu(false)}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
+              <a href="#admissions" onClick={() => setMenu(false)}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
+              <a href="#general-services" onClick={() => setMenu(false)}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
+              <a href="#eduken-platform" onClick={() => setMenu(false)}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
+              <a className="nav-dropdown-all" href="#general-services" onClick={() => setMenu(false)}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
+            </div>
+          </details>
           <a className="calculator-nav-link" href="/aggregate-calculator" onClick={() => setMenu(false)}>
             <Calculator size={16} aria-hidden="true" /> Aggregate Calculator
           </a>
@@ -3116,7 +3126,7 @@ function App() {
           <p className="jamb-catalogue-safety">This form collects a service request only; it does not take payment. Never send your NIN, OTP, JAMB password, email password or bank-card details through this form.</p>
         </section>
 
-        <section className="section pale">
+        <section className="section pale" id="general-services">
           <div className="section-head">
             <div>
               <span className="kicker">OUR SERVICES</span>
