@@ -286,12 +286,17 @@ export default function PlatformHub({
       setDeliverablesMessage('Sign in to view documents EDUKEN has published for your service requests.');
       return;
     }
+    // Clear the previous account's documents before fetching the current account's list.
+    // If the request fails, do not leave stale documents visible in the UI.
     setDeliverablesLoading(true);
+    setDeliverables([]);
+    setDeliverablesMessage('');
     try {
       const result = await api.get('/api/service-deliverables');
       setDeliverables(result.data.items || []);
       setDeliverablesMessage((result.data.items || []).length ? '' : 'No documents have been published to your account yet.');
     } catch (error) {
+      setDeliverables([]);
       setDeliverablesMessage(error instanceof Error ? error.message : 'Documents are temporarily unavailable.');
     } finally {
       setDeliverablesLoading(false);
