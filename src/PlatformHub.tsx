@@ -215,8 +215,8 @@ export default function PlatformHub({
     }
   };
 
-  const startWalletDeposit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const startWalletDeposit = async (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
     if (walletAction) return;
     const amount = Number(walletAmount);
     if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
@@ -850,6 +850,21 @@ export default function PlatformHub({
                 </div>
               ) : null}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {walletTransferInfo ? (
+                  <button
+                    className="primary"
+                    type="button"
+                    disabled={walletAction}
+                    onClick={() => {
+                      setWalletTransferInfo(null);
+                      setWalletTransferKey('');
+                      setWalletMessage('Switching to Flutterwave card checkout. Do not transfer to the previous bank details.');
+                      void startWalletDeposit();
+                    }}
+                  >
+                    {walletAction ? 'Preparing…' : 'Switch to card payment'}
+                  </button>
+                ) : null}
                 <button className="primary" type="submit" disabled={walletAction || Boolean(walletTransferKey)}>{walletAction ? 'Preparing…' : 'Pay with Flutterwave checkout'}</button>
                 <button className="primary" type="button" disabled={walletAction || Boolean(walletDepositKey) || Boolean(walletTransferKey)} onClick={() => void startWalletTransfer()}>{walletAction ? 'Preparing…' : 'Get bank-transfer details'}</button>
               </div>
