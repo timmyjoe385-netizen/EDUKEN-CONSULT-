@@ -4082,3 +4082,258 @@ html[data-theme="dark"] .site .consult-section { background:linear-gradient(135d
  .site .hero-visual .main-card { box-shadow:0 18px 44px rgba(18,62,44,.18); }
  .site .category-card,.site .admission-card,.site .opp-card,.site .spotlight-card,.site .update-card { border-radius:16px; }
 }
+
+
+/* Final responsive + dark-theme usability repair (2026-10-27).
+   Keep public styling scoped; make navigation and all controls legible on phones. */
+html[data-theme="dark"] body,
+html[data-theme="dark"] .site,
+html[data-theme="dark"] .site .article-page {
+  background: #07150f;
+  color: #edf6f0;
+}
+html[data-theme="dark"] .site .nav {
+  background: rgba(7, 21, 15, .97);
+  color: #edf6f0;
+  border-bottom-color: #294638;
+}
+html[data-theme="dark"] .site .nav-links,
+html[data-theme="dark"] .site .nav-links a,
+html[data-theme="dark"] .site .brand {
+  color: #d9e9df;
+}
+html[data-theme="dark"] .site .nav-links a:hover,
+html[data-theme="dark"] .site a:hover {
+  color: #9be4bd;
+}
+html[data-theme="dark"] .site .hero,
+html[data-theme="dark"] .site .section,
+html[data-theme="dark"] .site .trust-section,
+html[data-theme="dark"] .site .contact-section,
+html[data-theme="dark"] .site .more-section,
+html[data-theme="dark"] .site .platform-wide {
+  background-color: #0a1b13;
+  color: #edf6f0;
+}
+html[data-theme="dark"] .site .hero {
+  background-image: radial-gradient(circle at 80% 35%, rgba(38, 94, 65, .34) 0, transparent 36%);
+}
+html[data-theme="dark"] .site h1,
+html[data-theme="dark"] .site h2,
+html[data-theme="dark"] .site h3,
+html[data-theme="dark"] .site h4,
+html[data-theme="dark"] .site .brand,
+html[data-theme="dark"] .site label {
+  color: #f2f8f4;
+}
+html[data-theme="dark"] .site p,
+html[data-theme="dark"] .site li,
+html[data-theme="dark"] .site .hero-proof,
+html[data-theme="dark"] .site .eyebrow,
+html[data-theme="dark"] .site .kicker {
+  color: #c0d4c8;
+}
+html[data-theme="dark"] .site .category-card,
+html[data-theme="dark"] .site .opp-card,
+html[data-theme="dark"] .site .platform-card,
+html[data-theme="dark"] .site .platform-results button,
+html[data-theme="dark"] .site .finder-box,
+html[data-theme="dark"] .site .finder-results,
+html[data-theme="dark"] .site .drawer,
+html[data-theme="dark"] .site .drawer-item,
+html[data-theme="dark"] .site .tracker-row,
+html[data-theme="dark"] .site .secondary,
+html[data-theme="dark"] .site .faq-row,
+html[data-theme="dark"] .site .global-search-results,
+html[data-theme="dark"] .site .global-search-result {
+  background: #10271b;
+  color: #edf6f0;
+  border-color: #315641;
+}
+html[data-theme="dark"] .site button:not(.primary):not(.nav-cta),
+html[data-theme="dark"] .site input,
+html[data-theme="dark"] .site textarea,
+html[data-theme="dark"] .site select {
+  color: #f2f8f4;
+  border-color: #42664f;
+}
+html[data-theme="dark"] .site button:not(.primary):not(.nav-cta),
+html[data-theme="dark"] .site input,
+html[data-theme="dark"] .site textarea,
+html[data-theme="dark"] .site select {
+  background-color: #10271b;
+}
+html[data-theme="dark"] .site input::placeholder,
+html[data-theme="dark"] .site textarea::placeholder {
+  color: #a9c2b1;
+  opacity: 1;
+}
+html[data-theme="dark"] .site .primary,
+html[data-theme="dark"] .site .nav-cta,
+html[data-theme="dark"] .site button.primary,
+html[data-theme="dark"] .site a.primary,
+html[data-theme="dark"] .site .aggregate-hero-cta,
+html[data-theme="dark"] .site .hero-actions a.primary,
+html[data-theme="dark"] .site .platform-card .primary {
+  background: #087e55 !important;
+  color: #ffffff !important;
+  border: 1px solid #48bd88 !important;
+}
+html[data-theme="dark"] .site .secondary,
+html[data-theme="dark"] .site a.secondary,
+html[data-theme="dark"] .site button.secondary {
+  background: #132f21;
+  color: #f0f8f3 !important;
+  border-color: #42664f;
+}
+html[data-theme="dark"] .site .theme-toggle,
+html[data-theme="dark"] .site .menu-btn,
+html[data-theme="dark"] .site .install-nav,
+html[data-theme="dark"] .site .admin-login {
+  background: #173c2a;
+  color: #f4faf6;
+  border: 1px solid #527a60;
+}
+html[data-theme="dark"] .site .verified-pill,
+html[data-theme="dark"] .site .tag,
+html[data-theme="dark"] .site .icon-box {
+  background: #173d2a;
+  color: #baf5d2;
+  border-color: #427a56;
+}
+html[data-theme="dark"] .site .footer,
+html[data-theme="dark"] .site footer {
+  background: #06110b;
+  color: #d4e4da;
+  border-color: #294638;
+}
+html[data-theme="dark"] .site :focus-visible {
+  outline-color: #8be6b0;
+}
+.site button,
+.site a,
+.site input,
+.site select,
+.site textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+.site button,
+.site a {
+  touch-action: manipulation;
+}
+@media (max-width: 760px) {
+  .site .nav {
+    min-height: 68px;
+    height: auto;
+    padding: 10px 4%;
+    gap: 10px;
+  }
+  .site .brand { min-width: 0; gap: 8px; font-size: 13px; }
+  .site .brand-logo { width: 36px; height: 36px; }
+  .site .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid #d5e1d8;
+    border-radius: 11px;
+    background: #fff;
+    color: #173f31;
+  }
+  .site .nav-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    padding: 12px 4% 18px;
+    margin: 0;
+    gap: 4px;
+    align-items: stretch;
+    flex-direction: column;
+    background: #fbfcfa;
+    border-bottom: 1px solid #dce6de;
+    box-shadow: 0 16px 28px rgba(14, 42, 28, .12);
+    color: #263c30;
+  }
+  .site .nav-links.is-open,
+  .site .nav-links.open,
+  .site .nav-links[data-open="true"] {
+    display: flex;
+  }
+  .site .nav-links a,
+  .site .nav-links button {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    color: #263c30;
+    font-size: 15px;
+  }
+  .site .hero {
+    min-height: auto;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 38px 5% 28px;
+  }
+  .site .hero-copy { max-width: 100%; }
+  .site .hero h1 {
+    font-size: clamp(40px, 10.5vw, 58px);
+    line-height: .98;
+    overflow-wrap: anywhere;
+  }
+  .site .hero p { max-width: 62ch; }
+  .site .hero-actions { gap: 10px; margin: 22px 0; }
+  .site .hero-actions a,
+  .site .hero-actions button { min-height: 46px; }
+  .site .hero-visual { min-height: 290px; width: 100%; }
+  .site .main-card { width: min(100%, 420px); transform: none; }
+  .site .floating-card { max-width: 72%; }
+  .site .section { padding: 48px 5%; }
+  .site .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    align-items: start;
+  }
+  .site .category-grid,
+  .site .opportunity-grid,
+  .site .platform-grid,
+  .site .platform-cards,
+  .site .trust-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .site .finder-box {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 16px;
+    gap: 12px;
+  }
+  .site .finder-inputs { grid-template-columns: minmax(0, 1fr); }
+  .site .finder-inputs input,
+  .site .finder-inputs select { width: 100%; min-width: 0; min-height: 46px; }
+  .site .finder-results div { align-items: flex-start; gap: 8px; }
+  .site .floating-actions,
+  .site .sticky-actions,
+  .site .quick-actions {
+    max-width: calc(100vw - 24px);
+  }
+  .site .floating-actions button,
+  .site .sticky-actions button,
+  .site .quick-actions button { white-space: normal; }
+}
+@media (max-width: 420px) {
+  .site .brand { font-size: 12px; }
+  .site .nav { padding-inline: 3.5%; }
+  .site .hero h1 { font-size: clamp(36px, 10vw, 44px); }
+  .site .hero-visual { min-height: 250px; }
+  .site .main-card { padding: 18px; }
+  .site .section { padding-top: 40px; padding-bottom: 40px; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .site *, .site *::before, .site *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
