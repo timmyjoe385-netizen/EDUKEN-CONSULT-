@@ -4337,3 +4337,19 @@ html[data-theme="dark"] .site :focus-visible {
 @media (max-width: 760px) and (prefers-reduced-motion: reduce) {
   .site *, .site *::before, .site *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+
+/* Keep the established dark-theme base palette while ensuring contrast. */
+html[data-theme="dark"] body { background-color: #071426; }
+html[data-theme="dark"] .site .platform-card,
+html[data-theme="dark"] .site .platform-results button {
+  background-color: #0d2038;
+  color: #e8f0f8;
+  border-color: #294560;
+}
+html[data-theme="dark"] .site .platform-card h1,
+html[data-theme="dark"] .site .platform-card h2,
+html[data-theme="dark"] .site .platform-card h3,
+html[data-theme="dark"] .site .platform-card h4 { color: #f4f8fc; }
+html[data-theme="dark"] .site .platform-card p,
+html[data-theme="dark"] .site .platform-card label { color: #c5d5e5; }
