@@ -3969,3 +3969,14 @@ html[data-theme="dark"] .general-service-card__number {
 html[data-theme="dark"] .general-service-card__footer {
   border-color: #294560;
 }
+
+
+/* Premium public-site foundations: accessible focus, restrained motion, and touch-friendly navigation. */
+.site { --public-forest: #173f31; --public-mint: #e8f3eb; --public-paper: #fbfcfa; --public-ink: #17211d; --public-line: #e1e9e3; color: var(--public-ink); background: var(--public-paper); }
+.site :where(h1,h2,h3,h4) { text-wrap: balance; letter-spacing: -0.025em; }
+.site :where(button,a,input,select,textarea,summary):focus-visible { outline: 3px solid #77a98a; outline-offset: 3px; }
+.site :where(section) { scroll-margin-top: 88px; }
+.site :where(.nav) { background: rgba(251,252,250,.94); border-bottom-color: var(--public-line); }
+.site :where(.primary,.nav-cta) { border: 1px solid var(--public-forest); border-radius: 11px; box-shadow: 0 2px 4px rgba(16,47,36,.06); }
+@media (max-width:760px) { .site :where(.nav) { min-height: 66px; height: auto; padding: 10px 4.5%; gap: 10px; } .site :where(.brand-logo) { width: 36px; height: 36px; } .site :where(.menu-btn) { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; border-radius: 10px; cursor: pointer; } }
+@media (prefers-reduced-motion:reduce) { .site *, .site *::before, .site *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
