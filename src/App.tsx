@@ -104,6 +104,7 @@ const emptyContent: Content = {
 
 function App() {
   const [menu, setMenu] = useState(false);
+  const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [search, setSearch] = useState('');
   const [toast, setToast] = useState('');
@@ -2528,16 +2529,27 @@ function App() {
               {x}
             </a>
           ))}
-          <details className="nav-dropdown">
-            <summary aria-label="Browse EDUKEN services">Services <ChevronDown size={14} aria-hidden="true" /></summary>
-            <div className="nav-dropdown-menu">
-              <a href="#jamb-services" onClick={() => setMenu(false)}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
-              <a href="#admissions" onClick={() => setMenu(false)}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
-              <a href="#general-services" onClick={() => setMenu(false)}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
-              <a href="#eduken-platform" onClick={() => setMenu(false)}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
-              <a className="nav-dropdown-all" href="#general-services" onClick={() => setMenu(false)}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
-            </div>
-          </details>
+          <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
+            <button
+              type="button"
+              className="nav-dropdown-trigger"
+              aria-label="Browse EDUKEN services"
+              aria-expanded={servicesMenuOpen}
+              aria-controls="eduken-services-menu"
+              onClick={() => setServicesMenuOpen(open => !open)}
+            >
+              Services <ChevronDown size={14} aria-hidden="true" />
+            </button>
+            {servicesMenuOpen && (
+              <div className="nav-dropdown-menu" id="eduken-services-menu">
+                <a href="#jamb-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
+                <a href="#admissions" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
+                <a href="#general-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
+                <a href="#eduken-platform" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
+                <a className="nav-dropdown-all" href="#general-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
+              </div>
+            )}
+          </div>
           <a className="calculator-nav-link" href="/aggregate-calculator" onClick={() => setMenu(false)}>
             <Calculator size={16} aria-hidden="true" /> Aggregate Calculator
           </a>
