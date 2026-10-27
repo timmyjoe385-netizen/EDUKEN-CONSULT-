@@ -148,3 +148,12 @@ test("provider migration preserves Paystack as the default and constrains suppor
   assert.match(migration, /add column if not exists payment_provider text not null default 'paystack'/);
   assert.match(migration, /check \(payment_provider in \('paystack', 'flutterwave'\)\)/);
 });
+
+
+test("wallet UI lets a student switch from bank-transfer details directly to Flutterwave card checkout", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const ui = await readFile(new URL("../src/PlatformHub.tsx", import.meta.url), "utf8");
+  assert.match(ui, /Switch to card payment/, "bank-transfer details should expose a direct card-switch action");
+  assert.match(ui, /setWalletTransferInfo\(null\);[\s\S]*?setWalletTransferKey\(''\);[\s\S]*?void startWalletDeposit\(\)/, "switching should clear transfer-only UI state and start checkout without refreshing");
+  assert.match(ui, /Do not transfer to the previous bank details/, "students should be warned not to use the old transfer details after switching");
+});
