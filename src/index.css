@@ -4027,3 +4027,58 @@ html[data-theme="dark"] .general-service-card__footer {
   .site .menu-btn { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
 }
 
+
+
+/* Premium public-site pass: visibly apply the approved forest-green design. */
+.site {
+  --public-forest: #174b38;
+  --public-mint: #dcefe3;
+  --public-paper: #fbfcfa;
+  --public-line: #dce6de;
+  color: #17251e;
+  background: #fbfcfa;
+}
+.site .nav {
+  background: rgba(251,252,250,.97);
+  border-bottom: 1px solid #e2e9e3;
+  box-shadow: 0 5px 22px rgba(23,63,49,.05);
+  backdrop-filter: blur(14px);
+}
+.site .brand-logo { border-radius: 13px; box-shadow: 0 5px 16px rgba(23,75,56,.16); }
+.site .hero {
+  background: radial-gradient(circle at 86% 14%,rgba(191,224,202,.62),transparent 29%),linear-gradient(135deg,#fbfcfa 0%,#f2f8f3 56%,#e8f3eb 100%);
+}
+.site .hero h1 { color:#153f30; font-weight:780; line-height:.98; letter-spacing:-.06em; }
+.site .hero h1 em,.site .hero h1 span { color:#28734f; }
+.site .hero-copy > p,.site .section-head > p { color:#53645a; max-width:62ch; line-height:1.8; }
+.site .hero-visual .main-card { border:1px solid rgba(255,255,255,.76); background:linear-gradient(145deg,#1a543d,#103c2c); box-shadow:0 28px 70px rgba(18,62,44,.23); }
+.site .floating-card { border:1px solid #e0e9e2; box-shadow:0 14px 36px rgba(21,57,40,.12); }
+.site .section { background:#fbfcfa; }
+.site .section:nth-of-type(even) { background:#f4f8f4; }
+.site .section-head h2,.site .trust-section h2 { color:#193d2e; letter-spacing:-.045em; line-height:1.08; }
+.site .category-card,.site .admission-card,.site .opp-card,.site .spotlight-card,.site .update-card {
+  background:#fff; border:1px solid #dfe8e1; border-radius:18px; box-shadow:0 5px 18px rgba(23,63,49,.045);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.site .category-card:hover,.site .admission-card:hover,.site .opp-card:hover,.site .spotlight-card:hover,.site .update-card:hover {
+  transform:translateY(-3px); border-color:#b7d2bf; box-shadow:0 16px 38px rgba(23,63,49,.105);
+}
+.site :where(.primary,.nav-cta) { background:#174b38; color:#fff; border:1px solid #174b38; border-radius:12px; box-shadow:0 5px 13px rgba(23,75,56,.14); font-weight:650; }
+.site :where(.primary,.nav-cta):hover { background:#103c2c; border-color:#103c2c; }
+.site .secondary { border:1px solid #cbd9ce; border-radius:12px; background:#fff; }
+.site .consult-section { border:1px solid #d4e4d8; border-radius:24px; background:linear-gradient(135deg,#edf6ef,#dcefe3); box-shadow:0 18px 48px rgba(23,63,49,.08); }
+.site footer { background:#123c2d; color:#edf5ef; border-top:0; }
+.site footer a { color:inherit; }
+.site :where(a,button,input,select,textarea):focus-visible { outline:3px solid #6fae87; outline-offset:3px; }
+html[data-theme="dark"] .site { color:#e7f0e9; background:#101b16; }
+html[data-theme="dark"] .site .nav { background:rgba(16,27,22,.97); border-bottom-color:#2b3d32; }
+html[data-theme="dark"] .site .hero,html[data-theme="dark"] .site .section,html[data-theme="dark"] .site .section:nth-of-type(even) { background:#101b16; }
+html[data-theme="dark"] .site .hero h1,html[data-theme="dark"] .site .section-head h2,html[data-theme="dark"] .site .trust-section h2 { color:#e7f0e9; }
+html[data-theme="dark"] .site .hero-copy > p,html[data-theme="dark"] .site .section-head > p { color:#b6c8bc; }
+html[data-theme="dark"] .site .category-card,html[data-theme="dark"] .site .admission-card,html[data-theme="dark"] .site .opp-card,html[data-theme="dark"] .site .spotlight-card,html[data-theme="dark"] .site .update-card,html[data-theme="dark"] .site .secondary { background:#17251e; border-color:#304438; color:#e7f0e9; }
+html[data-theme="dark"] .site .consult-section { background:linear-gradient(135deg,#1a3024,#203d2c); border-color:#365a42; }
+@media(max-width:620px) {
+ .site .hero { background:linear-gradient(160deg,#fbfcfa 0%,#edf6ef 100%); }
+ .site .hero-visual .main-card { box-shadow:0 18px 44px rgba(18,62,44,.18); }
+ .site .category-card,.site .admission-card,.site .opp-card,.site .spotlight-card,.site .update-card { border-radius:16px; }
+}
