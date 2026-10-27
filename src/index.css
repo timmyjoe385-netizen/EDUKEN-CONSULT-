@@ -4393,3 +4393,38 @@ html[data-theme="dark"] .site .nav-dropdown-trigger { color: #e7f0e9; }
   .site .nav-dropdown-menu > a { padding: 11px 12px; }
   html[data-theme="dark"] .site .nav-dropdown-menu { background: #14251b; }
 }
+
+
+/* EDUKEN premium background: warm paper, soft ambient mint, and a restrained
+   academic contour watermark. Decorative only; keep content surfaces readable. */
+html:not([data-theme="dark"]) .site .hero,
+html:not([data-theme="dark"]) .site .spotlight-section,
+html:not([data-theme="dark"]) .site .newsroom-preview,
+html:not([data-theme="dark"]) .site .journey-section,
+html:not([data-theme="dark"]) .site #admissions,
+html:not([data-theme="dark"]) .site #updates,
+html:not([data-theme="dark"]) .site #about,
+html:not([data-theme="dark"]) .site .faq.section {
+  background-color: #fbfaf6;
+  background-image:
+    radial-gradient(ellipse at 88% 8%, rgba(213, 235, 220, 0.24), transparent 42%),
+    radial-gradient(circle at 94% 16%, rgba(30, 105, 77, 0.045) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 94% 16%, transparent 0 58px, rgba(30, 105, 77, 0.045) 59px 60px, transparent 61px),
+    radial-gradient(circle at 94% 16%, transparent 0 84px, rgba(30, 105, 77, 0.032) 85px 86px, transparent 87px);
+  background-size: auto, 18px 18px, auto, auto;
+  background-repeat: no-repeat, repeat, no-repeat, no-repeat;
+  background-position: center, center, right 2.5rem top 2rem, right 2.5rem top 2rem;
+}
+
+@media (max-width: 640px) {
+  html:not([data-theme="dark"]) .site .hero,
+  html:not([data-theme="dark"]) .site .spotlight-section,
+  html:not([data-theme="dark"]) .site .newsroom-preview,
+  html:not([data-theme="dark"]) .site .journey-section,
+  html:not([data-theme="dark"]) .site #admissions,
+  html:not([data-theme="dark"]) .site #updates,
+  html:not([data-theme="dark"]) .site #about,
+  html:not([data-theme="dark"]) .site .faq.section {
+    background-position: center, center, right -2.5rem top 1rem, right -2.5rem top 1rem;
+  }
+}
