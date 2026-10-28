@@ -2,7 +2,12 @@ import { test, expect } from '@playwright/test';
 
 test('signed-out student documents panel stays private, visible and responsive across themes', async ({ page }) => {
   await page.addInitScript(() => {
-    window.localStorage.setItem('eduken-theme', 'dark');
+    // Preserve the initial dark preference only on the first page load.
+    // On reload, the test's explicit light preference must take effect.
+    if (window.sessionStorage.getItem('eduken-deliverables-theme-initialized') !== '1') {
+      window.localStorage.setItem('eduken-theme', 'dark');
+      window.sessionStorage.setItem('eduken-deliverables-theme-initialized', '1');
+    }
   });
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
