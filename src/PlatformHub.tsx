@@ -247,25 +247,30 @@ export default function PlatformHub({
       setWalletTransactions([]);
       return;
     }
+    // Authentication is determined by /api/me alone. A failure in an optional
+    // workspace panel (saved items, tracker, alerts, or topics) must not make a
+    // successfully signed-in student appear signed out or hide the wallet.
     try {
-      const [me, saves, apps, notices, topicData] = await Promise.all([
-        api.get('/api/me'),
-        api.get('/api/user/saved'),
-        api.get('/api/user/tracker'),
-        api.get('/api/user/notifications'),
-        api.get('/api/user/topics'),
-      ]);
+      const me = await api.get('/api/me');
       setUser(me.data.user);
-      setSaved(saves.data.items || []);
-      setTracker(apps.data.items || []);
-      setAlerts(notices.data.items || []);
-      setTopics(topicData.data.topics || []);
-      void refreshDeliverables();
-      void refreshWallet();
-      api.post('/api/user/reminders/check', {}).catch(() => undefined);
     } catch {
       setUser(null);
+      return;
     }
+
+    const [saves, apps, notices, topicData] = await Promise.allSettled([
+      api.get('/api/user/saved'),
+      api.get('/api/user/tracker'),
+      api.get('/api/user/notifications'),
+      api.get('/api/user/topics'),
+    ]);
+    if (saves.status === 'fulfilled') setSaved(saves.value.data.items || []);
+    if (apps.status === 'fulfilled') setTracker(apps.value.data.items || []);
+    if (notices.status === 'fulfilled') setAlerts(notices.value.data.items || []);
+    if (topicData.status === 'fulfilled') setTopics(topicData.value.data.topics || []);
+    void refreshDeliverables();
+    void refreshWallet();
+    api.post('/api/user/reminders/check', {}).catch(() => undefined);
   };
 
   useEffect(() => {
