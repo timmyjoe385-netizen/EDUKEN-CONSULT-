@@ -168,6 +168,7 @@ export default function PlatformHub({
   const [customerPassword, setCustomerPassword] = useState('');
   const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
+  const [customerSessionMessage, setCustomerSessionMessage] = useState('');
   const [customerAuthMode, setCustomerAuthMode] = useState<'signin' | 'signup'>('signin');
 
   const refreshWallet = async () => {
@@ -323,26 +324,42 @@ export default function PlatformHub({
       setTopics([]);
       setWallet(null);
       setWalletTransactions([]);
+      setCustomerSessionMessage('');
       return;
     }
-    try {
-      const [me, saves, apps, notices, topicData] = await Promise.all([
-        api.get('/api/me'),
-        api.get('/api/user/saved'),
-        api.get('/api/user/tracker'),
-        api.get('/api/user/notifications'),
-        api.get('/api/user/topics'),
-      ]);
-      setUser(me.data.user);
-      setSaved(saves.data.items || []);
-      setTracker(apps.data.items || []);
-      setAlerts(notices.data.items || []);
-      setTopics(topicData.data.topics || []);
-      void refreshWallet();
-      api.post('/api/user/reminders/check', {}).catch(() => undefined);
-    } catch {
-      setUser(null);
+
+    // Keep the signed-in student visible even if an optional workspace panel fails.
+    const [meResult, saves, apps, notices, topicData] = await Promise.allSettled([
+      api.get('/api/me'),
+      api.get('/api/user/saved'),
+      api.get('/api/user/tracker'),
+      api.get('/api/user/notifications'),
+      api.get('/api/user/topics'),
+    ]);
+
+    if (meResult.status === 'fulfilled') {
+      setUser(meResult.value.data.user);
+    } else {
+      const cachedUser = auth.getUser();
+      if (cachedUser) {
+        setUser(cachedUser);
+        setCustomerSessionMessage('You are signed in. Some account details are temporarily unavailable; your wallet status is checked separately.');
+      } else {
+        setUser(null);
+        setCustomerSessionMessage('Your sign-in session is active, but account details could not be loaded. Please refresh and try again.');
+        void refreshWallet();
+        return;
+      }
     }
+
+    if (saves.status === 'fulfilled') setSaved(saves.value.data.items || []);
+    if (apps.status === 'fulfilled') setTracker(apps.value.data.items || []);
+    if (notices.status === 'fulfilled') setAlerts(notices.value.data.items || []);
+    if (topicData.status === 'fulfilled') setTopics(topicData.value.data.topics || []);
+
+    void refreshDeliverables();
+    void refreshWallet();
+    api.post('/api/user/reminders/check', {}).catch(() => undefined);
   };
 
   useEffect(() => {
@@ -387,6 +404,7 @@ export default function PlatformHub({
       setCustomerPassword('');
       setCustomerSignInOpen(false);
       setCustomerSignInMessage('');
+      setCustomerSessionMessage('Sign-in successful. Checking your EDUKEN Wallet…');
       await refresh();
       await refreshWallet();
     } catch (error) {
@@ -618,6 +636,7 @@ export default function PlatformHub({
             <CreditCard size={20} />
           </div>
           <h3>EDUKEN Wallet</h3>
+          {customerSessionMessage && user ? <small role="status" aria-live="polite">{customerSessionMessage}</small> : null}
           <p>Keep optional service credit and pay for eligible EDUKEN services without starting a new checkout each time.</p>
           {user ? (
             <>
