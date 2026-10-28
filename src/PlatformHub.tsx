@@ -133,6 +133,7 @@ export default function PlatformHub({
   const [customerPassword, setCustomerPassword] = useState('');
   const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
+  const [customerSessionMessage, setCustomerSessionMessage] = useState('');
 
   const refreshWallet = async () => {
     if (!auth.isSignedIn()) {
@@ -307,6 +308,7 @@ export default function PlatformHub({
       setCustomerPassword('');
       setCustomerSignInOpen(false);
       setCustomerSignInMessage('');
+      setCustomerSessionMessage('You are signed in successfully. Your EDUKEN Wallet is ready to view below.');
       await refresh();
       await refreshWallet();
     } catch (error) {
@@ -514,6 +516,7 @@ export default function PlatformHub({
             <CreditCard size={20} />
           </div>
           <h3>EDUKEN Wallet</h3>
+          {customerSessionMessage && user ? <small role="status" aria-live="polite">{customerSessionMessage}</small> : null}
           <p>Keep optional service credit and pay for eligible EDUKEN services without starting a new checkout each time.</p>
           {user ? (
             <>
