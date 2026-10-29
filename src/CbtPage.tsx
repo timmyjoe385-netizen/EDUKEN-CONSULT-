@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Calculator, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target, X } from 'lucide-react';
 import './cbt.css';
+import { api } from './lib/api';
 
 type Question = { id: number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
 
@@ -37,6 +38,8 @@ const SUBJECTS = [
 type Attempt = { date: string; mode: string; subject: string; score: number; total: number };
 
 export default function CbtPage() {
+  const [publishedQuestions, setPublishedQuestions] = useState<Question[] | null>(null);
+  const [questionLoadError, setQuestionLoadError] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState('Use of English');
   const [mode, setMode] = useState<'practice' | 'mock'>('practice');
   const [started, setStarted] = useState(false);
@@ -126,9 +129,35 @@ export default function CbtPage() {
     setCalcReset(true);
   };
 
+  useEffect(() => {
+    let active = true;
+    api.get('/api/cbt/questions')
+      .then((result) => {
+        if (!active) return;
+        const rows = Array.isArray(result.data?.items) ? result.data.items : [];
+        const mapped: Question[] = rows.map((row: any, index: number) => ({
+          id: index + 1,
+          subject: String(row.subject || ''),
+          prompt: String(row.question_text || ''),
+          options: ['A', 'B', 'C', 'D'].map(key => String(row.options?.[key] || '')),
+          answer: Math.max(0, ['A', 'B', 'C', 'D'].indexOf(String(row.correct_option || 'A').toUpperCase())),
+          explanation: String(row.explanation || ''),
+        })).filter((question: Question) => question.subject && question.prompt && question.options.every(Boolean));
+        setPublishedQuestions(mapped);
+      })
+      .catch(() => {
+        if (!active) return;
+        // Keep the existing original sample set available in preview if the question API is not deployed yet.
+        setPublishedQuestions(QUESTIONS);
+        setQuestionLoadError(true);
+      });
+    return () => { active = false; };
+  }, []);
+
+  const questionPool = publishedQuestions ?? [];
   const activeQuestions = useMemo(
-    () => mode === 'mock' ? QUESTIONS : QUESTIONS.filter(question => question.subject === selectedSubject),
-    [mode, selectedSubject]
+    () => mode === 'mock' ? questionPool : questionPool.filter(question => question.subject === selectedSubject),
+    [mode, selectedSubject, questionPool]
   );
   const question = activeQuestions[current];
   const calculatorAllowed = Boolean(question && ['Mathematics', 'Physics', 'Chemistry', 'Economics'].includes(question.subject));
@@ -275,11 +304,11 @@ export default function CbtPage() {
       <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><nav className="cbt-top-links"><a href="#subjects">Subjects</a><a href="#how-it-works">How it works</a><a href="/">Main website</a></nav><a className="cbt-mobile-home" href="/">Home</a></header>
       <main>
         <section className="cbt-hero">
-          <div className="cbt-hero-copy"><span className="cbt-eyebrow"><span /> JAMB PREPARATION STARTS HERE</span><h1>Prepare with purpose.<br /><em>Practise with confidence.</em></h1><p>Build your confidence with focused subject practice, timed mock tests and clear explanations — designed for Nigerian students preparing for entrance examinations.</p><div className="cbt-hero-actions"><button className="cbt-primary-button" onClick={() => begin('practice', selectedSubject)}><BookOpen size={17} /> Start free practice</button><button className="cbt-secondary-button" onClick={() => begin('mock', 'Use of English')}><Clock3 size={17} /> Try a timed mock</button></div><div className="cbt-trust-row"><span><ShieldCheck size={16} /> Free starter practice</span><span><CheckCircle2 size={16} /> Instant results</span></div></div>
+          <div className="cbt-hero-copy"><span className="cbt-eyebrow"><span /> JAMB PREPARATION STARTS HERE</span><h1>Prepare with purpose.<br /><em>Practise with confidence.</em></h1><p>Build your confidence with focused subject practice, timed mock tests and clear explanations — designed for Nigerian students preparing for entrance examinations.</p><div className="cbt-hero-actions"><button className="cbt-primary-button" disabled={!questionPool.some(question => question.subject === selectedSubject)} onClick={() => begin('practice', selectedSubject)}><BookOpen size={17} /> Start free practice</button><button className="cbt-secondary-button" disabled={!questionPool.length} onClick={() => begin('mock', 'Use of English')}><Clock3 size={17} /> Try a timed mock</button></div><div className="cbt-trust-row"><span><ShieldCheck size={16} /> Free starter practice</span><span><CheckCircle2 size={16} /> Instant results</span></div></div>
           <div className="cbt-hero-visual"><div className="cbt-visual-orbit" /><div className="cbt-preview-panel"><div className="cbt-preview-top"><span>EDUKEN CBT</span><span className="cbt-live-pill">PRACTICE</span></div><div className="cbt-preview-title">Your next step<br /><b>starts here.</b></div><div className="cbt-preview-metrics"><div><BookOpen size={18} /><b>Subject practice</b><small>Learn topic by topic</small></div><div><Target size={18} /><b>Timed mock tests</b><small>Build exam confidence</small></div></div><div className="cbt-preview-footer"><span><CheckCircle2 size={15} /> Answer explanations</span><span>Built for mobile</span></div></div><div className="cbt-floating-note"><GraduationCap size={19} /><span><b>Stay consistent</b><small>One practice at a time</small></span></div></div>
         </section>
-        <section className="cbt-subject-section" id="subjects"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">CHOOSE YOUR SUBJECT</span><h2>Start where you need it most.</h2></div><p>Choose a subject to practise, or take a mixed mock to check your current understanding.</p></div><div className="cbt-subject-grid">{SUBJECTS.map(subject => <article className="cbt-subject-card" key={subject.name}><div className="cbt-subject-icon">{subject.icon}</div><div><span>{subject.short}</span><h3>{subject.name}</h3><p>{subject.detail}</p></div><button onClick={() => begin('practice', subject.name)}>Practise subject <ArrowRight size={15} /></button></article>)}</div><div className="cbt-mock-banner"><div><span className="cbt-eyebrow">READY FOR A CHALLENGE?</span><h3>Try a mixed timed mock.</h3><p>Work through the starter question set, then review every answer and explanation.</p></div><button className="cbt-primary-button" onClick={() => begin('mock', 'Use of English')}>Start mixed mock <ArrowRight size={16} /></button></div></section>
-        <section className="cbt-how-section" id="how-it-works"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">A SIMPLE ROUTINE</span><h2>Practise. Review. Improve.</h2></div></div><div className="cbt-steps"><article><span>01</span><h3>Choose a subject</h3><p>Focus on one subject or use the mixed starter mock.</p></article><article><span>02</span><h3>Answer at your pace</h3><p>Navigate questions, change answers and flag items to revisit.</p></article><article><span>03</span><h3>Learn from results</h3><p>See your score, correct answers and explanations immediately.</p></article></div><div className="cbt-disclaimer"><ShieldCheck size={18} /><p>EDUKEN CBT is an independent practice resource and is not affiliated with or endorsed by JAMB. This first preview uses a small set of original sample questions; it is not a complete past-question bank or a prediction of the official examination.</p></div></section>
+        <section className="cbt-subject-section" id="subjects"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">CHOOSE YOUR SUBJECT</span><h2>Start where you need it most.</h2></div><p>Choose a subject to practise, or take a mixed mock to check your current understanding.</p></div>{questionLoadError && <p className="cbt-disclaimer" role="status">The published question service is not available in this preview yet, so original starter samples are being used.</p>}{publishedQuestions !== null && !questionLoadError && questionPool.length === 0 && <p className="cbt-disclaimer" role="status">No questions have been published yet. Your admin can add and approve questions in the CBT Question Bank.</p>}<div className="cbt-subject-grid">{SUBJECTS.map(subject => <article className="cbt-subject-card" key={subject.name}><div className="cbt-subject-icon">{subject.icon}</div><div><span>{subject.short}</span><h3>{subject.name}</h3><p>{subject.detail}</p></div><button disabled={!questionPool.some(question => question.subject === subject.name)} onClick={() => begin('practice', subject.name)}>Practise subject <ArrowRight size={15} /></button></article>)}</div><div className="cbt-mock-banner"><div><span className="cbt-eyebrow">READY FOR A CHALLENGE?</span><h3>Try a mixed timed mock.</h3><p>Work through the starter question set, then review every answer and explanation.</p></div><button className="cbt-primary-button" disabled={!questionPool.length} onClick={() => begin('mock', 'Use of English')}>Start mixed mock <ArrowRight size={16} /></button></div></section>
+        <section className="cbt-how-section" id="how-it-works"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">A SIMPLE ROUTINE</span><h2>Practise. Review. Improve.</h2></div></div><div className="cbt-steps"><article><span>01</span><h3>Choose a subject</h3><p>Focus on one subject or use the mixed starter mock.</p></article><article><span>02</span><h3>Answer at your pace</h3><p>Navigate questions, change answers and flag items to revisit.</p></article><article><span>03</span><h3>Learn from results</h3><p>See your score, correct answers and explanations immediately.</p></article></div><div className="cbt-disclaimer"><ShieldCheck size={18} /><p>EDUKEN CBT is an independent practice resource and is not affiliated with or endorsed by JAMB. Questions shown from the question bank are published only after admin review. If the service is unavailable in preview, original starter samples may be shown; this is not a complete past-question bank or a prediction of the official examination.</p></div></section>
         {attempts.length > 0 && <section className="cbt-history-section"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">YOUR RECENT PRACTICE</span><h2>Keep your momentum.</h2></div></div><div className="cbt-history-list">{attempts.map((attempt, index) => <div className="cbt-history-row" key={attempt.date + index}><span>{attempt.subject}</span><b>{Math.round(attempt.score / attempt.total * 100)}%</b><small>{new Date(attempt.date).toLocaleDateString()}</small></div>)}</div></section>}
       </main>
       <footer className="cbt-footer"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CONSULT</b></span></a><span>Learn with purpose. Prepare with confidence.</span><a href="/">Return to EDUKEN CONSULT <ArrowRight size={15} /></a></footer>
