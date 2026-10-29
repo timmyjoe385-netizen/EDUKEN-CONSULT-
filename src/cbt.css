@@ -19,3 +19,10 @@
 .cbt-calculator-keys button.equals{grid-column:span 5;background:#174d35;color:#fff;border-color:#174d35}
 .cbt-calculator>p{font-size:10px;color:#65716a;line-height:1.5;margin:11px 2px 1px}
 @media(max-width:520px){.cbt-exam-tools{gap:6px}.cbt-calculator-trigger{padding:9px 10px}.cbt-calculator-backdrop{align-items:flex-end;padding:10px}.cbt-calculator{border-radius:15px 15px 10px 10px;max-width:420px}.cbt-calculator-keys{gap:6px}.cbt-calculator-keys button{min-height:43px}}
+
+
+/* Accessible question-count controls for practice and mock setup. */
+.cbt-practice-count { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 20px; color: var(--cbt-text, #18352b); font-weight: 600; }
+.cbt-count-label, .cbt-practice-count label { display: block; margin: 12px 0 7px; font-size: 0.92rem; font-weight: 650; }
+.cbt-count-select { display: block; max-width: 100%; min-height: 42px; padding: 9px 12px; border: 1px solid #b9cbbf; border-radius: 10px; background: #fff; color: #18352b; font: inherit; }
+.cbt-mock-banner .cbt-count-select { margin-bottom: 4px; }
