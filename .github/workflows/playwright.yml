@@ -46,7 +46,7 @@ jobs:
         env:
           VITE_SUPABASE_URL: https://playwright-isolated.invalid
           VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_playwright_test
-          VITE_ENABLE_TEST_WRITES: 'true'
+          VITE_ENABLE_CBT_TEST_WRITES: 'true'
         run: npm run test:e2e
       - name: Upload browser report and failure evidence
         if: always()
