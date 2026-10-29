@@ -225,7 +225,7 @@ export default function CbtPage() {
   useEffect(() => {
     if (!submitted || activeQuestions.length === 0) return;
     const result: Attempt = {
-      date: new Date().toISOString(),
+      date: String(serverResult?.submittedAt || new Date().toISOString()),
       mode,
       subject: mode === 'mock' ? 'Mixed mock' : selectedSubject,
       score: correctCount,
@@ -328,6 +328,7 @@ export default function CbtPage() {
         score: Number(data.score || 0),
         total: Number(data.total || reviewedQuestions.length),
         percent: Number(data.percent || 0),
+        submittedAt: String(data.submittedAt || new Date().toISOString()),
       });
       setSubmitted(true);
     } catch (e) {
