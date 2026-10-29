@@ -3031,7 +3031,8 @@ Deno.serve(async (req) => {
         const incoming = parsed.value as Record<string, unknown>;
         const checked = validateQuestionInput({ ...current, ...incoming, status: incoming.status ?? current.status }, { allowStatus: true });
         if (!checked.valid) return json({ error: "Question validation failed.", errors: checked.errors }, 400);
-        const contentChanged = checked.question.question_fingerprint !== current.question_fingerprint;
+        const contentFields = ["exam_type", "subject", "topic", "subtopic", "question_text", "options", "correct_option", "explanation", "difficulty", "source_type", "source_name", "source_year", "provenance_notes", "licensing_notes"] as const;
+        const contentChanged = contentFields.some((field) => JSON.stringify(checked.question[field] ?? null) !== JSON.stringify(current[field] ?? null));
         const nextStatus = contentChanged ? "draft" : checked.question.status;
         const transition = validateStatusTransition(current.status, nextStatus);
         if (!transition.valid && !contentChanged) return json({ error: transition.error }, 409);
