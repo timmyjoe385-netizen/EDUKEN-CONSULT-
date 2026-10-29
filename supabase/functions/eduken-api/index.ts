@@ -3173,26 +3173,77 @@ Deno.serve(async (req) => {
         return json({ error: `Question count must be a whole number from 1 to ${maxQuestionCount} for ${mode} mode.` }, 400);
       }
 
-      let query = db.from("cbt_questions")
-        .select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty")
-        .eq("status", "published")
-        .order("subject")
-        .order("topic")
-        .limit(mode === "mock" ? 180 : 50);
-      if (mode === "practice") query = query.eq("subject", subject);
-      const { data, error } = await query;
-      if (error) throw error;
-      const rows = data ?? [];
+      const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
+      const rawCombination = Array.isArray(body.subjectCombination) ? body.subjectCombination.map(value => String(value).trim()) : [];
+      let chosenSubjects: string[] = [];
+      if (mode === "mock") {
+        if (rawCombination.length !== 3 || new Set(rawCombination).size !== 3 || rawCombination.some(value => !supportedSubjects.includes(value))) {
+          return json({ error: "Choose exactly three different additional subjects for a mixed mock." }, 400);
+        }
+        chosenSubjects = ["Use of English", ...rawCombination];
+      }
+
+      // Pull each selected subject independently, then sample randomly on the server.
+      // Full JAMB-format mocks use 60 English + 40 from each of the three selected subjects.
+      const shuffleRows = <T,>(items: T[]): T[] => {
+        const result = [...items];
+        for (let i = result.length - 1; i > 0; i--) {
+          const j = crypto.getRandomValues(new Uint32Array(1))[0] % (i + 1);
+          [result[i], result[j]] = [result[j], result[i]];
+        }
+        return result;
+      };
+      let rows: any[] = [];
+      if (mode === "practice") {
+        const { data, error } = await db.from("cbt_questions")
+          .select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty")
+          .eq("status", "published").eq("subject", subject).limit(500);
+        if (error) throw error;
+        rows = shuffleRows(data ?? []).slice(0, requestedQuestionCount);
+      } else {
+        const fullBlueprint = requestedQuestionCount === 180;
+        const counts = new Map<string, number>();
+        if (fullBlueprint) {
+          counts.set("Use of English", 60);
+          rawCombination.forEach(name => counts.set(name, 40));
+        } else {
+          const englishCount = Math.max(1, Math.round(requestedQuestionCount / 3));
+          counts.set("Use of English", englishCount);
+          const otherTotal = requestedQuestionCount - englishCount;
+          const each = Math.floor(otherTotal / 3);
+          let remainder = otherTotal % 3;
+          rawCombination.forEach(name => {
+            counts.set(name, each + (remainder-- > 0 ? 1 : 0));
+          });
+        }
+        const subjectResults = await Promise.all(chosenSubjects.map(async name => {
+          const required = counts.get(name) || 0;
+          const { data, error } = await db.from("cbt_questions")
+            .select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty")
+            .eq("status", "published").eq("subject", name).limit(1000);
+          if (error) throw error;
+          const available = data ?? [];
+          return { name, required, available: available.length, selected: shuffleRows(available).slice(0, required) };
+        }));
+        const short = subjectResults.find(item => item.available < item.required);
+        if (short) {
+          return json({
+            error: short.name + " currently has only " + short.available + " published questions; " + short.required + " are required for this mock selection.",
+            subject: short.name, available: short.available, requested: short.required,
+            requiredBySubject: Object.fromEntries(counts),
+          }, 409);
+        }
+        rows = shuffleRows(subjectResults.flatMap(item => item.selected));
+      }
       if (!rows.length) return json({ error: "No published questions are available for this selection yet." }, 409);
       if (rows.length < requestedQuestionCount) {
         return json({
-          error: `This selection currently has only ${rows.length} published questions; ${requestedQuestionCount} are required. Please choose a smaller practice set or try again after more questions are published.`,
-          available: rows.length,
-          requested: requestedQuestionCount,
+          error: `This selection currently has only ${rows.length} published questions; ${requestedQuestionCount} are required. Please choose a smaller set or publish more reviewed questions.`,
+          available: rows.length, requested: requestedQuestionCount,
         }, 409);
       }
 
-      const snapshot = rows.slice(0, requestedQuestionCount).map((row: any) => ({
+      const snapshot = rows.map((row: any) => ({
         id: String(row.id),
         subject: String(row.subject || ""),
         prompt: String(row.question_text || ""),
