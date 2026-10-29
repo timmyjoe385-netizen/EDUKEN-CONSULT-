@@ -81,6 +81,25 @@ const createCbtAttemptToken = () => {
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 };
 
+async function persistCbtAttemptSummary(attempt: any, score: number, total: number, submittedAt: string) {
+  const started = new Date(attempt.started_at).getTime();
+  const submitted = new Date(submittedAt).getTime();
+  const durationSeconds = Number.isFinite(started) && Number.isFinite(submitted)
+    ? Math.max(0, Math.floor((submitted - started) / 1000))
+    : null;
+  const { error } = await db.from("cbt_attempts").upsert({
+    attempt_session_id: attempt.id,
+    user_id: attempt.user_id ?? null,
+    mode: attempt.mode,
+    subject: attempt.subject,
+    score,
+    total,
+    duration_seconds: durationSeconds,
+    submitted_at: submittedAt,
+  }, { onConflict: "attempt_session_id" });
+  if (error) throw error;
+}
+
 const tokenOf = (req: Request) => {
   const h = req.headers.get("Authorization") || "";
   return h.startsWith("Bearer ") ? h.slice(7) : "";
@@ -3209,6 +3228,7 @@ Deno.serve(async (req) => {
         const previous = gradeCbtAttempt(attempt.question_snapshot, attempt.answers);
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
         const submittedAt = String(attempt.submitted_at || new Date().toISOString());
+        await persistCbtAttemptSummary(attempt, Number(attempt.score ?? previous.score), Number(attempt.total ?? previous.total), submittedAt);
         return json({
           score: attempt.score ?? previous.score,
           total: attempt.total ?? previous.total,
@@ -3241,32 +3261,13 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (updateError) throw updateError;
       if (!updated) return json({ error: "This practice attempt has already been submitted." }, 409);
+      await persistCbtAttemptSummary(attempt, graded.score, graded.total, submittedAt);
       return json({
         score: graded.score,
         total: graded.total,
         percent: graded.percent,
         review: graded.review,
         submittedAt,
-      });
-    }
-
-    if (path === "/api/cbt/attempts" && req.method === "GET") {
-      const user = await requireUser(req);
-      const { data, error } = await db.from("cbt_attempts")
-        .select("mode,subject,score,total,submitted_at")
-        .eq("user_id", user.id)
-        .eq("status", "submitted")
-        .order("submitted_at", { ascending: false })
-        .limit(20);
-      if (error) throw error;
-      return json({
-        items: (data ?? []).map((attempt: any) => ({
-          submitted_at: attempt.submitted_at,
-          mode: attempt.mode,
-          subject: attempt.subject,
-          score: attempt.score,
-          total: attempt.total,
-        })),
       });
     }
 
