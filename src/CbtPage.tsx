@@ -241,7 +241,7 @@ export default function CbtPage() {
                   <button className="utility" onClick={calculatorClear}>AC</button>
                   {['7','8','9','÷','4','5','6','×','1','2','3','−','±','0','.','+'].map(key => (
                     <button key={key} className={['÷','×','−','+'].includes(key) ? 'operator' : ''} onClick={() => {
-                      if (/^\\d$/.test(key)) calculatorDigit(key);
+                      if (/^\d$/.test(key)) calculatorDigit(key);
                       else if (key === '.') calculatorDecimal();
                       else if (key === '±') calculatorUnary('sign');
                       else calculatorApplyOperator(key);
