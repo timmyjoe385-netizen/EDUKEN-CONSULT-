@@ -157,21 +157,14 @@ export default function CbtPage() {
           explanation: '',
         })).filter((question: Question) => question.subject && question.prompt && question.options.every(Boolean));
         if (mapped.length === 0) {
-          // An empty published bank is not a usable student experience. Keep the
-          // bundled original questions available as clearly labelled local practice
-          // until an administrator publishes reviewed questions.
+          // An empty published bank is not a usable server-backed student experience.
+          // Keep original questions available as clearly labelled local practice until
+          // an administrator publishes reviewed questions.
           setPublishedQuestions(QUESTIONS);
           setQuestionLoadError(true);
           return;
         }
-        if (mapped.length === 0) {
-          // An empty production question bank should not leave the entire CBT unusable.
-          // Fall back to the clearly labelled, original local starter set until questions are published.
-          setPublishedQuestions(QUESTIONS);
-          setQuestionLoadError(true);
-        } else {
-          setPublishedQuestions(mapped);
-        }
+        setPublishedQuestions(mapped);
       })
       .catch(() => {
         if (!active) return;
