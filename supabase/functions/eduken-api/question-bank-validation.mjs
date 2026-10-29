@@ -68,6 +68,9 @@ export function validateQuestionInput(raw, { allowStatus = false } = {}) {
   if (question.source_type === "past_question" && (!question.source_name || !question.source_year || !question.provenance_notes || !question.licensing_notes)) {
     errors.push("Past-question records require source name, year, provenance notes and licensing notes.");
   }
+  if (question.source_type === "licensed" && (!question.source_name || !question.licensing_notes)) {
+    errors.push("Licensed records require the licensor/source name and licensing notes.");
+  }
   if (allowStatus && !ALLOWED_STATUSES.has(question.status)) errors.push("Question status is invalid.");
   if (!allowStatus) question.status = "draft";
   question.question_fingerprint = fingerprintQuestion(question);
