@@ -56,6 +56,8 @@ export default function CbtPage() {
   const [startError, setStartError] = useState('');
   const [submitError, setSubmitError] = useState('');
   const finishRef = useRef<() => void>(() => {});
+  const autoSubmitRetriesRef = useRef(0);
+  const autoSubmitRetryTimerRef = useRef<number | null>(null);
   // Use an absolute deadline so background tabs or a throttled mobile browser cannot pause exam time.
   const deadlineRef = useRef<number | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(15 * 60);
@@ -229,6 +231,10 @@ export default function CbtPage() {
     if (started && !submitted && secondsLeft === 0) finishRef.current();
   }, [secondsLeft, started, submitted]);
 
+  useEffect(() => () => {
+    if (autoSubmitRetryTimerRef.current !== null) window.clearTimeout(autoSubmitRetryTimerRef.current);
+  }, []);
+
   useEffect(() => {
     if (!submitted || activeQuestions.length === 0) return;
     const result: Attempt = {
@@ -252,6 +258,11 @@ export default function CbtPage() {
     setStarting(true);
     setStartError('');
     setSubmitError('');
+    autoSubmitRetriesRef.current = 0;
+    if (autoSubmitRetryTimerRef.current !== null) {
+      window.clearTimeout(autoSubmitRetryTimerRef.current);
+      autoSubmitRetryTimerRef.current = null;
+    }
     setMode(nextMode);
     setSelectedSubject(subject);
     setAnswers({});
@@ -343,8 +354,22 @@ export default function CbtPage() {
         submittedAt: String(data.submittedAt || new Date().toISOString()),
       });
       setSubmitted(true);
+      autoSubmitRetriesRef.current = 0;
+      if (autoSubmitRetryTimerRef.current !== null) {
+        window.clearTimeout(autoSubmitRetryTimerRef.current);
+        autoSubmitRetryTimerRef.current = null;
+      }
     } catch (e) {
       setSubmitError(e instanceof Error ? e.message : 'Could not submit practice. Please try again.');
+      // When the exam clock has expired, retry transient failures automatically. The server
+      // treats repeated submissions idempotently, so a lost response is safe to retry.
+      if (secondsLeft === 0 && attemptToken && autoSubmitRetriesRef.current < 3 && autoSubmitRetryTimerRef.current === null) {
+        autoSubmitRetriesRef.current += 1;
+        autoSubmitRetryTimerRef.current = window.setTimeout(() => {
+          autoSubmitRetryTimerRef.current = null;
+          finishRef.current();
+        }, 1500);
+      }
     } finally {
       setSubmitting(false);
     }
