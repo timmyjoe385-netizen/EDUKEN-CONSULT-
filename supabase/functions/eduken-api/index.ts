@@ -11,7 +11,7 @@ import { normalizeServicePrice } from "./service-price-validation.mjs";
 import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
-import { gradeCbtAttempt } from "./cbt-attempt-validation.mjs";
+import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -3191,7 +3191,10 @@ Deno.serve(async (req) => {
       const token = createCbtAttemptToken();
       const now = new Date();
       const durationSeconds = mode === "mock" ? 30 * 60 : 15 * 60;
-      const expiresAt = new Date(now.getTime() + durationSeconds * 1000).toISOString();
+      // The visible timer remains exact; this short grace window lets the automatic
+      // submit request reach the server after the countdown reaches zero.
+      const expiresAt = getCbtAttemptExpiry(now, durationSeconds);
+      if (!expiresAt) throw new Error("Could not calculate CBT attempt expiry.");
       const user = await currentUser(req);
       const { error: insertError } = await db.from("cbt_attempt_sessions").insert({
         attempt_token_hash: await sha256Hex(token),
