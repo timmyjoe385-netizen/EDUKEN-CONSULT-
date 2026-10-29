@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { gradeCbtAttempt } from "../supabase/functions/eduken-api/cbt-attempt-validation.mjs";
+import { gradeCbtAttempt, getCbtAttemptExpiry, CBT_SUBMISSION_GRACE_SECONDS } from "../supabase/functions/eduken-api/cbt-attempt-validation.mjs";
 
 const snapshot = [
   { id: "q-1", subject: "Mathematics", prompt: "2 + 2?", options: { A: "3", B: "4", C: "5", D: "6" }, correct_option: "B", explanation: "Two plus two is four." },
@@ -35,4 +35,17 @@ test("rejects malformed answer values and malformed snapshots", () => {
   assert.equal(gradeCbtAttempt(snapshot, { "q-1": 9 }).valid, false);
   assert.equal(gradeCbtAttempt([], {}).valid, false);
   assert.equal(gradeCbtAttempt([{ id: "q", options: {}, correct_option: "Z" }], {}).valid, false);
+});
+
+
+test("timed CBT expiry includes a short server grace window for automatic submission", () => {
+  const started = new Date("2026-10-29T07:00:00.000Z");
+  assert.equal(CBT_SUBMISSION_GRACE_SECONDS, 15);
+  assert.equal(
+    getCbtAttemptExpiry(started, 900),
+    "2026-10-29T07:15:15.000Z",
+  );
+  assert.equal(getCbtAttemptExpiry("not-a-date", 900), null);
+  assert.equal(getCbtAttemptExpiry(started, 0), null);
+  assert.equal(getCbtAttemptExpiry(started, 900, -1), null);
 });
