@@ -3255,7 +3255,6 @@ Deno.serve(async (req) => {
           total: graded.total,
           status: "submitted",
           submitted_at: submittedAt,
-          duration_seconds: Math.max(0, Math.floor((Date.now() - new Date(attempt.started_at).getTime()) / 1000)),
         })
         .eq("id", attempt.id)
         .eq("status", "active")
