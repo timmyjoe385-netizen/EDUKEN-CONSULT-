@@ -57,7 +57,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: 6c2433e899d3005cdf82b8eaa98de61f
       - name: Smoke-test real CBT preview in Chromium
         env:
-          CBT_PREVIEW_URL: https://eduken-consult-preview.timmy385.workers.dev/cbt
+          CBT_PREVIEW_URL: https://eduken-consult-preview.timmyjoe385.workers.dev/cbt
         run: |
           npx playwright install chromium --with-deps
           node tests/cbt-preview-smoke.mjs
