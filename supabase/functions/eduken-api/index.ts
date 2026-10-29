@@ -3118,6 +3118,40 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/cbt/attempts" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.from("cbt_attempts")
+        .select("id,mode,subject,score,total,duration_seconds,submitted_at")
+        .eq("user_id", user.id)
+        .order("submitted_at", { ascending: false })
+        .limit(30);
+      if (error) throw error;
+      return json({ items: data ?? [] });
+    }
+
+    if (path === "/api/cbt/attempts" && req.method === "POST") {
+      const user = await requireUser(req);
+      const parsed = parseJsonObjectBody(await req.text());
+      if (!parsed.valid) return json({ error: parsed.error }, 400);
+      const body = parsed.value as Record<string, unknown>;
+      const mode = body.mode;
+      const subject = String(body.subject || "").trim().slice(0, 120);
+      const score = Number(body.score);
+      const total = Number(body.total);
+      const duration = body.durationSeconds == null ? null : Number(body.durationSeconds);
+      if (!["practice","mock"].includes(String(mode)) || !subject ||
+          !Number.isInteger(score) || !Number.isInteger(total) || total < 1 ||
+          score < 0 || score > total ||
+          (duration !== null && (!Number.isInteger(duration) || duration < 0 || duration > 86400))) {
+        return json({ error: "Invalid CBT attempt summary." }, 400);
+      }
+      const { data, error } = await db.from("cbt_attempts").insert({
+        user_id: user.id, mode, subject, score, total, duration_seconds: duration,
+      }).select("id,mode,subject,score,total,duration_seconds,submitted_at").single();
+      if (error) throw error;
+      return json({ attempt: data }, 201);
+    }
+
     if (path === "/api/cbt/questions" && req.method === "GET") {
       const params = new URL(req.url).searchParams;
       let query = db.from("cbt_questions").select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty,source_type,source_name,source_year").eq("status", "published").order("subject").order("topic").limit(100);
