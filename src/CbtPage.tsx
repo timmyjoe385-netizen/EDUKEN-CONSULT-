@@ -164,11 +164,18 @@ export default function CbtPage() {
           setQuestionLoadError(true);
           return;
         }
-        setPublishedQuestions(mapped);
+        if (mapped.length === 0) {
+          // An empty production question bank should not leave the entire CBT unusable.
+          // Fall back to the clearly labelled, original local starter set until questions are published.
+          setPublishedQuestions(QUESTIONS);
+          setQuestionLoadError(true);
+        } else {
+          setPublishedQuestions(mapped);
+        }
       })
       .catch(() => {
         if (!active) return;
-        // Keep the existing original sample set available in preview if the question API is not deployed yet.
+        // Keep the original sample set available when the question API cannot be reached.
         setPublishedQuestions(QUESTIONS);
         setQuestionLoadError(true);
       });
