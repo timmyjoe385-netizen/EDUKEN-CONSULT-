@@ -266,6 +266,7 @@ export default function CbtPage() {
 
     let nextQuestions: Question[] = [];
     let durationSeconds = nextMode === 'mock' ? 30 * 60 : 15 * 60;
+    let serverDeadline: number | null = null;
     if (questionLoadError) {
       nextQuestions = nextMode === 'mock' ? QUESTIONS : QUESTIONS.filter(question => question.subject === subject);
       setLocalFallbackSession(true);
@@ -287,6 +288,9 @@ export default function CbtPage() {
         if (!nextQuestions.length) throw new Error('The question set could not be prepared. Please try again.');
         setAttemptToken(data.attemptToken);
         durationSeconds = Number(data.durationSeconds) || durationSeconds;
+        const serverExpiry = Date.parse(String(data.expiresAt || ''));
+        // Server expiry includes the 15-second submission grace; align the visible timer to the actual exam duration.
+        if (Number.isFinite(serverExpiry)) serverDeadline = serverExpiry - 15_000;
       } catch (e) {
         setStartError(e instanceof Error ? e.message : 'Could not start practice. Please try again.');
         setStarting(false);
@@ -300,7 +304,7 @@ export default function CbtPage() {
       return;
     }
     setSessionQuestions(nextQuestions);
-    deadlineRef.current = Date.now() + durationSeconds * 1000;
+    deadlineRef.current = serverDeadline ?? (Date.now() + durationSeconds * 1000);
     setSecondsLeft(durationSeconds);
     setStarted(true);
     setStarting(false);
