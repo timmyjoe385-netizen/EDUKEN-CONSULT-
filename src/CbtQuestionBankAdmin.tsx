@@ -49,6 +49,8 @@ export default function CbtQuestionBankAdmin() {
   const [message,setMessage] = useState('');
   const [error,setError] = useState('');
   const [importResult,setImportResult] = useState<any>(null);
+  const [importHistory,setImportHistory] = useState<any[]>([]);
+  const [loadingImports,setLoadingImports] = useState(false);
   const [importing,setImporting] = useState(false);
   const [filename,setFilename] = useState('');
   const [showImport,setShowImport] = useState(false);
@@ -59,7 +61,18 @@ export default function CbtQuestionBankAdmin() {
     catch(e) { setError(e instanceof Error ? e.message : 'Could not load question bank.'); }
     finally { setLoading(false); }
   };
-  useEffect(()=>{ void load(); },[filter]);
+  const loadImportHistory = async () => {
+    setLoadingImports(true);
+    try {
+      const result = await api.get('/api/admin/cbt/imports');
+      setImportHistory(result.data?.items || []);
+    } catch(e) {
+      setError(e instanceof Error ? e.message : 'Could not load import history.');
+    } finally {
+      setLoadingImports(false);
+    }
+  };
+  useEffect(()=>{ void load(); void loadImportHistory(); },[filter]);
   const visible = useMemo(()=>items.filter(q => !search || [q.question_text,q.subject,q.topic,q.subtopic].join(' ').toLowerCase().includes(search.toLowerCase())),[items,search]);
   const change = (key: keyof Question, value: any) => setForm(current => current ? ({...current,[key]:value}) : current);
   const save = async () => {
@@ -93,7 +106,7 @@ export default function CbtQuestionBankAdmin() {
     setImporting(true); setError('');
     try {
       const result=await api.post('/api/admin/cbt/import',{filename,sourceLabel:'CSV admin import',rows:batchRows});
-      setImportResult(result.data); setMessage('Import finished. All imported questions remain drafts until reviewed.'); setBatchRows(null); await load();
+      setImportResult(result.data); setMessage('Import finished. All imported questions remain drafts until reviewed.'); setBatchRows(null); await load(); await loadImportHistory();
     } catch(e) { setError(e instanceof Error ? e.message : 'Import failed.'); }
     finally { setImporting(false); }
   };
@@ -127,6 +140,10 @@ export default function CbtQuestionBankAdmin() {
     </div> : null}
     {loading ? <div className="admin-empty">Loading question bank…</div> : visible.length ? <div className="system-settings-list">{visible.map(q=><article className="system-setting-row" key={q.id}><span className="system-setting-copy"><b>{q.subject} · {q.topic}</b><small>{q.question_text}</small><small>Source: {q.source_type==='original'?'Original':q.source_name||q.source_type}{q.source_year?' · '+q.source_year:''} · {q.difficulty}</small><small>State: <b>{q.status}</b></small></span><div className="analytics-controls"><button className="secondary" onClick={()=>setForm({...q})}>Edit</button>{q.status==='draft'?<button className="secondary" onClick={()=>void transition(q,'reviewed')}>Mark reviewed</button>:null}{q.status==='reviewed'?<button className="secondary" onClick={()=>void transition(q,'approved')}>Approve</button>:null}{q.status==='approved'?<button className="primary" onClick={()=>void transition(q,'published')}>Publish</button>:null}{q.status==='published'?<button className="secondary" onClick={()=>void transition(q,'unpublished')}>Unpublish</button>:null}{['draft','unpublished'].includes(q.status)?<button className="secondary" onClick={()=>void remove(q)}>Delete</button>:null}</div></article>)}</div> : <div className="admin-empty">No questions match this filter yet. Create one or import a CSV template.</div>}
     {showImport ? <div className="system-settings-panel" style={{marginTop:18}}><div className="analytics-toolbar"><h3>Bulk CSV import</h3><button className="secondary" onClick={()=>{setShowImport(false);setBatchRows(null);}}><X size={16}/> Close</button></div><p>Upload a UTF-8 CSV using the template. Maximum 500 rows per import. Invalid rows and duplicates are reported. Everything imported stays in draft; no question is auto-published.</p><input type="file" accept=".csv,text/csv" onChange={e=>void chooseFile(e.target.files?.[0])}/>{batchRows ? <div className="system-setting-row"><span>{filename}: {batchRows.length} rows ready for validation and import.</span><button className="primary" onClick={()=>void runImport()} disabled={importing}><Upload size={16}/>{importing?'Importing…':'Validate & import drafts'}</button></div>:null}{importResult ? <div className="analytics-error" role="status"><b>Import report</b><p>Inserted: {importResult.inserted} · Duplicates: {importResult.duplicates} · Invalid: {importResult.invalid}</p>{(importResult.errors||[]).slice(0,30).map((e:any,i:number)=><small key={i}>Row {e.row}: {e.errors?.join(' ')}</small>)}</div>:null}</div>:null}
+    <div className="system-settings-panel" style={{marginTop:18}}>
+      <div className="analytics-toolbar"><div><h3>CSV import history</h3><p>Recent batches and their validation outcomes.</p></div><button className="secondary" onClick={()=>void loadImportHistory()} disabled={loadingImports}><RefreshCw size={16}/>{loadingImports?'Refreshing…':'Refresh history'}</button></div>
+      {loadingImports && importHistory.length===0 ? <div className="admin-empty">Loading import history…</div> : importHistory.length===0 ? <div className="admin-empty">No CSV imports recorded yet.</div> : <div className="system-settings-list">{importHistory.map((batch:any)=><article className="system-setting-row" key={batch.id}><span className="system-setting-copy"><b>{batch.filename || 'Unnamed CSV import'}</b><small>{batch.source_label || 'Admin CSV import'} · {new Date(batch.created_at).toLocaleString()}</small><small>{batch.inserted_rows} imported · {batch.duplicate_rows} duplicates · {batch.invalid_rows} invalid · {batch.total_rows} total</small></span><span className="tag">{batch.status}</span></article>)}</div>}
+    </div>
     <div className="system-setting-row"><ShieldCheck size={18}/><span>Students can only retrieve published questions through the public API. Administrative writes require the existing server-side admin authorization check. Source and licensing notes are retained for audit.</span></div>
   </section>;
 }
