@@ -131,9 +131,14 @@ export default function CbtPage() {
     [mode, selectedSubject]
   );
   const question = activeQuestions[current];
+  const calculatorAllowed = Boolean(question && ['Mathematics', 'Physics', 'Chemistry', 'Economics'].includes(question.subject));
   const correctCount = activeQuestions.filter(item => answers[item.id] === item.answer).length;
   const answeredCount = activeQuestions.filter(item => answers[item.id] !== undefined).length;
   const percent = activeQuestions.length ? Math.round((correctCount / activeQuestions.length) * 100) : 0;
+
+  useEffect(() => {
+    if (!calculatorAllowed) setCalculatorOpen(false);
+  }, [calculatorAllowed]);
 
   useEffect(() => {
     try {
@@ -200,7 +205,7 @@ export default function CbtPage() {
         <main className="cbt-exam-wrap">
           <div className="cbt-exam-heading">
             <div><span className="cbt-eyebrow">{mode === 'mock' ? 'MIXED MOCK TEST' : 'SUBJECT PRACTICE'}</span><h1>{mode === 'mock' ? 'JAMB-style practice mock' : selectedSubject}</h1><p>Independent practice by EDUKEN CONSULT. Not affiliated with JAMB.</p></div>
-            <div className="cbt-exam-tools"><button className="cbt-calculator-trigger" onClick={() => setCalculatorOpen(true)}><Calculator size={16} /> Calculator</button><button className="cbt-quiet-button" onClick={() => { if (window.confirm('Leave this practice session? Your current answers will be lost.')) { setStarted(false); setSubmitted(false); } }}><ArrowLeft size={16} /> Exit</button></div>
+            <div className="cbt-exam-tools">{calculatorAllowed && <button className="cbt-calculator-trigger" onClick={() => setCalculatorOpen(true)}><Calculator size={16} /> Calculator</button>}<button className="cbt-quiet-button" onClick={() => { if (window.confirm('Leave this practice session? Your current answers will be lost.')) { setStarted(false); setSubmitted(false); } }}><ArrowLeft size={16} /> Exit</button></div>
           </div>
           <div className="cbt-exam-progress"><span style={{ width: ((current + 1) / activeQuestions.length * 100) + '%' }} /></div>
           <div className="cbt-exam-grid">
