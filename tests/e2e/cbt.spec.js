@@ -110,3 +110,78 @@ test('published CBT questions are graded by the server after submission', async 
   await expect(page.getByText('Correct answer:')).toBeVisible();
   await expect(page.getByText('The second option is correct.')).toBeVisible();
 });
+
+
+test('timed-out CBT automatically retries a temporary submission failure', async ({ page }) => {
+  await page.clock.install();
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'question-timeout-1',
+      subject: 'Use of English',
+      question_text: 'Choose the correct option.',
+      options: { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' },
+    }] }),
+  }));
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      attemptToken: 'b'.repeat(64),
+      durationSeconds: 1,
+      expiresAt: new Date(Date.now() + 16_000).toISOString(),
+      questions: [{
+        id: 'question-timeout-1',
+        subject: 'Use of English',
+        prompt: 'Choose the correct option.',
+        options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
+      }],
+    }),
+  }));
+
+  let submissionCount = 0;
+  await page.route('**/api/cbt/submit*', async route => {
+    submissionCount += 1;
+    if (submissionCount === 1) {
+      await route.fulfill({
+        status: 503,
+        contentType: 'application/json',
+        body: JSON.stringify({ error: 'Temporary network/server failure.' }),
+      });
+      return;
+    }
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        score: 1,
+        total: 1,
+        percent: 100,
+        submittedAt: new Date(Date.now()).toISOString(),
+        review: [{
+          id: 'question-timeout-1',
+          subject: 'Use of English',
+          prompt: 'Choose the correct option.',
+          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
+          selectedOption: 'B',
+          correctOption: 'B',
+          explanation: 'The second option is correct.',
+          isCorrect: true,
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await page.getByRole('button', { name: /Right/ }).click();
+
+  await page.clock.fastForward(1_000);
+  await expect(page.getByText(/Temporary network\/server failure/i)).toBeVisible();
+  await page.clock.fastForward(1_500);
+
+  await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
+  expect(submissionCount).toBe(2);
+});
