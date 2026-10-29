@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Calculator, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target, X } from 'lucide-react';
 import './cbt.css';
 
 type Question = { id: number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
@@ -46,15 +46,99 @@ export default function CbtPage() {
   const [flagged, setFlagged] = useState<number[]>([]);
   const [secondsLeft, setSecondsLeft] = useState(15 * 60);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
+  const [calculatorOpen, setCalculatorOpen] = useState(false);
+  const [calcDisplay, setCalcDisplay] = useState('0');
+  const [calcStored, setCalcStored] = useState<number | null>(null);
+  const [calcOperator, setCalcOperator] = useState<string | null>(null);
+  const [calcReset, setCalcReset] = useState(false);
+
+  const calculatorNumber = () => Number(calcDisplay);
+  const calculatorDigit = (digit: string) => {
+    if (calcReset || calcDisplay === '0' || calcDisplay === 'Error') {
+      setCalcDisplay(digit);
+    } else if (calcDisplay.length < 16) {
+      setCalcDisplay(calcDisplay + digit);
+    }
+    setCalcReset(false);
+  };
+  const calculatorDecimal = () => {
+    if (calcReset || calcDisplay === 'Error') {
+      setCalcDisplay('0.');
+      setCalcReset(false);
+    } else if (!calcDisplay.includes('.')) {
+      setCalcDisplay(calcDisplay + '.');
+    }
+  };
+  const calculatorClear = () => {
+    setCalcDisplay('0');
+    setCalcStored(null);
+    setCalcOperator(null);
+    setCalcReset(false);
+  };
+  const calculatorBackspace = () => {
+    if (calcReset || calcDisplay === 'Error' || calcDisplay.length <= 1 || (calcDisplay.length === 2 && calcDisplay.startsWith('-'))) {
+      setCalcDisplay('0');
+    } else {
+      setCalcDisplay(calcDisplay.slice(0, -1));
+    }
+    setCalcReset(false);
+  };
+  const calculatorFormat = (value: number) => {
+    if (!Number.isFinite(value)) return 'Error';
+    return String(Number(value.toPrecision(10)));
+  };
+  const calculatorApplyOperator = (operator: string) => {
+    const currentValue = calculatorNumber();
+    if (!Number.isFinite(currentValue)) return;
+    if (calcStored !== null && calcOperator && !calcReset) {
+      const result = calcOperator === '+' ? calcStored + currentValue
+        : calcOperator === '−' ? calcStored - currentValue
+        : calcOperator === '×' ? calcStored * currentValue
+        : currentValue === 0 ? NaN : calcStored / currentValue;
+      const formatted = calculatorFormat(result);
+      setCalcDisplay(formatted);
+      setCalcStored(formatted === 'Error' ? null : Number(formatted));
+    } else {
+      setCalcStored(currentValue);
+    }
+    setCalcOperator(operator);
+    setCalcReset(true);
+  };
+  const calculatorEquals = () => {
+    if (calcStored === null || !calcOperator) return;
+    const currentValue = calculatorNumber();
+    const result = calcOperator === '+' ? calcStored + currentValue
+      : calcOperator === '−' ? calcStored - currentValue
+      : calcOperator === '×' ? calcStored * currentValue
+      : currentValue === 0 ? NaN : calcStored / currentValue;
+    setCalcDisplay(calculatorFormat(result));
+    setCalcStored(null);
+    setCalcOperator(null);
+    setCalcReset(true);
+  };
+  const calculatorUnary = (operation: 'sqrt' | 'square' | 'percent' | 'sign') => {
+    const value = calculatorNumber();
+    const result = operation === 'sqrt' ? (value < 0 ? NaN : Math.sqrt(value))
+      : operation === 'square' ? value * value
+      : operation === 'percent' ? value / 100
+      : value * -1;
+    setCalcDisplay(calculatorFormat(result));
+    setCalcReset(true);
+  };
 
   const activeQuestions = useMemo(
     () => mode === 'mock' ? QUESTIONS : QUESTIONS.filter(question => question.subject === selectedSubject),
     [mode, selectedSubject]
   );
   const question = activeQuestions[current];
+  const calculatorAllowed = Boolean(question && ['Mathematics', 'Physics', 'Chemistry', 'Economics'].includes(question.subject));
   const correctCount = activeQuestions.filter(item => answers[item.id] === item.answer).length;
   const answeredCount = activeQuestions.filter(item => answers[item.id] !== undefined).length;
   const percent = activeQuestions.length ? Math.round((correctCount / activeQuestions.length) * 100) : 0;
+
+  useEffect(() => {
+    if (!calculatorAllowed) setCalculatorOpen(false);
+  }, [calculatorAllowed]);
 
   useEffect(() => {
     try {
@@ -121,7 +205,7 @@ export default function CbtPage() {
         <main className="cbt-exam-wrap">
           <div className="cbt-exam-heading">
             <div><span className="cbt-eyebrow">{mode === 'mock' ? 'MIXED MOCK TEST' : 'SUBJECT PRACTICE'}</span><h1>{mode === 'mock' ? 'JAMB-style practice mock' : selectedSubject}</h1><p>Independent practice by EDUKEN CONSULT. Not affiliated with JAMB.</p></div>
-            <button className="cbt-quiet-button" onClick={() => { if (window.confirm('Leave this practice session? Your current answers will be lost.')) { setStarted(false); setSubmitted(false); } }}><ArrowLeft size={16} /> Exit</button>
+            <div className="cbt-exam-tools">{calculatorAllowed && <button className="cbt-calculator-trigger" onClick={() => setCalculatorOpen(true)}><Calculator size={16} /> Calculator</button>}<button className="cbt-quiet-button" onClick={() => { if (window.confirm('Leave this practice session? Your current answers will be lost.')) { setStarted(false); setSubmitted(false); } }}><ArrowLeft size={16} /> Exit</button></div>
           </div>
           <div className="cbt-exam-progress"><span style={{ width: ((current + 1) / activeQuestions.length * 100) + '%' }} /></div>
           <div className="cbt-exam-grid">
@@ -144,6 +228,31 @@ export default function CbtPage() {
               <small>Answers are saved only in this browser for this early preview.</small>
             </aside>
           </div>
+          {calculatorOpen && (
+            <div className="cbt-calculator-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setCalculatorOpen(false); }}>
+              <section className="cbt-calculator" role="dialog" aria-modal="true" aria-label="Practice calculator">
+                <header><div><Calculator size={18} /><div><strong>Calculator</strong><small>For calculation practice</small></div></div><button aria-label="Close calculator" onClick={() => setCalculatorOpen(false)}><X size={19} /></button></header>
+                <div className="cbt-calculator-display" aria-live="polite">{calcDisplay}</div>
+                <div className="cbt-calculator-keys">
+                  <button className="utility" onClick={() => calculatorUnary('sqrt')}>√</button>
+                  <button className="utility" onClick={() => calculatorUnary('square')}>x²</button>
+                  <button className="utility" onClick={() => calculatorUnary('percent')}>%</button>
+                  <button className="utility" onClick={calculatorBackspace}>⌫</button>
+                  <button className="utility" onClick={calculatorClear}>AC</button>
+                  {['7','8','9','÷','4','5','6','×','1','2','3','−','±','0','.','+'].map(key => (
+                    <button key={key} className={['÷','×','−','+'].includes(key) ? 'operator' : ''} onClick={() => {
+                      if (/^\d$/.test(key)) calculatorDigit(key);
+                      else if (key === '.') calculatorDecimal();
+                      else if (key === '±') calculatorUnary('sign');
+                      else calculatorApplyOperator(key);
+                    }}>{key}</button>
+                  ))}
+                  <button className="equals" onClick={calculatorEquals}>=</button>
+                </div>
+                <p>Use only when permitted by the practice test instructions.</p>
+              </section>
+            </div>
+          )}
         </main>
       </div>
     );
