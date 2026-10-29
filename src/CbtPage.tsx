@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Calculator, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target, X } from 'lucide-react';
 import './cbt.css';
 import { api } from './lib/api';
 
-type Question = { id: number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
+type Question = { id: string | number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
 
 const QUESTIONS: Question[] = [
   { id: 1, subject: 'Use of English', prompt: 'Choose the word nearest in meaning to “diligent”.', options: ['Careless', 'Hardworking', 'Impatient', 'Uncertain'], answer: 1, explanation: 'Diligent means careful and hardworking.' },
@@ -45,8 +45,17 @@ export default function CbtPage() {
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [current, setCurrent] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, number>>({});
-  const [flagged, setFlagged] = useState<number[]>([]);
+  const [answers, setAnswers] = useState<Record<string, number>>({});
+  const [flagged, setFlagged] = useState<Array<string | number>>([]);
+  const [sessionQuestions, setSessionQuestions] = useState<Question[]>([]);
+  const [attemptToken, setAttemptToken] = useState<string | null>(null);
+  const [serverResult, setServerResult] = useState<any>(null);
+  const [localFallbackSession, setLocalFallbackSession] = useState(false);
+  const [starting, setStarting] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [startError, setStartError] = useState('');
+  const [submitError, setSubmitError] = useState('');
+  const finishRef = useRef<() => void>(() => {});
   const [secondsLeft, setSecondsLeft] = useState(15 * 60);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [calculatorOpen, setCalculatorOpen] = useState(false);
@@ -136,12 +145,12 @@ export default function CbtPage() {
         if (!active) return;
         const rows = Array.isArray(result.data?.items) ? result.data.items : [];
         const mapped: Question[] = rows.map((row: any, index: number) => ({
-          id: index + 1,
+          id: String(row.id || index + 1),
           subject: String(row.subject || ''),
           prompt: String(row.question_text || ''),
           options: ['A', 'B', 'C', 'D'].map(key => String(row.options?.[key] || '')),
-          answer: Math.max(0, ['A', 'B', 'C', 'D'].indexOf(String(row.correct_option || 'A').toUpperCase())),
-          explanation: String(row.explanation || ''),
+          answer: -1,
+          explanation: '',
         })).filter((question: Question) => question.subject && question.prompt && question.options.every(Boolean));
         setPublishedQuestions(mapped);
       })
@@ -155,15 +164,16 @@ export default function CbtPage() {
   }, []);
 
   const questionPool = publishedQuestions ?? [];
-  const activeQuestions = useMemo(
+  const poolForSelection = useMemo(
     () => mode === 'mock' ? questionPool : questionPool.filter(question => question.subject === selectedSubject),
     [mode, selectedSubject, questionPool]
   );
+  const activeQuestions = sessionQuestions.length ? sessionQuestions : poolForSelection;
   const question = activeQuestions[current];
   const calculatorAllowed = Boolean(question && ['Mathematics', 'Physics', 'Chemistry', 'Economics'].includes(question.subject));
-  const correctCount = activeQuestions.filter(item => answers[item.id] === item.answer).length;
-  const answeredCount = activeQuestions.filter(item => answers[item.id] !== undefined).length;
-  const percent = activeQuestions.length ? Math.round((correctCount / activeQuestions.length) * 100) : 0;
+  const correctCount = serverResult ? Number(serverResult.score || 0) : activeQuestions.filter(item => item.answer >= 0 && answers[String(item.id)] === item.answer).length;
+  const answeredCount = activeQuestions.filter(item => answers[String(item.id)] !== undefined).length;
+  const percent = serverResult ? Number(serverResult.percent || 0) : activeQuestions.length ? Math.round((correctCount / activeQuestions.length) * 100) : 0;
 
   useEffect(() => {
     if (!calculatorAllowed) setCalculatorOpen(false);
@@ -200,7 +210,6 @@ export default function CbtPage() {
       setSecondsLeft(value => {
         if (value <= 1) {
           window.clearInterval(timer);
-          setSubmitted(true);
           return 0;
         }
         return value - 1;
@@ -208,6 +217,10 @@ export default function CbtPage() {
     }, 1000);
     return () => window.clearInterval(timer);
   }, [started, submitted]);
+
+  useEffect(() => {
+    if (started && !submitted && secondsLeft === 0) finishRef.current();
+  }, [secondsLeft, started, submitted]);
 
   useEffect(() => {
     if (!submitted || activeQuestions.length === 0) return;
@@ -223,41 +236,107 @@ export default function CbtPage() {
       try { window.localStorage.setItem('eduken-cbt-attempts-v1', JSON.stringify(next)); } catch { /* Optional history. */ }
       return next;
     });
-    void api.post('/api/cbt/attempts', {
-      mode: result.mode,
-      subject: result.subject,
-      score: result.score,
-      total: result.total,
-      durationSeconds: Math.max(0, (mode === 'mock' ? 30 * 60 : 15 * 60) - secondsLeft),
-    }).then((response) => {
-      const item = response.data?.attempt;
-      if (!item) return;
-      const savedAttempt: Attempt = {
-        date: String(item.submitted_at || result.date),
-        mode: String(item.mode || result.mode),
-        subject: String(item.subject || result.subject),
-        score: Number(item.score ?? result.score),
-        total: Number(item.total ?? result.total),
-      };
-      setAttempts(previous => [savedAttempt, ...previous.filter(entry => entry.date !== result.date)].slice(0, 10));
-    }).catch(() => { /* Signed-out attempts remain saved in this browser. */ });
+    // The server already persisted and graded authenticated/guest attempt sessions. Browser history remains a convenience.
   // Save exactly once for each submitted session.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitted]);
 
-  const begin = (nextMode: 'practice' | 'mock', subject = selectedSubject) => {
+  const begin = async (nextMode: 'practice' | 'mock', subject = selectedSubject) => {
+    setStarting(true);
+    setStartError('');
+    setSubmitError('');
     setMode(nextMode);
     setSelectedSubject(subject);
     setAnswers({});
     setFlagged([]);
     setCurrent(0);
-    setSecondsLeft(nextMode === 'mock' ? 30 * 60 : 15 * 60);
     setSubmitted(false);
+    setStarted(false);
+    setSessionQuestions([]);
+    setAttemptToken(null);
+    setServerResult(null);
+    setLocalFallbackSession(false);
+
+    let nextQuestions: Question[] = [];
+    let durationSeconds = nextMode === 'mock' ? 30 * 60 : 15 * 60;
+    if (questionLoadError) {
+      nextQuestions = nextMode === 'mock' ? QUESTIONS : QUESTIONS.filter(question => question.subject === subject);
+      setLocalFallbackSession(true);
+    } else {
+      try {
+        const response = await api.post('/api/cbt/start', { mode: nextMode, subject });
+        const data = response.data || {};
+        if (!Array.isArray(data.questions) || !data.questions.length || typeof data.attemptToken !== 'string') {
+          throw new Error('No published questions are available for this selection yet.');
+        }
+        nextQuestions = data.questions.map((row: any, index: number) => ({
+          id: String(row.id || index + 1),
+          subject: String(row.subject || subject),
+          prompt: String(row.prompt || ''),
+          options: Array.isArray(row.options) ? row.options.map((option: unknown) => String(option)) : [],
+          answer: -1,
+          explanation: '',
+        })).filter((item: Question) => item.prompt && item.options.length === 4 && item.options.every(Boolean));
+        if (!nextQuestions.length) throw new Error('The question set could not be prepared. Please try again.');
+        setAttemptToken(data.attemptToken);
+        durationSeconds = Number(data.durationSeconds) || durationSeconds;
+      } catch (e) {
+        setStartError(e instanceof Error ? e.message : 'Could not start practice. Please try again.');
+        setStarting(false);
+        return;
+      }
+    }
+
+    if (!nextQuestions.length) {
+      setStartError('No starter questions are available for this subject yet.');
+      setStarting(false);
+      return;
+    }
+    setSessionQuestions(nextQuestions);
+    setSecondsLeft(durationSeconds);
     setStarted(true);
+    setStarting(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const finish = () => setSubmitted(true);
+  const finish = async () => {
+    if (submitting || submitted) return;
+    if (!attemptToken || localFallbackSession) {
+      setSubmitted(true);
+      return;
+    }
+    setSubmitting(true);
+    setSubmitError('');
+    try {
+      const submittedAnswers = Object.fromEntries(activeQuestions.map(item => [
+        String(item.id),
+        answers[String(item.id)] === undefined ? null : answers[String(item.id)],
+      ]));
+      const response = await api.post('/api/cbt/submit', { attemptToken, answers: submittedAnswers });
+      const data = response.data || {};
+      if (!Array.isArray(data.review)) throw new Error('The result could not be verified. Please retry submission.');
+      const reviewedQuestions: Question[] = data.review.map((item: any) => ({
+        id: String(item.id),
+        subject: String(item.subject || ''),
+        prompt: String(item.prompt || ''),
+        options: Array.isArray(item.options) ? item.options.map((option: unknown) => String(option)) : [],
+        answer: ['A', 'B', 'C', 'D'].indexOf(String(item.correctOption || '').toUpperCase()),
+        explanation: String(item.explanation || ''),
+      }));
+      setSessionQuestions(reviewedQuestions);
+      setServerResult({
+        score: Number(data.score || 0),
+        total: Number(data.total || reviewedQuestions.length),
+        percent: Number(data.percent || 0),
+      });
+      setSubmitted(true);
+    } catch (e) {
+      setSubmitError(e instanceof Error ? e.message : 'Could not submit practice. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+  finishRef.current = () => { void finish(); };
   const formatTime = (value: number) => String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0');
 
   if (started && question && !submitted) {
@@ -278,19 +357,20 @@ export default function CbtPage() {
               <div className="cbt-question-meta"><span>Question {current + 1} of {activeQuestions.length}</span><button className={flagged.includes(question.id) ? 'cbt-flag active' : 'cbt-flag'} onClick={() => setFlagged(old => old.includes(question.id) ? old.filter(id => id !== question.id) : [...old, question.id])}><Flag size={15} /> {flagged.includes(question.id) ? 'Flagged' : 'Review later'}</button></div>
               <h2>{question.prompt}</h2>
               <div className="cbt-options">
-                {question.options.map((option, index) => <button key={option} className={answers[question.id] === index ? 'cbt-option selected' : 'cbt-option'} onClick={() => setAnswers(old => ({ ...old, [question.id]: index }))}><span>{String.fromCharCode(65 + index)}</span><b>{option}</b>{answers[question.id] === index ? <CheckCircle2 size={18} /> : null}</button>)}
+                {question.options.map((option, index) => <button key={option} className={answers[String(question.id)] === index ? 'cbt-option selected' : 'cbt-option'} onClick={() => setAnswers(old => ({ ...old, [String(question.id)]: index }))}><span>{String.fromCharCode(65 + index)}</span><b>{option}</b>{answers[question.id] === index ? <CheckCircle2 size={18} /> : null}</button>)}
               </div>
               <div className="cbt-question-actions">
                 <button className="cbt-secondary-button" disabled={current === 0} onClick={() => setCurrent(value => value - 1)}>Previous</button>
-                {current < activeQuestions.length - 1 ? <button className="cbt-primary-button" onClick={() => setCurrent(value => value + 1)}>Next question <ArrowRight size={16} /></button> : <button className="cbt-primary-button" onClick={finish}>Submit practice <CheckCircle2 size={16} /></button>}
+                {current < activeQuestions.length - 1 ? <button className="cbt-primary-button" onClick={() => setCurrent(value => value + 1)}>Next question <ArrowRight size={16} /></button> : <button className="cbt-primary-button" onClick={() => void finish()} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit practice'} <CheckCircle2 size={16} /></button>}
               </div>
             </section>
             <aside className="cbt-question-nav">
               <h3>Question navigator</h3><p>{answeredCount} answered · {flagged.length} flagged</p>
-              <div className="cbt-number-grid">{activeQuestions.map((item, index) => <button key={item.id} aria-label={'Go to question ' + (index + 1)} className={index === current ? 'current' : answers[item.id] !== undefined ? 'answered' : flagged.includes(item.id) ? 'flagged' : ''} onClick={() => setCurrent(index)}>{index + 1}</button>)}</div>
+              <div className="cbt-number-grid">{activeQuestions.map((item, index) => <button key={item.id} aria-label={'Go to question ' + (index + 1)} className={index === current ? 'current' : answers[String(item.id)] !== undefined ? 'answered' : flagged.includes(item.id) ? 'flagged' : ''} onClick={() => setCurrent(index)}>{index + 1}</button>)}</div>
               <div className="cbt-legend"><span><i className="answered" /> Answered</span><span><i className="flagged" /> Flagged</span><span><i className="current" /> Current</span></div>
-              <button className="cbt-submit-wide" onClick={finish}>Finish and see results</button>
-              <small>Answers are saved only in this browser for this early preview.</small>
+              <button className="cbt-submit-wide" onClick={() => void finish()} disabled={submitting}>{submitting ? 'Submitting…' : 'Finish and see results'}</button>
+              <small>The answer key stays server-side until submission. Sign in to save progress to your account; guest history stays in this browser.</small>
+              {submitError && <p className="cbt-disclaimer" role="alert">{submitError}</p>}
             </aside>
           </div>
           {calculatorOpen && (
@@ -328,7 +408,7 @@ export default function CbtPage() {
       <div className="cbt-page">
         <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><a className="cbt-back-link" href="/"><ArrowLeft size={16} /> EDUKEN home</a></header>
         <main className="cbt-results-wrap">
-          <section className="cbt-result-hero"><div className="cbt-result-icon"><Target size={28} /></div><span className="cbt-eyebrow">PRACTICE COMPLETE</span><h1>{percent >= 70 ? 'Good work. Keep building.' : 'Every attempt is progress.'}</h1><p>{mode === 'mock' ? 'Mixed JAMB-style mock' : selectedSubject} · {activeQuestions.length} questions</p><div className="cbt-score-ring"><strong>{percent}%</strong><span>Score</span></div><div className="cbt-result-stats"><div><strong>{correctCount}</strong><span>Correct</span></div><div><strong>{activeQuestions.length - correctCount}</strong><span>Incorrect / skipped</span></div><div><strong>{answeredCount}</strong><span>Attempted</span></div></div><button className="cbt-primary-button" onClick={() => begin(mode, selectedSubject)}><RotateCcw size={16} /> Try again</button><button className="cbt-secondary-button" onClick={() => { setStarted(false); setSubmitted(false); }}>Choose another practice</button></section>
+          <section className="cbt-result-hero"><div className="cbt-result-icon"><Target size={28} /></div><span className="cbt-eyebrow">PRACTICE COMPLETE</span><h1>{percent >= 70 ? 'Good work. Keep building.' : 'Every attempt is progress.'}</h1><p>{mode === 'mock' ? 'Mixed JAMB-style mock' : selectedSubject} · {activeQuestions.length} questions</p><div className="cbt-score-ring"><strong>{percent}%</strong><span>Score</span></div><div className="cbt-result-stats"><div><strong>{correctCount}</strong><span>Correct</span></div><div><strong>{activeQuestions.length - correctCount}</strong><span>Incorrect / skipped</span></div><div><strong>{answeredCount}</strong><span>Attempted</span></div></div><button className="cbt-primary-button" onClick={() => void begin(mode, selectedSubject)}><RotateCcw size={16} /> Try again</button><button className="cbt-secondary-button" onClick={() => { setStarted(false); setSubmitted(false); setSessionQuestions([]); setAttemptToken(null); setServerResult(null); setLocalFallbackSession(false); setStartError(''); }}>Choose another practice</button></section>
           <section className="cbt-review-card"><div className="cbt-review-heading"><div><span className="cbt-eyebrow">LEARN FROM YOUR ANSWERS</span><h2>Answer review</h2></div><span>{correctCount}/{activeQuestions.length} correct</span></div>{activeQuestions.map((item, index) => <article className="cbt-review-item" key={item.id}><div className="cbt-review-question"><span className={answers[item.id] === item.answer ? 'correct' : 'incorrect'}>{answers[item.id] === item.answer ? '✓' : '!'}</span><div><b>{index + 1}. {item.prompt}</b><p>Your answer: {answers[item.id] === undefined ? 'Not answered' : item.options[answers[item.id]]}</p><p>Correct answer: <strong>{item.options[item.answer]}</strong></p><small>{item.explanation}</small></div></div></article>)}</section>
         </main>
       </div>
@@ -340,7 +420,7 @@ export default function CbtPage() {
       <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><nav className="cbt-top-links"><a href="#subjects">Subjects</a><a href="#how-it-works">How it works</a><a href="/">Main website</a></nav><a className="cbt-mobile-home" href="/">Home</a></header>
       <main>
         <section className="cbt-hero">
-          <div className="cbt-hero-copy"><span className="cbt-eyebrow"><span /> JAMB PREPARATION STARTS HERE</span><h1>Prepare with purpose.<br /><em>Practise with confidence.</em></h1><p>Build your confidence with focused subject practice, timed mock tests and clear explanations — designed for Nigerian students preparing for entrance examinations.</p><div className="cbt-hero-actions"><button className="cbt-primary-button" disabled={!questionPool.some(question => question.subject === selectedSubject)} onClick={() => begin('practice', selectedSubject)}><BookOpen size={17} /> Start free practice</button><button className="cbt-secondary-button" disabled={!questionPool.length} onClick={() => begin('mock', 'Use of English')}><Clock3 size={17} /> Try a timed mock</button></div><div className="cbt-trust-row"><span><ShieldCheck size={16} /> Free starter practice</span><span><CheckCircle2 size={16} /> Instant results</span></div></div>
+          <div className="cbt-hero-copy"><span className="cbt-eyebrow"><span /> JAMB PREPARATION STARTS HERE</span><h1>Prepare with purpose.<br /><em>Practise with confidence.</em></h1><p>Build your confidence with focused subject practice, timed mock tests and clear explanations — designed for Nigerian students preparing for entrance examinations.</p><div className="cbt-hero-actions"><button className="cbt-primary-button" disabled={starting || !questionPool.some(question => question.subject === selectedSubject)} onClick={() => void begin('practice', selectedSubject)}><BookOpen size={17} /> {starting ? 'Starting…' : 'Start free practice'}</button><button className="cbt-secondary-button" disabled={starting || !questionPool.length} onClick={() => void begin('mock', 'Use of English')}><Clock3 size={17} /> {starting ? 'Starting…' : 'Try a timed mock'}</button></div>{startError && <p className="cbt-disclaimer" role="alert">{startError}</p>}<div className="cbt-trust-row"><span><ShieldCheck size={16} /> Free starter practice</span><span><CheckCircle2 size={16} /> Instant results</span></div></div>
           <div className="cbt-hero-visual"><div className="cbt-visual-orbit" /><div className="cbt-preview-panel"><div className="cbt-preview-top"><span>EDUKEN CBT</span><span className="cbt-live-pill">PRACTICE</span></div><div className="cbt-preview-title">Your next step<br /><b>starts here.</b></div><div className="cbt-preview-metrics"><div><BookOpen size={18} /><b>Subject practice</b><small>Learn topic by topic</small></div><div><Target size={18} /><b>Timed mock tests</b><small>Build exam confidence</small></div></div><div className="cbt-preview-footer"><span><CheckCircle2 size={15} /> Answer explanations</span><span>Built for mobile</span></div></div><div className="cbt-floating-note"><GraduationCap size={19} /><span><b>Stay consistent</b><small>One practice at a time</small></span></div></div>
         </section>
         <section className="cbt-subject-section" id="subjects"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">CHOOSE YOUR SUBJECT</span><h2>Start where you need it most.</h2></div><p>Choose a subject to practise, or take a mixed mock to check your current understanding.</p></div>{questionLoadError && <p className="cbt-disclaimer" role="status">The published question service is not available in this preview yet, so original starter samples are being used.</p>}{publishedQuestions !== null && !questionLoadError && questionPool.length === 0 && <p className="cbt-disclaimer" role="status">No questions have been published yet. Your admin can add and approve questions in the CBT Question Bank.</p>}<div className="cbt-subject-grid">{SUBJECTS.map(subject => <article className="cbt-subject-card" key={subject.name}><div className="cbt-subject-icon">{subject.icon}</div><div><span>{subject.short}</span><h3>{subject.name}</h3><p>{subject.detail}</p></div><button disabled={!questionPool.some(question => question.subject === subject.name)} onClick={() => begin('practice', subject.name)}>Practise subject <ArrowRight size={15} /></button></article>)}</div><div className="cbt-mock-banner"><div><span className="cbt-eyebrow">READY FOR A CHALLENGE?</span><h3>Try a mixed timed mock.</h3><p>Work through the starter question set, then review every answer and explanation.</p></div><button className="cbt-primary-button" disabled={!questionPool.length} onClick={() => begin('mock', 'Use of English')}>Start mixed mock <ArrowRight size={16} /></button></div></section>
