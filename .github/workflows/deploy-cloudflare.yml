@@ -55,6 +55,12 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: 6c2433e899d3005cdf82b8eaa98de61f
+      - name: Smoke-test real CBT preview in Chromium
+        env:
+          CBT_PREVIEW_URL: https://eduken-consult-preview.timmyjoe385.workers.dev/cbt
+        run: |
+          npx playwright install chromium --with-deps
+          node tests/cbt-preview-smoke.mjs
       - name: Smoke-test isolated guest payment recovery endpoint
         if: github.event_name == 'pull_request' && (github.head_ref == 'fix/guest-payment-return-recovery-20261019' || github.head_ref == 'integration/main-release-candidate-20261020' || github.head_ref == 'feat/flutterwave-test-integration')
         env:
