@@ -219,10 +219,28 @@ export default function CbtPage() {
       total: activeQuestions.length,
     };
     setAttempts(previous => {
-      const next = [result, ...previous].slice(0, 5);
+      const next = [result, ...previous].slice(0, 10);
       try { window.localStorage.setItem('eduken-cbt-attempts-v1', JSON.stringify(next)); } catch { /* Optional history. */ }
       return next;
     });
+    void api.post('/api/cbt/attempts', {
+      mode: result.mode,
+      subject: result.subject,
+      score: result.score,
+      total: result.total,
+      durationSeconds: Math.max(0, (mode === 'mock' ? 30 * 60 : 15 * 60) - secondsLeft),
+    }).then((response) => {
+      const item = response.data?.attempt;
+      if (!item) return;
+      const savedAttempt: Attempt = {
+        date: String(item.submitted_at || result.date),
+        mode: String(item.mode || result.mode),
+        subject: String(item.subject || result.subject),
+        score: Number(item.score ?? result.score),
+        total: Number(item.total ?? result.total),
+      };
+      setAttempts(previous => [savedAttempt, ...previous.filter(entry => entry.date !== result.date)].slice(0, 10));
+    }).catch(() => { /* Signed-out attempts remain saved in this browser. */ });
   // Save exactly once for each submitted session.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitted]);
