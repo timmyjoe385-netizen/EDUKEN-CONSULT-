@@ -3102,10 +3102,19 @@ Deno.serve(async (req) => {
         for (const row of data ?? []) existing.add(row.question_fingerprint);
       }
       const errors = [...prepared.errors];
+      const seenInBatch = new Set<string>();
       const candidates = prepared.valid.filter(item => {
-        if (!existing.has(item.question.question_fingerprint)) return true;
-        errors.push({ row: item.row, type: "duplicate_existing", errors: ["Matching question already exists in the bank."] });
-        return false;
+        const fingerprint = item.question.question_fingerprint;
+        if (existing.has(fingerprint)) {
+          errors.push({ row: item.row, type: "duplicate_existing", errors: ["Matching question already exists in the bank."] });
+          return false;
+        }
+        if (seenInBatch.has(fingerprint)) {
+          errors.push({ row: item.row, type: "duplicate_batch", errors: ["Matching question appears more than once in this CSV batch."] });
+          return false;
+        }
+        seenInBatch.add(fingerprint);
+        return true;
       });
       const { data: batch, error: batchError } = await db.from("cbt_question_imports").insert({
         filename: String(body.filename || "").trim().slice(0, 200),
