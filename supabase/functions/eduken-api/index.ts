@@ -3241,14 +3241,14 @@ Deno.serve(async (req) => {
       }
       if (attempt.status !== "active") return json({ error: "This practice attempt has expired. Start a new attempt to continue." }, 410);
       if (new Date(attempt.expires_at).getTime() <= Date.now()) {
-        const { error } = await db.from("cbt_attempts").update({ status: "expired" }).eq("id", attempt.id).eq("status", "active");
+        const { error } = await db.from("cbt_attempt_sessions").update({ status: "expired" }).eq("id", attempt.id).eq("status", "active");
         if (error) throw error;
         return json({ error: "This practice attempt has expired. Start a new attempt to continue." }, 410);
       }
       const graded = gradeCbtAttempt(attempt.question_snapshot, body.answers);
       if (!graded.valid) return json({ error: "Answer submission is invalid.", errors: graded.errors }, 400);
       const submittedAt = new Date().toISOString();
-      const { data: updated, error: updateError } = await db.from("cbt_attempts")
+      const { data: updated, error: updateError } = await db.from("cbt_attempt_sessions")
         .update({
           answers: graded.normalizedAnswers,
           score: graded.score,
