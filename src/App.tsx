@@ -2500,7 +2500,7 @@ function App() {
     );
   }
 
-  if (window.location.pathname.replace(/\\/+$/, '') === '/cbt') {
+  if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
     return <CbtPage />;
   }
 
