@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
 import CbtPage from './CbtPage';
+import CbtQuestionBankAdmin from './CbtQuestionBankAdmin';
 import PaymentsAdmin from './PaymentsAdmin';
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
@@ -1617,6 +1618,7 @@ function App() {
               'analytics',
               'system-settings',
               'system-health',
+              'cbt-questions',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -1627,7 +1629,7 @@ function App() {
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
                   else if (tab === 'system-health') loadSystemHealth();
-                  else if (tab !== 'payments') loadAdmin(tab);
+                  else if (tab !== 'payments' && tab !== 'cbt-questions') loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
@@ -1640,7 +1642,9 @@ function App() {
                         ? '💳 Payments'
                         : tab === 'analytics'
                       ? '📊 Analytics & Insights'
-                      : tab === 'system-settings'
+                      : tab === 'cbt-questions'
+                    ? '📝 CBT Question Bank'
+                    : tab === 'system-settings'
                         ? '⚙️ Manage System'
                         : tab === 'system-health'
                           ? '🩺 System Health'
@@ -1659,7 +1663,7 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
               {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -1679,7 +1683,9 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'system-health' ? (
+            {adminTab === 'cbt-questions' ? (
+              <CbtQuestionBankAdmin />
+            ) : adminTab === 'system-health' ? (
               <section className="analytics-panel" aria-label="System health checks">
                 <div className="analytics-toolbar">
                   <div>
