@@ -53,3 +53,11 @@ test("status workflow does not allow skipping review or approval", () => {
   assert.equal(validateStatusTransition("approved", "published").valid, true);
   assert.equal(validateStatusTransition("published", "draft").valid, false);
 });
+
+
+test("requires licensor and usage-rights notes for licensed content", () => {
+  const missing = validateQuestionInput({ ...sample, source_type: "licensed" });
+  assert.ok(missing.errors.some(x => /licensor\/source name and licensing notes/.test(x)));
+  const valid = validateQuestionInput({ ...sample, source_type: "licensed", source_name: "Example publisher", licensing_notes: "Written permission recorded." });
+  assert.equal(valid.valid, true);
+});
