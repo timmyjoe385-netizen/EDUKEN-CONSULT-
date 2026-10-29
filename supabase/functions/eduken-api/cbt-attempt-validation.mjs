@@ -1,4 +1,12 @@
 const OPTION_KEYS = ["A", "B", "C", "D"];
+export const CBT_SUBMISSION_GRACE_SECONDS = 15;
+
+export function getCbtAttemptExpiry(startedAt, durationSeconds, graceSeconds = CBT_SUBMISSION_GRACE_SECONDS) {
+  const startedMs = startedAt instanceof Date ? startedAt.getTime() : Date.parse(String(startedAt ?? ""));
+  if (!Number.isFinite(startedMs) || !Number.isInteger(durationSeconds) || durationSeconds <= 0 ||
+      !Number.isInteger(graceSeconds) || graceSeconds < 0) return null;
+  return new Date(startedMs + (durationSeconds + graceSeconds) * 1000).toISOString();
+}
 
 const isRecord = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
 
