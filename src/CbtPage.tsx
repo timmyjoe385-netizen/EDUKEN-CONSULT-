@@ -1,0 +1,179 @@
+import { useEffect, useMemo, useState } from 'react';
+import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target } from 'lucide-react';
+import './cbt.css';
+
+type Question = { id: number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
+
+const QUESTIONS: Question[] = [
+  { id: 1, subject: 'Use of English', prompt: 'Choose the word nearest in meaning to “diligent”.', options: ['Careless', 'Hardworking', 'Impatient', 'Uncertain'], answer: 1, explanation: 'Diligent means careful and hardworking.' },
+  { id: 2, subject: 'Use of English', prompt: 'Choose the correctly punctuated sentence.', options: ['However I stayed at home.', 'However, I stayed at home.', 'However I, stayed at home.', 'However; I stayed, at home.'], answer: 1, explanation: 'A conjunctive adverb at the beginning of a sentence is commonly followed by a comma.' },
+  { id: 3, subject: 'Mathematics', prompt: 'If 3x − 5 = 16, what is x?', options: ['5', '6', '7', '8'], answer: 2, explanation: 'Add 5 to both sides: 3x = 21. Divide by 3, so x = 7.' },
+  { id: 4, subject: 'Mathematics', prompt: 'Find 15% of 240.', options: ['24', '30', '36', '40'], answer: 2, explanation: '0.15 × 240 = 36.' },
+  { id: 5, subject: 'Biology', prompt: 'Which cell structure is primarily responsible for aerobic respiration?', options: ['Ribosome', 'Mitochondrion', 'Golgi apparatus', 'Cell wall'], answer: 1, explanation: 'Mitochondria are the main site of aerobic respiration in eukaryotic cells.' },
+  { id: 6, subject: 'Biology', prompt: 'The basic structural and functional unit of life is the…', options: ['Tissue', 'Organ', 'Cell', 'System'], answer: 2, explanation: 'The cell is the basic structural and functional unit of living organisms.' },
+  { id: 7, subject: 'Chemistry', prompt: 'What is the chemical symbol for sodium?', options: ['So', 'S', 'Na', 'N'], answer: 2, explanation: 'Sodium has the chemical symbol Na, from the Latin name natrium.' },
+  { id: 8, subject: 'Chemistry', prompt: 'A solution with a pH of 3 is best described as…', options: ['Acidic', 'Neutral', 'Alkaline', 'A metal'], answer: 0, explanation: 'A pH below 7 indicates an acidic solution.' },
+  { id: 9, subject: 'Physics', prompt: 'What is the SI unit of force?', options: ['Joule', 'Watt', 'Newton', 'Pascal'], answer: 2, explanation: 'Force is measured in newtons (N).' },
+  { id: 10, subject: 'Physics', prompt: 'A car travels 100 metres in 5 seconds. What is its average speed?', options: ['10 m/s', '20 m/s', '25 m/s', '50 m/s'], answer: 1, explanation: 'Average speed = distance ÷ time = 100 ÷ 5 = 20 m/s.' },
+  { id: 11, subject: 'Government', prompt: 'The principle of separation of powers is commonly associated with…', options: ['Montesquieu', 'Karl Marx', 'Adam Smith', 'Thomas Hobbes'], answer: 0, explanation: 'Montesquieu is strongly associated with the modern formulation of separation of powers.' },
+  { id: 12, subject: 'Government', prompt: 'In a democracy, political authority ultimately derives from…', options: ['The military', 'The electorate', 'The judiciary alone', 'Traditional rulers alone'], answer: 1, explanation: 'Democratic authority is grounded in the people, expressed through constitutional processes such as elections.' },
+  { id: 13, subject: 'Economics', prompt: 'The basic economic problem arises mainly because resources are…', options: ['Unlimited', 'Scarce relative to wants', 'Always free', 'Never useful'], answer: 1, explanation: 'Scarcity means available resources are limited relative to human wants.' },
+  { id: 14, subject: 'Economics', prompt: 'The next best alternative forgone when a choice is made is called…', options: ['Fixed cost', 'Profit', 'Opportunity cost', 'Revenue'], answer: 2, explanation: 'Opportunity cost is the value of the next best alternative forgone.' },
+  { id: 15, subject: 'Literature in English', prompt: 'A comparison using “like” or “as” is known as…', options: ['Metaphor', 'Simile', 'Irony', 'Onomatopoeia'], answer: 1, explanation: 'A simile compares two things using words such as “like” or “as”.' },
+  { id: 16, subject: 'Literature in English', prompt: 'The main character in a literary work is usually called the…', options: ['Antagonist', 'Narrator', 'Protagonist', 'Audience'], answer: 2, explanation: 'The protagonist is the central character in a story or drama.' },
+];
+
+const SUBJECTS = [
+  { name: 'Use of English', short: 'ENG', detail: 'Comprehension, vocabulary and grammar', icon: 'A' },
+  { name: 'Mathematics', short: 'MTH', detail: 'Numbers, algebra and problem solving', icon: '÷' },
+  { name: 'Biology', short: 'BIO', detail: 'Cells, organisms and life processes', icon: '◉' },
+  { name: 'Chemistry', short: 'CHM', detail: 'Matter, reactions and calculations', icon: '⚗' },
+  { name: 'Physics', short: 'PHY', detail: 'Motion, energy and measurement', icon: '∿' },
+  { name: 'Government', short: 'GOV', detail: 'Political systems and institutions', icon: '§' },
+  { name: 'Economics', short: 'ECO', detail: 'Scarcity, markets and choices', icon: '₦' },
+  { name: 'Literature in English', short: 'LIT', detail: 'Literary forms and techniques', icon: '✦' },
+];
+
+type Attempt = { date: string; mode: string; subject: string; score: number; total: number };
+
+export default function CbtPage() {
+  const [selectedSubject, setSelectedSubject] = useState('Use of English');
+  const [mode, setMode] = useState<'practice' | 'mock'>('practice');
+  const [started, setStarted] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, number>>({});
+  const [flagged, setFlagged] = useState<number[]>([]);
+  const [secondsLeft, setSecondsLeft] = useState(15 * 60);
+  const [attempts, setAttempts] = useState<Attempt[]>([]);
+
+  const activeQuestions = useMemo(
+    () => mode === 'mock' ? QUESTIONS : QUESTIONS.filter(question => question.subject === selectedSubject),
+    [mode, selectedSubject]
+  );
+  const question = activeQuestions[current];
+  const correctCount = activeQuestions.filter(item => answers[item.id] === item.answer).length;
+  const answeredCount = activeQuestions.filter(item => answers[item.id] !== undefined).length;
+  const percent = activeQuestions.length ? Math.round((correctCount / activeQuestions.length) * 100) : 0;
+
+  useEffect(() => {
+    try {
+      const saved = window.localStorage.getItem('eduken-cbt-attempts-v1');
+      if (saved) setAttempts(JSON.parse(saved).slice(0, 5));
+    } catch { /* Practice remains available if local storage is blocked. */ }
+  }, []);
+
+  useEffect(() => {
+    if (!started || submitted) return;
+    const timer = window.setInterval(() => {
+      setSecondsLeft(value => {
+        if (value <= 1) {
+          window.clearInterval(timer);
+          setSubmitted(true);
+          return 0;
+        }
+        return value - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [started, submitted]);
+
+  useEffect(() => {
+    if (!submitted || activeQuestions.length === 0) return;
+    const result: Attempt = {
+      date: new Date().toISOString(),
+      mode,
+      subject: mode === 'mock' ? 'Mixed mock' : selectedSubject,
+      score: correctCount,
+      total: activeQuestions.length,
+    };
+    setAttempts(previous => {
+      const next = [result, ...previous].slice(0, 5);
+      try { window.localStorage.setItem('eduken-cbt-attempts-v1', JSON.stringify(next)); } catch { /* Optional history. */ }
+      return next;
+    });
+  // Save exactly once for each submitted session.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitted]);
+
+  const begin = (nextMode: 'practice' | 'mock', subject = selectedSubject) => {
+    setMode(nextMode);
+    setSelectedSubject(subject);
+    setAnswers({});
+    setFlagged([]);
+    setCurrent(0);
+    setSecondsLeft(nextMode === 'mock' ? 30 * 60 : 15 * 60);
+    setSubmitted(false);
+    setStarted(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const finish = () => setSubmitted(true);
+  const formatTime = (value: number) => String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0');
+
+  if (started && question && !submitted) {
+    return (
+      <div className="cbt-page">
+        <header className="cbt-topbar">
+          <a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a>
+          <div className={secondsLeft < 120 ? 'cbt-timer urgent' : 'cbt-timer'}><Clock3 size={17} /> {formatTime(secondsLeft)}</div>
+        </header>
+        <main className="cbt-exam-wrap">
+          <div className="cbt-exam-heading">
+            <div><span className="cbt-eyebrow">{mode === 'mock' ? 'MIXED MOCK TEST' : 'SUBJECT PRACTICE'}</span><h1>{mode === 'mock' ? 'JAMB-style practice mock' : selectedSubject}</h1><p>Independent practice by EDUKEN CONSULT. Not affiliated with JAMB.</p></div>
+            <button className="cbt-quiet-button" onClick={() => { if (window.confirm('Leave this practice session? Your current answers will be lost.')) { setStarted(false); setSubmitted(false); } }}><ArrowLeft size={16} /> Exit</button>
+          </div>
+          <div className="cbt-exam-progress"><span style={{ width: ((current + 1) / activeQuestions.length * 100) + '%' }} /></div>
+          <div className="cbt-exam-grid">
+            <section className="cbt-question-card">
+              <div className="cbt-question-meta"><span>Question {current + 1} of {activeQuestions.length}</span><button className={flagged.includes(question.id) ? 'cbt-flag active' : 'cbt-flag'} onClick={() => setFlagged(old => old.includes(question.id) ? old.filter(id => id !== question.id) : [...old, question.id])}><Flag size={15} /> {flagged.includes(question.id) ? 'Flagged' : 'Review later'}</button></div>
+              <h2>{question.prompt}</h2>
+              <div className="cbt-options">
+                {question.options.map((option, index) => <button key={option} className={answers[question.id] === index ? 'cbt-option selected' : 'cbt-option'} onClick={() => setAnswers(old => ({ ...old, [question.id]: index }))}><span>{String.fromCharCode(65 + index)}</span><b>{option}</b>{answers[question.id] === index ? <CheckCircle2 size={18} /> : null}</button>)}
+              </div>
+              <div className="cbt-question-actions">
+                <button className="cbt-secondary-button" disabled={current === 0} onClick={() => setCurrent(value => value - 1)}>Previous</button>
+                {current < activeQuestions.length - 1 ? <button className="cbt-primary-button" onClick={() => setCurrent(value => value + 1)}>Next question <ArrowRight size={16} /></button> : <button className="cbt-primary-button" onClick={finish}>Submit practice <CheckCircle2 size={16} /></button>}
+              </div>
+            </section>
+            <aside className="cbt-question-nav">
+              <h3>Question navigator</h3><p>{answeredCount} answered · {flagged.length} flagged</p>
+              <div className="cbt-number-grid">{activeQuestions.map((item, index) => <button key={item.id} aria-label={'Go to question ' + (index + 1)} className={index === current ? 'current' : answers[item.id] !== undefined ? 'answered' : flagged.includes(item.id) ? 'flagged' : ''} onClick={() => setCurrent(index)}>{index + 1}</button>)}</div>
+              <div className="cbt-legend"><span><i className="answered" /> Answered</span><span><i className="flagged" /> Flagged</span><span><i className="current" /> Current</span></div>
+              <button className="cbt-submit-wide" onClick={finish}>Finish and see results</button>
+              <small>Answers are saved only in this browser for this early preview.</small>
+            </aside>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (submitted) {
+    return (
+      <div className="cbt-page">
+        <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><a className="cbt-back-link" href="/"><ArrowLeft size={16} /> EDUKEN home</a></header>
+        <main className="cbt-results-wrap">
+          <section className="cbt-result-hero"><div className="cbt-result-icon"><Target size={28} /></div><span className="cbt-eyebrow">PRACTICE COMPLETE</span><h1>{percent >= 70 ? 'Good work. Keep building.' : 'Every attempt is progress.'}</h1><p>{mode === 'mock' ? 'Mixed JAMB-style mock' : selectedSubject} · {activeQuestions.length} questions</p><div className="cbt-score-ring"><strong>{percent}%</strong><span>Score</span></div><div className="cbt-result-stats"><div><strong>{correctCount}</strong><span>Correct</span></div><div><strong>{activeQuestions.length - correctCount}</strong><span>Incorrect / skipped</span></div><div><strong>{answeredCount}</strong><span>Attempted</span></div></div><button className="cbt-primary-button" onClick={() => begin(mode, selectedSubject)}><RotateCcw size={16} /> Try again</button><button className="cbt-secondary-button" onClick={() => { setStarted(false); setSubmitted(false); }}>Choose another practice</button></section>
+          <section className="cbt-review-card"><div className="cbt-review-heading"><div><span className="cbt-eyebrow">LEARN FROM YOUR ANSWERS</span><h2>Answer review</h2></div><span>{correctCount}/{activeQuestions.length} correct</span></div>{activeQuestions.map((item, index) => <article className="cbt-review-item" key={item.id}><div className="cbt-review-question"><span className={answers[item.id] === item.answer ? 'correct' : 'incorrect'}>{answers[item.id] === item.answer ? '✓' : '!'}</span><div><b>{index + 1}. {item.prompt}</b><p>Your answer: {answers[item.id] === undefined ? 'Not answered' : item.options[answers[item.id]]}</p><p>Correct answer: <strong>{item.options[item.answer]}</strong></p><small>{item.explanation}</small></div></div></article>)}</section>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="cbt-page">
+      <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><nav className="cbt-top-links"><a href="#subjects">Subjects</a><a href="#how-it-works">How it works</a><a href="/">Main website</a></nav><a className="cbt-mobile-home" href="/">Home</a></header>
+      <main>
+        <section className="cbt-hero">
+          <div className="cbt-hero-copy"><span className="cbt-eyebrow"><span /> JAMB PREPARATION STARTS HERE</span><h1>Prepare with purpose.<br /><em>Practise with confidence.</em></h1><p>Build your confidence with focused subject practice, timed mock tests and clear explanations — designed for Nigerian students preparing for entrance examinations.</p><div className="cbt-hero-actions"><button className="cbt-primary-button" onClick={() => begin('practice', selectedSubject)}><BookOpen size={17} /> Start free practice</button><button className="cbt-secondary-button" onClick={() => begin('mock', 'Use of English')}><Clock3 size={17} /> Try a timed mock</button></div><div className="cbt-trust-row"><span><ShieldCheck size={16} /> Free starter practice</span><span><CheckCircle2 size={16} /> Instant results</span></div></div>
+          <div className="cbt-hero-visual"><div className="cbt-visual-orbit" /><div className="cbt-preview-panel"><div className="cbt-preview-top"><span>EDUKEN CBT</span><span className="cbt-live-pill">PRACTICE</span></div><div className="cbt-preview-title">Your next step<br /><b>starts here.</b></div><div className="cbt-preview-metrics"><div><BookOpen size={18} /><b>Subject practice</b><small>Learn topic by topic</small></div><div><Target size={18} /><b>Timed mock tests</b><small>Build exam confidence</small></div></div><div className="cbt-preview-footer"><span><CheckCircle2 size={15} /> Answer explanations</span><span>Built for mobile</span></div></div><div className="cbt-floating-note"><GraduationCap size={19} /><span><b>Stay consistent</b><small>One practice at a time</small></span></div></div>
+        </section>
+        <section className="cbt-subject-section" id="subjects"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">CHOOSE YOUR SUBJECT</span><h2>Start where you need it most.</h2></div><p>Choose a subject to practise, or take a mixed mock to check your current understanding.</p></div><div className="cbt-subject-grid">{SUBJECTS.map(subject => <article className="cbt-subject-card" key={subject.name}><div className="cbt-subject-icon">{subject.icon}</div><div><span>{subject.short}</span><h3>{subject.name}</h3><p>{subject.detail}</p></div><button onClick={() => begin('practice', subject.name)}>Practise subject <ArrowRight size={15} /></button></article>)}</div><div className="cbt-mock-banner"><div><span className="cbt-eyebrow">READY FOR A CHALLENGE?</span><h3>Try a mixed timed mock.</h3><p>Work through the starter question set, then review every answer and explanation.</p></div><button className="cbt-primary-button" onClick={() => begin('mock', 'Use of English')}>Start mixed mock <ArrowRight size={16} /></button></div></section>
+        <section className="cbt-how-section" id="how-it-works"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">A SIMPLE ROUTINE</span><h2>Practise. Review. Improve.</h2></div></div><div className="cbt-steps"><article><span>01</span><h3>Choose a subject</h3><p>Focus on one subject or use the mixed starter mock.</p></article><article><span>02</span><h3>Answer at your pace</h3><p>Navigate questions, change answers and flag items to revisit.</p></article><article><span>03</span><h3>Learn from results</h3><p>See your score, correct answers and explanations immediately.</p></article></div><div className="cbt-disclaimer"><ShieldCheck size={18} /><p>EDUKEN CBT is an independent practice resource and is not affiliated with or endorsed by JAMB. This first preview uses a small set of original sample questions; it is not a complete past-question bank or a prediction of the official examination.</p></div></section>
+        {attempts.length > 0 && <section className="cbt-history-section"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">YOUR RECENT PRACTICE</span><h2>Keep your momentum.</h2></div></div><div className="cbt-history-list">{attempts.map((attempt, index) => <div className="cbt-history-row" key={attempt.date + index}><span>{attempt.subject}</span><b>{Math.round(attempt.score / attempt.total * 100)}%</b><small>{new Date(attempt.date).toLocaleDateString()}</small></div>)}</div></section>}
+      </main>
+      <footer className="cbt-footer"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CONSULT</b></span></a><span>Learn with purpose. Prepare with confidence.</span><a href="/">Return to EDUKEN CONSULT <ArrowRight size={15} /></a></footer>
+    </div>
+  );
+}
