@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('CBT page safely explains when no questions have been published', async ({ page }) => {
+test('CBT falls back to original local practice when the published bank is empty', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -13,9 +13,11 @@ test('CBT page safely explains when no questions have been published', async ({ 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
-  await expect(page.getByText(/No questions have been published yet/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 2')).toBeVisible();
 
   const dimensions = await page.evaluate(() => ({
     viewport: window.innerWidth,
