@@ -43,3 +43,70 @@ test('CBT practice fallback supports navigation, flagging and answer review', as
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
 });
+
+test('published CBT questions are graded by the server after submission', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        items: [{
+          id: 'question-uuid-1',
+          subject: 'Use of English',
+          question_text: 'Choose the correct option.',
+          options: { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' },
+        }],
+      }),
+    })
+  );
+  await page.route('**/api/cbt/start*', route =>
+    route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'a'.repeat(64),
+        durationSeconds: 900,
+        questions: [{
+          id: 'question-uuid-1',
+          subject: 'Use of English',
+          prompt: 'Choose the correct option.',
+          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
+        }],
+      }),
+    })
+  );
+  await page.route('**/api/cbt/submit*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.attemptToken).toBe('a'.repeat(64));
+    expect(payload.answers['question-uuid-1']).toBe(1);
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        score: 1,
+        total: 1,
+        percent: 100,
+        submittedAt: '2026-10-29T06:00:00.000Z',
+        review: [{
+          id: 'question-uuid-1',
+          subject: 'Use of English',
+          prompt: 'Choose the correct option.',
+          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
+          selectedOption: 'B',
+          correctOption: 'B',
+          explanation: 'The second option is correct.',
+          isCorrect: true,
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await page.getByRole('button', { name: /Right/ }).click();
+  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
+  await expect(page.getByText('Correct answer:')).toBeVisible();
+  await expect(page.getByText('The second option is correct.')).toBeVisible();
+});
