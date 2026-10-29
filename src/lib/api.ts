@@ -11,6 +11,11 @@ const ALLOW_TEST_WRITES =
   Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
   SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
   SUPABASE_KEY !== PRODUCTION_SUPABASE_KEY;
+const ALLOW_CBT_TEST_WRITES =
+  import.meta.env.VITE_ENABLE_CBT_TEST_WRITES === 'true' &&
+  Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
+  SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
+  SUPABASE_KEY !== PRODUCTION_SUPABASE_KEY;
 
 // Expose the resolved backend mode so preview-only UI reads use the same isolated test project as writes.
 export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;
@@ -85,7 +90,12 @@ const request = async (
   retry = true
 ): Promise<any> => {
   const method = String(options.method || 'GET').toUpperCase();
-  if (shouldBlockWrite(window.location.origin, method, {
+  const isolatedCbtTestWrite =
+    ALLOW_CBT_TEST_WRITES &&
+    window.location.origin !== 'https://eduken-consult.timmy385.workers.dev' &&
+    SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
+    /^\/api\/(?:admin\/)?cbt(?:\/|$)/.test(path);
+  if (!isolatedCbtTestWrite && shouldBlockWrite(window.location.origin, method, {
     supabaseUrl: SUPABASE_URL,
     allowTestWrites: ALLOW_TEST_WRITES,
   })) {

@@ -41,7 +41,17 @@ jobs:
         run: npx playwright install chromium --with-deps
       - name: Test API input validation
         run: npm run test:validation
+      - name: Verify real CBT API against isolated Supabase
+        env:
+          CBT_TEST_SUPABASE_URL: https://wpktzogarfqrgkirzdpy.supabase.co
+          CBT_TEST_SUPABASE_PUBLISHABLE_KEY: sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB
+        run: node tests/cbt-api-integration.mjs
       - name: Run local branch browser checks
+        # Browser tests intercept API requests; allow writes only to this deliberately fake, non-production URL.
+        env:
+          VITE_SUPABASE_URL: https://playwright-isolated.invalid
+          VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_playwright_test
+          VITE_ENABLE_CBT_TEST_WRITES: 'true'
         run: npm run test:e2e
       - name: Upload browser report and failure evidence
         if: always()

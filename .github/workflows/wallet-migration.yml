@@ -149,3 +149,25 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -f /workspace/tests/sql/wallet-migration-smoke.sql
+      - name: Apply EDUKEN CBT migrations in disposable PostgreSQL
+        run: |
+          set -e
+          for migration in \
+            20261029120000_add_cbt_question_bank.sql \
+            20261029124500_add_cbt_import_batch_index.sql \
+            20261029132900_add_cbt_attempt_sessions.sql \
+            20261029133000_add_cbt_attempt_history.sql; do
+            docker run --rm --network host \
+              -v "$GITHUB_WORKSPACE:/workspace" \
+              -e PGPASSWORD=postgres postgres:16 \
+              psql -h 127.0.0.1 -U postgres -d eduken_wallet_test \
+              -v ON_ERROR_STOP=1 -f "/workspace/supabase/migrations/$migration"
+          done
+      - name: Verify CBT migration security and idempotency
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/tests/sql/cbt-migration-smoke.sql

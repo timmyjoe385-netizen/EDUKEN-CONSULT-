@@ -157,3 +157,13 @@ test("wallet UI lets a student switch from bank-transfer details directly to Flu
   assert.match(ui, /setWalletTransferInfo\(null\);[\s\S]*?setWalletTransferKey\(''\);[\s\S]*?void startWalletDeposit\(\)/, "switching should clear transfer-only UI state and start checkout without refreshing");
   assert.match(ui, /Do not transfer to the previous bank details/, "students should be warned not to use the old transfer details after switching");
 });
+
+
+test("isolated preview blocks external service and wallet checkout before provider initialization", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const app = await readFile(new URL("../src/App.tsx", import.meta.url), "utf8");
+  const hub = await readFile(new URL("../src/PlatformHub.tsx", import.meta.url), "utf8");
+  assert.match(app, /if \(usesIsolatedTestBackend\) \{\s*setPaymentMessage\('Preview safety is enabled: external service checkout is disabled here\. No payment has been started\.'\);\s*return;/);
+  assert.match(hub, /if \(usesIsolatedTestBackend\) \{\s*setWalletMessage\('Preview safety is enabled: external wallet checkout is disabled here\. No payment has been started\.'\);\s*return;/);
+  assert.match(app, /external service and wallet checkouts are disabled/);
+});

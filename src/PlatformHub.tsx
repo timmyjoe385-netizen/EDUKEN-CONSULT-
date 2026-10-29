@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { api, auth, notifications } from './lib/api';
+import { api, auth, notifications, usesIsolatedTestBackend } from './lib/api';
 import { FileText, Download, RefreshCw } from 'lucide-react';
 import {
   Bell,
@@ -218,6 +218,10 @@ export default function PlatformHub({
   const startWalletDeposit = async (event?: React.FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     if (walletAction) return;
+    if (usesIsolatedTestBackend) {
+      setWalletMessage('Preview safety is enabled: external wallet checkout is disabled here. No payment has been started.');
+      return;
+    }
     const amount = Number(walletAmount);
     if (!Number.isInteger(amount) || amount < 100 || amount > 500000) {
       setWalletMessage('Enter a whole-naira amount between ₦100 and ₦500,000.');

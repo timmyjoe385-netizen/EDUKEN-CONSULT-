@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from '../../supabase/functions/eduken-api/service-request-validation.mjs';
 
+const supabaseTestUrl = String(process.env.VITE_SUPABASE_URL || 'https://pphxltbkwygqjtjgkhxu.supabase.co').replace(/\/+$/, '');
+
 test('admin date editor parses ISO and human-readable deadlines for the native picker', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   expect(app).toContain('raw.match(/^(\\d{4}-\\d{2}-\\d{2})/)');
@@ -10,8 +12,8 @@ test('admin date editor parses ISO and human-readable deadlines for the native p
   expect(app).not.toContain('raw.match(/\\\\b(\\\\d{1,2})(?:st|nd|rd|th)?\\\\s+([A-Za-z]+)\\\\s+(\\\\d{4})\\\\b/i)');
 });
 
-const publicContentUrl =
-  'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content';
+const publicContentUrl = `${supabaseTestUrl}/functions/v1/eduken-api/public-content`;
+const publicContentApiUrl = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content';
 
 test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   const uncaughtErrors = [];
@@ -318,7 +320,8 @@ test('verified admission and update cards display the prominent EDUKEN badge', a
 });
 
 test('public content API returns the expected data structure', async ({ request }) => {
-  const response = await request.get(publicContentUrl, {
+  // This is a read-only GET against the live public endpoint; no writes or private records are requested.
+  const response = await request.get(publicContentApiUrl, {
     headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' },
     timeout: 20_000,
   });
@@ -999,7 +1002,7 @@ test('database hardening migration removes direct client access to consultation 
 });
 
 test('public header exposes customer wallet access but not admin access', async ({ page }) => {
-  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+  const authorizeEndpoint = `${supabaseTestUrl}/auth/v1/authorize`;
 
   // Customer wallet access is intentionally visible; admin access must remain private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
@@ -1086,7 +1089,7 @@ test('customer password sign-in shows a safe error without exposing provider det
     }),
   );
   await page.route(url =>
-    url.hostname === 'pphxltbkwygqjtjgkhxu.supabase.co'
+    url.hostname === new URL(supabaseTestUrl).hostname
     && url.pathname === '/auth/v1/token'
     && url.searchParams.get('grant_type') === 'password',
   route => route.fulfill({
@@ -1843,7 +1846,7 @@ test('Make Payments page shows the request summary without exposing its checkout
 });
 
 test('public navigation hides Admin Login while direct /admin keeps the OAuth return path', async ({ page }) => {
-  const authorizeEndpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/authorize';
+  const authorizeEndpoint = `${supabaseTestUrl}/auth/v1/authorize`;
 
   // Public navigation must not advertise the admin route.
   await page.goto('/', { waitUntil: 'domcontentloaded' });

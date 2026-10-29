@@ -27,6 +27,8 @@ import {
   X,
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
+import CbtPage from './CbtPage';
+import CbtQuestionBankAdmin from './CbtQuestionBankAdmin';
 import PaymentsAdmin from './PaymentsAdmin';
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
@@ -1356,6 +1358,10 @@ function App() {
 
   const submitGuestPayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (usesIsolatedTestBackend) {
+      setPaymentMessage('Preview safety is enabled: external service checkout is disabled here. No payment has been started.');
+      return;
+    }
     if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
     const email = paymentEmail.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -1612,6 +1618,7 @@ function App() {
               'analytics',
               'system-settings',
               'system-health',
+              'cbt-questions',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -1622,7 +1629,7 @@ function App() {
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
                   else if (tab === 'system-health') loadSystemHealth();
-                  else if (tab !== 'payments') loadAdmin(tab);
+                  else if (tab !== 'payments' && tab !== 'cbt-questions') loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
@@ -1635,7 +1642,9 @@ function App() {
                         ? '💳 Payments'
                         : tab === 'analytics'
                       ? '📊 Analytics & Insights'
-                      : tab === 'system-settings'
+                      : tab === 'cbt-questions'
+                    ? '📝 CBT Question Bank'
+                    : tab === 'system-settings'
                         ? '⚙️ Manage System'
                         : tab === 'system-health'
                           ? '🩺 System Health'
@@ -1654,7 +1663,7 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
               {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -1674,7 +1683,9 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'system-health' ? (
+            {adminTab === 'cbt-questions' ? (
+              <CbtQuestionBankAdmin />
+            ) : adminTab === 'system-health' ? (
               <section className="analytics-panel" aria-label="System health checks">
                 <div className="analytics-toolbar">
                   <div>
@@ -2495,6 +2506,10 @@ function App() {
     );
   }
 
+  if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
+    return <CbtPage />;
+  }
+
   return (
     <div className="site">
       {toast && (
@@ -2505,7 +2520,7 @@ function App() {
       )}
       {usesIsolatedTestBackend && (
         <div role="status" style={{ background: '#fff3cd', color: '#664d03', border: '1px solid #ffecb5', padding: '12px 18px', textAlign: 'center', fontWeight: 700 }}>
-          TEST PREVIEW ONLY — isolated checkout · synthetic ₦100 service · no real fulfilment or live payments
+          TEST PREVIEW ONLY — isolated data · external service and wallet checkouts are disabled · no real payments or fulfilment
         </div>
       )}
       <header className="nav">
@@ -2529,6 +2544,7 @@ function App() {
               {x}
             </a>
           ))}
+          <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
           <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
             <button
               type="button"
@@ -2640,6 +2656,7 @@ function App() {
               <a className="primary" href="#opportunities">
                 Explore Opportunities <ArrowRight size={18} />
               </a>
+              <a href="/cbt" className="secondary cbt-hero-cta"><Monitor size={18} /> Try EDUKEN CBT</a>
               <a className="secondary aggregate-hero-cta" href="/aggregate-calculator">
                 <Calculator size={18} /> Calculate Aggregate
               </a>
