@@ -3108,6 +3108,16 @@ Deno.serve(async (req) => {
       return json({ batch: finalBatch, inserted: inserted.length, duplicates, invalid, errors }, 201);
     }
 
+    if (path === "/api/admin/cbt/imports" && req.method === "GET") {
+      await requireAdmin(req);
+      const { data, error } = await db.from("cbt_question_imports")
+        .select("id,filename,source_label,total_rows,inserted_rows,duplicate_rows,invalid_rows,status,created_at")
+        .order("created_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      return json({ items: data ?? [] });
+    }
+
     if (path === "/api/cbt/questions" && req.method === "GET") {
       const params = new URL(req.url).searchParams;
       let query = db.from("cbt_questions").select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty,source_type,source_name,source_year").eq("status", "published").order("subject").order("topic").limit(100);
