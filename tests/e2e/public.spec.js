@@ -13,6 +13,7 @@ test('admin date editor parses ISO and human-readable deadlines for the native p
 });
 
 const publicContentUrl = `${supabaseTestUrl}/functions/v1/eduken-api/public-content`;
+const publicContentApiUrl = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content';
 
 test('live homepage loads and renders EDUKEN content', async ({ page }) => {
   const uncaughtErrors = [];
@@ -319,7 +320,8 @@ test('verified admission and update cards display the prominent EDUKEN badge', a
 });
 
 test('public content API returns the expected data structure', async ({ request }) => {
-  const response = await request.get(publicContentUrl, {
+  // This is a read-only GET against the live public endpoint; no writes or private records are requested.
+  const response = await request.get(publicContentApiUrl, {
     headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' },
     timeout: 20_000,
   });
