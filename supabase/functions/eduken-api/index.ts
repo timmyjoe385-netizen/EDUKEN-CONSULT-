@@ -11,6 +11,7 @@ import { normalizeServicePrice } from "./service-price-validation.mjs";
 import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
+import { gradeCbtAttempt } from "./cbt-attempt-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -73,6 +74,16 @@ const pathOf = (req: Request) => {
     return rest.length ? "/" + rest.join("/") : "/";
   }
   return pathname || "/";
+};
+
+const sha256Hex = async (value: string) => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+
+const createCbtAttemptToken = () => {
+  const bytes = crypto.getRandomValues(new Uint8Array(32));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 };
 
 const tokenOf = (req: Request) => {
@@ -3152,9 +3163,142 @@ Deno.serve(async (req) => {
       return json({ attempt: data }, 201);
     }
 
+    if (path === "/api/cbt/start" && req.method === "POST") {
+      const parsed = parseJsonObjectBody(await req.text());
+      if (!parsed.valid) return json({ error: parsed.error }, 400);
+      const body = parsed.value as Record<string, unknown>;
+      const mode = String(body.mode || "practice");
+      const subject = String(body.subject || "").trim().slice(0, 120);
+      if (!["practice", "mock"].includes(mode)) return json({ error: "Practice mode is invalid." }, 400);
+      if (mode === "practice" && !subject) return json({ error: "Choose a subject before starting practice." }, 400);
+
+      let query = db.from("cbt_questions")
+        .select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty")
+        .eq("status", "published")
+        .order("subject")
+        .order("topic")
+        .limit(mode === "mock" ? 100 : 50);
+      if (mode === "practice") query = query.eq("subject", subject);
+      const { data, error } = await query;
+      if (error) throw error;
+      const rows = data ?? [];
+      if (!rows.length) return json({ error: "No published questions are available for this selection yet." }, 409);
+
+      const snapshot = rows.map((row: any) => ({
+        id: String(row.id),
+        subject: String(row.subject || ""),
+        prompt: String(row.question_text || ""),
+        options: {
+          A: String(row.options?.A || ""),
+          B: String(row.options?.B || ""),
+          C: String(row.options?.C || ""),
+          D: String(row.options?.D || ""),
+        },
+        correct_option: String(row.correct_option || "").toUpperCase(),
+        explanation: String(row.explanation || ""),
+        difficulty: String(row.difficulty || "medium"),
+      }));
+      const token = createCbtAttemptToken();
+      const now = new Date();
+      const durationSeconds = mode === "mock" ? 30 * 60 : 15 * 60;
+      const expiresAt = new Date(now.getTime() + durationSeconds * 1000).toISOString();
+      const user = await currentUser(req);
+      const { error: insertError } = await db.from("cbt_attempts").insert({
+        attempt_token_hash: await sha256Hex(token),
+        user_id: user?.id ?? null,
+        mode,
+        subject: mode === "mock" ? "Mixed mock" : subject,
+        question_snapshot: snapshot,
+        total: snapshot.length,
+        status: "active",
+        started_at: now.toISOString(),
+        expires_at: expiresAt,
+      });
+      if (insertError) throw insertError;
+
+      return json({
+        attemptToken: token,
+        expiresAt,
+        durationSeconds,
+        mode,
+        subject: mode === "mock" ? "Mixed mock" : subject,
+        questions: snapshot.map((question: any) => ({
+          id: question.id,
+          subject: question.subject,
+          prompt: question.prompt,
+          options: ["A", "B", "C", "D"].map((key) => question.options[key]),
+          difficulty: question.difficulty,
+        })),
+      }, 201);
+    }
+
+    if (path === "/api/cbt/submit" && req.method === "POST") {
+      const parsed = parseJsonObjectBody(await req.text());
+      if (!parsed.valid) return json({ error: parsed.error }, 400);
+      const body = parsed.value as Record<string, unknown>;
+      const token = String(body.attemptToken || "").trim();
+      if (!/^[a-f0-9]{64}$/i.test(token)) return json({ error: "Attempt token is invalid." }, 400);
+      const { data: attempt, error: readError } = await db.from("cbt_attempts")
+        .select("id,question_snapshot,status,expires_at")
+        .eq("attempt_token_hash", await sha256Hex(token))
+        .maybeSingle();
+      if (readError) throw readError;
+      if (!attempt) return json({ error: "Practice attempt was not found or has expired." }, 404);
+      if (attempt.status !== "active") return json({ error: "This practice attempt has already been submitted or expired." }, 409);
+      if (new Date(attempt.expires_at).getTime() <= Date.now()) {
+        const { error } = await db.from("cbt_attempts").update({ status: "expired" }).eq("id", attempt.id).eq("status", "active");
+        if (error) throw error;
+        return json({ error: "This practice attempt has expired. Start a new attempt to continue." }, 410);
+      }
+      const graded = gradeCbtAttempt(attempt.question_snapshot, body.answers);
+      if (!graded.valid) return json({ error: "Answer submission is invalid.", errors: graded.errors }, 400);
+      const submittedAt = new Date().toISOString();
+      const { data: updated, error: updateError } = await db.from("cbt_attempts")
+        .update({
+          answers: graded.normalizedAnswers,
+          score: graded.score,
+          total: graded.total,
+          status: "submitted",
+          submitted_at: submittedAt,
+        })
+        .eq("id", attempt.id)
+        .eq("status", "active")
+        .select("id")
+        .maybeSingle();
+      if (updateError) throw updateError;
+      if (!updated) return json({ error: "This practice attempt has already been submitted." }, 409);
+      return json({
+        score: graded.score,
+        total: graded.total,
+        percent: graded.percent,
+        review: graded.review,
+        submittedAt,
+      });
+    }
+
+    if (path === "/api/cbt/attempts" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.from("cbt_attempts")
+        .select("mode,subject,score,total,submitted_at")
+        .eq("user_id", user.id)
+        .eq("status", "submitted")
+        .order("submitted_at", { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      return json({
+        items: (data ?? []).map((attempt: any) => ({
+          date: attempt.submitted_at,
+          mode: attempt.mode,
+          subject: attempt.subject,
+          score: attempt.score,
+          total: attempt.total,
+        })),
+      });
+    }
+
     if (path === "/api/cbt/questions" && req.method === "GET") {
       const params = new URL(req.url).searchParams;
-      let query = db.from("cbt_questions").select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty,source_type,source_name,source_year").eq("status", "published").order("subject").order("topic").limit(100);
+      let query = db.from("cbt_questions").select("id,exam_type,subject,topic,subtopic,question_text,options,difficulty,source_type,source_name,source_year").eq("status", "published").order("subject").order("topic").limit(100);
       for (const key of ["exam_type", "subject", "topic"] as const) {
         const value = params.get(key)?.trim();
         if (value) query = query.eq(key, value);
