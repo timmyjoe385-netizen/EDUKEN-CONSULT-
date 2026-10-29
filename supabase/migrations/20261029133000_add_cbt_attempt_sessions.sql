@@ -43,8 +43,7 @@ alter table public.cbt_attempts
   add column if not exists attempt_session_id uuid;
 
 create unique index if not exists cbt_attempts_attempt_session_id_uidx
-  on public.cbt_attempts (attempt_session_id)
-  where attempt_session_id is not null;
+  on public.cbt_attempts (attempt_session_id);
 
 do $$
 begin
