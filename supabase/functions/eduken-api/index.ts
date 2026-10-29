@@ -86,6 +86,25 @@ const createCbtAttemptToken = () => {
   return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
 };
 
+async function persistCbtAttemptSummary(attempt: any, score: number, total: number, submittedAt: string) {
+  const started = new Date(attempt.started_at).getTime();
+  const submitted = new Date(submittedAt).getTime();
+  const durationSeconds = Number.isFinite(started) && Number.isFinite(submitted)
+    ? Math.max(0, Math.floor((submitted - started) / 1000))
+    : null;
+  const { error } = await db.from("cbt_attempts").upsert({
+    attempt_session_id: attempt.id,
+    user_id: attempt.user_id ?? null,
+    mode: attempt.mode,
+    subject: attempt.subject,
+    score,
+    total,
+    duration_seconds: durationSeconds,
+    submitted_at: submittedAt,
+  }, { onConflict: "attempt_session_id" });
+  if (error) throw error;
+}
+
 const tokenOf = (req: Request) => {
   const h = req.headers.get("Authorization") || "";
   return h.startsWith("Bearer ") ? h.slice(7) : "";
@@ -3129,40 +3148,6 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
-    if (path === "/api/cbt/attempts" && req.method === "GET") {
-      const user = await requireUser(req);
-      const { data, error } = await db.from("cbt_attempts")
-        .select("id,mode,subject,score,total,duration_seconds,submitted_at")
-        .eq("user_id", user.id)
-        .order("submitted_at", { ascending: false })
-        .limit(30);
-      if (error) throw error;
-      return json({ items: data ?? [] });
-    }
-
-    if (path === "/api/cbt/attempts" && req.method === "POST") {
-      const user = await requireUser(req);
-      const parsed = parseJsonObjectBody(await req.text());
-      if (!parsed.valid) return json({ error: parsed.error }, 400);
-      const body = parsed.value as Record<string, unknown>;
-      const mode = body.mode;
-      const subject = String(body.subject || "").trim().slice(0, 120);
-      const score = Number(body.score);
-      const total = Number(body.total);
-      const duration = body.durationSeconds == null ? null : Number(body.durationSeconds);
-      if (!["practice","mock"].includes(String(mode)) || !subject ||
-          !Number.isInteger(score) || !Number.isInteger(total) || total < 1 ||
-          score < 0 || score > total ||
-          (duration !== null && (!Number.isInteger(duration) || duration < 0 || duration > 86400))) {
-        return json({ error: "Invalid CBT attempt summary." }, 400);
-      }
-      const { data, error } = await db.from("cbt_attempts").insert({
-        user_id: user.id, mode, subject, score, total, duration_seconds: duration,
-      }).select("id,mode,subject,score,total,duration_seconds,submitted_at").single();
-      if (error) throw error;
-      return json({ attempt: data }, 201);
-    }
-
     if (path === "/api/cbt/start" && req.method === "POST") {
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
@@ -3203,7 +3188,7 @@ Deno.serve(async (req) => {
       const durationSeconds = mode === "mock" ? 30 * 60 : 15 * 60;
       const expiresAt = new Date(now.getTime() + durationSeconds * 1000).toISOString();
       const user = await currentUser(req);
-      const { error: insertError } = await db.from("cbt_attempts").insert({
+      const { error: insertError } = await db.from("cbt_attempt_sessions").insert({
         attempt_token_hash: await sha256Hex(token),
         user_id: user?.id ?? null,
         mode,
@@ -3238,8 +3223,8 @@ Deno.serve(async (req) => {
       const body = parsed.value as Record<string, unknown>;
       const token = String(body.attemptToken || "").trim();
       if (!/^[a-f0-9]{64}$/i.test(token)) return json({ error: "Attempt token is invalid." }, 400);
-      const { data: attempt, error: readError } = await db.from("cbt_attempts")
-        .select("id,question_snapshot,answers,status,expires_at,score,total,submitted_at")
+      const { data: attempt, error: readError } = await db.from("cbt_attempt_sessions")
+        .select("id,user_id,mode,subject,started_at,question_snapshot,answers,status,expires_at,score,total,submitted_at")
         .eq("attempt_token_hash", await sha256Hex(token))
         .maybeSingle();
       if (readError) throw readError;
@@ -3247,25 +3232,27 @@ Deno.serve(async (req) => {
       if (attempt.status === "submitted") {
         const previous = gradeCbtAttempt(attempt.question_snapshot, attempt.answers);
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
+        const submittedAt = String(attempt.submitted_at || new Date().toISOString());
+        await persistCbtAttemptSummary(attempt, Number(attempt.score ?? previous.score), Number(attempt.total ?? previous.total), submittedAt);
         return json({
           score: attempt.score ?? previous.score,
           total: attempt.total ?? previous.total,
           percent: Math.round(((attempt.score ?? previous.score) / (attempt.total ?? previous.total)) * 100),
           review: previous.review,
-          submittedAt: attempt.submitted_at,
+          submittedAt,
           alreadySubmitted: true,
         });
       }
       if (attempt.status !== "active") return json({ error: "This practice attempt has expired. Start a new attempt to continue." }, 410);
       if (new Date(attempt.expires_at).getTime() <= Date.now()) {
-        const { error } = await db.from("cbt_attempts").update({ status: "expired" }).eq("id", attempt.id).eq("status", "active");
+        const { error } = await db.from("cbt_attempt_sessions").update({ status: "expired" }).eq("id", attempt.id).eq("status", "active");
         if (error) throw error;
         return json({ error: "This practice attempt has expired. Start a new attempt to continue." }, 410);
       }
       const graded = gradeCbtAttempt(attempt.question_snapshot, body.answers);
       if (!graded.valid) return json({ error: "Answer submission is invalid.", errors: graded.errors }, 400);
       const submittedAt = new Date().toISOString();
-      const { data: updated, error: updateError } = await db.from("cbt_attempts")
+      const { data: updated, error: updateError } = await db.from("cbt_attempt_sessions")
         .update({
           answers: graded.normalizedAnswers,
           score: graded.score,
@@ -3279,6 +3266,7 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (updateError) throw updateError;
       if (!updated) return json({ error: "This practice attempt has already been submitted." }, 409);
+      await persistCbtAttemptSummary(attempt, graded.score, graded.total, submittedAt);
       return json({
         score: graded.score,
         total: graded.total,
@@ -3306,6 +3294,17 @@ Deno.serve(async (req) => {
           total: attempt.total,
         })),
       });
+    }
+
+    if (path === "/api/cbt/attempts" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.from("cbt_attempts")
+        .select("mode,subject,score,total,submitted_at,duration_seconds")
+        .eq("user_id", user.id)
+        .order("submitted_at", { ascending: false })
+        .limit(20);
+      if (error) throw error;
+      return json({ items: data ?? [] });
     }
 
     if (path === "/api/cbt/questions" && req.method === "GET") {
