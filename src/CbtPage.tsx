@@ -56,6 +56,8 @@ export default function CbtPage() {
   const [startError, setStartError] = useState('');
   const [submitError, setSubmitError] = useState('');
   const finishRef = useRef<() => void>(() => {});
+  // Use an absolute deadline so background tabs or a throttled mobile browser cannot pause exam time.
+  const deadlineRef = useRef<number | null>(null);
   const [secondsLeft, setSecondsLeft] = useState(15 * 60);
   const [attempts, setAttempts] = useState<Attempt[]>([]);
   const [calculatorOpen, setCalculatorOpen] = useState(false);
@@ -206,16 +208,21 @@ export default function CbtPage() {
 
   useEffect(() => {
     if (!started || submitted) return;
-    const timer = window.setInterval(() => {
-      setSecondsLeft(value => {
-        if (value <= 1) {
-          window.clearInterval(timer);
-          return 0;
-        }
-        return value - 1;
-      });
-    }, 1000);
-    return () => window.clearInterval(timer);
+    let timer: number | undefined;
+    const updateRemaining = () => {
+      const deadline = deadlineRef.current;
+      if (deadline === null) return;
+      const remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setSecondsLeft(previous => previous === remaining ? previous : remaining);
+      if (remaining === 0 && timer !== undefined) window.clearInterval(timer);
+    };
+    timer = window.setInterval(updateRemaining, 250);
+    document.addEventListener('visibilitychange', updateRemaining);
+    updateRemaining();
+    return () => {
+      if (timer !== undefined) window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', updateRemaining);
+    };
   }, [started, submitted]);
 
   useEffect(() => {
@@ -293,6 +300,7 @@ export default function CbtPage() {
       return;
     }
     setSessionQuestions(nextQuestions);
+    deadlineRef.current = Date.now() + durationSeconds * 1000;
     setSecondsLeft(durationSeconds);
     setStarted(true);
     setStarting(false);
