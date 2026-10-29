@@ -27,6 +27,7 @@ import {
   X,
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
+import CbtPage from './CbtPage';
 import PaymentsAdmin from './PaymentsAdmin';
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
@@ -1356,6 +1357,10 @@ function App() {
 
   const submitGuestPayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (usesIsolatedTestBackend) {
+      setPaymentMessage('Preview safety is enabled: external service checkout is disabled here. No payment has been started.');
+      return;
+    }
     if (!checkoutSession || paymentSubmitting || checkoutSession.paymentStatus === 'Paid') return;
     const email = paymentEmail.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -2495,6 +2500,10 @@ function App() {
     );
   }
 
+  if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
+    return <CbtPage />;
+  }
+
   return (
     <div className="site">
       {toast && (
@@ -2505,7 +2514,7 @@ function App() {
       )}
       {usesIsolatedTestBackend && (
         <div role="status" style={{ background: '#fff3cd', color: '#664d03', border: '1px solid #ffecb5', padding: '12px 18px', textAlign: 'center', fontWeight: 700 }}>
-          TEST PREVIEW ONLY — isolated checkout · synthetic ₦100 service · no real fulfilment or live payments
+          TEST PREVIEW ONLY — isolated data · external service and wallet checkouts are disabled · no real payments or fulfilment
         </div>
       )}
       <header className="nav">
@@ -2529,6 +2538,7 @@ function App() {
               {x}
             </a>
           ))}
+          <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
           <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
             <button
               type="button"
@@ -2640,6 +2650,7 @@ function App() {
               <a className="primary" href="#opportunities">
                 Explore Opportunities <ArrowRight size={18} />
               </a>
+              <a href="/cbt" className="secondary cbt-hero-cta"><Monitor size={18} /> Try EDUKEN CBT</a>
               <a className="secondary aggregate-hero-cta" href="/aggregate-calculator">
                 <Calculator size={18} /> Calculate Aggregate
               </a>
