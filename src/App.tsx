@@ -27,6 +27,7 @@ import {
   X,
 } from 'lucide-react';
 import PlatformHub from './PlatformHub';
+import CbtPage from './CbtPage';
 import PaymentsAdmin from './PaymentsAdmin';
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
@@ -2499,6 +2500,10 @@ function App() {
     );
   }
 
+  if (window.location.pathname.replace(/\\/+$/, '') === '/cbt') {
+    return <CbtPage />;
+  }
+
   return (
     <div className="site">
       {toast && (
@@ -2533,6 +2538,7 @@ function App() {
               {x}
             </a>
           ))}
+          <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
           <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
             <button
               type="button"
@@ -2644,6 +2650,7 @@ function App() {
               <a className="primary" href="#opportunities">
                 Explore Opportunities <ArrowRight size={18} />
               </a>
+              <a href="/cbt" className="secondary cbt-hero-cta"><Monitor size={18} /> Try EDUKEN CBT</a>
               <a className="secondary aggregate-hero-cta" href="/aggregate-calculator">
                 <Calculator size={18} /> Calculate Aggregate
               </a>
