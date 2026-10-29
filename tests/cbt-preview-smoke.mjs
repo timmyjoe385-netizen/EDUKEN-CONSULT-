@@ -25,8 +25,9 @@ try {
 
   await page.waitForFunction(() => !document.body.innerText.includes("The published question service is not available in this preview yet."));
   const mockSubjectOptions = page.locator(".cbt-mock-subject-option input[type=\"checkbox\"]");
-  assert.equal(await mockSubjectOptions.count(), 7, "The mock selector must offer seven additional subjects besides Use of English.");
-  assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 3, "Exactly three additional subjects must be selected by default; Use of English is included automatically.");
+  assert.equal(await mockSubjectOptions.count(), 8, "The mock selector must show Use of English plus seven additional subjects.");
+  assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 4, "Exactly four unique subjects must be selected, including required Use of English.");
+  assert.equal(await page.locator(".cbt-mock-subject-required input").isDisabled(), true, "Use of English must remain selected and locked.");
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
   const subjectButton = page.locator(".cbt-subject-picker button:not([disabled])");
