@@ -39,3 +39,17 @@ test("status transitions require review and approval before publication", () => 
   assert.equal(validateStatusTransition("reviewed", "approved").valid, true);
   assert.equal(validateStatusTransition("approved", "published").valid, true);
 });
+
+
+test("rejects out-of-range source years and oversized question text", () => {
+  assert.ok(validateQuestionInput({ ...sample, source_year: 2101 }).errors.some(x => /Source year/.test(x)));
+  assert.ok(validateQuestionInput({ ...sample, question_text: "x".repeat(10001) }).errors.some(x => /Question text/.test(x)));
+});
+
+test("status workflow does not allow skipping review or approval", () => {
+  assert.equal(validateStatusTransition("draft", "approved").valid, false);
+  assert.equal(validateStatusTransition("draft", "published").valid, false);
+  assert.equal(validateStatusTransition("reviewed", "published").valid, false);
+  assert.equal(validateStatusTransition("approved", "published").valid, true);
+  assert.equal(validateStatusTransition("published", "draft").valid, false);
+});
