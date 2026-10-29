@@ -55,7 +55,7 @@ export default function CbtQuestionBankAdmin() {
   const [batchRows,setBatchRows] = useState<Record<string,unknown>[] | null>(null);
   const load = async () => {
     setLoading(true); setError('');
-    try { const result = await api.get('/api/admin/cbt/questions' + (filter !== 'all' ? '?status='+encodeURIComponent(filter) : '')); setItems(result.items || []); }
+    try { const result = await api.get('/api/admin/cbt/questions' + (filter !== 'all' ? '?status='+encodeURIComponent(filter) : '')); setItems(result.data?.items || []); }
     catch(e) { setError(e instanceof Error ? e.message : 'Could not load question bank.'); }
     finally { setLoading(false); }
   };
@@ -67,14 +67,14 @@ export default function CbtQuestionBankAdmin() {
     setSaving(true); setError(''); setMessage('');
     try {
       const result = form.id ? await api.put('/api/admin/cbt/questions/'+form.id,form) : await api.post('/api/admin/cbt/questions',form);
-      setMessage(result.notice || 'Question saved as a draft/reviewable record. Publishing still requires review and approval.');
+      setMessage(result.data?.notice || 'Question saved as a draft/reviewable record. Publishing still requires review and approval.');
       setForm(null); await load();
     } catch(e) { setError(e instanceof Error ? e.message : 'Could not save question.'); }
     finally { setSaving(false); }
   };
   const transition = async (q: Question, status: string) => {
     setError(''); setMessage('');
-    try { const result = await api.put('/api/admin/cbt/questions/'+q.id,{...q,status}); setMessage(result.notice || 'Question status updated.'); await load(); }
+    try { const result = await api.put('/api/admin/cbt/questions/'+q.id,{...q,status}); setMessage(result.data?.notice || 'Question status updated.'); await load(); }
     catch(e) { setError(e instanceof Error ? e.message : 'Could not update status.'); }
   };
   const remove = async (q: Question) => {
@@ -93,7 +93,7 @@ export default function CbtQuestionBankAdmin() {
     setImporting(true); setError('');
     try {
       const result=await api.post('/api/admin/cbt/import',{filename,sourceLabel:'CSV admin import',rows:batchRows});
-      setImportResult(result); setMessage('Import finished. All imported questions remain drafts until reviewed.'); setBatchRows(null); await load();
+      setImportResult(result.data); setMessage('Import finished. All imported questions remain drafts until reviewed.'); setBatchRows(null); await load();
     } catch(e) { setError(e instanceof Error ? e.message : 'Import failed.'); }
     finally { setImporting(false); }
   };
