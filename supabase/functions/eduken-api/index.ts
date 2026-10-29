@@ -2997,7 +2997,7 @@ Deno.serve(async (req) => {
     }
 
 
-    const adminCbtQuestion = path.match(/^\\/api\\/admin\\/cbt\\/questions(?:\\/([^/]+))?$/);
+    const adminCbtQuestion = path.match(/^\/api\/admin\/cbt\/questions(?:\/([^/]+))?$/);
     if (adminCbtQuestion) {
       const user = await requireAdmin(req);
       const id = adminCbtQuestion[1];
