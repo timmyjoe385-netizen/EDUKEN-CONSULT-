@@ -174,6 +174,24 @@ export default function CbtPage() {
       const saved = window.localStorage.getItem('eduken-cbt-attempts-v1');
       if (saved) setAttempts(JSON.parse(saved).slice(0, 5));
     } catch { /* Practice remains available if local storage is blocked. */ }
+    let active = true;
+    api.get('/api/cbt/attempts').then((result) => {
+      if (!active || !Array.isArray(result.data?.items)) return;
+      const remote: Attempt[] = result.data.items.map((item: any) => ({
+        date: String(item.submitted_at || ''),
+        mode: String(item.mode || 'practice'),
+        subject: String(item.subject || ''),
+        score: Number(item.score || 0),
+        total: Number(item.total || 0),
+      }));
+      setAttempts(previous => {
+        const combined = [...remote, ...previous].filter((item, index, all) =>
+          all.findIndex(other => other.date === item.date && other.mode === item.mode && other.subject === item.subject && other.score === item.score && other.total === item.total) === index
+        );
+        return combined.slice(0, 10);
+      });
+    }).catch(() => { /* Signed-out practice keeps browser-local history. */ });
+    return () => { active = false; };
   }, []);
 
   useEffect(() => {
