@@ -10,6 +10,7 @@ import { emailAlertRateLimitPolicy, emailAlertRetryDelayMs, getEmailAlertClientI
 import { normalizeServicePrice } from "./service-price-validation.mjs";
 import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
+import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -2993,6 +2994,129 @@ Deno.serve(async (req) => {
         return json({ ok: true, settings: data.settings, updated_at: data.updated_at });
       }
       return json({ error: "Method not allowed." }, 405);
+    }
+
+
+    const adminCbtQuestion = path.match(/^\\/api\\/admin\\/cbt\\/questions(?:\\/([^/]+))?$/);
+    if (adminCbtQuestion) {
+      const user = await requireAdmin(req);
+      const id = adminCbtQuestion[1];
+      if (req.method === "GET") {
+        const params = new URL(req.url).searchParams;
+        const status = params.get("status");
+        const q = (params.get("q") || "").trim().replace(/[,%()]/g, " ");
+        let query = db.from("cbt_questions").select("*").order("updated_at", { ascending: false }).limit(200);
+        if (status && ["draft","reviewed","approved","published","unpublished"].includes(status)) query = query.eq("status", status);
+        if (q) query = query.or("question_text.ilike.%"+q+"%,subject.ilike.%"+q+"%,topic.ilike.%"+q+"%");
+        const { data, error } = await query;
+        if (error) throw error;
+        return json({ items: data ?? [] });
+      }
+      if (req.method === "POST" && !id) {
+        const parsed = parseJsonObjectBody(await req.text());
+        if (!parsed.valid) return json({ error: parsed.error }, 400);
+        const checked = validateQuestionInput(parsed.value);
+        if (!checked.valid) return json({ error: "Question validation failed.", errors: checked.errors }, 400);
+        const { data, error } = await db.from("cbt_questions").insert({ ...checked.question, created_by: user.id, updated_by: user.id }).select("*").single();
+        if (error?.code === "23505") return json({ error: "A matching question already exists." }, 409);
+        if (error) throw error;
+        return json({ question: data }, 201);
+      }
+      if (req.method === "PUT" && id) {
+        const parsed = parseJsonObjectBody(await req.text());
+        if (!parsed.valid) return json({ error: parsed.error }, 400);
+        const { data: current, error: readError } = await db.from("cbt_questions").select("*").eq("id", id).maybeSingle();
+        if (readError) throw readError;
+        if (!current) return json({ error: "Question not found." }, 404);
+        const incoming = parsed.value as Record<string, unknown>;
+        const checked = validateQuestionInput({ ...current, ...incoming, status: incoming.status ?? current.status }, { allowStatus: true });
+        if (!checked.valid) return json({ error: "Question validation failed.", errors: checked.errors }, 400);
+        const contentChanged = checked.question.question_fingerprint !== current.question_fingerprint;
+        const nextStatus = contentChanged ? "draft" : checked.question.status;
+        const transition = validateStatusTransition(current.status, nextStatus);
+        if (!transition.valid && !contentChanged) return json({ error: transition.error }, 409);
+        if (nextStatus === "published" && current.status !== "approved") return json({ error: "Only approved questions can be published." }, 409);
+        const now = new Date().toISOString();
+        const update: Record<string, unknown> = { ...checked.question, status: nextStatus, updated_by: user.id, updated_at: now };
+        if (contentChanged) Object.assign(update, { reviewed_by: null, approved_by: null, published_by: null, reviewed_at: null, approved_at: null, published_at: null });
+        if (nextStatus === "reviewed") Object.assign(update, { reviewed_by: user.id, reviewed_at: now });
+        if (nextStatus === "approved") Object.assign(update, { approved_by: user.id, approved_at: now });
+        if (nextStatus === "published") Object.assign(update, { published_by: user.id, published_at: now });
+        const { data, error } = await db.from("cbt_questions").update(update).eq("id", id).select("*").single();
+        if (error?.code === "23505") return json({ error: "A matching question already exists." }, 409);
+        if (error) throw error;
+        return json({ question: data, ...(contentChanged ? { notice: "Question content changed and was returned to draft for fresh review." } : {}) });
+      }
+      if (req.method === "DELETE" && id) {
+        const { data: current, error: readError } = await db.from("cbt_questions").select("id,status").eq("id", id).maybeSingle();
+        if (readError) throw readError;
+        if (!current) return json({ error: "Question not found." }, 404);
+        if (!["draft","unpublished"].includes(current.status)) return json({ error: "Only draft or unpublished questions can be deleted." }, 409);
+        const { error } = await db.from("cbt_questions").delete().eq("id", id);
+        if (error) throw error;
+        return json({ ok: true });
+      }
+      return json({ error: "Method not allowed." }, 405);
+    }
+
+    if (path === "/api/admin/cbt/import" && req.method === "POST") {
+      const user = await requireAdmin(req);
+      const parsed = parseJsonObjectBody(await req.text());
+      if (!parsed.valid) return json({ error: parsed.error }, 400);
+      const body = parsed.value as Record<string, unknown>;
+      if (!Array.isArray(body.rows) || body.rows.length === 0) return json({ error: "Provide at least one question row." }, 400);
+      if (body.rows.length > 500) return json({ error: "Import is limited to 500 rows per batch." }, 413);
+      const prepared = parseQuestionImportRows(body.rows as Record<string, unknown>[]);
+      const fingerprints = prepared.valid.map(item => item.question.question_fingerprint);
+      const existing = new Set<string>();
+      for (let i = 0; i < fingerprints.length; i += 100) {
+        const { data, error } = await db.from("cbt_questions").select("question_fingerprint").in("question_fingerprint", fingerprints.slice(i, i + 100));
+        if (error) throw error;
+        for (const row of data ?? []) existing.add(row.question_fingerprint);
+      }
+      const errors = [...prepared.errors];
+      const candidates = prepared.valid.filter(item => {
+        if (!existing.has(item.question.question_fingerprint)) return true;
+        errors.push({ row: item.row, type: "duplicate_existing", errors: ["Matching question already exists in the bank."] });
+        return false;
+      });
+      const { data: batch, error: batchError } = await db.from("cbt_question_imports").insert({
+        filename: String(body.filename || "").trim().slice(0, 200),
+        source_label: String(body.sourceLabel || "").trim().slice(0, 200),
+        total_rows: prepared.totalRows, status: "validated", imported_by: user.id, error_report: errors,
+      }).select("*").single();
+      if (batchError) throw batchError;
+      let inserted: any[] = [];
+      if (candidates.length) {
+        const records = candidates.map(item => ({ ...item.question, status: "draft", import_batch_id: batch.id, created_by: user.id, updated_by: user.id }));
+        const { data, error } = await db.from("cbt_questions").upsert(records, { onConflict: "question_fingerprint", ignoreDuplicates: true }).select("id,question_fingerprint");
+        if (error) {
+          await db.from("cbt_question_imports").update({ status: "failed" }).eq("id", batch.id);
+          throw error;
+        }
+        inserted = data ?? [];
+      }
+      const insertedFingerprints = new Set(inserted.map(item => item.question_fingerprint));
+      for (const item of candidates) if (!insertedFingerprints.has(item.question.question_fingerprint)) errors.push({ row: item.row, type: "duplicate_existing", errors: ["Matching question already exists in the bank."] });
+      const duplicates = errors.filter(item => String(item.type).startsWith("duplicate")).length;
+      const invalid = errors.filter(item => item.type === "invalid").length;
+      const { data: finalBatch, error: updateError } = await db.from("cbt_question_imports").update({
+        status: "completed", inserted_rows: inserted.length, duplicate_rows: duplicates, invalid_rows: invalid, error_report: errors,
+      }).eq("id", batch.id).select("*").single();
+      if (updateError) throw updateError;
+      return json({ batch: finalBatch, inserted: inserted.length, duplicates, invalid, errors }, 201);
+    }
+
+    if (path === "/api/cbt/questions" && req.method === "GET") {
+      const params = new URL(req.url).searchParams;
+      let query = db.from("cbt_questions").select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty,source_type,source_name,source_year").eq("status", "published").order("subject").order("topic").limit(100);
+      for (const key of ["exam_type", "subject", "topic"] as const) {
+        const value = params.get(key)?.trim();
+        if (value) query = query.eq(key, value);
+      }
+      const { data, error } = await query;
+      if (error) throw error;
+      return json({ items: data ?? [] });
     }
 
     const adminContent = path.match(/^\/api\/admin\/content\/([^/]+)(?:\/([^/]+))?$/);
