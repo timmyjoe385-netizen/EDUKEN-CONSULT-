@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { isAllowedServiceRequestStatus, validateServiceRequestBody } from '../../supabase/functions/eduken-api/service-request-validation.mjs';
 
-const supabaseTestUrl = String(process.env.VITE_SUPABASE_URL || 'https://pphxltbkwygqjtjgkhxu.supabase.co').replace(/\\/+$/, '');
+const supabaseTestUrl = String(process.env.VITE_SUPABASE_URL || 'https://pphxltbkwygqjtjgkhxu.supabase.co').replace(/\/+$/, '');
 
 test('admin date editor parses ISO and human-readable deadlines for the native picker', () => {
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
