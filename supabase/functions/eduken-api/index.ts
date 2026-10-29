@@ -3299,7 +3299,7 @@ Deno.serve(async (req) => {
       if (error) throw error;
       return json({
         items: (data ?? []).map((attempt: any) => ({
-          date: attempt.submitted_at,
+          submitted_at: attempt.submitted_at,
           mode: attempt.mode,
           subject: attempt.subject,
           score: attempt.score,
