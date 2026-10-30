@@ -48,7 +48,7 @@ No production database or production question records are to be modified as part
 
 ## Latest repository verification
 
-- Current PR branch head: `c520714cf133330d56ec387cebbdf36936c5a89e`.
+- The successful workflow evidence cited below is for code head `c520714cf133330d56ec387cebbdf36936c5a89e`; this plan update is documentation-only.
 - PR #194 remains open and in draft state; it has not been merged.
 - On this exact head, the latest PR workflow runs for build check, wallet migration SQL integration, Playwright browser checks, and build/Cloudflare preview workflow all completed successfully.
 - The successful build/Cloudflare workflow is a preview/PR workflow result, not permission or proof of a production release.
