@@ -32,7 +32,7 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 
 ## Drafting progress (repository content only)
 
-Eighteen original CSV batches now contain 720 draft questions: 90 per subject across the eight supported subjects. These are content drafts, not reviewed or published bank records. A structural scan across all 720 rows confirmed the 18-column format, valid answer keys, explanations, four distinct options, and draft status, with 90 rows per subject. A cross-batch normalized-stem scan found no exact normalized-stem duplicates. This does not replace academic review or semantic-duplicate review.
+Nineteen original CSV batches now contain 760 draft questions: 95 per subject across the eight supported subjects. These are content drafts, not reviewed or published bank records. A structural scan across all 760 rows confirmed the 18-column format, valid answer keys, explanations, four distinct options, and draft status, with 95 rows per subject. A cross-batch normalized-stem scan found no exact normalized-stem duplicates. This does not replace academic review or semantic-duplicate review.
 
 ## Recent CBT implementation checks
 
