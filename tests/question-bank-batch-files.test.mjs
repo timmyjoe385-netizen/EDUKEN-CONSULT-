@@ -5,8 +5,8 @@ import { join } from "node:path";
 
 const directory = join(process.cwd(), "content", "cbt");
 const files = readdirSync(directory)
-  .filter(name => /^original-batch-\\d+-40-questions\\.csv$/.test(name))
-  .sort((a, b) => Number(a.match(/batch-(\\d+)/)[1]) - Number(b.match(/batch-(\\d+)/)[1]));
+  .filter(name => /^original-batch-\d+-40-questions\.csv$/.test(name))
+  .sort((a, b) => Number(a.match(/batch-(\d+)/)[1]) - Number(b.match(/batch-(\d+)/)[1]));
 const expectedHeader = [
   "subject", "topic", "subtopic", "question_text",
   "option_a", "option_b", "option_c", "option_d",
@@ -42,12 +42,12 @@ function parseCsv(source) {
 }
 
 function normalizeStem(value) {
-  return String(value || "").normalize("NFKC").toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu, " ").trim();
+  return String(value || "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 }
 
 test("all original CBT batches are structurally valid and remain draft-only", () => {
   assert.ok(files.length > 0, "At least one original question batch must exist.");
-  const numbers = files.map(name => Number(name.match(/batch-(\\d+)/)[1]));
+  const numbers = files.map(name => Number(name.match(/batch-(\d+)/)[1]));
   assert.deepEqual(numbers, Array.from({ length: files.length }, (_, i) => i + 1), "Batch numbering must be sequential without gaps.");
   const seenStems = new Map();
   let totalRows = 0;
@@ -67,7 +67,7 @@ test("all original CBT batches are structurally valid and remain draft-only", ()
       counts[subject]++;
       assert.ok(topic.trim(), location + ": topic is required.");
       assert.ok(stem.trim().length >= 5, location + ": question stem is required.");
-      const options = [optionA, optionB, optionC, optionD].map(value => value.normalize("NFKC").toLowerCase().replace(/\\s+/g, " ").trim());
+      const options = [optionA, optionB, optionC, optionD].map(value => value.normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim());
       assert.ok(options.every(Boolean), location + ": all four options are required.");
       assert.equal(new Set(options).size, 4, location + ": options must be distinct.");
       assert.ok(["A", "B", "C", "D"].includes(answer), location + ": answer key must be A, B, C or D.");
