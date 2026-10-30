@@ -18,10 +18,10 @@ const request = async (path, body) => {
   return { response, data };
 };
 
-const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English" });
+const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
 assert.equal(started.response.status, 201, "A practice session should start from published isolated sample questions.");
 assert.match(started.data.attemptToken || "", /^[a-f0-9]{64}$/i, "The server should issue an opaque attempt token.");
-assert.equal(started.data.durationSeconds, 900, "Subject practice should use the expected 15-minute timer.");
+assert.equal(started.data.durationSeconds, 60, "A one-question practice attempt should use a one-minute timer.");
 assert.ok(Array.isArray(started.data.questions) && started.data.questions.length > 0, "The session should include published questions.");
 
 for (const question of started.data.questions) {
@@ -32,9 +32,11 @@ for (const question of started.data.questions) {
 
 const fixture = started.data.questions.find(question => question.prompt === "Which word names a person, place, or thing?");
 assert.ok(fixture, "The isolated original Use of English fixture should be included in the practice session.");
+const correctIndex = fixture.options.indexOf("Happiness");
+assert.notEqual(correctIndex, -1, "The known correct option text must remain present after option shuffling.");
 const answers = Object.fromEntries(started.data.questions.map(question => [
   String(question.id),
-  String(question.id) === String(fixture.id) ? 1 : null,
+  String(question.id) === String(fixture.id) ? correctIndex : null,
 ]));
 
 const submitted = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers });
@@ -42,7 +44,7 @@ assert.equal(submitted.response.status, 200, "The server should accept and grade
 assert.equal(submitted.data.score, 1, "The server should award one point for the known correct answer.");
 assert.equal(submitted.data.total, started.data.questions.length);
 assert.equal(submitted.data.percent, Math.round(100 / started.data.questions.length));
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.correctOption, "B");
+assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.correctOption, ["A", "B", "C", "D"][correctIndex]);
 assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.isCorrect, true);
 
 const repeated = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers: {} });
