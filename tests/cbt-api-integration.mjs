@@ -50,4 +50,17 @@ assert.equal(repeated.response.status, 200, "A repeated submission should return
 assert.equal(repeated.data.alreadySubmitted, true, "A repeated submission should be marked as already submitted.");
 assert.equal(repeated.data.score, submitted.data.score, "Repeated submission must not change the stored score.");
 
+
+const fullMock = await request("/api/cbt/start", {
+  mode: "mock",
+  subject: "Use of English",
+  questionCount: 180,
+  subjectCombination: ["Biology", "Chemistry", "Physics"],
+});
+assert.equal(fullMock.response.status, 409, "A full mock must be rejected until every selected subject has its required published bank.");
+assert.equal(fullMock.data.requiredBySubject?.["Use of English"], 60);
+assert.equal(fullMock.data.requiredBySubject?.Biology, 40);
+assert.equal(fullMock.data.requiredBySubject?.Chemistry, 40);
+assert.equal(fullMock.data.requiredBySubject?.Physics, 40);
+
 console.log("CBT API integration passed: published-only question payload, hidden answer key, server grading and idempotent repeat submission.");
