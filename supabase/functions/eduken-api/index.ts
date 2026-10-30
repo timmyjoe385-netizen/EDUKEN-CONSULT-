@@ -3243,20 +3243,28 @@ Deno.serve(async (req) => {
         }, 409);
       }
 
-      const snapshot = rows.map((row: any) => ({
-        id: String(row.id),
-        subject: String(row.subject || ""),
-        prompt: String(row.question_text || ""),
-        options: {
-          A: String(row.options?.A || ""),
-          B: String(row.options?.B || ""),
-          C: String(row.options?.C || ""),
-          D: String(row.options?.D || ""),
-        },
-        correct_option: String(row.correct_option || "").toUpperCase(),
-        explanation: String(row.explanation || ""),
-        difficulty: String(row.difficulty || "medium"),
-      }));
+      const snapshot = rows.map((row: any) => {
+        // Shuffle option order per attempt, while remapping the correct key in the
+        // server-side snapshot so grading and answer review stay aligned.
+        const originalKeys = shuffleRows(["A", "B", "C", "D"]);
+        const options = Object.fromEntries(
+          ["A", "B", "C", "D"].map((key, index) => [
+            key,
+            String(row.options?.[originalKeys[index]] || ""),
+          ]),
+        ) as Record<string, string>;
+        const originalCorrect = String(row.correct_option || "").toUpperCase();
+        const correctIndex = originalKeys.indexOf(originalCorrect);
+        return {
+          id: String(row.id),
+          subject: String(row.subject || ""),
+          prompt: String(row.question_text || ""),
+          options,
+          correct_option: correctIndex >= 0 ? ["A", "B", "C", "D"][correctIndex] : originalCorrect,
+          explanation: String(row.explanation || ""),
+          difficulty: String(row.difficulty || "medium"),
+        };
+      });
       const token = createCbtAttemptToken();
       const now = new Date();
       const durationSeconds = mode === "mock"
