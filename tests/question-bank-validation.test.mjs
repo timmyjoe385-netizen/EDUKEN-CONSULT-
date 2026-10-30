@@ -23,7 +23,7 @@ test("rejects missing options and invalid answer keys", () => {
 
 test("requires a useful explanation and four distinct options", () => {
   assert.ok(validateQuestionInput({ ...sample, explanation: "" }).errors.some(x => /explanation of at least 5 characters/i.test(x)));
-  assert.ok(validateQuestionInput({ ...sample, explanation: "why" }).valid);
+  assert.ok(validateQuestionInput({ ...sample, explanation: "This explains the answer." }).valid);
   assert.ok(validateQuestionInput({ ...sample, options: { A: "Same", B: " same ", C: "Third", D: "Fourth" } }).errors.some(x => /options must be different/i.test(x)));
   assert.ok(validateQuestionInput({ ...sample, explanation: "x".repeat(5001) }).errors.some(x => /Explanation must not exceed/i.test(x)));
 });
