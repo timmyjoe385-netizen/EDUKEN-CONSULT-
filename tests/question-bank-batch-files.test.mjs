@@ -75,7 +75,7 @@ test("all original CBT batches are structurally valid and remain draft-only", ()
       assert.ok(["easy", "medium", "hard"].includes(difficulty), location + ": difficulty must be valid.");
       assert.equal(examType, "JAMB", location + ": exam type must be JAMB.");
       assert.equal(sourceType, "original", location + ": these batches must be original-authored content.");
-      assert.equal(sourceName, "", location + ": original questions must not invent a third-party source.");
+      assert.ok(sourceName === "" || sourceName === "EDUKEN CONSULT" || sourceName === "EDUKEN CONSULT original draft", location + ": source name must be blank or identify EDUKEN as the author, never a third-party past-paper source.");
       assert.equal(sourceYear, "", location + ": original questions must not invent a past-paper year.");
       assert.ok(provenance.trim(), location + ": provenance notes are required.");
       assert.ok(licensing.trim(), location + ": licensing notes are required.");
