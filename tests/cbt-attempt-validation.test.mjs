@@ -49,3 +49,43 @@ test("timed CBT expiry includes a short server grace window for automatic submis
   assert.equal(getCbtAttemptExpiry(started, 0), null);
   assert.equal(getCbtAttemptExpiry(started, 900, -1), null);
 });
+
+import { getCbtSubjectQuestionCounts, remapCbtQuestionOptions } from "../supabase/functions/eduken-api/cbt-question-selection.mjs";
+
+test("full JAMB mock uses 60 English and 40 from each of three selected subjects", () => {
+  const counts = getCbtSubjectQuestionCounts(180, ["Biology", "Chemistry", "Physics"]);
+  assert.deepEqual(Object.fromEntries(counts), {
+    "Use of English": 60, Biology: 40, Chemistry: 40, Physics: 40,
+  });
+  assert.equal([...counts.values()].reduce((sum, value) => sum + value, 0), 180);
+});
+
+test("shorter mixed mocks distribute the requested count across all four subjects", () => {
+  const counts = getCbtSubjectQuestionCounts(100, ["Biology", "Chemistry", "Physics"]);
+  assert.deepEqual(Object.fromEntries(counts), {
+    "Use of English": 33, Biology: 23, Chemistry: 22, Physics: 22,
+  });
+  assert.equal([...counts.values()].reduce((sum, value) => sum + value, 0), 100);
+});
+
+test("option shuffling remaps the correct key for every possible option order", () => {
+  const keys = ["A", "B", "C", "D"];
+  const original = { A: "first", B: "second", C: "third", D: "fourth" };
+  const permutations = [];
+  const permute = (remaining, prefix = []) => {
+    if (!remaining.length) { permutations.push(prefix); return; }
+    remaining.forEach((key, index) => permute([...remaining.slice(0, index), ...remaining.slice(index + 1)], [...prefix, key]));
+  };
+  permute(keys);
+  for (const order of permutations) {
+    const result = remapCbtQuestionOptions(original, "C", order);
+    assert.equal(result.options[result.correct_option], "third");
+    assert.deepEqual(Object.values(result.options).sort(), Object.values(original).sort());
+  }
+  assert.equal(permutations.length, 24);
+});
+
+test("option remapping rejects incomplete permutations and invalid answer keys", () => {
+  assert.throws(() => remapCbtQuestionOptions({ A: "a" }, "A", ["A", "A", "C", "D"]), /exactly once/);
+  assert.throws(() => remapCbtQuestionOptions({ A: "a" }, "E", ["A", "B", "C", "D"]), /correct option/);
+});

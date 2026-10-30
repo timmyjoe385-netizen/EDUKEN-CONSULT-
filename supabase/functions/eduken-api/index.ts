@@ -11,6 +11,7 @@ import { normalizeServicePrice } from "./service-price-validation.mjs";
 import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
+import { getCbtSubjectQuestionCounts, remapCbtQuestionOptions } from "./cbt-question-selection.mjs";
 import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
 
 const cors = {
@@ -3031,12 +3032,15 @@ Deno.serve(async (req) => {
         const params = new URL(req.url).searchParams;
         const status = params.get("status");
         const q = (params.get("q") || "").trim().replace(/[,%()]/g, " ");
-        let query = db.from("cbt_questions").select("*").order("updated_at", { ascending: false }).limit(200);
+        const page = Math.max(1, Math.floor(Number(params.get("page")) || 1));
+        const pageSize = Math.min(100, Math.max(1, Math.floor(Number(params.get("pageSize")) || 50)));
+        let query = db.from("cbt_questions").select("*", { count: "exact" }).order("updated_at", { ascending: false });
         if (status && ["draft","reviewed","approved","published","unpublished"].includes(status)) query = query.eq("status", status);
         if (q) query = query.or("question_text.ilike.%"+q+"%,subject.ilike.%"+q+"%,topic.ilike.%"+q+"%");
-        const { data, error } = await query;
+        const start = (page - 1) * pageSize;
+        const { data, error, count } = await query.range(start, start + pageSize - 1);
         if (error) throw error;
-        return json({ items: data ?? [] });
+        return json({ items: data ?? [], total: count ?? 0, page, pageSize });
       }
       if (req.method === "POST" && !id) {
         const parsed = parseJsonObjectBody(await req.text());
@@ -3202,20 +3206,7 @@ Deno.serve(async (req) => {
         rows = shuffleRows(data ?? []).slice(0, requestedQuestionCount);
       } else {
         const fullBlueprint = requestedQuestionCount === 180;
-        const counts = new Map<string, number>();
-        if (fullBlueprint) {
-          counts.set("Use of English", 60);
-          rawCombination.forEach(name => counts.set(name, 40));
-        } else {
-          const englishCount = Math.max(1, Math.round(requestedQuestionCount / 3));
-          counts.set("Use of English", englishCount);
-          const otherTotal = requestedQuestionCount - englishCount;
-          const each = Math.floor(otherTotal / 3);
-          let remainder = otherTotal % 3;
-          rawCombination.forEach(name => {
-            counts.set(name, each + (remainder-- > 0 ? 1 : 0));
-          });
-        }
+        const counts = getCbtSubjectQuestionCounts(requestedQuestionCount, rawCombination);
         const subjectResults = await Promise.all(chosenSubjects.map(async name => {
           const required = counts.get(name) || 0;
           const { data, error } = await db.from("cbt_questions")
@@ -3243,20 +3234,21 @@ Deno.serve(async (req) => {
         }, 409);
       }
 
-      const snapshot = rows.map((row: any) => ({
-        id: String(row.id),
-        subject: String(row.subject || ""),
-        prompt: String(row.question_text || ""),
-        options: {
-          A: String(row.options?.A || ""),
-          B: String(row.options?.B || ""),
-          C: String(row.options?.C || ""),
-          D: String(row.options?.D || ""),
-        },
-        correct_option: String(row.correct_option || "").toUpperCase(),
-        explanation: String(row.explanation || ""),
-        difficulty: String(row.difficulty || "medium"),
-      }));
+      const snapshot = rows.map((row: any) => {
+        // Shuffle option order per attempt, while remapping the correct key in the
+        // server-side snapshot so grading and answer review stay aligned.
+        const originalKeys = shuffleRows(["A", "B", "C", "D"]);
+        const remapped = remapCbtQuestionOptions(row.options, row.correct_option, originalKeys);
+        return {
+          id: String(row.id),
+          subject: String(row.subject || ""),
+          prompt: String(row.question_text || ""),
+          options: remapped.options,
+          correct_option: remapped.correct_option,
+          explanation: String(row.explanation || ""),
+          difficulty: String(row.difficulty || "medium"),
+        };
+      });
       const token = createCbtAttemptToken();
       const now = new Date();
       const durationSeconds = mode === "mock"
