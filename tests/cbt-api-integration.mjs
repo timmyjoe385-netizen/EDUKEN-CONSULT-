@@ -66,3 +66,19 @@ assert.equal(fullMock.data.requiredBySubject?.Chemistry, 40);
 assert.equal(fullMock.data.requiredBySubject?.Physics, 40);
 
 console.log("CBT API integration passed: published-only question payload, hidden answer key, server grading and idempotent repeat submission.");
+
+// Administrative question-bank endpoints must reject requests that carry only the
+// public API key and no authenticated user session.
+const adminHeaders = { apikey: key, "Content-Type": "application/json" };
+const adminList = await fetch(endpoint + "/api/admin/cbt/questions", { headers: adminHeaders });
+assert.equal(adminList.status, 401, "The admin question-bank list must require an authenticated user.");
+const adminHistory = await fetch(endpoint + "/api/admin/cbt/imports", { headers: adminHeaders });
+assert.equal(adminHistory.status, 401, "The admin import history must require an authenticated user.");
+const adminImport = await fetch(endpoint + "/api/admin/cbt/import", {
+  method: "POST",
+  headers: adminHeaders,
+  body: JSON.stringify({ filename: "unauthorised.csv", rows: [{ subject: "Use of English" }] }),
+});
+assert.equal(adminImport.status, 401, "The admin import endpoint must reject unauthenticated writes before parsing or inserting data.");
+
+console.log("CBT admin API security passed: question list, import history and CSV import reject unauthenticated requests.");
