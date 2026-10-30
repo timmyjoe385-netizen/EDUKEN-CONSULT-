@@ -37,7 +37,7 @@ export function fingerprintQuestion(question) {
     question.exam_type, question.subject, question.topic, question.subtopic,
     question.question_text,
     ...OPTION_KEYS.map((key) => question.options?.[key] || ""),
-  ].map((value) => String(value || "").normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim()).join("|");
+  ].map((value) => String(value || "").normalize("NFKC").toLowerCase().replace(/\\s+/g, " ").trim()).join("|");
   // Stable non-cryptographic fingerprint for duplicate detection, not an auth token.
   let a = 0x811c9dc5;
   let b = 0x9e3779b9;
@@ -61,7 +61,11 @@ export function validateQuestionInput(raw, { allowStatus = false } = {}) {
     if (!question.options[key]) errors.push("Option " + key + " is required.");
     if (question.options[key].length > 3000) errors.push("Option " + key + " must not exceed 3,000 characters.");
   }
+  const normalizedOptions = OPTION_KEYS.map((key) => question.options[key].normalize("NFKC").toLowerCase().replace(/\\s+/g, " ").trim()).filter(Boolean);
+  if (new Set(normalizedOptions).size !== normalizedOptions.length) errors.push("All four answer options must be different.");
   if (!OPTION_KEYS.includes(question.correct_option)) errors.push("Correct answer must be A, B, C or D.");
+  if (question.explanation.length < 5) errors.push("An explanation of at least 5 characters is required.");
+  if (question.explanation.length > 5000) errors.push("Explanation must not exceed 5,000 characters.");
   if (!ALLOWED_DIFFICULTIES.has(question.difficulty)) errors.push("Difficulty must be easy, medium or hard.");
   if (!ALLOWED_SOURCE_TYPES.has(question.source_type)) errors.push("Source type is invalid.");
   if (question.source_year !== null && (!Number.isInteger(question.source_year) || question.source_year < 1960 || question.source_year > 2100)) errors.push("Source year must be a whole year from 1960 to 2100.");
