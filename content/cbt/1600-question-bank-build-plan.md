@@ -32,7 +32,9 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 
 ## Drafting progress (repository content only)
 
-Twenty-three original CSV batches now contain 920 draft questions: 115 per subject across the eight supported subjects. These are content drafts, not reviewed or published bank records. The first twenty batches were structurally scanned: 800 rows, 18 columns, 100 per subject, valid answer keys, explanations of at least five characters, four distinct options, draft status, and no exact normalized-stem duplicates. Batches 21, 22 and 23 are present as 40-row CSVs; a complete structural and cross-batch duplicate pass remains required for these later batches. Structural checks do not replace academic review or semantic-duplicate review.
+Twenty-four original CSV batches now exist in the current PR branch: 960 draft questions total, with 120 questions per supported subject. A fresh scan of batches 01–24 at the current branch head confirmed 40 data rows per file, the exact 18-column header, five questions per subject per batch, valid A/B/C/D answer keys, four distinct options, non-empty explanations meeting the import validator's five-character minimum, and draft status throughout. This is a structural/import-readiness check, not academic approval.
+
+The cross-batch stem review has identified repeated or closely overlapping question families (including osmosis and the functional unit of the kidney). These must be deduplicated or rewritten before the bank is treated as a clean 960-question set. Exact stem matching alone is not enough: semantic duplicates and answer/explanation accuracy still require academic review. Do not import or publish these repository CSV drafts automatically.
 
 ## Recent CBT implementation checks
 
@@ -40,6 +42,14 @@ The reconciled branch now uses shared server-side helpers for the 180-question b
 
 ## Current verified baseline (isolated test project only)
 
-The isolated test database currently reports 73 rows: 65 draft and 8 published, with one published row in each supported subject. This is not a completed bank and does not support a full mock. Reconcile existing rows and provenance before adding/importing more content.
+The isolated test project `wpktzogarfqrgkirzdpy` remains active and separate from production. Its latest read-only subject/status query reports 73 rows: 65 drafts and 8 published, with one published row in each of the eight supported subjects (Use of English has 9 drafts; each other subject has 8 drafts). This is not a completed bank and does not support a full 180-question mock. The API must reject an underfilled full mock clearly.
 
 No production database or production question records are to be modified as part of this plan.
+
+## Latest repository verification
+
+- Current PR branch head: `c520714cf133330d56ec387cebbdf36936c5a89e`.
+- PR #194 remains open and in draft state; it has not been merged.
+- On this exact head, the latest PR workflow runs for build check, wallet migration SQL integration, Playwright browser checks, and build/Cloudflare preview workflow all completed successfully.
+- The successful build/Cloudflare workflow is a preview/PR workflow result, not permission or proof of a production release.
+- The full-mock bank remains underfilled in the isolated database. Admin import-to-publish testing with an authenticated admin account and academic review remain outstanding.
