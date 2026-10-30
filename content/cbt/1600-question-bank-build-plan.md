@@ -32,9 +32,9 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 
 ## Drafting progress (repository content only)
 
-Twenty-four original CSV batches now exist in the current PR branch: 960 draft questions total, with 120 questions per supported subject. A fresh scan of batches 01–24 at the current branch head confirmed 40 data rows per file, the exact 18-column header, five questions per subject per batch, valid A/B/C/D answer keys, four distinct options, non-empty explanations meeting the import validator's five-character minimum, and draft status throughout. This is a structural/import-readiness check, not academic approval.
+Twenty-five original CSV batches now exist in the current PR branch: 1,000 draft questions total, with 125 questions per supported subject. A fresh scan of batches 01–24 confirmed 40 data rows per file, the exact 18-column header, five questions per subject per batch, valid A/B/C/D answer keys, four distinct options, non-empty explanations meeting the import validator's five-character minimum, and draft status throughout. This is a structural/import-readiness check, not academic approval.
 
-The cross-batch stem review has identified repeated or closely overlapping question families (including osmosis and the functional unit of the kidney). These must be deduplicated or rewritten before the bank is treated as a clean 960-question set. Exact stem matching alone is not enough: semantic duplicates and answer/explanation accuracy still require academic review. Do not import or publish these repository CSV drafts automatically.
+Batch 25 was individually scanned after creation and contains 40 valid rows (five per subject), the exact 18-column header, valid answer keys, four distinct options, meaningful explanations, and draft status. The cross-batch stem review has identified repeated or closely overlapping question families (including osmosis and the functional unit of the kidney). These must be deduplicated or rewritten before the bank is treated as a clean 960-question set. Exact stem matching alone is not enough: semantic duplicates and answer/explanation accuracy still require academic review. Do not import or publish these repository CSV drafts automatically.
 
 ## Recent CBT implementation checks
 
@@ -48,7 +48,7 @@ No production database or production question records are to be modified as part
 
 ## Latest repository verification
 
-- The successful workflow evidence cited below is for code head `c520714cf133330d56ec387cebbdf36936c5a89e`; this plan update is documentation-only.
+- The successful workflow evidence cited below is for code head `c520714cf133330d56ec387cebbdf36936c5a89e`; the later commits add only question-bank content and documentation.
 - PR #194 remains open and in draft state; it has not been merged.
 - On this exact head, the latest PR workflow runs for build check, wallet migration SQL integration, Playwright browser checks, and build/Cloudflare preview workflow all completed successfully.
 - The successful build/Cloudflare workflow is a preview/PR workflow result, not permission or proof of a production release.
