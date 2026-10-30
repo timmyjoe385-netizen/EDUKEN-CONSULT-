@@ -32,7 +32,11 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 
 ## Drafting progress (repository content only)
 
-Nine original CSV batches now contain 360 draft questions: 45 per subject across the eight supported subjects. These are content drafts, not reviewed or published bank records. Batches 07–09 passed structural validation for all 18 columns, required values, valid answer keys, draft status, original provenance, and five questions per subject in each batch. A cross-batch normalized-stem scan across all 360 drafts found no exact normalized-stem duplicates. This does not replace academic review or semantic-duplicate review.
+Nine original CSV batches now contain 360 draft questions: 45 per subject across the eight supported subjects. These are content drafts, not reviewed or published bank records. A structural scan across all 360 rows confirmed the 18-column format, valid answer keys, and draft status, with 45 rows per subject. A cross-batch normalized-stem scan found no exact normalized-stem duplicates. This does not replace academic review or semantic-duplicate review.
+
+## Recent CBT implementation checks
+
+The reconciled branch now uses shared server-side helpers for the 180-question blueprint and option-order remapping. Unit tests cover the 60 + 40 + 40 + 40 full-mock distribution, shorter mixed-mock distribution, all 24 possible answer-option permutations, and invalid option mappings. These tests are part of the current branch validation; they do not establish that the question bank is sufficiently populated for a full mock.
 
 ## Current verified baseline (isolated test project only)
 
