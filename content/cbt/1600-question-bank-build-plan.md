@@ -30,6 +30,10 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 - A full JAMB-style mock requires 60 Use of English questions plus 40 questions from each of three selected additional subjects (180 total); reject the attempt clearly if any selected bank is short.
 - Keep question content separate from code and never place draft or unreviewed questions in the student-facing published feed.
 
+## Drafting progress (repository content only)
+
+Seven original CSV batches now contain 280 draft questions: 35 per subject across the eight supported subjects. These are content drafts, not reviewed or published bank records. The 40-row batch 07 passed structural validation for all 18 columns, required values, valid answer keys, draft status, original provenance, and five questions per subject. Academic accuracy and semantic duplicate review are still required before import or publication.
+
 ## Current verified baseline (isolated test project only)
 
 The isolated test database currently reports 73 rows: 65 draft and 8 published, with one published row in each supported subject. This is not a completed bank and does not support a full mock. Reconcile existing rows and provenance before adding/importing more content.
