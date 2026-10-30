@@ -28,7 +28,7 @@
 .cbt-mock-banner .cbt-count-select { margin-bottom: 4px; }
 
 
-/* Compact subject picker replaces the large subject-card grid on the CBT landing page. */
+/* Compact subject picker; mixed-mock subject selection remains separate below. */
 .cbt-subject-picker{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,.8fr) auto;align-items:center;gap:16px;margin:24px 0 30px;padding:22px;border:1px solid var(--cbt-border,#dce8df);border-radius:18px;background:var(--cbt-surface,#fff)}
 .cbt-subject-picker-copy label{display:block;font-weight:700;color:var(--cbt-text,#173b2a);margin-bottom:6px}
 .cbt-subject-picker-copy p{margin:0;color:var(--cbt-muted,#64756b);font-size:.92rem;line-height:1.5}
