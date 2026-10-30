@@ -32,7 +32,7 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 
 ## Drafting progress (repository content only)
 
-Twenty-seven original CSV batches now exist in the current PR branch: 1,080 draft questions total, with 135 questions per supported subject. A fresh scan of batches 01–24 confirmed 40 data rows per file, the exact 18-column header, five questions per subject per batch, valid A/B/C/D answer keys, four distinct options, non-empty explanations meeting the import validator's five-character minimum, and draft status throughout. This is a structural/import-readiness check, not academic approval.
+Twenty-eight original CSV batches now exist in the current PR branch: 1,120 draft questions total, with 140 draft questions per supported subject. Batch 28 was present in malformed CSV form and has been rebuilt with 40 structurally valid original questions, five per subject. A fresh scan of batches 01–24 confirmed 40 data rows per file, the exact 18-column header, five questions per subject per batch, valid A/B/C/D answer keys, four distinct options, non-empty explanations meeting the import validator's five-character minimum, and draft status throughout. This is a structural/import-readiness check, not academic approval.
 
 Batch 25 was individually scanned after creation and contains 40 valid rows (five per subject), the exact 18-column header, valid answer keys, four distinct options, meaningful explanations, and draft status. Targeted normalized-stem checks across batches 02, 08, 16, 17 and 18 found five repeated stems (covering angle of incidence, GDP measurement, osmosis, kidney filtration and opportunity cost); those items were rewritten in batches 16–18. A separate exact normalized-stem scan of batches 13–25 found one duplicate apostrophe question in batches 24 and 25; the batch 25 item was replaced with an elegy-versus-ode question. The full structural scan across batches 01–25 confirmed 40 rows per batch, the exact 18-column header, five questions per subject, valid answer keys, four distinct options, explanations meeting the importer’s five-character minimum, and draft status. Exact duplicate checks within batches 01–12 and within batches 13–25 had no remaining matches after the batch 25 correction. Batch 26 was individually checked: 40 rows, five per subject, 18 columns, valid keys, distinct options, explanations, and draft status. A cross-range exact scan and full semantic/academic review are still required; do not treat structural validity as proof of academic correctness, and do not import or publish these repository CSV drafts automatically.
 
@@ -48,8 +48,10 @@ No production database or production question records are to be modified as part
 
 ## Latest repository verification
 
-- The successful workflow evidence cited below is for code head `c520714cf133330d56ec387cebbdf36936c5a89e`; the later commits add only question-bank content and documentation.
 - PR #194 remains open and in draft state; it has not been merged.
-- On this exact head, the latest PR workflow runs for build check, wallet migration SQL integration, Playwright browser checks, and build/Cloudflare preview workflow all completed successfully.
-- The successful build/Cloudflare workflow is a preview/PR workflow result, not permission or proof of a production release.
-- The full-mock bank remains underfilled in the isolated database. Admin import-to-publish testing with an authenticated admin account and academic review remain outstanding.
+- At head `6fa51fe0bfca85af2b22756899402e0897db9bb7`, the website build and full validation/security regression workflow passed. The validation job reported 109 tests passed, zero failed, including the permanent cross-batch question-bank test across all 28 existing numbered CSV files (1,120 structurally valid draft questions, 140 per subject).
+- The isolated wallet/CBT SQL integration workflow also passed on this head.
+- Playwright browser checks and the Cloudflare preview deployment were still running when this note was prepared; their results must be checked against the latest branch head before being reported.
+- Production deployment remains excluded. A successful build or preview is not a production release.
+- The isolated full-mock bank remains underfilled. Authenticated admin import-to-publish testing and academic review remain outstanding.
+- Batch 28 was rebuilt after validation exposed malformed CSV cells and two exact cross-batch duplicates (catalyst and monopoly stems). Batch 27 also had exact duplicate stems involving pressure groups and naturalisation; both were replaced with distinct original questions. The permanent duplicate test was not changed or bypassed.
