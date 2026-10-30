@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('CBT falls back to original local practice when the published bank is empty', async ({ page }) => {
+test('CBT does not expose local samples when the published bank is empty', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -13,11 +13,10 @@ test('CBT falls back to original local practice when the published bank is empty
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
-  await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 2')).toBeVisible();
+  await expect(page.getByText(/Student attempts are disabled until reviewed questions are published/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.locator('.cbt-question-card')).toHaveCount(0);
 
   const dimensions = await page.evaluate(() => ({
     viewport: window.innerWidth,
@@ -30,20 +29,14 @@ test('CBT falls back to original local practice when the published bank is empty
   ).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
 
-test('CBT practice fallback supports navigation, flagging and answer review', async ({ page }) => {
+test('CBT does not fall back to unpublished samples when the published API is unavailable', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByText(/original starter samples are being used/i)).toBeVisible();
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 2')).toBeVisible();
-
-  await page.getByRole('button', { name: /Review later/i }).click();
-  await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
-  await page.getByRole('button', { name: /Next question/i }).click();
-  await expect(page.getByText('Question 2 of 2')).toBeVisible();
-  await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  await expect(page.getByText(/Student attempts are disabled until reviewed questions are published/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.locator('.cbt-question-card')).toHaveCount(0);
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
