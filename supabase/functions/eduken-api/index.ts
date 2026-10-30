@@ -11,6 +11,7 @@ import { normalizeServicePrice } from "./service-price-validation.mjs";
 import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
+import { getCbtSubjectQuestionCounts, remapCbtQuestionOptions } from "./cbt-question-selection.mjs";
 import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
 
 const cors = {
@@ -3202,20 +3203,7 @@ Deno.serve(async (req) => {
         rows = shuffleRows(data ?? []).slice(0, requestedQuestionCount);
       } else {
         const fullBlueprint = requestedQuestionCount === 180;
-        const counts = new Map<string, number>();
-        if (fullBlueprint) {
-          counts.set("Use of English", 60);
-          rawCombination.forEach(name => counts.set(name, 40));
-        } else {
-          const englishCount = Math.max(1, Math.round(requestedQuestionCount / 3));
-          counts.set("Use of English", englishCount);
-          const otherTotal = requestedQuestionCount - englishCount;
-          const each = Math.floor(otherTotal / 3);
-          let remainder = otherTotal % 3;
-          rawCombination.forEach(name => {
-            counts.set(name, each + (remainder-- > 0 ? 1 : 0));
-          });
-        }
+        const counts = getCbtSubjectQuestionCounts(requestedQuestionCount, rawCombination);
         const subjectResults = await Promise.all(chosenSubjects.map(async name => {
           const required = counts.get(name) || 0;
           const { data, error } = await db.from("cbt_questions")
@@ -3247,20 +3235,13 @@ Deno.serve(async (req) => {
         // Shuffle option order per attempt, while remapping the correct key in the
         // server-side snapshot so grading and answer review stay aligned.
         const originalKeys = shuffleRows(["A", "B", "C", "D"]);
-        const options = Object.fromEntries(
-          ["A", "B", "C", "D"].map((key, index) => [
-            key,
-            String(row.options?.[originalKeys[index]] || ""),
-          ]),
-        ) as Record<string, string>;
-        const originalCorrect = String(row.correct_option || "").toUpperCase();
-        const correctIndex = originalKeys.indexOf(originalCorrect);
+        const remapped = remapCbtQuestionOptions(row.options, row.correct_option, originalKeys);
         return {
           id: String(row.id),
           subject: String(row.subject || ""),
           prompt: String(row.question_text || ""),
-          options,
-          correct_option: correctIndex >= 0 ? ["A", "B", "C", "D"][correctIndex] : originalCorrect,
+          options: remapped.options,
+          correct_option: remapped.correct_option,
           explanation: String(row.explanation || ""),
           difficulty: String(row.difficulty || "medium"),
         };
