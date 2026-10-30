@@ -21,6 +21,13 @@ test("rejects missing options and invalid answer keys", () => {
   assert.ok(validateQuestionInput({ ...sample, correct_option: "E" }).errors.some(x => /Correct answer/.test(x)));
 });
 
+test("requires a useful explanation and four distinct options", () => {
+  assert.ok(validateQuestionInput({ ...sample, explanation: "" }).errors.some(x => /explanation of at least 5 characters/i.test(x)));
+  assert.ok(validateQuestionInput({ ...sample, explanation: "why" }).valid);
+  assert.ok(validateQuestionInput({ ...sample, options: { A: "Same", B: " same ", C: "Third", D: "Fourth" } }).errors.some(x => /options must be different/i.test(x)));
+  assert.ok(validateQuestionInput({ ...sample, explanation: "x".repeat(5001) }).errors.some(x => /Explanation must not exceed/i.test(x)));
+});
+
 test("requires provenance and licensing notes for past questions", () => {
   const result = validateQuestionInput({ ...sample, source_type: "past_question" });
   assert.ok(result.errors.some(x => /source name, year, provenance notes and licensing notes/.test(x)));
@@ -40,7 +47,6 @@ test("status transitions require review and approval before publication", () => 
   assert.equal(validateStatusTransition("approved", "published").valid, true);
 });
 
-
 test("rejects out-of-range source years and oversized question text", () => {
   assert.ok(validateQuestionInput({ ...sample, source_year: 2101 }).errors.some(x => /Source year/.test(x)));
   assert.ok(validateQuestionInput({ ...sample, question_text: "x".repeat(10001) }).errors.some(x => /Question text/.test(x)));
@@ -54,10 +60,9 @@ test("status workflow does not allow skipping review or approval", () => {
   assert.equal(validateStatusTransition("published", "draft").valid, false);
 });
 
-
 test("requires licensor and usage-rights notes for licensed content", () => {
   const missing = validateQuestionInput({ ...sample, source_type: "licensed" });
-  assert.ok(missing.errors.some(x => /licensor\/source name and licensing notes/.test(x)));
+  assert.ok(missing.errors.some(x => /licensor\\/source name and licensing notes/.test(x)));
   const valid = validateQuestionInput({ ...sample, source_type: "licensed", source_name: "Example publisher", licensing_notes: "Written permission recorded." });
   assert.equal(valid.valid, true);
 });
