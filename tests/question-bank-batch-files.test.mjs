@@ -50,6 +50,7 @@ test("all original CBT batches are structurally valid and remain draft-only", ()
   const numbers = files.map(name => Number(name.match(/batch-(\d+)/)[1]));
   assert.deepEqual(numbers, Array.from({ length: files.length }, (_, i) => i + 1), "Batch numbering must be sequential without gaps.");
   const seenStems = new Map();
+  const duplicateStems = [];
   let totalRows = 0;
 
   for (const file of files) {
@@ -83,8 +84,8 @@ test("all original CBT batches are structurally valid and remain draft-only", ()
 
       const normalized = normalizeStem(stem);
       const previous = seenStems.get(normalized);
-      assert.ok(!previous, location + ": exact normalized stem duplicates " + JSON.stringify(previous));
-      seenStems.set(normalized, location);
+      if (previous) duplicateStems.push(location + " duplicates " + previous + ": " + JSON.stringify(stem));
+      else seenStems.set(normalized, location);
       totalRows++;
     });
 
@@ -94,4 +95,5 @@ test("all original CBT batches are structurally valid and remain draft-only", ()
   }
 
   assert.equal(totalRows, files.length * 40);
+  assert.equal(duplicateStems.length, 0, "Exact normalized duplicate stems found:\n" + duplicateStems.join("\n"));
 });
