@@ -32,26 +32,40 @@ Prepare 200 reviewed, publishable questions for each of the eight supported subj
 
 ## Drafting progress (repository content only)
 
-Forty original CSV batches now exist in the current PR branch: 1,600 draft questions total, with 200 draft questions per supported subject. Batch 28 was rebuilt after structural validation exposed malformed CSV cells and exact cross-batch duplicates. Batch 29 repeated stems found by the permanent cross-batch test were replaced with distinct questions, including periodic trends, demand schedule, store of value, progressive taxation and an aside in drama. Batches 30 through 40 each add 40 original questions, five per subject, across additional syllabus areas. Duplicate stems found during validation were replaced while keeping the permanent cross-batch check enabled. The batch files are repository drafts only. Structural validity and automated duplicate checks are not academic approval; semantic similarity, syllabus coverage, answer accuracy and explanations still require subject-expert review before any publication.
+Forty original CSV batches exist in the current PR branch: 1,600 draft questions total, 200 per supported subject. Each file contains 40 questions, five per subject, with the exact 18-column schema. All 40 files were fetched from the current verified branch head and independently checked for 18 columns and 40 data rows. The permanent build test also enforces sequential batch numbering, five questions per subject per file, valid answer keys, four distinct options, explanations, original-authorship/provenance/licensing fields, draft-only status, and no exact normalized duplicate stems.
 
-Batch 25 was individually scanned after creation and contains 40 valid rows (five per subject), the exact 18-column header, valid answer keys, four distinct options, meaningful explanations, and draft status. Targeted normalized-stem checks across batches 02, 08, 16, 17 and 18 found five repeated stems (covering angle of incidence, GDP measurement, osmosis, kidney filtration and opportunity cost); those items were rewritten in batches 16–18. A separate exact normalized-stem scan of batches 13–25 found one duplicate apostrophe question in batches 24 and 25; the batch 25 item was replaced with an elegy-versus-ode question. The full structural scan across batches 01–25 confirmed 40 rows per batch, the exact 18-column header, five questions per subject, valid answer keys, four distinct options, explanations meeting the importer’s five-character minimum, and draft status. Exact duplicate checks within batches 01–12 and within batches 13–25 had no remaining matches after the batch 25 correction. Batch 26 was individually checked: 40 rows, five per subject, 18 columns, valid keys, distinct options, explanations, and draft status. A cross-range exact scan and full semantic/academic review are still required; do not treat structural validity as proof of academic correctness, and do not import or publish these repository CSV drafts automatically.
+The repository CSVs are drafts only. Structural validity and automated duplicate checks are not academic approval. No automatic import or publication is permitted. Academic accuracy, ambiguity, syllabus coverage, difficulty, correct-answer validity, explanation alignment, and semantic overlap still require review before publication.
+
+## Similarity screening — preliminary, not an approval
+
+A preliminary stem-similarity screen was run over four separate 10-batch windows (batches 01–10, 11–20, 21–30, and 31–40). It flagged 118 candidate pairs within those windows for manual review. This is a noisy lexical screen: it can flag unrelated calculation questions that share generic wording, and it can miss paraphrases with different vocabulary. It did not compare pairs across the four windows, and it did not validate answer keys or explanations. Treat the flagged pairs as review leads, not as 118 confirmed duplicates. Several strong paraphrase candidates appeared (for example, repeated definitions of perfect competition, isotope terminology, rhyme scheme, narrator reliability, organelle function, and political-party manifesto). These must be checked against the complete question, options, answer, explanation, and topic before any row is changed. Do not automatically rewrite questions based on this heuristic.
 
 ## Recent CBT implementation checks
 
-The reconciled branch now uses shared server-side helpers for the 180-question blueprint and option-order remapping. Unit tests cover the 60 + 40 + 40 + 40 full-mock distribution, shorter mixed-mock distribution, all 24 possible answer-option permutations, and invalid option mappings. These tests are part of the current branch validation; they do not establish that the question bank is sufficiently populated for a full mock.
+The reconciled branch uses shared server-side helpers for the 180-question blueprint and option-order remapping. Unit tests cover the 60 + 40 + 40 + 40 full-mock distribution, shorter mixed-mock distribution, all 24 possible answer-option permutations, and invalid option mappings. The latest verified CI run on commit 7054c480adb5aedaeb48753ff3e2d5e5b04b022c passed the build, cross-batch structural/duplicate validation, wallet SQL integration, browser checks, and isolated preview deployment. The production deploy job was intentionally skipped. The guest payment recovery smoke test was also skipped; it was not a passing test.
 
 ## Current verified baseline (isolated test project only)
 
-The isolated test project `wpktzogarfqrgkirzdpy` remains active and separate from production. Its latest read-only subject/status query reports 73 rows: 65 drafts and 8 published, with one published row in each of the eight supported subjects (Use of English has 9 drafts; each other subject has 8 drafts). This is not a completed bank and does not support a full 180-question mock. The API must reject an underfilled full mock clearly.
+The isolated test project `wpktzogarfqrgkirzdpy` remains active and separate from production. A fresh read-only query reports 73 CBT rows: 65 drafts and 8 published, with one published row in each of the eight supported subjects (Use of English has 9 drafts; each other subject has 8 drafts). This is not a completed bank and does not support a full 180-question mock. The API must reject an underfilled full mock clearly. The repository's 1,600 CSV drafts have not been imported into this database.
 
-No production database or production question records are to be modified as part of this plan.
+## Admin workflow and release gates
+
+Authenticated admin CSV import-to-review-to-publish UI testing remains outstanding. Unauthenticated access assertions are covered by the automated tests, but they do not prove that an authorized administrator can complete the entire workflow safely. Do not claim that the admin workflow is fully verified until an authenticated end-to-end test is completed.
+
+Before a student-facing production release:
+- complete and document the semantic-overlap review across all 1,600 questions;
+- have subject-competent reviewers verify academic accuracy, answer keys, explanations, ambiguity, and syllabus coverage;
+- test the authenticated admin import, review, approval, and publish workflow in isolation;
+- import only reviewed material into the isolated project and confirm that enough published questions exist for the requested exam combinations;
+- rerun all CI, browser, API, and preview checks against the final commit;
+- obtain explicit release approval before any production merge, production database change, or production deployment.
 
 ## Latest repository verification
 
-- PR #194 remains open and unmerged; its latest verified head is `3d63dec2d5727b88938f3ae30313648a08dc7175`.
-- The branch now contains all 40 numbered CSV batches: 1,600 draft questions total, 200 per supported subject. Batches 39 and 40 each passed a targeted structural check: 40 rows, exact 18-column header, five questions per subject, four distinct options, valid answer keys, meaningful explanations, and draft status.
-- The latest full build, Cloudflare build/preview, wallet SQL integration, and Playwright browser checks for this head were queued or in progress when this note was updated. Their final results must be inspected before describing the branch as fully validated.
-- The permanent cross-batch duplicate test remains enabled. Its full result for all 40 batches is still pending on the latest head; any reported duplicates must be fixed rather than bypassing the test.
-- Production deployment remains excluded. A successful build or preview is not a production release.
-- The isolated full-mock bank remains underfilled (73 database rows in the last read-only check). Authenticated admin import-to-publish testing and academic review remain outstanding. Repository CSV drafts have not been imported or published.
-- Batch 28 was rebuilt after validation exposed malformed CSV cells and exact cross-batch duplicates. Later duplicate stems found in subsequent batches were replaced with distinct original questions; the permanent duplicate test was not changed or bypassed.
+- PR #194 is open, unmerged, and still marked draft. Latest verified head at the time of this update: `7054c480adb5aedaeb48753ff3e2d5e5b04b022c`.
+- The latest build check, wallet migration SQL integration, Playwright browser suite, and isolated preview Worker deployment all completed successfully on that head.
+- The production deployment job was skipped intentionally; no production release was performed.
+- The guest payment recovery smoke test was skipped, not passed.
+- The isolated test database has only 73 questions (65 drafts, 8 published) and is insufficient for the 180-question mock.
+- Authenticated admin import-to-publish testing and full academic/semantic review remain outstanding.
+- Production database and production question records remain untouched.
