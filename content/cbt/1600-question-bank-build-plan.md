@@ -71,11 +71,13 @@ Before a student-facing production release:
 ## Latest repository verification
 
 - PR #194 is open, unmerged, and still marked draft.
-- The latest tested branch head at the time of this update passed the build and validation/security regression checks, including the global exact-duplicate test across all 40 batches.
-- Wallet migration SQL integration passed on that head.
-- The isolated Cloudflare preview build completed; its Worker deployment and real-CBT Chromium smoke test were still in progress at the last check. The separate Playwright browser workflow was queued. Do not report those as passed until their runs complete.
-- The production deployment job was skipped intentionally; no production release was performed.
-- The guest payment recovery smoke test has been skipped on the preceding preview run; it was not a passing test.
+- Latest branch head: `3d89a58af4ace7556f93f919d90482b2673a8505`.
+- Build and validation/security regression tests passed on this head, including the global exact-normalized-duplicate check across all 40 CSV batches after the latest content corrections.
+- Wallet migration SQL integration passed on this head.
+- The isolated Cloudflare preview workflow is still running. Preview deployment and the real-CBT Chromium smoke test are pending.
+- The separate Playwright browser workflow is still running against this head.
+- Production deployment was skipped intentionally; no production release was performed.
+- The guest payment recovery smoke test is not yet confirmed as passed on this head; previous preview runs skipped it.
 - The isolated test database has only 73 questions (65 drafts, 8 published) and is insufficient for the 180-question mock.
 - Authenticated admin import-to-publish testing and full academic/semantic review remain outstanding.
 - Production database and production question records remain untouched.
