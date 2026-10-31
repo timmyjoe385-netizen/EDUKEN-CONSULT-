@@ -48,10 +48,10 @@ No production database or production question records are to be modified as part
 
 ## Latest repository verification
 
-- PR #194 remains open and in draft state; it has not been merged.
-- At head `6fa51fe0bfca85af2b22756899402e0897db9bb7`, the website build and full validation/security regression workflow passed. The validation job reported 109 tests passed, zero failed, including the permanent cross-batch question-bank test across all 28 existing numbered CSV files (1,120 structurally valid draft questions, 140 per subject).
-- The isolated wallet/CBT SQL integration workflow also passed on this head.
-- Playwright browser checks and the Cloudflare preview deployment were still running when this note was prepared; their results must be checked against the latest branch head before being reported.
+- PR #194 remains open and unmerged; its latest verified head is `3d63dec2d5727b88938f3ae30313648a08dc7175`.
+- The branch now contains all 40 numbered CSV batches: 1,600 draft questions total, 200 per supported subject. Batches 39 and 40 each passed a targeted structural check: 40 rows, exact 18-column header, five questions per subject, four distinct options, valid answer keys, meaningful explanations, and draft status.
+- The latest full build, Cloudflare build/preview, wallet SQL integration, and Playwright browser checks for this head were queued or in progress when this note was updated. Their final results must be inspected before describing the branch as fully validated.
+- The permanent cross-batch duplicate test remains enabled. Its full result for all 40 batches is still pending on the latest head; any reported duplicates must be fixed rather than bypassing the test.
 - Production deployment remains excluded. A successful build or preview is not a production release.
-- The isolated full-mock bank remains underfilled. Authenticated admin import-to-publish testing and academic review remain outstanding.
-- Batch 28 was rebuilt after validation exposed malformed CSV cells and two exact cross-batch duplicates (catalyst and monopoly stems). Batch 27 also had exact duplicate stems involving pressure groups and naturalisation; both were replaced with distinct original questions. The permanent duplicate test was not changed or bypassed.
+- The isolated full-mock bank remains underfilled (73 database rows in the last read-only check). Authenticated admin import-to-publish testing and academic review remain outstanding. Repository CSV drafts have not been imported or published.
+- Batch 28 was rebuilt after validation exposed malformed CSV cells and exact cross-batch duplicates. Later duplicate stems found in subsequent batches were replaced with distinct original questions; the permanent duplicate test was not changed or bypassed.
