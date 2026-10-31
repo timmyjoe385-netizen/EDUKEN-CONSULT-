@@ -68,7 +68,11 @@ test("all original CBT batches are structurally valid and remain draft-only", ()
       counts[subject]++;
       assert.ok(topic.trim(), location + ": topic is required.");
       assert.ok(stem.trim().length >= 5, location + ": question stem is required.");
-      const options = [optionA, optionB, optionC, optionD].map(value => value.normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim());
+      const caseSensitiveNotation = subject === "Biology" && /genetics|inheritance/i.test(topic + " " + subtopic);
+      const options = [optionA, optionB, optionC, optionD].map(value => {
+        const normalized = value.normalize("NFKC").replace(/\s+/g, " ").trim();
+        return caseSensitiveNotation ? normalized : normalized.toLowerCase();
+      });
       assert.ok(options.every(Boolean), location + ": all four options are required.");
       assert.equal(new Set(options).size, 4, location + ": options must be distinct.");
       assert.ok(["A", "B", "C", "D"].includes(answer), location + ": answer key must be A, B, C or D.");
