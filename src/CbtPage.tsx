@@ -141,8 +141,8 @@ export default function CbtPage() {
         })).filter((question: Question) => question.subject && question.prompt && question.options.every(Boolean));
         if (mapped.length === 0) {
           // An empty published bank is not a usable server-backed student experience.
-          // Keep original questions available as clearly labelled local practice until
-          // an administrator publishes reviewed questions.
+          // Do not fall back to local sample questions; students can start only from
+          // the published, server-backed question bank.
           setPublishedQuestions([]);
           setQuestionLoadError(true);
           return;
@@ -151,7 +151,7 @@ export default function CbtPage() {
       })
       .catch(() => {
         if (!active) return;
-        // Keep the original sample set available when the question API cannot be reached.
+        // Do not expose local sample questions when the published API is unavailable.
         setPublishedQuestions([]);
         setQuestionLoadError(true);
       });
@@ -452,7 +452,7 @@ export default function CbtPage() {
       <div className="cbt-page">
         <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><a className="cbt-back-link" href="/"><ArrowLeft size={16} /> EDUKEN home</a></header>
         <main className="cbt-results-wrap">
-          <section className="cbt-result-hero"><div className="cbt-result-icon"><Target size={28} /></div><span className="cbt-eyebrow">PRACTICE COMPLETE</span><h1>{percent >= 70 ? 'Good work. Keep building.' : 'Every attempt is progress.'}</h1><p>{mode === 'mock' ? 'Mixed JAMB-style mock' : selectedSubject} · {activeQuestions.length} questions</p><div className="cbt-score-ring"><strong>{percent}%</strong><span>Score</span></div><div className="cbt-result-stats"><div><strong>{correctCount}</strong><span>Correct</span></div><div><strong>{activeQuestions.length - correctCount}</strong><span>Incorrect / skipped</span></div><div><strong>{answeredCount}</strong><span>Attempted</span></div></div><button className="cbt-primary-button" onClick={() => void begin(mode, selectedSubject)}><RotateCcw size={16} /> Try again</button><button className="cbt-secondary-button" onClick={() => { setStarted(false); setSubmitted(false); setSessionQuestions([]); setAttemptToken(null); setServerResult(null);; setStartError(''); }}>Choose another practice</button></section>
+          <section className="cbt-result-hero"><div className="cbt-result-icon"><Target size={28} /></div><span className="cbt-eyebrow">PRACTICE COMPLETE</span><h1>{percent >= 70 ? 'Good work. Keep building.' : 'Every attempt is progress.'}</h1><p>{mode === 'mock' ? 'Mixed JAMB-style mock' : selectedSubject} · {activeQuestions.length} questions</p><div className="cbt-score-ring"><strong>{percent}%</strong><span>Score</span></div><div className="cbt-result-stats"><div><strong>{correctCount}</strong><span>Correct</span></div><div><strong>{activeQuestions.length - correctCount}</strong><span>Incorrect / skipped</span></div><div><strong>{answeredCount}</strong><span>Attempted</span></div></div><button className="cbt-primary-button" onClick={() => void begin(mode, selectedSubject)}><RotateCcw size={16} /> Try again</button><button className="cbt-secondary-button" onClick={() => { setStarted(false); setSubmitted(false); setSessionQuestions([]); setAttemptToken(null); setServerResult(null); setStartError(''); }}>Choose another practice</button></section>
           <section className="cbt-review-card"><div className="cbt-review-heading"><div><span className="cbt-eyebrow">LEARN FROM YOUR ANSWERS</span><h2>Answer review</h2></div><span>{correctCount}/{activeQuestions.length} correct</span></div>{activeQuestions.map((item, index) => <article className="cbt-review-item" key={item.id}><div className="cbt-review-question"><span className={answers[item.id] === item.answer ? 'correct' : 'incorrect'}>{answers[item.id] === item.answer ? '✓' : '!'}</span><div><b>{index + 1}. {item.prompt}</b><p>Your answer: {answers[item.id] === undefined ? 'Not answered' : item.options[answers[item.id]]}</p><p>Correct answer: <strong>{item.options[item.answer]}</strong></p><small>{item.explanation}</small></div></div></article>)}</section>
         </main>
       </div>
