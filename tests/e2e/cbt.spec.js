@@ -104,6 +104,8 @@ test('published CBT questions are graded by the server after submission', async 
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   await expect(page.getByText('Correct answer:')).toBeVisible();
   await expect(page.getByText('The second option is correct.')).toBeVisible();
+  await page.getByRole('button', { name: 'Choose another practice' }).click();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeVisible();
 });
 
 
