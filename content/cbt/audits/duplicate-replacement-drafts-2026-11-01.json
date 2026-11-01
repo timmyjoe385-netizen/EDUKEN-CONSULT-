@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 63,
+  "draft_count": 65,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 63 proposals remain separate, unpublished drafts. DUP-60 to DUP-63 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
+  "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -1156,14 +1156,50 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "Drafted against the DUP-63 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.3648 against a circle-sector question; the concepts are distinct. Confirm map-scale coverage in the current JAMB Mathematics syllabus during independent review."
+    },
+    {
+      "target_id": "DUP-64",
+      "subject": "Chemistry",
+      "topic": "Nuclear chemistry",
+      "subtopic": "Half-life",
+      "question": "A radioactive isotope has a half-life of 6 hours. What fraction of the original sample remains after 18 hours?",
+      "options": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "1/16"
+      ],
+      "answer": "C",
+      "explanation": "Eighteen hours represents three half-lives (18 ÷ 6 = 3). The remaining fraction is (1/2)³ = 1/8.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Drafted for the DUP-64 Chemistry holdout (atomic-radius trend). Full 1,600-row same-subject lexical screen: highest Dice score 0.2623 against a first-order rate-constant unit question. The concept is distinct. Independent Chemistry review and contextual bank-wide clearance remain required."
+    },
+    {
+      "target_id": "DUP-65",
+      "subject": "Biology",
+      "topic": "Animal physiology",
+      "subtopic": "Insect respiration",
+      "question": "The fine terminal branches of an insect's tracheal system that deliver oxygen directly to body cells are called:",
+      "options": [
+        "Tracheoles",
+        "Spiracles",
+        "Malpighian tubules",
+        "Air sacs"
+      ],
+      "answer": "A",
+      "explanation": "Tracheoles are the fine terminal branches of the insect tracheal system. They extend close to body cells and provide the route for oxygen to diffuse directly to tissues. Spiracles are the external openings of the system.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Drafted for the DUP-65 Biology holdout (commensalism). Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a question on the ureter; no concept overlap. Independent Biology review and contextual bank-wide clearance remain required."
     }
   ],
-  "revision_note": "DUP-60/61: Organ of Corti and shoot phototropism. DUP-62/63: enjambment and map-scale conversion. All four new drafts were screened against all 1,600 staged rows and remain outside the original source CSVs.",
+  "revision_note": "DUP-60 to DUP-63: Organ of Corti/hearing, shoot phototropism, enjambment and map-scale conversion. DUP-64/65: radioactive half-life calculation and insect tracheoles. All six newest drafts were screened against all 1,600 staged rows and remain outside original source CSVs.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 27,
+  "drafts_missing": 25,
   "drafts_missing_target_ids": [
-    "DUP-64",
-    "DUP-65",
     "DUP-66",
     "DUP-67",
     "DUP-68",
