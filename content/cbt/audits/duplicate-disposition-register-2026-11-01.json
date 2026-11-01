@@ -17,11 +17,11 @@
     "threshold_note": "The 0.42 reconstruction reproduces the reported total of 390. A 0.43 run yields 352. The original reported category split was 41/349; the reconstruction is 40/350, a one-pair classification discrepancy still documented in the audit."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 23,
+    "cross_window_pairs": 32,
     "within_window_pairs": 15,
-    "total_pairs": 38,
-    "prior_replacement_provenance_pairs": 37,
-    "original_draft_overlap_pairs": 1
+    "total_pairs": 47,
+    "prior_replacement_provenance_pairs": 39,
+    "original_draft_overlap_pairs": 8
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -30,16 +30,18 @@
     "previously_triaged": 70
   },
   "replacement_plan": {
-    "unique_replacement_targets": 38,
+    "unique_replacement_targets": 47,
     "all_targets_unique": true,
     "retain_replace_assignments_complete": true,
     "csv_edits_authorized": false,
     "production_deployment_authorized": false,
     "pr_merge_authorized": false,
     "draft_bankwide_screen_complete": true,
-    "drafts_inserted": 0
+    "drafts_inserted": 0,
+    "additional_confirmed_pairs_added_on_2026_11_01": 9,
+    "additional_replacement_drafts_required": 9
   },
-  "approval_gate": "The 38-row retain/replace register and 38 replacement drafts are prepared. Do not edit original-batch CSVs, deploy production, or merge PR #194 until the user explicitly approves the retain/replace plan and final question-bank insertion.",
+  "approval_gate": "The 47-row retain/replace register and 38 original replacement drafts are staged. Nine additional replacement drafts are still required for the newly confirmed duplicate rows. Do not edit original-batch CSVs, import/publish, deploy production, or merge PR #194 until the user explicitly approves the reconciled retain/replace plan and all replacements have passed bank-wide and subject review.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -805,6 +807,186 @@
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
       }
+    },
+    {
+      "id": "DUP-39",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 9 row 18",
+      "b": "batch 32 row 21",
+      "concept": "Empirical formula from the same percentage composition",
+      "reason": "Both questions give the same 40% carbon, 6.7% hydrogen and 53.3% oxygen composition and ask for the simplest empirical formula. They assess the same calculation and produce CH₂O.",
+      "retain": "batch 9 row 18",
+      "replace": "batch 32 row 21",
+      "retention_basis": "Batch 9 row 18 is present in the original batch-09 creation commit. Batch 32 row 21 replaced a sulfur oxidation-number question in commit 7293bf29bd4fccb687464e96b7ac43813862b376; retain the original batch-09 item and treat batch-32 as a corrective replacement.",
+      "provenance": "Batch 32 row 21 was introduced by replacement commit 7293bf29bd4fccb687464e96b7ac43813862b376, replacing the sulfur oxidation-number item. It duplicates the original empirical-formula question in batch 9 row 18.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout. Create a distinct Chemistry syllabus question, screen it bank-wide, then review answer and explanation."
+      }
+    },
+    {
+      "id": "DUP-40",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 4 row 17",
+      "b": "batch 21 row 18",
+      "concept": "Simple distillation of salt solution to obtain pure water",
+      "reason": "Both ask why simple distillation can obtain pure water from salt solution; both rely on water vaporising and being condensed separately.",
+      "retain": "batch 4 row 17",
+      "replace": "batch 21 row 18",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch-04 version, whose stem and explanation clearly describe vaporisation and condensation.",
+      "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout."
+      }
+    },
+    {
+      "id": "DUP-41",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 19 row 16",
+      "b": "batch 40 row 13",
+      "concept": "Natural selection favours heritable traits that improve survival and reproduction",
+      "reason": "Both questions ask which organisms natural selection favours and identify traits that improve survival or reproductive success in an environment. They test the same core concept.",
+      "retain": "batch 19 row 16",
+      "replace": "batch 40 row 13",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch-19 version, which explicitly mentions survival and reproduction in the environment.",
+      "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout."
+      }
+    },
+    {
+      "id": "DUP-42",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 9 row 30",
+      "b": "batch 33 row 28",
+      "concept": "Economies of scale as a fall in average cost when output expands",
+      "reason": "Both define economies of scale as a reduction or fall in average cost as a firm expands production. They assess the same definition.",
+      "retain": "batch 9 row 30",
+      "replace": "batch 33 row 28",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch-09 version, which states the concept directly and has a clear explanation.",
+      "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout."
+      }
+    },
+    {
+      "id": "DUP-43",
+      "scope": "cross_window",
+      "subject": "Mathematics",
+      "a": "batch 5 row 7",
+      "b": "batch 21 row 9",
+      "concept": "Factorising the identical expression 6x + 12",
+      "reason": "Both stems ask the learner to factorise exactly 6x + 12 and have the same correct answer, 6(x + 2). The altered wording 'completely' does not create a different assessment.",
+      "retain": "batch 5 row 7",
+      "replace": "batch 21 row 9",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch-05 version; both have the same correct factorisation and the earlier row has a complete four-option set.",
+      "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout."
+      }
+    },
+    {
+      "id": "DUP-44",
+      "scope": "cross_window",
+      "subject": "Physics",
+      "a": "batch 4 row 26",
+      "b": "batch 35 row 25",
+      "concept": "Hydrostatic pressure increases with depth",
+      "reason": "Both ask what liquid pressure at rest increases with and identify depth below the surface. They test the same direct-recall relationship.",
+      "retain": "batch 4 row 26",
+      "replace": "batch 35 row 25",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch-04 version, which also explains the hydrostatic relationship.",
+      "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout."
+      }
+    },
+    {
+      "id": "DUP-45",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 30 row 30",
+      "b": "batch 39 row 31",
+      "concept": "Naira depreciation can make naira-priced exports cheaper to foreign buyers",
+      "reason": "Both ask how naira depreciation affects the foreign-currency price of Nigerian exports and identify that they may become cheaper to foreign buyers, other things equal.",
+      "retain": "batch 30 row 30",
+      "replace": "batch 39 row 31",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch-30 version, which explicitly states 'all else being equal' and explains the exchange-rate effect.",
+      "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout."
+      }
+    },
+    {
+      "id": "DUP-46",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 23 row 19",
+      "b": "batch 36 row 18",
+      "concept": "Carboxyl functional group of carboxylic acids",
+      "reason": "Both ask learners to identify the −COOH group as characteristic of carboxylic acids; specifying ethanoic acid does not change the assessed functional-group fact.",
+      "retain": "batch 23 row 19",
+      "replace": "batch 36 row 18",
+      "retention_basis": "Batch 23 row 19 is present in its original batch-23 creation commit. Batch 36 row 18 replaced the original ethanol hydroxyl-group question in commit f2c1020405559529d074d6553bfe221f57d56d15; retain the original batch-23 carboxylic-acid item and treat batch-36 as a corrective replacement.",
+      "provenance": "Batch 36 row 18 was introduced by replacement commit f2c1020405559529d074d6553bfe221f57d56d15, replacing a distinct question about the hydroxyl group in ethanol. It duplicates the original carboxylic-acid functional-group item in batch 23 row 19.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this newly confirmed holdout. Choose a distinct Chemistry syllabus learning objective and screen it bank-wide."
+      }
+    },
+    {
+      "id": "DUP-47",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 26 row 34",
+      "b": "batch 32 row 34",
+      "concept": "Constitutional division of powers in a federation",
+      "reason": "Both ask how constitutional powers are divided in a federal system. This is part of a three-row overlap: batch 32 row 34 is retained under DUP-28 against batch 33 row 35; batch 26 row 34 is an additional duplicate of the same retained item.",
+      "retain": "batch 32 row 34",
+      "replace": "batch 26 row 34",
+      "retention_basis": "Keep batch 32 row 34 as the single retained item because its stem explicitly says powers are divided between central and constituent governments by the constitution. Batch 33 row 35 remains held under DUP-28; batch 26 row 34 is now also held.",
+      "provenance": "Batch 26 row 34 and batch 32 row 34 are present in their original batch-creation snapshots. Batch 33 row 35 was separately introduced by prior replacement commit c61f2ffd593deb7ee18f3c123209a85da1b35cbb and is already held under DUP-28. The three rows form one duplicate cluster with one retained question and two holdouts.",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "original_csv_unchanged_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists for this additional holdout. Do not create a second near-identical Government replacement; use a distinct federalism syllabus objective."
+      }
     }
   ],
   "draft_screening": {
@@ -852,6 +1034,8 @@
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. Contextual concept-level review is required."
+    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. Contextual concept-level review is required. The 9 newly confirmed holdouts have no replacement drafts yet.",
+    "additional_duplicate_targets": 9,
+    "additional_replacement_drafts_required": 9
   }
 }
