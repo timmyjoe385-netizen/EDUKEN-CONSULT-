@@ -46,8 +46,8 @@
       "assessment": "preliminary_pass",
       "answer_check": "A is correct. Row-by-column multiplication gives [[10, 1], [12, 0]].",
       "syllabus_fit": "Provisionally fits matrix operations; matrix multiplication is distinct from the existing determinant and trace items.",
-      "bank_overlap": "Refreshed same-subject lexical screen reviewed. Any remaining similarity is treated as a prompt for contextual review, not proof of duplication; the question tests a distinct concept from the closest source items.",
-      "decision": "Keep as a draft pending human Mathematics review."
+      "bank_overlap": "Refreshed screen: highest same-subject score 0.4; top matches are unrelated arithmetic/matrix-trace stems. The matrix product operation is distinct; this is a lexical/template flag, not a duplicate finding.",
+      "decision": "Keep as a draft pending human subject review; lexical flag has been contextually distinguished from the closest source item."
     },
     {
       "target_id": "DUP-53",
@@ -55,8 +55,8 @@
       "assessment": "preliminary_pass",
       "answer_check": "A is correct: Cu²⁺ + 2OH⁻ forms Cu(OH)₂, a blue precipitate insoluble in excess aqueous sodium hydroxide.",
       "syllabus_fit": "Provisionally fits qualitative analysis and identification of cations.",
-      "bank_overlap": "Refreshed same-subject lexical screen reviewed. Any remaining similarity is treated as a prompt for contextual review, not proof of duplication; the question tests a distinct concept from the closest source items.",
-      "decision": "Keep as a draft pending human Chemistry review."
+      "bank_overlap": "Refreshed screen: highest same-subject score 0.458; closest item is a chloride-ion qualitative test. This item tests copper(II) hydroxide precipitation, a different ion and reaction; shared assessment format is not semantic duplication.",
+      "decision": "Keep as a draft pending human subject review; lexical flag has been contextually distinguished from the closest source item."
     }
   ],
   "release_gate": "These are preliminary assistant checks, not independent academic sign-off. Do not insert any of DUP-48 to DUP-53 into original CSVs or publish them until subject-competent review, full contextual bank review and the user's final controlled replacement approval."
