@@ -242,7 +242,7 @@
   },
   "source_files_modified": false,
   "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
-  "status": "STAGING_ONLY_SEMANTIC_REVIEW_INCOMPLETE_PROVENANCE_14_REPLACEMENT_COMMITS_PENDING_ONE_PAIR_UNVERIFIED_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
+  "status": "STAGING_ONLY_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
   "restrictions": [
     "Original 40 source batch CSVs were not edited or deleted.",
     "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
@@ -264,5 +264,25 @@
     "reconstructed_within_window_candidates_reviewed": 390,
     "unresolved_within_window_count_discrepancy": 38,
     "note": "All 286 cross-window candidates at or above the 0.65 review threshold have received manual contextual review. The 1,018 lower-scoring candidates remain unreviewed; the original within-window report still has 279 pending candidates and a 38-pair discrepancy against the reconstructed candidate set."
+  },
+  "semantic_review": {
+    "within_window": {
+      "reconstructed_candidates": 390,
+      "candidates_at_reconstructed_threshold_0_42_reviewed": 390,
+      "different_topic_or_subtopic_reviewed": 350,
+      "same_topic_and_subtopic_carried_forward_as_reviewed": 40,
+      "remaining_in_reconstructed_candidate_set": 0,
+      "original_reported_same_topic_subtopic_count": 41,
+      "reconstructed_same_topic_subtopic_count": 40,
+      "unresolved_category_boundary_difference": 1,
+      "independent_recomputation_at_threshold_0_43": 352,
+      "interpretation": "The original reported total of 390 is reproduced at threshold 0.42, not the stated 0.43. The 0.42 reconstruction contains 390 candidates (40 same-topic/subtopic and 350 other); all 390 have review statuses. The original report's split was 41/349, leaving a one-pair category boundary mismatch, documented rather than concealed."
+    },
+    "cross_window": {
+      "candidates": 1304,
+      "manually_reviewed_at_or_above_similarity_threshold_0_65": 286,
+      "below_threshold_not_manually_reviewed": 1018,
+      "interpretation": "All candidates meeting the 0.65 manual-review threshold were reviewed. The 1,018 lower-scoring candidates remain screened but were not manually reviewed; this is a lower-priority residual review set, not an unreviewed high-priority queue."
+    }
   }
 }
