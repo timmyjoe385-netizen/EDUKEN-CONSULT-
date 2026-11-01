@@ -975,18 +975,19 @@
       "subject": "Economics",
       "topic": "Demand and supply",
       "subtopic": "Cross elasticity of demand",
-      "question": "The price of good X rises by 10%, causing the quantity demanded of good Y to fall by 15%. What is the cross elasticity of demand for Y with respect to X?",
+      "question": "The cross elasticity of demand between two goods is +0.8. What does this value indicate about the relationship between the goods?",
       "options": [
-        "−1.5",
-        "−0.67",
-        "+1.5",
-        "+0.67"
+        "They are substitutes.",
+        "They are complements.",
+        "They are unrelated goods.",
+        "Both are inferior goods."
       ],
       "answer": "A",
-      "explanation": "Cross elasticity of demand is the percentage change in quantity demanded of one good divided by the percentage change in the price of another. −15% ÷ 10% = −1.5. The negative value indicates that the goods are complements.",
+      "explanation": "A positive cross elasticity of demand means that an increase in the price of one good is associated with an increase in the quantity demanded of the other. The goods are substitutes.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Reworded after the initial stem triggered a lexical similarity flag against own-price elasticity questions. This version tests interpretation of the sign of cross elasticity, a distinct concept; rerun the full-bank screen."
     },
     {
       "target_id": "DUP-55",
