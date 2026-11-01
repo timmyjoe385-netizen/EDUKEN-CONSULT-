@@ -79,7 +79,7 @@
       "replacement_review": {
         "status": "blocked_duplicate_existing_bank",
         "match": "batch 38, CSV row 20",
-        "reason": "The replacement asks for the product of ethanol + ethanoic acid esterification; the existing item already tests the defining products of alcohol + carboxylic acid esterification (ester + water). Same reaction family and learning objective."
+        "reason": "Same esterification learning objective: both questions test products of an alcohol + carboxylic acid reaction (ester and water)."
       }
     },
     {
@@ -201,7 +201,7 @@
       "replacement_review": {
         "status": "blocked_duplicate_existing_bank",
         "match": "batch 39, CSV row 17",
-        "reason": "The replacement uses methyl orange turning red to identify an acidic solution; the existing item uses blue litmus turning red to identify an acidic solution. Both test the same acid-indicator inference, with only the indicator changed."
+        "reason": "Same acid-indicator inference: both identify an acidic solution from a red indicator result; only the indicator differs."
       }
     },
     {
