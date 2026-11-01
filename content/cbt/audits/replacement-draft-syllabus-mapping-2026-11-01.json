@@ -419,12 +419,12 @@
     {
       "target_id": "DUP-42",
       "subject": "Economics",
-      "syllabus_area": "Production — revenue concepts",
-      "rationale": "Marginal revenue is a production/revenue concept; confirm explicit syllabus fit and level of calculation/definition.",
+      "syllabus_area": "Production — law of variable proportions / diminishing returns",
+      "rationale": "The proposed item tests the short-run relationship between a variable factor and fixed factors. Confirm the exact terminology and syllabus fit with an Economics reviewer.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
       "status": "subject_review_required",
-      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+      "review_note": "New proposal only. The retained bank contains a separate economies-of-scale question with 'diminishing returns' only as a distractor; this is a distinct short-run production law, but requires subject review."
     },
     {
       "target_id": "DUP-43",
