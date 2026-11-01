@@ -75,6 +75,24 @@
       "syllabus_fit": "Provisionally fits poetic sound devices and literary terminology.",
       "bank_overlap": "Refreshed screen highest same-subject similarity 0.3396; manual concept comparison still required. The current bank contains assonance, alliteration and sibilance questions, but not an equivalent definition of cacophony identified in the topic index.",
       "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-56",
+      "subject": "Literature in English",
+      "assessment": "preliminary_pass",
+      "answer_check": "B is correct. Euphony produces smooth, harmonious sounds; cacophony produces harsh or discordant sounds.",
+      "syllabus_fit": "Provisionally fits poetic sound devices and literary terminology.",
+      "bank_overlap": "Refreshed same-subject screen highest similarity 0.2793. Existing questions cover assonance, alliteration and sibilance; this draft tests euphony. Human concept-level review remains required.",
+      "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-57",
+      "subject": "Use of English",
+      "assessment": "preliminary_pass",
+      "answer_check": "B is correct. The verb phrase 'chose' is omitted in the second clause but understood from the first, which is ellipsis.",
+      "syllabus_fit": "Provisionally fits cohesion and textual devices in English usage.",
+      "bank_overlap": "Refreshed same-subject screen highest similarity 0.3367. No equivalent ellipsis item was found by the topic/text scan; contextual review remains required.",
+      "decision": "Keep as a draft pending human English review and contextual bank-wide clearance."
     }
   ],
   "release_gate": "These are preliminary assistant checks, not independent academic sign-off. Do not insert any of DUP-48 to DUP-53 into original CSVs or publish them until subject-competent review, full contextual bank review and the user's final controlled replacement approval."
