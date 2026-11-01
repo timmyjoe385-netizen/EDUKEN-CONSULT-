@@ -1,15 +1,19 @@
 {
   "audit_date": "2026-11-01",
-  "purpose": "Non-destructive staging export implementing the user's retain-unique/hold-confirmed-duplicates rule for the existing 1,600-question bank.",
+  "purpose": "Non-destructive staging export applying the user's rule: retain one question per confirmed duplicate cluster and hold confirmed duplicate rows until replacements are ready.",
   "source_repository": "timmyjoe385-netizen/EDUKEN-CONSULT-",
   "source_branch": "feat/cbt-subject-combination-reconciled",
-  "source_snapshot_commit": "ecc0321648cdde7ba9f032445a2b782e7a5f4bdb",
   "source_batch_files": 40,
   "source_question_rows": 1600,
-  "confirmed_duplicate_pairs": 38,
-  "provisionally_retained_rows": 1562,
-  "held_duplicate_rows": 38,
-  "reconciliation": "1562 retained + 38 held = 1600 source question rows. One designated replacement row per confirmed pair is held; the register's designated counterpart is retained.",
+  "confirmed_duplicate_relationships": 47,
+  "unique_held_duplicate_rows": 47,
+  "provisionally_retained_rows": 1553,
+  "reconciliation": "1,553 provisionally retained + 47 held = 1,600 source question rows.",
+  "duplicate_provenance": {
+    "prior_replacement_or_review_provenance_relationships": 39,
+    "original_draft_overlap_relationships": 8,
+    "note": "Counts classify duplicate relationships, not unique question rows. The register contains 47 confirmed relationships and 47 unique held row locations. One retained location (batch 32 row 34) is shared by two relationships because it is the single retained member of a three-row Government duplicate cluster."
+  },
   "per_batch": [
     {
       "batch": 1,
@@ -113,8 +117,8 @@
     },
     {
       "batch": 21,
-      "retained": 40,
-      "held": 0
+      "retained": 38,
+      "held": 2
     },
     {
       "batch": 22,
@@ -138,8 +142,8 @@
     },
     {
       "batch": 26,
-      "retained": 38,
-      "held": 2
+      "retained": 37,
+      "held": 3
     },
     {
       "batch": 27,
@@ -168,13 +172,13 @@
     },
     {
       "batch": 32,
-      "retained": 39,
-      "held": 1
+      "retained": 38,
+      "held": 2
     },
     {
       "batch": 33,
-      "retained": 38,
-      "held": 2
+      "retained": 37,
+      "held": 3
     },
     {
       "batch": 34,
@@ -183,13 +187,13 @@
     },
     {
       "batch": 35,
-      "retained": 38,
-      "held": 2
+      "retained": 37,
+      "held": 3
     },
     {
       "batch": 36,
-      "retained": 37,
-      "held": 3
+      "retained": 36,
+      "held": 4
     },
     {
       "batch": 37,
@@ -203,16 +207,16 @@
     },
     {
       "batch": 39,
-      "retained": 38,
-      "held": 2
+      "retained": 37,
+      "held": 3
     },
     {
       "batch": 40,
-      "retained": 38,
-      "held": 2
+      "retained": 37,
+      "held": 3
     }
   ],
-  "staged_files": [
+  "staging_files": [
     "retained-batches-01-10.csv",
     "retained-batches-11-20.csv",
     "retained-batches-21-30.csv",
@@ -222,22 +226,24 @@
     "held-duplicates-21-30.csv",
     "held-duplicates-31-40.csv"
   ],
-  "source_files_modified": false,
-  "original_csv_schema_preserved_in_source": true,
-  "staging_csv_schema": "Retained chunks add source_batch and source_csv_row columns before the original 18 columns. Held chunks add pair_id, subject, retained_location, and held_location before the original 18 columns.",
-  "replacement_readiness": {
-    "total": 38,
-    "provisionally_syllabus_aligned": 26,
-    "subject_review_required": 7,
+  "replacement_status": {
+    "confirmed_targets": 47,
+    "existing_draft_proposals": 38,
+    "additional_drafts_required": 9,
     "blocked_existing_bank_overlap": 5,
-    "inserted": 0
+    "provisional_syllabus_mapping": 26,
+    "subject_review_required": 7,
+    "drafts_inserted": 0
   },
+  "source_files_modified": false,
+  "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
   "status": "STAGING_ONLY_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
   "restrictions": [
-    "Original 40 batch CSV files were not edited or deleted.",
-    "No question has been imported into Supabase or published.",
-    "Do not deploy to production or merge PR #194 based on this staging export.",
-    "All retained questions still require academic review of topic fit, stem clarity, options, answer key, explanation and syllabus coverage.",
-    "Replacement drafts must be cleared or replaced before any insertion into the source bank."
+    "Original 40 source batch CSVs were not edited or deleted.",
+    "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
+    "All 1,553 retained rows still require academic review of syllabus fit, question clarity, options, answer key and explanation.",
+    "The 47 held rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
+    "Of 47 replacement targets, 38 have draft proposals and 9 still need drafts. Five existing drafts are blocked by bank overlap; seven need subject review; 26 are only provisionally syllabus-mapped.",
+    "No production deployment, PR merge, question publication or production database change is authorised by this staging export."
   ]
 }
