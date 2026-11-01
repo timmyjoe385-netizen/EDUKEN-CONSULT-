@@ -15,9 +15,10 @@
   },
   "totals": {
     "replacement_drafts": 38,
-    "provisionally_aligned": 27,
+    "provisionally_aligned": 26,
     "subject_review_required": 11,
-    "inserted_into_question_csvs": 0
+    "inserted_into_question_csvs": 0,
+    "blocked_existing_bank_overlap": 1
   },
   "items": [
     {
@@ -60,10 +61,10 @@
       "target_id": "DUP-05",
       "subject": "Literature in English",
       "syllabus_area": "Poetry — types of poetry (elegy)",
-      "rationale": "Elegy is expressly listed as a poetic type.",
+      "rationale": "Not cleared for insertion: the mapped elegy replacement draft duplicates the concept already tested by batch 14, row 38 ('An elegy is a poem traditionally written to:').",
       "match_type": "explicit",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
-      "status": "provisionally_aligned"
+      "status": "blocked_existing_bank_overlap"
     },
     {
       "target_id": "DUP-06",
@@ -363,5 +364,5 @@
       "status": "subject_review_required"
     }
   ],
-  "release_gate": "Do not insert any replacement until the user explicitly approves the 38-row retain/replace register and the subject-review-required items are cleared. All questions must remain draft until the normal academic review and approval workflow."
+  "release_gate": "Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, all subject-review-required items are cleared, and every draft passes contextual full-bank duplicate review. Blocked items must be re-drafted before insertion. All questions remain draft until normal academic review and approval."
 }
