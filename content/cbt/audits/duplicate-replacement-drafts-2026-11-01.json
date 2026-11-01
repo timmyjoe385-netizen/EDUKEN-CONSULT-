@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 72,
+  "draft_count": 78,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1320,20 +1320,123 @@
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-72",
+      "subject": "Use of English",
+      "topic": "Lexis and structure",
+      "subtopic": "Idiomatic expressions",
+      "question": "When someone says that a plan “fell through”, the expression means that the plan:",
+      "options": [
+        "Was completed successfully",
+        "Failed to happen",
+        "Was postponed for one hour",
+        "Was kept secret"
+      ],
+      "answer": "B",
+      "explanation": "“Fall through” means to fail or not be completed as planned.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-73",
+      "subject": "Biology",
+      "topic": "Coordination",
+      "subtopic": "Reflex action",
+      "question": "Which part of the central nervous system coordinates a simple withdrawal reflex before conscious interpretation of pain?",
+      "options": [
+        "Cerebrum",
+        "Spinal cord",
+        "Cerebellum",
+        "Hypothalamus"
+      ],
+      "answer": "B",
+      "explanation": "A simple withdrawal reflex is coordinated through a reflex arc in the spinal cord, allowing a rapid response before conscious processing by the brain.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-76",
+      "subject": "Economics",
+      "topic": "Market failure",
+      "subtopic": "Negative externalities",
+      "question": "A factory releases untreated waste into a river, imposing costs on nearby residents that are not reflected in the market price of its product. This is an example of:",
+      "options": [
+        "A positive externality",
+        "A negative externality",
+        "A public good",
+        "A transfer payment"
+      ],
+      "answer": "B",
+      "explanation": "A negative externality occurs when production or consumption imposes external costs on third parties that are not included in the market price.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-78",
+      "subject": "Use of English",
+      "topic": "Lexis and structure",
+      "subtopic": "Punctuation",
+      "question": "Which punctuation mark should separate the two independent clauses in this sentence when no coordinating conjunction is used: “The rain stopped _____ the match resumed”?",
+      "options": [
+        "Apostrophe",
+        "Semicolon",
+        "Hyphen",
+        "Quotation mark"
+      ],
+      "answer": "B",
+      "explanation": "A semicolon can join two closely related independent clauses when no coordinating conjunction is used.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-80",
+      "subject": "Economics",
+      "topic": "Economic systems",
+      "subtopic": "Mixed economy",
+      "question": "An economy in which private businesses operate alongside state-owned enterprises and government regulation is generally described as:",
+      "options": [
+        "A command economy",
+        "A traditional economy",
+        "A mixed economy",
+        "A subsistence economy"
+      ],
+      "answer": "C",
+      "explanation": "A mixed economy combines private economic activity with government ownership, regulation or provision of selected goods and services.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-88",
+      "subject": "Economics",
+      "topic": "Inflation",
+      "subtopic": "Cost-push inflation",
+      "question": "A sharp increase in the cost of imported fuel raises production expenses across an economy. This is most likely to cause:",
+      "options": [
+        "Demand-pull inflation",
+        "Cost-push inflation",
+        "Deflation",
+        "A fall in the general price level"
+      ],
+      "answer": "B",
+      "explanation": "Cost-push inflation occurs when rising production costs, such as fuel and imported input costs, push firms to raise prices.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "Added DUP-75 and DUP-77 after same-subject full-bank lexical screening below 0.42. They remain drafts pending independent academic review and contextual semantic clearance.",
+  "revision_note": "Added DUP-72, DUP-73, DUP-76, DUP-78, DUP-80 and DUP-88 after full same-subject 1,600-row lexical screening below 0.42 and cross-checking against the current replacement draft bank. DUP-81 and DUP-83 candidates were rejected after contextual review found existing liquid-pressure and unreliable-narrator questions; those targets remain without replacement drafts.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 18,
+  "drafts_missing": 12,
   "drafts_missing_target_ids": [
     "DUP-68",
     "DUP-70",
-    "DUP-72",
-    "DUP-73",
-    "DUP-76",
-    "DUP-78",
     "DUP-79",
-    "DUP-80",
     "DUP-81",
     "DUP-82",
     "DUP-83",
@@ -1341,7 +1444,6 @@
     "DUP-85",
     "DUP-86",
     "DUP-87",
-    "DUP-88",
     "DUP-89",
     "DUP-90"
   ]
