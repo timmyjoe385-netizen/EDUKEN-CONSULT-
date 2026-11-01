@@ -3,7 +3,7 @@
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
   "draft_count": 47,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "Drafts are proposals only. Forty-seven proposals exist for 65 confirmed holdouts; eighteen holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
+  "important": "Drafts are proposals only. Forty-seven proposals exist for 90 confirmed holdouts; forty-three holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -857,9 +857,9 @@
       "status": "new_draft_pending_subject_review_and_bankwide_screen"
     }
   ],
-  "revision_note": "The register now contains 65 confirmed duplicate holdouts. The existing 47 proposals cover DUP-01 through DUP-47; eighteen newly confirmed targets (DUP-48 through DUP-65) remain intentionally undrafted until distinct, syllabus-appropriate replacements are prepared.",
-  "confirmed_duplicate_targets": 65,
-  "drafts_missing": 18,
+  "revision_note": "The register now contains 90 confirmed duplicate holdouts. The existing 47 proposals cover DUP-01 through DUP-47; forty-three further targets (DUP-48 through DUP-90) remain intentionally undrafted until distinct, syllabus-appropriate replacements are prepared.",
+  "confirmed_duplicate_targets": 90,
+  "drafts_missing": 43,
   "drafts_missing_target_ids": [
     "DUP-48",
     "DUP-49",
@@ -878,6 +878,31 @@
     "DUP-62",
     "DUP-63",
     "DUP-64",
-    "DUP-65"
+    "DUP-65",
+    "DUP-66",
+    "DUP-67",
+    "DUP-68",
+    "DUP-69",
+    "DUP-70",
+    "DUP-71",
+    "DUP-72",
+    "DUP-73",
+    "DUP-74",
+    "DUP-75",
+    "DUP-76",
+    "DUP-77",
+    "DUP-78",
+    "DUP-79",
+    "DUP-80",
+    "DUP-81",
+    "DUP-82",
+    "DUP-83",
+    "DUP-84",
+    "DUP-85",
+    "DUP-86",
+    "DUP-87",
+    "DUP-88",
+    "DUP-89",
+    "DUP-90"
   ]
 }
