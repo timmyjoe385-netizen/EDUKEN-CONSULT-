@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 47,
+  "draft_count": 49,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "Drafts are proposals only. Forty-seven proposals exist for 90 confirmed holdouts; forty-three holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
   "items": [
@@ -855,14 +855,50 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-48",
+      "subject": "Literature in English",
+      "topic": "Literary criticism",
+      "subtopic": "Denotation and connotation",
+      "question": "In literary analysis, the denotation of a word refers to its:",
+      "options": [
+        "Emotional associations in a particular context",
+        "Literal or direct meaning",
+        "Sound pattern when spoken",
+        "Historical origin and development"
+      ],
+      "answer": "B",
+      "explanation": "Denotation is the direct or dictionary meaning of a word, while connotation refers to the ideas or feelings associated with it.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "A retained-bank text scan found no use of 'denotation' or the same literal-meaning prompt. Full semantic screening and subject review remain required."
+    },
+    {
+      "target_id": "DUP-49",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "subtopic": "Tax incidence",
+      "question": "After the effects of tax shifting have worked through a market, the tax incidence refers to:",
+      "options": [
+        "The authority that collects the tax",
+        "The date on which the tax becomes payable",
+        "The final distribution of the tax burden between buyers and sellers",
+        "The total quantity of goods produced before the tax"
+      ],
+      "answer": "C",
+      "explanation": "Tax incidence describes who ultimately bears the economic burden of a tax, which may differ from the person or firm legally required to remit it.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "A retained-bank text scan found no use of 'tax incidence' or the same final-burden prompt. Full semantic screening and subject review remain required."
     }
   ],
-  "revision_note": "The register now contains 90 confirmed duplicate holdouts. The existing 47 proposals cover DUP-01 through DUP-47; forty-three further targets (DUP-48 through DUP-90) remain intentionally undrafted until distinct, syllabus-appropriate replacements are prepared.",
+  "revision_note": "Two additional original replacement drafts were added for DUP-48 and DUP-49 after a retained-bank text scan found no direct term/prompt match. They remain drafts pending contextual bank-wide similarity screening, subject review and answer validation. The remaining missing targets are DUP-50 through DUP-90.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 43,
+  "drafts_missing": 41,
   "drafts_missing_target_ids": [
-    "DUP-48",
-    "DUP-49",
     "DUP-50",
     "DUP-51",
     "DUP-52",
