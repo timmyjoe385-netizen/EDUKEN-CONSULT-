@@ -61,10 +61,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 43,
-    "draft_count": 47
+    "additional_replacement_drafts_required": 39,
+    "draft_count": 51
   },
-  "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 47 proposals, leaving 43 targets (DUP-48 through DUP-90) without drafts. Of the 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; none is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
+  "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 51 proposals, leaving 39 targets (DUP-52 through DUP-90) without drafts. Of the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; four additional proposals (DUP-48 to DUP-51) are pending subject and bank-wide review. None is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
   "pairs": [
     {
       "id": "DUP-01",
