@@ -14,9 +14,9 @@
     "Literature in English": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf"
   },
   "totals": {
-    "confirmed_duplicate_targets": 57,
+    "confirmed_duplicate_targets": 65,
     "replacement_drafts": 47,
-    "drafts_missing": 10,
+    "drafts_missing": 18,
     "provisionally_aligned": 26,
     "subject_review_required": 16,
     "blocked_existing_bank_overlap": 5,
@@ -480,7 +480,7 @@
     }
   ],
   "release_gate": "26 drafts are provisionally mapped to JAMB IBASS topic/objective coverage, 7 remain held for subject review because their specific detail is not expressly named, and 5 remain blocked by confirmed overlap with the existing bank. These mapping statuses are not academic approval. Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, the 7 subject-review items are cleared or replaced, all 5 blocked items receive distinct replacements, and every draft passes contextual full-bank duplicate review. All questions remain draft until normal academic review and approval.",
-  "revision_note": "The duplicate register expanded to 57 targets. Existing mapping contains 47 proposals; DUP-48 through DUP-57 have no replacement draft or syllabus mapping yet and remain held.",
+  "revision_note": "The duplicate register expanded to 65 targets. Existing mapping contains 47 proposals; DUP-48 through DUP-65 have no replacement draft or syllabus mapping yet and remain held.",
   "missing_draft_target_ids": [
     "DUP-48",
     "DUP-49",
@@ -491,6 +491,14 @@
     "DUP-54",
     "DUP-55",
     "DUP-56",
-    "DUP-57"
+    "DUP-57",
+    "DUP-58",
+    "DUP-59",
+    "DUP-60",
+    "DUP-61",
+    "DUP-62",
+    "DUP-63",
+    "DUP-64",
+    "DUP-65"
   ]
 }
