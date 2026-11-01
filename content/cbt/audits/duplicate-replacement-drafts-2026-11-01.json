@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 61,
+  "draft_count": 63,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 61 proposals remain separate, unpublished drafts. DUP-60 and DUP-61 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts. Source-row mapping discrepancies between the current original batch CSVs and the staging holdout records must be reconciled before final bank assembly.",
+  "important": "All 63 proposals remain separate, unpublished drafts. DUP-60 to DUP-63 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -1118,14 +1118,50 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required."
+    },
+    {
+      "target_id": "DUP-62",
+      "subject": "Literature in English",
+      "topic": "Poetic techniques",
+      "subtopic": "Enjambment",
+      "question": "When a poet carries a sentence beyond the end of a line without a pause, the technique is called:",
+      "options": [
+        "Enjambment",
+        "Caesura",
+        "Alliteration",
+        "Refrain"
+      ],
+      "answer": "A",
+      "explanation": "Enjambment occurs when the sense of a sentence or phrase continues from one poetic line into the next without a grammatical pause at the line ending. Caesura is a pause within a line.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Drafted against the DUP-62 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.4046 against the existing caesura item (batch 16 row 37). Enjambment and caesura are distinct poetic techniques, but the close wording requires human Literature review and contextual clearance."
+    },
+    {
+      "target_id": "DUP-63",
+      "subject": "Mathematics",
+      "topic": "Ratio and proportion",
+      "subtopic": "Map scales",
+      "question": "A map has a scale of 1:50,000. What actual distance is represented by 4 cm on the map?",
+      "options": [
+        "500 m",
+        "1 km",
+        "2 km",
+        "20 km"
+      ],
+      "answer": "C",
+      "explanation": "A scale of 1:50,000 means 1 cm on the map represents 50,000 cm on the ground. Therefore 4 cm represents 200,000 cm, which is 2,000 m or 2 km.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Drafted against the DUP-63 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.3648 against a circle-sector question; the concepts are distinct. Confirm map-scale coverage in the current JAMB Mathematics syllabus during independent review."
     }
   ],
-  "revision_note": "DUP-60 and DUP-61 added as separate Biology proposals (Organ of Corti/hearing and shoot phototropism). Both are below the 0.42 lexical threshold against all 1,600 staged rows. Their staged held-row text is verified, but the listed source locations do not match the corresponding rows in the current original-batch CSV files; provenance reconciliation is a release blocker. No original CSV changed.",
+  "revision_note": "DUP-60/61: Organ of Corti and shoot phototropism. DUP-62/63: enjambment and map-scale conversion. All four new drafts were screened against all 1,600 staged rows and remain outside the original source CSVs.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 29,
+  "drafts_missing": 27,
   "drafts_missing_target_ids": [
-    "DUP-62",
-    "DUP-63",
     "DUP-64",
     "DUP-65",
     "DUP-66",
