@@ -5,18 +5,19 @@
   "source_branch": "feat/cbt-subject-combination-reconciled",
   "source_batch_files": 40,
   "source_question_rows": 1600,
-  "confirmed_duplicate_relationships": 65,
-  "unique_held_duplicate_rows": 65,
-  "provisionally_retained_rows": 1535,
-  "reconciliation": "1,535 provisionally retained + 65 held = 1,600 source question rows.",
+  "confirmed_duplicate_relationships": 90,
+  "unique_held_duplicate_rows": 90,
+  "provisionally_retained_rows": 1510,
+  "reconciliation": "1,510 provisionally retained + 90 held = 1,600 source question rows.",
   "duplicate_provenance": {
-    "prior_replacement_or_review_provenance_relationships": 47,
-    "original_draft_overlap_relationships": 17,
+    "prior_replacement_commit_verified": 47,
+    "replacement_after_initial_snapshot_commit_sha_pending": 14,
+    "original_draft_overlap_relationships": 28,
     "provenance_unverified_relationships": 1,
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "Counts classify duplicate relationships, not unique source rows. The 65 confirmed relationships map to 65 unique held locations. Two retained locations are shared by three-row clusters: batch 32 row 34 (Government) and batch 11 row 37 (Literature in English)."
+    "note": "Counts classify duplicate relationships, not unique source rows. The 90 confirmed relationships map to 90 unique held locations. Fourteen further pairs are known to contain later replacement-created content because current rows differ from original batch snapshots, but their exact introducing commit SHAs remain to be normalized."
   },
   "per_batch": [
     {
@@ -36,8 +37,8 @@
     },
     {
       "batch": 4,
-      "retained": 40,
-      "held": 0
+      "retained": 39,
+      "held": 1
     },
     {
       "batch": 5,
@@ -66,18 +67,18 @@
     },
     {
       "batch": 10,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 11,
       "retained": 38,
       "held": 2
     },
     {
-      "batch": 11,
-      "retained": 39,
-      "held": 1
-    },
-    {
       "batch": 12,
-      "retained": 39,
-      "held": 1
+      "retained": 38,
+      "held": 2
     },
     {
       "batch": 13,
@@ -111,8 +112,8 @@
     },
     {
       "batch": 19,
-      "retained": 38,
-      "held": 2
+      "retained": 36,
+      "held": 4
     },
     {
       "batch": 20,
@@ -156,48 +157,48 @@
     },
     {
       "batch": 28,
-      "retained": 36,
-      "held": 4
+      "retained": 35,
+      "held": 5
     },
     {
       "batch": 29,
-      "retained": 38,
-      "held": 2
+      "retained": 36,
+      "held": 4
     },
     {
       "batch": 30,
-      "retained": 40,
-      "held": 0
+      "retained": 39,
+      "held": 1
     },
     {
       "batch": 31,
-      "retained": 36,
-      "held": 4
-    },
-    {
-      "batch": 32,
-      "retained": 38,
-      "held": 2
-    },
-    {
-      "batch": 33,
-      "retained": 36,
-      "held": 4
-    },
-    {
-      "batch": 34,
       "retained": 34,
       "held": 6
     },
     {
+      "batch": 32,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 33,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 34,
+      "retained": 32,
+      "held": 8
+    },
+    {
       "batch": 35,
-      "retained": 37,
-      "held": 3
+      "retained": 35,
+      "held": 5
     },
     {
       "batch": 36,
-      "retained": 35,
-      "held": 5
+      "retained": 33,
+      "held": 7
     },
     {
       "batch": 37,
@@ -206,18 +207,18 @@
     },
     {
       "batch": 38,
-      "retained": 36,
-      "held": 4
+      "retained": 35,
+      "held": 5
     },
     {
       "batch": 39,
-      "retained": 34,
-      "held": 6
+      "retained": 33,
+      "held": 7
     },
     {
       "batch": 40,
-      "retained": 37,
-      "held": 3
+      "retained": 35,
+      "held": 5
     }
   ],
   "staging_files": [
@@ -231,9 +232,9 @@
     "held-duplicates-31-40.csv"
   ],
   "replacement_status": {
-    "confirmed_targets": 65,
+    "confirmed_targets": 90,
     "existing_draft_proposals": 47,
-    "additional_drafts_required": 18,
+    "additional_drafts_required": 43,
     "blocked_existing_bank_overlap": 5,
     "provisional_syllabus_mapping": 26,
     "subject_review_required": 16,
@@ -241,7 +242,7 @@
   },
   "source_files_modified": false,
   "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
-  "status": "STAGING_ONLY_SEMANTIC_REVIEW_INCOMPLETE_PROVENANCE_ONE_PAIR_UNVERIFIED_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
+  "status": "STAGING_ONLY_SEMANTIC_REVIEW_INCOMPLETE_PROVENANCE_14_REPLACEMENT_COMMITS_PENDING_ONE_PAIR_UNVERIFIED_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
   "restrictions": [
     "Original 40 source batch CSVs were not edited or deleted.",
     "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
@@ -250,18 +251,18 @@
     "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
     "Cross-window screening found 1,304 similarity candidates. Sixty-nine have been manually reviewed; 1,235 remain unreviewed. The original within-window report also has 279 pending candidates and a 38-pair discrepancy against the reconstructed candidate set.",
     "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
-    "The register now contains 65 confirmed duplicate targets. Existing drafts cover 47; eighteen additional targets (DUP-48 through DUP-65) have no replacement draft yet and remain held.",
-    "Cross-window screening found 1,304 similarity candidates. One hundred and twenty-four have been manually reviewed; 1,180 remain unreviewed. The original within-window report also has 279 pending candidates and a 38-pair discrepancy against the reconstructed candidate set."
+    "The register now contains 90 confirmed duplicate targets. Existing drafts cover 47; forty-three additional targets (DUP-48 through DUP-90) have no replacement draft yet and remain held.",
+    "All 286 cross-window candidates at or above the 0.65 review threshold have been manually reviewed. The remaining 1,018 lower-scoring candidates have not received manual contextual review. The original within-window report also has 279 pending candidates and a 38-pair discrepancy."
   ],
   "semantic_review_status": {
     "cross_window_candidates": 1304,
-    "manually_reviewed_candidates": 124,
+    "manually_reviewed_candidates": 286,
     "high_similarity_shortlist_reviewed": 49,
-    "additional_targeted_candidates_reviewed": 75,
-    "cross_window_candidates_not_manually_reviewed": 1180,
+    "additional_targeted_candidates_reviewed": 237,
+    "cross_window_candidates_not_manually_reviewed": 1018,
     "original_reported_within_window_candidates_pending": 279,
     "reconstructed_within_window_candidates_reviewed": 390,
     "unresolved_within_window_count_discrepancy": 38,
-    "note": "Screening covered all 1,600 questions, but manual semantic review is not complete. Do not treat all similarity candidates as resolved."
+    "note": "All 286 cross-window candidates at or above the 0.65 review threshold have received manual contextual review. The 1,018 lower-scoring candidates remain unreviewed; the original within-window report still has 279 pending candidates and a 38-pair discrepancy against the reconstructed candidate set."
   }
 }
