@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 13,
+  "version": 14,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -11,8 +11,8 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 73,
-    "screened": 73,
+    "count": 76,
+    "screened": 76,
     "all_proposals_screened": true
   },
   "screening_summary": {
@@ -1718,6 +1718,75 @@
           "question": "A reduction in average cost as a firm increases its scale of production is called:"
         }
       ]
+    },
+    {
+      "target_id": "DUP-70",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3333,
+      "top_matches": [
+        {
+          "location": "batch 05 row 15",
+          "score": 0.3333,
+          "question": "Vaccination helps protect against certain infections mainly by:"
+        },
+        {
+          "location": "batch 21 row 13",
+          "score": 0.3175,
+          "question": "A thick waxy cuticle on a plant leaf mainly helps to ___."
+        },
+        {
+          "location": "batch 28 row 13",
+          "score": 0.3145,
+          "question": "Which cell structure contains most of the genetic material and helps control cell activities?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-81",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3587,
+      "top_matches": [
+        {
+          "location": "batch 33 row 25",
+          "score": 0.3587,
+          "question": "The increase in length per unit original length per unit rise in temperature is the coefficient of:"
+        },
+        {
+          "location": "batch 31 row 24",
+          "score": 0.3216,
+          "question": "The magnitude of an induced e.m.f. in a coil increases when the magnetic flux through it is changed"
+        },
+        {
+          "location": "batch 40 row 23",
+          "score": 0.2963,
+          "question": "A spring extends by 0.05 m when a force of 10 N is applied. What is its spring constant?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-89",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3964,
+      "top_matches": [
+        {
+          "location": "batch 33 row 6",
+          "score": 0.3964,
+          "question": "Which word ends with the same consonant sound as 'laugh'?"
+        },
+        {
+          "location": "batch 07 row 5",
+          "score": 0.3793,
+          "question": "Which word contains the same initial consonant sound as “judge”?"
+        },
+        {
+          "location": "batch 36 row 6",
+          "score": 0.3363,
+          "question": "Which word begins with the same consonant sound as 'judge'?"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1731,5 +1800,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 13 adds six screened proposals DUP-72, 73, 76, 78, 80 and 88. DUP-81 and DUP-83 were explicitly excluded after contextual review found overlap despite low lexical scores. Scores below the 0.42 lexical threshold are screening signals only, not academic approval."
+  "revision_note": "Version 14 adds DUP-70, DUP-81 and DUP-89. All three remained below the 0.42 same-subject lexical flag threshold in a full 1,600-row scan. This does not constitute academic approval or semantic uniqueness certification."
 }
