@@ -228,11 +228,11 @@
   ],
   "replacement_status": {
     "confirmed_targets": 47,
-    "existing_draft_proposals": 38,
-    "additional_drafts_required": 9,
+    "existing_draft_proposals": 47,
+    "additional_drafts_required": 0,
     "blocked_existing_bank_overlap": 5,
     "provisional_syllabus_mapping": 26,
-    "subject_review_required": 7,
+    "subject_review_required": 16,
     "drafts_inserted": 0
   },
   "source_files_modified": false,
@@ -243,7 +243,7 @@
     "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
     "All 1,553 retained rows still require academic review of syllabus fit, question clarity, options, answer key and explanation.",
     "The 47 held rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
-    "Of 47 replacement targets, 38 have draft proposals and 9 still need drafts. Five existing drafts are blocked by bank overlap; seven need subject review; 26 are only provisionally syllabus-mapped.",
+    "All 47 replacement targets now have draft proposals. Of these, 26 are provisionally syllabus-mapped, 16 require subject review (including the 9 new proposals), and 5 are blocked by existing-bank overlap. None has been inserted.",
     "No production deployment, PR merge, question publication or production database change is authorised by this staging export."
   ]
 }
