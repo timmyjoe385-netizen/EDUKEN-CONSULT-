@@ -1098,7 +1098,7 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. Important: the current original-batch CSV files do not match the row text recorded in the staging holdout file for the cited source locations. Reconcile source-row provenance before final bank assembly. Independent Biology review remains required."
+      "review_note": "Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required."
     },
     {
       "target_id": "DUP-61",
@@ -1117,7 +1117,7 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. Important: the current original-batch CSV files do not match the row text recorded in the staging holdout file for the cited source locations. Reconcile source-row provenance before final bank assembly. Independent Biology review remains required."
+      "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required."
     }
   ],
   "revision_note": "DUP-60 and DUP-61 added as separate Biology proposals (Organ of Corti/hearing and shoot phototropism). Both are below the 0.42 lexical threshold against all 1,600 staged rows. Their staged held-row text is verified, but the listed source locations do not match the corresponding rows in the current original-batch CSV files; provenance reconciliation is a release blocker. No original CSV changed.",
