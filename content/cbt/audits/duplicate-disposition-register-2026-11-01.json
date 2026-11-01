@@ -1587,10 +1587,10 @@
       "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "draft_needs_subject_and_bankwide_review",
+        "reason": "Candidate saved in separate draft bank following full same-subject lexical screening below 0.42. Human subject and semantic review remains required."
       }
     },
     {
@@ -1629,10 +1629,10 @@
       "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "candidate_rejected_overlap",
-        "reason": "Overlaps existing bank question at batch 11 row 33 on judicial review; removed from draft bank."
+        "status": "draft_needs_subject_and_bankwide_review",
+        "reason": "Candidate saved in separate draft bank following full same-subject lexical screening below 0.42. Human subject and semantic review remains required."
       }
     },
     {
