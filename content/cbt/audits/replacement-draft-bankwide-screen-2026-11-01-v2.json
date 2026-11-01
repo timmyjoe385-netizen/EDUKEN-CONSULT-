@@ -2,7 +2,7 @@
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
   "version": 2,
-  "purpose": "Refreshed non-destructive lexical screen of all current replacement proposals against all 1,600 source question rows, including retained and held rows.",
+  "purpose": "Refreshed non-destructive lexical screen of all current replacement proposals against all 1,600 source question rows, including retained and held rows; includes revised DUP-52/53 wording.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -1218,22 +1218,22 @@
       "target_id": "DUP-52",
       "subject": "Mathematics",
       "flagged": true,
-      "highest_similarity": 0.5122,
+      "highest_similarity": 0.4944,
       "top_matches": [
         {
-          "location": "batch 02 row 7",
-          "score": 0.5122,
-          "question": "If A = {1, 2, 3} and B = {3, 4}, what is A ∩ B?"
+          "location": "batch 16 row 9",
+          "score": 0.4944,
+          "question": "Calculate the mean of 4, 6, 8 and 10."
         },
         {
-          "location": "batch 40 row 7",
-          "score": 0.4286,
-          "question": "If A = {1, 2, 3, 4} and B = {3, 4, 5}, then A ∩ B is"
+          "location": "batch 27 row 10",
+          "score": 0.3864,
+          "question": "Find the trace of the matrix [[4, 2], [1, 7]]."
         },
         {
-          "location": "batch 33 row 11",
-          "score": 0.4186,
-          "question": "If A = [[2, 1], [0, 3]], what is the trace of A?"
+          "location": "batch 31 row 11",
+          "score": 0.383,
+          "question": "Find the determinant of the matrix [[2, 3], [1, 4]]."
         }
       ]
     },
@@ -1241,22 +1241,22 @@
       "target_id": "DUP-53",
       "subject": "Chemistry",
       "flagged": true,
-      "highest_similarity": 0.5053,
+      "highest_similarity": 0.5537,
       "top_matches": [
         {
           "location": "batch 39 row 20",
-          "score": 0.5053,
+          "score": 0.5537,
           "question": "When acidified silver nitrate solution is added to a solution containing chloride ions, what is observed?"
         },
         {
-          "location": "batch 11 row 20",
-          "score": 0.3648,
-          "question": "Which of the following is a strong acid in aqueous solution?"
+          "location": "batch 28 row 18",
+          "score": 0.3636,
+          "question": "When zinc is added to copper(II) sulfate solution, copper is deposited because:"
         },
         {
-          "location": "batch 23 row 20",
-          "score": 0.3625,
-          "question": "Which observation is commonly used to identify hydrogen gas?"
+          "location": "batch 13 row 19",
+          "score": 0.3613,
+          "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
         }
       ]
     }
