@@ -1,8 +1,8 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 8,
-  "purpose": "Refreshed non-destructive lexical screen of all 59 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-58/59.",
+  "version": 9,
+  "purpose": "Refreshed non-destructive lexical screen of all 61 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -18,7 +18,7 @@
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 16,
-    "below_threshold_count": 43,
+    "below_threshold_count": 45,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -1396,6 +1396,52 @@
           "question": "In a play, the exposition usually serves to:"
         }
       ]
+    },
+    {
+      "target_id": "DUP-60",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2783,
+      "top_matches": [
+        {
+          "location": "batch 17 row 16",
+          "score": 0.2783,
+          "question": "Water enters root hair cells from the soil mainly by:"
+        },
+        {
+          "location": "batch 13 row 12",
+          "score": 0.2456,
+          "question": "The main function of red blood cells in humans is to…"
+        },
+        {
+          "location": "batch 07 row 16",
+          "score": 0.24,
+          "question": "In natural selection, individuals with advantageous inherited variations are more likely to:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-61",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2262,
+      "top_matches": [
+        {
+          "location": "batch 09 row 13",
+          "score": 0.2262,
+          "question": "Which plant tissue conducts water and dissolved mineral salts from the roots towards the leaves?"
+        },
+        {
+          "location": "batch 18 row 15",
+          "score": 0.2207,
+          "question": "In a flowering plant, the pollen tube grows through the style towards the:"
+        },
+        {
+          "location": "batch 38 row 12",
+          "score": 0.1949,
+          "question": "When a plant cell is placed in a strongly concentrated salt solution, its protoplast may shrink away from the cell wall. This is called:"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1403,5 +1449,10 @@
     "All flagged items require contextual assessment; scores do not prove duplication or uniqueness.",
     "This screen is not academic approval, answer-key approval, syllabus approval or permission to insert/publish any draft.",
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
-  ]
+  ],
+  "proposals": {
+    "count": 61,
+    "screened": 61,
+    "all_proposals_screened": true
+  }
 }
