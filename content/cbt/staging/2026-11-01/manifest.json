@@ -233,19 +233,19 @@
   ],
   "replacement_status": {
     "confirmed_targets": 90,
-    "existing_draft_proposals": 53,
-    "additional_drafts_required": 37,
+    "existing_draft_proposals": 55,
+    "additional_drafts_required": 35,
     "blocked_existing_bank_overlap": 5,
     "provisional_syllabus_mapping": 26,
     "subject_review_required": 16,
     "drafts_inserted": 0,
-    "new_drafts_added_in_current_revision": 6,
-    "new_drafts_require_subject_and_bankwide_review": 6,
+    "new_drafts_added_in_current_revision": 8,
+    "new_drafts_require_subject_and_bankwide_review": 8,
     "proposal_status_counts": {
       "revised_draft_needs_bank_wide_check": 33,
       "blocked_duplicate_existing_bank": 5,
       "new_draft_pending_subject_review_and_bankwide_screen": 9,
-      "draft_needs_subject_and_bankwide_review": 6
+      "draft_needs_subject_and_bankwide_review": 8
     }
   },
   "source_files_modified": false,
@@ -319,6 +319,20 @@
       "status": "preliminary_ai_review_complete_independent_subject_review_pending",
       "replacement_proposals_reviewed": 6,
       "note": "Preliminary answer-key, concept and syllabus-fit review for DUP-48 to DUP-53; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v3.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 55,
+      "flagged_at_or_above_0_42": 17,
+      "note": "Refreshed screen includes all 55 replacement proposals. Lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 8,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-55; independent subject review remains required."
     }
   ]
 }
