@@ -63,10 +63,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 25,
-    "draft_count": 65
+    "additional_replacement_drafts_required": 0,
+    "draft_count": 90
   },
-  "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 53 proposals, leaving 37 targets (DUP-54 through DUP-90) without drafts. Of the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; four additional proposals (DUP-48 to DUP-51) are pending subject and bank-wide review. None is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
+  "approval_gate": "All 90 duplicate targets have separate replacement draft records, full-bank screening results and syllabus mapping records. This is draft coverage only: 12 candidates remain lexical flags requiring independent contextual subject review; 64 syllabus mappings require subject review and 26 are provisionally aligned only. All 48 answer/context checks are preliminary, not independent academic approval. Exact Git insertion provenance remains incomplete for 13 later-replacement rows and DUP-34. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until independent subject/answer review, contextual review, provenance reconciliation, final import validation and explicit user approval are complete.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1956,56 +1956,57 @@
     }
   ],
   "draft_screening": {
-    "report": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01.json",
+    "report": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
     "bank_batches": 40,
     "bank_questions": 1600,
-    "drafts_screened": 38,
-    "lexical_flags_at_or_above_0_42": 13,
-    "below_threshold": 25,
+    "drafts_screened": 90,
+    "lexical_flags_at_or_above_0_42": 12,
+    "below_threshold": 78,
     "flagged_ids": [
-      "DUP-01",
-      "DUP-02",
       "DUP-04",
-      "DUP-05",
-      "DUP-07",
       "DUP-10",
       "DUP-16",
-      "DUP-17",
+      "DUP-18",
       "DUP-22",
-      "DUP-32",
       "DUP-33",
       "DUP-34",
-      "DUP-36"
+      "DUP-35",
+      "DUP-36",
+      "DUP-45",
+      "DUP-48",
+      "DUP-53"
     ],
-    "interpretation": "Flags are lexical similarity prompts for manual contextual review, not automatic duplicate decisions. All drafts remain uninserted.",
-    "lexical_flags_manually_reviewed": 13,
+    "interpretation": "Flags are lexical similarity prompts for independent contextual subject review, not automatic duplicate decisions. All 90 drafts remain uninserted.",
+    "lexical_flags_manually_reviewed": 0,
     "confirmed_draft_duplicates_after_contextual_review": 0,
-    "contextual_review": "All 13 lexical flags were manually reviewed against their matched bank question; all are distinct concepts/functions and no draft was confirmed as a duplicate."
+    "manual_contextual_review_complete": false,
+    "note": "Assistant preliminary contextual assessments are recorded for all 12 flagged candidates; independent human subject review remains outstanding."
   },
   "draft_validation": {
-    "draft_count": 38,
-    "all_have_four_options": true,
+    "draft_count": 90,
+    "all_targets_unique": true,
+    "all_have_four_distinct_options": true,
     "all_answer_keys_valid_a_to_d": true,
     "all_have_explanations": true,
     "all_have_nonempty_question_stems": true,
     "structural_validation": "passed",
-    "answer_and_explanation_review": "completed for all 38 drafts",
-    "official_jamb_syllabus_mapping": "still pending",
+    "answer_and_explanation_review": "48 preliminary assistant checks recorded; independent subject review outstanding for all drafts",
+    "official_jamb_syllabus_mapping": "90 mapped; 26 provisionally aligned and 64 require subject review; none approved",
     "bank_insertion": "not performed"
   },
   "replacement_review_summary": {
-    "drafts_total": 65,
-    "blocked_existing_bank_overlap": 5,
-    "not_yet_cleared": 60,
+    "drafts_total": 90,
+    "blocked_existing_bank_overlap": 0,
+    "not_yet_cleared": 90,
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "additional_duplicate_targets": 52,
-    "additional_replacement_drafts_required": 25,
+    "additional_duplicate_pairs_added": 52,
+    "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
     "manual_contextual_review_status": "incomplete",
-    "source_row_provenance_reconciliation": "DUP-60 and DUP-61 source locations verified; register row numbers refer to physical CSV rows including the header.",
-    "rule": "Lexical screening is not approval. The 61 proposals remain outside the source bank. Five are explicitly blocked for existing-bank overlap; the other 56 are not cleared for insertion until the applicable subject/contextual checks are complete. Current original-batch CSV row contents do not match the staged held-row records for DUP-60 and DUP-61; reconcile provenance before final assembly."
+    "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; 13 later-replacement introducing SHAs pending and DUP-34 unresolved.",
+    "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
   "history_reconciliation_status": {
     "prior_replacement_commit_verified": 48,
@@ -2015,7 +2016,7 @@
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Thirteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
+    "note": "Staging location joins are verified for all 90 pairs. Forty-eight prior-replacement relationships have commit-backed evidence; 13 later-replacement rows still need exact introducing commit SHA normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the inspected batch-38 and batch-39 commits are formatting/rewrite snapshots and do not establish the earliest introduction or precedence."
   },
   "revision_note": "DUP-64 and DUP-65 now have separate proposals: Chemistry half-life calculation and Biology insect tracheoles. Both were screened against all 1,600 staged rows and fall below the 0.42 lexical review threshold. Both remain drafts pending independent subject review and contextual clearance. No source CSVs modified.",
   "staging_location_audit": {
@@ -2029,6 +2030,6 @@
     "subject_matches": 90,
     "source_csvs_changed": false,
     "method": "For each DUP-01 to DUP-90, joined the register's retain/replace locations to the retained-batches exports and the matching pair_id, retained_location and held_location in the held-duplicates exports. Physical row identifiers and subjects matched in all 90 cases.",
-    "remaining_provenance_work": "This verifies the staging location join, not every original Git insertion commit. Thirteen later-replacement rows still need exact introducing commit SHA normalization; DUP-34 remains provenance-unverified because the inspected formatting commits do not identify which row was first introduced."
+    "remaining_provenance_work": "All 90 staging location joins are verified. This does not verify every original Git insertion commit: 13 later-replacement rows still need exact introducing commit SHA normalization; DUP-34 remains provenance-unverified."
   }
 }
