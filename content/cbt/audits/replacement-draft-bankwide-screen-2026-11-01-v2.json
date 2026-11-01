@@ -1,8 +1,8 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 2,
-  "purpose": "Refreshed non-destructive lexical screen of all current replacement proposals against all 1,600 source question rows, including retained and held rows; includes revised DUP-52/53 wording.",
+  "version": 3,
+  "purpose": "Refreshed non-destructive lexical screen of all 55 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-54/55.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -11,14 +11,14 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 53,
-    "screened": 53,
+    "count": 55,
+    "screened": 55,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
-    "flagged_count": 16,
-    "below_threshold_count": 37,
+    "flagged_count": 17,
+    "below_threshold_count": 38,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -35,7 +35,8 @@
       "DUP-36",
       "DUP-45",
       "DUP-48",
-      "DUP-53"
+      "DUP-53",
+      "DUP-54"
     ],
     "manual_contextual_review_complete": false
   },
@@ -1256,6 +1257,52 @@
           "location": "batch 13 row 19",
           "score": 0.4202,
           "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-54",
+      "subject": "Economics",
+      "flagged": true,
+      "highest_similarity": 0.6049,
+      "top_matches": [
+        {
+          "location": "batch 34 row 27",
+          "score": 0.6049,
+          "question": "Price rises by 10% and quantity demanded falls by 20%. What is the absolute price elasticity of demand?"
+        },
+        {
+          "location": "batch 27 row 27",
+          "score": 0.4977,
+          "question": "If quantity demanded changes by 12% when price changes by 4%, what is the absolute value of price elasticity of demand?"
+        },
+        {
+          "location": "batch 08 row 27",
+          "score": 0.4532,
+          "question": "Price elasticity of demand measures the responsiveness of quantity demanded to a change in:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-55",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3396,
+      "top_matches": [
+        {
+          "location": "batch 19 row 40",
+          "score": 0.3396,
+          "question": "The deliberate omission of conjunctions between successive words or clauses is called:"
+        },
+        {
+          "location": "batch 11 row 39",
+          "score": 0.3069,
+          "question": "The repetition of consonant sounds within or at the ends of nearby words is called:"
+        },
+        {
+          "location": "batch 25 row 38",
+          "score": 0.2842,
+          "question": "A stanza or section of a poem consisting of six lines is called a:"
         }
       ]
     }
