@@ -14,9 +14,9 @@
     "Literature in English": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf"
   },
   "totals": {
-    "replacement_drafts": 38,
+    "replacement_drafts": 47,
     "provisionally_aligned": 26,
-    "subject_review_required": 7,
+    "subject_review_required": 16,
     "blocked_existing_bank_overlap": 5,
     "inserted_into_question_csvs": 0
   },
@@ -385,7 +385,98 @@
       "status": "subject_review_required",
       "official_syllabus_evidence": "Biology lists reproduction in mammals, fertilization and embryo development, and separately covers inoculation/vaccination for disease prevention. It does not expressly name passive immunity or placental transfer of maternal antibodies; the specific immunology detail needs subject review.",
       "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf"
+    },
+    {
+      "target_id": "DUP-39",
+      "subject": "Chemistry",
+      "syllabus_area": "Metals — extraction of aluminium",
+      "rationale": "The syllabus covers extraction of metals; the exact function of cryolite should be confirmed by a Chemistry reviewer.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-40",
+      "subject": "Chemistry",
+      "syllabus_area": "Chemical industry — Contact process",
+      "rationale": "The syllabus covers the Contact process; the specific catalyst detail should be confirmed by a Chemistry reviewer.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-41",
+      "subject": "Biology",
+      "syllabus_area": "Coordination and control — endocrine glands and hormones",
+      "rationale": "The endocrine system is within Biology; confirm the specific prolactin function against the syllabus and expected JAMB depth.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-42",
+      "subject": "Economics",
+      "syllabus_area": "Production — revenue concepts",
+      "rationale": "Marginal revenue is a production/revenue concept; confirm explicit syllabus fit and level of calculation/definition.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-43",
+      "subject": "Mathematics",
+      "syllabus_area": "Algebra — functions",
+      "rationale": "The Mathematics syllabus includes functions; confirm that one-to-one function terminology is within the required syllabus scope.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Mathematics.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-44",
+      "subject": "Physics",
+      "syllabus_area": "Waves — wave properties",
+      "rationale": "Wave motion is included; confirm diffraction as a required wave phenomenon.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-45",
+      "subject": "Economics",
+      "syllabus_area": "Factors of production — factor rewards",
+      "rationale": "The syllabus covers factors of production and factor rewards; confirm the definition of economic rent and transfer earnings.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-46",
+      "subject": "Chemistry",
+      "syllabus_area": "Chemical bonding / metals — alloys",
+      "rationale": "The syllabus covers metals and alloys; confirm brass composition is an appropriate examinable detail.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
+    },
+    {
+      "target_id": "DUP-47",
+      "subject": "Government",
+      "syllabus_area": "Legislature — powers, functions and privileges",
+      "rationale": "The syllabus covers the legislature and its functions; confirm parliamentary privilege is within the required scope.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
+      "status": "subject_review_required",
+      "review_note": "New proposal only. Do not insert until a subject reviewer confirms syllabus fit and the question is screened against the full retained bank."
     }
   ],
-  "release_gate": "26 drafts are provisionally mapped to JAMB IBASS topic/objective coverage, 7 remain held for subject review because their specific detail is not expressly named, and 5 remain blocked by confirmed overlap with the existing bank. These mapping statuses are not academic approval. Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, the 7 subject-review items are cleared or replaced, all 5 blocked items receive distinct replacements, and every draft passes contextual full-bank duplicate review. All questions remain draft until normal academic review and approval."
+  "release_gate": "26 drafts are provisionally mapped to JAMB IBASS topic/objective coverage, 7 remain held for subject review because their specific detail is not expressly named, and 5 remain blocked by confirmed overlap with the existing bank. These mapping statuses are not academic approval. Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, the 7 subject-review items are cleared or replaced, all 5 blocked items receive distinct replacements, and every draft passes contextual full-bank duplicate review. All questions remain draft until normal academic review and approval.",
+  "revision_note": "Added DUP-39 to DUP-47 as nine new replacement proposals. All nine are explicitly held for subject review; none is considered approved or inserted."
 }
