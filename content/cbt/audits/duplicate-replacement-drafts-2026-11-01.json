@@ -3,7 +3,7 @@
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
   "draft_count": 47,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "Drafts are proposals only. Forty-seven proposals exist for 57 confirmed holdouts; ten holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
+  "important": "Drafts are proposals only. Forty-seven proposals exist for 65 confirmed holdouts; eighteen holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -857,9 +857,9 @@
       "status": "new_draft_pending_subject_review_and_bankwide_screen"
     }
   ],
-  "revision_note": "The register now contains 57 confirmed duplicate holdouts. The existing 47 proposals cover DUP-01 through DUP-47; ten newly confirmed targets (DUP-48 through DUP-57) remain intentionally undrafted until distinct, syllabus-appropriate replacements are prepared.",
-  "confirmed_duplicate_targets": 57,
-  "drafts_missing": 10,
+  "revision_note": "The register now contains 65 confirmed duplicate holdouts. The existing 47 proposals cover DUP-01 through DUP-47; eighteen newly confirmed targets (DUP-48 through DUP-65) remain intentionally undrafted until distinct, syllabus-appropriate replacements are prepared.",
+  "confirmed_duplicate_targets": 65,
+  "drafts_missing": 18,
   "drafts_missing_target_ids": [
     "DUP-48",
     "DUP-49",
@@ -870,6 +870,14 @@
     "DUP-54",
     "DUP-55",
     "DUP-56",
-    "DUP-57"
+    "DUP-57",
+    "DUP-58",
+    "DUP-59",
+    "DUP-60",
+    "DUP-61",
+    "DUP-62",
+    "DUP-63",
+    "DUP-64",
+    "DUP-65"
   ]
 }
