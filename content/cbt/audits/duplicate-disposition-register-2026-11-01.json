@@ -61,8 +61,8 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 31,
-    "draft_count": 59
+    "additional_replacement_drafts_required": 29,
+    "draft_count": 61
   },
   "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 53 proposals, leaving 37 targets (DUP-54 through DUP-90) without drafts. Of the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; four additional proposals (DUP-48 to DUP-51) are pending subject and bank-wide review. None is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
   "pairs": [
@@ -1265,11 +1265,14 @@
       "provenance": "Batch 7 row 15 was introduced by replacement commit 51eded879e74. Batch 16 row 15 was introduced by replacement commit fa001041a387. Both replaced different kidney-structure questions with the same ureter fact. Corrective overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
-      }
+        "status": "draft_created_needs_subject_and_bankwide_review",
+        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review, contextual clearance and source-row provenance reconciliation remain outstanding.",
+        "draft_question": "The sensory hair cells that detect sound vibrations are located in the:",
+        "highest_similarity": 0.2783
+      },
+      "source_location_reconciliation": "The held-row record exists in the staging CSV, but the current original-batch CSV at the listed retained/held locations does not contain the recorded question text. Do not treat the row mapping as reconciled or alter source CSVs until commit-level provenance is checked."
     },
     {
       "id": "DUP-61",
@@ -1285,11 +1288,14 @@
       "provenance": "Batch 6 row 13 is present in original batch-creation commit aa349ac1f168. Batch 28 row 16 was introduced by replacement commit a272b4b0b8d0, replacing a transpiration-factor question. Corrective overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
-      }
+        "status": "draft_created_needs_subject_and_bankwide_review",
+        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review, contextual clearance and source-row provenance reconciliation remain outstanding.",
+        "draft_question": "A young plant shoot bends towards light because cells on its shaded side undergo greater:",
+        "highest_similarity": 0.2262
+      },
+      "source_location_reconciliation": "The held-row record exists in the staging CSV, but the current original-batch CSV at the listed retained/held locations does not contain the recorded question text. Do not treat the row mapping as reconciled or alter source CSVs until commit-level provenance is checked."
     },
     {
       "id": "DUP-62",
@@ -1936,17 +1942,18 @@
     "bank_insertion": "not performed"
   },
   "replacement_review_summary": {
-    "drafts_total": 47,
+    "drafts_total": 61,
     "blocked_existing_bank_overlap": 5,
-    "not_yet_cleared": 42,
+    "not_yet_cleared": 56,
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. Forty-seven draft proposals exist for 90 confirmed holdouts; forty-three newly confirmed targets still have no replacement draft. Five existing drafts remain blocked by bank overlap; sixteen require subject review; twenty-six are provisionally syllabus-mapped. No draft has been inserted.",
     "additional_duplicate_targets": 52,
-    "additional_replacement_drafts_required": 43,
-    "subject_review_required": 16,
-    "provisionally_aligned": 26
+    "additional_replacement_drafts_required": 29,
+    "independent_subject_review_status": "incomplete",
+    "manual_contextual_review_status": "incomplete",
+    "source_row_provenance_reconciliation": "blocker_for_final_bank_assembly",
+    "rule": "Lexical screening is not approval. The 61 proposals remain outside the source bank. Five are explicitly blocked for existing-bank overlap; the other 56 are not cleared for insertion until the applicable subject/contextual checks are complete. Current original-batch CSV row contents do not match the staged held-row records for DUP-60 and DUP-61; reconcile provenance before final assembly."
   },
   "history_reconciliation_status": {
     "prior_replacement_commit_verified": 48,
@@ -1958,5 +1965,5 @@
     ],
     "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Thirteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
   },
-  "revision_note": "DUP-58 and DUP-59 now have separate draft proposals. 59 proposals exist; 31 confirmed duplicate targets (DUP-60 through DUP-90) still lack replacement drafts."
+  "revision_note": "DUP-60 and DUP-61 have separate Biology replacement proposals and full staged-bank lexical screens. Both are below threshold. Source-row location mismatches were detected between staging holdout records and current original-batch CSVs; this is now explicitly a release blocker. No source CSV was modified."
 }
