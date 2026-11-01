@@ -7,6 +7,12 @@
 - 1,543 questions provisionally retained.
 - Reconciliation: 1,543 + 57 = 1,600.
 
+## Provenance
+- 41 duplicate relationships have commit-backed prior-replacement history.
+- 15 are original-draft overlaps.
+- One pair (DUP-34) still has unresolved provenance.
+- Two three-question clusters have one retained row and two held rows: Government (batch 32 row 34 retained; batches 26 row 34 and 33 row 35 held) and Literature exposition (batch 11 row 37 retained; batches 19 row 38 and 31 row 37 held).
+
 ## Files
 - `retained-batches-*.csv`: provisionally retained rows grouped into four 10-batch windows. Each includes original batch and CSV-row provenance, followed by all 18 original question fields.
 - `held-duplicates-*.csv`: all held rows, with pair ID and retained/held source locations.
