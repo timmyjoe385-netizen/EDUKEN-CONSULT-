@@ -144,6 +144,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate defines when an allele is dominant in a heterozygote; the closest source asks for the genotype label Tt (heterozygous). Related genetics terminology but different definitions. Retain as draft pending independent Biology reviewer confirmation."
       }
     },
     {
@@ -264,6 +268,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate tests deflation (a sustained fall in the general price level); the closest source tests inflation (a sustained rise). Opposite concepts, not the same answer objective. Retain pending Economics reviewer confirmation."
       }
     },
     {
@@ -384,6 +392,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate uses a separating funnel for two immiscible liquids; the closest source tests filtration of an insoluble solid from a liquid. Different mixtures and separation methods. Retain pending Chemistry reviewer confirmation."
       }
     },
     {
@@ -424,6 +436,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate applies the law of reflection at a plane mirror; the closest held-bank item tests total internal reflection at a boundary. Distinct optical principles. Retain pending Physics reviewer confirmation."
       }
     },
     {
@@ -504,6 +520,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate tests plasma transport of dissolved substances; the closest source tests red blood cells carrying haemoglobin/oxygen. Different blood components and functions. Retain pending Biology reviewer confirmation."
       }
     },
     {
@@ -724,6 +744,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate tests the possessive function of “whose”; the closest source tests a defining relative clause introduced by “that”. Related relative-clause grammar but distinct function. Retain pending English reviewer confirmation."
       }
     },
     {
@@ -744,6 +768,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate tests the plural-only noun “cattle” taking a plural verb; the closest sources test agreement with compound subjects/nearest-subject rule. Related concord domain but different rule. Retain pending English reviewer confirmation."
       }
     },
     {
@@ -764,6 +792,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate defines an epigraph (quotation at the beginning); the closest source defines an epilogue (concluding section). Similar spelling but opposite placement and different literary function. Retain pending Literature reviewer confirmation."
       }
     },
     {
@@ -784,6 +816,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate asks for a party constitution (internal rules and structure); the closest source asks for a party manifesto (policy promises/programme). Different political documents and functions. Retain pending Government reviewer confirmation."
       }
     },
     {
@@ -964,6 +1000,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate defines economic rent as a payment above transfer earnings; the closest sources ask for ordinary factor rewards (wages/interest/rent). Related factor-reward area but distinct economic concept. Retain pending Economics reviewer confirmation."
       }
     },
     {
@@ -1024,6 +1064,10 @@
       "replacement_review": {
         "status": "preliminary_ai_review_only_human_review_required",
         "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: denotation is a word's literal meaning; diction is a writer's choice/use of words. Related literary vocabulary but different concepts. Because the lexical score is high, require an independent Literature reviewer to confirm the distinction."
       }
     },
     {
@@ -1124,6 +1168,10 @@
       "replacement_review": {
         "status": "preliminary_ai_review_only_human_review_required",
         "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
+      },
+      "contextual_review": {
+        "status": "assistant_preliminary_distinction_human_subject_review_required",
+        "note": "Preliminary distinction: the candidate identifies Cu(OH)₂ formed from Cu²⁺ and OH⁻; the closest sources ask about salt formation in neutralisation or gas evolution in acid reactions. Different reaction and qualitative identification objective. Retain pending Chemistry reviewer confirmation."
       }
     },
     {
