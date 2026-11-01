@@ -17,11 +17,11 @@
     "threshold_note": "The 0.42 reconstruction reproduces the reported total of 390. A 0.43 run yields 352. The original reported category split was 41/349; the reconstruction is 40/350, a one-pair classification discrepancy still documented in the audit.",
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
-    "cross_window_additional_targeted_candidates_reviewed": 75,
-    "cross_window_manually_reviewed_candidates": 124,
-    "cross_window_candidates_remaining_not_manually_reviewed": 1180,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 27,
-    "cross_window_review_note": "The 49-candidate high-similarity shortlist was reviewed, followed by 75 additional targeted candidates: 20 candidates ranked 105–284 and 55 candidates ranked 50–104. This produced 27 additional duplicate pair records since the initial 38-pair register. One three-row exposition cluster generated two candidate edges but only one additional held row. The remaining 1,180 cross-window candidates have not been manually reviewed.",
+    "cross_window_additional_targeted_candidates_reviewed": 237,
+    "cross_window_manually_reviewed_candidates": 286,
+    "cross_window_candidates_remaining_not_manually_reviewed": 1018,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 52,
+    "cross_window_review_note": "The 49-candidate high-similarity shortlist and all 237 additional candidates ranked 50–286 have been manually reviewed. This produced 52 additional duplicate pair records beyond the initial 38-pair register. All 286 candidates with scores at or above the 0.65 review threshold are now reviewed; the remaining 1,018 lower-scoring candidates have not received manual contextual review.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,11 +36,12 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 50,
+    "cross_window_pairs": 75,
     "within_window_pairs": 15,
-    "total_pairs": 65,
-    "prior_replacement_provenance_pairs": 47,
-    "original_draft_overlap_pairs": 17,
+    "total_pairs": 90,
+    "prior_replacement_commit_verified": 47,
+    "replacement_after_initial_snapshot_commit_sha_pending": 14,
+    "original_draft_overlap_pairs": 28,
     "provenance_unverified_pairs": 1,
     "provenance_classification_complete": false
   },
@@ -51,7 +52,7 @@
     "previously_triaged": 70
   },
   "replacement_plan": {
-    "unique_replacement_targets": 65,
+    "unique_replacement_targets": 90,
     "all_targets_unique": true,
     "retain_replace_assignments_complete": true,
     "csv_edits_authorized": false,
@@ -59,8 +60,8 @@
     "pr_merge_authorized": false,
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
-    "additional_confirmed_pairs_added_on_2026_11_01": 27,
-    "additional_replacement_drafts_required": 18,
+    "additional_confirmed_pairs_added_on_2026_11_01": 52,
+    "additional_replacement_drafts_required": 43,
     "draft_count": 47
   },
   "approval_gate": "The 47-row retain/replace register and 38 original replacement drafts are staged. Nine additional replacement drafts are still required for the newly confirmed duplicate rows. Do not edit original-batch CSVs, import/publish, deploy production, or merge PR #194 until the user explicitly approves the reconciled retain/replace plan and all replacements have passed bank-wide and subject review.",
@@ -1369,6 +1370,531 @@
         "status": "not_yet_cleared",
         "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
       }
+    },
+    {
+      "id": "DUP-66",
+      "scope": "cross_window",
+      "subject": "Physics",
+      "a": "batch 2 row 26",
+      "b": "batch 38 row 22",
+      "concept": "Same numerical power calculation: 600 J of work completed in 20 s, giving 30 W",
+      "reason": "Same numerical power calculation: 600 J of work completed in 20 s, giving 30 W.",
+      "retain": "batch 2 row 26",
+      "replace": "batch 38 row 22",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-67",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 2 row 19",
+      "b": "batch 36 row 19",
+      "concept": "Both define oxidation in electron-transfer terms as loss of electrons",
+      "reason": "Both define oxidation in electron-transfer terms as loss of electrons.",
+      "retain": "batch 2 row 19",
+      "replace": "batch 36 row 19",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-68",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 16 row 4",
+      "b": "batch 36 row 2",
+      "concept": "Both test the same present-perfect question-tag pattern, changing only the subject pronoun",
+      "reason": "Both test the same present-perfect question-tag pattern, changing only the subject pronoun.",
+      "retain": "batch 16 row 4",
+      "replace": "batch 36 row 2",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-69",
+      "scope": "cross_window",
+      "subject": "Literature in English",
+      "a": "batch 35 row 40",
+      "b": "batch 12 row 39",
+      "concept": "Both ask how many lines a traditional sonnet contains; answer is fourteen",
+      "reason": "Both ask how many lines a traditional sonnet contains; answer is fourteen.",
+      "retain": "batch 35 row 40",
+      "replace": "batch 12 row 39",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-70",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 19 row 15",
+      "b": "batch 31 row 13",
+      "concept": "Both identify magnesium as the central mineral element in chlorophyll",
+      "reason": "Both identify magnesium as the central mineral element in chlorophyll.",
+      "retain": "batch 19 row 15",
+      "replace": "batch 31 row 13",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-71",
+      "scope": "cross_window",
+      "subject": "Physics",
+      "a": "batch 10 row 26",
+      "b": "batch 40 row 25",
+      "concept": "Both identify an alpha particle as a helium nucleus",
+      "reason": "Both identify an alpha particle as a helium nucleus.",
+      "retain": "batch 10 row 26",
+      "replace": "batch 40 row 25",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-72",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 2 row 6",
+      "b": "batch 19 row 3",
+      "concept": "Both test the meaning of the idiom 'spill the beans' as revealing a secret",
+      "reason": "Both test the meaning of the idiom 'spill the beans' as revealing a secret.",
+      "retain": "batch 2 row 6",
+      "replace": "batch 19 row 3",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-73",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 5 row 15",
+      "b": "batch 33 row 16",
+      "concept": "Both ask how vaccination protects against infection by stimulating a specific immune response and memory",
+      "reason": "Both ask how vaccination protects against infection by stimulating a specific immune response and memory.",
+      "retain": "batch 5 row 15",
+      "replace": "batch 33 row 16",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-74",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 20 row 15",
+      "b": "batch 40 row 12",
+      "concept": "Both ask where the blastocyst/early embryo normally implants after fertilisation: the uterine lining",
+      "reason": "Both ask where the blastocyst/early embryo normally implants after fertilisation: the uterine lining.",
+      "retain": "batch 20 row 15",
+      "replace": "batch 40 row 12",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-75",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 25 row 28",
+      "b": "batch 31 row 31",
+      "concept": "Both identify the Gini coefficient as a measure of income inequality",
+      "reason": "Both identify the Gini coefficient as a measure of income inequality.",
+      "retain": "batch 25 row 28",
+      "replace": "batch 31 row 31",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-76",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 37 row 27",
+      "b": "batch 10 row 27",
+      "concept": "Both test the law of supply: a higher price generally increases quantity supplied, other things equal",
+      "reason": "Both test the law of supply: a higher price generally increases quantity supplied, other things equal.",
+      "retain": "batch 37 row 27",
+      "replace": "batch 10 row 27",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-77",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 7 row 35",
+      "b": "batch 34 row 35",
+      "concept": "Both ask for a typical local-government revenue source and identify market fees/local charges",
+      "reason": "Both ask for a typical local-government revenue source and identify market fees/local charges.",
+      "retain": "batch 7 row 35",
+      "replace": "batch 34 row 35",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-78",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 20 row 6",
+      "b": "batch 28 row 4",
+      "concept": "Both use the identical example list 'reading, swimming and cycling' to test parallel structure",
+      "reason": "Both use the identical example list 'reading, swimming and cycling' to test parallel structure.",
+      "retain": "batch 20 row 6",
+      "replace": "batch 28 row 4",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-79",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 12 row 3",
+      "b": "batch 4 row 5",
+      "concept": "Both test backshift of 'I am tired' in reported speech; the reporting speaker/name changes only",
+      "reason": "Both test backshift of 'I am tired' in reported speech; the reporting speaker/name changes only.",
+      "retain": "batch 12 row 3",
+      "replace": "batch 4 row 5",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-80",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 3 row 28",
+      "b": "batch 35 row 31",
+      "concept": "Both identify factory building rent under a fixed lease as a short-run fixed cost",
+      "reason": "Both identify factory building rent under a fixed lease as a short-run fixed cost.",
+      "retain": "batch 3 row 28",
+      "replace": "batch 35 row 31",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-81",
+      "scope": "cross_window",
+      "subject": "Physics",
+      "a": "batch 26 row 25",
+      "b": "batch 35 row 26",
+      "concept": "Both ask when an emf is induced in a coil: when magnetic flux linkage changes",
+      "reason": "Both ask when an emf is induced in a coil: when magnetic flux linkage changes.",
+      "retain": "batch 26 row 25",
+      "replace": "batch 35 row 26",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-82",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 8 row 28",
+      "b": "batch 19 row 27",
+      "concept": "Both define progressive taxation as a system in which the tax rate rises with taxable income",
+      "reason": "Both define progressive taxation as a system in which the tax rate rises with taxable income.",
+      "retain": "batch 8 row 28",
+      "replace": "batch 19 row 27",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-83",
+      "scope": "cross_window",
+      "subject": "Literature in English",
+      "a": "batch 20 row 39",
+      "b": "batch 32 row 39",
+      "concept": "Both test the concluding resolution/denouement of a narrative, where the main conflict is settled and the outcome becomes clear",
+      "reason": "Both test the concluding resolution/denouement of a narrative, where the main conflict is settled and the outcome becomes clear.",
+      "retain": "batch 20 row 39",
+      "replace": "batch 32 row 39",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-84",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 26 row 13",
+      "b": "batch 39 row 16",
+      "concept": "Both identify moving air around the leaf as a condition that generally increases transpiration",
+      "reason": "Both identify moving air around the leaf as a condition that generally increases transpiration.",
+      "retain": "batch 26 row 13",
+      "replace": "batch 39 row 16",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-85",
+      "scope": "cross_window",
+      "subject": "Literature in English",
+      "a": "batch 30 row 41",
+      "b": "batch 32 row 37",
+      "concept": "Both define dramatis personae as the list of characters in a play",
+      "reason": "Both define dramatis personae as the list of characters in a play.",
+      "retain": "batch 30 row 41",
+      "replace": "batch 32 row 37",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-86",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 38 row 18",
+      "b": "batch 11 row 18",
+      "concept": "Both state that one mole of an ideal gas occupies approximately 22",
+      "reason": "Both state that one mole of an ideal gas occupies approximately 22.4 dm³ at 0°C and 1 atm.",
+      "retain": "batch 38 row 18",
+      "replace": "batch 11 row 18",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-87",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 16 row 5",
+      "b": "batch 29 row 4",
+      "concept": "Both test subject-verb agreement with the same 'Neither the principal nor the teachers' construction",
+      "reason": "Both test subject-verb agreement with the same 'Neither the principal nor the teachers' construction.",
+      "retain": "batch 16 row 5",
+      "replace": "batch 29 row 4",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-88",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 3 row 30",
+      "b": "batch 34 row 31",
+      "concept": "Both state that investment in education and training builds human capital",
+      "reason": "Both state that investment in education and training builds human capital.",
+      "retain": "batch 3 row 30",
+      "replace": "batch 34 row 31",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-89",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 7 row 5",
+      "b": "batch 30 row 5",
+      "concept": "Both ask which word begins with the same /dʒ/ consonant sound as 'judge'; both use 'giant' as the correct answer",
+      "reason": "Both ask which word begins with the same /dʒ/ consonant sound as 'judge'; both use 'giant' as the correct answer.",
+      "retain": "batch 7 row 5",
+      "replace": "batch 30 row 5",
+      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
+      "provenance_status": "original_batch_creation_overlap",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
+    },
+    {
+      "id": "DUP-90",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 8 row 17",
+      "b": "batch 29 row 20",
+      "concept": "Both ask how atomic radius changes from left to right across a period and answer that it decreases",
+      "reason": "Both ask how atomic radius changes from left to right across a period and answer that it decreases. This extends the existing three-row cluster with batch 37 row 20 already held under DUP-64.",
+      "retain": "batch 8 row 17",
+      "replace": "batch 29 row 20",
+      "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
+      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
+      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "decision": "confirmed_semantic_duplicate",
+      "csv_change_status": "not_changed_staging_holdout_created",
+      "replacement_status": "replacement_required_not_drafted",
+      "replacement_review": {
+        "status": "not_yet_cleared",
+        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+      }
     }
   ],
   "draft_screening": {
@@ -1416,19 +1942,20 @@
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. Forty-seven draft proposals exist for 65 confirmed holdouts; eighteen newly confirmed targets still have no replacement draft. Five existing drafts remain blocked by bank overlap; sixteen require subject review; twenty-six are provisionally syllabus-mapped. No draft has been inserted.",
-    "additional_duplicate_targets": 27,
-    "additional_replacement_drafts_required": 18,
+    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. Forty-seven draft proposals exist for 90 confirmed holdouts; forty-three newly confirmed targets still have no replacement draft. Five existing drafts remain blocked by bank overlap; sixteen require subject review; twenty-six are provisionally syllabus-mapped. No draft has been inserted.",
+    "additional_duplicate_targets": 52,
+    "additional_replacement_drafts_required": 43,
     "subject_review_required": 16,
     "provisionally_aligned": 26
   },
   "history_reconciliation_status": {
-    "prior_replacement_provenance_relationships": 47,
-    "original_draft_overlap_relationships": 17,
+    "prior_replacement_commit_verified": 47,
+    "replacement_after_initial_snapshot_commit_sha_pending": 14,
+    "original_draft_overlap_relationships": 28,
     "unverified_relationships": 1,
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "The row-level history list and register provenance notes account for 47 prior-replacement overlaps and 17 original-draft overlaps. DUP-34 remains explicitly unresolved. Do not count it as a verified prior-replacement or original-draft overlap."
+    "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Fourteen more current rows are absent from their original batch snapshots and are classified as later replacements, but their exact introducing commit SHAs still need to be normalized. Twenty-eight pairs are original-draft overlaps; DUP-34 remains unresolved."
   }
 }
