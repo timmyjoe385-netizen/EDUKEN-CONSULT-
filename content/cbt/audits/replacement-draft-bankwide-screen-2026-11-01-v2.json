@@ -1,8 +1,8 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 4,
-  "purpose": "Refreshed non-destructive lexical screen of all 55 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-54/55.",
+  "version": 5,
+  "purpose": "Refreshed non-destructive lexical screen of all 57 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-56/57.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -11,14 +11,14 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 55,
-    "screened": 55,
+    "count": 57,
+    "screened": 57,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 16,
-    "below_threshold_count": 39,
+    "below_threshold_count": 41,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -1302,6 +1302,52 @@
           "location": "batch 25 row 38",
           "score": 0.2842,
           "question": "A stanza or section of a poem consisting of six lines is called a:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-56",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.2793,
+      "top_matches": [
+        {
+          "location": "batch 32 row 38",
+          "score": 0.2793,
+          "question": "The repetition of similar sounds at the ends of poetic lines is known as"
+        },
+        {
+          "location": "batch 02 row 39",
+          "score": 0.2619,
+          "question": "The sequence and arrangement of events in a story is its:"
+        },
+        {
+          "location": "batch 12 row 40",
+          "score": 0.2581,
+          "question": "Which narrative technique attempts to present the continuous flow of a character's thoughts and impressions?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-57",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3367,
+      "top_matches": [
+        {
+          "location": "batch 11 row 6",
+          "score": 0.3367,
+          "question": "In the sentence “The children played happily in the yard,” which word modifies the verb?"
+        },
+        {
+          "location": "batch 25 row 2",
+          "score": 0.3318,
+          "question": "In the sentence “Hardly had the referee blown the whistle ___ the crowd rushed onto the field,” choose the correct completion."
+        },
+        {
+          "location": "batch 14 row 6",
+          "score": 0.3152,
+          "question": "In the sentence “To win the prize was her aim”, the phrase “To win the prize” functions as the…"
         }
       ]
     }
