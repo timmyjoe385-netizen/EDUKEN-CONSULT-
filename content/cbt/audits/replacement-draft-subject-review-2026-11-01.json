@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-63. This is not independent subject-expert sign-off.",
+  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-65. This is not independent subject-expert sign-off.",
   "reviewer_status": "preliminary_review_completed_human_subject_review_still_required",
   "reviews": [
     {
@@ -148,6 +148,24 @@
       "syllabus_fit": "Provisionally fits ratio, proportion and scale conversion; confirm map-scale coverage in the current JAMB Mathematics syllabus.",
       "bank_overlap": "Highest same-subject Dice score is 0.3648 against a circle-sector question. No concept-level duplicate identified in the screen; contextual review remains required.",
       "decision": "Keep as a separate draft pending independent Mathematics review and syllabus confirmation."
+    },
+    {
+      "target_id": "DUP-64",
+      "subject": "Chemistry",
+      "assessment": "preliminary_pass_pending_human_review",
+      "answer_check": "C is correct. Eighteen hours is three half-lives, so (1/2)^3 = 1/8 remains.",
+      "syllabus_fit": "Provisionally fits radioactivity and half-life calculations; confirm exact JAMB Chemistry syllabus coverage.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: highest Dice score 0.2623 against a first-order rate-constant unit question. No concept overlap identified in the screen; contextual review remains required.",
+      "decision": "Keep as a separate draft pending independent Chemistry review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-65",
+      "subject": "Biology",
+      "assessment": "preliminary_pass_pending_human_review",
+      "answer_check": "A is correct. Tracheoles are fine terminal branches of the insect tracheal system where gas exchange with tissues occurs; spiracles are external openings.",
+      "syllabus_fit": "Provisionally fits insect respiration and animal physiology; confirm exact JAMB Biology syllabus coverage.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a ureter question, with no concept overlap identified. Contextual review remains required.",
+      "decision": "Keep as a separate draft pending independent Biology review and contextual bank-wide clearance."
     }
   ],
   "release_gate": "All assistant checks are preliminary, not independent academic sign-off. Do not insert or publish any replacement until subject-competent review, full contextual bank review, source-row provenance reconciliation and the user's final controlled replacement approval."
