@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 65,
+  "draft_count": 66,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1194,13 +1194,30 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "Drafted for the DUP-65 Biology holdout (commensalism). Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a question on the ureter; no concept overlap. Independent Biology review and contextual bank-wide clearance remain required."
+    },
+    {
+      "target_id": "DUP-66",
+      "subject": "Physics",
+      "topic": "Electromagnetism",
+      "subtopic": "Transformer efficiency",
+      "question": "A transformer receives 240 V on its primary coil and supplies 12 V across its secondary coil. If the primary current is 0.5 A and the secondary current is 8 A, what is its efficiency?",
+      "options": [
+        "60%",
+        "70%",
+        "80%",
+        "90%"
+      ],
+      "answer": "C",
+      "explanation": "Input power = 240 × 0.5 = 120 W. Output power = 12 × 8 = 96 W. Efficiency = (96/120) × 100 = 80%.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-60 to DUP-63: Organ of Corti/hearing, shoot phototropism, enjambment and map-scale conversion. DUP-64/65: radioactive half-life calculation and insect tracheoles. All six newest drafts were screened against all 1,600 staged rows and remain outside original source CSVs.",
+  "revision_note": "DUP-66 and DUP-67 replacement candidates added after a fresh full 1,600-row same-subject screen. These remain drafts pending independent subject, syllabus and contextual semantic review; original CSVs unchanged.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 25,
+  "drafts_missing": 24,
   "drafts_missing_target_ids": [
-    "DUP-66",
     "DUP-67",
     "DUP-68",
     "DUP-69",
