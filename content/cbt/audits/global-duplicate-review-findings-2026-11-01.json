@@ -171,10 +171,9 @@
       "concept": "Bacterial reproduction by binary fission",
       "retain": "batch 21 row 14",
       "replace": "batch 27 row 14",
-      "history_note": "Both currently present; no prior replacement commit identified for these locations.",
       "decision": "confirmed_semantic_duplicate",
       "current_csv_checked": true,
-      "csv_changes_made": false
+      "csv_changed_in_this_audit": false
     },
     {
       "subject": "Economics",
@@ -183,10 +182,9 @@
       "concept": "Regressive taxation",
       "retain": "batch 22 row 29",
       "replace": "batch 26 row 27",
-      "history_note": "Both currently present; no prior replacement commit identified for these locations.",
       "decision": "confirmed_semantic_duplicate",
       "current_csv_checked": true,
-      "csv_changes_made": false
+      "csv_changed_in_this_audit": false
     },
     {
       "subject": "Physics",
@@ -195,10 +193,9 @@
       "concept": "Ammeter connected in series to measure current",
       "retain": "batch 25 row 23",
       "replace": "batch 29 row 23",
-      "history_note": "Both currently present; earlier batch 29 replacement commit changed a different question.",
       "decision": "confirmed_semantic_duplicate",
       "current_csv_checked": true,
-      "csv_changes_made": false
+      "csv_changed_in_this_audit": false
     },
     {
       "subject": "Mathematics",
@@ -207,10 +204,9 @@
       "concept": "Inverse variation with identical values and calculation",
       "retain": "batch 27 row 11",
       "replace": "batch 28 row 10",
-      "history_note": "Both currently present; earlier batch 28 and 27 replacement commits changed different rows.",
       "decision": "confirmed_semantic_duplicate",
       "current_csv_checked": true,
-      "csv_changes_made": false
+      "csv_changed_in_this_audit": false
     },
     {
       "subject": "Government",
@@ -219,19 +215,76 @@
       "concept": "Constitutional division of powers in a federation",
       "retain": "batch 32 row 34",
       "replace": "batch 33 row 35",
-      "history_note": "batch 33 row 35 was introduced by earlier replacement commit c61f2ffd593deb7ee18f3c123209a85da1b35cbb, replacing a constitutional-amendment question; this replacement created an overlap with batch 32 row 34. Treat as corrective replacement.",
+      "history_note": "Batch 33 row 35 was introduced by prior replacement commit c61f2ffd593deb7ee18f3c123209a85da1b35cbb; corrective overlap.",
       "decision": "confirmed_semantic_duplicate",
       "current_csv_checked": true,
-      "csv_changes_made": false
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Use of English",
+      "a": "batch 32 row 4",
+      "b": "batch 36 row 4",
+      "concept": "Collocation 'congratulate someone on' an achievement",
+      "retain": "batch 32 row 4",
+      "replace": "batch 36 row 4",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Use of English",
+      "a": "batch 26 row 4",
+      "b": "batch 30 row 3",
+      "concept": "Meaning of candid/candour",
+      "retain": "batch 30 row 3",
+      "replace": "batch 26 row 4",
+      "history_note": "Batch 26 candid item was introduced by prior replacement commit a08692d851750c09fe0e8358eedd906162ffaaa5; corrective overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Physics",
+      "a": "batch 14 row 22",
+      "b": "batch 19 row 22",
+      "concept": "Direction of centripetal force",
+      "retain": "batch 14 row 22",
+      "replace": "batch 19 row 22",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Literature in English",
+      "a": "batch 34 row 40",
+      "b": "batch 40 row 40",
+      "concept": "Symbolism as representation beyond literal meaning",
+      "retain": "batch 34 row 40",
+      "replace": "batch 40 row 40",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     }
   ],
   "history_reconciliation": {
     "prior_replacement_commits_reviewed": "Several key replacement/diversification commits were inspected, including batches 15–40; a full row-by-row ledger of all prior replacement commits is still being reconciled.",
-    "confirmed_prior_replacement_overlap_count": 2,
+    "confirmed_prior_replacement_overlap_count": 3,
     "overlap_locations": [
       "batch 32 row 34 / batch 33 row 35",
-      "batch 2 row 40 / batch 37 row 41"
+      "batch 2 row 40 / batch 37 row 41",
+      "batch 26 row 4 / batch 30 row 3"
     ],
-    "note": "The complete 1,600-question scan already includes all current previously replaced rows, so their resulting content is not omitted from duplicate screening. The two confirmed overlaps above arose from earlier replacement content and must be corrected only once."
+    "note": "The global scan includes the current content of every previously replaced row. Three confirmed duplicates involve previously introduced replacement content (batch 33 row 35 federalism; batch 37 row 41 Theme; batch 26 row 4 candid). These must be treated as corrective overlaps and only corrected once."
+  },
+  "within_window_review": {
+    "candidate_pairs_screened": 390,
+    "same_subject_topic_subtopic_pairs_reviewed": 41,
+    "confirmed_semantic_duplicate_pairs": 9,
+    "reviewed_but_preserved_pairs": 32,
+    "notes": [
+      "The initial five within-window duplicate pairs were rechecked against current CSV rows.",
+      "Four further duplicates were confirmed after reviewing all 41 same-subject/topic/subtopic candidate pairs.",
+      "Distinct questions testing complementary definitions, calculations, different values, or different lexical targets were preserved."
+    ]
   }
 }
