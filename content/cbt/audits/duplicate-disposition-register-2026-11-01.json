@@ -1268,11 +1268,10 @@
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
         "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review, contextual clearance and source-row provenance reconciliation remain outstanding.",
+        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review and contextual clearance remain outstanding.",
         "draft_question": "The sensory hair cells that detect sound vibrations are located in the:",
         "highest_similarity": 0.2783
-      },
-      "source_location_reconciliation": "The held-row record exists in the staging CSV, but the current original-batch CSV at the listed retained/held locations does not contain the recorded question text. Do not treat the row mapping as reconciled or alter source CSVs until commit-level provenance is checked."
+      }
     },
     {
       "id": "DUP-61",
@@ -1291,11 +1290,10 @@
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
         "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review, contextual clearance and source-row provenance reconciliation remain outstanding.",
+        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review and contextual clearance remain outstanding.",
         "draft_question": "A young plant shoot bends towards light because cells on its shaded side undergo greater:",
         "highest_similarity": 0.2262
-      },
-      "source_location_reconciliation": "The held-row record exists in the staging CSV, but the current original-batch CSV at the listed retained/held locations does not contain the recorded question text. Do not treat the row mapping as reconciled or alter source CSVs until commit-level provenance is checked."
+      }
     },
     {
       "id": "DUP-62",
@@ -1952,7 +1950,7 @@
     "additional_replacement_drafts_required": 29,
     "independent_subject_review_status": "incomplete",
     "manual_contextual_review_status": "incomplete",
-    "source_row_provenance_reconciliation": "blocker_for_final_bank_assembly",
+    "source_row_provenance_reconciliation": "DUP-60 and DUP-61 source locations verified; register row numbers refer to physical CSV rows including the header.",
     "rule": "Lexical screening is not approval. The 61 proposals remain outside the source bank. Five are explicitly blocked for existing-bank overlap; the other 56 are not cleared for insertion until the applicable subject/contextual checks are complete. Current original-batch CSV row contents do not match the staged held-row records for DUP-60 and DUP-61; reconcile provenance before final assembly."
   },
   "history_reconciliation_status": {
@@ -1965,5 +1963,5 @@
     ],
     "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Thirteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
   },
-  "revision_note": "DUP-60 and DUP-61 have separate Biology replacement proposals and full staged-bank lexical screens. Both are below threshold. Source-row location mismatches were detected between staging holdout records and current original-batch CSVs; this is now explicitly a release blocker. No source CSV was modified."
+  "revision_note": "DUP-60 and DUP-61 have separate Biology replacement proposals and full staged-bank lexical screens. Both are below threshold. Their source locations were verified using physical CSV row numbers including the header; both match the staging holdout records. No source CSV was modified."
 }
