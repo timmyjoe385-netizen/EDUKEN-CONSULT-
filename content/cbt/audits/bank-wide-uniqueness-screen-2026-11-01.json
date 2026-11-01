@@ -1,0 +1,66 @@
+{
+  "audit_date": "2026-11-01",
+  "purpose": "Reproducible preliminary bank-wide uniqueness and structural screening of the current non-destructive staging export and all replacement proposals.",
+  "scope": {
+    "retained_question_rows": 1510,
+    "replacement_proposals": 49,
+    "original_source_rows": 1600,
+    "confirmed_duplicate_rows_held": 90,
+    "held_rows_not_included_in_retained_bank_scan": true
+  },
+  "source_files": [
+    {
+      "path": "content/cbt/staging/2026-11-01/retained-batches-01-10.csv",
+      "sha": "8bc866864d50f2351f2246ff428591390d7c7990",
+      "rows": 395
+    },
+    {
+      "path": "content/cbt/staging/2026-11-01/retained-batches-11-20.csv",
+      "sha": "0ee8a058347972fc2a506b022255c59664dea87b",
+      "rows": 387
+    },
+    {
+      "path": "content/cbt/staging/2026-11-01/retained-batches-21-30.csv",
+      "sha": "b35ec20439bb4a1558eb5ac90f2955a7d388c579",
+      "rows": 383
+    },
+    {
+      "path": "content/cbt/staging/2026-11-01/retained-batches-31-40.csv",
+      "sha": "ce78f9b3966baa7729241db5ff03819671cb77a4",
+      "rows": 345
+    }
+  ],
+  "retained_subject_counts": {
+    "Use of English": 189,
+    "Mathematics": 195,
+    "Biology": 183,
+    "Chemistry": 187,
+    "Physics": 189,
+    "Economics": 184,
+    "Government": 195,
+    "Literature in English": 188
+  },
+  "checks": {
+    "retained_exact_duplicate_question_stem_groups": 0,
+    "retained_rows_missing_question_or_option_or_valid_answer_key": 0,
+    "replacement_proposals_with_invalid_required_fields_or_option_count_or_answer_key": 0,
+    "replacement_proposals_missing_explanation": 0,
+    "same_subject_word_trigram_dice_threshold": 0.45,
+    "replacement_to_retained_candidate_pairs_at_or_above_threshold": 0,
+    "replacement_to_replacement_candidate_pairs_at_or_above_threshold": 0
+  },
+  "interpretation": [
+    "No normalized exact duplicate question stems were found within the 1,510 provisionally retained rows.",
+    "All 1,510 retained rows had a question, four non-empty options and an A-D answer key.",
+    "All 49 replacement proposals had a target ID, subject, question, exactly four options, an A-D answer key and an explanation.",
+    "No same-subject replacement-to-retained or replacement-to-replacement pair reached the preliminary word-trigram Dice threshold of 0.45.",
+    "This automated screen is not proof of academic correctness or complete semantic uniqueness. The 49 proposals still require contextual subject review; prior proposals already marked blocked or needing review remain in those statuses.",
+    "The bank is not deployment-ready: retained subject counts are below the 200-per-subject target and are uneven."
+  ],
+  "release_status": "SCREENING_ONLY_NOT_APPROVED_FOR_IMPORT_PUBLICATION_MERGE_OR_DEPLOYMENT",
+  "limitations": [
+    "The 1,018 cross-window candidates below the earlier 0.65 manual-review threshold remain unreviewed.",
+    "The original within-window report retains a 279-candidate pending count and a 38-pair discrepancy against the reconstructed 390-candidate review set.",
+    "A zero-result automated similarity screen does not replace human review of wording, concepts, syllabus alignment, answer correctness or question quality."
+  ]
+}
