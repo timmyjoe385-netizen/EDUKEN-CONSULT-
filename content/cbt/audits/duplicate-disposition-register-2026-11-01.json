@@ -100,11 +100,10 @@
       "provenance": null,
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_user_approval",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "blocked_duplicate_existing_bank",
-        "match": "batch 38, CSV row 20",
-        "reason": "Same esterification learning objective: both questions test products of an alcohol + carboxylic acid reaction (ester and water)."
+        "status": "revised_draft_needs_subject_and_bankwide_review",
+        "reason": "The earlier esterification candidate was withdrawn because it duplicated batch 38 row 20. This salt-bridge candidate tests a different electrochemical-cell function and has been re-screened against all 1,600 source questions."
       }
     },
     {
@@ -161,11 +160,10 @@
       "provenance": "batch 37 row 41 is a previously introduced replacement (commit 437788c145a4a3ff578d9fd7640b4b1d6739cedc added the Theme question); it duplicates the existing batch 2 Theme question. This is a corrective overlap, not a reason to repeat the earlier replacement.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_user_approval",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "blocked_duplicate_existing_bank",
-        "match": "batch 14, CSV row 38",
-        "reason": "Replacement asks for the definition/purpose of an elegy; existing question already tests that same concept."
+        "status": "revised_draft_needs_subject_and_bankwide_review",
+        "reason": "The earlier elegy-definition candidate was withdrawn because it duplicated batch 14 row 38. This candidate tests metre; compare carefully with the existing blank-verse question during Literature review."
       }
     },
     {
@@ -222,11 +220,10 @@
       "provenance": null,
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_user_approval",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "blocked_duplicate_existing_bank",
-        "match": "batch 39, CSV row 17",
-        "reason": "Same acid-indicator inference: both identify an acidic solution from a red indicator result; only the indicator differs."
+        "status": "revised_draft_needs_subject_and_bankwide_review",
+        "reason": "The earlier methyl-orange acidity candidate was withdrawn because the bank already tests acid identification with blue litmus. This natural-gas composition question tests a different Chemistry concept."
       }
     },
     {
@@ -663,11 +660,10 @@
       "provenance": "Batch 26 candid item was introduced by prior replacement commit a08692d851750c09fe0e8358eedd906162ffaaa5; corrective overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_user_approval",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "blocked_duplicate_existing_bank",
-        "match": "batch 5, CSV row 4",
-        "reason": "Replacement tests the meaning of meticulous; existing vocabulary question tests the same word."
+        "status": "revised_draft_needs_subject_and_bankwide_review",
+        "reason": "The earlier meticulous-definition candidate was withdrawn because it duplicated batch 5 row 4. This specialised-vocabulary item is distinct from the existing etymologist question; full-bank screen rerun."
       }
     },
     {
@@ -704,11 +700,10 @@
       "provenance": null,
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_user_approval",
+      "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "blocked_duplicate_existing_bank",
-        "match": "batch 6, CSV row 40",
-        "reason": "Replacement asks for euphemism using 'passed away'; existing item already tests the definition of euphemism."
+        "status": "revised_draft_needs_subject_and_bankwide_review",
+        "reason": "The earlier euphemism candidate was withdrawn because it duplicated batch 6 row 40. This candidate tests a distinct dramatic genre."
       }
     },
     {
