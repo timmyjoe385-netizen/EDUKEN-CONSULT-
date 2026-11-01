@@ -2,7 +2,70 @@
   "audit_date": "2026-11-01",
   "within_window_screen": {
     "candidate_pairs": 390,
-    "high_priority_candidates_reviewed": 13
+    "high_priority_candidates_reviewed": 13,
+    "reviewed_pairs": 13,
+    "confirmed_duplicate_pairs": [
+      {
+        "a": "batch 21 row 14",
+        "b": "batch 27 row 14",
+        "subject": "Biology",
+        "concept": "Bacterial reproduction by binary fission",
+        "retain": "batch 21 row 14",
+        "replace": "batch 27 row 14",
+        "reason": "Same process and answer; the stem and explanation test the same fact.",
+        "decision": "confirmed_semantic_duplicate",
+        "current_csv_checked": true,
+        "csv_changed_in_this_audit": false
+      },
+      {
+        "a": "batch 22 row 29",
+        "b": "batch 26 row 27",
+        "subject": "Economics",
+        "concept": "Regressive taxation",
+        "retain": "batch 22 row 29",
+        "replace": "batch 26 row 27",
+        "reason": "Same definition and same explanation.",
+        "decision": "confirmed_semantic_duplicate",
+        "current_csv_checked": true,
+        "csv_changed_in_this_audit": false
+      },
+      {
+        "a": "batch 25 row 23",
+        "b": "batch 29 row 23",
+        "subject": "Physics",
+        "concept": "Ammeter connected in series to measure current",
+        "retain": "batch 25 row 23",
+        "replace": "batch 29 row 23",
+        "reason": "Both ask why an ammeter is connected in series and identify current measurement.",
+        "decision": "confirmed_semantic_duplicate",
+        "current_csv_checked": true,
+        "csv_changed_in_this_audit": false
+      },
+      {
+        "a": "batch 27 row 11",
+        "b": "batch 28 row 10",
+        "subject": "Mathematics",
+        "concept": "Inverse variation with identical values x=4, y=6 and x=8",
+        "retain": "batch 27 row 11",
+        "replace": "batch 28 row 10",
+        "reason": "Same values, same calculation and same answer.",
+        "decision": "confirmed_semantic_duplicate",
+        "current_csv_checked": true,
+        "csv_changed_in_this_audit": false
+      },
+      {
+        "a": "batch 32 row 34",
+        "b": "batch 33 row 35",
+        "subject": "Government",
+        "concept": "Constitutional division of powers in a federation",
+        "retain": "batch 32 row 34",
+        "replace": "batch 33 row 35",
+        "reason": "Same concept and same answer; only stem wording differs.",
+        "decision": "confirmed_semantic_duplicate",
+        "current_csv_checked": true,
+        "csv_changed_in_this_audit": false
+      }
+    ]
   },
   "decisions": [
     {
@@ -101,6 +164,7 @@
     "This is a high-priority subset, not the complete 390-pair manual review.",
     "The 4-line and 8-line stanza pair must not be removed; they test different stanza forms.",
     "Vocabulary questions share a common instruction template but test distinct lexical knowledge.",
-    "No CSV changes made."
+    "No CSV changes made.",
+    "The five previously reported within-window duplicate pairs were re-opened against the current CSVs and all five are still present at the listed locations. The 13-pair high-priority shortlist was also reviewed: one additional pair is confirmed (inverse variation), the four-line vs eight-line stanza pair is preserved, and the remaining different vocabulary/phonology items are preserved. The two momentum questions are the same numerical skill with different values and are flagged as template repetition, not an exact duplicate."
   ]
 }
