@@ -26,21 +26,21 @@
     {
       "target_id": "DUP-02",
       "subject": "Chemistry",
-      "topic": "Organic chemistry",
-      "subtopic": "Esterification",
-      "question": "When ethanol reacts with ethanoic acid in the presence of concentrated sulphuric acid, the organic product formed is:",
+      "topic": "Electrochemistry",
+      "subtopic": "Salt bridge",
+      "question": "In a simple galvanic cell, the main function of the salt bridge is to:",
       "options": [
-        "ethene",
-        "ethyl ethanoate",
-        "ethanal",
-        "methane"
+        "Supply electrons to the cathode",
+        "Maintain electrical neutrality by allowing ions to migrate",
+        "Increase the temperature of the electrolyte",
+        "Prevent the redox reaction from occurring"
       ],
       "answer": "B",
-      "explanation": "Ethanol reacts with ethanoic acid in an esterification reaction to form the ester ethyl ethanoate and water.",
+      "explanation": "Ions migrate through the salt bridge to prevent charge build-up in the half-cells and maintain electrical neutrality, allowing the cell to continue operating.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "blocked_duplicate_existing_bank",
-      "review_note": "The draft tests ethanol plus ethanoic acid esterification; the existing question tests alcohol plus carboxylic acid esterification products (ester and water). Same reaction family and learning objective. Existing match: batch 38, CSV row 20: “The reaction between an alcohol and a carboxylic acid can produce an ester and”. Do not insert; replace with a distinct syllabus learning objective and rerun full-bank contextual screening."
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The earlier esterification candidate was withdrawn because it duplicated batch 38 row 20. This salt-bridge candidate tests a different electrochemical-cell function and has been re-screened against all 1,600 source questions."
     },
     {
       "target_id": "DUP-03",
@@ -81,21 +81,21 @@
     {
       "target_id": "DUP-05",
       "subject": "Literature in English",
-      "topic": "Literary forms",
-      "subtopic": "Elegy",
-      "question": "A poem written to mourn the death of a person is known as an:",
+      "topic": "Poetry",
+      "subtopic": "Iambic pentameter",
+      "question": "A line of verse made up of five iambic feet is said to be written in:",
       "options": [
-        "ode",
-        "elegy",
-        "epic",
-        "ballad"
+        "Iambic tetrameter",
+        "Iambic pentameter",
+        "Trochaic trimeter",
+        "Dactylic hexameter"
       ],
       "answer": "B",
-      "explanation": "An elegy is a poem that expresses sorrow or lamentation, commonly for someone who has died.",
-      "difficulty": "easy",
+      "explanation": "An iambic foot has an unstressed syllable followed by a stressed syllable. Five such feet form iambic pentameter.",
+      "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "blocked_duplicate_existing_bank",
-      "review_note": "Blocked on 2026-11-01: semantically duplicates the existing Literature in English item at batch 14, CSV row 38 (question: 'An elegy is a poem traditionally written to:'). Both ask for the definition/purpose of an elegy as a poem of mourning/death. Do not insert. Re-draft on a distinct syllabus subtopic and repeat the full-bank check."
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The earlier elegy-definition candidate was withdrawn because it duplicated batch 14 row 38. This candidate tests metre; compare carefully with the existing blank-verse question during Literature review."
     },
     {
       "target_id": "DUP-06",
@@ -136,21 +136,21 @@
     {
       "target_id": "DUP-08",
       "subject": "Chemistry",
-      "topic": "Acids and bases",
-      "subtopic": "Acid-base indicators",
-      "question": "A few drops of methyl orange turn red when added to an unknown solution. The solution is most likely: ",
+      "topic": "Organic chemistry",
+      "subtopic": "Natural gas",
+      "question": "The principal constituent of most natural gas is:",
       "options": [
-        "alkaline",
-        "neutral",
-        "acidic",
-        "a pure metal"
+        "Ethene",
+        "Methane",
+        "Carbon monoxide",
+        "Sulfur dioxide"
       ],
-      "answer": "C",
-      "explanation": "Methyl orange is red in acidic solution and yellow in alkaline solution.",
+      "answer": "B",
+      "explanation": "Natural gas consists mainly of methane, although its exact composition varies by source and it may contain smaller amounts of other hydrocarbons and gases.",
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
-      "status": "blocked_duplicate_existing_bank",
-      "review_note": "The draft uses methyl orange turning red to identify an acidic solution; the existing item uses blue litmus turning red to identify an acidic solution. Both test the same acid-indicator inference. Existing match: batch 39, CSV row 17: “A solution that turns blue litmus paper red is likely to be”. Do not insert; replace with a distinct syllabus learning objective and rerun full-bank contextual screening."
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The earlier methyl-orange acidity candidate was withdrawn because the bank already tests acid identification with blue litmus. This natural-gas composition question tests a different Chemistry concept."
     },
     {
       "target_id": "DUP-09",
@@ -534,20 +534,20 @@
       "target_id": "DUP-30",
       "subject": "Use of English",
       "topic": "Vocabulary",
-      "subtopic": "Word meaning",
-      "question": "In the sentence “The engineer was meticulous in checking every measurement,” meticulous means:",
+      "subtopic": "Specialised vocabulary",
+      "question": "A person whose profession involves compiling dictionaries is called a:",
       "options": [
-        "careless",
-        "thorough and attentive to detail",
-        "impatient",
-        "uncertain"
+        "Lexicographer",
+        "Biographer",
+        "Cartographer",
+        "Choreographer"
       ],
-      "answer": "B",
-      "explanation": "Meticulous means extremely careful and precise, especially about details.",
+      "answer": "A",
+      "explanation": "A lexicographer is a person who compiles, edits or writes dictionaries.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "blocked_duplicate_existing_bank",
-      "review_note": "Confirmed semantic duplicate. Both items test the meaning of the same vocabulary word, meticulous; adding a sentence context does not make it a distinct question-bank concept. Existing match: batch 5, CSV row 4. Do not insert; re-draft and repeat full-bank screening."
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The earlier meticulous-definition candidate was withdrawn because it duplicated batch 5 row 4. This specialised-vocabulary item is distinct from the existing etymologist question; full-bank screen rerun."
     },
     {
       "target_id": "DUP-31",
@@ -570,21 +570,21 @@
     {
       "target_id": "DUP-32",
       "subject": "Literature in English",
-      "topic": "Literary devices",
-      "subtopic": "Euphemism",
-      "question": "The expression “passed away” is commonly used instead of “died”. This is an example of:",
+      "topic": "Drama",
+      "subtopic": "Comedy of manners",
+      "question": "A comedy that satirises the manners, social conventions and behaviour of a particular social class is called a:",
       "options": [
-        "euphemism",
-        "paradox",
-        "alliteration",
-        "pun"
+        "Comedy of manners",
+        "Tragedy",
+        "Pastoral elegy",
+        "Epic"
       ],
       "answer": "A",
-      "explanation": "A euphemism is a mild or indirect expression used in place of one considered harsh or unpleasant.",
-      "difficulty": "easy",
+      "explanation": "Comedy of manners uses wit, irony and satire to expose the artificial behaviour and social conventions of a particular class or society.",
+      "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "blocked_duplicate_existing_bank",
-      "review_note": "Confirmed semantic duplicate. Both items test euphemism: a mild expression substituted for a harsh/direct expression. The example “passed away” is simply an instance of the same concept. Existing match: batch 6, CSV row 40. Do not insert; re-draft and repeat full-bank screening."
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The earlier euphemism candidate was withdrawn because it duplicated batch 6 row 40. This candidate tests a distinct dramatic genre."
     },
     {
       "target_id": "DUP-33",
@@ -1648,7 +1648,7 @@
       "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "All DUP-01 to DUP-90 target IDs have draft records. DUP-84's earlier pulmonary-vein proposal was withdrawn as a semantic duplicate of batch 21 row 12 and replaced with a DNA-ligase question, re-screened against the complete bank and draft set. Draft coverage is not approval for insertion.",
+  "revision_note": "Five formerly blocked candidate drafts (DUP-02, 05, 08, 30 and 32) were withdrawn and replaced with distinct proposals after confirming their earlier semantic overlap. The replacement proposals are screened against the complete 1,600-row bank and the existing draft set; they remain pending independent subject review.",
   "confirmed_duplicate_targets": 90,
   "drafts_missing": 0,
   "drafts_missing_target_ids": []
