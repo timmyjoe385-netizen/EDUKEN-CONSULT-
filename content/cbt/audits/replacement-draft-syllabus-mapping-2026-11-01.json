@@ -18,9 +18,10 @@
     "replacement_drafts": 90,
     "drafts_missing": 0,
     "provisionally_aligned": 26,
-    "subject_review_required": 59,
-    "blocked_existing_bank_overlap": 5,
-    "inserted_into_question_csvs": 0
+    "subject_review_required": 64,
+    "blocked_existing_bank_overlap": 0,
+    "inserted_into_question_csvs": 0,
+    "rejected_prior_candidates": 5
   },
   "items": [
     {
@@ -35,11 +36,12 @@
     {
       "target_id": "DUP-02",
       "subject": "Chemistry",
-      "syllabus_area": "Organic chemistry — alkanoic acids and esterification",
-      "rationale": "The replacement asks for ethanol + ethanoic acid esterification products; batch 38 row 20 already tests alcohol + carboxylic acid producing an ester and water.",
-      "match_type": "explicit",
+      "syllabus_area": "Electrochemistry — Salt bridge",
+      "rationale": "The replacement tests salt bridge within Chemistry; confirm the exact depth and objective against the current IBASS syllabus.",
+      "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
-      "status": "blocked_existing_bank_overlap"
+      "status": "subject_review_required",
+      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-03",
@@ -62,11 +64,12 @@
     {
       "target_id": "DUP-05",
       "subject": "Literature in English",
-      "syllabus_area": "Poetry — types of poetry (elegy)",
-      "rationale": "Not cleared for insertion: the mapped elegy replacement draft duplicates the concept already tested by batch 14, row 38 ('An elegy is a poem traditionally written to:').",
-      "match_type": "explicit",
+      "syllabus_area": "Poetry — Iambic pentameter",
+      "rationale": "The replacement tests iambic pentameter within Literature in English; confirm the exact depth and objective against the current IBASS syllabus.",
+      "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
-      "status": "blocked_existing_bank_overlap"
+      "status": "subject_review_required",
+      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-06",
@@ -91,11 +94,12 @@
     {
       "target_id": "DUP-08",
       "subject": "Chemistry",
-      "syllabus_area": "Acids, bases and salts — indicators",
-      "rationale": "The replacement uses methyl orange to identify acid by red colour; batch 39 row 17 already tests identifying an acidic solution from blue litmus turning red.",
-      "match_type": "explicit",
+      "syllabus_area": "Organic chemistry — Natural gas",
+      "rationale": "The replacement tests natural gas within Chemistry; confirm the exact depth and objective against the current IBASS syllabus.",
+      "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
-      "status": "blocked_existing_bank_overlap"
+      "status": "subject_review_required",
+      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-09",
@@ -302,11 +306,12 @@
     {
       "target_id": "DUP-30",
       "subject": "Use of English",
-      "syllabus_area": "Lexis and structure — synonyms and word meaning",
-      "rationale": "Confirmed semantic duplicate. Both items test the meaning of the same vocabulary word, meticulous; adding a sentence context does not make it a distinct question-bank concept.",
-      "match_type": "explicit",
+      "syllabus_area": "Vocabulary — Specialised vocabulary",
+      "rationale": "The replacement tests specialised vocabulary within Use of English; confirm the exact depth and objective against the current IBASS syllabus.",
+      "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
-      "status": "blocked_existing_bank_overlap"
+      "status": "subject_review_required",
+      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-31",
@@ -320,11 +325,12 @@
     {
       "target_id": "DUP-32",
       "subject": "Literature in English",
-      "syllabus_area": "General literary principles — literary terms and figures of speech",
-      "rationale": "Confirmed semantic duplicate. Both items test euphemism: a mild expression substituted for a harsh/direct expression. The example “passed away” is simply an instance of the same concept.",
+      "syllabus_area": "Drama — Comedy of manners",
+      "rationale": "The replacement tests comedy of manners within Literature in English; confirm the exact depth and objective against the current IBASS syllabus.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
-      "status": "blocked_existing_bank_overlap"
+      "status": "subject_review_required",
+      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-33",
@@ -910,6 +916,6 @@
     }
   ],
   "release_gate": "26 drafts are provisionally mapped to JAMB IBASS topic/objective coverage, 7 remain held for subject review because their specific detail is not expressly named, and 5 remain blocked by confirmed overlap with the existing bank. These mapping statuses are not academic approval. Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, the 7 subject-review items are cleared or replaced, all 5 blocked items receive distinct replacements, and every draft passes contextual full-bank duplicate review. All questions remain draft until normal academic review and approval.",
-  "revision_note": "Updated to cover all 90 duplicate targets. DUP-48 to DUP-90 now have preliminary subject-topic mappings with official IBASS subject source URLs, but each is explicitly marked subject_review_required pending human confirmation of syllabus depth and wording. DUP-84 mapping reflects the revised DNA-ligase candidate. This is not JAMB syllabus sign-off.",
+  "revision_note": "All 90 target IDs have current draft candidates and preliminary syllabus mappings. Five earlier candidates (DUP-02, 05, 08, 30, 32) were withdrawn for semantic overlap and replaced with new proposals. Those five replacement mappings are now marked subject_review_required. Historical rejected candidates are documented in the draft revision notes; none is eligible for insertion.",
   "missing_draft_target_ids": []
 }
