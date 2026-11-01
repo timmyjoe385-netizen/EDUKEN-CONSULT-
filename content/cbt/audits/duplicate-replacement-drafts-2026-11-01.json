@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 49,
+  "draft_count": 51,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "Drafts are proposals only. Forty-seven proposals exist for 90 confirmed holdouts; forty-three holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
+  "important": "Drafts are proposals only. 51 proposals exist for 90 confirmed holdouts; 39 holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -893,14 +893,50 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "A retained-bank text scan found no use of 'tax incidence' or the same final-burden prompt. Full semantic screening and subject review remain required."
+    },
+    {
+      "target_id": "DUP-50",
+      "subject": "Biology",
+      "topic": "Genetics",
+      "subtopic": "ABO blood-group inheritance",
+      "question": "A man with blood group AB and a woman with blood group O have a child. Which blood group is NOT possible for the child?",
+      "options": [
+        "A",
+        "B",
+        "AB",
+        "O"
+      ],
+      "answer": "C",
+      "explanation": "The AB parent can pass either the Iᴬ or Iᴮ allele, while the O parent can pass only i. The possible genotypes are Iᴬi and Iᴮi, giving blood group A or B; AB is not possible.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "A retained-bank keyword scan found no 'ABO blood-group inheritance' or 'codominance' item. Full semantic screening and subject review remain required."
+    },
+    {
+      "target_id": "DUP-51",
+      "subject": "Physics",
+      "topic": "Waves",
+      "subtopic": "Resonance",
+      "question": "A system is said to be in resonance when the frequency of an applied periodic force is equal to its:",
+      "options": [
+        "amplitude",
+        "natural frequency",
+        "wavelength",
+        "wave speed"
+      ],
+      "answer": "B",
+      "explanation": "Resonance occurs when the driving frequency matches the natural frequency of a system, producing a large response under suitable conditions.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "A retained-bank keyword scan found no 'resonance frequency' item. Full semantic screening and subject review remain required."
     }
   ],
-  "revision_note": "Two additional original replacement drafts were added for DUP-48 and DUP-49 after a retained-bank text scan found no direct term/prompt match. They remain drafts pending contextual bank-wide similarity screening, subject review and answer validation. The remaining missing targets are DUP-50 through DUP-90.",
+  "revision_note": "Two original replacement proposals were added for DUP-50 and DUP-51. Keyword screening against the four retained staging CSVs found no direct match for ABO blood-group inheritance/codominance or resonance frequency. This is preliminary only; contextual similarity, syllabus, answer and explanation review remain outstanding.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 41,
+  "drafts_missing": 39,
   "drafts_missing_target_ids": [
-    "DUP-50",
-    "DUP-51",
     "DUP-52",
     "DUP-53",
     "DUP-54",
