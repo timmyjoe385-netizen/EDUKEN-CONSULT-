@@ -1,1 +1,695 @@
-{"audit_date":"2026-11-01","purpose":"Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.","draft_count":38,"source_register":"content/cbt/audits/duplicate-disposition-register-2026-11-01.json","important":"These are proposed replacements only. They have not been inserted into any original-batch CSV. Each must pass bank-wide similarity screening, answer validation and syllabus/topic review before insertion.","items":[{"target_id":"DUP-01","subject":"Mathematics","topic":"Geometry","subtopic":"Properties of rectangles","question":"Which statement about the diagonals of a rectangle is correct?","options":["They are unequal and do not bisect each other","They are equal in length and bisect each other","They are perpendicular in every rectangle","They are parallel to the shorter sides"],"answer":"B","explanation":"The diagonals of a rectangle are equal in length and bisect one another.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-02","subject":"Chemistry","topic":"Organic chemistry","subtopic":"Esterification","question":"When ethanol reacts with ethanoic acid in the presence of concentrated sulphuric acid, the organic product formed is:","options":["ethene","ethyl ethanoate","ethanal","methane"],"answer":"B","explanation":"Ethanol reacts with ethanoic acid in an esterification reaction to form the ester ethyl ethanoate and water.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-03","subject":"Physics","topic":"Electricity","subtopic":"Alternating current","question":"An electric current that repeatedly changes direction at regular intervals is called:","options":["direct current","alternating current","static charge","induced resistance"],"answer":"B","explanation":"Alternating current periodically reverses direction, unlike direct current, which flows in one direction.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-04","subject":"Biology","topic":"Genetics","subtopic":"Alleles and inheritance","question":"An allele that is expressed in the phenotype of a heterozygous organism is described as:","options":["recessive","dominant","mutant only","incomplete"],"answer":"B","explanation":"A dominant allele is expressed in the phenotype when present in a heterozygous pair.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-05","subject":"Literature in English","topic":"Literary forms","subtopic":"Elegy","question":"A poem written to mourn the death of a person is known as an:","options":["ode","elegy","epic","ballad"],"answer":"B","explanation":"An elegy is a poem that expresses sorrow or lamentation, commonly for someone who has died.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-06","subject":"Biology","topic":"Reproduction","subtopic":"Seed dispersal","question":"The presence of hooks or barbs on the surface of some fruits helps in:","options":["dispersal by wind","dispersal by water","dispersal by attaching to animals","self-pollination"],"answer":"C","explanation":"Hooks and barbs can cling to animal fur or clothing, carrying the fruit or seeds away from the parent plant.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-07","subject":"Physics","topic":"Heat","subtopic":"Heat transfer by radiation","question":"Which method of heat transfer can occur through a vacuum?","options":["conduction","convection","radiation","evaporation"],"answer":"C","explanation":"Radiation transfers energy by electromagnetic waves and does not require a material medium.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-08","subject":"Chemistry","topic":"Acids and bases","subtopic":"Acid-base indicators","question":"A few drops of methyl orange turn red when added to an unknown solution. The solution is most likely: ","options":["alkaline","neutral","acidic","a pure metal"],"answer":"C","explanation":"Methyl orange is red in acidic solution and yellow in alkaline solution.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-09","subject":"Chemistry","topic":"Electrochemistry","subtopic":"Electrolysis of water","question":"A small amount of dilute sulphuric acid is added to water before electrolysis mainly to: ","options":["increase the electrical conductivity","remove all dissolved ions","produce chlorine gas","prevent the electrodes from conducting"],"answer":"A","explanation":"Pure water conducts electricity poorly. The acid supplies ions and increases conductivity.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-10","subject":"Economics","topic":"Inflation","subtopic":"Deflation","question":"A continuous fall in the general price level of goods and services in an economy is known as:","options":["inflation","deflation","devaluation","stagflation"],"answer":"B","explanation":"Deflation is a sustained decrease in the general price level, meaning the purchasing power of money rises.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-11","subject":"Physics","topic":"Optics","subtopic":"Thin lenses","question":"A ray of light directed through the optical centre of a thin lens emerges:","options":["parallel to the principal axis in every case","without deviation","through the principal focus","perpendicular to the principal axis"],"answer":"B","explanation":"A paraxial ray passing through the optical centre of a thin lens is transmitted without appreciable deviation.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-12","subject":"Economics","topic":"Macroeconomics","subtopic":"Per capita income","question":"A country has a national income of ₦900 billion and a population of 30 million. What is its per capita income?","options":["₦3,000","₦30,000","₦300,000","₦3,000,000"],"answer":"B","explanation":"Per capita income = national income ÷ population = ₦900,000,000,000 ÷ 30,000,000 = ₦30,000.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-13","subject":"Chemistry","topic":"Organic chemistry","subtopic":"Substitution reactions of alkanes","question":"The reaction between methane and chlorine in ultraviolet light is classified as: ","options":["addition","substitution","neutralisation","polymerisation"],"answer":"B","explanation":"Ultraviolet light initiates free-radical substitution, replacing a hydrogen atom in methane with chlorine.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-14","subject":"Biology","topic":"Cell biology","subtopic":"Prokaryotic cells","question":"A cell that lacks a membrane-bound nucleus is classified as:","options":["eukaryotic","prokaryotic","multicellular","specialised"],"answer":"B","explanation":"Prokaryotic cells do not have a membrane-bound nucleus; their genetic material is located in a nucleoid region.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-15","subject":"Economics","topic":"Public finance","subtopic":"Recurrent expenditure","question":"Government payment of monthly salaries to public school teachers is generally classified as:","options":["capital expenditure","recurrent expenditure","public debt repayment only","foreign investment"],"answer":"B","explanation":"Recurrent expenditure covers regular operating costs such as salaries, utilities and routine administration.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-16","subject":"Chemistry","topic":"Separation techniques","subtopic":"Separating immiscible liquids","question":"Which apparatus is most suitable for separating two immiscible liquids such as kerosene and water?","options":["Burette","Separating funnel","Evaporating dish","Condenser"],"answer":"B","explanation":"A separating funnel allows the immiscible liquids to form separate layers and be drained off individually.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-17","subject":"Biology","topic":"Plant physiology","subtopic":"Plant hormones","question":"Which plant hormone is chiefly associated with promoting cell elongation in shoots? ","options":["auxin","insulin","adrenaline","glucagon"],"answer":"A","explanation":"Auxins promote cell elongation in shoots and are involved in tropic growth responses.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-18","subject":"Physics","topic":"Optics","subtopic":"Law of reflection","question":"A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection? ","options":["25°","35°","55°","70°"],"answer":"B","explanation":"The law of reflection states that the angle of reflection equals the angle of incidence, measured from the normal.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-19","subject":"Economics","topic":"International trade","subtopic":"Customs unions","question":"A customs union is a trade arrangement in which member countries: ","options":["apply a common external tariff to non-members","ban all trade among themselves","use different external tariffs for every non-member","abolish all domestic taxes"],"answer":"A","explanation":"A customs union removes or reduces trade barriers among members and adopts a common external tariff toward non-members.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-20","subject":"Economics","topic":"Money and banking","subtopic":"Commercial banking","question":"When a commercial bank grants a loan to a customer, it primarily creates:","options":["a new tax liability","a deposit balance in the borrower's account","new currency notes issued by the central bank","a government budget surplus"],"answer":"B","explanation":"When a bank makes a loan, it normally credits the borrower's deposit account, creating a corresponding bank deposit and loan asset.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-21","subject":"Literature in English","topic":"Narrative structure","subtopic":"Flashback","question":"A narrative technique that interrupts the present action to show an event from an earlier time is called:","options":["foreshadowing","flashback","climax","denouement"],"answer":"B","explanation":"A flashback takes the reader or audience back to an earlier event to provide background or context.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-22","subject":"Biology","topic":"Human physiology","subtopic":"Blood plasma","question":"Which component of blood transports many dissolved nutrients, hormones and waste products? ","options":["platelets","plasma","red blood cells","lymphocytes"],"answer":"B","explanation":"Plasma is the liquid component of blood and carries dissolved substances, including nutrients, hormones and wastes.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-23","subject":"Economics","topic":"International trade","subtopic":"Foreign direct investment","question":"A foreign company establishes and operates a manufacturing plant in Nigeria. This is an example of:","options":["foreign direct investment","an import quota","a trade embargo","a balance-of-trade deficit"],"answer":"A","explanation":"Foreign direct investment involves an investor from another country establishing or acquiring a lasting business interest in the host country.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-24","subject":"Biology","topic":"Microbiology","subtopic":"Bacterial structure","question":"The rigid cell wall of most bacteria is made mainly of:","options":["cellulose","chitin","peptidoglycan","starch"],"answer":"C","explanation":"Most bacterial cell walls contain peptidoglycan, which helps maintain cell shape and resist osmotic pressure.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-25","subject":"Economics","topic":"Public finance","subtopic":"Tax avoidance and evasion","question":"Knowingly concealing taxable income to avoid paying legally due tax is known as:","options":["tax evasion","tax incidence","tax shifting","public borrowing"],"answer":"A","explanation":"Tax evasion is the illegal concealment or misrepresentation of income or transactions to avoid tax liability.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-26","subject":"Physics","topic":"Electricity","subtopic":"Capacitance calculations","question":"A capacitor stores a charge of 24 μC when connected to a 6 V supply. What is its capacitance?","options":["2 μF","4 μF","6 μF","12 μF"],"answer":"B","explanation":"C = Q/V = 24 μC ÷ 6 V = 4 μF.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-27","subject":"Mathematics","topic":"Variation","subtopic":"Joint variation","question":"If z varies jointly as x and y, which equation represents the relationship?","options":["z = k(x + y)","z = kxy","z = k/x + y","z = kx/y²"],"answer":"B","explanation":"Joint variation means z is proportional to the product of x and y, so z = kxy.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-28","subject":"Government","topic":"Federalism","subtopic":"Exclusive legislative powers","question":"In Nigeria, which level of government has exclusive legislative authority over matters on the Exclusive Legislative List?","options":["Local government councils","State governments","The federal legislature","Traditional councils"],"answer":"C","explanation":"The National Assembly legislates on matters assigned to the Exclusive Legislative List by the Constitution.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-29","subject":"Use of English","topic":"Grammar","subtopic":"Prepositions","question":"The patient was deprived _____ sleep during the long journey. ","options":["from","of","with","by"],"answer":"B","explanation":"The correct expression is “deprived of” something.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-30","subject":"Use of English","topic":"Vocabulary","subtopic":"Word meaning","question":"In the sentence “The engineer was meticulous in checking every measurement,” meticulous means:","options":["careless","thorough and attentive to detail","impatient","uncertain"],"answer":"B","explanation":"Meticulous means extremely careful and precise, especially about details.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-31","subject":"Physics","topic":"Mechanics","subtopic":"Impulse and momentum","question":"A 0.2 kg ball moving at 10 m/s is brought to rest in 0.5 s. What is the magnitude of the average force applied?","options":["2 N","4 N","5 N","20 N"],"answer":"B","explanation":"Average force equals change in momentum divided by time: F = (0.2 × 10) ÷ 0.5 = 4 N.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-32","subject":"Literature in English","topic":"Literary devices","subtopic":"Euphemism","question":"The expression “passed away” is commonly used instead of “died”. This is an example of:","options":["euphemism","paradox","alliteration","pun"],"answer":"A","explanation":"A euphemism is a mild or indirect expression used in place of one considered harsh or unpleasant.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-33","subject":"Use of English","topic":"Grammar","subtopic":"Relative pronouns","question":"In the sentence “The girl whose bag was missing reported the matter,” the word “whose” expresses:","options":["time","possession","place","comparison"],"answer":"B","explanation":"“Whose” is a possessive relative pronoun; it shows that the missing bag belongs to the girl.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-34","subject":"Use of English","topic":"Grammar","subtopic":"Concord","question":"Choose the correct verb: “The cattle _____ grazing near the river.”","options":["is","was","are","has"],"answer":"C","explanation":"“Cattle” is a plural noun and takes a plural verb: “are.”","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-35","subject":"Literature in English","topic":"Literary criticism","subtopic":"Epigraph","question":"A short quotation placed at the beginning of a book or chapter to suggest its theme is called an:","options":["epigraph","epilogue","aside","prologue"],"answer":"A","explanation":"An epigraph is a quotation or brief statement placed at the beginning of a literary work or section, often to introduce its theme.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-36","subject":"Government","topic":"Political parties","subtopic":"Party organisation","question":"The document that formally sets out the rules and internal structure of a political party is its:","options":["party constitution","national budget","electoral register","standing orders of the courts"],"answer":"A","explanation":"A party constitution sets out the organisation, membership rules, offices and procedures of the political party.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-37","subject":"Government","topic":"Legislature","subtopic":"Private members' bills","question":"A private member's bill is generally introduced by: ","options":["a legislator who is not acting as a government minister","the Chief Justice","the national electoral commission","a local government chairman"],"answer":"A","explanation":"A private member's bill is introduced by a legislator who is not introducing it on behalf of the executive government.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"},{"target_id":"DUP-38","subject":"Biology","topic":"Disease","subtopic":"Immunity","question":"A baby may receive temporary passive immunity when antibodies are transferred from its mother through:","options":["the placenta","the pancreas","the kidney","the bone marrow"],"answer":"A","explanation":"Maternal antibodies, especially IgG, cross the placenta and provide the newborn with temporary passive protection.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"revised_draft_needs_bank_wide_check"}],"revision_note":"Revised the first draft after initial 400-question similarity samples revealed several overly similar or existing-question matches. All 38 drafts remain proposals and have not been inserted into batch CSVs. Further revisions remove additional high-similarity matches discovered in subsequent 400-question windows. A further pass revised questions with close matches to existing bank items, including duplicate stems, repeated definitions and overly similar templates. Replaced additional drafts that matched existing bank questions on test crosses, ovule-to-seed development, thermal expansion, price ceilings, satire, party whips and similar question patterns. Revised additional items where first-pass comparisons exposed close existing stems or the same tested concept, including ethene reactions, genotype definitions, thermal-expansion examples, cell-biology facts, central-bank functions and mechanics calculations. A further review revised eleven candidates whose first wording overlapped too closely with existing bank concepts or phrasing. All 38 drafts are now explicitly marked as uninserted proposals awaiting the refreshed full-bank screen and answer/syllabus validation. Six further revisions were made to remove same-concept flags (polymerisation, irony, induction, elasticity, chromatography and gravitational energy). Three further drafts were revised after the focused re-screen identified close existing matches (antagonist definition, transformer principle and price ceiling). The three remaining candidates were moved away from repeatedly matching question-bank concepts (characterisation, Newton's second law and consumer surplus). Two further drafts were changed after manual contextual review identified an exact soliloquy overlap and an overly close pair of alkene-reaction items. The soliloquy/hamartia draft concepts matched existing questions; the final DUP-35 proposal tests stage directions instead. The stage-directions wording also matched an existing item, so DUP-35 now tests the distinct limerick form. The limerick proposal matched an existing poetic-form question; DUP-35 is now a distinct terminology item about the author of a play. The playwright wording was also an exact existing question; the latest DUP-35 draft tests catharsis. The catharsis wording overlapped an existing question; the latest DUP-35 draft now tests the dramatic prologue. The prologue wording duplicated an existing batch question; the latest DUP-35 proposal now tests epigraph."}
+{
+  "audit_date": "2026-11-01",
+  "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
+  "draft_count": 38,
+  "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
+  "important": "These are proposed replacements only. They have not been inserted into any original-batch CSV. Each must pass bank-wide similarity screening, answer validation and syllabus/topic review before insertion.",
+  "items": [
+    {
+      "target_id": "DUP-01",
+      "subject": "Mathematics",
+      "topic": "Geometry",
+      "subtopic": "Properties of rectangles",
+      "question": "Which statement about the diagonals of a rectangle is correct?",
+      "options": [
+        "They are unequal and do not bisect each other",
+        "They are equal in length and bisect each other",
+        "They are perpendicular in every rectangle",
+        "They are parallel to the shorter sides"
+      ],
+      "answer": "B",
+      "explanation": "The diagonals of a rectangle are equal in length and bisect one another.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-02",
+      "subject": "Chemistry",
+      "topic": "Organic chemistry",
+      "subtopic": "Esterification",
+      "question": "When ethanol reacts with ethanoic acid in the presence of concentrated sulphuric acid, the organic product formed is:",
+      "options": [
+        "ethene",
+        "ethyl ethanoate",
+        "ethanal",
+        "methane"
+      ],
+      "answer": "B",
+      "explanation": "Ethanol reacts with ethanoic acid in an esterification reaction to form the ester ethyl ethanoate and water.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-03",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "subtopic": "Alternating current",
+      "question": "An electric current that repeatedly changes direction at regular intervals is called:",
+      "options": [
+        "direct current",
+        "alternating current",
+        "static charge",
+        "induced resistance"
+      ],
+      "answer": "B",
+      "explanation": "Alternating current periodically reverses direction, unlike direct current, which flows in one direction.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-04",
+      "subject": "Biology",
+      "topic": "Genetics",
+      "subtopic": "Alleles and inheritance",
+      "question": "An allele that is expressed in the phenotype of a heterozygous organism is described as:",
+      "options": [
+        "recessive",
+        "dominant",
+        "mutant only",
+        "incomplete"
+      ],
+      "answer": "B",
+      "explanation": "A dominant allele is expressed in the phenotype when present in a heterozygous pair.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-05",
+      "subject": "Literature in English",
+      "topic": "Literary forms",
+      "subtopic": "Elegy",
+      "question": "A poem written to mourn the death of a person is known as an:",
+      "options": [
+        "ode",
+        "elegy",
+        "epic",
+        "ballad"
+      ],
+      "answer": "B",
+      "explanation": "An elegy is a poem that expresses sorrow or lamentation, commonly for someone who has died.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "blocked_duplicate_existing_bank",
+      "review_note": "Blocked on 2026-11-01: semantically duplicates the existing Literature in English item at batch 14, CSV row 38 (question: 'An elegy is a poem traditionally written to:'). Both ask for the definition/purpose of an elegy as a poem of mourning/death. Do not insert. Re-draft on a distinct syllabus subtopic and repeat the full-bank check."
+    },
+    {
+      "target_id": "DUP-06",
+      "subject": "Biology",
+      "topic": "Reproduction",
+      "subtopic": "Seed dispersal",
+      "question": "The presence of hooks or barbs on the surface of some fruits helps in:",
+      "options": [
+        "dispersal by wind",
+        "dispersal by water",
+        "dispersal by attaching to animals",
+        "self-pollination"
+      ],
+      "answer": "C",
+      "explanation": "Hooks and barbs can cling to animal fur or clothing, carrying the fruit or seeds away from the parent plant.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-07",
+      "subject": "Physics",
+      "topic": "Heat",
+      "subtopic": "Heat transfer by radiation",
+      "question": "Which method of heat transfer can occur through a vacuum?",
+      "options": [
+        "conduction",
+        "convection",
+        "radiation",
+        "evaporation"
+      ],
+      "answer": "C",
+      "explanation": "Radiation transfers energy by electromagnetic waves and does not require a material medium.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-08",
+      "subject": "Chemistry",
+      "topic": "Acids and bases",
+      "subtopic": "Acid-base indicators",
+      "question": "A few drops of methyl orange turn red when added to an unknown solution. The solution is most likely: ",
+      "options": [
+        "alkaline",
+        "neutral",
+        "acidic",
+        "a pure metal"
+      ],
+      "answer": "C",
+      "explanation": "Methyl orange is red in acidic solution and yellow in alkaline solution.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-09",
+      "subject": "Chemistry",
+      "topic": "Electrochemistry",
+      "subtopic": "Electrolysis of water",
+      "question": "A small amount of dilute sulphuric acid is added to water before electrolysis mainly to: ",
+      "options": [
+        "increase the electrical conductivity",
+        "remove all dissolved ions",
+        "produce chlorine gas",
+        "prevent the electrodes from conducting"
+      ],
+      "answer": "A",
+      "explanation": "Pure water conducts electricity poorly. The acid supplies ions and increases conductivity.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-10",
+      "subject": "Economics",
+      "topic": "Inflation",
+      "subtopic": "Deflation",
+      "question": "A continuous fall in the general price level of goods and services in an economy is known as:",
+      "options": [
+        "inflation",
+        "deflation",
+        "devaluation",
+        "stagflation"
+      ],
+      "answer": "B",
+      "explanation": "Deflation is a sustained decrease in the general price level, meaning the purchasing power of money rises.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-11",
+      "subject": "Physics",
+      "topic": "Optics",
+      "subtopic": "Thin lenses",
+      "question": "A ray of light directed through the optical centre of a thin lens emerges:",
+      "options": [
+        "parallel to the principal axis in every case",
+        "without deviation",
+        "through the principal focus",
+        "perpendicular to the principal axis"
+      ],
+      "answer": "B",
+      "explanation": "A paraxial ray passing through the optical centre of a thin lens is transmitted without appreciable deviation.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-12",
+      "subject": "Economics",
+      "topic": "Macroeconomics",
+      "subtopic": "Per capita income",
+      "question": "A country has a national income of ₦900 billion and a population of 30 million. What is its per capita income?",
+      "options": [
+        "₦3,000",
+        "₦30,000",
+        "₦300,000",
+        "₦3,000,000"
+      ],
+      "answer": "B",
+      "explanation": "Per capita income = national income ÷ population = ₦900,000,000,000 ÷ 30,000,000 = ₦30,000.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-13",
+      "subject": "Chemistry",
+      "topic": "Organic chemistry",
+      "subtopic": "Substitution reactions of alkanes",
+      "question": "The reaction between methane and chlorine in ultraviolet light is classified as: ",
+      "options": [
+        "addition",
+        "substitution",
+        "neutralisation",
+        "polymerisation"
+      ],
+      "answer": "B",
+      "explanation": "Ultraviolet light initiates free-radical substitution, replacing a hydrogen atom in methane with chlorine.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-14",
+      "subject": "Biology",
+      "topic": "Cell biology",
+      "subtopic": "Prokaryotic cells",
+      "question": "A cell that lacks a membrane-bound nucleus is classified as:",
+      "options": [
+        "eukaryotic",
+        "prokaryotic",
+        "multicellular",
+        "specialised"
+      ],
+      "answer": "B",
+      "explanation": "Prokaryotic cells do not have a membrane-bound nucleus; their genetic material is located in a nucleoid region.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-15",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "subtopic": "Recurrent expenditure",
+      "question": "Government payment of monthly salaries to public school teachers is generally classified as:",
+      "options": [
+        "capital expenditure",
+        "recurrent expenditure",
+        "public debt repayment only",
+        "foreign investment"
+      ],
+      "answer": "B",
+      "explanation": "Recurrent expenditure covers regular operating costs such as salaries, utilities and routine administration.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-16",
+      "subject": "Chemistry",
+      "topic": "Separation techniques",
+      "subtopic": "Separating immiscible liquids",
+      "question": "Which apparatus is most suitable for separating two immiscible liquids such as kerosene and water?",
+      "options": [
+        "Burette",
+        "Separating funnel",
+        "Evaporating dish",
+        "Condenser"
+      ],
+      "answer": "B",
+      "explanation": "A separating funnel allows the immiscible liquids to form separate layers and be drained off individually.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-17",
+      "subject": "Biology",
+      "topic": "Plant physiology",
+      "subtopic": "Plant hormones",
+      "question": "Which plant hormone is chiefly associated with promoting cell elongation in shoots? ",
+      "options": [
+        "auxin",
+        "insulin",
+        "adrenaline",
+        "glucagon"
+      ],
+      "answer": "A",
+      "explanation": "Auxins promote cell elongation in shoots and are involved in tropic growth responses.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-18",
+      "subject": "Physics",
+      "topic": "Optics",
+      "subtopic": "Law of reflection",
+      "question": "A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection? ",
+      "options": [
+        "25°",
+        "35°",
+        "55°",
+        "70°"
+      ],
+      "answer": "B",
+      "explanation": "The law of reflection states that the angle of reflection equals the angle of incidence, measured from the normal.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-19",
+      "subject": "Economics",
+      "topic": "International trade",
+      "subtopic": "Customs unions",
+      "question": "A customs union is a trade arrangement in which member countries: ",
+      "options": [
+        "apply a common external tariff to non-members",
+        "ban all trade among themselves",
+        "use different external tariffs for every non-member",
+        "abolish all domestic taxes"
+      ],
+      "answer": "A",
+      "explanation": "A customs union removes or reduces trade barriers among members and adopts a common external tariff toward non-members.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-20",
+      "subject": "Economics",
+      "topic": "Money and banking",
+      "subtopic": "Commercial banking",
+      "question": "When a commercial bank grants a loan to a customer, it primarily creates:",
+      "options": [
+        "a new tax liability",
+        "a deposit balance in the borrower's account",
+        "new currency notes issued by the central bank",
+        "a government budget surplus"
+      ],
+      "answer": "B",
+      "explanation": "When a bank makes a loan, it normally credits the borrower's deposit account, creating a corresponding bank deposit and loan asset.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-21",
+      "subject": "Literature in English",
+      "topic": "Narrative structure",
+      "subtopic": "Flashback",
+      "question": "A narrative technique that interrupts the present action to show an event from an earlier time is called:",
+      "options": [
+        "foreshadowing",
+        "flashback",
+        "climax",
+        "denouement"
+      ],
+      "answer": "B",
+      "explanation": "A flashback takes the reader or audience back to an earlier event to provide background or context.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-22",
+      "subject": "Biology",
+      "topic": "Human physiology",
+      "subtopic": "Blood plasma",
+      "question": "Which component of blood transports many dissolved nutrients, hormones and waste products? ",
+      "options": [
+        "platelets",
+        "plasma",
+        "red blood cells",
+        "lymphocytes"
+      ],
+      "answer": "B",
+      "explanation": "Plasma is the liquid component of blood and carries dissolved substances, including nutrients, hormones and wastes.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-23",
+      "subject": "Economics",
+      "topic": "International trade",
+      "subtopic": "Foreign direct investment",
+      "question": "A foreign company establishes and operates a manufacturing plant in Nigeria. This is an example of:",
+      "options": [
+        "foreign direct investment",
+        "an import quota",
+        "a trade embargo",
+        "a balance-of-trade deficit"
+      ],
+      "answer": "A",
+      "explanation": "Foreign direct investment involves an investor from another country establishing or acquiring a lasting business interest in the host country.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-24",
+      "subject": "Biology",
+      "topic": "Microbiology",
+      "subtopic": "Bacterial structure",
+      "question": "The rigid cell wall of most bacteria is made mainly of:",
+      "options": [
+        "cellulose",
+        "chitin",
+        "peptidoglycan",
+        "starch"
+      ],
+      "answer": "C",
+      "explanation": "Most bacterial cell walls contain peptidoglycan, which helps maintain cell shape and resist osmotic pressure.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-25",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "subtopic": "Tax avoidance and evasion",
+      "question": "Knowingly concealing taxable income to avoid paying legally due tax is known as:",
+      "options": [
+        "tax evasion",
+        "tax incidence",
+        "tax shifting",
+        "public borrowing"
+      ],
+      "answer": "A",
+      "explanation": "Tax evasion is the illegal concealment or misrepresentation of income or transactions to avoid tax liability.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-26",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "subtopic": "Capacitance calculations",
+      "question": "A capacitor stores a charge of 24 μC when connected to a 6 V supply. What is its capacitance?",
+      "options": [
+        "2 μF",
+        "4 μF",
+        "6 μF",
+        "12 μF"
+      ],
+      "answer": "B",
+      "explanation": "C = Q/V = 24 μC ÷ 6 V = 4 μF.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-27",
+      "subject": "Mathematics",
+      "topic": "Variation",
+      "subtopic": "Joint variation",
+      "question": "If z varies jointly as x and y, which equation represents the relationship?",
+      "options": [
+        "z = k(x + y)",
+        "z = kxy",
+        "z = k/x + y",
+        "z = kx/y²"
+      ],
+      "answer": "B",
+      "explanation": "Joint variation means z is proportional to the product of x and y, so z = kxy.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-28",
+      "subject": "Government",
+      "topic": "Federalism",
+      "subtopic": "Exclusive legislative powers",
+      "question": "In Nigeria, which level of government has exclusive legislative authority over matters on the Exclusive Legislative List?",
+      "options": [
+        "Local government councils",
+        "State governments",
+        "The federal legislature",
+        "Traditional councils"
+      ],
+      "answer": "C",
+      "explanation": "The National Assembly legislates on matters assigned to the Exclusive Legislative List by the Constitution.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-29",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Prepositions",
+      "question": "The patient was deprived _____ sleep during the long journey. ",
+      "options": [
+        "from",
+        "of",
+        "with",
+        "by"
+      ],
+      "answer": "B",
+      "explanation": "The correct expression is “deprived of” something.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-30",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Word meaning",
+      "question": "In the sentence “The engineer was meticulous in checking every measurement,” meticulous means:",
+      "options": [
+        "careless",
+        "thorough and attentive to detail",
+        "impatient",
+        "uncertain"
+      ],
+      "answer": "B",
+      "explanation": "Meticulous means extremely careful and precise, especially about details.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-31",
+      "subject": "Physics",
+      "topic": "Mechanics",
+      "subtopic": "Impulse and momentum",
+      "question": "A 0.2 kg ball moving at 10 m/s is brought to rest in 0.5 s. What is the magnitude of the average force applied?",
+      "options": [
+        "2 N",
+        "4 N",
+        "5 N",
+        "20 N"
+      ],
+      "answer": "B",
+      "explanation": "Average force equals change in momentum divided by time: F = (0.2 × 10) ÷ 0.5 = 4 N.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-32",
+      "subject": "Literature in English",
+      "topic": "Literary devices",
+      "subtopic": "Euphemism",
+      "question": "The expression “passed away” is commonly used instead of “died”. This is an example of:",
+      "options": [
+        "euphemism",
+        "paradox",
+        "alliteration",
+        "pun"
+      ],
+      "answer": "A",
+      "explanation": "A euphemism is a mild or indirect expression used in place of one considered harsh or unpleasant.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-33",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Relative pronouns",
+      "question": "In the sentence “The girl whose bag was missing reported the matter,” the word “whose” expresses:",
+      "options": [
+        "time",
+        "possession",
+        "place",
+        "comparison"
+      ],
+      "answer": "B",
+      "explanation": "“Whose” is a possessive relative pronoun; it shows that the missing bag belongs to the girl.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-34",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Concord",
+      "question": "Choose the correct verb: “The cattle _____ grazing near the river.”",
+      "options": [
+        "is",
+        "was",
+        "are",
+        "has"
+      ],
+      "answer": "C",
+      "explanation": "“Cattle” is a plural noun and takes a plural verb: “are.”",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-35",
+      "subject": "Literature in English",
+      "topic": "Literary criticism",
+      "subtopic": "Epigraph",
+      "question": "A short quotation placed at the beginning of a book or chapter to suggest its theme is called an:",
+      "options": [
+        "epigraph",
+        "epilogue",
+        "aside",
+        "prologue"
+      ],
+      "answer": "A",
+      "explanation": "An epigraph is a quotation or brief statement placed at the beginning of a literary work or section, often to introduce its theme.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-36",
+      "subject": "Government",
+      "topic": "Political parties",
+      "subtopic": "Party organisation",
+      "question": "The document that formally sets out the rules and internal structure of a political party is its:",
+      "options": [
+        "party constitution",
+        "national budget",
+        "electoral register",
+        "standing orders of the courts"
+      ],
+      "answer": "A",
+      "explanation": "A party constitution sets out the organisation, membership rules, offices and procedures of the political party.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-37",
+      "subject": "Government",
+      "topic": "Legislature",
+      "subtopic": "Private members' bills",
+      "question": "A private member's bill is generally introduced by: ",
+      "options": [
+        "a legislator who is not acting as a government minister",
+        "the Chief Justice",
+        "the national electoral commission",
+        "a local government chairman"
+      ],
+      "answer": "A",
+      "explanation": "A private member's bill is introduced by a legislator who is not introducing it on behalf of the executive government.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-38",
+      "subject": "Biology",
+      "topic": "Disease",
+      "subtopic": "Immunity",
+      "question": "A baby may receive temporary passive immunity when antibodies are transferred from its mother through:",
+      "options": [
+        "the placenta",
+        "the pancreas",
+        "the kidney",
+        "the bone marrow"
+      ],
+      "answer": "A",
+      "explanation": "Maternal antibodies, especially IgG, cross the placenta and provide the newborn with temporary passive protection.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "revised_draft_needs_bank_wide_check"
+    }
+  ],
+  "revision_note": "Revised the first draft after initial 400-question similarity samples revealed several overly similar or existing-question matches. All 38 drafts remain proposals and have not been inserted into batch CSVs. Further revisions remove additional high-similarity matches discovered in subsequent 400-question windows. A further pass revised questions with close matches to existing bank items, including duplicate stems, repeated definitions and overly similar templates. Replaced additional drafts that matched existing bank questions on test crosses, ovule-to-seed development, thermal expansion, price ceilings, satire, party whips and similar question patterns. Revised additional items where first-pass comparisons exposed close existing stems or the same tested concept, including ethene reactions, genotype definitions, thermal-expansion examples, cell-biology facts, central-bank functions and mechanics calculations. A further review revised eleven candidates whose first wording overlapped too closely with existing bank concepts or phrasing. All 38 drafts are now explicitly marked as uninserted proposals awaiting the refreshed full-bank screen and answer/syllabus validation. Six further revisions were made to remove same-concept flags (polymerisation, irony, induction, elasticity, chromatography and gravitational energy). Three further drafts were revised after the focused re-screen identified close existing matches (antagonist definition, transformer principle and price ceiling). The three remaining candidates were moved away from repeatedly matching question-bank concepts (characterisation, Newton's second law and consumer surplus). Two further drafts were changed after manual contextual review identified an exact soliloquy overlap and an overly close pair of alkene-reaction items. The soliloquy/hamartia draft concepts matched existing questions; the final DUP-35 proposal tests stage directions instead. The stage-directions wording also matched an existing item, so DUP-35 now tests the distinct limerick form. The limerick proposal matched an existing poetic-form question; DUP-35 is now a distinct terminology item about the author of a play. The playwright wording was also an exact existing question; the latest DUP-35 draft tests catharsis. The catharsis wording overlapped an existing question; the latest DUP-35 draft now tests the dramatic prologue. The prologue wording duplicated an existing batch question; the latest DUP-35 proposal now tests epigraph. DUP-05 was blocked after contextual review found a same-concept existing question in batch 14 row 38; it remains uninserted pending a genuinely distinct replacement."
+}
