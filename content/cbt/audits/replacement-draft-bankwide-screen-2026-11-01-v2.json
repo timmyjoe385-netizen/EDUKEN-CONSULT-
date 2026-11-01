@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 16,
+  "version": 17,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -11,8 +11,8 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 79,
-    "screened": 79,
+    "count": 85,
+    "screened": 85,
     "all_proposals_screened": true
   },
   "screening_summary": {
@@ -1856,6 +1856,144 @@
           "question": "A person who studies the origin and development of words is a(n) ___."
         }
       ]
+    },
+    {
+      "target_id": "DUP-68",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.2653,
+      "top_matches": [
+        {
+          "location": "batch 31 row 6",
+          "score": 0.2653,
+          "question": "Which syllable is stressed in the noun 'photograph'?"
+        },
+        {
+          "location": "batch 09 row 6",
+          "score": 0.2524,
+          "question": "In the noun “REcord” (a document), the primary stress falls on the:"
+        },
+        {
+          "location": "batch 26 row 6",
+          "score": 0.2342,
+          "question": "Which syllable carries the primary stress in the noun “photography”?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-82",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.413,
+      "top_matches": [
+        {
+          "location": "batch 35 row 30",
+          "score": 0.413,
+          "question": "The additional satisfaction from consuming one more unit of a good is called"
+        },
+        {
+          "location": "batch 08 row 31",
+          "score": 0.3713,
+          "question": "Marginal utility is the additional satisfaction obtained from:"
+        },
+        {
+          "location": "batch 33 row 27",
+          "score": 0.3543,
+          "question": "A consumer maximises utility under the equi-marginal principle when:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-83",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3514,
+      "top_matches": [
+        {
+          "location": "batch 11 row 38",
+          "score": 0.3514,
+          "question": "The voice speaking in a poem, which may be different from the poet, is called the:"
+        },
+        {
+          "location": "batch 34 row 39",
+          "score": 0.2483,
+          "question": "A narrator who uses 'I' to tell events in which they participate is using"
+        },
+        {
+          "location": "batch 13 row 37",
+          "score": 0.2431,
+          "question": "A character who undergoes a significant change in attitude, behaviour or outlook during a story is described as:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-85",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3723,
+      "top_matches": [
+        {
+          "location": "batch 29 row 41",
+          "score": 0.3723,
+          "question": "The complete written text of a play, including dialogue and performance instructions, is called the:"
+        },
+        {
+          "location": "batch 17 row 38",
+          "score": 0.3455,
+          "question": "The expression “That performance was not bad” uses understatement by negating the opposite. This figure is:"
+        },
+        {
+          "location": "batch 17 row 40",
+          "score": 0.3429,
+          "question": "The feeling of anxious anticipation about what may happen next in a play is known as:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-86",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3158,
+      "top_matches": [
+        {
+          "location": "batch 33 row 20",
+          "score": 0.3158,
+          "question": "The functional group characteristic of alcohols is"
+        },
+        {
+          "location": "batch 31 row 17",
+          "score": 0.2958,
+          "question": "When a lighted splint is brought near hydrogen gas, the gas produces a characteristic:"
+        },
+        {
+          "location": "batch 19 row 18",
+          "score": 0.2876,
+          "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-90",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3021,
+      "top_matches": [
+        {
+          "location": "batch 18 row 21",
+          "score": 0.3021,
+          "question": "During electrolysis of aqueous copper(II) sulfate using inert electrodes, which substance is deposited at the cathode?"
+        },
+        {
+          "location": "batch 08 row 19",
+          "score": 0.2985,
+          "question": "What is the oxidation number of sulfur in H₂SO₄?"
+        },
+        {
+          "location": "batch 19 row 18",
+          "score": 0.2599,
+          "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1869,5 +2007,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 16 adds DUP-84 and DUP-87. Both have same-subject lexical scores below 0.42 and remain draft-only pending independent review."
+  "revision_note": "Version 17 completes draft coverage for target IDs DUP-66 to DUP-90 by adding six screened candidates. Scores below 0.42 are lexical screens only. DUP-82 is flagged for close concept review against marginal-utility definition questions. No item is approved for insertion by this update."
 }
