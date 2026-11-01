@@ -233,19 +233,19 @@
   ],
   "replacement_status": {
     "confirmed_targets": 90,
-    "existing_draft_proposals": 49,
-    "additional_drafts_required": 41,
+    "existing_draft_proposals": 51,
+    "additional_drafts_required": 39,
     "blocked_existing_bank_overlap": 5,
     "provisional_syllabus_mapping": 26,
     "subject_review_required": 16,
     "drafts_inserted": 0,
-    "new_drafts_added_in_current_revision": 2,
-    "new_drafts_require_subject_and_bankwide_review": 2,
+    "new_drafts_added_in_current_revision": 4,
+    "new_drafts_require_subject_and_bankwide_review": 4,
     "proposal_status_counts": {
       "revised_draft_needs_bank_wide_check": 33,
       "blocked_duplicate_existing_bank": 5,
       "new_draft_pending_subject_review_and_bankwide_screen": 9,
-      "draft_needs_subject_and_bankwide_review": 2
+      "draft_needs_subject_and_bankwide_review": 4
     }
   },
   "source_files_modified": false,
@@ -256,10 +256,10 @@
     "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
     "The 1,510 provisionally retained rows are not academically approved or deployment-ready; each requires review of syllabus fit, question clarity, options, answer key and explanation.",
     "The 90 held duplicate rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
-    "The 90 confirmed duplicate relationships comprise 47 with verified prior-replacement commits, 14 with replacement-created content whose exact introducing commit SHAs remain to be normalized, 28 original-draft overlaps, and one unresolved-provenance pair (DUP-34).",
+    "The 90 confirmed duplicate relationships comprise 48 with verified prior-replacement commits, 13 with replacement-created content whose exact introducing commit SHAs remain to be normalized, 28 original-draft overlaps, and one unresolved-provenance pair (DUP-34).",
     "All 286 cross-window candidates at or above the 0.65 manual-review threshold have been reviewed; 1,018 lower-scoring candidates remain screened but not manually reviewed.",
     "All 390 reconstructed within-window candidates at threshold 0.42 have review statuses; the original report's 41/349 category split differs by one pair from the reconstructed 40/350 split, and its stated 0.43 threshold does not reproduce the reported total.",
-    "The 47 existing replacement proposals are not approved for insertion: 26 are provisionally syllabus-mapped, 16 require subject review, and five are blocked by existing-bank overlap. A further 43 replacement drafts are still required for DUP-48 through DUP-90.",
+    "The 51 existing replacement proposals are not approved for insertion. The original 47 comprise 26 provisionally syllabus-mapped, 16 requiring subject review, and five blocked by existing-bank overlap. Four additional proposals (DUP-48 to DUP-51) require subject and bank-wide review. 39 replacement drafts are still required for DUP-52 through DUP-90.",
     "No production deployment, PR merge, question publication or production database change is authorised by this staging export."
   ],
   "semantic_review_status": {
@@ -301,9 +301,10 @@
   "audit_reports": [
     {
       "path": "content/cbt/audits/bank-wide-uniqueness-screen-2026-11-01.json",
-      "status": "preliminary_automated_screen_only",
+      "status": "preliminary_automated_screen_only_newer_proposals_pending",
       "retained_rows_screened": 1510,
-      "replacement_proposals_screened": 49
+      "replacement_proposals_screened": 49,
+      "note": "The existing bank-wide automated screen covers the 1,510 retained rows and the first 49 replacement proposals. DUP-50 and DUP-51 were added after that screen and still require inclusion in a refreshed full-bank contextual uniqueness screen."
     }
   ]
 }
