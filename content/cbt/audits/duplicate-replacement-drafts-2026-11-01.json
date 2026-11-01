@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 38,
+  "draft_count": 47,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "These are proposed replacements only. They have not been inserted into any original-batch CSV. Each must pass bank-wide similarity screening, answer validation and syllabus/topic review before insertion.",
+  "important": "All 47 items are proposals only. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -693,7 +693,169 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "revised_draft_needs_bank_wide_check"
+    },
+    {
+      "target_id": "DUP-39",
+      "subject": "Chemistry",
+      "topic": "Metals",
+      "subtopic": "Extraction of aluminium",
+      "question": "During the electrolytic extraction of aluminium, cryolite is added to alumina mainly to:",
+      "options": [
+        "raise the melting point of alumina",
+        "lower the melting point of the mixture and improve its electrical conductivity",
+        "act as the reducing agent that forms aluminium",
+        "prevent oxygen from being released at the anode"
+      ],
+      "answer": "B",
+      "explanation": "Cryolite dissolves alumina, lowers the operating temperature and improves the conductivity of the electrolyte, reducing the energy required for extraction.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-40",
+      "subject": "Chemistry",
+      "topic": "Chemical industry",
+      "subtopic": "Contact process catalyst",
+      "question": "In the Contact process, which substance is commonly used as the catalyst for converting sulphur dioxide to sulphur trioxide?",
+      "options": [
+        "iron",
+        "nickel",
+        "vanadium(V) oxide",
+        "manganese(IV) oxide"
+      ],
+      "answer": "C",
+      "explanation": "Vanadium(V) oxide, V₂O₅, catalyses the oxidation of sulphur dioxide to sulphur trioxide in the Contact process.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-41",
+      "subject": "Biology",
+      "topic": "Human physiology",
+      "subtopic": "Endocrine hormones",
+      "question": "Which hormone stimulates the production of milk in the mammary glands after childbirth?",
+      "options": [
+        "oxytocin",
+        "prolactin",
+        "adrenaline",
+        "thyroxine"
+      ],
+      "answer": "B",
+      "explanation": "Prolactin stimulates milk production in the mammary glands. Oxytocin is involved in milk ejection.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-42",
+      "subject": "Economics",
+      "topic": "Production",
+      "subtopic": "Marginal revenue",
+      "question": "A firm's marginal revenue is the:",
+      "options": [
+        "total cost of producing all units",
+        "addition to total revenue from selling one extra unit",
+        "average revenue earned on all units sold",
+        "amount paid to a factor of production"
+      ],
+      "answer": "B",
+      "explanation": "Marginal revenue is the change in total revenue resulting from the sale of one additional unit of output.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-43",
+      "subject": "Mathematics",
+      "topic": "Functions",
+      "subtopic": "One-to-one functions",
+      "question": "A function is one-to-one if:",
+      "options": [
+        "every element of its domain has the same image",
+        "different elements of its domain have different images",
+        "every element of the codomain must be an image",
+        "the function has no inverse"
+      ],
+      "answer": "B",
+      "explanation": "A one-to-one function maps distinct domain elements to distinct values; no two different inputs share the same output.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-44",
+      "subject": "Physics",
+      "topic": "Waves",
+      "subtopic": "Diffraction",
+      "question": "The bending or spreading of waves as they pass through a narrow opening or around an obstacle is called:",
+      "options": [
+        "reflection",
+        "diffraction",
+        "refraction",
+        "polarisation"
+      ],
+      "answer": "B",
+      "explanation": "Diffraction is the spreading of waves when they pass through an opening or around an obstacle. It is most noticeable when the opening or obstacle is comparable in size to the wavelength.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-45",
+      "subject": "Economics",
+      "topic": "Factors of production",
+      "subtopic": "Economic rent",
+      "question": "Economic rent is the payment received by a factor of production in excess of its:",
+      "options": [
+        "marginal product",
+        "transfer earnings",
+        "total revenue",
+        "fixed cost"
+      ],
+      "answer": "B",
+      "explanation": "Economic rent is the surplus payment to a factor over the minimum amount required to keep it in its present use, known as transfer earnings.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-46",
+      "subject": "Chemistry",
+      "topic": "Chemical bonding",
+      "subtopic": "Alloys",
+      "question": "Brass is an alloy made mainly from:",
+      "options": [
+        "copper and tin",
+        "copper and zinc",
+        "iron and carbon",
+        "aluminium and magnesium"
+      ],
+      "answer": "B",
+      "explanation": "Brass is primarily an alloy of copper and zinc. Bronze, by contrast, is mainly copper and tin.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+    },
+    {
+      "target_id": "DUP-47",
+      "subject": "Government",
+      "topic": "Legislature",
+      "subtopic": "Legislative privilege",
+      "question": "The privilege of freedom of speech in legislative proceedings primarily allows a legislator to:",
+      "options": [
+        "express views during parliamentary proceedings without being sued or prosecuted for those statements",
+        "avoid criminal responsibility for offences committed outside the legislature",
+        "ignore lawful court orders",
+        "prevent the public from scrutinising legislative debates"
+      ],
+      "answer": "A",
+      "explanation": "Parliamentary privilege protects statements made as part of legislative proceedings so members can debate freely. It is not a general immunity from criminal law or unrelated legal duties.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "new_draft_pending_subject_review_and_bankwide_screen"
     }
   ],
-  "revision_note": "Revised the first draft after initial 400-question similarity samples revealed several overly similar or existing-question matches. All 38 drafts remain proposals and have not been inserted into batch CSVs. Further revisions remove additional high-similarity matches discovered in subsequent 400-question windows. A further pass revised questions with close matches to existing bank items, including duplicate stems, repeated definitions and overly similar templates. Replaced additional drafts that matched existing bank questions on test crosses, ovule-to-seed development, thermal expansion, price ceilings, satire, party whips and similar question patterns. Revised additional items where first-pass comparisons exposed close existing stems or the same tested concept, including ethene reactions, genotype definitions, thermal-expansion examples, cell-biology facts, central-bank functions and mechanics calculations. A further review revised eleven candidates whose first wording overlapped too closely with existing bank concepts or phrasing. All 38 drafts are now explicitly marked as uninserted proposals awaiting the refreshed full-bank screen and answer/syllabus validation. Six further revisions were made to remove same-concept flags (polymerisation, irony, induction, elasticity, chromatography and gravitational energy). Three further drafts were revised after the focused re-screen identified close existing matches (antagonist definition, transformer principle and price ceiling). The three remaining candidates were moved away from repeatedly matching question-bank concepts (characterisation, Newton's second law and consumer surplus). Two further drafts were changed after manual contextual review identified an exact soliloquy overlap and an overly close pair of alkene-reaction items. The soliloquy/hamartia draft concepts matched existing questions; the final DUP-35 proposal tests stage directions instead. The stage-directions wording also matched an existing item, so DUP-35 now tests the distinct limerick form. The limerick proposal matched an existing poetic-form question; DUP-35 is now a distinct terminology item about the author of a play. The playwright wording was also an exact existing question; the latest DUP-35 draft tests catharsis. The catharsis wording overlapped an existing question; the latest DUP-35 draft now tests the dramatic prologue. The prologue wording duplicated an existing batch question; the latest DUP-35 proposal now tests epigraph. DUP-05 was blocked after contextual review found a same-concept existing question in batch 14 row 38; it remains uninserted pending a genuinely distinct replacement. DUP-30 (meticulous definition) and DUP-32 (euphemism) were also blocked after contextual review found same-concept items in the existing bank. DUP-02 (esterification products) and DUP-08 (acidic-solution indicator colour) were blocked after direct contextual comparison with existing same-subject questions."
+  "revision_note": "Added draft proposals for newly confirmed DUP-39 through DUP-47. These nine are subject to expert syllabus review and bank-wide contextual screening; none has been inserted into a source CSV."
 }
