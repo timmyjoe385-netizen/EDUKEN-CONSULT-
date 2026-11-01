@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 17,
+  "version": 19,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -17,18 +17,14 @@
   },
   "screening_summary": {
     "threshold": 0.42,
-    "flagged_count": 16,
-    "below_threshold_count": 74,
+    "flagged_count": 12,
+    "below_threshold_count": 78,
     "flagged_ids": [
-      "DUP-02",
       "DUP-04",
-      "DUP-05",
       "DUP-10",
       "DUP-16",
       "DUP-18",
       "DUP-22",
-      "DUP-30",
-      "DUP-32",
       "DUP-33",
       "DUP-34",
       "DUP-35",
@@ -66,23 +62,23 @@
     {
       "target_id": "DUP-02",
       "subject": "Chemistry",
-      "flagged": true,
-      "highest_similarity": 0.529,
+      "flagged": false,
+      "highest_similarity": 0.4144,
       "top_matches": [
         {
-          "location": "batch 17 row 17",
-          "score": 0.529,
-          "question": "When ethene reacts with bromine, the main organic product is:"
+          "location": "batch 23 row 17",
+          "score": 0.4144,
+          "question": "In a galvanic cell, oxidation takes place at the"
         },
         {
-          "location": "batch 13 row 19",
-          "score": 0.3735,
-          "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
+          "location": "batch 40 row 17",
+          "score": 0.2655,
+          "question": "What is the oxidation number of manganese in KMnO₄?"
         },
         {
-          "location": "batch 37 row 21",
-          "score": 0.3616,
-          "question": "Which gas is produced when dilute hydrochloric acid reacts with calcium carbonate?"
+          "location": "batch 33 row 20",
+          "score": 0.2632,
+          "question": "The functional group characteristic of alcohols is"
         }
       ]
     },
@@ -135,23 +131,23 @@
     {
       "target_id": "DUP-05",
       "subject": "Literature in English",
-      "flagged": true,
-      "highest_similarity": 0.4348,
+      "flagged": false,
+      "highest_similarity": 0.3673,
       "top_matches": [
         {
+          "location": "batch 13 row 39",
+          "score": 0.3673,
+          "question": "Blank verse is poetry written in…"
+        },
+        {
+          "location": "batch 08 row 39",
+          "score": 0.352,
+          "question": "A narrative that begins in the middle of the action is said to begin:"
+        },
+        {
           "location": "batch 06 row 41",
-          "score": 0.4348,
+          "score": 0.25,
           "question": "A biography is an account of a person's life written by:"
-        },
-        {
-          "location": "batch 14 row 38",
-          "score": 0.4231,
-          "question": "An elegy is a poem traditionally written to:"
-        },
-        {
-          "location": "batch 35 row 38",
-          "score": 0.3455,
-          "question": "Describing a brave person as 'a lion' is an example of"
         }
       ]
     },
@@ -205,22 +201,22 @@
       "target_id": "DUP-08",
       "subject": "Chemistry",
       "flagged": false,
-      "highest_similarity": 0.3684,
+      "highest_similarity": 0.381,
       "top_matches": [
         {
-          "location": "batch 39 row 17",
-          "score": 0.3684,
-          "question": "A solution that turns blue litmus paper red is likely to be"
+          "location": "batch 16 row 20",
+          "score": 0.381,
+          "question": "At constant temperature, the pressure of a fixed mass of gas is…"
         },
         {
-          "location": "batch 39 row 20",
-          "score": 0.306,
-          "question": "When acidified silver nitrate solution is added to a solution containing chloride ions, what is observed?"
+          "location": "batch 36 row 21",
+          "score": 0.3689,
+          "question": "Which ore is the principal commercial source of aluminium?"
         },
         {
-          "location": "batch 28 row 18",
-          "score": 0.2875,
-          "question": "When zinc is added to copper(II) sulfate solution, copper is deposited because:"
+          "location": "batch 40 row 21",
+          "score": 0.2923,
+          "question": "At constant volume, the pressure of a fixed mass of gas is directly proportional to its:"
         }
       ]
     },
@@ -710,23 +706,23 @@
     {
       "target_id": "DUP-30",
       "subject": "Use of English",
-      "flagged": true,
-      "highest_similarity": 0.4255,
+      "flagged": false,
+      "highest_similarity": 0.2637,
       "top_matches": [
         {
-          "location": "batch 12 row 2",
-          "score": 0.4255,
-          "question": "In the sentence “The meeting was put off until Friday”, the expression “put off” means…"
+          "location": "batch 08 row 3",
+          "score": 0.2637,
+          "question": "If a plan is “called off,” it is:"
         },
         {
-          "location": "batch 05 row 4",
-          "score": 0.3636,
-          "question": "Choose the word nearest in meaning to “meticulous.”"
+          "location": "batch 40 row 3",
+          "score": 0.2586,
+          "question": "A person who deliberately sets fire to property is an"
         },
         {
-          "location": "batch 30 row 3",
-          "score": 0.3571,
-          "question": "In the sentence 'The manager spoke with remarkable candour', the word 'candour' means"
+          "location": "batch 27 row 6",
+          "score": 0.2576,
+          "question": "A rising intonation is commonly used at the end of which type of question?"
         }
       ]
     },
@@ -756,23 +752,23 @@
     {
       "target_id": "DUP-32",
       "subject": "Literature in English",
-      "flagged": true,
-      "highest_similarity": 0.4348,
+      "flagged": false,
+      "highest_similarity": 0.3483,
       "top_matches": [
         {
-          "location": "batch 32 row 40",
-          "score": 0.4348,
-          "question": "Which expression is an example of a simile?"
-        },
-        {
-          "location": "batch 01 row 37",
-          "score": 0.3846,
-          "question": "“Time is a thief” is an example of:"
-        },
-        {
           "location": "batch 33 row 37",
-          "score": 0.3708,
+          "score": 0.3483,
           "question": "A poem that expresses the personal thoughts and emotions of an individual speaker is commonly classified as a:"
+        },
+        {
+          "location": "batch 20 row 41",
+          "score": 0.3412,
+          "question": "A short concluding section that follows the main action of a play is called an:"
+        },
+        {
+          "location": "batch 22 row 38",
+          "score": 0.3333,
+          "question": "The series of events that develops the main conflict and builds tension towards the climax is called:"
         }
       ]
     },
@@ -2122,5 +2118,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 18 reconciles all 90 replacement drafts to 90 bankwide screening results. The first five new drafts DUP-66, 67, 69, 71 and 74 were added. DUP-84's prior pulmonary-vein candidate was withdrawn as a semantic duplicate of batch 21 row 12 and replaced with a DNA-ligase question; its screening result was recalculated against all 200 Biology rows. All flagged scores remain review prompts, not verdicts."
+  "revision_note": "Version 19 replaces five previously blocked candidates (DUP-02, DUP-05, DUP-08, DUP-30 and DUP-32) with distinct concepts. Each replacement was compared with all 200 same-subject rows in the 1,600-question bank and with the current replacement draft bank. The five revised candidates are below the 0.42 lexical threshold. Earlier blocked candidates are retained only in the revision notes; the new candidates are not approved for insertion."
 }
