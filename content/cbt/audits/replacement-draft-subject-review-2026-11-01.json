@@ -93,6 +93,24 @@
       "syllabus_fit": "Provisionally fits cohesion and textual devices in English usage.",
       "bank_overlap": "Refreshed same-subject screen highest similarity 0.3367. No equivalent ellipsis item was found by the topic/text scan; contextual review remains required.",
       "decision": "Keep as a draft pending human English review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-58",
+      "subject": "Biology",
+      "assessment": "preliminary_pass",
+      "answer_check": "B is correct. Homologous structures share an underlying anatomical plan inherited from a common ancestor, despite adaptation to different functions.",
+      "syllabus_fit": "Provisionally fits evolution and evidence for common ancestry.",
+      "bank_overlap": "Refreshed same-subject screen highest similarity 0.6638. Existing items cover general adaptation and evolution, but the specific evidence from homologous structures is distinct. Human concept-level review remains required.",
+      "decision": "Keep as a draft pending human Biology review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-59",
+      "subject": "Literature in English",
+      "assessment": "preliminary_pass",
+      "answer_check": "B is correct. An epithet is a descriptive word or phrase highlighting a characteristic; the distractors describe other literary devices.",
+      "syllabus_fit": "Provisionally fits literary devices and terminology.",
+      "bank_overlap": "Refreshed same-subject screen highest similarity 0.5455. No equivalent epithet definition was identified in the current topic index; contextual review remains required.",
+      "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
     }
   ],
   "release_gate": "These are preliminary assistant checks, not independent academic sign-off. Do not insert any of DUP-48 to DUP-53 into original CSVs or publish them until subject-competent review, full contextual bank review and the user's final controlled replacement approval."
