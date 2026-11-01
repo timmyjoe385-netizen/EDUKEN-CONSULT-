@@ -1,8 +1,8 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 10,
-  "purpose": "Refreshed non-destructive lexical screen of all 63 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
+  "version": 11,
+  "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -18,7 +18,7 @@
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 16,
-    "below_threshold_count": 47,
+    "below_threshold_count": 49,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -1488,6 +1488,52 @@
           "question": "What is the distance of the point (−3, 4) from the origin?"
         }
       ]
+    },
+    {
+      "target_id": "DUP-64",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.2623,
+      "top_matches": [
+        {
+          "location": "batch 19 row 18",
+          "score": 0.2623,
+          "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
+        },
+        {
+          "location": "batch 05 row 18",
+          "score": 0.2353,
+          "question": "Isotopes of the same element have the same number of:"
+        },
+        {
+          "location": "batch 25 row 21",
+          "score": 0.2329,
+          "question": "A catalyst increases the rate of a reaction because it"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-65",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3462,
+      "top_matches": [
+        {
+          "location": "batch 07 row 15",
+          "score": 0.3462,
+          "question": "Which structure carries urine from each kidney to the urinary bladder?"
+        },
+        {
+          "location": "batch 09 row 13",
+          "score": 0.3352,
+          "question": "Which plant tissue conducts water and dissolved mineral salts from the roots towards the leaves?"
+        },
+        {
+          "location": "batch 30 row 12",
+          "score": 0.3102,
+          "question": "Which structure receives the filtrate immediately after it passes from the glomerulus during ultrafiltration?"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1497,8 +1543,8 @@
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
   ],
   "proposals": {
-    "count": 63,
-    "screened": 63,
+    "count": 65,
+    "screened": 65,
     "all_proposals_screened": true
   }
 }
