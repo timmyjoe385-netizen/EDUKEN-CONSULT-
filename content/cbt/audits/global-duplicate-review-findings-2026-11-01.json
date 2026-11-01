@@ -12,7 +12,10 @@
     "cross_window_similarity_candidates_at_threshold_0_43": 1304,
     "cross_window_pairs_score_at_least_0_65": 286,
     "cross_window_pairs_score_at_least_0_80": 88,
-    "topic_and_subtopic_matches_at_least_0_80": 42
+    "topic_and_subtopic_matches_at_least_0_80": 42,
+    "cross_window_high_similarity_same_topic_subtopic_reviewed": 42,
+    "cross_window_confirmed_pairs_after_full_42_review": 22,
+    "cross_window_preserved_pairs_after_full_42_review": 20
   },
   "confirmed_cross_window_duplicates": [
     {
@@ -155,6 +158,96 @@
       "decision": "confirmed_semantic_duplicate",
       "action": "retain one; replace the other after complete audit",
       "csv_changes_made": false
+    },
+    {
+      "subject": "Economics",
+      "a": "batch 25 row 31",
+      "b": "batch 33 row 29",
+      "concept": "Definition of public debt",
+      "retain": "batch 25 row 31",
+      "replace": "batch 33 row 29",
+      "history_note": "Batch 33 row 29 public-debt item was introduced in earlier diversification commit 30aaa3b5e5bc661d84f8230fcadf182310452501; corrective overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Chemistry",
+      "a": "batch 10 row 21",
+      "b": "batch 35 row 19",
+      "concept": "Paper chromatography separates components by differing interactions with mobile/stationary phases",
+      "retain": "batch 10 row 21",
+      "replace": "batch 35 row 19",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Biology",
+      "a": "batch 12 row 12",
+      "b": "batch 34 row 14",
+      "concept": "Stomata are the main route of water-vapour loss from leaves",
+      "retain": "batch 12 row 12",
+      "replace": "batch 34 row 14",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Physics",
+      "a": "batch 4 row 25",
+      "b": "batch 32 row 24",
+      "concept": "A convex lens is a converging lens",
+      "retain": "batch 4 row 25",
+      "replace": "batch 32 row 24",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Economics",
+      "a": "batch 9 row 31",
+      "b": "batch 38 row 31",
+      "concept": "A tariff is a tax/duty on imported goods",
+      "retain": "batch 9 row 31",
+      "replace": "batch 38 row 31",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Economics",
+      "a": "batch 6 row 29",
+      "b": "batch 37 row 29",
+      "concept": "Commercial banks accept deposits and grant loans",
+      "retain": "batch 6 row 29",
+      "replace": "batch 37 row 29",
+      "history_note": "Batch 37 row 29 was introduced by prior diversification commit 437788c145a4a3ff578d9fd7640b4b1d6739cedc; corrective overlap.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Literature in English",
+      "a": "batch 20 row 39",
+      "b": "batch 25 row 37",
+      "concept": "Denouement as the concluding stage where conflicts are resolved",
+      "retain": "batch 20 row 39",
+      "replace": "batch 25 row 37",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
+    },
+    {
+      "subject": "Biology",
+      "a": "batch 1 row 15",
+      "b": "batch 38 row 13",
+      "concept": "Platelets are the blood component responsible for clotting",
+      "retain": "batch 1 row 15",
+      "replace": "batch 38 row 13",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     }
   ],
   "review_notes": [
@@ -268,13 +361,15 @@
   ],
   "history_reconciliation": {
     "prior_replacement_commits_reviewed": "Several key replacement/diversification commits were inspected, including batches 15–40; a full row-by-row ledger of all prior replacement commits is still being reconciled.",
-    "confirmed_prior_replacement_overlap_count": 3,
+    "confirmed_prior_replacement_overlap_count": 5,
     "overlap_locations": [
       "batch 32 row 34 / batch 33 row 35",
       "batch 2 row 40 / batch 37 row 41",
-      "batch 26 row 4 / batch 30 row 3"
+      "batch 26 row 4 / batch 30 row 3",
+      "batch 25 row 31 / batch 33 row 29",
+      "batch 6 row 29 / batch 37 row 29"
     ],
-    "note": "The global scan includes the current content of every previously replaced row. Three confirmed duplicates involve previously introduced replacement content (batch 33 row 35 federalism; batch 37 row 41 Theme; batch 26 row 4 candid). These must be treated as corrective overlaps and only corrected once."
+    "note": "The global scan includes the current content of all previously replaced rows. Five confirmed duplicate pairs involve content introduced by prior replacement/diversification commits (batch 33 row 35 federalism; batch 37 row 41 Theme; batch 26 row 4 candid; batch 33 row 29 public debt; batch 37 row 29 commercial-bank function). These are corrective overlaps and must be fixed only once."
   },
   "within_window_review": {
     "candidate_pairs_screened": 390,
