@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 3,
+  "version": 4,
   "purpose": "Refreshed non-destructive lexical screen of all 55 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-54/55.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -17,8 +17,8 @@
   },
   "screening_summary": {
     "threshold": 0.42,
-    "flagged_count": 17,
-    "below_threshold_count": 38,
+    "flagged_count": 16,
+    "below_threshold_count": 39,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -35,8 +35,7 @@
       "DUP-36",
       "DUP-45",
       "DUP-48",
-      "DUP-53",
-      "DUP-54"
+      "DUP-53"
     ],
     "manual_contextual_review_complete": false
   },
@@ -1263,23 +1262,23 @@
     {
       "target_id": "DUP-54",
       "subject": "Economics",
-      "flagged": true,
-      "highest_similarity": 0.6049,
+      "flagged": false,
+      "highest_similarity": 0.4141,
       "top_matches": [
         {
-          "location": "batch 34 row 27",
-          "score": 0.6049,
-          "question": "Price rises by 10% and quantity demanded falls by 20%. What is the absolute price elasticity of demand?"
-        },
-        {
           "location": "batch 27 row 27",
-          "score": 0.4977,
+          "score": 0.4141,
           "question": "If quantity demanded changes by 12% when price changes by 4%, what is the absolute value of price elasticity of demand?"
         },
         {
-          "location": "batch 08 row 27",
-          "score": 0.4532,
-          "question": "Price elasticity of demand measures the responsiveness of quantity demanded to a change in:"
+          "location": "batch 34 row 27",
+          "score": 0.3684,
+          "question": "Price rises by 10% and quantity demanded falls by 20%. What is the absolute price elasticity of demand?"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3333,
+          "question": "A country's balance of trade in goods is the difference between the value of its"
         }
       ]
     },
