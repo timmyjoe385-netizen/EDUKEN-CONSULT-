@@ -18,10 +18,10 @@
 - `retained-batches-*.csv`: provisionally retained rows grouped into four 10-batch windows. Each includes original batch and CSV-row provenance, followed by all 18 original question fields.
 - `held-duplicates-*.csv`: all held rows, with pair ID and retained/held source locations.
 - `manifest.json`: per-batch counts, provenance classification and release gates.
-- `../audits/bank-wide-uniqueness-screen-2026-11-01.json`: preliminary exact-stem, structure and replacement-collision screen across all 1,510 retained rows and 49 proposals; automated screening only, not academic approval.
+- `../audits/bank-wide-uniqueness-screen-2026-11-01.json`: preliminary exact-stem, structure and replacement-collision screen across all 1,510 retained rows and the first 49 proposals at the time of that screen; DUP-50 and DUP-51 were added afterwards and require a refreshed screen. Automated screening is not academic approval.
 
 ## Replacement status
-There are 90 confirmed duplicate targets. Existing draft proposals now cover 49 targets, including new proposals for DUP-48 and DUP-49. Forty-one targets (DUP-50 to DUP-90) still have no replacement draft and remain held. Among the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap. The two new proposals are also pending subject and bank-wide similarity review. No replacement draft has been inserted into the original bank.
+There are 90 confirmed duplicate targets. Existing draft proposals now cover 51 targets, including new proposals for DUP-48 through DUP-51. Thirty-nine targets (DUP-52 to DUP-90) still have no replacement draft and remain held. Among the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap. The four new proposals (DUP-48 to DUP-51) are also pending subject and bank-wide similarity review. No replacement draft has been inserted into the original bank.
 
 ## Semantic-review status
 - Within-window reconstruction: 390 candidate pairs at the reproduced 0.42 threshold; all 390 have explicit review statuses. This includes 350 different-topic/subtopic candidates contextually reviewed and 40 same-topic/subtopic candidates carried forward as previously reviewed.
