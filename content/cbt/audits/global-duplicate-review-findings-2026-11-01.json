@@ -27,7 +27,16 @@
     "cross_window_manually_reviewed_candidates": 69,
     "cross_window_additional_targeted_candidates_reviewed": 20,
     "cross_window_targeted_duplicate_pair_records_confirmed": 19,
-    "note": "The 49-candidate high-similarity shortlist and 20 additional targeted candidates have been manually reviewed. The additional targeted review produced 19 new duplicate pair records; two candidate edges belong to the same three-question exposition cluster. 1,235 cross-window candidates remain unreviewed."
+    "note": "The 49-candidate high-similarity shortlist and 20 additional targeted candidates have been manually reviewed. The additional targeted review produced 19 new duplicate pair records; two candidate edges belong to the same three-question exposition cluster. 1,235 cross-window candidates remain unreviewed.",
+    "current_cross_window_duplicate_pairs": 42,
+    "current_within_window_duplicate_pairs": 15,
+    "current_total_duplicate_pairs": 57,
+    "current_unique_held_rows": 57,
+    "current_provenance_summary": {
+      "prior_replacement": 41,
+      "original_draft_overlap": 15,
+      "unverified": 1
+    }
   },
   "confirmed_cross_window_duplicates": [
     {
@@ -517,8 +526,8 @@
     }
   ],
   "history_reconciliation": {
-    "prior_replacement_commits_reviewed": "Row-level commit-patch checks recorded for all 37 confirmed duplicate pairs.",
-    "confirmed_prior_replacement_overlap_count": 42,
+    "prior_replacement_commits_reviewed": "Row-level commit-patch evidence is recorded for 41 confirmed prior-replacement overlap relationships. One pair (DUP-34) remains unresolved; 15 other pair relationships are classified as original-draft overlaps.",
+    "confirmed_prior_replacement_overlap_count": 41,
     "overlap_locations": [
       "batch 32 row 34 / batch 33 row 35",
       "batch 2 row 40 / batch 37 row 41",
@@ -559,9 +568,11 @@
       "batch 15 row 34 / batch 34 row 34",
       "batch 25 row 24 / batch 11 row 24",
       "batch 15 row 38 / batch 31 row 40",
-      "batch 11 row 37 / batch 31 row 37"
+      "batch 11 row 37 / batch 31 row 37",
+      "batch 9 row 18 / batch 32 row 21",
+      "batch 23 row 19 / batch 36 row 18"
     ],
-    "note": "The controlled duplicate register records 42 prior-replacement/review provenance relationships and 15 original-draft overlaps. This global summary has 40 structured row-level entries after adding the three newly verified cases; any remaining structured-history normalization is separate from the register's source-level provenance fields.",
+    "note": "The current register has 57 confirmed duplicate relationships: 41 with prior-replacement provenance, 15 original-draft overlaps, and one unresolved provenance classification (DUP-34). The row-level history list has 42 entries: 41 commit-backed prior-replacement cases plus the unresolved DUP-34 entry. No source CSV has been edited.",
     "row_level_verified_overlaps": [
       {
         "pair": "batch 32 row 34 / batch 33 row 35",
@@ -802,6 +813,18 @@
         "introduced": "batch 11 row 37 and batch 31 row 37",
         "commit": "e2b578d11025; feaedd421ea4",
         "detail": "Both exposition questions were introduced in prior replacement/diversification commits. Batch 19 row 38 is already held in the same three-row cluster; retain batch 11 row 37 only."
+      },
+      {
+        "pair": "batch 9 row 18 / batch 32 row 21",
+        "introduced": "batch 32 row 21",
+        "commit": "7293bf29bd4f",
+        "detail": "The empirical-formula item in batch 32 replaced a sulfur oxidation-number item and duplicates the original empirical-formula item in batch 9."
+      },
+      {
+        "pair": "batch 23 row 19 / batch 36 row 18",
+        "introduced": "batch 36 row 18",
+        "commit": "f2c102040555",
+        "detail": "The carboxyl-group item in batch 36 replaced a hydroxyl-group question and duplicates the original carboxylic-acid functional-group item in batch 23."
       }
     ]
   },
@@ -844,16 +867,14 @@
     "csv_questions_changed": false,
     "production_deployment": false,
     "notes": [
-      "The complete 390-pair within-window candidate register has been reconstructed at the 0.42 set-based character-trigram Dice threshold. The same implementation at 0.43 yields 352, reproducing the 38-candidate total difference.",
-      "All 350 reconstructed different-topic/subtopic candidates have now received contextual review; 0 remain pending.",
-      "The reconstructed 0.42 candidate set contains 40 same-topic-and-subtopic candidates and 350 other candidates, one pair away from the originally reported 41/349 category split. The exact one-pair label/normalization boundary remains to be reconciled.",
-      "The confirmed duplicate register contains 23 cross-window and 15 within-window pairs (38 total). Thirty-seven pairs have prior-replacement row-level provenance; the vaccination pair batch 15 row 15 / batch 20 row 16 is an original-draft overlap, not a prior-replacement overlap.",
-      "The 49-pair cross-window high-similarity shortlist has been reviewed: 15 previously logged duplicates plus 34 newly reviewed pairs; one additional duplicate was confirmed and 33 were preserved. The remaining 1,255 lower-scoring cross-window candidates were screened computationally but not manually reviewed.",
-      "No original question CSV has been edited. No production deployment or merge has occurred.",
-      "All 14 cross-window duplicate entries that previously lacked explicit retain/replace choices now have row-level retention decisions and corrective replacement targets. These are planning decisions only; no question CSV has been edited.",
-      "After the earlier 49-candidate shortlist review, 20 additional cross-window candidates ranked 105–284 were manually checked. These produced 19 additional duplicate pair records; two candidate edges belong to the same three-question exposition cluster. The register now contains 42 cross-window and 15 within-window pairs (57 total).",
-      "Of 1,304 cross-window similarity candidates, 69 have been manually reviewed and 1,235 remain unreviewed. The original within-window report has 279 candidates pending; the reconstructed 0.42 candidate set differs by 38 pairs. The semantic audit remains incomplete.",
-      "All 57 confirmed duplicate targets have unique holdout locations. The three-row Government cluster retains batch 32 row 34 and holds batch 33 row 35 plus batch 26 row 34. The three-row Literature exposition cluster retains batch 11 row 37 and holds batch 19 row 38 plus batch 31 row 37."
+      "The 1,600 source questions are accounted for across 40 original batches. The controlled register now records 57 confirmed duplicate relationships: 42 cross-window and 15 within-window, with 57 unique held row locations.",
+      "Provenance classification: 41 duplicate relationships have commit-backed prior-replacement history, 15 are original-draft overlaps, and one pair (DUP-34) remains unverified. The register and global history file carry the row-level evidence.",
+      "The cross-window screen produced 1,304 similarity candidates. Sixty-nine have received manual contextual review (49 in the high-similarity shortlist and 20 additional targeted candidates); 1,235 remain unreviewed.",
+      "The original within-window candidate report has 279 different-topic candidates pending. A reconstructed 0.42 candidate set differs from the original report by 38 pairs (3 same-topic and 35 different-topic); the original candidate generator/list has not been recovered. Do not claim the within-window tail is complete.",
+      "The retained staging export contains 1,543 rows and the held-duplicate export contains 57 rows. All 1,600 rows are accounted for. The original 40 batch CSV files remain unchanged.",
+      "Forty-seven replacement proposals exist for 57 held targets. Ten targets (DUP-48 to DUP-57) have no replacement draft yet. Of the existing 47 proposals, 26 are provisionally mapped, 16 need subject review, and five are blocked by existing-bank overlap. No replacement has been inserted.",
+      "Structural validation of the retained staging bank found no exact duplicate question stems and no missing core fields. This is not proof that all semantic near-duplicates have been cleared.",
+      "No Supabase import, publication, PR merge or production deployment has occurred or is authorised by this audit."
     ],
     "reconstructed_candidate_count_at_0_42": 390,
     "reconstructed_same_topic_and_subtopic_candidates": 40,
@@ -871,7 +892,10 @@
     "retain_replace_assignments_pending": 0,
     "cross_window_additional_targeted_candidates_reviewed": 20,
     "cross_window_manually_reviewed_candidates": 69,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 19
+    "cross_window_targeted_duplicate_pair_records_confirmed": 19,
+    "provenance_prior_replacement_pairs": 41,
+    "provenance_original_draft_overlap_pairs": 15,
+    "provenance_unverified_pairs": 1
   },
   "provenance_checked_nonreplacement_duplicates": [
     {
