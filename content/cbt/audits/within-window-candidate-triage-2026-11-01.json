@@ -64,8 +64,47 @@
         "decision": "confirmed_semantic_duplicate",
         "current_csv_checked": true,
         "csv_changed_in_this_audit": false
+      },
+      {
+        "a": "batch 32 row 4",
+        "b": "batch 36 row 4",
+        "subject": "Use of English",
+        "concept": "The collocation 'congratulate someone on' an achievement",
+        "retain": "batch 32 row 4",
+        "replace": "batch 36 row 4",
+        "reason": "Both ask for the preposition used after 'congratulate' to introduce an achievement; they assess the same collocation."
+      },
+      {
+        "a": "batch 26 row 4",
+        "b": "batch 30 row 3",
+        "subject": "Use of English",
+        "concept": "Meaning of candid/candour (honesty and openness)",
+        "retain": "batch 30 row 3",
+        "replace": "batch 26 row 4",
+        "reason": "Candid and candour are the adjective/noun forms of the same lexical concept; the questions test essentially the same meaning.",
+        "history_note": "The candid item in batch 26 was introduced by earlier replacement commit a08692d851750c09fe0e8358eedd906162ffaaa5; this overlap must be treated as corrective replacement."
+      },
+      {
+        "a": "batch 14 row 22",
+        "b": "batch 19 row 22",
+        "subject": "Physics",
+        "concept": "Direction of centripetal force in uniform circular motion",
+        "retain": "batch 14 row 22",
+        "replace": "batch 19 row 22",
+        "reason": "Both ask the same direct-recall fact: centripetal force points towards the centre of the circular path."
+      },
+      {
+        "a": "batch 34 row 40",
+        "b": "batch 40 row 40",
+        "subject": "Literature in English",
+        "concept": "Symbolism as representation of meaning beyond the literal",
+        "retain": "batch 34 row 40",
+        "replace": "batch 40 row 40",
+        "reason": "Both definitions ask the learner to identify symbolism using substantially the same concept and explanation."
       }
-    ]
+    ],
+    "high_priority_same_topic_subtopic_pairs_reviewed": 41,
+    "confirmed_duplicate_pair_count": 9
   },
   "decisions": [
     {
@@ -165,6 +204,7 @@
     "The 4-line and 8-line stanza pair must not be removed; they test different stanza forms.",
     "Vocabulary questions share a common instruction template but test distinct lexical knowledge.",
     "No CSV changes made.",
-    "The five previously reported within-window duplicate pairs were re-opened against the current CSVs and all five are still present at the listed locations. The 13-pair high-priority shortlist was also reviewed: one additional pair is confirmed (inverse variation), the four-line vs eight-line stanza pair is preserved, and the remaining different vocabulary/phonology items are preserved. The two momentum questions are the same numerical skill with different values and are flagged as template repetition, not an exact duplicate."
+    "The five previously reported within-window duplicate pairs were re-opened against the current CSVs and all five are still present at the listed locations. The 13-pair high-priority shortlist was also reviewed: one additional pair is confirmed (inverse variation), the four-line vs eight-line stanza pair is preserved, and the remaining different vocabulary/phonology items are preserved. The two momentum questions are the same numerical skill with different values and are flagged as template repetition, not an exact duplicate.",
+    "The next 28 same-subject/topic/subtopic candidate pairs were reviewed. Four additional semantic duplicates were confirmed: congratulate-on collocation, candid/candour, centripetal-force direction, and symbolism. Related but distinct question pairs (e.g., specific-heat definition vs calculation, median with different data sets, arithmetic-progression calculations, density calculations, and separate set operations) were preserved."
   ]
 }
