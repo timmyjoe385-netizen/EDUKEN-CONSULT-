@@ -15,10 +15,10 @@
   },
   "totals": {
     "replacement_drafts": 38,
-    "provisionally_aligned": 22,
+    "provisionally_aligned": 20,
     "subject_review_required": 11,
     "inserted_into_question_csvs": 0,
-    "blocked_existing_bank_overlap": 5
+    "blocked_existing_bank_overlap": 7
   },
   "items": [
     {
@@ -34,7 +34,7 @@
       "target_id": "DUP-02",
       "subject": "Chemistry",
       "syllabus_area": "Organic chemistry — alkanoic acids and esterification",
-      "rationale": "The replacement asks for the product of ethanol + ethanoic acid esterification; the existing item already tests the defining products of alcohol + carboxylic acid esterification (ester + water). Same reaction family and learning objective.",
+      "rationale": "The replacement asks for ethanol + ethanoic acid esterification products; batch 38 row 20 already tests alcohol + carboxylic acid producing an ester and water.",
       "match_type": "explicit",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
       "status": "blocked_existing_bank_overlap"
@@ -88,7 +88,7 @@
       "target_id": "DUP-08",
       "subject": "Chemistry",
       "syllabus_area": "Acids, bases and salts — indicators",
-      "rationale": "The replacement uses methyl orange turning red to identify an acidic solution; the existing item uses blue litmus turning red to identify an acidic solution. Both test the same acid-indicator inference, with only the indicator changed.",
+      "rationale": "The replacement uses methyl orange to identify acid by red colour; batch 39 row 17 already tests identifying an acidic solution from blue litmus turning red.",
       "match_type": "explicit",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
       "status": "blocked_existing_bank_overlap"
