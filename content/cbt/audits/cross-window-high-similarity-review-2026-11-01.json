@@ -23,7 +23,10 @@
       "topic": "Geometry",
       "question_a": "A regular polygon has an exterior angle of 30°. How many sides does it have?",
       "question_b": "A regular polygon has an exterior angle of 40°. How many sides does it have?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different numerical input (30° vs 40°) changes the required side count; same geometry rule but a valid alternate practice item.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.941,
@@ -33,7 +36,10 @@
       "topic": "Sequences",
       "question_a": "An arithmetic progression has first term 5 and common difference 3. What is its 10th term?",
       "question_b": "An arithmetic progression has first term 5 and common difference 3. What is its eighth term?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Same arithmetic-progression skill but asks for a different term; template repetition, not the same question or answer.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.94,
@@ -53,7 +59,10 @@
       "topic": "Mechanics",
       "question_a": "A 2 kg object moves at 5 m/s. What is its momentum?",
       "question_b": "A 2 kg object moves at 3 m/s. What is its momentum?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Momentum calculation uses a different velocity; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.927,
@@ -63,7 +72,10 @@
       "topic": "Chemical calculations",
       "question_a": "What volume of a 0.5 mol/dm³ solution contains 1.0 mol of solute?",
       "question_b": "What volume of a 0.5 mol/dm³ solution contains 0.25 mol of solute?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Molarity-volume calculation uses a different amount of solute; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.921,
@@ -83,7 +95,10 @@
       "topic": "Sequences",
       "question_a": "An arithmetic progression has first term 5 and common difference 3. What is its 10th term?",
       "question_b": "An arithmetic progression has first term 4 and common difference 3. What is its tenth term?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different first term and target term in an arithmetic progression; valid alternate calculation.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.917,
@@ -103,7 +118,10 @@
       "topic": "Sequences",
       "question_a": "An arithmetic progression has first term 4 and common difference 3. What is its tenth term?",
       "question_b": "An arithmetic progression has first term 5 and common difference 3. What is its eighth term?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different first term and target term in an arithmetic progression; valid alternate calculation.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.889,
@@ -143,7 +161,10 @@
       "topic": "Vocabulary",
       "question_a": "In the sentence “The witness gave a candid account of the incident,” the word “candid” means",
       "question_b": "In the sentence \\The witness gave a coherent account of the incident\\, the word \\coherent\\ means",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target and meaning (candid vs coherent); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.882,
@@ -153,7 +174,10 @@
       "topic": "Coordinate geometry",
       "question_a": "Find the midpoint of the segment joining (2, 4) and (6, 8).",
       "question_b": "Find the midpoint of the line segment joining (−2, 4) and (6, 10).",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Midpoint calculation uses different coordinates; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.88,
@@ -163,7 +187,10 @@
       "topic": "Geometry",
       "question_a": "Two angles of a triangle are 45° and 65°. Find the third angle.",
       "question_b": "Two angles of a triangle are 48° and 67°. Find the third angle.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Triangle angle-sum calculation uses different given angles; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.88,
@@ -183,7 +210,10 @@
       "topic": "Matrices",
       "question_a": "Find the determinant of the matrix [[3, 2], [5, 4]].",
       "question_b": "Find the determinant of the matrix [[2, 3], [1, 4]].",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different matrix entries produce a different determinant; valid alternate calculation.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.87,
@@ -203,7 +233,10 @@
       "topic": "Properties of matter",
       "question_a": "A metal block has a mass of 200 g and a volume of 50 cm³. What is its density?",
       "question_b": "A block has a mass of 240 g and a volume of 80 cm³. What is its density?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Density calculation uses different mass and volume; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.863,
@@ -223,7 +256,10 @@
       "topic": "Probability",
       "question_a": "A fair die is rolled once. What is the probability of obtaining a number greater than 4?",
       "question_b": "A fair die is rolled once. What is the probability of obtaining a prime number?",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different probability events (number greater than four vs prime number); these test different favourable-outcome sets.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.853,
@@ -243,7 +279,10 @@
       "topic": "Statistics",
       "question_a": "Find the mode of 2, 3, 3, 4, 5, 5, 5.",
       "question_b": "Find the mode of 2, 3, 3, 4, 5, 3 and 6.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Mode calculation uses a different data set; valid alternate application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.852,
@@ -263,7 +302,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “concise.”",
       "question_b": "Choose the word nearest in meaning to 'candid'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (concise vs candid); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.848,
@@ -273,7 +315,10 @@
       "topic": "Commercial arithmetic",
       "question_a": "Find the simple interest on ₦8,000 invested at 5% per annum for 3 years.",
       "question_b": "Find the simple interest on ₦20,000 for 3 years at 5% per annum.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Simple-interest calculation uses a different principal; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.842,
@@ -283,7 +328,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word opposite in meaning to “scarce.”",
       "question_b": "Choose the word opposite in meaning to 'hostile'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different antonym target (scarce vs hostile); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.841,
@@ -293,7 +341,10 @@
       "topic": "Electricity",
       "question_a": "An appliance operates at 12 V and draws 2 A. What is its electrical power?",
       "question_b": "An appliance operates at 12 V and draws 3 A. Calculate its electrical power.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Electrical-power calculation uses a different current; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.83,
@@ -303,7 +354,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “concise.”",
       "question_b": "Choose the word nearest in meaning to 'obsolete'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (concise vs obsolete); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.826,
@@ -313,7 +367,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “concise.”",
       "question_b": "Choose the word nearest in meaning to 'abstain'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (concise vs abstain); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.821,
@@ -323,7 +380,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word opposite in meaning to “expand.”",
       "question_b": "Choose the word opposite in meaning to 'hostile'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different antonym target (expand vs hostile); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.816,
@@ -333,7 +393,10 @@
       "topic": "Electricity",
       "question_a": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:",
       "question_b": "Two resistors of 4 Ω and 6 Ω are connected in series. Their combined resistance is",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Series-resistance calculation uses different resistor values; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.809,
@@ -343,7 +406,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “concise.”",
       "question_b": "Choose the word nearest in meaning to “diligent.”",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (concise vs diligent); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.809,
@@ -353,7 +419,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “diligent.”",
       "question_b": "Choose the word nearest in meaning to 'candid'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (diligent vs candid); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.809,
@@ -363,7 +432,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “diligent.”",
       "question_b": "Choose the word nearest in meaning to 'abstain'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (diligent vs abstain); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.805,
@@ -403,7 +475,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “concise.”",
       "question_b": "Choose the word nearest in meaning to 'ephemeral'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (concise vs ephemeral); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.8,
@@ -413,7 +488,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “meticulous.”",
       "question_b": "Choose the word nearest in meaning to 'candid'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (meticulous vs candid); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.8,
@@ -423,7 +501,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “meticulous.”",
       "question_b": "Choose the word nearest in meaning to 'abstain'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (meticulous vs abstain); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.792,
@@ -433,7 +514,10 @@
       "topic": "Motion",
       "question_a": "A car’s velocity changes from 5 m/s to 17 m/s in 4 s. Its average acceleration is:",
       "question_b": "A car's velocity changes from 4 m/s to 16 m/s in 3 seconds. Find its average acceleration.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Acceleration calculation uses different starting/ending velocities and time; valid alternate numerical application.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.792,
@@ -443,7 +527,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “diligent.”",
       "question_b": "Choose the word nearest in meaning to 'obsolete'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (diligent vs obsolete); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.785,
@@ -453,7 +540,12 @@
       "topic": "International trade",
       "question_a": "A country’s balance of trade in goods compares the value of its:",
       "question_b": "A country's balance of trade in goods is the difference between the value of its",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "confirmed_semantic_duplicate",
+      "retain": "batch 2 row 30",
+      "replace": "batch 28 row 30",
+      "reason": "Both ask for the balance of trade in goods and compare merchandise exports with imports; the wording and answer concept are effectively identical. Retain batch 2 row 30 and replace batch 28 row 30 once.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.784,
@@ -463,7 +555,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “meticulous.”",
       "question_b": "Choose the word nearest in meaning to “diligent.”",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (meticulous vs diligent); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.784,
@@ -473,7 +568,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “meticulous.”",
       "question_b": "Choose the word nearest in meaning to 'obsolete'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (meticulous vs obsolete); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.784,
@@ -483,7 +581,10 @@
       "topic": "Vocabulary",
       "question_a": "Choose the word nearest in meaning to “diligent.”",
       "question_b": "Choose the word nearest in meaning to 'ephemeral'.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different vocabulary target (diligent vs ephemeral); preserve both.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     },
     {
       "score": 0.782,
@@ -493,7 +594,30 @@
       "topic": "Calculus",
       "question_a": "Differentiate y = 4x³ − 2x with respect to x.",
       "question_b": "Differentiate y = 5x⁴ − 3x² + 7 with respect to x.",
-      "decision": "distinct_variant_or_needs_review"
+      "decision": "preserve_both_distinct_or_valid_practice_variant",
+      "reason": "Different polynomial expression; both test differentiation, but the mathematical expressions and resulting derivatives differ. Preserve both as practice variants.",
+      "current_csv_checked": true,
+      "csv_changed_in_this_audit": false
     }
+  ],
+  "review_summary": {
+    "total_high_similarity_candidates": 49,
+    "previously_confirmed_already_logged": 15,
+    "newly_contextually_reviewed": 34,
+    "newly_confirmed_semantic_duplicates": 1,
+    "preserve_both_distinct_or_valid_variants": 33,
+    "review_scope": "All 34 previously unclassified candidates in the 49-pair same-subject/topic/subtopic cross-window shortlist were contextually checked against the full current CSV rows where necessary. This is not a review of all 1,304 cross-window screening candidates.",
+    "confirmed_new_pair": {
+      "a": "batch 2 row 30",
+      "b": "batch 28 row 30",
+      "retain": "batch 2 row 30",
+      "replace": "batch 28 row 30",
+      "subject": "Economics",
+      "concept": "Balance of trade in goods"
+    },
+    "remaining_unreviewed_cross_window_candidates": 1255
+  },
+  "notes": [
+    "Contextual review completed for all 34 candidates that were not already marked as confirmed duplicates in the 49-pair high-similarity cross-window shortlist. One additional semantic duplicate was confirmed: batch 2 row 30 / batch 28 row 30 (balance of trade in goods). Retain batch 2 row 30; mark batch 28 row 30 for one controlled replacement. The other 33 pairs were preserved because they test different vocabulary targets, different numerical inputs/data sets, or distinct concepts; some are reusable template variants, not duplicate questions. All decisions are register-only; no original CSV was edited. This does not complete review of the full 1,304 cross-window candidate screen."
   ]
 }
