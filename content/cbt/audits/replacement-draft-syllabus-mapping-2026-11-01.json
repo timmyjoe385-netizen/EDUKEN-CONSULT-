@@ -1,0 +1,367 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Non-destructive syllabus mapping of the 38 proposed replacement questions. This file does not authorize insertion, CSV edits, publication, PR merge or production deployment.",
+  "source_policy": "Use JAMB's IBASS syllabus as the primary reference. The official Mathematics PDF endpoint was not extractable in this audit session; Mathematics mappings remain provisional and must be checked against the live IBASS document. For every subject, confirm the current IBASS revision before publication.",
+  "source_urls": {
+    "Use of English": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
+    "Mathematics": "https://ibass.jamb.gov.ng/assets/uploads/Mathematics.pdf",
+    "Biology": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+    "Chemistry": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+    "Physics": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+    "Economics": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+    "Government": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
+    "Literature in English": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf"
+  },
+  "totals": {
+    "replacement_drafts": 38,
+    "provisionally_aligned": 27,
+    "subject_review_required": 11,
+    "inserted_into_question_csvs": 0
+  },
+  "items": [
+    {
+      "target_id": "DUP-01",
+      "subject": "Mathematics",
+      "syllabus_area": "Geometry/Trigonometry — Euclidean geometry",
+      "rationale": "The rectangle-diagonal property is a plane-geometry property.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Mathematics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-02",
+      "subject": "Chemistry",
+      "syllabus_area": "Organic chemistry — alkanoic acids and esterification",
+      "rationale": "The syllabus expressly includes esterification among alkanoic-acid reactions.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-03",
+      "subject": "Physics",
+      "syllabus_area": "Simple A.C. circuits",
+      "rationale": "The syllabus expressly covers A.C. current and voltage, peak and r.m.s. values.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-04",
+      "subject": "Biology",
+      "syllabus_area": "Heredity — inheritance of characters",
+      "rationale": "Dominant/recessive allele expression is within inheritance and cross-breeding concepts.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-05",
+      "subject": "Literature in English",
+      "syllabus_area": "Poetry — types of poetry (elegy)",
+      "rationale": "Elegy is expressly listed as a poetic type.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-06",
+      "subject": "Biology",
+      "syllabus_area": "Reproduction — sexual reproduction in flowering plants",
+      "rationale": "Seed dispersal by hooks/barbs is related to fruit/seed biology, but seed-dispersal mechanisms are not expressly named in the accessible syllabus text.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-07",
+      "subject": "Physics",
+      "syllabus_area": "Heat transfer",
+      "rationale": "Radiation is expressly listed as a mode of heat transfer.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-08",
+      "subject": "Chemistry",
+      "syllabus_area": "Acids, bases and salts — indicators",
+      "rationale": "Acid/base indicators are expressly included.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-09",
+      "subject": "Chemistry",
+      "syllabus_area": "Electrolysis — electrolysis of dilute sulphuric acid",
+      "rationale": "The syllabus expressly lists electrolysis of dilute H2SO4; the role of ions in conductivity is within this topic.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-10",
+      "subject": "Economics",
+      "syllabus_area": "Money and inflation — deflation",
+      "rationale": "Deflation, its measurement, effects and control are expressly listed.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-11",
+      "subject": "Physics",
+      "syllabus_area": "Refraction of light through plane and curved surfaces — lenses",
+      "rationale": "The syllabus includes types of lenses and lens formula; the optical-centre ray rule is a supporting lens principle.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-12",
+      "subject": "Economics",
+      "syllabus_area": "National income — measurement and estimates",
+      "rationale": "Per-capita income is a national-income estimate/measure and fits this topic.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-13",
+      "subject": "Chemistry",
+      "syllabus_area": "Organic chemistry — alkanes and substitution reactions",
+      "rationale": "The syllabus expressly includes substitution/halogenation reactions of alkanes.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-14",
+      "subject": "Biology",
+      "syllabus_area": "Variety of organisms — living organisms and cell structure; Monera/prokaryotes",
+      "rationale": "The syllabus expressly identifies Monera as prokaryotes and covers cell structure.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-15",
+      "subject": "Economics",
+      "syllabus_area": "Public finance — public expenditure",
+      "rationale": "Teacher salaries fit public expenditure; the specific recurrent-versus-capital classification is not expressly named in the accessible topic list.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-16",
+      "subject": "Chemistry",
+      "syllabus_area": "Separation of mixtures and purification of chemical substances",
+      "rationale": "Separating immiscible liquids is an application of separation methods; the separating-funnel apparatus is not specifically named.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-17",
+      "subject": "Biology",
+      "syllabus_area": "Coordination and control — plant hormones/phytohormones",
+      "rationale": "Auxins and their effects on growth and tropism are expressly included.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-18",
+      "subject": "Physics",
+      "syllabus_area": "Reflection of light at plane and curved surfaces",
+      "rationale": "The laws of reflection are expressly listed.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-19",
+      "subject": "Economics",
+      "syllabus_area": "International trade — trade arrangements/customs unions",
+      "rationale": "A customs union is a regional trade arrangement; the term itself is not expressly named in the accessible syllabus text.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-20",
+      "subject": "Economics",
+      "syllabus_area": "Financial institutions — deposit money banks and creation of money",
+      "rationale": "The syllabus expressly includes deposit money banks and the creation of money.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-21",
+      "subject": "Literature in English",
+      "syllabus_area": "Drama — dramatic techniques",
+      "rationale": "Flashback is expressly listed as a dramatic technique.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-22",
+      "subject": "Biology",
+      "syllabus_area": "Transport — blood, lymph and media of transportation",
+      "rationale": "The syllabus expressly covers blood composition/functions and media of transportation.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-23",
+      "subject": "Economics",
+      "syllabus_area": "International trade / economic growth and development — foreign investment",
+      "rationale": "Foreign direct investment is related to international capital flows and development, but FDI is not expressly named in the accessible syllabus text.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-24",
+      "subject": "Biology",
+      "syllabus_area": "Variety of organisms — Monera/prokaryotes and bacteria",
+      "rationale": "Bacteria/prokaryotes are expressly included; peptidoglycan composition is a supporting structural detail not separately named.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-25",
+      "subject": "Economics",
+      "syllabus_area": "Public finance — taxation and tax principles",
+      "rationale": "Taxation is expressly included; the specific term tax evasion is not expressly listed in the accessible topic text.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-26",
+      "subject": "Physics",
+      "syllabus_area": "Capacitors",
+      "rationale": "Capacitance and numerical problems involving capacitors are expressly included.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-27",
+      "subject": "Mathematics",
+      "syllabus_area": "Algebra — variation (joint variation)",
+      "rationale": "Joint variation is expressly part of the variation topic.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Mathematics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-28",
+      "subject": "Government",
+      "syllabus_area": "Arms of government — legislature; structures of governance — federalism; constitution",
+      "rationale": "Legislative powers and the federal structure are directly covered by the syllabus topics.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-29",
+      "subject": "Use of English",
+      "syllabus_area": "Lexis and structure — ordinary/idiomatic usage and word classes/functions",
+      "rationale": "The preposition collocation is a standard usage/lexis item within this section.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-30",
+      "subject": "Use of English",
+      "syllabus_area": "Lexis and structure — synonyms and word meaning",
+      "rationale": "The syllabus expressly includes synonyms and interpretation of word meaning.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-31",
+      "subject": "Physics",
+      "syllabus_area": "Mechanics — Newton's laws, impulse and momentum",
+      "rationale": "Impulse and momentum are expressly listed under Newton's laws of motion.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Physics.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-32",
+      "subject": "Literature in English",
+      "syllabus_area": "General literary principles — literary terms and figures of speech",
+      "rationale": "Euphemism is a figure of speech; it is not individually named but falls within the syllabus's general literary-terms/figures-of-speech coverage.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-33",
+      "subject": "Use of English",
+      "syllabus_area": "Lexis and structure — word classes/functions and clause patterns",
+      "rationale": "The possessive relative pronoun is a grammar/word-function item within this section.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-34",
+      "subject": "Use of English",
+      "syllabus_area": "Lexis and structure — number and agreement/concord",
+      "rationale": "Agreement/concord is expressly listed.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-35",
+      "subject": "Literature in English",
+      "syllabus_area": "General literary principles — literary terms",
+      "rationale": "Epigraph is a literary term, but it is not individually named in the accessible list; confirm that this extension is acceptable before insertion.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-36",
+      "subject": "Government",
+      "syllabus_area": "Political parties and party systems — organization and functions",
+      "rationale": "Political-party organization is expressly listed.",
+      "match_type": "explicit",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
+      "status": "provisionally_aligned"
+    },
+    {
+      "target_id": "DUP-37",
+      "subject": "Government",
+      "syllabus_area": "Arms of government — legislature; processes of legislation",
+      "rationale": "A private member's bill is a legislative process, but the specific term is not expressly named in the accessible topic list.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
+      "status": "subject_review_required"
+    },
+    {
+      "target_id": "DUP-38",
+      "subject": "Biology",
+      "syllabus_area": "Humans and environment — disease prevention/vaccination; reproduction and development",
+      "rationale": "Maternal antibody transfer/passive immunity is not expressly named in the accessible syllabus text; subject-expert confirmation is required.",
+      "match_type": "review_required",
+      "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
+      "status": "subject_review_required"
+    }
+  ],
+  "release_gate": "Do not insert any replacement until the user explicitly approves the 38-row retain/replace register and the subject-review-required items are cleared. All questions must remain draft until the normal academic review and approval workflow."
+}
