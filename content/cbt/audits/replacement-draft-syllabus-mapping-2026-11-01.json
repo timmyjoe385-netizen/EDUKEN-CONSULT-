@@ -37,11 +37,11 @@
       "target_id": "DUP-02",
       "subject": "Chemistry",
       "syllabus_area": "Electrochemistry — Salt bridge",
-      "rationale": "The replacement tests salt bridge within Chemistry; confirm the exact depth and objective against the current IBASS syllabus.",
+      "rationale": "The replacement tests salt bridge within Chemistry; confirm exact depth and objectives against the current IBASS syllabus.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
       "status": "subject_review_required",
-      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
+      "review_note": "Revised candidate after earlier proposal was withdrawn for semantic overlap. Confirm syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-03",
@@ -65,11 +65,11 @@
       "target_id": "DUP-05",
       "subject": "Literature in English",
       "syllabus_area": "Poetry — Iambic pentameter",
-      "rationale": "The replacement tests iambic pentameter within Literature in English; confirm the exact depth and objective against the current IBASS syllabus.",
+      "rationale": "The replacement tests iambic pentameter within Literature in English; confirm exact depth and objectives against the current IBASS syllabus.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
       "status": "subject_review_required",
-      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
+      "review_note": "Revised candidate after earlier proposal was withdrawn for semantic overlap. Confirm syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-06",
@@ -95,11 +95,11 @@
       "target_id": "DUP-08",
       "subject": "Chemistry",
       "syllabus_area": "Organic chemistry — Natural gas",
-      "rationale": "The replacement tests natural gas within Chemistry; confirm the exact depth and objective against the current IBASS syllabus.",
+      "rationale": "The replacement tests natural gas within Chemistry; confirm exact depth and objectives against the current IBASS syllabus.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
       "status": "subject_review_required",
-      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
+      "review_note": "Revised candidate after earlier proposal was withdrawn for semantic overlap. Confirm syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-09",
@@ -307,11 +307,11 @@
       "target_id": "DUP-30",
       "subject": "Use of English",
       "syllabus_area": "Vocabulary — Specialised vocabulary",
-      "rationale": "The replacement tests specialised vocabulary within Use of English; confirm the exact depth and objective against the current IBASS syllabus.",
+      "rationale": "The replacement tests specialised vocabulary within Use of English; confirm exact depth and objectives against the current IBASS syllabus.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
       "status": "subject_review_required",
-      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
+      "review_note": "Revised candidate after earlier proposal was withdrawn for semantic overlap. Confirm syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-31",
@@ -326,11 +326,11 @@
       "target_id": "DUP-32",
       "subject": "Literature in English",
       "syllabus_area": "Drama — Comedy of manners",
-      "rationale": "The replacement tests comedy of manners within Literature in English; confirm the exact depth and objective against the current IBASS syllabus.",
+      "rationale": "The replacement tests comedy of manners within Literature in English; confirm exact depth and objectives against the current IBASS syllabus.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
       "status": "subject_review_required",
-      "review_note": "This is a revised candidate after the earlier proposal was rejected for semantic overlap. Confirm exact syllabus scope and difficulty before approval."
+      "review_note": "Revised candidate after earlier proposal was withdrawn for semantic overlap. Confirm syllabus scope and difficulty before approval."
     },
     {
       "target_id": "DUP-33",
@@ -916,6 +916,6 @@
     }
   ],
   "release_gate": "26 drafts are provisionally mapped to JAMB IBASS topic/objective coverage, 7 remain held for subject review because their specific detail is not expressly named, and 5 remain blocked by confirmed overlap with the existing bank. These mapping statuses are not academic approval. Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, the 7 subject-review items are cleared or replaced, all 5 blocked items receive distinct replacements, and every draft passes contextual full-bank duplicate review. All questions remain draft until normal academic review and approval.",
-  "revision_note": "All 90 target IDs have current draft candidates and preliminary syllabus mappings. Five earlier candidates (DUP-02, 05, 08, 30, 32) were withdrawn for semantic overlap and replaced with new proposals. Those five replacement mappings are now marked subject_review_required. Historical rejected candidates are documented in the draft revision notes; none is eligible for insertion.",
+  "revision_note": "All 90 target IDs have current replacement candidates. Five previously blocked candidate versions (DUP-02, 05, 08, 30 and 32) were withdrawn and replaced with distinct draft candidates. Current mapping marks those replacements subject_review_required; no candidate has been inserted into original CSVs.",
   "missing_draft_target_ids": []
 }
