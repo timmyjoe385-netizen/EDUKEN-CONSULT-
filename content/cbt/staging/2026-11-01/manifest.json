@@ -246,13 +246,13 @@
   "restrictions": [
     "Original 40 source batch CSVs were not edited or deleted.",
     "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
-    "All 1,553 retained rows still require academic review of syllabus fit, question clarity, options, answer key and explanation.",
-    "The 47 held rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
-    "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
-    "Cross-window screening found 1,304 similarity candidates. Sixty-nine have been manually reviewed; 1,235 remain unreviewed. The original within-window report also has 279 pending candidates and a 38-pair discrepancy against the reconstructed candidate set.",
-    "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
-    "The register now contains 90 confirmed duplicate targets. Existing drafts cover 47; forty-three additional targets (DUP-48 through DUP-90) have no replacement draft yet and remain held.",
-    "All 286 cross-window candidates at or above the 0.65 review threshold have been manually reviewed. The remaining 1,018 lower-scoring candidates have not received manual contextual review. The original within-window report also has 279 pending candidates and a 38-pair discrepancy."
+    "The 1,510 provisionally retained rows are not academically approved or deployment-ready; each requires review of syllabus fit, question clarity, options, answer key and explanation.",
+    "The 90 held duplicate rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
+    "The 90 confirmed duplicate relationships comprise 47 with verified prior-replacement commits, 14 with replacement-created content whose exact introducing commit SHAs remain to be normalized, 28 original-draft overlaps, and one unresolved-provenance pair (DUP-34).",
+    "All 286 cross-window candidates at or above the 0.65 manual-review threshold have been reviewed; 1,018 lower-scoring candidates remain screened but not manually reviewed.",
+    "All 390 reconstructed within-window candidates at threshold 0.42 have review statuses; the original report's 41/349 category split differs by one pair from the reconstructed 40/350 split, and its stated 0.43 threshold does not reproduce the reported total.",
+    "The 47 existing replacement proposals are not approved for insertion: 26 are provisionally syllabus-mapped, 16 require subject review, and five are blocked by existing-bank overlap. A further 43 replacement drafts are still required for DUP-48 through DUP-90.",
+    "No production deployment, PR merge, question publication or production database change is authorised by this staging export."
   ],
   "semantic_review_status": {
     "cross_window_candidates": 1304,
