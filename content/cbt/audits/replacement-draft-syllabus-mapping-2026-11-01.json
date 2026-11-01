@@ -15,10 +15,10 @@
   },
   "totals": {
     "replacement_drafts": 38,
-    "provisionally_aligned": 26,
+    "provisionally_aligned": 24,
     "subject_review_required": 11,
     "inserted_into_question_csvs": 0,
-    "blocked_existing_bank_overlap": 1
+    "blocked_existing_bank_overlap": 3
   },
   "items": [
     {
@@ -286,10 +286,10 @@
       "target_id": "DUP-30",
       "subject": "Use of English",
       "syllabus_area": "Lexis and structure — synonyms and word meaning",
-      "rationale": "The syllabus expressly includes synonyms and interpretation of word meaning.",
+      "rationale": "Confirmed semantic duplicate. Both items test the meaning of the same vocabulary word, meticulous; adding a sentence context does not make it a distinct question-bank concept.",
       "match_type": "explicit",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
-      "status": "provisionally_aligned"
+      "status": "blocked_existing_bank_overlap"
     },
     {
       "target_id": "DUP-31",
@@ -304,10 +304,10 @@
       "target_id": "DUP-32",
       "subject": "Literature in English",
       "syllabus_area": "General literary principles — literary terms and figures of speech",
-      "rationale": "Euphemism is a figure of speech; it is not individually named but falls within the syllabus's general literary-terms/figures-of-speech coverage.",
+      "rationale": "Confirmed semantic duplicate. Both items test euphemism: a mild expression substituted for a harsh/direct expression. The example “passed away” is simply an instance of the same concept.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
-      "status": "subject_review_required"
+      "status": "blocked_existing_bank_overlap"
     },
     {
       "target_id": "DUP-33",
