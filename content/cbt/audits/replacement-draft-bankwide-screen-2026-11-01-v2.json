@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 11,
+  "version": 12,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -11,8 +11,8 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 59,
-    "screened": 59,
+    "count": 67,
+    "screened": 67,
     "all_proposals_screened": true
   },
   "screening_summary": {
@@ -1534,6 +1534,52 @@
           "question": "Which structure receives the filtrate immediately after it passes from the glomerulus during ultrafiltration?"
         }
       ]
+    },
+    {
+      "target_id": "DUP-75",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.4022,
+      "top_matches": [
+        {
+          "location": "batch 12 row 31",
+          "score": 0.4022,
+          "question": "A country has an absolute advantage in producing a good when it can:"
+        },
+        {
+          "location": "batch 02 row 30",
+          "score": 0.3146,
+          "question": "A country’s balance of trade in goods compares the value of its:"
+        },
+        {
+          "location": "batch 20 row 30",
+          "score": 0.3069,
+          "question": "The process of increasing a country's stock of productive assets is called ___."
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-77",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3724,
+      "top_matches": [
+        {
+          "location": "batch 22 row 35",
+          "score": 0.3724,
+          "question": "Public accountability requires public officials to ___."
+        },
+        {
+          "location": "batch 39 row 34",
+          "score": 0.3415,
+          "question": "The principle of political neutrality requires civil servants to:"
+        },
+        {
+          "location": "batch 28 row 32",
+          "score": 0.2994,
+          "question": "The principle of checks and balances allows each arm of government to:"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1546,5 +1592,6 @@
     "count": 65,
     "screened": 65,
     "all_proposals_screened": true
-  }
+  },
+  "revision_note": "Version 12 adds DUP-75 and DUP-77 to the bankwide screening register. Scores were computed against the full 1,600 staged questions in the relevant subject; these are lexical screening results only and do not constitute academic or semantic approval."
 }
