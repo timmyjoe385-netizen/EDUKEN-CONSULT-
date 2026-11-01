@@ -11,14 +11,14 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 85,
-    "screened": 85,
+    "count": 90,
+    "screened": 90,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 16,
-    "below_threshold_count": 49,
+    "below_threshold_count": 74,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -1536,48 +1536,140 @@
       ]
     },
     {
-      "target_id": "DUP-75",
-      "subject": "Economics",
+      "target_id": "DUP-66",
+      "subject": "Physics",
       "flagged": false,
-      "highest_similarity": 0.4022,
+      "highest_similarity": 0.3285,
       "top_matches": [
         {
-          "location": "batch 12 row 31",
-          "score": 0.4022,
-          "question": "A country has an absolute advantage in producing a good when it can:"
+          "location": "batch 17 row 23",
+          "score": 0.3285,
+          "question": "A lamp connected across a 9 V source draws a current of 0.5 A. What is the resistance of the lamp?"
         },
         {
-          "location": "batch 02 row 30",
-          "score": 0.3146,
-          "question": "A country’s balance of trade in goods compares the value of its:"
+          "location": "batch 32 row 26",
+          "score": 0.3192,
+          "question": "A machine receives 500 J of energy and delivers 350 J of useful output energy. What is its efficiency?"
         },
         {
-          "location": "batch 20 row 30",
-          "score": 0.3069,
-          "question": "The process of increasing a country's stock of productive assets is called ___."
+          "location": "batch 01 row 23",
+          "score": 0.3184,
+          "question": "A 4 Ω resistor carries a current of 3 A. What is the potential difference across it?"
         }
       ]
     },
     {
-      "target_id": "DUP-77",
-      "subject": "Government",
+      "target_id": "DUP-67",
+      "subject": "Chemistry",
       "flagged": false,
-      "highest_similarity": 0.3724,
+      "highest_similarity": 0.4094,
       "top_matches": [
         {
-          "location": "batch 22 row 35",
-          "score": 0.3724,
-          "question": "Public accountability requires public officials to ___."
+          "location": "batch 28 row 21",
+          "score": 0.4094,
+          "question": "What is the formula of the ammonium ion?"
         },
         {
-          "location": "batch 39 row 34",
-          "score": 0.3415,
-          "question": "The principle of political neutrality requires civil servants to:"
+          "location": "batch 05 row 19",
+          "score": 0.3787,
+          "question": "Metallic bonding is commonly described as attraction between positive metal ions and:"
         },
         {
-          "location": "batch 28 row 32",
-          "score": 0.2994,
-          "question": "The principle of checks and balances allows each arm of government to:"
+          "location": "batch 15 row 21",
+          "score": 0.327,
+          "question": "Which gas is released when an ammonium salt is warmed with a strong alkali?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-68",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.2653,
+      "top_matches": [
+        {
+          "location": "batch 31 row 6",
+          "score": 0.2653,
+          "question": "Which syllable is stressed in the noun 'photograph'?"
+        },
+        {
+          "location": "batch 09 row 6",
+          "score": 0.2524,
+          "question": "In the noun “REcord” (a document), the primary stress falls on the:"
+        },
+        {
+          "location": "batch 26 row 6",
+          "score": 0.2342,
+          "question": "Which syllable carries the primary stress in the noun “photography”?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-69",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3182,
+      "top_matches": [
+        {
+          "location": "batch 12 row 40",
+          "score": 0.3182,
+          "question": "Which narrative technique attempts to present the continuous flow of a character's thoughts and impressions?"
+        },
+        {
+          "location": "batch 33 row 40",
+          "score": 0.3176,
+          "question": "The sentence 'The classroom was a furnace' is an example of"
+        },
+        {
+          "location": "batch 35 row 37",
+          "score": 0.3158,
+          "question": "A brief remark made by a character to the audience, unheard by the other characters, is an"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-70",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3333,
+      "top_matches": [
+        {
+          "location": "batch 05 row 15",
+          "score": 0.3333,
+          "question": "Vaccination helps protect against certain infections mainly by:"
+        },
+        {
+          "location": "batch 21 row 13",
+          "score": 0.3175,
+          "question": "A thick waxy cuticle on a plant leaf mainly helps to ___."
+        },
+        {
+          "location": "batch 28 row 13",
+          "score": 0.3145,
+          "question": "Which cell structure contains most of the genetic material and helps control cell activities?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-71",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3117,
+      "top_matches": [
+        {
+          "location": "batch 19 row 23",
+          "score": 0.3117,
+          "question": "Two resistors of 6 Ω and 3 Ω are connected in parallel. What is their equivalent resistance?"
+        },
+        {
+          "location": "batch 31 row 23",
+          "score": 0.3077,
+          "question": "A neutral metal sphere is charged without touching it by bringing a charged rod near it and using an earth connection. This process is"
+        },
+        {
+          "location": "batch 07 row 23",
+          "score": 0.2831,
+          "question": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:"
         }
       ]
     },
@@ -1628,6 +1720,52 @@
       ]
     },
     {
+      "target_id": "DUP-74",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2971,
+      "top_matches": [
+        {
+          "location": "batch 26 row 14",
+          "score": 0.2971,
+          "question": "In a population exposed to an antibiotic, resistant bacteria become more common mainly because"
+        },
+        {
+          "location": "batch 08 row 14",
+          "score": 0.2951,
+          "question": "Antibodies are produced mainly by:"
+        },
+        {
+          "location": "batch 18 row 16",
+          "score": 0.2805,
+          "question": "Which structure in the nephron is the main site where blood is filtered under pressure?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-75",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.4022,
+      "top_matches": [
+        {
+          "location": "batch 12 row 31",
+          "score": 0.4022,
+          "question": "A country has an absolute advantage in producing a good when it can:"
+        },
+        {
+          "location": "batch 02 row 30",
+          "score": 0.3146,
+          "question": "A country’s balance of trade in goods compares the value of its:"
+        },
+        {
+          "location": "batch 20 row 30",
+          "score": 0.3069,
+          "question": "The process of increasing a country's stock of productive assets is called ___."
+        }
+      ]
+    },
+    {
       "target_id": "DUP-76",
       "subject": "Economics",
       "flagged": false,
@@ -1647,6 +1785,29 @@
           "location": "batch 17 row 30",
           "score": 0.3182,
           "question": "The government imposes a tax on a product. This is most likely to:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-77",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3724,
+      "top_matches": [
+        {
+          "location": "batch 22 row 35",
+          "score": 0.3724,
+          "question": "Public accountability requires public officials to ___."
+        },
+        {
+          "location": "batch 39 row 34",
+          "score": 0.3415,
+          "question": "The principle of political neutrality requires civil servants to:"
+        },
+        {
+          "location": "batch 28 row 32",
+          "score": 0.2994,
+          "question": "The principle of checks and balances allows each arm of government to:"
         }
       ]
     },
@@ -1674,121 +1835,6 @@
       ]
     },
     {
-      "target_id": "DUP-80",
-      "subject": "Economics",
-      "flagged": false,
-      "highest_similarity": 0.3524,
-      "top_matches": [
-        {
-          "location": "batch 40 row 30",
-          "score": 0.3524,
-          "question": "An economic system in which the state makes most major production and allocation decisions is a"
-        },
-        {
-          "location": "batch 16 row 29",
-          "score": 0.3367,
-          "question": "A cooperative society is an organisation that is generally owned and controlled by:"
-        },
-        {
-          "location": "batch 08 row 28",
-          "score": 0.2919,
-          "question": "A progressive income tax is one in which the average tax rate generally:"
-        }
-      ]
-    },
-    {
-      "target_id": "DUP-88",
-      "subject": "Economics",
-      "flagged": false,
-      "highest_similarity": 0.4167,
-      "top_matches": [
-        {
-          "location": "batch 18 row 27",
-          "score": 0.4167,
-          "question": "When the price of an imported raw material rises, what is the most likely immediate effect on the supply of a product that uses it?"
-        },
-        {
-          "location": "batch 04 row 29",
-          "score": 0.4108,
-          "question": "Other things being equal, an increase in production costs usually causes supply to:"
-        },
-        {
-          "location": "batch 09 row 30",
-          "score": 0.3799,
-          "question": "A reduction in average cost as a firm increases its scale of production is called:"
-        }
-      ]
-    },
-    {
-      "target_id": "DUP-70",
-      "subject": "Biology",
-      "flagged": false,
-      "highest_similarity": 0.3333,
-      "top_matches": [
-        {
-          "location": "batch 05 row 15",
-          "score": 0.3333,
-          "question": "Vaccination helps protect against certain infections mainly by:"
-        },
-        {
-          "location": "batch 21 row 13",
-          "score": 0.3175,
-          "question": "A thick waxy cuticle on a plant leaf mainly helps to ___."
-        },
-        {
-          "location": "batch 28 row 13",
-          "score": 0.3145,
-          "question": "Which cell structure contains most of the genetic material and helps control cell activities?"
-        }
-      ]
-    },
-    {
-      "target_id": "DUP-81",
-      "subject": "Physics",
-      "flagged": false,
-      "highest_similarity": 0.3587,
-      "top_matches": [
-        {
-          "location": "batch 33 row 25",
-          "score": 0.3587,
-          "question": "The increase in length per unit original length per unit rise in temperature is the coefficient of:"
-        },
-        {
-          "location": "batch 31 row 24",
-          "score": 0.3216,
-          "question": "The magnitude of an induced e.m.f. in a coil increases when the magnetic flux through it is changed"
-        },
-        {
-          "location": "batch 40 row 23",
-          "score": 0.2963,
-          "question": "A spring extends by 0.05 m when a force of 10 N is applied. What is its spring constant?"
-        }
-      ]
-    },
-    {
-      "target_id": "DUP-89",
-      "subject": "Use of English",
-      "flagged": false,
-      "highest_similarity": 0.3964,
-      "top_matches": [
-        {
-          "location": "batch 33 row 6",
-          "score": 0.3964,
-          "question": "Which word ends with the same consonant sound as 'laugh'?"
-        },
-        {
-          "location": "batch 07 row 5",
-          "score": 0.3793,
-          "question": "Which word contains the same initial consonant sound as “judge”?"
-        },
-        {
-          "location": "batch 36 row 6",
-          "score": 0.3363,
-          "question": "Which word begins with the same consonant sound as 'judge'?"
-        }
-      ]
-    },
-    {
       "target_id": "DUP-79",
       "subject": "Use of English",
       "flagged": false,
@@ -1812,71 +1858,48 @@
       ]
     },
     {
-      "target_id": "DUP-84",
-      "subject": "Biology",
+      "target_id": "DUP-80",
+      "subject": "Economics",
       "flagged": false,
-      "highest_similarity": 0.4068,
+      "highest_similarity": 0.3524,
       "top_matches": [
         {
-          "location": "batch 21 row 12",
-          "score": 0.4068,
-          "question": "Which blood vessel returns oxygenated blood from the lungs to the heart?"
+          "location": "batch 40 row 30",
+          "score": 0.3524,
+          "question": "An economic system in which the state makes most major production and allocation decisions is a"
         },
         {
-          "location": "batch 22 row 15",
-          "score": 0.8392,
-          "question": "Which blood vessel carries deoxygenated blood from the heart to the lungs?"
+          "location": "batch 16 row 29",
+          "score": 0.3367,
+          "question": "A cooperative society is an organisation that is generally owned and controlled by:"
         },
         {
-          "location": "batch 33 row 12",
-          "score": 0.7117,
-          "question": "Which major blood vessel carries oxygenated blood from the left ventricle to the rest of the body?"
+          "location": "batch 08 row 28",
+          "score": 0.2919,
+          "question": "A progressive income tax is one in which the average tax rate generally:"
         }
       ]
     },
     {
-      "target_id": "DUP-87",
-      "subject": "Use of English",
+      "target_id": "DUP-81",
+      "subject": "Physics",
       "flagged": false,
-      "highest_similarity": 0.406,
+      "highest_similarity": 0.3587,
       "top_matches": [
         {
-          "location": "batch 40 row 3",
-          "score": 0.406,
-          "question": "A person who deliberately sets fire to property is an"
+          "location": "batch 33 row 25",
+          "score": 0.3587,
+          "question": "The increase in length per unit original length per unit rise in temperature is the coefficient of:"
         },
         {
-          "location": "batch 27 row 6",
-          "score": 0.3221,
-          "question": "A rising intonation is commonly used at the end of which type of question?"
+          "location": "batch 31 row 24",
+          "score": 0.3216,
+          "question": "The magnitude of an induced e.m.f. in a coil increases when the magnetic flux through it is changed"
         },
         {
-          "location": "batch 17 row 3",
-          "score": 0.3217,
-          "question": "A person who studies the origin and development of words is a(n) ___."
-        }
-      ]
-    },
-    {
-      "target_id": "DUP-68",
-      "subject": "Use of English",
-      "flagged": false,
-      "highest_similarity": 0.2653,
-      "top_matches": [
-        {
-          "location": "batch 31 row 6",
-          "score": 0.2653,
-          "question": "Which syllable is stressed in the noun 'photograph'?"
-        },
-        {
-          "location": "batch 09 row 6",
-          "score": 0.2524,
-          "question": "In the noun “REcord” (a document), the primary stress falls on the:"
-        },
-        {
-          "location": "batch 26 row 6",
-          "score": 0.2342,
-          "question": "Which syllable carries the primary stress in the noun “photography”?"
+          "location": "batch 40 row 23",
+          "score": 0.2963,
+          "question": "A spring extends by 0.05 m when a force of 10 N is applied. What is its spring constant?"
         }
       ]
     },
@@ -1927,6 +1950,29 @@
       ]
     },
     {
+      "target_id": "DUP-84",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3286,
+      "top_matches": [
+        {
+          "location": "batch 37 row 12",
+          "score": 0.3286,
+          "question": "Which enzyme in the stomach begins the digestion of proteins?"
+        },
+        {
+          "location": "batch 19 row 13",
+          "score": 0.325,
+          "question": "Which enzyme breaks down fats into fatty acids and glycerol during digestion?"
+        },
+        {
+          "location": "batch 02 row 14",
+          "score": 0.3188,
+          "question": "Which enzyme in saliva begins the digestion of starch?"
+        }
+      ]
+    },
+    {
       "target_id": "DUP-85",
       "subject": "Literature in English",
       "flagged": false,
@@ -1973,6 +2019,75 @@
       ]
     },
     {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.406,
+      "top_matches": [
+        {
+          "location": "batch 40 row 3",
+          "score": 0.406,
+          "question": "A person who deliberately sets fire to property is an"
+        },
+        {
+          "location": "batch 27 row 6",
+          "score": 0.3221,
+          "question": "A rising intonation is commonly used at the end of which type of question?"
+        },
+        {
+          "location": "batch 17 row 3",
+          "score": 0.3217,
+          "question": "A person who studies the origin and development of words is a(n) ___."
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-88",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.4167,
+      "top_matches": [
+        {
+          "location": "batch 18 row 27",
+          "score": 0.4167,
+          "question": "When the price of an imported raw material rises, what is the most likely immediate effect on the supply of a product that uses it?"
+        },
+        {
+          "location": "batch 04 row 29",
+          "score": 0.4108,
+          "question": "Other things being equal, an increase in production costs usually causes supply to:"
+        },
+        {
+          "location": "batch 09 row 30",
+          "score": 0.3799,
+          "question": "A reduction in average cost as a firm increases its scale of production is called:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-89",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3964,
+      "top_matches": [
+        {
+          "location": "batch 33 row 6",
+          "score": 0.3964,
+          "question": "Which word ends with the same consonant sound as 'laugh'?"
+        },
+        {
+          "location": "batch 07 row 5",
+          "score": 0.3793,
+          "question": "Which word contains the same initial consonant sound as “judge”?"
+        },
+        {
+          "location": "batch 36 row 6",
+          "score": 0.3363,
+          "question": "Which word begins with the same consonant sound as 'judge'?"
+        }
+      ]
+    },
+    {
       "target_id": "DUP-90",
       "subject": "Chemistry",
       "flagged": false,
@@ -2007,5 +2122,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 17 completes draft coverage for target IDs DUP-66 to DUP-90 by adding six screened candidates. Scores below 0.42 are lexical screens only. DUP-82 is flagged for close concept review against marginal-utility definition questions. No item is approved for insertion by this update."
+  "revision_note": "Version 18 reconciles all 90 replacement drafts to 90 bankwide screening results. The first five new drafts DUP-66, 67, 69, 71 and 74 were added. DUP-84's prior pulmonary-vein candidate was withdrawn as a semantic duplicate of batch 21 row 12 and replaced with a DNA-ligase question; its screening result was recalculated against all 200 Biology rows. All flagged scores remain review prompts, not verdicts."
 }
