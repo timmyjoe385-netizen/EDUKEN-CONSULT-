@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 15,
+  "version": 16,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -11,8 +11,8 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 77,
-    "screened": 77,
+    "count": 79,
+    "screened": 79,
     "all_proposals_screened": true
   },
   "screening_summary": {
@@ -1810,6 +1810,52 @@
           "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
         }
       ]
+    },
+    {
+      "target_id": "DUP-84",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.4068,
+      "top_matches": [
+        {
+          "location": "batch 21 row 12",
+          "score": 0.4068,
+          "question": "Which blood vessel returns oxygenated blood from the lungs to the heart?"
+        },
+        {
+          "location": "batch 22 row 15",
+          "score": 0.8392,
+          "question": "Which blood vessel carries deoxygenated blood from the heart to the lungs?"
+        },
+        {
+          "location": "batch 33 row 12",
+          "score": 0.7117,
+          "question": "Which major blood vessel carries oxygenated blood from the left ventricle to the rest of the body?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.406,
+      "top_matches": [
+        {
+          "location": "batch 40 row 3",
+          "score": 0.406,
+          "question": "A person who deliberately sets fire to property is an"
+        },
+        {
+          "location": "batch 27 row 6",
+          "score": 0.3221,
+          "question": "A rising intonation is commonly used at the end of which type of question?"
+        },
+        {
+          "location": "batch 17 row 3",
+          "score": 0.3217,
+          "question": "A person who studies the origin and development of words is a(n) ___."
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1823,5 +1869,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 15 adds DUP-79. Same-subject maximum trigram Dice similarity is 0.3810 (batch 14 row 2), below the 0.42 lexical flag threshold. The candidate remains a draft and requires human semantic review."
+  "revision_note": "Version 16 adds DUP-84 and DUP-87. Both have same-subject lexical scores below 0.42 and remain draft-only pending independent review."
 }
