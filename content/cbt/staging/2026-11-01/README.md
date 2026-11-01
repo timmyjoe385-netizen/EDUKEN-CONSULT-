@@ -8,8 +8,8 @@
 - Reconciliation: 1,510 + 90 = 1,600.
 
 ## Provenance
-- 47 duplicate relationships have commit-backed prior-replacement history.
-- 14 further pairs contain later replacement-created content confirmed against the original batch snapshots; exact introducing commit SHAs still need normalization.
+- 48 duplicate relationships have commit-backed prior-replacement history.
+- 13 further pairs contain later replacement-created content confirmed against the original batch snapshots; exact introducing commit SHAs still need normalization.
 - 28 are original-draft overlaps.
 - One pair (DUP-34) still has unresolved provenance.
 - Two three-question clusters have one retained row and two held rows: Government (batch 32 row 34 retained; batches 26 row 34 and 33 row 35 held) and Literature exposition (batch 11 row 37 retained; batches 19 row 38 and 31 row 37 held).
@@ -20,7 +20,7 @@
 - `manifest.json`: per-batch counts, provenance classification and release gates.
 
 ## Replacement status
-There are 90 confirmed duplicate targets. Existing draft proposals cover 47 targets (DUP-01 to DUP-47). Forty-three newly confirmed targets (DUP-48 to DUP-90) have no replacement draft yet and remain held. Of the existing 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap. No replacement draft has been inserted into the original bank.
+There are 90 confirmed duplicate targets. Existing draft proposals now cover 49 targets, including new proposals for DUP-48 and DUP-49. Forty-one targets (DUP-50 to DUP-90) still have no replacement draft and remain held. Among the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap. The two new proposals are also pending subject and bank-wide similarity review. No replacement draft has been inserted into the original bank.
 
 ## Semantic-review status
 - Within-window reconstruction: 390 candidate pairs at the reproduced 0.42 threshold; all 390 have explicit review statuses. This includes 350 different-topic/subtopic candidates contextually reviewed and 40 same-topic/subtopic candidates carried forward as previously reviewed.
