@@ -18,16 +18,16 @@
 - `retained-batches-*.csv`: provisionally retained rows grouped into four 10-batch windows. Each includes original batch and CSV-row provenance, followed by all 18 original question fields.
 - `held-duplicates-*.csv`: all held rows, with pair ID and retained/held source locations.
 - `manifest.json`: per-batch counts, provenance classification and release gates.
-- `../audits/replacement-draft-bankwide-screen-2026-11-01-v2.json`: version 9 lexical screen of all 61 replacement proposals against all 1,600 staged source rows. Lexical flags are review prompts, not duplicate verdicts or academic approval.
-- `../audits/replacement-draft-subject-review-2026-11-01.json`: preliminary answer/concept checks for DUP-48 through DUP-61; not independent subject-expert approval.
+- `../audits/replacement-draft-bankwide-screen-2026-11-01-v2.json`: version 10 lexical screen of all 63 replacement proposals against all 1,600 staged source rows. Lexical flags are review prompts, not duplicate verdicts or academic approval.
+- `../audits/replacement-draft-subject-review-2026-11-01.json`: preliminary answer/concept checks for DUP-48 through DUP-63; not independent subject-expert approval.
 
 ## Replacement status
-There are 90 confirmed duplicate targets. Separate draft proposals now cover 61 targets; 29 targets (DUP-62 to DUP-90) still need drafts. Five proposals remain blocked because they overlap existing bank questions. The other 56 proposals are not cleared for insertion. Fourteen recent proposals (DUP-48 to DUP-61) have preliminary AI-assisted answer/concept checks recorded, but independent subject review and contextual bank-wide clearance remain outstanding.
+There are 90 confirmed duplicate targets. Separate draft proposals now cover 63 targets; 27 targets (DUP-64 to DUP-90) still need drafts. Five proposals remain blocked because they overlap existing bank questions. The other 58 proposals are not cleared for insertion. Sixteen recent proposals (DUP-48 to DUP-63) have preliminary AI-assisted answer/concept checks recorded, but independent subject review and contextual bank-wide clearance remain outstanding.
 
-The version 9 lexical screen covers all 61 proposals against all 1,600 staged rows. Sixteen proposals meet or exceed the 0.42 review threshold; these are similarity prompts, not confirmed duplicates. DUP-60 (Organ of Corti/hearing) and DUP-61 (shoot phototropism) score 0.2783 and 0.2262 respectively against their closest same-subject matches.
+The version 10 lexical screen covers all 63 proposals against all 1,600 staged rows. Sixteen proposals meet or exceed the 0.42 review threshold; these are similarity prompts, not confirmed duplicates. Recent proposals include DUP-60 (Organ of Corti/hearing), DUP-61 (shoot phototropism), DUP-62 (enjambment) and DUP-63 (map-scale conversion). DUP-62's closest lexical match is a caesura definition (a distinct but related poetic technique); independent Literature review is required. DUP-63's syllabus coverage for map scales must be confirmed.
 
 ## Source-row indexing check
-Register locations use physical CSV row numbers, including the header row. DUP-60 (batch 7 row 15; batch 16 row 15) and DUP-61 (batch 6 row 13; batch 28 row 16) were checked against those exact physical rows and match the staging holdout records. The original source CSVs remain unchanged.
+Register locations use physical CSV row numbers, including the header row. DUP-60 (batch 7 row 15; batch 16 row 15) and DUP-61 (batch 6 row 13; batch 28 row 16) were checked at those exact physical rows and match the staging holdout records. The original source CSVs remain unchanged.
 
 ## Semantic-review status
 - Within-window reconstruction: 390 candidate pairs at the reproduced 0.42 threshold; all 390 have explicit review statuses. This includes 350 different-topic/subtopic candidates contextually reviewed and 40 same-topic/subtopic candidates carried forward as previously reviewed.
@@ -36,6 +36,6 @@ Register locations use physical CSV row numbers, including the header row. DUP-6
 - Similarity candidates are not duplicates by themselves. Confirmed duplicate decisions are recorded separately in the 90-pair disposition register.
 
 ## Important
-This is a staging export, not approval to publish. The original 40 batch CSVs have not been modified. The 1,510 retained questions are not yet academically approved or deployment-ready. All replacement proposals require validation of syllabus fit, question clarity, options, answer key, explanation and bank-wide uniqueness. The physical-row indexing convention is documented above; the checked DUP-60 and DUP-61 locations match.
+This is a staging export, not approval to publish. The original 40 batch CSVs have not been modified. The 1,510 retained questions are not yet academically approved or deployment-ready. All replacement proposals require validation of syllabus fit, question clarity, options, answer key, explanation and bank-wide uniqueness.
 
 No Supabase import, publication, PR merge or production deployment is authorised by this staging export.
