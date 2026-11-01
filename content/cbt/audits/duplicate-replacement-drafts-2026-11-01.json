@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
-  "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 59,
+  "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
+  "draft_count": 61,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 53 proposals remain drafts. The six newest proposals (DUP-48 to DUP-53) require independent subject review and bank-wide contextual review. DUP-48 has a strong lexical similarity flag against the existing diction item; the concepts appear distinct but require a subject reviewer. DUP-50 was changed to a Golgi-apparatus question to avoid the existing ABO overlap.",
+  "important": "All 61 proposals remain separate, unpublished drafts. DUP-60 and DUP-61 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts. Source-row mapping discrepancies between the current original batch CSVs and the staging holdout records must be reconciled before final bank assembly.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -1080,14 +1080,50 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "Revised to use a clear literary example after the prior wording triggered lexical similarity against metaphor questions. The revised wording is screened against all source rows."
+    },
+    {
+      "target_id": "DUP-60",
+      "subject": "Biology",
+      "topic": "Sense organs",
+      "subtopic": "Hearing",
+      "question": "The sensory hair cells that detect sound vibrations are located in the:",
+      "options": [
+        "Organ of Corti",
+        "Semicircular canals",
+        "Eustachian tube",
+        "Auditory nerve"
+      ],
+      "answer": "A",
+      "explanation": "The Organ of Corti lies within the cochlea and contains hair cells that convert sound-induced mechanical vibrations into nerve impulses carried by the auditory nerve.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. Important: the current original-batch CSV files do not match the row text recorded in the staging holdout file for the cited source locations. Reconcile source-row provenance before final bank assembly. Independent Biology review remains required."
+    },
+    {
+      "target_id": "DUP-61",
+      "subject": "Biology",
+      "topic": "Plant physiology",
+      "subtopic": "Phototropism",
+      "question": "A young plant shoot bends towards light because cells on its shaded side undergo greater:",
+      "options": [
+        "cell elongation",
+        "cell division only",
+        "loss of chlorophyll",
+        "water loss"
+      ],
+      "answer": "A",
+      "explanation": "In positive phototropism, auxin promotes greater cell elongation on the shaded side of a shoot. The unequal growth causes the shoot to bend towards the light.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. Important: the current original-batch CSV files do not match the row text recorded in the staging holdout file for the cited source locations. Reconcile source-row provenance before final bank assembly. Independent Biology review remains required."
     }
   ],
-  "revision_note": "DUP-58 and DUP-59 drafted for the next confirmed Biology and Literature in English holdouts. Both remain separate proposals and are not inserted into source CSVs.",
+  "revision_note": "DUP-60 and DUP-61 added as separate Biology proposals (Organ of Corti/hearing and shoot phototropism). Both are below the 0.42 lexical threshold against all 1,600 staged rows. Their staged held-row text is verified, but the listed source locations do not match the corresponding rows in the current original-batch CSV files; provenance reconciliation is a release blocker. No original CSV changed.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 31,
+  "drafts_missing": 29,
   "drafts_missing_target_ids": [
-    "DUP-60",
-    "DUP-61",
     "DUP-62",
     "DUP-63",
     "DUP-64",
