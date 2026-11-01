@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 84,
+  "draft_count": 90,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1536,17 +1536,119 @@
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-68",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Homographs",
+      "question": "In “Strong winds damaged the roof”, the noun “winds” refers to:",
+      "options": [
+        "Moving air",
+        "A winding path",
+        "A musical instrument",
+        "A direction on a map"
+      ],
+      "answer": "A",
+      "explanation": "Here “winds” means moving air. The word “wind” can also be a verb meaning to turn or twist, with a different pronunciation.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-82",
+      "subject": "Economics",
+      "topic": "Consumer behaviour",
+      "subtopic": "Law of diminishing marginal utility",
+      "question": "As a consumer consumes additional units of a good within a given period, the marginal utility from each successive unit generally:",
+      "options": [
+        "Increases continuously",
+        "Diminishes",
+        "Remains permanently zero",
+        "Becomes equal to total expenditure"
+      ],
+      "answer": "B",
+      "explanation": "The law of diminishing marginal utility states that, other things being equal, the additional satisfaction from each extra unit consumed tends to fall as consumption increases.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "Lexical score is below 0.42 but close to existing marginal-utility definition items; independent Economics reviewer must confirm the law-of-diminishing-utility distinction before approval."
+    },
+    {
+      "target_id": "DUP-83",
+      "subject": "Literature in English",
+      "topic": "Literary terms",
+      "subtopic": "Pseudonym",
+      "question": "A writer who publishes under an assumed name different from their own is using a:",
+      "options": [
+        "Pseudonym",
+        "Prologue",
+        "Refrain",
+        "Soliloquy"
+      ],
+      "answer": "A",
+      "explanation": "A pseudonym is an assumed or pen name used by an author instead of their actual name.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-85",
+      "subject": "Literature in English",
+      "topic": "Drama and stagecraft",
+      "subtopic": "Blocking",
+      "question": "In theatre, the planned movement and positioning of actors on stage during a performance is known as:",
+      "options": [
+        "Blocking",
+        "Casting",
+        "Diction",
+        "Catharsis"
+      ],
+      "answer": "A",
+      "explanation": "Blocking is the planned arrangement and movement of performers on stage to support the action and visual composition of a production.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-86",
+      "subject": "Chemistry",
+      "topic": "Qualitative analysis",
+      "subtopic": "Test for nitrate ions",
+      "question": "In the brown-ring test for nitrate ions, the characteristic brown ring forms at the:",
+      "options": [
+        "Bottom of the test tube",
+        "Junction of the two liquid layers",
+        "Surface of the solution",
+        "Outside of the test tube"
+      ],
+      "answer": "B",
+      "explanation": "In the brown-ring test, freshly prepared iron(II) sulfate is added, followed carefully by concentrated sulfuric acid. A brown ring forms at the interface between the two liquid layers.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-90",
+      "subject": "Chemistry",
+      "topic": "Crystallisation",
+      "subtopic": "Water of crystallisation",
+      "question": "In hydrated copper(II) sulfate, CuSO₄·5H₂O, the number 5 indicates that each formula unit contains:",
+      "options": [
+        "Five sulfate ions",
+        "Five water molecules of crystallisation",
+        "Five copper ions",
+        "Five hydrogen ions"
+      ],
+      "answer": "B",
+      "explanation": "The dot formula CuSO₄·5H₂O shows five water molecules associated with each formula unit of hydrated copper(II) sulfate.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-84 and DUP-87 added after full same-subject lexical screening below 0.42 and draft-bank checks. DUP-68, DUP-82, DUP-83, DUP-85, DUP-86 and DUP-90 remain unfilled while candidate overlaps are redesigned or reviewed.",
+  "revision_note": "All 25 newly identified holdout targets DUP-66 to DUP-90 now have draft records. Six final drafts (DUP-68, 82, 83, 85, 86 and 90) were added after full same-subject bank screening. This is draft completeness only: flagged, semantically overlapping, blocked and unreviewed candidates remain excluded from insertion until their review gates are satisfied.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 6,
-  "drafts_missing_target_ids": [
-    "DUP-68",
-    "DUP-82",
-    "DUP-83",
-    "DUP-85",
-    "DUP-86",
-    "DUP-90"
-  ]
+  "drafts_missing": 0,
+  "drafts_missing_target_ids": []
 }
