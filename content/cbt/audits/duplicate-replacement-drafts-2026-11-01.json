@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 57,
+  "draft_count": 59,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 53 proposals remain drafts. The six newest proposals (DUP-48 to DUP-53) require independent subject review and bank-wide contextual review. DUP-48 has a strong lexical similarity flag against the existing diction item; the concepts appear distinct but require a subject reviewer. DUP-50 was changed to a Golgi-apparatus question to avoid the existing ABO overlap.",
   "items": [
@@ -1042,14 +1042,48 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-58",
+      "subject": "Biology",
+      "topic": "Evolution",
+      "subtopic": "Homologous structures",
+      "question": "The forelimbs of humans, whales and bats have a similar basic arrangement of bones but perform different functions. These structures provide evidence of:",
+      "options": [
+        "Convergent evolution from unrelated ancestors",
+        "Common ancestry through divergent evolution",
+        "Artificial selection by humans",
+        "Identical habitats and feeding habits"
+      ],
+      "answer": "B",
+      "explanation": "Homologous structures share a basic anatomical plan because they were inherited from a common ancestor, although they may have become adapted for different functions. This is evidence of divergent evolution.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-59",
+      "subject": "Literature in English",
+      "topic": "Literary devices",
+      "subtopic": "Epithet",
+      "question": "In literature, an epithet is best described as:",
+      "options": [
+        "A repeated line at the end of each stanza",
+        "A descriptive word or phrase that highlights a characteristic of a person or thing",
+        "A comparison that uses “like” or “as”",
+        "A deliberate contradiction between appearance and reality"
+      ],
+      "answer": "B",
+      "explanation": "An epithet is a descriptive word or phrase attached to a person or thing to express a notable quality or characteristic. The other options describe a refrain, simile and irony respectively.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-56 and DUP-57 drafted for the next confirmed Literature in English and Use of English holdouts. Both remain separate proposals and are not inserted into the source CSVs.",
+  "revision_note": "DUP-58 and DUP-59 drafted for the next confirmed Biology and Literature in English holdouts. Both remain separate proposals and are not inserted into source CSVs.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 33,
+  "drafts_missing": 31,
   "drafts_missing_target_ids": [
-    "DUP-58",
-    "DUP-59",
     "DUP-60",
     "DUP-61",
     "DUP-62",
