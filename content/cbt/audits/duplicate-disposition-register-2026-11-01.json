@@ -61,10 +61,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 39,
-    "draft_count": 51
+    "additional_replacement_drafts_required": 37,
+    "draft_count": 53
   },
-  "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 51 proposals, leaving 39 targets (DUP-52 through DUP-90) without drafts. Of the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; four additional proposals (DUP-48 to DUP-51) are pending subject and bank-wide review. None is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
+  "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 53 proposals, leaving 37 targets (DUP-54 through DUP-90) without drafts. Of the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; four additional proposals (DUP-48 to DUP-51) are pending subject and bank-wide review. None is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1025,10 +1025,10 @@
       "provenance": "Both questions were present in original batch-creation commits: batch 6 aa349ac1f168 and batch 20 e3bf96175e7f. No replacement-introducing commit was found for these rows; original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "preliminary_ai_review_only_human_review_required",
+        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
       }
     },
     {
@@ -1045,10 +1045,10 @@
       "provenance": "Both rows are present in original batch-creation commits: batch 8 99167dee76f3 and batch 12 e69e4822a8d5. No replacement-introducing commit was found; original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "preliminary_ai_review_only_human_review_required",
+        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
       }
     },
     {
@@ -1065,10 +1065,10 @@
       "provenance": "Both rows are present in original batch-creation commits: batch 9 5f26270a5ea3 and batch 31 7c71ed78f94f. No replacement-introducing commit was found; original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "preliminary_ai_review_only_human_review_required",
+        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
       }
     },
     {
@@ -1085,10 +1085,10 @@
       "provenance": "Batch 25 row 24 is present in original batch-creation commit c83ea029b945. Batch 11 row 24 was introduced by replacement/diversification commit e2b578d11025, replacing a wave-speed question. Corrective overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "preliminary_ai_review_only_human_review_required",
+        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
       }
     },
     {
@@ -1105,10 +1105,10 @@
       "provenance": "Both rows are present in original batch-creation commits: batch 3 b784577a761b and batch 18 d3a017fad241. No replacement-introducing commit was found; original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "preliminary_ai_review_only_human_review_required",
+        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
       }
     },
     {
@@ -1125,10 +1125,10 @@
       "provenance": "Both rows are present in original batch-creation commits: batch 19 b7720d18e8ba and batch 33 7c351499fa95. No replacement-introducing commit was found; original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "preliminary_ai_review_only_human_review_required",
+        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
       }
     },
     {
@@ -1957,5 +1957,6 @@
       "DUP-34"
     ],
     "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Thirteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
-  }
+  },
+  "revision_note": "DUP-52 and DUP-53 have now been drafted separately. DUP-50 was revised to avoid overlap with the existing ABO blood-group item. 53 proposals exist; 37 targets (DUP-54 through DUP-90) still lack drafts."
 }
