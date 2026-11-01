@@ -39,8 +39,10 @@
     "cross_window_pairs": 42,
     "within_window_pairs": 15,
     "total_pairs": 57,
-    "prior_replacement_provenance_pairs": 42,
-    "original_draft_overlap_pairs": 15
+    "prior_replacement_provenance_pairs": 41,
+    "original_draft_overlap_pairs": 15,
+    "provenance_unverified_pairs": 1,
+    "provenance_classification_complete": false
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -1259,5 +1261,14 @@
     "additional_replacement_drafts_required": 10,
     "subject_review_required": 16,
     "provisionally_aligned": 26
+  },
+  "history_reconciliation_status": {
+    "prior_replacement_provenance_relationships": 41,
+    "original_draft_overlap_relationships": 15,
+    "unverified_relationships": 1,
+    "unverified_pair_ids": [
+      "DUP-34"
+    ],
+    "note": "The row-level history list and register provenance notes now account for 41 prior-replacement overlaps and 15 original-draft overlaps. DUP-34 remains explicitly unresolved. Do not count it as a verified prior-replacement or original-draft overlap."
   }
 }
