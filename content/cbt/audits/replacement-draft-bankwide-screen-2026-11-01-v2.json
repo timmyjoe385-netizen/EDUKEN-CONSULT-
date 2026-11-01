@@ -1,8 +1,8 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 9,
-  "purpose": "Refreshed non-destructive lexical screen of all 61 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
+  "version": 10,
+  "purpose": "Refreshed non-destructive lexical screen of all 63 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -18,7 +18,7 @@
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 16,
-    "below_threshold_count": 45,
+    "below_threshold_count": 47,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -1442,6 +1442,52 @@
           "question": "When a plant cell is placed in a strongly concentrated salt solution, its protoplast may shrink away from the cell wall. This is called:"
         }
       ]
+    },
+    {
+      "target_id": "DUP-62",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.4046,
+      "top_matches": [
+        {
+          "location": "batch 16 row 37",
+          "score": 0.4046,
+          "question": "A pause within a line of poetry, often created by punctuation or a break in the rhythm, is called a:"
+        },
+        {
+          "location": "batch 15 row 41",
+          "score": 0.4,
+          "question": "In classical tragedy, anagnorisis refers to the moment when a character:"
+        },
+        {
+          "location": "batch 36 row 37",
+          "score": 0.3576,
+          "question": "A struggle between a character and forces outside that character is known as:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-63",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3648,
+      "top_matches": [
+        {
+          "location": "batch 28 row 8",
+          "score": 0.3648,
+          "question": "A sector has a central angle of 90°. What fraction of the full circle does it represent?"
+        },
+        {
+          "location": "batch 22 row 9",
+          "score": 0.3247,
+          "question": "An angle at the centre of a circle is 100°. What is the angle at the circumference standing on the same arc?"
+        },
+        {
+          "location": "batch 25 row 11",
+          "score": 0.3226,
+          "question": "What is the distance of the point (−3, 4) from the origin?"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1451,8 +1497,8 @@
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
   ],
   "proposals": {
-    "count": 61,
-    "screened": 61,
+    "count": 63,
+    "screened": 63,
     "all_proposals_screened": true
   }
 }
