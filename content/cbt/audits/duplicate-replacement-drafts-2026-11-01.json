@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 55,
+  "draft_count": 57,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 53 proposals remain drafts. The six newest proposals (DUP-48 to DUP-53) require independent subject review and bank-wide contextual review. DUP-48 has a strong lexical similarity flag against the existing diction item; the concepts appear distinct but require a subject reviewer. DUP-50 was changed to a Golgi-apparatus question to avoid the existing ABO overlap.",
   "items": [
@@ -1006,14 +1006,48 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-56",
+      "subject": "Literature in English",
+      "topic": "Sound devices",
+      "subtopic": "Euphony",
+      "question": "A poet arranges words and sounds to produce a smooth, harmonious and pleasing auditory effect. This technique is known as:",
+      "options": [
+        "Cacophony",
+        "Euphony",
+        "Sibilance",
+        "Onomatopoeia"
+      ],
+      "answer": "B",
+      "explanation": "Euphony is the use or arrangement of pleasing, harmonious sounds. Cacophony produces harsh or discordant sounds; sibilance repeats hissing consonants; onomatopoeia imitates sounds.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-57",
+      "subject": "Use of English",
+      "topic": "Cohesion",
+      "subtopic": "Ellipsis as a cohesive device",
+      "question": "In the sentence “Ada chose the blue dress, while Tola the red one,” which cohesive device allows the verb phrase “chose” to be omitted from the second clause?",
+      "options": [
+        "Substitution",
+        "Ellipsis",
+        "Reference",
+        "Conjunction"
+      ],
+      "answer": "B",
+      "explanation": "Ellipsis is the omission of a word or group of words that can be understood from the surrounding text. Here, “chose” is understood after “Tola” and is therefore omitted.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-54 and DUP-55 drafted for the next confirmed Economics and Literature in English holdouts. Both remain separate draft proposals and are not inserted into source CSVs.",
+  "revision_note": "DUP-56 and DUP-57 drafted for the next confirmed Literature in English and Use of English holdouts. Both remain separate proposals and are not inserted into the source CSVs.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 35,
+  "drafts_missing": 33,
   "drafts_missing_target_ids": [
-    "DUP-56",
-    "DUP-57",
     "DUP-58",
     "DUP-59",
     "DUP-60",
