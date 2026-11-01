@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-61. This is not independent subject-expert sign-off.",
+  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-63. This is not independent subject-expert sign-off.",
   "reviewer_status": "preliminary_review_completed_human_subject_review_still_required",
   "reviews": [
     {
@@ -130,6 +130,24 @@
       "syllabus_fit": "Provisionally fits plant responses and tropic movements.",
       "bank_overlap": "Full 1,600-row staged-bank lexical screen: highest same-subject Dice score 0.2262; closest match concerns xylem transport, not phototropism. Contextual review remains required.",
       "decision": "Keep as a separate draft pending independent Biology review and source-row provenance reconciliation."
+    },
+    {
+      "target_id": "DUP-62",
+      "subject": "Literature in English",
+      "assessment": "preliminary_pass_pending_human_review",
+      "answer_check": "A is correct. Enjambment carries grammatical sense across a line ending without a pause; caesura is a pause within a line.",
+      "syllabus_fit": "Provisionally fits poetic techniques and sound/structure devices; confirm exact syllabus coverage.",
+      "bank_overlap": "Highest same-subject Dice score is 0.4046 against a caesura definition. The concepts are distinct but lexically close; human Literature review is important.",
+      "decision": "Keep as a separate draft pending independent Literature review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-63",
+      "subject": "Mathematics",
+      "assessment": "preliminary_pass_pending_human_review",
+      "answer_check": "C is correct. 4 × 50,000 cm = 200,000 cm = 2,000 m = 2 km.",
+      "syllabus_fit": "Provisionally fits ratio, proportion and scale conversion; confirm map-scale coverage in the current JAMB Mathematics syllabus.",
+      "bank_overlap": "Highest same-subject Dice score is 0.3648 against a circle-sector question. No concept-level duplicate identified in the screen; contextual review remains required.",
+      "decision": "Keep as a separate draft pending independent Mathematics review and syllabus confirmation."
     }
   ],
   "release_gate": "All assistant checks are preliminary, not independent academic sign-off. Do not insert or publish any replacement until subject-competent review, full contextual bank review, source-row provenance reconciliation and the user's final controlled replacement approval."
