@@ -135,3 +135,26 @@ The last unresolved within-window candidate, batch 31 row 2 versus batch 33 row 
 No question CSV was edited by this decision. All 1,600 questions remain drafts. The 390 within-window lexical candidates are not all fully reviewed: the highest-priority same-topic/subtopic set and 70 highest-scoring different-topic/subtopic candidates have been reviewed, but the remaining different-topic candidate tail is still outstanding. Similarity scores must not be treated as duplicate decisions.
 
 Next gate: finish the full location-level reconciliation of all 32 confirmed pairs against prior replacement commits and all earlier question edits; then finish the remaining candidate review and produce a definitive retain/replace/preserve register before editing question CSVs.
+
+
+## Continuation update — 1 November 2026 (both workstreams)
+
+The detailed global findings now record **33 confirmed semantic duplicate pairs**: 22 cross-window and 11 within-window. The latest additional within-window finding is batch 38 row 2 versus batch 39 row 5: both use the same "Each of the players" subject frame and test singular verb agreement. Retain batch 38 row 2; mark batch 39 row 5 for replacement only after historical provenance reconciliation. No question CSV was edited.
+
+### Candidate-tail reconciliation
+
+The original within-window triage reports 349 different-topic/subtopic candidates, of which the 70 highest-scoring candidates had already been reviewed. An independent recomputation from the four stored 400-question window indexes at the documented same-subject trigram-Dice threshold of 0.43 reproduced 314 different-topic/subtopic candidates. The 244 lower-scoring pairs after the top 70 were inspected; one further duplicate was confirmed (batch 38 row 2 / batch 39 row 5), and the reviewed remainder were preserved as distinct assessment concepts. The original 349 count and independent 314 count differ by 35; those 35 candidates must be reconciled before the full candidate review can be declared complete. Similarity scores alone are not duplicate decisions.
+
+### Historical replacement reconciliation
+
+The retrieved branch history was enumerated across 400 commits, and targeted batch histories and selected replacement/diversification patches were inspected. Five prior-replacement overlaps remain confirmed: batch 32 row 34 / batch 33 row 35; batch 2 row 40 / batch 37 row 41; batch 26 row 4 / batch 30 row 3; batch 25 row 31 / batch 33 row 29; and batch 6 row 29 / batch 37 row 29. These must be corrected only once. The complete row-by-row provenance ledger for all 33 pairs is not yet complete; the new batch 38/39 concord pair also remains in that queue.
+
+### Next gates
+
+1. Reconcile the 35-candidate count discrepancy against the original candidate-generation method.
+2. Complete row-level provenance checks for all 33 confirmed pairs against prior replacement commits and CSV edit history.
+3. Publish a definitive retain / replace / preserve register.
+4. Only then edit the selected CSV rows, preserving subject balance and topic coverage.
+5. Re-run all 1,600-question validation and isolated CBT tests.
+
+All 1,600 questions remain drafts. Original question files remain unchanged by this audit. PR #194 remains unmerged; no production deployment or publication is authorised by this work.
