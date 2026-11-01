@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "purpose": "Preliminary AI-assisted academic and syllabus-fit review of replacement proposals DUP-48 to DUP-53. This is not independent subject-expert sign-off.",
+  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-61. This is not independent subject-expert sign-off.",
   "reviewer_status": "preliminary_review_completed_human_subject_review_still_required",
   "reviews": [
     {
@@ -112,7 +112,25 @@
       "syllabus_fit": "Provisionally fits literary devices and terminology.",
       "bank_overlap": "After replacing the earlier generic and Richard-the-Lionheart stems, the refreshed screen's highest same-subject score is 0.4113. Human contextual review remains required.",
       "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-60",
+      "subject": "Biology",
+      "assessment": "preliminary_pass_pending_human_review",
+      "answer_check": "A is correct. The Organ of Corti is located in the cochlea and contains sensory hair cells that transduce mechanical vibrations into nerve impulses.",
+      "syllabus_fit": "Provisionally fits sense organs and the physiology of hearing.",
+      "bank_overlap": "Full 1,600-row staged-bank lexical screen: highest same-subject Dice score 0.2783; closest match concerns water uptake by root hair cells, not hearing. Contextual review remains required.",
+      "decision": "Keep as a separate draft pending independent Biology review and source-row provenance reconciliation."
+    },
+    {
+      "target_id": "DUP-61",
+      "subject": "Biology",
+      "assessment": "preliminary_pass_pending_human_review",
+      "answer_check": "A is correct. Unequal cell elongation on the shaded side causes a shoot to bend towards the light; auxin distribution mediates the response.",
+      "syllabus_fit": "Provisionally fits plant responses and tropic movements.",
+      "bank_overlap": "Full 1,600-row staged-bank lexical screen: highest same-subject Dice score 0.2262; closest match concerns xylem transport, not phototropism. Contextual review remains required.",
+      "decision": "Keep as a separate draft pending independent Biology review and source-row provenance reconciliation."
     }
   ],
-  "release_gate": "These are preliminary assistant checks, not independent academic sign-off. Do not insert any of DUP-48 to DUP-53 into original CSVs or publish them until subject-competent review, full contextual bank review and the user's final controlled replacement approval."
+  "release_gate": "All assistant checks are preliminary, not independent academic sign-off. Do not insert or publish any replacement until subject-competent review, full contextual bank review, source-row provenance reconciliation and the user's final controlled replacement approval."
 }
