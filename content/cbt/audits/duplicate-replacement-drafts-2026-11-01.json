@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 66,
+  "draft_count": 68,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1212,15 +1212,49 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-67",
+      "subject": "Chemistry",
+      "topic": "Chemical bonding",
+      "subtopic": "Coordinate covalent bond",
+      "question": "In the formation of the ammonium ion, NH₄⁺, the bond formed when NH₃ combines with H⁺ is initially described as a:",
+      "options": [
+        "Ionic bond",
+        "Metallic bond",
+        "Coordinate covalent bond",
+        "Hydrogen bond"
+      ],
+      "answer": "C",
+      "explanation": "The nitrogen atom in NH₃ donates its lone pair to H⁺ to form the N–H bond. Both bonding electrons are supplied by nitrogen, so it is a coordinate covalent bond.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-69",
+      "subject": "Literature in English",
+      "topic": "Drama",
+      "subtopic": "Dramatic irony",
+      "question": "A character confidently predicts success while the audience already knows that the character's plan is doomed. This contrast is an example of:",
+      "options": [
+        "Dramatic irony",
+        "Comic relief",
+        "Soliloquy",
+        "Foreshadowing"
+      ],
+      "answer": "A",
+      "explanation": "Dramatic irony occurs when the audience knows something important that a character does not, creating a contrast between the character's understanding and the audience's knowledge.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-66 and DUP-67 replacement candidates added after a fresh full 1,600-row same-subject screen. These remain drafts pending independent subject, syllabus and contextual semantic review; original CSVs unchanged.",
+  "revision_note": "DUP-66 to DUP-69 proposals added only where same-subject lexical screen stayed below 0.42. DUP-67 acid pH candidate rejected for high lexical overlap and replaced by a coordinate-covalent-bond candidate. All remain drafts pending human academic and semantic review.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 24,
+  "drafts_missing": 23,
   "drafts_missing_target_ids": [
-    "DUP-67",
     "DUP-68",
-    "DUP-69",
     "DUP-70",
     "DUP-71",
     "DUP-72",
