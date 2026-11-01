@@ -1,8 +1,8 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 5,
-  "purpose": "Refreshed non-destructive lexical screen of all 57 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-56/57.",
+  "version": 6,
+  "purpose": "Refreshed non-destructive lexical screen of all 59 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-58/59.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -11,13 +11,13 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 57,
-    "screened": 57,
+    "count": 59,
+    "screened": 59,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
-    "flagged_count": 16,
+    "flagged_count": 18,
     "below_threshold_count": 41,
     "flagged_ids": [
       "DUP-02",
@@ -35,7 +35,9 @@
       "DUP-36",
       "DUP-45",
       "DUP-48",
-      "DUP-53"
+      "DUP-53",
+      "DUP-58",
+      "DUP-59"
     ],
     "manual_contextual_review_complete": false
   },
@@ -1348,6 +1350,52 @@
           "location": "batch 14 row 6",
           "score": 0.3152,
           "question": "In the sentence “To win the prize was her aim”, the phrase “To win the prize” functions as the…"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-58",
+      "subject": "Biology",
+      "flagged": true,
+      "highest_similarity": 0.6638,
+      "top_matches": [
+        {
+          "location": "batch 23 row 13",
+          "score": 0.6638,
+          "question": "The similarity in basic bone arrangement in the forelimbs of humans, whales and bats is evidence of"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.2589,
+          "question": "Which structure in the human female reproductive system is the usual site of fertilisation?"
+        },
+        {
+          "location": "batch 02 row 15",
+          "score": 0.2235,
+          "question": "The functional unit of the human kidney is the:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-59",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.5455,
+      "top_matches": [
+        {
+          "location": "batch 27 row 39",
+          "score": 0.5455,
+          "question": "Sarcasm is best described as:"
+        },
+        {
+          "location": "batch 38 row 37",
+          "score": 0.5106,
+          "question": "In a stage production, a prop is best described as:"
+        },
+        {
+          "location": "batch 20 row 37",
+          "score": 0.5063,
+          "question": "A ballad is best described as a:"
         }
       ]
     }
