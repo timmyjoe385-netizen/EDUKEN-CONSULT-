@@ -77,8 +77,9 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "blocked_duplicate_existing_bank",
+        "match": "batch 38, CSV row 20",
+        "reason": "The replacement asks for the product of ethanol + ethanoic acid esterification; the existing item already tests the defining products of alcohol + carboxylic acid esterification (ester + water). Same reaction family and learning objective."
       }
     },
     {
@@ -198,8 +199,9 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "blocked_duplicate_existing_bank",
+        "match": "batch 39, CSV row 17",
+        "reason": "The replacement uses methyl orange turning red to identify an acidic solution; the existing item uses blue litmus turning red to identify an acidic solution. Both test the same acid-indicator inference, with only the indicator changed."
       }
     },
     {
@@ -845,8 +847,8 @@
   },
   "replacement_review_summary": {
     "drafts_total": 38,
-    "blocked_existing_bank_overlap": 3,
-    "not_yet_cleared": 35,
+    "blocked_existing_bank_overlap": 5,
+    "not_yet_cleared": 33,
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
