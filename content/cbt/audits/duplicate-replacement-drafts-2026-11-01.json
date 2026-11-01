@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 69,
+  "draft_count": 72,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1266,20 +1266,71 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-74",
+      "subject": "Biology",
+      "topic": "Excretion",
+      "subtopic": "Ultrafiltration",
+      "question": "The high pressure that drives ultrafiltration in a mammalian kidney is produced mainly because the:",
+      "options": [
+        "Afferent arteriole is wider than the efferent arteriole",
+        "Efferent arteriole is wider than the afferent arteriole",
+        "Bowman's capsule has a muscular wall",
+        "Collecting duct actively pumps blood"
+      ],
+      "answer": "A",
+      "explanation": "The afferent arteriole is wider than the efferent arteriole, creating relatively high hydrostatic pressure in the glomerular capillaries and forcing small molecules into Bowman's capsule.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-76",
+      "subject": "Economics",
+      "topic": "Demand and supply",
+      "subtopic": "Cross elasticity of demand",
+      "question": "The cross elasticity of demand between two goods is positive. The goods are most likely to be:",
+      "options": [
+        "Complements",
+        "Substitutes",
+        "Inferior goods",
+        "Public goods"
+      ],
+      "answer": "B",
+      "explanation": "A positive cross elasticity means demand for one good rises when the price of the other rises; this is the usual relationship between substitute goods.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-77",
+      "subject": "Government",
+      "topic": "The judiciary",
+      "subtopic": "Judicial review",
+      "question": "When a court examines whether an action of the executive or legislature is consistent with the constitution, it is exercising:",
+      "options": [
+        "Judicial review",
+        "Delegated legislation",
+        "Collective responsibility",
+        "Universal suffrage"
+      ],
+      "answer": "A",
+      "explanation": "Judicial review is the power of a court to assess the constitutionality or legality of actions and laws made by public authorities.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "Additional candidates added only where full same-subject 1,600-row lexical screen stayed below 0.42. Above-threshold candidates remain unadded and require redesign. All accepted items are draft-only and need independent academic and contextual review.",
+  "revision_note": "DUP-74 to DUP-77 screened against all 1,600 staged questions within their respective subjects. Only below-0.42 proposals were added. Candidates remain draft-only pending academic and contextual review.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 24,
+  "drafts_missing": 22,
   "drafts_missing_target_ids": [
     "DUP-68",
     "DUP-70",
     "DUP-72",
     "DUP-73",
-    "DUP-74",
     "DUP-75",
-    "DUP-76",
-    "DUP-77",
     "DUP-78",
     "DUP-79",
     "DUP-80",
