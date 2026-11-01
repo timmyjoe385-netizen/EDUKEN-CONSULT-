@@ -1046,38 +1046,40 @@
     {
       "target_id": "DUP-58",
       "subject": "Biology",
-      "topic": "Evolution",
-      "subtopic": "Homologous structures",
-      "question": "The forelimbs of humans, whales and bats have a similar basic arrangement of bones but perform different functions. These structures provide evidence of:",
+      "topic": "Ecology",
+      "subtopic": "Quadrat sampling",
+      "question": "Which field method is most suitable for estimating the abundance of grasses in a study area?",
       "options": [
-        "Convergent evolution from unrelated ancestors",
-        "Common ancestry through divergent evolution",
-        "Artificial selection by humans",
-        "Identical habitats and feeding habits"
+        "Using a quadrat",
+        "Using a pooter",
+        "Using a sweep net",
+        "Using a pitfall trap"
       ],
-      "answer": "B",
-      "explanation": "Homologous structures share a basic anatomical plan because they were inherited from a common ancestor, although they may have become adapted for different functions. This is evidence of divergent evolution.",
+      "answer": "A",
+      "explanation": "A quadrat is a square frame placed in sample areas to estimate the abundance, density or frequency of plants and other relatively stationary organisms. Pooters and sweep nets collect mobile small animals, while pitfall traps sample ground-dwelling invertebrates.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The initial homologous-structures proposal was withdrawn after the full-bank screen found an existing homologous-structures question in batch 23 row 13. This revised quadrat-sampling question tests a different ecological field method; rerun full-bank screen."
     },
     {
       "target_id": "DUP-59",
       "subject": "Literature in English",
       "topic": "Literary devices",
       "subtopic": "Epithet",
-      "question": "In literature, an epithet is best described as:",
+      "question": "The descriptive title “Richard the Lionheart” is an example of:",
       "options": [
-        "A repeated line at the end of each stanza",
-        "A descriptive word or phrase that highlights a characteristic of a person or thing",
-        "A comparison that uses “like” or “as”",
-        "A deliberate contradiction between appearance and reality"
+        "An epithet",
+        "A paradox",
+        "An oxymoron",
+        "A euphemism"
       ],
-      "answer": "B",
-      "explanation": "An epithet is a descriptive word or phrase attached to a person or thing to express a notable quality or characteristic. The other options describe a refrain, simile and irony respectively.",
+      "answer": "A",
+      "explanation": "An epithet is a descriptive word or phrase attached to a person or thing to highlight a notable quality. “The Lionheart” identifies Richard by a characteristic associated with courage.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The stem was made more concrete after the first definition-style wording triggered lexical similarity flags against unrelated 'best described as' stems. Rerun the full-bank screen."
     }
   ],
   "revision_note": "DUP-58 and DUP-59 drafted for the next confirmed Biology and Literature in English holdouts. Both remain separate proposals and are not inserted into source CSVs.",
