@@ -104,7 +104,20 @@
       }
     ],
     "high_priority_same_topic_subtopic_pairs_reviewed": 41,
-    "confirmed_duplicate_pair_count": 9
+    "confirmed_duplicate_pair_count": 9,
+    "different_topic_or_subtopic_candidates": 349,
+    "highest_similarity_different_topic_candidates_reviewed": 70,
+    "review_needed_pairs": [
+      {
+        "a": "batch 31 row 2",
+        "b": "batch 33 row 2",
+        "subject": "Use of English",
+        "concept": "Subject relative pronoun 'who' in a relative clause",
+        "reason": "Both questions use the same grammatical rule and answer in near-identical sentence contexts. Different wording alone may not add enough assessment variety.",
+        "decision": "review_needed_before_final_replacement",
+        "suggested_action": "Consider replacing one with a different relative-pronoun function or a different clause skill."
+      }
+    ]
   },
   "decisions": [
     {
@@ -205,6 +218,7 @@
     "Vocabulary questions share a common instruction template but test distinct lexical knowledge.",
     "No CSV changes made.",
     "The five previously reported within-window duplicate pairs were re-opened against the current CSVs and all five are still present at the listed locations. The 13-pair high-priority shortlist was also reviewed: one additional pair is confirmed (inverse variation), the four-line vs eight-line stanza pair is preserved, and the remaining different vocabulary/phonology items are preserved. The two momentum questions are the same numerical skill with different values and are flagged as template repetition, not an exact duplicate.",
-    "The next 28 same-subject/topic/subtopic candidate pairs were reviewed. Four additional semantic duplicates were confirmed: congratulate-on collocation, candid/candour, centripetal-force direction, and symbolism. Related but distinct question pairs (e.g., specific-heat definition vs calculation, median with different data sets, arithmetic-progression calculations, density calculations, and separate set operations) were preserved."
+    "The next 28 same-subject/topic/subtopic candidate pairs were reviewed. Four additional semantic duplicates were confirmed: congratulate-on collocation, candid/candour, centripetal-force direction, and symbolism. Related but distinct question pairs (e.g., specific-heat definition vs calculation, median with different data sets, arithmetic-progression calculations, density calculations, and separate set operations) were preserved.",
+    "Reviewed the 70 highest-scoring within-window candidates whose topic/subtopic labels differed. Most were clearly distinct concepts (e.g., semicolon vs colon; magnetic flux vs flux density; pulmonary vein vs pulmonary artery; demand vs supply; covalent vs coordinate covalent; Charles' law vs Boyle's law; simile vs metaphor; hubris vs hamartia). The relative-pronoun pair in batches 31 and 33 remains review-needed. This does not complete review of all 349 different-topic candidates."
   ]
 }
