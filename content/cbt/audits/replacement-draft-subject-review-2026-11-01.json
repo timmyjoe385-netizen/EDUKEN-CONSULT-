@@ -108,9 +108,9 @@
       "target_id": "DUP-59",
       "subject": "Literature in English",
       "assessment": "preliminary_pass",
-      "answer_check": "A is correct. “The Lionheart” is a descriptive epithet associated with Richard's courage.",
+      "answer_check": "A is correct. “Swift-footed” is a descriptive epithet traditionally associated with Achilles.",
       "syllabus_fit": "Provisionally fits literary devices and terminology.",
-      "bank_overlap": "After replacing the generic definition stem with a concrete example, the refreshed screen's highest same-subject similarity is 0.4771. Human contextual review remains required.",
+      "bank_overlap": "After replacing the earlier generic and Richard-the-Lionheart stems, the refreshed screen's highest same-subject score is 0.4113. Human contextual review remains required.",
       "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
     }
   ],
