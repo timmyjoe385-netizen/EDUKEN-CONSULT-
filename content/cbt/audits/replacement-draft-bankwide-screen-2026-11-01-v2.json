@@ -1,0 +1,1270 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "version": 2,
+  "purpose": "Refreshed non-destructive lexical screen of all current replacement proposals against all 1,600 source question rows, including retained and held rows.",
+  "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
+  "source_bank": {
+    "batches": 40,
+    "question_rows": 1600,
+    "retained_and_held_included": true,
+    "original_csvs_modified": false
+  },
+  "replacement_proposals": {
+    "count": 53,
+    "screened": 53,
+    "all_proposals_screened": true
+  },
+  "screening_summary": {
+    "threshold": 0.42,
+    "flagged_count": 17,
+    "below_threshold_count": 36,
+    "flagged_ids": [
+      "DUP-02",
+      "DUP-04",
+      "DUP-05",
+      "DUP-10",
+      "DUP-16",
+      "DUP-18",
+      "DUP-22",
+      "DUP-30",
+      "DUP-32",
+      "DUP-33",
+      "DUP-34",
+      "DUP-35",
+      "DUP-36",
+      "DUP-45",
+      "DUP-48",
+      "DUP-52",
+      "DUP-53"
+    ],
+    "manual_contextual_review_complete": false
+  },
+  "results": [
+    {
+      "target_id": "DUP-01",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.35,
+      "top_matches": [
+        {
+          "location": "batch 40 row 8",
+          "score": 0.35,
+          "question": "What is the size of each exterior angle of a regular octagon?"
+        },
+        {
+          "location": "batch 11 row 8",
+          "score": 0.3471,
+          "question": "What is the size of each interior angle of a regular pentagon?"
+        },
+        {
+          "location": "batch 10 row 9",
+          "score": 0.3077,
+          "question": "The sum of the interior angles of a hexagon is:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-02",
+      "subject": "Chemistry",
+      "flagged": true,
+      "highest_similarity": 0.529,
+      "top_matches": [
+        {
+          "location": "batch 17 row 17",
+          "score": 0.529,
+          "question": "When ethene reacts with bromine, the main organic product is:"
+        },
+        {
+          "location": "batch 13 row 19",
+          "score": 0.3735,
+          "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
+        },
+        {
+          "location": "batch 37 row 21",
+          "score": 0.3616,
+          "question": "Which gas is produced when dilute hydrochloric acid reacts with calcium carbonate?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-03",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.4138,
+      "top_matches": [
+        {
+          "location": "batch 18 row 22",
+          "score": 0.4138,
+          "question": "In a direct-current circuit, electrical power is calculated using:"
+        },
+        {
+          "location": "batch 23 row 22",
+          "score": 0.3311,
+          "question": "According to Lenz's law, the induced current flows in a direction that"
+        },
+        {
+          "location": "batch 25 row 23",
+          "score": 0.3291,
+          "question": "Which instrument is connected in series in a circuit to measure electric current?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-04",
+      "subject": "Biology",
+      "flagged": true,
+      "highest_similarity": 0.5344,
+      "top_matches": [
+        {
+          "location": "batch 39 row 12",
+          "score": 0.5344,
+          "question": "An organism with genotype Tt is described as"
+        },
+        {
+          "location": "batch 28 row 15",
+          "score": 0.4458,
+          "question": "An organism that has two different alleles for a particular gene is described as:"
+        },
+        {
+          "location": "batch 01 row 14",
+          "score": 0.4342,
+          "question": "An organism with two identical alleles for a gene is described as:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-05",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.4348,
+      "top_matches": [
+        {
+          "location": "batch 06 row 41",
+          "score": 0.4348,
+          "question": "A biography is an account of a person's life written by:"
+        },
+        {
+          "location": "batch 14 row 38",
+          "score": 0.4231,
+          "question": "An elegy is a poem traditionally written to:"
+        },
+        {
+          "location": "batch 35 row 38",
+          "score": 0.3455,
+          "question": "Describing a brave person as 'a lion' is an example of"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-06",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3284,
+      "top_matches": [
+        {
+          "location": "batch 39 row 13",
+          "score": 0.3284,
+          "question": "A parasite that lives on the external surface of its host is called an"
+        },
+        {
+          "location": "batch 23 row 13",
+          "score": 0.271,
+          "question": "The similarity in basic bone arrangement in the forelimbs of humans, whales and bats is evidence of"
+        },
+        {
+          "location": "batch 09 row 16",
+          "score": 0.2353,
+          "question": "The part of the brain chiefly responsible for balance and coordination is the:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-07",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.4094,
+      "top_matches": [
+        {
+          "location": "batch 11 row 25",
+          "score": 0.4094,
+          "question": "Heat transfer through the bulk movement of a liquid or gas is called:"
+        },
+        {
+          "location": "batch 03 row 25",
+          "score": 0.2759,
+          "question": "Sound cannot travel through:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.2424,
+          "question": "Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-08",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3684,
+      "top_matches": [
+        {
+          "location": "batch 39 row 17",
+          "score": 0.3684,
+          "question": "A solution that turns blue litmus paper red is likely to be"
+        },
+        {
+          "location": "batch 39 row 20",
+          "score": 0.306,
+          "question": "When acidified silver nitrate solution is added to a solution containing chloride ions, what is observed?"
+        },
+        {
+          "location": "batch 28 row 18",
+          "score": 0.2875,
+          "question": "When zinc is added to copper(II) sulfate solution, copper is deposited because:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-09",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3019,
+      "top_matches": [
+        {
+          "location": "batch 04 row 20",
+          "score": 0.3019,
+          "question": "In electrolysis, the electrode connected to the positive terminal of the power supply is the:"
+        },
+        {
+          "location": "batch 12 row 18",
+          "score": 0.2798,
+          "question": "According to Faraday's first law of electrolysis, the mass of a substance deposited is directly proportional to the:"
+        },
+        {
+          "location": "batch 32 row 19",
+          "score": 0.2727,
+          "question": "Complete neutralisation of dilute sulphuric acid with sodium hydroxide produces which salt?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-10",
+      "subject": "Economics",
+      "flagged": true,
+      "highest_similarity": 0.4507,
+      "top_matches": [
+        {
+          "location": "batch 02 row 29",
+          "score": 0.4507,
+          "question": "A sustained rise in the general price level is called:"
+        },
+        {
+          "location": "batch 20 row 29",
+          "score": 0.4046,
+          "question": "A tax imposed on goods and services when they are purchased is generally classified as:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3727,
+          "question": "A fall in average cost as a firm expands its scale of production is known as"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-11",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3577,
+      "top_matches": [
+        {
+          "location": "batch 18 row 24",
+          "score": 0.3577,
+          "question": "Which type of lens is thicker at the centre than at the edges?"
+        },
+        {
+          "location": "batch 11 row 25",
+          "score": 0.2754,
+          "question": "Heat transfer through the bulk movement of a liquid or gas is called:"
+        },
+        {
+          "location": "batch 14 row 22",
+          "score": 0.2615,
+          "question": "In uniform circular motion, the centripetal force is directed…"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-12",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3521,
+      "top_matches": [
+        {
+          "location": "batch 22 row 27",
+          "score": 0.3521,
+          "question": "National income is commonly measured over a period of ___."
+        },
+        {
+          "location": "batch 28 row 28",
+          "score": 0.3158,
+          "question": "Per capita income is calculated by dividing"
+        },
+        {
+          "location": "batch 13 row 31",
+          "score": 0.3049,
+          "question": "An increase in a country's real GDP over time is commonly used as an indicator of…"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-13",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3796,
+      "top_matches": [
+        {
+          "location": "batch 05 row 17",
+          "score": 0.3796,
+          "question": "The reaction between an acid and a base typically produces:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3576,
+          "question": "The reaction between an alcohol and a carboxylic acid can produce an ester and"
+        },
+        {
+          "location": "batch 16 row 17",
+          "score": 0.3473,
+          "question": "What are the products of complete reaction between hydrochloric acid and sodium hydroxide?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-14",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.315,
+      "top_matches": [
+        {
+          "location": "batch 06 row 15",
+          "score": 0.315,
+          "question": "The cell membrane is described as selectively permeable because it:"
+        },
+        {
+          "location": "batch 01 row 13",
+          "score": 0.2783,
+          "question": "In a food chain, green plants are usually classified as:"
+        },
+        {
+          "location": "batch 16 row 14",
+          "score": 0.2247,
+          "question": "A gene is best described as…"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-15",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3827,
+      "top_matches": [
+        {
+          "location": "batch 24 row 30",
+          "score": 0.3827,
+          "question": "When a central bank sells government securities to the public, it generally"
+        },
+        {
+          "location": "batch 11 row 30",
+          "score": 0.3457,
+          "question": "Which of the following is most likely to be classified as a public good?"
+        },
+        {
+          "location": "batch 20 row 29",
+          "score": 0.3448,
+          "question": "A tax imposed on goods and services when they are purchased is generally classified as:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-16",
+      "subject": "Chemistry",
+      "flagged": true,
+      "highest_similarity": 0.5181,
+      "top_matches": [
+        {
+          "location": "batch 17 row 21",
+          "score": 0.5181,
+          "question": "Which method is most suitable for separating an insoluble solid from a liquid?"
+        },
+        {
+          "location": "batch 38 row 21",
+          "score": 0.4615,
+          "question": "Simple distillation is most suitable for separating a liquid from"
+        },
+        {
+          "location": "batch 24 row 21",
+          "score": 0.3902,
+          "question": "Fractional distillation is especially suitable for separating liquids that"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-17",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.4172,
+      "top_matches": [
+        {
+          "location": "batch 22 row 16",
+          "score": 0.4172,
+          "question": "In humans, which sex chromosome combination is typically associated with a male?"
+        },
+        {
+          "location": "batch 17 row 13",
+          "score": 0.3158,
+          "question": "Which structure inside the nucleus is chiefly involved in producing ribosomal components?"
+        },
+        {
+          "location": "batch 40 row 15",
+          "score": 0.3125,
+          "question": "Which hormone increases water reabsorption in the collecting ducts of the kidney?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-18",
+      "subject": "Physics",
+      "flagged": true,
+      "highest_similarity": 0.4271,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.4271,
+          "question": "Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:"
+        },
+        {
+          "location": "batch 30 row 23",
+          "score": 0.3556,
+          "question": "The critical angle for a pair of media is the angle of incidence in the optically denser medium for which the angle of refraction is:"
+        },
+        {
+          "location": "batch 21 row 24",
+          "score": 0.3485,
+          "question": "A plane mirror normally forms an image that is ___."
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-19",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3519,
+      "top_matches": [
+        {
+          "location": "batch 37 row 31",
+          "score": 0.3519,
+          "question": "A transfer payment is a government payment for which:"
+        },
+        {
+          "location": "batch 32 row 31",
+          "score": 0.3107,
+          "question": "A major function of a trade union is to"
+        },
+        {
+          "location": "batch 32 row 29",
+          "score": 0.2913,
+          "question": "A contestable market is one in which:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-20",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3273,
+      "top_matches": [
+        {
+          "location": "batch 06 row 29",
+          "score": 0.3273,
+          "question": "A common function of commercial banks is to:"
+        },
+        {
+          "location": "batch 09 row 29",
+          "score": 0.293,
+          "question": "An increase in the cash reserve requirement generally reduces commercial banks' ability to:"
+        },
+        {
+          "location": "batch 24 row 30",
+          "score": 0.2817,
+          "question": "When a central bank sells government securities to the public, it generally"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-21",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.4103,
+      "top_matches": [
+        {
+          "location": "batch 12 row 41",
+          "score": 0.4103,
+          "question": "A narrative in which characters and events represent abstract ideas or moral principles is called:"
+        },
+        {
+          "location": "batch 12 row 40",
+          "score": 0.4039,
+          "question": "Which narrative technique attempts to present the continuous flow of a character's thoughts and impressions?"
+        },
+        {
+          "location": "batch 25 row 41",
+          "score": 0.3947,
+          "question": "Free indirect discourse is a narrative technique that"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-22",
+      "subject": "Biology",
+      "flagged": true,
+      "highest_similarity": 0.4785,
+      "top_matches": [
+        {
+          "location": "batch 35 row 13",
+          "score": 0.4785,
+          "question": "Which blood component contains haemoglobin and transports most oxygen in humans?"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3624,
+          "question": "Which component of blood is primarily responsible for clotting?"
+        },
+        {
+          "location": "batch 07 row 13",
+          "score": 0.3378,
+          "question": "Which tissue transports manufactured food in flowering plants?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-23",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2963,
+      "top_matches": [
+        {
+          "location": "batch 01 row 31",
+          "score": 0.2963,
+          "question": "A tax charged as a fixed percentage of the price of a product is an example of:"
+        },
+        {
+          "location": "batch 22 row 30",
+          "score": 0.2949,
+          "question": "Which of the following is an example of economic infrastructure?"
+        },
+        {
+          "location": "batch 32 row 30",
+          "score": 0.2897,
+          "question": "Which of the following is an example of a direct tax?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-24",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3566,
+      "top_matches": [
+        {
+          "location": "batch 11 row 12",
+          "score": 0.3566,
+          "question": "Which substance is the main structural component of the cell wall in most plants?"
+        },
+        {
+          "location": "batch 32 row 16",
+          "score": 0.3206,
+          "question": "What is the main role of Rhizobium bacteria in the root nodules of leguminous plants?"
+        },
+        {
+          "location": "batch 13 row 12",
+          "score": 0.3077,
+          "question": "The main function of red blood cells in humans is to…"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-25",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2628,
+      "top_matches": [
+        {
+          "location": "batch 08 row 28",
+          "score": 0.2628,
+          "question": "A progressive income tax is one in which the average tax rate generally:"
+        },
+        {
+          "location": "batch 35 row 27",
+          "score": 0.2553,
+          "question": "The conventional reward paid to the factor of production known as land is:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.2361,
+          "question": "A fall in average cost as a firm expands its scale of production is known as"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-26",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3833,
+      "top_matches": [
+        {
+          "location": "batch 12 row 25",
+          "score": 0.3833,
+          "question": "A capacitor is primarily used to store…"
+        },
+        {
+          "location": "batch 38 row 25",
+          "score": 0.3731,
+          "question": "The total resistance of resistors connected in series is"
+        },
+        {
+          "location": "batch 14 row 26",
+          "score": 0.3669,
+          "question": "A potential difference of 9 V causes a current of 3 A through a conductor. What is its resistance?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-27",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3967,
+      "top_matches": [
+        {
+          "location": "batch 36 row 11",
+          "score": 0.3967,
+          "question": "If y varies directly as x and y = 15 when x = 3, find y when x = 7."
+        },
+        {
+          "location": "batch 27 row 11",
+          "score": 0.3802,
+          "question": "If y varies inversely as x and y = 6 when x = 4, find y when x = 8."
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.368,
+          "question": "If y varies inversely as x and y = 6 when x = 4, what is y when x = 8?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-28",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3375,
+      "top_matches": [
+        {
+          "location": "batch 12 row 36",
+          "score": 0.3375,
+          "question": "One legislative function of a local government council is to make:"
+        },
+        {
+          "location": "batch 02 row 32",
+          "score": 0.2963,
+          "question": "In a representative democracy, members of the legislature primarily:"
+        },
+        {
+          "location": "batch 18 row 33",
+          "score": 0.2927,
+          "question": "The supreme legal authority of a state over its territory is known as ___."
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-29",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.1923,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.1923,
+          "question": "The students congratulated her _____ winning the scholarship."
+        },
+        {
+          "location": "batch 29 row 5",
+          "score": 0.1739,
+          "question": "If a passage states that a proposal was “received with reservations,” the readers most likely"
+        },
+        {
+          "location": "batch 26 row 5",
+          "score": 0.1702,
+          "question": "Which connector best completes the sentence? “The road was flooded; ___, the delivery arrived before noon.”"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-30",
+      "subject": "Use of English",
+      "flagged": true,
+      "highest_similarity": 0.4255,
+      "top_matches": [
+        {
+          "location": "batch 12 row 2",
+          "score": 0.4255,
+          "question": "In the sentence “The meeting was put off until Friday”, the expression “put off” means…"
+        },
+        {
+          "location": "batch 05 row 4",
+          "score": 0.3636,
+          "question": "Choose the word nearest in meaning to “meticulous.”"
+        },
+        {
+          "location": "batch 30 row 3",
+          "score": 0.3571,
+          "question": "In the sentence 'The manager spoke with remarkable candour', the word 'candour' means"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-31",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3766,
+      "top_matches": [
+        {
+          "location": "batch 06 row 23",
+          "score": 0.3766,
+          "question": "What is the momentum of a 4 kg object moving at 5 m/s?"
+        },
+        {
+          "location": "batch 01 row 22",
+          "score": 0.3694,
+          "question": "A runner covers 150 m in 30 s. What is the average speed?"
+        },
+        {
+          "location": "batch 26 row 26",
+          "score": 0.3684,
+          "question": "A 0.5 kg ball moves at 8 m s⁻¹. What is its momentum?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-32",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.4348,
+      "top_matches": [
+        {
+          "location": "batch 32 row 40",
+          "score": 0.4348,
+          "question": "Which expression is an example of a simile?"
+        },
+        {
+          "location": "batch 01 row 37",
+          "score": 0.3846,
+          "question": "“Time is a thief” is an example of:"
+        },
+        {
+          "location": "batch 33 row 37",
+          "score": 0.3708,
+          "question": "A poem that expresses the personal thoughts and emotions of an individual speaker is commonly classified as a:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-33",
+      "subject": "Use of English",
+      "flagged": true,
+      "highest_similarity": 0.4459,
+      "top_matches": [
+        {
+          "location": "batch 12 row 2",
+          "score": 0.4459,
+          "question": "In the sentence “The meeting was put off until Friday”, the expression “put off” means…"
+        },
+        {
+          "location": "batch 36 row 5",
+          "score": 0.4366,
+          "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
+        },
+        {
+          "location": "batch 30 row 3",
+          "score": 0.381,
+          "question": "In the sentence 'The manager spoke with remarkable candour', the word 'candour' means"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-34",
+      "subject": "Use of English",
+      "flagged": true,
+      "highest_similarity": 0.5,
+      "top_matches": [
+        {
+          "location": "batch 01 row 3",
+          "score": 0.5,
+          "question": "Choose the correct verb: “Neither the teacher nor the students ___ ready.”"
+        },
+        {
+          "location": "batch 33 row 3",
+          "score": 0.5,
+          "question": "Choose the correct verb: “The list of items ___ on the desk.”"
+        },
+        {
+          "location": "batch 16 row 5",
+          "score": 0.487,
+          "question": "Choose the correct verb: “Neither the principal nor the teachers ___ available.”"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-35",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.4311,
+      "top_matches": [
+        {
+          "location": "batch 20 row 41",
+          "score": 0.4311,
+          "question": "A short concluding section that follows the main action of a play is called an:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.382,
+          "question": "The list of characters in a play, usually provided near the beginning of the script, is called the"
+        },
+        {
+          "location": "batch 30 row 41",
+          "score": 0.314,
+          "question": "The list of characters in a play, often provided before the opening scene, is called:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-36",
+      "subject": "Government",
+      "flagged": true,
+      "highest_similarity": 0.4459,
+      "top_matches": [
+        {
+          "location": "batch 26 row 35",
+          "score": 0.4459,
+          "question": "A political party manifesto is primarily a document that"
+        },
+        {
+          "location": "batch 02 row 34",
+          "score": 0.3521,
+          "question": "One important function of a political party is to:"
+        },
+        {
+          "location": "batch 16 row 33",
+          "score": 0.3333,
+          "question": "Which is a key function of a political party in a democracy?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-37",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.4167,
+      "top_matches": [
+        {
+          "location": "batch 38 row 35",
+          "score": 0.4167,
+          "question": "A bureaucracy is generally characterised by"
+        },
+        {
+          "location": "batch 34 row 33",
+          "score": 0.3373,
+          "question": "An electoral ward is generally:"
+        },
+        {
+          "location": "batch 11 row 36",
+          "score": 0.3304,
+          "question": "A public corporation is generally established by government to…"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-38",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.293,
+      "top_matches": [
+        {
+          "location": "batch 02 row 13",
+          "score": 0.293,
+          "question": "The transfer of pollen from an anther to a stigma is called:"
+        },
+        {
+          "location": "batch 30 row 16",
+          "score": 0.2762,
+          "question": "In flowering plants, water is transported from the roots to the leaves mainly through the:"
+        },
+        {
+          "location": "batch 08 row 14",
+          "score": 0.2667,
+          "question": "Antibodies are produced mainly by:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-39",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3968,
+      "top_matches": [
+        {
+          "location": "batch 07 row 20",
+          "score": 0.3968,
+          "question": "During electrolysis, reduction occurs at the:"
+        },
+        {
+          "location": "batch 40 row 18",
+          "score": 0.3623,
+          "question": "During the electrorefining of copper, the impure copper is used as the:"
+        },
+        {
+          "location": "batch 20 row 17",
+          "score": 0.3452,
+          "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-40",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3875,
+      "top_matches": [
+        {
+          "location": "batch 22 row 21",
+          "score": 0.3875,
+          "question": "The Contact process is used industrially to manufacture ___."
+        },
+        {
+          "location": "batch 18 row 21",
+          "score": 0.3619,
+          "question": "During electrolysis of aqueous copper(II) sulfate using inert electrodes, which substance is deposited at the cathode?"
+        },
+        {
+          "location": "batch 20 row 17",
+          "score": 0.356,
+          "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-41",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3951,
+      "top_matches": [
+        {
+          "location": "batch 40 row 15",
+          "score": 0.3951,
+          "question": "Which hormone increases water reabsorption in the collecting ducts of the kidney?"
+        },
+        {
+          "location": "batch 26 row 15",
+          "score": 0.381,
+          "question": "Which hormone primarily stimulates the growth and development of ovarian follicles during the menstrual cycle?"
+        },
+        {
+          "location": "batch 37 row 12",
+          "score": 0.3404,
+          "question": "Which enzyme in the stomach begins the digestion of proteins?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-42",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3211,
+      "top_matches": [
+        {
+          "location": "batch 03 row 28",
+          "score": 0.3211,
+          "question": "Which is generally a fixed cost in the short run for a factory?"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3119,
+          "question": "Which of the following is usually a fixed cost in the short run?"
+        },
+        {
+          "location": "batch 35 row 30",
+          "score": 0.2672,
+          "question": "The additional satisfaction from consuming one more unit of a good is called"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-43",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.2143,
+      "top_matches": [
+        {
+          "location": "batch 39 row 10",
+          "score": 0.2143,
+          "question": "In a right-angled triangle the cosine of an acute angle is the ratio of:"
+        },
+        {
+          "location": "batch 07 row 7",
+          "score": 0.209,
+          "question": "In a right-angled triangle, tan θ is equal to:"
+        },
+        {
+          "location": "batch 10 row 9",
+          "score": 0.2029,
+          "question": "The sum of the interior angles of a hexagon is:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-44",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.325,
+      "top_matches": [
+        {
+          "location": "batch 11 row 25",
+          "score": 0.325,
+          "question": "Heat transfer through the bulk movement of a liquid or gas is called:"
+        },
+        {
+          "location": "batch 35 row 22",
+          "score": 0.2914,
+          "question": "The number of complete waves passing a point per second is the"
+        },
+        {
+          "location": "batch 36 row 23",
+          "score": 0.2819,
+          "question": "In a sound wave travelling through air, air particles vibrate"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-45",
+      "subject": "Economics",
+      "flagged": true,
+      "highest_similarity": 0.4286,
+      "top_matches": [
+        {
+          "location": "batch 01 row 29",
+          "score": 0.4286,
+          "question": "Which factor of production receives wages as its typical reward?"
+        },
+        {
+          "location": "batch 10 row 30",
+          "score": 0.4085,
+          "question": "The typical reward paid to the factor of production called capital is:"
+        },
+        {
+          "location": "batch 35 row 27",
+          "score": 0.4082,
+          "question": "The conventional reward paid to the factor of production known as land is:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-46",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.2917,
+      "top_matches": [
+        {
+          "location": "batch 27 row 21",
+          "score": 0.2917,
+          "question": "Why are many alloys harder than the pure metals from which they are made?"
+        },
+        {
+          "location": "batch 16 row 18",
+          "score": 0.2703,
+          "question": "The mass number of an atom is the total number of:"
+        },
+        {
+          "location": "batch 01 row 20",
+          "score": 0.2667,
+          "question": "An ionic bond is formed mainly through:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-47",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3893,
+      "top_matches": [
+        {
+          "location": "batch 02 row 32",
+          "score": 0.3893,
+          "question": "In a representative democracy, members of the legislature primarily:"
+        },
+        {
+          "location": "batch 14 row 35",
+          "score": 0.3521,
+          "question": "Freedom of expression primarily protects a person's ability to…"
+        },
+        {
+          "location": "batch 28 row 33",
+          "score": 0.3143,
+          "question": "In a legislature, a party whip is primarily responsible for:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-48",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.6667,
+      "top_matches": [
+        {
+          "location": "batch 36 row 38",
+          "score": 0.6667,
+          "question": "In literary analysis, diction refers to the writer's:"
+        },
+        {
+          "location": "batch 39 row 41",
+          "score": 0.5172,
+          "question": "The setting of a literary work refers primarily to its"
+        },
+        {
+          "location": "batch 28 row 40",
+          "score": 0.4902,
+          "question": "In literary criticism, mood refers to the:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-49",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2807,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.2807,
+          "question": "Other things being equal, a rise in the market price of a good generally leads producers to:"
+        },
+        {
+          "location": "batch 02 row 27",
+          "score": 0.2722,
+          "question": "A market with many sellers offering very similar products and easy entry is closest to:"
+        },
+        {
+          "location": "batch 23 row 30",
+          "score": 0.2444,
+          "question": "A firm that sells its output at the prevailing market price and cannot influence that price is described as a:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-50",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3135,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.3135,
+          "question": "Which cell organelle contains most of the genetic material and helps control cell activities?"
+        },
+        {
+          "location": "batch 15 row 13",
+          "score": 0.3103,
+          "question": "Which organelle contains chlorophyll and is the main site of photosynthesis?"
+        },
+        {
+          "location": "batch 39 row 15",
+          "score": 0.306,
+          "question": "Which organelle contains digestive enzymes that break down worn-out cell components?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-51",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3952,
+      "top_matches": [
+        {
+          "location": "batch 08 row 25",
+          "score": 0.3952,
+          "question": "When the resultant external force on a system is zero, its total momentum:"
+        },
+        {
+          "location": "batch 24 row 22",
+          "score": 0.381,
+          "question": "The work done by the resultant force on an object is equal to its change in:"
+        },
+        {
+          "location": "batch 30 row 26",
+          "score": 0.36,
+          "question": "The apparent change in the observed frequency of a sound due to relative motion between source and observer is called the:"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-52",
+      "subject": "Mathematics",
+      "flagged": true,
+      "highest_similarity": 0.5122,
+      "top_matches": [
+        {
+          "location": "batch 02 row 7",
+          "score": 0.5122,
+          "question": "If A = {1, 2, 3} and B = {3, 4}, what is A ∩ B?"
+        },
+        {
+          "location": "batch 40 row 7",
+          "score": 0.4286,
+          "question": "If A = {1, 2, 3, 4} and B = {3, 4, 5}, then A ∩ B is"
+        },
+        {
+          "location": "batch 33 row 11",
+          "score": 0.4186,
+          "question": "If A = [[2, 1], [0, 3]], what is the trace of A?"
+        }
+      ]
+    },
+    {
+      "target_id": "DUP-53",
+      "subject": "Chemistry",
+      "flagged": true,
+      "highest_similarity": 0.5053,
+      "top_matches": [
+        {
+          "location": "batch 39 row 20",
+          "score": 0.5053,
+          "question": "When acidified silver nitrate solution is added to a solution containing chloride ions, what is observed?"
+        },
+        {
+          "location": "batch 11 row 20",
+          "score": 0.3648,
+          "question": "Which of the following is a strong acid in aqueous solution?"
+        },
+        {
+          "location": "batch 23 row 20",
+          "score": 0.3625,
+          "question": "Which observation is commonly used to identify hydrogen gas?"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Lexical similarity can flag different concepts that share wording and can miss paraphrased duplicates.",
+    "All flagged items require contextual assessment; scores do not prove duplication or uniqueness.",
+    "This screen is not academic approval, answer-key approval, syllabus approval or permission to insert/publish any draft.",
+    "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
+  ]
+}
