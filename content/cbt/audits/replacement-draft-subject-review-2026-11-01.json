@@ -1,9 +1,54 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-90. This is not independent subject-expert sign-off.",
-  "reviewer_status": "preliminary_review_completed_human_subject_review_still_required",
+  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for revised replacement proposals DUP-02, DUP-05, DUP-08, DUP-30, DUP-32 and DUP-48 to DUP-90. This is not independent subject-expert sign-off.",
+  "reviewer_status": "preliminary_answer_and_context_checks_completed_human_subject_review_still_required",
   "reviews": [
+    {
+      "target_id": "DUP-02",
+      "subject": "Chemistry",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: ions migrate through the salt bridge to prevent charge build-up and maintain electrical neutrality in the two half-cells.",
+      "syllabus_fit": "Electrochemistry and galvanic cells; confirm salt-bridge detail and depth against the current JAMB Chemistry syllabus.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: maximum Dice 0.4144 against a galvanic-cell anode question. Related cell context, but different function. Human Chemistry review required.",
+      "decision": "Keep as a separate draft pending independent Chemistry review and contextual bankwide clearance."
+    },
+    {
+      "target_id": "DUP-05",
+      "subject": "Literature in English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: an iamb is an unstressed syllable followed by a stressed syllable; five iambs form iambic pentameter.",
+      "syllabus_fit": "Poetry and metre; confirm the level of metrical terminology against the current JAMB Literature syllabus.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: maximum Dice 0.3673 against a blank-verse question. Blank verse is commonly written in unrhymed iambic pentameter, so this is related and requires explicit Literature reviewer confirmation.",
+      "decision": "Keep as a draft only; do not approve until a Literature reviewer confirms this is sufficiently distinct from the blank-verse item."
+    },
+    {
+      "target_id": "DUP-08",
+      "subject": "Chemistry",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: methane is the principal constituent of most natural gas, though composition varies by source.",
+      "syllabus_fit": "Hydrocarbons and natural gas; confirm the exact syllabus scope and depth.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: maximum Dice 0.3810; closest matches are gas-law and aluminium-ore questions, not natural-gas composition.",
+      "decision": "Keep as a separate draft pending independent Chemistry review and contextual bankwide clearance."
+    },
+    {
+      "target_id": "DUP-30",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: a lexicographer compiles, edits or writes dictionaries.",
+      "syllabus_fit": "Vocabulary and specialised word meanings; confirm expected vocabulary depth against the current JAMB Use of English syllabus.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: maximum Dice 0.2637. The nearest related occupation is an etymologist, a different role (word origins rather than dictionary compilation).",
+      "decision": "Keep as a separate draft pending independent English review and contextual bankwide clearance."
+    },
+    {
+      "target_id": "DUP-32",
+      "subject": "Literature in English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: comedy of manners satirises the behaviour and social conventions of a particular class or society.",
+      "syllabus_fit": "Drama and dramatic genres; confirm the exact genre terminology against the current JAMB Literature syllabus.",
+      "bank_overlap": "Full 1,600-row same-subject lexical screen: maximum Dice 0.3483; closest matches test lyric poetry, epilogue and plot development, not comedy of manners.",
+      "decision": "Keep as a separate draft pending independent Literature review and contextual bankwide clearance."
+    },
     {
       "target_id": "DUP-48",
       "subject": "Literature in English",
