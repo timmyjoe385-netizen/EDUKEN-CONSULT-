@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 51,
+  "draft_count": 53,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "Drafts are proposals only. 51 proposals exist for 90 confirmed holdouts; 39 holdouts have no replacement draft yet. No draft has been inserted into any original-batch CSV. Every proposal must pass contextual similarity screening, subject-expert syllabus review, answer validation and explanation review before insertion.",
+  "important": "All 53 proposals remain drafts. The six newest proposals (DUP-48 to DUP-53) require independent subject review and bank-wide contextual review. DUP-48 has a strong lexical similarity flag against the existing diction item; the concepts appear distinct but require a subject reviewer. DUP-50 was changed to a Golgi-apparatus question to avoid the existing ABO overlap.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -897,21 +897,21 @@
     {
       "target_id": "DUP-50",
       "subject": "Biology",
-      "topic": "Genetics",
-      "subtopic": "ABO blood-group inheritance",
-      "question": "A man with blood group AB and a woman with blood group O have a child. Which blood group is NOT possible for the child?",
+      "topic": "Cell biology",
+      "subtopic": "Golgi apparatus and protein packaging",
+      "question": "Which organelle modifies, sorts and packages proteins into vesicles for transport within or out of a cell?",
       "options": [
-        "A",
-        "B",
-        "AB",
-        "O"
+        "Golgi apparatus",
+        "Ribosome",
+        "Mitochondrion",
+        "Lysosome"
       ],
-      "answer": "C",
-      "explanation": "The AB parent can pass either the Iᴬ or Iᴮ allele, while the O parent can pass only i. The possible genotypes are Iᴬi and Iᴮi, giving blood group A or B; AB is not possible.",
+      "answer": "A",
+      "explanation": "The Golgi apparatus modifies, sorts and packages proteins into vesicles for transport to other cell locations or for secretion. Ribosomes synthesise proteins, mitochondria release energy, and lysosomes contain digestive enzymes.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "A retained-bank keyword scan found no 'ABO blood-group inheritance' or 'codominance' item. Full semantic screening and subject review remain required."
+      "review_note": "Revised after identifying an existing ABO blood-group inheritance item in the retained bank. The new cell-organelle concept is distinct; subject review and the refreshed full-bank screen are still required."
     },
     {
       "target_id": "DUP-51",
@@ -931,14 +931,48 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "A retained-bank keyword scan found no 'resonance frequency' item. Full semantic screening and subject review remain required."
+    },
+    {
+      "target_id": "DUP-52",
+      "subject": "Mathematics",
+      "topic": "Matrices",
+      "subtopic": "Matrix multiplication",
+      "question": "Given A = [[1, 2], [0, 3]] and B = [[2, 1], [4, 0]], what is the product AB?",
+      "options": [
+        "[[10, 1], [12, 0]]",
+        "[[2, 4], [0, 9]]",
+        "[[10, 4], [12, 3]]",
+        "[[6, 1], [12, 0]]"
+      ],
+      "answer": "A",
+      "explanation": "Multiply each row of A by each column of B. The entries are 1×2 + 2×4 = 10, 1×1 + 2×0 = 1, 0×2 + 3×4 = 12, and 0×1 + 3×0 = 0. Therefore AB = [[10, 1], [12, 0]].",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-53",
+      "subject": "Chemistry",
+      "topic": "Qualitative analysis",
+      "subtopic": "Identification of copper(II) ions",
+      "question": "Aqueous sodium hydroxide is added dropwise to a solution containing Cu²⁺ ions. Which observation is expected?",
+      "options": [
+        "A blue precipitate forms and remains insoluble in excess sodium hydroxide.",
+        "A white precipitate forms and dissolves in excess sodium hydroxide.",
+        "A brown precipitate forms immediately.",
+        "A colourless gas is evolved."
+      ],
+      "answer": "A",
+      "explanation": "Copper(II) ions react with hydroxide ions to form blue copper(II) hydroxide, Cu(OH)₂. This precipitate is insoluble in excess aqueous sodium hydroxide.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "Two original replacement proposals were added for DUP-50 and DUP-51. Keyword screening against the four retained staging CSVs found no direct match for ABO blood-group inheritance/codominance or resonance frequency. This is preliminary only; contextual similarity, syllabus, answer and explanation review remain outstanding.",
+  "revision_note": "DUP-50 was revised away from ABO blood-group inheritance after the retained bank was found to contain an existing ABO inheritance item. DUP-52 and DUP-53 are new original drafts. All proposals remain separate from the original batch CSVs; no insertion or publication has occurred.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 39,
+  "drafts_missing": 37,
   "drafts_missing_target_ids": [
-    "DUP-52",
-    "DUP-53",
     "DUP-54",
     "DUP-55",
     "DUP-56",
