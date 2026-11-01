@@ -937,7 +937,7 @@
       "subject": "Mathematics",
       "topic": "Matrices",
       "subtopic": "Matrix multiplication",
-      "question": "Given A = [[1, 2], [0, 3]] and B = [[2, 1], [4, 0]], what is the product AB?",
+      "question": "Calculate the product of the matrices [[1, 2], [0, 3]] and [[2, 1], [4, 0]].",
       "options": [
         "[[10, 1], [12, 0]]",
         "[[2, 4], [0, 9]]",
@@ -948,25 +948,27 @@
       "explanation": "Multiply each row of A by each column of B. The entries are 1×2 + 2×4 = 10, 1×1 + 2×0 = 1, 0×2 + 3×4 = 12, and 0×1 + 3×0 = 0. Therefore AB = [[10, 1], [12, 0]].",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The initial wording produced a lexical false positive against set-operation stems because of the A/B notation. The stem has been rewritten to state the matrix product directly; contextual review and the refreshed screen remain required."
     },
     {
       "target_id": "DUP-53",
       "subject": "Chemistry",
       "topic": "Qualitative analysis",
       "subtopic": "Identification of copper(II) ions",
-      "question": "Aqueous sodium hydroxide is added dropwise to a solution containing Cu²⁺ ions. Which observation is expected?",
+      "question": "When hydroxide ions are added to a solution containing Cu²⁺ ions, which precipitate is produced?",
       "options": [
-        "A blue precipitate forms and remains insoluble in excess sodium hydroxide.",
-        "A white precipitate forms and dissolves in excess sodium hydroxide.",
-        "A brown precipitate forms immediately.",
-        "A colourless gas is evolved."
+        "Copper(II) hydroxide, which is blue",
+        "Copper(I) oxide, which is red",
+        "Copper(II) carbonate, which is green",
+        "Copper(II) sulfide, which is black"
       ],
       "answer": "A",
-      "explanation": "Copper(II) ions react with hydroxide ions to form blue copper(II) hydroxide, Cu(OH)₂. This precipitate is insoluble in excess aqueous sodium hydroxide.",
+      "explanation": "Copper(II) ions react with hydroxide ions to form copper(II) hydroxide, Cu(OH)₂, which appears as a blue precipitate and is insoluble in excess aqueous sodium hydroxide.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The initial wording produced a lexical false positive against an existing chloride-ion qualitative test because of a shared 'reagent added to solution' template. The stem now tests the copper(II)-hydroxide precipitate directly; contextual review and the refreshed screen remain required."
     }
   ],
   "revision_note": "DUP-50 was revised away from ABO blood-group inheritance after the retained bank was found to contain an existing ABO inheritance item. DUP-52 and DUP-53 are new original drafts. All proposals remain separate from the original batch CSVs; no insertion or publication has occurred.",
