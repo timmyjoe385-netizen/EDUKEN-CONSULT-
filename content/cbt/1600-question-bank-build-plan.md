@@ -81,3 +81,35 @@ Before a student-facing production release:
 - The isolated test database has only 73 questions (65 drafts, 8 published) and is insufficient for the 180-question mock.
 - Authenticated admin import-to-publish testing and full academic/semantic review remain outstanding.
 - Production database and production question records remain untouched.
+
+
+## Fresh global duplicate-cleanup audit — 1 November 2026 (in progress)
+
+### Repository snapshot and scan coverage
+- Scanned the current branch's 40 numbered CSV files in four manageable windows: batches 01–10, 11–20, 21–30, and 31–40.
+- All 40 files were fetched successfully. Each file had the exact 18-column header and 40 question rows; all 1,600 question rows were present.
+- The isolated structural checks across these windows found no malformed rows and no non-draft statuses. The current CI build also passed the repository-wide question-bank test: 109 tests passed, 0 failed. That test verifies the exact 18-column schema, 40 rows per batch, five questions per subject per batch, valid keys/options/explanations/provenance, draft-only status, and zero exact normalized duplicate stems globally across all 40 files.
+- Exact duplicate groups found by the independent per-window pass: zero. The current CI test is the authoritative global exact-stem check across all 40 files; it passed on branch head 71d1830f4496d213acf8326c59867d1271e5a4b7.
+
+### New lexical candidate screen
+- Ran a same-subject character-trigram Dice screen at threshold 0.43 within each 10-batch window. Candidate pair counts: batches 01–10 = 119; 11–20 = 107; 21–30 = 82; 31–40 = 82; total = 390 within-window candidate pairs.
+- These are review flags, not confirmed duplicates. Generic question templates and related-but-distinct facts produce false positives. The candidate screen has not yet compared pairs across the four windows, so cross-window semantic review remains outstanding.
+- Contextual review of the strongest candidates confirmed the following redundant pairs:
+  - Biology: batch 21 row 14 and batch 27 row 14 — bacterial asexual reproduction by binary fission.
+  - Economics: batch 22 row 29 and batch 26 row 27 — definition of regressive taxation.
+  - Physics: batch 25 row 23 and batch 29 row 23 — ammeter/current measurement in a series circuit.
+  - Mathematics: batch 27 row 11 and batch 28 row 10 — the same inverse-variation values and calculation.
+  - Government: batch 32 row 34 and batch 33 row 35 — constitutional division of powers in a federal system.
+- Additional candidates needing a deliberate decision, not automatic replacement:
+  - Mathematics: batch 38 row 8 and batch 40 row 11 — same 15% discount/selling-price skill with different amounts.
+  - Physics: batch 33 row 24 and batch 38 row 25 — numerical series-resistance calculation versus the general series-resistance rule.
+  - Chemistry: batch 31 row 19 and batch 33 row 17 — surface-area effect on reaction rate in different setups.
+- Explicitly preserve distinct concepts flagged by wording similarity:
+  - Physics: batch 24 row 23 asks for the SI unit of magnetic flux density (tesla); batch 28 row 23 asks for the SI unit of magnetic flux (weber). These are different physical quantities.
+  - Use of English: batch 27 row 2 (semicolon) and batch 28 row 5 (colon) test different punctuation rules.
+  - Literature: batch 23 row 37 (hubris) and batch 26 row 39 (hamartia) are different tragic concepts; batch 37 row 38 (four-line stanza) and batch 39 row 38 (eight-line stanza) are different stanza forms.
+
+### Current decision and remaining work
+- Do not delete or replace any question solely from the lexical score. The five confirmed redundant pairs above must be reconciled against the full 1,600-question set and the previous 31 replacement history before editing.
+- No question CSV was modified during this audit. All 1,600 rows remain draft.
+- Outstanding: compare semantic candidates across the former 01–20 and 21–40 boundaries and across all four current windows; review candidate options, correct answers and explanations; verify topic/subtopic alignment; produce the final location-level unique/repeated/review-needed inventory; then prepare the clean first set and replacement plan.
