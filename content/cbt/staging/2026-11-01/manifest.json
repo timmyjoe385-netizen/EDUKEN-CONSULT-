@@ -10,14 +10,14 @@
   "provisionally_retained_rows": 1510,
   "reconciliation": "1,510 provisionally retained + 90 held = 1,600 source question rows.",
   "duplicate_provenance": {
-    "prior_replacement_commit_verified": 47,
-    "replacement_after_initial_snapshot_commit_sha_pending": 14,
+    "prior_replacement_commit_verified": 48,
+    "replacement_after_initial_snapshot_commit_sha_pending": 13,
     "original_draft_overlap_relationships": 28,
     "provenance_unverified_relationships": 1,
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "Counts classify duplicate relationships, not unique source rows. The 90 confirmed relationships map to 90 unique held locations. Fourteen further pairs are known to contain later replacement-created content because current rows differ from original batch snapshots, but their exact introducing commit SHAs remain to be normalized."
+    "note": "Forty-eight duplicate relationships have commit-backed prior-replacement evidence. Thirteen further pairs contain later replacement-created content confirmed against original batch snapshots, but exact introducing commit SHAs remain to be normalized. Twenty-eight are original-draft overlaps; DUP-34 remains provenance-unresolved."
   },
   "per_batch": [
     {
@@ -233,12 +233,14 @@
   ],
   "replacement_status": {
     "confirmed_targets": 90,
-    "existing_draft_proposals": 47,
-    "additional_drafts_required": 43,
+    "existing_draft_proposals": 49,
+    "additional_drafts_required": 41,
     "blocked_existing_bank_overlap": 5,
     "provisional_syllabus_mapping": 26,
     "subject_review_required": 16,
-    "drafts_inserted": 0
+    "drafts_inserted": 0,
+    "new_drafts_added_in_current_revision": 2,
+    "new_drafts_require_subject_and_bankwide_review": 2
   },
   "source_files_modified": false,
   "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
@@ -263,7 +265,7 @@
     "original_reported_within_window_candidates_pending": 279,
     "reconstructed_within_window_candidates_reviewed": 390,
     "unresolved_within_window_count_discrepancy": 38,
-    "note": "All 286 cross-window candidates at or above the 0.65 review threshold have received manual contextual review. The 1,018 lower-scoring candidates remain unreviewed; the original within-window report still has 279 pending candidates and a 38-pair discrepancy against the reconstructed candidate set."
+    "note": "Cross-window screen has 1,304 candidates: 286 manually reviewed (including the 49-pair same-subject/topic/subtopic shortlist; 1,018 lower-scoring candidates remain unreviewed). The within-window reconstruction at threshold 0.42 has 390 reviewed candidates, while the original report still has 279 pending candidates and a 38-pair discrepancy against the reconstruction."
   },
   "semantic_review": {
     "within_window": {
@@ -282,7 +284,12 @@
       "candidates": 1304,
       "manually_reviewed_at_or_above_similarity_threshold_0_65": 286,
       "below_threshold_not_manually_reviewed": 1018,
-      "interpretation": "All candidates meeting the 0.65 manual-review threshold were reviewed. The 1,018 lower-scoring candidates remain screened but were not manually reviewed; this is a lower-priority residual review set, not an unreviewed high-priority queue."
+      "interpretation": "The 49-pair same-subject/topic/subtopic shortlist is fully dispositioned (15 previously confirmed and 34 newly contextually reviewed: one additional semantic duplicate and 33 distinct/valid variants). This shortlist is not the full 1,304-candidate screen. The overall review log records 286 manually reviewed cross-window candidates; 1,018 below-threshold candidates remain unreviewed.",
+      "high_similarity_shortlist_reviewed": 49,
+      "high_similarity_shortlist_newly_contextually_reviewed": 34,
+      "high_similarity_shortlist_newly_confirmed_duplicates": 1,
+      "high_similarity_shortlist_preserved_distinct_or_valid_variants": 33,
+      "remaining_unreviewed_cross_window_candidates": 1255
     }
   }
 }
