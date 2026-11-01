@@ -15,7 +15,9 @@
     "topic_and_subtopic_matches_at_least_0_80": 42,
     "cross_window_high_similarity_same_topic_subtopic_reviewed": 42,
     "cross_window_confirmed_pairs_after_full_42_review": 22,
-    "cross_window_preserved_pairs_after_full_42_review": 20
+    "cross_window_preserved_pairs_after_full_42_review": 20,
+    "within_window_confirmed_pairs_after_review": 10,
+    "within_window_review_needed_pairs_remaining": 0
   },
   "confirmed_cross_window_duplicates": [
     {
@@ -254,7 +256,8 @@
     "Similarity counts are candidate counts, not duplicate counts.",
     "Different numbers or values in the same topic are not automatically duplicates; they need a question-design review for excessive template repetition.",
     "The full within-window semantic candidate queue still needs contextual review; prior same-window checks confirmed five duplicate pairs.",
-    "No original CSV question has been changed or removed during this audit."
+    "No original CSV question has been changed or removed during this audit.",
+    "The remaining relative-pronoun candidate (batch 31 row 2 / batch 33 row 2) was checked against both current CSVs and confirmed as a repeated assessment pattern. Both test the same subject-relative-pronoun rule in near-identical sentence frames. Replacement location remains on hold pending prior replacement-history reconciliation."
   ],
   "confirmed_within_window_duplicates": [
     {
@@ -357,6 +360,15 @@
       "decision": "confirmed_semantic_duplicate",
       "current_csv_checked": true,
       "csv_changed_in_this_audit": false
+    },
+    {
+      "a": "batch 31 row 2",
+      "b": "batch 33 row 2",
+      "subject": "Use of English",
+      "concept": "Subject relative pronoun 'who' in a relative clause",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both questions test 'who' as the subject relative pronoun for a person in near-identical sentence frames: a person who won an award/scholarship thanks their teachers.",
+      "history_note": "The exact retain/replace location is pending the complete prior replacement-commit ledger; do not edit either CSV row until reconciled."
     }
   ],
   "history_reconciliation": {
