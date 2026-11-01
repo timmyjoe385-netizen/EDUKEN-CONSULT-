@@ -1,0 +1,499 @@
+{
+  "audit_date": "2026-11-01",
+  "method": "Cross-window same-subject/topic/subtopic trigram Dice >= 0.78; candidate-only screen",
+  "candidate_count": 49,
+  "confirmed_already_logged": 15,
+  "other_candidates": 34,
+  "candidates": [
+    {
+      "score": 0.994,
+      "a": "batch 20 row 9",
+      "b": "batch 36 row 10",
+      "subject": "Mathematics",
+      "topic": "Geometry",
+      "question_a": "What is the sum of the exterior angles of any convex polygon, taking one at each vertex?",
+      "question_b": "What is the sum of the exterior angles of any convex polygon, taking one exterior angle at each vertex?",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.958,
+      "a": "batch 13 row 7",
+      "b": "batch 33 row 7",
+      "subject": "Mathematics",
+      "topic": "Geometry",
+      "question_a": "A regular polygon has an exterior angle of 30°. How many sides does it have?",
+      "question_b": "A regular polygon has an exterior angle of 40°. How many sides does it have?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.941,
+      "a": "batch 8 row 7",
+      "b": "batch 31 row 7",
+      "subject": "Mathematics",
+      "topic": "Sequences",
+      "question_a": "An arithmetic progression has first term 5 and common difference 3. What is its 10th term?",
+      "question_b": "An arithmetic progression has first term 5 and common difference 3. What is its eighth term?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.94,
+      "a": "batch 4 row 24",
+      "b": "batch 36 row 24",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "question_a": "In a simple series circuit, the current through each component is:",
+      "question_b": "In a series circuit, the current through each component is",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.939,
+      "a": "batch 20 row 22",
+      "b": "batch 34 row 22",
+      "subject": "Physics",
+      "topic": "Mechanics",
+      "question_a": "A 2 kg object moves at 5 m/s. What is its momentum?",
+      "question_b": "A 2 kg object moves at 3 m/s. What is its momentum?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.927,
+      "a": "batch 19 row 17",
+      "b": "batch 37 row 17",
+      "subject": "Chemistry",
+      "topic": "Chemical calculations",
+      "question_a": "What volume of a 0.5 mol/dm³ solution contains 1.0 mol of solute?",
+      "question_b": "What volume of a 0.5 mol/dm³ solution contains 0.25 mol of solute?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.921,
+      "a": "batch 28 row 25",
+      "b": "batch 34 row 26",
+      "subject": "Physics",
+      "topic": "Heat",
+      "question_a": "The heat needed to raise the temperature of 1 kg of a substance by 1 K is its",
+      "question_b": "The quantity of heat needed to raise the temperature of 1 kg of a substance by 1 K is its",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.917,
+      "a": "batch 8 row 7",
+      "b": "batch 29 row 11",
+      "subject": "Mathematics",
+      "topic": "Sequences",
+      "question_a": "An arithmetic progression has first term 5 and common difference 3. What is its 10th term?",
+      "question_b": "An arithmetic progression has first term 4 and common difference 3. What is its tenth term?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.917,
+      "a": "batch 1 row 14",
+      "b": "batch 34 row 12",
+      "subject": "Biology",
+      "topic": "Genetics",
+      "question_a": "An organism with two identical alleles for a gene is described as:",
+      "question_b": "An organism with two identical alleles for a particular gene is described as",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.906,
+      "a": "batch 29 row 11",
+      "b": "batch 31 row 7",
+      "subject": "Mathematics",
+      "topic": "Sequences",
+      "question_a": "An arithmetic progression has first term 4 and common difference 3. What is its tenth term?",
+      "question_b": "An arithmetic progression has first term 5 and common difference 3. What is its eighth term?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.889,
+      "a": "batch 10 row 12",
+      "b": "batch 28 row 13",
+      "subject": "Biology",
+      "topic": "Cell biology",
+      "question_a": "Which cell organelle contains most of the genetic material and helps control cell activities?",
+      "question_b": "Which cell structure contains most of the genetic material and helps control cell activities?",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.887,
+      "a": "batch 2 row 40",
+      "b": "batch 37 row 41",
+      "subject": "Literature in English",
+      "topic": "Literary criticism",
+      "question_a": "The central idea or underlying message explored in a literary work is its:",
+      "question_b": "The central idea or underlying message developed in a literary work is its:",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.886,
+      "a": "batch 7 row 19",
+      "b": "batch 28 row 19",
+      "subject": "Chemistry",
+      "topic": "Organic chemistry",
+      "question_a": "Which general formula represents an acyclic alkene with one carbon-carbon double bond?",
+      "question_b": "Which general formula represents an open-chain alkene with one carbon-carbon double bond?",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.886,
+      "a": "batch 26 row 4",
+      "b": "batch 31 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "In the sentence “The witness gave a candid account of the incident,” the word “candid” means",
+      "question_b": "In the sentence \\The witness gave a coherent account of the incident\\, the word \\coherent\\ means",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.882,
+      "a": "batch 5 row 9",
+      "b": "batch 34 row 11",
+      "subject": "Mathematics",
+      "topic": "Coordinate geometry",
+      "question_a": "Find the midpoint of the segment joining (2, 4) and (6, 8).",
+      "question_b": "Find the midpoint of the line segment joining (−2, 4) and (6, 10).",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.88,
+      "a": "batch 4 row 9",
+      "b": "batch 16 row 8",
+      "subject": "Mathematics",
+      "topic": "Geometry",
+      "question_a": "Two angles of a triangle are 45° and 65°. Find the third angle.",
+      "question_b": "Two angles of a triangle are 48° and 67°. Find the third angle.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.88,
+      "a": "batch 25 row 31",
+      "b": "batch 33 row 29",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "question_a": "Public debt refers to:",
+      "question_b": "Public debt refers to the:",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.878,
+      "a": "batch 23 row 11",
+      "b": "batch 31 row 11",
+      "subject": "Mathematics",
+      "topic": "Matrices",
+      "question_a": "Find the determinant of the matrix [[3, 2], [5, 4]].",
+      "question_b": "Find the determinant of the matrix [[2, 3], [1, 4]].",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.87,
+      "a": "batch 10 row 21",
+      "b": "batch 35 row 19",
+      "subject": "Chemistry",
+      "topic": "Separation techniques",
+      "question_a": "Paper chromatography separates substances mainly because they have different:",
+      "question_b": "Paper chromatography separates components mainly because they have different",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.865,
+      "a": "batch 12 row 23",
+      "b": "batch 27 row 22",
+      "subject": "Physics",
+      "topic": "Properties of matter",
+      "question_a": "A metal block has a mass of 200 g and a volume of 50 cm³. What is its density?",
+      "question_b": "A block has a mass of 240 g and a volume of 80 cm³. What is its density?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.863,
+      "a": "batch 12 row 12",
+      "b": "batch 34 row 14",
+      "subject": "Biology",
+      "topic": "Plant physiology",
+      "question_a": "Most water vapour is lost from the leaves of a typical terrestrial plant through the…",
+      "question_b": "Most water vapour is lost from the leaves of many terrestrial plants through the",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.861,
+      "a": "batch 11 row 9",
+      "b": "batch 29 row 9",
+      "subject": "Mathematics",
+      "topic": "Probability",
+      "question_a": "A fair die is rolled once. What is the probability of obtaining a number greater than 4?",
+      "question_b": "A fair die is rolled once. What is the probability of obtaining a prime number?",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.853,
+      "a": "batch 4 row 25",
+      "b": "batch 32 row 24",
+      "subject": "Physics",
+      "topic": "Optics",
+      "question_a": "A convex lens is also known as a:",
+      "question_b": "A converging lens is also known as a",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.852,
+      "a": "batch 10 row 8",
+      "b": "batch 22 row 10",
+      "subject": "Mathematics",
+      "topic": "Statistics",
+      "question_a": "Find the mode of 2, 3, 3, 4, 5, 5, 5.",
+      "question_b": "Find the mode of 2, 3, 3, 4, 5, 3 and 6.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.852,
+      "a": "batch 9 row 31",
+      "b": "batch 38 row 31",
+      "subject": "Economics",
+      "topic": "International trade",
+      "question_a": "A tariff is a tax imposed mainly on:",
+      "question_b": "A tariff is a tax imposed on",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.848,
+      "a": "batch 1 row 4",
+      "b": "batch 36 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “concise.”",
+      "question_b": "Choose the word nearest in meaning to 'candid'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.848,
+      "a": "batch 21 row 10",
+      "b": "batch 32 row 10",
+      "subject": "Mathematics",
+      "topic": "Commercial arithmetic",
+      "question_a": "Find the simple interest on ₦8,000 invested at 5% per annum for 3 years.",
+      "question_b": "Find the simple interest on ₦20,000 for 3 years at 5% per annum.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.842,
+      "a": "batch 2 row 3",
+      "b": "batch 38 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word opposite in meaning to “scarce.”",
+      "question_b": "Choose the word opposite in meaning to 'hostile'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.841,
+      "a": "batch 3 row 22",
+      "b": "batch 20 row 23",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "question_a": "An appliance operates at 12 V and draws 2 A. What is its electrical power?",
+      "question_b": "An appliance operates at 12 V and draws 3 A. Calculate its electrical power.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.83,
+      "a": "batch 1 row 4",
+      "b": "batch 39 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “concise.”",
+      "question_b": "Choose the word nearest in meaning to 'obsolete'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.826,
+      "a": "batch 1 row 4",
+      "b": "batch 37 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “concise.”",
+      "question_b": "Choose the word nearest in meaning to 'abstain'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.821,
+      "a": "batch 5 row 6",
+      "b": "batch 38 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word opposite in meaning to “expand.”",
+      "question_b": "Choose the word opposite in meaning to 'hostile'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.816,
+      "a": "batch 7 row 23",
+      "b": "batch 33 row 24",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "question_a": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:",
+      "question_b": "Two resistors of 4 Ω and 6 Ω are connected in series. Their combined resistance is",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.809,
+      "a": "batch 1 row 4",
+      "b": "batch 21 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “concise.”",
+      "question_b": "Choose the word nearest in meaning to “diligent.”",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.809,
+      "a": "batch 21 row 3",
+      "b": "batch 36 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “diligent.”",
+      "question_b": "Choose the word nearest in meaning to 'candid'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.809,
+      "a": "batch 21 row 3",
+      "b": "batch 37 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “diligent.”",
+      "question_b": "Choose the word nearest in meaning to 'abstain'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.805,
+      "a": "batch 6 row 29",
+      "b": "batch 37 row 29",
+      "subject": "Economics",
+      "topic": "Money and banking",
+      "question_a": "A common function of commercial banks is to:",
+      "question_b": "One major function of commercial banks is to",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.804,
+      "a": "batch 20 row 39",
+      "b": "batch 25 row 37",
+      "subject": "Literature in English",
+      "topic": "Narrative structure",
+      "question_a": "The denouement of a narrative is the section in which:",
+      "question_b": "The denouement of a narrative is the stage at which:",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.803,
+      "a": "batch 1 row 15",
+      "b": "batch 38 row 13",
+      "subject": "Biology",
+      "topic": "Human physiology",
+      "question_a": "Which blood component is primarily responsible for clot formation?",
+      "question_b": "Which component of blood is primarily responsible for clotting?",
+      "decision": "confirmed_duplicate_already_logged"
+    },
+    {
+      "score": 0.8,
+      "a": "batch 1 row 4",
+      "b": "batch 34 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “concise.”",
+      "question_b": "Choose the word nearest in meaning to 'ephemeral'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.8,
+      "a": "batch 5 row 4",
+      "b": "batch 36 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “meticulous.”",
+      "question_b": "Choose the word nearest in meaning to 'candid'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.8,
+      "a": "batch 5 row 4",
+      "b": "batch 37 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “meticulous.”",
+      "question_b": "Choose the word nearest in meaning to 'abstain'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.792,
+      "a": "batch 3 row 23",
+      "b": "batch 17 row 22",
+      "subject": "Physics",
+      "topic": "Motion",
+      "question_a": "A car’s velocity changes from 5 m/s to 17 m/s in 4 s. Its average acceleration is:",
+      "question_b": "A car's velocity changes from 4 m/s to 16 m/s in 3 seconds. Find its average acceleration.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.792,
+      "a": "batch 21 row 3",
+      "b": "batch 39 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “diligent.”",
+      "question_b": "Choose the word nearest in meaning to 'obsolete'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.785,
+      "a": "batch 2 row 30",
+      "b": "batch 28 row 30",
+      "subject": "Economics",
+      "topic": "International trade",
+      "question_a": "A country’s balance of trade in goods compares the value of its:",
+      "question_b": "A country's balance of trade in goods is the difference between the value of its",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.784,
+      "a": "batch 5 row 4",
+      "b": "batch 21 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “meticulous.”",
+      "question_b": "Choose the word nearest in meaning to “diligent.”",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.784,
+      "a": "batch 5 row 4",
+      "b": "batch 39 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “meticulous.”",
+      "question_b": "Choose the word nearest in meaning to 'obsolete'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.784,
+      "a": "batch 21 row 3",
+      "b": "batch 34 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "question_a": "Choose the word nearest in meaning to “diligent.”",
+      "question_b": "Choose the word nearest in meaning to 'ephemeral'.",
+      "decision": "distinct_variant_or_needs_review"
+    },
+    {
+      "score": 0.782,
+      "a": "batch 8 row 10",
+      "b": "batch 25 row 8",
+      "subject": "Mathematics",
+      "topic": "Calculus",
+      "question_a": "Differentiate y = 4x³ − 2x with respect to x.",
+      "question_b": "Differentiate y = 5x⁴ − 3x² + 7 with respect to x.",
+      "decision": "distinct_variant_or_needs_review"
+    }
+  ]
+}
