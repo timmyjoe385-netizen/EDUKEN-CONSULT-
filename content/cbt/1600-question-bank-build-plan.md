@@ -171,3 +171,28 @@ An independent recomputation from the four stored 400-question indexes using the
 The global findings and within-window triage registers now both record 11 within-window duplicate pairs (22 cross-window + 11 within-window = 33 total). The batch 38 row 2 / batch 39 row 5 concord pair is synchronized in both registers. No question CSV has been edited.
 
 Next: recover or reproduce the original 390-pair candidate-generation method, reconcile all 38 count differences, and review the remaining 279 reported different-topic candidates with explicit preserve/duplicate decisions. Separately complete row-level provenance for all 33 confirmed pairs against the replacement history. Do not begin CSV replacements until both registers are complete.
+
+
+## Historical row-provenance update — 1 November 2026
+
+Targeted Git commit-patch checks have now verified **14 of the 33 confirmed duplicate pairs** as prior-replacement overlaps. The exact locations and introducing commit SHAs are recorded in `content/cbt/audits/global-duplicate-review-findings-2026-11-01.json` under `history_reconciliation.row_level_verified_overlaps`.
+
+The 14 verified pairs cover:
+- Federalism division of powers — batch 32/33
+- Literary theme — batch 2/37
+- Candid meaning — batch 26/30
+- Public debt — batch 25/33
+- Commercial-bank functions — batch 6/37
+- Relative pronoun “who” — batch 31/33
+- Exterior-angle sum — batch 20/36
+- Phenolphthalein colour — batch 20/22
+- Molten sodium chloride electrolysis — batch 20/34
+- Denouement — batch 20/25
+- Nucleus function — batch 10/28
+- Anther/pollen production — batch 10/35
+- Right-hand grip rule — batch 10/40
+- Symbolism — batch 34/40
+
+These are 14 duplicate pairs, not 14 questions; some pairs have both questions introduced by earlier replacement commits. The remaining 19 confirmed pairs still need row-level provenance checks. No question CSV has been modified.
+
+Candidate review remains open: the original triage reports 279 different-topic candidates still pending after its reported 70 reviewed, and its 390 total does not match the independent 352-pair recomputation. The 38-pair discrepancy remains unresolved. Do not start replacement edits yet.
