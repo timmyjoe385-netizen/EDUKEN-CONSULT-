@@ -1648,7 +1648,7 @@
       "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "Five formerly blocked candidate drafts (DUP-02, 05, 08, 30 and 32) were withdrawn and replaced with distinct proposals after confirming their earlier semantic overlap. The replacement proposals are screened against the complete 1,600-row bank and the existing draft set; they remain pending independent subject review.",
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review.",
   "confirmed_duplicate_targets": 90,
   "drafts_missing": 0,
   "drafts_missing_target_ids": []
