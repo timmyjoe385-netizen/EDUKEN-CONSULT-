@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 38 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 53,
+  "draft_count": 55,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 53 proposals remain drafts. The six newest proposals (DUP-48 to DUP-53) require independent subject review and bank-wide contextual review. DUP-48 has a strong lexical similarity flag against the existing diction item; the concepts appear distinct but require a subject reviewer. DUP-50 was changed to a Golgi-apparatus question to avoid the existing ABO overlap.",
   "items": [
@@ -969,14 +969,48 @@
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
       "review_note": "The stem was shortened to distinguish this cation-identification test from the existing chloride-ion qualitative test. Contextual review remains required."
+    },
+    {
+      "target_id": "DUP-54",
+      "subject": "Economics",
+      "topic": "Demand and supply",
+      "subtopic": "Cross elasticity of demand",
+      "question": "The price of good X rises by 10%, causing the quantity demanded of good Y to fall by 15%. What is the cross elasticity of demand for Y with respect to X?",
+      "options": [
+        "−1.5",
+        "−0.67",
+        "+1.5",
+        "+0.67"
+      ],
+      "answer": "A",
+      "explanation": "Cross elasticity of demand is the percentage change in quantity demanded of one good divided by the percentage change in the price of another. −15% ÷ 10% = −1.5. The negative value indicates that the goods are complements.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-55",
+      "subject": "Literature in English",
+      "topic": "Sound devices",
+      "subtopic": "Cacophony",
+      "question": "A poet deliberately uses harsh, discordant combinations of sounds to create an unpleasant or jarring effect. This sound device is called:",
+      "options": [
+        "Euphony",
+        "Cacophony",
+        "Assonance",
+        "Alliteration"
+      ],
+      "answer": "B",
+      "explanation": "Cacophony is the deliberate use of harsh or discordant sounds to create a jarring effect. Euphony creates a pleasing sound; assonance repeats vowel sounds; alliteration repeats initial consonant sounds.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-50 was revised away from ABO blood-group inheritance after the retained bank was found to contain an existing ABO inheritance item. DUP-52 and DUP-53 are new original drafts. All proposals remain separate from the original batch CSVs; no insertion or publication has occurred.",
+  "revision_note": "DUP-54 and DUP-55 drafted for the next confirmed Economics and Literature in English holdouts. Both remain separate draft proposals and are not inserted into source CSVs.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 37,
+  "drafts_missing": 35,
   "drafts_missing_target_ids": [
-    "DUP-54",
-    "DUP-55",
     "DUP-56",
     "DUP-57",
     "DUP-58",
