@@ -39,7 +39,8 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 9,
-    "additional_replacement_drafts_required": 9
+    "additional_replacement_drafts_required": 0,
+    "draft_count": 47
   },
   "approval_gate": "The 47-row retain/replace register and 38 original replacement drafts are staged. Nine additional replacement drafts are still required for the newly confirmed duplicate rows. Do not edit original-batch CSVs, import/publish, deploy production, or merge PR #194 until the user explicitly approves the reconciled retain/replace plan and all replacements have passed bank-wide and subject review.",
   "pairs": [
@@ -822,10 +823,10 @@
       "provenance": "Batch 32 row 21 was introduced by replacement commit 7293bf29bd4fccb687464e96b7ac43813862b376, replacing the sulfur oxidation-number item. It duplicates the original empirical-formula question in batch 9 row 18.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout. Create a distinct Chemistry syllabus question, screen it bank-wide, then review answer and explanation."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -842,10 +843,10 @@
       "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -862,10 +863,10 @@
       "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -882,10 +883,10 @@
       "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -902,10 +903,10 @@
       "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -922,10 +923,10 @@
       "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -942,10 +943,10 @@
       "provenance": "Both questions are present in their original batch-creation commits; no earlier replacement-introducing commit was found for these rows. This is an original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -962,10 +963,10 @@
       "provenance": "Batch 36 row 18 was introduced by replacement commit f2c1020405559529d074d6553bfe221f57d56d15, replacing a distinct question about the hydroxyl group in ethanol. It duplicates the original carboxylic-acid functional-group item in batch 23 row 19.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this newly confirmed holdout. Choose a distinct Chemistry syllabus learning objective and screen it bank-wide."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     },
     {
@@ -982,10 +983,10 @@
       "provenance": "Batch 26 row 34 and batch 32 row 34 are present in their original batch-creation snapshots. Batch 33 row 35 was separately introduced by prior replacement commit c61f2ffd593deb7ee18f3c123209a85da1b35cbb and is already held under DUP-28. The three rows form one duplicate cluster with one retained question and two holdouts.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "No replacement draft exists for this additional holdout. Do not create a second near-identical Government replacement; use a distinct federalism syllabus objective."
+        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
       }
     }
   ],
@@ -1028,14 +1029,16 @@
     "bank_insertion": "not performed"
   },
   "replacement_review_summary": {
-    "drafts_total": 38,
+    "drafts_total": 47,
     "blocked_existing_bank_overlap": 5,
-    "not_yet_cleared": 33,
+    "not_yet_cleared": 42,
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. Contextual concept-level review is required. The 9 newly confirmed holdouts have no replacement drafts yet.",
+    "rule": "A replacement draft is not approved merely because it passes numerical similarity screening. All 47 drafts require contextual concept-level review and subject validation. Five existing drafts remain blocked by bank overlap; sixteen require subject review; twenty-six are provisionally syllabus-mapped. No draft has been inserted.",
     "additional_duplicate_targets": 9,
-    "additional_replacement_drafts_required": 9
+    "additional_replacement_drafts_required": 0,
+    "subject_review_required": 16,
+    "provisionally_aligned": 26
   }
 }
