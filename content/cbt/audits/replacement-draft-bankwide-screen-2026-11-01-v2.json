@@ -126,7 +126,12 @@
           "score": 0.4342,
           "question": "An organism with two identical alleles for a gene is described as:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate defines when an allele is dominant in a heterozygote; the closest source asks for the genotype label Tt (heterozygous). Related genetics terminology but different definitions. Retain as draft pending independent Biology reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-05",
@@ -264,7 +269,12 @@
           "score": 0.3727,
           "question": "A fall in average cost as a firm expands its scale of production is known as"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate tests deflation (a sustained fall in the general price level); the closest source tests inflation (a sustained rise). Opposite concepts, not the same answer objective. Retain pending Economics reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-11",
@@ -402,7 +412,12 @@
           "score": 0.3902,
           "question": "Fractional distillation is especially suitable for separating liquids that"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate uses a separating funnel for two immiscible liquids; the closest source tests filtration of an insoluble solid from a liquid. Different mixtures and separation methods. Retain pending Chemistry reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-17",
@@ -448,7 +463,12 @@
           "score": 0.3485,
           "question": "A plane mirror normally forms an image that is ___."
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate applies the law of reflection at a plane mirror; the closest held-bank item tests total internal reflection at a boundary. Distinct optical principles. Retain pending Physics reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-19",
@@ -540,7 +560,12 @@
           "score": 0.3378,
           "question": "Which tissue transports manufactured food in flowering plants?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate tests plasma transport of dissolved substances; the closest source tests red blood cells carrying haemoglobin/oxygen. Different blood components and functions. Retain pending Biology reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-23",
@@ -793,7 +818,12 @@
           "score": 0.381,
           "question": "In the sentence 'The manager spoke with remarkable candour', the word 'candour' means"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate tests the possessive function of “whose”; the closest source tests a defining relative clause introduced by “that”. Related relative-clause grammar but distinct function. Retain pending English reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-34",
@@ -816,7 +846,12 @@
           "score": 0.487,
           "question": "Choose the correct verb: “Neither the principal nor the teachers ___ available.”"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate tests the plural-only noun “cattle” taking a plural verb; the closest sources test agreement with compound subjects/nearest-subject rule. Related concord domain but different rule. Retain pending English reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-35",
@@ -839,7 +874,12 @@
           "score": 0.314,
           "question": "The list of characters in a play, often provided before the opening scene, is called:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate defines an epigraph (quotation at the beginning); the closest source defines an epilogue (concluding section). Similar spelling but opposite placement and different literary function. Retain pending Literature reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-36",
@@ -862,7 +902,12 @@
           "score": 0.3333,
           "question": "Which is a key function of a political party in a democracy?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate asks for a party constitution (internal rules and structure); the closest source asks for a party manifesto (policy promises/programme). Different political documents and functions. Retain pending Government reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-37",
@@ -1069,7 +1114,12 @@
           "score": 0.4082,
           "question": "The conventional reward paid to the factor of production known as land is:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate defines economic rent as a payment above transfer earnings; the closest sources ask for ordinary factor rewards (wages/interest/rent). Related factor-reward area but distinct economic concept. Retain pending Economics reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-46",
@@ -1138,7 +1188,12 @@
           "score": 0.4902,
           "question": "In literary criticism, mood refers to the:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: denotation is a word's literal meaning; diction is a writer's choice/use of words. Related literary vocabulary but different concepts. Because the lexical score is high, require an independent Literature reviewer to confirm the distinction."
+      }
     },
     {
       "target_id": "DUP-49",
@@ -1253,7 +1308,12 @@
           "score": 0.4202,
           "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "conceptually_distinct_pending_human_review",
+        "note": "Preliminary distinction: the candidate identifies Cu(OH)₂ formed from Cu²⁺ and OH⁻; the closest sources ask about salt formation in neutralisation or gas evolution in acid reactions. Different reaction and qualitative identification objective. Retain pending Chemistry reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-54",
@@ -2118,5 +2178,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 19 replaces five previously blocked candidates (DUP-02, DUP-05, DUP-08, DUP-30 and DUP-32) with distinct concepts. Each replacement was compared with all 200 same-subject rows in the 1,600-question bank and with the current replacement draft bank. The five revised candidates are below the 0.42 lexical threshold. Earlier blocked candidates are retained only in the revision notes; the new candidates are not approved for insertion."
+  "revision_note": "Version 20 records a preliminary contextual assessment for all 12 remaining lexical flags. The assessments distinguish related wording from different learning objectives; they are not independent subject-expert approval. Human review is still required for all 12 flagged candidates and the other syllabus/answer checks. Five previously blocked drafts have been replaced with distinct candidates; no blocked candidate remains active."
 }
