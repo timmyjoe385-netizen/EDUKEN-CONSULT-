@@ -1,0 +1,63 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Preliminary AI-assisted academic and syllabus-fit review of replacement proposals DUP-48 to DUP-53. This is not independent subject-expert sign-off.",
+  "reviewer_status": "preliminary_review_completed_human_subject_review_still_required",
+  "reviews": [
+    {
+      "target_id": "DUP-48",
+      "subject": "Literature in English",
+      "assessment": "conditional_pass_subject_content",
+      "answer_check": "B is correct: denotation is a word's literal or direct meaning; connotation concerns associated ideas or feelings.",
+      "syllabus_fit": "Provisionally fits general literary principles and literary terminology; verify exact expected scope against the current JAMB Literature syllabus.",
+      "bank_overlap": "The refreshed lexical screen flags 0.6667 similarity with batch 36 row 38 (diction). Diction concerns a writer's choice/use of words; denotation concerns a word's direct meaning. Related vocabulary concepts, but not the same definition or learning objective.",
+      "decision": "Keep as a draft; human Literature reviewer must confirm distinction and syllabus depth."
+    },
+    {
+      "target_id": "DUP-49",
+      "subject": "Economics",
+      "assessment": "preliminary_pass",
+      "answer_check": "C is correct: tax incidence is the final economic distribution of a tax burden between buyers and sellers, which can differ from the party legally remitting the tax.",
+      "syllabus_fit": "Provisionally fits public finance, taxation principles and tax incidence/effects.",
+      "bank_overlap": "No same-subject stem reached the 0.42 lexical threshold; top match was 0.2807. Lexical screening alone cannot exclude semantic overlap.",
+      "decision": "Keep as a draft pending human Economics review."
+    },
+    {
+      "target_id": "DUP-50",
+      "subject": "Biology",
+      "assessment": "revised_preliminary_pass",
+      "answer_check": "A is correct: the Golgi apparatus modifies, sorts and packages proteins into vesicles. The distractors describe other cell structures.",
+      "syllabus_fit": "Provisionally fits cell structure and organelle functions.",
+      "bank_overlap": "The previous ABO cross draft was withdrawn because the bank already contains an ABO blood-group inheritance item. The revised Golgi item is a different cell-organelle concept; refresh screen includes this revision.",
+      "decision": "Keep revised version as a draft pending human Biology review."
+    },
+    {
+      "target_id": "DUP-51",
+      "subject": "Physics",
+      "assessment": "preliminary_pass",
+      "answer_check": "B is correct: resonance occurs when the driving frequency matches a system's natural frequency; response amplitude depends on damping and system conditions.",
+      "syllabus_fit": "Provisionally fits vibrations, forced vibrations and resonance within wave/vibration topics.",
+      "bank_overlap": "No same-subject stem reached the 0.42 lexical threshold; top match was 0.3952. Check concept-level overlap with the full Physics bank during human review.",
+      "decision": "Keep as a draft pending human Physics review."
+    },
+    {
+      "target_id": "DUP-52",
+      "subject": "Mathematics",
+      "assessment": "preliminary_pass",
+      "answer_check": "A is correct. Direct row-by-column multiplication gives [[10, 1], [12, 0]].",
+      "syllabus_fit": "Provisionally fits matrix operations; matrix multiplication is distinct from the existing determinant and trace items.",
+      "bank_overlap": "Refresh screen includes the new stem; contextual review remains required.",
+      "decision": "Keep as a draft pending human Mathematics review."
+    },
+    {
+      "target_id": "DUP-53",
+      "subject": "Chemistry",
+      "assessment": "preliminary_pass",
+      "answer_check": "A is correct: Cu²⁺ forms blue Cu(OH)₂ precipitate with aqueous hydroxide; it is insoluble in excess sodium hydroxide.",
+      "syllabus_fit": "Provisionally fits qualitative analysis and identification of cations.",
+      "bank_overlap": "Refresh screen includes the new stem; contextual review remains required.",
+      "decision": "Keep as a draft pending human Chemistry review."
+    }
+  ],
+  "release_gate": "These are preliminary assistant checks, not independent academic sign-off. Do not insert any of DUP-48 to DUP-53 into original CSVs or publish them until subject-competent review, full contextual bank review and the user's final controlled replacement approval."
+}
