@@ -97,19 +97,20 @@
     {
       "target_id": "DUP-58",
       "subject": "Biology",
-      "assessment": "preliminary_pass",
-      "answer_check": "B is correct. Homologous structures share an underlying anatomical plan inherited from a common ancestor, despite adaptation to different functions.",
-      "syllabus_fit": "Provisionally fits evolution and evidence for common ancestry.",
-      "bank_overlap": "Refreshed same-subject screen highest similarity 0.6638. Existing items cover general adaptation and evolution, but the specific evidence from homologous structures is distinct. Human concept-level review remains required.",
-      "decision": "Keep as a draft pending human Biology review and contextual bank-wide clearance."
+      "assessment": "revised_preliminary_pass",
+      "answer_check": "A is correct. Quadrat sampling estimates abundance, density or frequency of plants and other relatively stationary organisms.",
+      "syllabus_fit": "Provisionally fits ecological sampling methods and fieldwork.",
+      "bank_overlap": "The earlier homologous-structures draft was withdrawn after the bank-wide comparison found an existing question on that concept (batch 23 row 13). The revised quadrat-sampling stem has a highest same-subject lexical score of 0.2895; concept-level review remains required.",
+      "decision": "Keep revised quadrat-sampling proposal as a draft pending human Biology review and contextual bank-wide clearance.",
+      "topic": "Ecology"
     },
     {
       "target_id": "DUP-59",
       "subject": "Literature in English",
       "assessment": "preliminary_pass",
-      "answer_check": "B is correct. An epithet is a descriptive word or phrase highlighting a characteristic; the distractors describe other literary devices.",
+      "answer_check": "A is correct. “The Lionheart” is a descriptive epithet associated with Richard's courage.",
       "syllabus_fit": "Provisionally fits literary devices and terminology.",
-      "bank_overlap": "Refreshed same-subject screen highest similarity 0.5455. No equivalent epithet definition was identified in the current topic index; contextual review remains required.",
+      "bank_overlap": "After replacing the generic definition stem with a concrete example, the refreshed screen's highest same-subject similarity is 0.4771. Human contextual review remains required.",
       "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
     }
   ],
