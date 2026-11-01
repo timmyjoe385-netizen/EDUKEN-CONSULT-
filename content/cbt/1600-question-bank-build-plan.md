@@ -124,3 +124,14 @@ Before a student-facing production release:
 - Combined with the five already confirmed within-window pairs, the current confirmed list contains 19 redundant pairs. Do not assume this is the final count until the full within-window semantic candidate queue and all prior replacement history are reconciled.
 - Many high-scoring pairs are legitimate variants rather than duplicates: changed numerical values in a calculation, related but different laws, or different terms within the same topic. They must not be removed automatically. The report deliberately preserves the distinction between lexical similarity and repeated assessment content.
 - No question CSV has been edited or deleted. All 1,600 questions remain draft. Next: review the remaining high-value candidates and same-window queue; verify each confirmed pair against the earlier replacement history; create a final location-level decision register; then replace only the approved redundant items with balanced, syllabus-aligned questions and rerun the complete validation.
+
+
+## Reconciliation correction — 1 November 2026
+
+The latest detailed findings file is the source of truth for the confirmed-pair count. It records 22 cross-window semantic duplicate pairs and 10 within-window semantic duplicate pairs, for **32 confirmed pairs**. This supersedes the earlier 19-pair progress snapshot and the intermediate 31-pair summary.
+
+The last unresolved within-window candidate, batch 31 row 2 versus batch 33 row 2, has now been checked against both current CSV rows. Both items test the subject relative pronoun "who" in near-identical person-won-award/scholarship-and-thanked-teachers sentence frames. It is now recorded as a confirmed repeated assessment pattern. The exact retain/replace location is deliberately held until the full prior replacement-commit ledger is reconciled.
+
+No question CSV was edited by this decision. All 1,600 questions remain drafts. The 390 within-window lexical candidates are not all fully reviewed: the highest-priority same-topic/subtopic set and 70 highest-scoring different-topic/subtopic candidates have been reviewed, but the remaining different-topic candidate tail is still outstanding. Similarity scores must not be treated as duplicate decisions.
+
+Next gate: finish the full location-level reconciliation of all 32 confirmed pairs against prior replacement commits and all earlier question edits; then finish the remaining candidate review and produce a definitive retain/replace/preserve register before editing question CSVs.
