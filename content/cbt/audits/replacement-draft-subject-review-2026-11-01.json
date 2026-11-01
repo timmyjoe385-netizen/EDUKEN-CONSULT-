@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-65. This is not independent subject-expert sign-off.",
+  "purpose": "Preliminary AI-assisted academic, answer-key and syllabus-fit checks for replacement proposals DUP-48 to DUP-90. This is not independent subject-expert sign-off.",
   "reviewer_status": "preliminary_review_completed_human_subject_review_still_required",
   "reviews": [
     {
@@ -166,6 +166,231 @@
       "syllabus_fit": "Provisionally fits insect respiration and animal physiology; confirm exact JAMB Biology syllabus coverage.",
       "bank_overlap": "Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a ureter question, with no concept overlap identified. Contextual review remains required.",
       "decision": "Keep as a separate draft pending independent Biology review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-66",
+      "subject": "Physics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "C is correct: input power = 240 × 0.5 = 120 W; output power = 12 × 8 = 96 W; efficiency = 96/120 × 100 = 80%.",
+      "syllabus_fit": "Transformer performance/efficiency; confirm syllabus depth.",
+      "bank_overlap": "Highest same-subject Dice 0.3285; closest match is a machine-efficiency question, not a transformer calculation. Human Physics review must confirm the distinction.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-67",
+      "subject": "Chemistry",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "C is correct: nitrogen donates its lone pair to H⁺ to form a coordinate covalent N–H bond in NH₄⁺.",
+      "syllabus_fit": "Chemical bonding and coordinate covalent bonds; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.4094 against the ammonium-ion formula question. Similar species, different learning objective; require Chemistry review.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-68",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: “winds” means moving air; the homograph “wind” can also mean to turn or twist, with a different pronunciation.",
+      "syllabus_fit": "Lexis and meaning in context; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.2653; no close conceptual match identified in the lexical screen.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-69",
+      "subject": "Literature in English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: dramatic irony occurs when the audience knows important information that a character does not.",
+      "syllabus_fit": "Drama and dramatic techniques; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3182; closest lexical matches concern narrative technique and stage remarks, not dramatic irony.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-70",
+      "subject": "Biology",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: water in the central vacuole contributes to turgor pressure, helping maintain cell firmness.",
+      "syllabus_fit": "Cell structure and functions; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3333; no vacuole/turgor match was found in the bank.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-71",
+      "subject": "Physics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "D is correct: Coulomb's law gives F proportional to 1/r²; doubling separation reduces force to F/4.",
+      "syllabus_fit": "Electrostatics and Coulomb's law; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3117; closest matches are resistor and charging questions, not Coulomb's inverse-square law.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-72",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: “fall through” means to fail or not happen as planned.",
+      "syllabus_fit": "Lexis and idiomatic expressions; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3894; closest items test different idioms. Human English review should confirm idiom selection.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-73",
+      "subject": "Biology",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: a simple withdrawal reflex is integrated through the spinal cord before conscious interpretation of pain.",
+      "syllabus_fit": "Coordination and reflex actions; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3297; closest matches concern brain and neuron functions, not withdrawal-reflex integration.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-74",
+      "subject": "Biology",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: the afferent arteriole is wider than the efferent arteriole, helping create high hydrostatic pressure in glomerular capillaries.",
+      "syllabus_fit": "Excretion and kidney ultrafiltration; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.2971; closest match asks the site of filtration, a related but distinct objective.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-75",
+      "subject": "Economics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: opportunity cost of cloth is 2 units of rice in A and 1 in B; B has comparative advantage.",
+      "syllabus_fit": "International trade and comparative advantage; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.4022 against an absolute-advantage question. Related trade theory but different criterion; human Economics review required.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-76",
+      "subject": "Economics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: untreated waste imposes external costs on third parties, a negative production externality.",
+      "syllabus_fit": "Market failure and externalities; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3622; no negative-externality match identified in the screen.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-77",
+      "subject": "Government",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: equality before the law means public officials and ordinary citizens are subject to the same law.",
+      "syllabus_fit": "Rule of law and constitutional principles; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3724; closest matches concern accountability, neutrality and checks/balances.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-78",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: a semicolon can join two closely related independent clauses without a coordinating conjunction.",
+      "syllabus_fit": "Punctuation; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.4105 against a question about semicolons in complex lists. Related punctuation mark but a different use; human review required.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-79",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: “to borrow a textbook” explains the purpose of visiting the library.",
+      "syllabus_fit": "Phrases and infinitive functions; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3810; no same-function match identified in the top results.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-80",
+      "subject": "Economics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "C is correct: a mixed economy combines private enterprise with government ownership, regulation or provision.",
+      "syllabus_fit": "Economic systems; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3524 against a command-economy definition; distinct system characteristics.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-81",
+      "subject": "Physics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: α = ΔL/(LΔT) = 0.002/(2 × 50) = 2.0 × 10⁻⁵ °C⁻¹.",
+      "syllabus_fit": "Thermal expansion; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3587 against a definition of the coefficient; this item is a calculation.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-82",
+      "subject": "Economics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: marginal utility from successive units generally diminishes, other things equal.",
+      "syllabus_fit": "Consumer behaviour and utility; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.4130 against existing marginal-utility definition questions. This is conceptually close and requires explicit human review before approval.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-83",
+      "subject": "Literature in English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: a pseudonym is an assumed or pen name used by an author.",
+      "syllabus_fit": "Literary terminology; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3514; no pseudonym match identified.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-84",
+      "subject": "Biology",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: DNA ligase joins adjacent Okazaki fragments by sealing breaks in the DNA sugar-phosphate backbone.",
+      "syllabus_fit": "Genetics and DNA replication; confirm whether this level of molecular detail is within the current JAMB Biology syllabus.",
+      "bank_overlap": "Highest same-subject Dice 0.3286. The earlier pulmonary-vein draft was withdrawn because it duplicated batch 21 row 12; this replacement has been re-screened.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-85",
+      "subject": "Literature in English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: blocking is the planned movement and positioning of performers on stage.",
+      "syllabus_fit": "Drama and stagecraft; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3723; no stage-blocking match identified.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-86",
+      "subject": "Chemistry",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: nitrate ions give a brown ring at the interface in the brown-ring test using FeSO₄ and concentrated H₂SO₄.",
+      "syllabus_fit": "Qualitative analysis and tests for anions; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3158; closest results are other qualitative tests, not nitrate identification.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: a teetotaller abstains from drinking alcoholic beverages.",
+      "syllabus_fit": "Vocabulary and word meaning; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.4060; closest lexical match is a different occupation/person descriptor.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-88",
+      "subject": "Economics",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: rising production costs can push firms to raise prices, causing cost-push inflation.",
+      "syllabus_fit": "Inflation and causes of inflation; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.4167 against a production-cost/supply question. Related cost shock, different outcome; human Economics review required.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-89",
+      "subject": "Use of English",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "A is correct: /m/ and /n/ are nasal consonants.",
+      "syllabus_fit": "Oral English and consonant classification; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3964 against a consonant-sound comparison question; different phonetic objective.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
+    },
+    {
+      "target_id": "DUP-90",
+      "subject": "Chemistry",
+      "assessment": "preliminary_answer_check_pass_pending_human_review",
+      "answer_check": "B is correct: CuSO₄·5H₂O contains five water molecules of crystallisation per formula unit.",
+      "syllabus_fit": "Chemical formulae, hydrated salts and water of crystallisation; confirm syllabus scope.",
+      "bank_overlap": "Highest same-subject Dice 0.3021; closest match is copper(II) sulfate electrolysis, not hydrate formula interpretation.",
+      "decision": "Keep as a separate draft only. Independent subject review and explicit contextual bankwide clearance are required before insertion or publication."
     }
   ],
   "release_gate": "All assistant checks are preliminary, not independent academic sign-off. Do not insert or publish any replacement until subject-competent review, full contextual bank review, source-row provenance reconciliation and the user's final controlled replacement approval."
