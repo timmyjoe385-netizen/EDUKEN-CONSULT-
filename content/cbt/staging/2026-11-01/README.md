@@ -26,8 +26,8 @@ There are 90 confirmed duplicate targets. Separate draft proposals now cover 61 
 
 The version 9 lexical screen covers all 61 proposals against all 1,600 staged rows. Sixteen proposals meet or exceed the 0.42 review threshold; these are similarity prompts, not confirmed duplicates. DUP-60 (Organ of Corti/hearing) and DUP-61 (shoot phototropism) score 0.2783 and 0.2262 respectively against their closest same-subject matches.
 
-## Source-row reconciliation blocker
-The held-row records for DUP-60 and DUP-61 are present in the staging CSVs, but their recorded source locations do not match the corresponding rows in the current original-batch CSV files. For example, the staged DUP-60 row records a ureter question at batch 16 row 15, while the current original batch 16 row 15 contains a mutualism question. The staged DUP-61 row records stomatal regulation at batch 28 row 16, while the current original batch 28 row 16 contains a Chemistry question. The discrepancy must be traced through commit history and the authoritative source snapshot before final bank assembly. Do not edit original CSVs to force a match.
+## Source-row indexing check
+Register locations use physical CSV row numbers, including the header row. DUP-60 (batch 7 row 15; batch 16 row 15) and DUP-61 (batch 6 row 13; batch 28 row 16) were checked against those exact physical rows and match the staging holdout records. The original source CSVs remain unchanged.
 
 ## Semantic-review status
 - Within-window reconstruction: 390 candidate pairs at the reproduced 0.42 threshold; all 390 have explicit review statuses. This includes 350 different-topic/subtopic candidates contextually reviewed and 40 same-topic/subtopic candidates carried forward as previously reviewed.
@@ -36,6 +36,6 @@ The held-row records for DUP-60 and DUP-61 are present in the staging CSVs, but 
 - Similarity candidates are not duplicates by themselves. Confirmed duplicate decisions are recorded separately in the 90-pair disposition register.
 
 ## Important
-This is a staging export, not approval to publish. The original 40 batch CSVs have not been modified. The 1,510 retained questions are not yet academically approved or deployment-ready. All replacement proposals require validation of syllabus fit, question clarity, options, answer key, explanation and bank-wide uniqueness. The source-row reconciliation blocker above must be resolved before final bank assembly.
+This is a staging export, not approval to publish. The original 40 batch CSVs have not been modified. The 1,510 retained questions are not yet academically approved or deployment-ready. All replacement proposals require validation of syllabus fit, question clarity, options, answer key, explanation and bank-wide uniqueness. The physical-row indexing convention is documented above; the checked DUP-60 and DUP-61 locations match.
 
 No Supabase import, publication, PR merge or production deployment is authorised by this staging export.
