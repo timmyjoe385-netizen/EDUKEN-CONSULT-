@@ -15,10 +15,10 @@
   },
   "totals": {
     "replacement_drafts": 38,
-    "provisionally_aligned": 20,
-    "subject_review_required": 11,
-    "inserted_into_question_csvs": 0,
-    "blocked_existing_bank_overlap": 7
+    "provisionally_aligned": 23,
+    "subject_review_required": 10,
+    "blocked_existing_bank_overlap": 5,
+    "inserted_into_question_csvs": 0
   },
   "items": [
     {
