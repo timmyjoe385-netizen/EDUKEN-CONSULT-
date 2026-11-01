@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 68,
+  "draft_count": 69,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1248,15 +1248,32 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-71",
+      "subject": "Physics",
+      "topic": "Electrostatics",
+      "subtopic": "Coulomb's law",
+      "question": "Two point charges are separated by a distance r and exert an electrostatic force F on each other. If their separation is increased to 2r without changing the charges, what is the new force?",
+      "options": [
+        "4F",
+        "2F",
+        "F/2",
+        "F/4"
+      ],
+      "answer": "D",
+      "explanation": "By Coulomb's law, electrostatic force is inversely proportional to the square of separation. Doubling the distance gives F/(2²) = F/4.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-66 to DUP-69 proposals added only where same-subject lexical screen stayed below 0.42. DUP-67 acid pH candidate rejected for high lexical overlap and replaced by a coordinate-covalent-bond candidate. All remain drafts pending human academic and semantic review.",
+  "revision_note": "Additional candidates added only where full same-subject 1,600-row lexical screen stayed below 0.42. Above-threshold candidates remain unadded and require redesign. All accepted items are draft-only and need independent academic and contextual review.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 23,
+  "drafts_missing": 24,
   "drafts_missing_target_ids": [
     "DUP-68",
     "DUP-70",
-    "DUP-71",
     "DUP-72",
     "DUP-73",
     "DUP-74",
