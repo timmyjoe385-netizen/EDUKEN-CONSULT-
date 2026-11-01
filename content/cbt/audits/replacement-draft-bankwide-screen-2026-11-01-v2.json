@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 14,
+  "version": 15,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -11,8 +11,8 @@
     "original_csvs_modified": false
   },
   "replacement_proposals": {
-    "count": 76,
-    "screened": 76,
+    "count": 77,
+    "screened": 77,
     "all_proposals_screened": true
   },
   "screening_summary": {
@@ -1787,6 +1787,29 @@
           "question": "Which word begins with the same consonant sound as 'judge'?"
         }
       ]
+    },
+    {
+      "target_id": "DUP-79",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.381,
+      "top_matches": [
+        {
+          "location": "batch 14 row 2",
+          "score": 0.381,
+          "question": "In the sentence “The host told a joke to break the ice”, the expression “break the ice” means to…"
+        },
+        {
+          "location": "batch 11 row 5",
+          "score": 0.3791,
+          "question": "Choose the sentence that correctly expresses an unreal condition in the present."
+        },
+        {
+          "location": "batch 36 row 5",
+          "score": 0.3724,
+          "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
+        }
+      ]
     }
   ],
   "limitations": [
@@ -1800,5 +1823,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 14 adds DUP-70, DUP-81 and DUP-89. All three remained below the 0.42 same-subject lexical flag threshold in a full 1,600-row scan. This does not constitute academic approval or semantic uniqueness certification."
+  "revision_note": "Version 15 adds DUP-79. Same-subject maximum trigram Dice similarity is 0.3810 (batch 14 row 2), below the 0.42 lexical flag threshold. The candidate remains a draft and requires human semantic review."
 }
