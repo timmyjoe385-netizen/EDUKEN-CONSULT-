@@ -64,7 +64,7 @@
     "additional_replacement_drafts_required": 43,
     "draft_count": 47
   },
-  "approval_gate": "The 47-row retain/replace register and 38 original replacement drafts are staged. Nine additional replacement drafts are still required for the newly confirmed duplicate rows. Do not edit original-batch CSVs, import/publish, deploy production, or merge PR #194 until the user explicitly approves the reconciled retain/replace plan and all replacements have passed bank-wide and subject review.",
+  "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 47 proposals, leaving 43 targets (DUP-48 through DUP-90) without drafts. Of the 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; none is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1956,6 +1956,6 @@
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Fourteen more current rows are absent from their original batch snapshots and are classified as later replacements, but their exact introducing commit SHAs still need to be normalized. Twenty-eight pairs are original-draft overlaps; DUP-34 remains unresolved."
+    "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Fourteen more current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at the row-level provenance stage: both current rows are labelled original EDUKEN drafts and are semantically similar subject-verb agreement items, but the available current snapshots do not establish which draft came first or whether either row was changed later."
   }
 }
