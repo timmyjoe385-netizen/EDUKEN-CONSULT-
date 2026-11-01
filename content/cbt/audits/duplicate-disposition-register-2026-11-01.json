@@ -43,7 +43,9 @@
     "replacement_after_initial_snapshot_commit_sha_pending": 13,
     "original_draft_overlap_pairs": 28,
     "provenance_unverified_pairs": 1,
-    "provenance_classification_complete": false
+    "provenance_classification_complete": false,
+    "staging_location_join_verified_pairs": 90,
+    "staging_location_join_complete": true
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -772,7 +774,8 @@
       "contextual_review": {
         "status": "assistant_preliminary_distinction_human_subject_review_required",
         "note": "Preliminary distinction: the candidate tests the plural-only noun “cattle” taking a plural verb; the closest sources test agreement with compound subjects/nearest-subject rule. Related concord domain but different rule. Retain pending English reviewer confirmation."
-      }
+      },
+      "provenance_status": "provenance_unverified"
     },
     {
       "id": "DUP-35",
@@ -1648,7 +1651,7 @@
       "replace": "batch 10 row 27",
       "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
       "provenance": "Batch 10 row 27 (Consumer surplus) is introduced in commit 18e953ed6237. The commit patch adds the current question row; it is absent from the original batch-10 creation snapshot. This is a prior replacement/diversification overlap. Retain batch 37 row 27 and replace batch 10 row 27 once in the controlled replacement pass.",
-      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "provenance_status": "prior_replacement_commit_verified",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
@@ -2014,5 +2017,18 @@
     ],
     "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Thirteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
   },
-  "revision_note": "DUP-64 and DUP-65 now have separate proposals: Chemistry half-life calculation and Biology insect tracheoles. Both were screened against all 1,600 staged rows and fall below the 0.42 lexical review threshold. Both remain drafts pending independent subject review and contextual clearance. No source CSVs modified."
+  "revision_note": "DUP-64 and DUP-65 now have separate proposals: Chemistry half-life calculation and Biology insect tracheoles. Both were screened against all 1,600 staged rows and fall below the 0.42 lexical review threshold. Both remain drafts pending independent subject review and contextual clearance. No source CSVs modified.",
+  "staging_location_audit": {
+    "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
+    "retained_staging_rows": 1510,
+    "held_duplicate_staging_rows": 90,
+    "register_pairs_checked": 90,
+    "held_pair_id_matches": 90,
+    "retained_location_matches": 90,
+    "held_location_matches": 90,
+    "subject_matches": 90,
+    "source_csvs_changed": false,
+    "method": "For each DUP-01 to DUP-90, joined the register's retain/replace locations to the retained-batches exports and the matching pair_id, retained_location and held_location in the held-duplicates exports. Physical row identifiers and subjects matched in all 90 cases.",
+    "remaining_provenance_work": "This verifies the staging location join, not every original Git insertion commit. Thirteen later-replacement rows still need exact introducing commit SHA normalization; DUP-34 remains provenance-unverified because the inspected formatting commits do not identify which row was first introduced."
+  }
 }
