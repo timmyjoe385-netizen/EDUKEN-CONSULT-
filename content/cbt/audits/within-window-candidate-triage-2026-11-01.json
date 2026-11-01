@@ -1,0 +1,106 @@
+{
+  "audit_date": "2026-11-01",
+  "within_window_screen": {
+    "candidate_pairs": 390,
+    "high_priority_candidates_reviewed": 13
+  },
+  "decisions": [
+    {
+      "a": "batch 27 row 11",
+      "b": "batch 28 row 10",
+      "subject": "Mathematics",
+      "decision": "confirmed_duplicate",
+      "reason": "Same inverse-variation data and calculation; only wording differs."
+    },
+    {
+      "a": "batch 37 row 38",
+      "b": "batch 39 row 38",
+      "subject": "Literature in English",
+      "decision": "preserve_both",
+      "reason": "Four-line stanza (quatrain) and eight-line stanza (octave) are distinct forms."
+    },
+    {
+      "a": "batch 2 row 3",
+      "b": "batch 5 row 6",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different antonym targets: scarce and expand."
+    },
+    {
+      "a": "batch 36 row 3",
+      "b": "batch 37 row 3",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: candid and abstain."
+    },
+    {
+      "a": "batch 36 row 3",
+      "b": "batch 39 row 3",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: candid and obsolete."
+    },
+    {
+      "a": "batch 37 row 3",
+      "b": "batch 39 row 3",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: abstain and obsolete."
+    },
+    {
+      "a": "batch 1 row 4",
+      "b": "batch 5 row 4",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: concise and meticulous."
+    },
+    {
+      "a": "batch 34 row 3",
+      "b": "batch 36 row 3",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: ephemeral and candid."
+    },
+    {
+      "a": "batch 34 row 3",
+      "b": "batch 37 row 3",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: ephemeral and abstain."
+    },
+    {
+      "a": "batch 34 row 3",
+      "b": "batch 39 row 3",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different vocabulary targets: ephemeral and obsolete."
+    },
+    {
+      "a": "batch 32 row 6",
+      "b": "batch 35 row 6",
+      "subject": "Use of English",
+      "decision": "preserve_both",
+      "reason": "Different diphthongs /ɔɪ/ and /eɪ/."
+    },
+    {
+      "a": "batch 3 row 24",
+      "b": "batch 7 row 25",
+      "subject": "Physics",
+      "decision": "preserve_both",
+      "reason": "One tests the definition of specific heat capacity; the other applies the formula numerically."
+    },
+    {
+      "a": "batch 34 row 22",
+      "b": "batch 39 row 25",
+      "subject": "Physics",
+      "decision": "review_as_template_repetition",
+      "reason": "Both are momentum calculations with changed mass; same skill but different numerical data. Not automatically a duplicate."
+    }
+  ],
+  "notes": [
+    "This is a high-priority subset, not the complete 390-pair manual review.",
+    "The 4-line and 8-line stanza pair must not be removed; they test different stanza forms.",
+    "Vocabulary questions share a common instruction template but test distinct lexical knowledge.",
+    "No CSV changes made."
+  ]
+}
