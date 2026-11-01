@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 19,
+  "version": 21,
   "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -80,7 +80,12 @@
           "score": 0.2632,
           "question": "The functional group characteristic of alcohols is"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "new_candidate_distinct_pending_human_review",
+        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+      }
     },
     {
       "target_id": "DUP-03",
@@ -154,7 +159,12 @@
           "score": 0.25,
           "question": "A biography is an account of a person's life written by:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "new_candidate_distinct_pending_human_review",
+        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+      }
     },
     {
       "target_id": "DUP-06",
@@ -223,7 +233,12 @@
           "score": 0.2923,
           "question": "At constant volume, the pressure of a fixed mass of gas is directly proportional to its:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "new_candidate_distinct_pending_human_review",
+        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+      }
     },
     {
       "target_id": "DUP-09",
@@ -749,7 +764,12 @@
           "score": 0.2576,
           "question": "A rising intonation is commonly used at the end of which type of question?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "new_candidate_distinct_pending_human_review",
+        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+      }
     },
     {
       "target_id": "DUP-31",
@@ -795,7 +815,12 @@
           "score": 0.3333,
           "question": "The series of events that develops the main conflict and builds tension towards the climax is called:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_contextual_assessment",
+        "decision": "new_candidate_distinct_pending_human_review",
+        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+      }
     },
     {
       "target_id": "DUP-33",
@@ -2178,5 +2203,5 @@
     "screened": 65,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 20 records a preliminary contextual assessment for all 12 remaining lexical flags. The assessments distinguish related wording from different learning objectives; they are not independent subject-expert approval. Human review is still required for all 12 flagged candidates and the other syllabus/answer checks. Five previously blocked drafts have been replaced with distinct candidates; no blocked candidate remains active."
+  "revision_note": "Version 21 records revised candidates for DUP-02, 05, 08, 30 and 32. Their earlier blocked drafts were withdrawn; each new candidate is below the 0.42 same-subject lexical threshold and is compared against the full 1,600-row source bank. This does not constitute academic approval."
 }
