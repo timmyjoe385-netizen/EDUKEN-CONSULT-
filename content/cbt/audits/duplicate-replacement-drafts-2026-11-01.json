@@ -937,7 +937,7 @@
       "subject": "Mathematics",
       "topic": "Matrices",
       "subtopic": "Matrix multiplication",
-      "question": "Calculate the product of the matrices [[1, 2], [0, 3]] and [[2, 1], [4, 0]].",
+      "question": "Evaluate the matrix product [[1, 2], [0, 3]] × [[2, 1], [4, 0]].",
       "options": [
         "[[10, 1], [12, 0]]",
         "[[2, 4], [0, 9]]",
@@ -949,26 +949,26 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "The initial wording produced a lexical false positive against set-operation stems because of the A/B notation. The stem has been rewritten to state the matrix product directly; contextual review and the refreshed screen remain required."
+      "review_note": "The stem was shortened to reduce template-based lexical similarity with unrelated arithmetic questions. The matrix operation is distinct from the existing determinant and trace items."
     },
     {
       "target_id": "DUP-53",
       "subject": "Chemistry",
       "topic": "Qualitative analysis",
       "subtopic": "Identification of copper(II) ions",
-      "question": "When hydroxide ions are added to a solution containing Cu²⁺ ions, which precipitate is produced?",
+      "question": "Which solid is formed when Cu²⁺(aq) reacts with OH⁻(aq)?",
       "options": [
-        "Copper(II) hydroxide, which is blue",
-        "Copper(I) oxide, which is red",
-        "Copper(II) carbonate, which is green",
-        "Copper(II) sulfide, which is black"
+        "Cu(OH)₂, a blue precipitate",
+        "Cu₂O, a red precipitate",
+        "CuCO₃, a green precipitate",
+        "CuS, a black precipitate"
       ],
       "answer": "A",
-      "explanation": "Copper(II) ions react with hydroxide ions to form copper(II) hydroxide, Cu(OH)₂, which appears as a blue precipitate and is insoluble in excess aqueous sodium hydroxide.",
+      "explanation": "Copper(II) ions react with hydroxide ions to form copper(II) hydroxide, Cu(OH)₂, which is a blue precipitate and is insoluble in excess aqueous sodium hydroxide.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "The initial wording produced a lexical false positive against an existing chloride-ion qualitative test because of a shared 'reagent added to solution' template. The stem now tests the copper(II)-hydroxide precipitate directly; contextual review and the refreshed screen remain required."
+      "review_note": "The stem was shortened to distinguish this cation-identification test from the existing chloride-ion qualitative test. Contextual review remains required."
     }
   ],
   "revision_note": "DUP-50 was revised away from ABO blood-group inheritance after the retained bank was found to contain an existing ABO inheritance item. DUP-52 and DUP-53 are new original drafts. All proposals remain separate from the original batch CSVs; no insertion or publication has occurred.",
