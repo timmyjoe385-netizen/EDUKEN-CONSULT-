@@ -741,8 +741,8 @@
       "reason": "Both questions use the identical subject frame 'Each of the players' and test singular verb agreement; changes to the object and verb do not create a meaningfully different assessment.",
       "retain": "batch 38 row 2",
       "replace": "batch 39 row 5",
-      "retention_basis": "Current question records checked. Row-level historical provenance remains to be reconciled; no CSV edit made.",
-      "provenance": "Current question records checked. Row-level historical provenance remains to be reconciled; no CSV edit made.",
+      "retention_basis": "Current rows are substantively redundant: both assess singular verb agreement after 'Each of the players'. Batch 38 row 2 is the provisional retained item; batch 39 row 5 is the provisional replacement target. The two commits previously cited as provenance evidence only reformat/rewrite the CSV rows and do not establish original insertion history.",
+      "provenance": "The two current rows are confirmed semantically redundant. The audit's cited commits 8cb5b369ea05d22955f8320c8b76bd2868ad17d5 (batch 38) and 54b2d2b7de4932a77aa4e511ab53c439387995b0 (batch 39) were inspected: each diff shows the same question on both the removed and added sides, so these are CSV-format/rewrite snapshots, not evidence that either commit introduced the question. They establish that both rows existed before those commits, but do not identify the original insertion commits or establish which was created first. Keep batch 38 row 2 as the provisional retain and batch 39 row 5 as the provisional replacement target; do not edit either source row until the true introduction history is established.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
@@ -1956,6 +1956,6 @@
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Fourteen more current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at the row-level provenance stage: both current rows are labelled original EDUKEN drafts and are semantically similar subject-verb agreement items, but the available current snapshots do not establish which draft came first or whether either row was changed later."
+    "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Fourteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
   }
 }
