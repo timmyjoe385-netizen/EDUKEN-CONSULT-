@@ -158,3 +158,16 @@ The retrieved branch history was enumerated across 400 commits, and targeted bat
 5. Re-run all 1,600-question validation and isolated CBT tests.
 
 All 1,600 questions remain drafts. Original question files remain unchanged by this audit. PR #194 remains unmerged; no production deployment or publication is authorised by this work.
+
+
+## Audit correction — 1 November 2026 (candidate review evidence)
+
+This correction supersedes the preceding continuation note's statement that 244 lower-ranked candidates had been individually inspected and preserved. That statement overstated the work completed: the independent recomputation enumerated candidate pairs but did not constitute contextual manual review of all 244 pairs.
+
+The original triage records 390 within-window candidates, 41 same-topic/subtopic candidates reviewed, 349 different-topic/subtopic candidates, and 70 highest-scoring different-topic candidates reviewed. On those reported figures, **279 different-topic candidates remain pending**.
+
+An independent recomputation from the four stored 400-question indexes using the documented same-subject character-trigram Dice threshold of 0.43 produced 352 candidates: 38 same-topic/subtopic and 314 different-topic/subtopic. This differs from the original triage by 38 candidates overall (3 same-topic/subtopic and 35 different-topic/subtopic). The original candidate-generation artifact or exact generator implementation has not yet been located, so the difference is unresolved. The independent count is a diagnostic, not a replacement for the original count and not proof of manual review.
+
+The global findings and within-window triage registers now both record 11 within-window duplicate pairs (22 cross-window + 11 within-window = 33 total). The batch 38 row 2 / batch 39 row 5 concord pair is synchronized in both registers. No question CSV has been edited.
+
+Next: recover or reproduce the original 390-pair candidate-generation method, reconcile all 38 count differences, and review the remaining 279 reported different-topic candidates with explicit preserve/duplicate decisions. Separately complete row-level provenance for all 33 confirmed pairs against the replacement history. Do not begin CSV replacements until both registers are complete.
