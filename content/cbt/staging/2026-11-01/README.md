@@ -1,17 +1,22 @@
 # EDUKEN CBT question-bank staging — 1 November 2026
 
-This folder contains a non-destructive staging export of the existing 1,600-question bank.
-
-## Result
-- 1,600 source question rows accounted for across 40 batches.
-- 1,562 rows provisionally retained.
-- 38 designated duplicate rows held back (one per confirmed duplicate pair).
-- Reconciliation: 1,562 + 38 = 1,600.
+## Reconciled count
+- 1,600 source question rows across all 40 original batches.
+- 47 confirmed duplicate relationships in the controlled disposition register.
+- 47 unique duplicate rows held back.
+- 1,553 questions provisionally retained.
+- Reconciliation: 1,553 + 47 = 1,600.
 
 ## Files
-- `retained-batches-*.csv`: provisionally retained questions, grouped by original 10-batch windows. The original 18 columns are preserved after two source-location columns.
-- `held-duplicates-*.csv`: the 38 held rows, with duplicate-pair ID and both retained/held source locations.
-- `manifest.json`: per-batch counts and release limitations.
+- `retained-batches-*.csv`: provisionally retained rows grouped into four 10-batch windows. Each includes original batch and CSV-row provenance, followed by all 18 original question fields.
+- `held-duplicates-*.csv`: all held rows, with pair ID and retained/held source locations.
+- `manifest.json`: per-batch counts, provenance classification and release gates.
 
-## Important
-This is staging, not publication approval. The original 40 source CSV files are unchanged. The retained 1,562 are not yet academically approved or deployment-ready. They still require subject review for accuracy, answer keys, explanations, clarity and syllabus coverage. The 38 replacement drafts are not ready for insertion: 26 are provisionally mapped, 7 require subject review, and 5 overlap with existing bank content. No Supabase import, publication, PR merge or production deployment is authorised by these files.
+## Important release status
+This is a staging export, not approval to publish. The original 40 batch CSVs remain unchanged. The 1,553 retained questions are not yet academically approved or deployment-ready.
+
+The register has 47 confirmed duplicate relationships: 39 classified as prior replacement/review provenance and 8 as original-draft overlap. One retained row is referenced by two relationships in a three-question Government duplicate cluster; the held-location count remains 47.
+
+There are 47 replacement targets. Existing drafts cover 38; 9 additional drafts are still required. Of the existing 38 drafts, 5 are blocked by existing-bank overlap, 7 need subject review, and 26 are only provisionally syllabus-mapped. No replacement draft has been inserted into the original bank.
+
+No Supabase import, publication, PR merge or production deployment is authorised by this staging export.
