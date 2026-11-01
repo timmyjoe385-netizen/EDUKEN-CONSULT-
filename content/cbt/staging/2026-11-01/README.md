@@ -23,7 +23,10 @@
 There are 90 confirmed duplicate targets. Existing draft proposals cover 47 targets (DUP-01 to DUP-47). Forty-three newly confirmed targets (DUP-48 to DUP-90) have no replacement draft yet and remain held. Of the existing 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap. No replacement draft has been inserted into the original bank.
 
 ## Semantic-review status
-The 1,600-question bank has been screened. All 286 cross-window similarity candidates at or above the 0.65 review threshold have been manually reviewed; 1,018 lower-scoring candidates remain unreviewed. The original within-window report has 279 candidates pending, and its reported count differs from an independently reconstructed candidate set by 38 pairs. Therefore, the semantic audit is not complete.
+- Within-window reconstruction: 390 candidate pairs at the reproduced 0.42 threshold; all 390 have explicit review statuses. This includes 350 different-topic/subtopic candidates contextually reviewed and 40 same-topic/subtopic candidates carried forward as previously reviewed.
+- The original within-window report states a 41/349 category split, while reconstruction gives 40/350. The total of 390 is reproduced at 0.42, not the method text's stated 0.43. A one-pair category-boundary discrepancy remains documented; no reconstructed candidate remains unreviewed.
+- Cross-window screening: 1,304 candidates; all 286 scoring at or above 0.65 were manually reviewed. The 1,018 lower-scoring candidates were not manually reviewed because they fall below the review threshold.
+- Similarity candidates are not duplicates by themselves. Confirmed duplicate decisions are recorded separately in the 90-pair disposition register.
 
 ## Important
 This is a staging export, not approval to publish. The original 40 batch CSVs remain unchanged. The 1,510 retained questions are not yet academically approved or deployment-ready. All replacement proposals require validation of syllabus fit, question clarity, options, answer key, explanation and bank-wide uniqueness.
