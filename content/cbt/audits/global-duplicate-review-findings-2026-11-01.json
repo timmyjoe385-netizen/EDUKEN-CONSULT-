@@ -63,7 +63,8 @@
       "reason": "Same definition and same answer.",
       "decision": "confirmed_semantic_duplicate",
       "action": "retain one; replace the other after complete audit",
-      "csv_changes_made": false
+      "csv_changes_made": false,
+      "history_note": "batch 37 row 41 is a previously introduced replacement (commit 437788c145a4a3ff578d9fd7640b4b1d6739cedc added the Theme question); it duplicates the existing batch 2 Theme question. This is a corrective overlap, not a reason to repeat the earlier replacement."
     },
     {
       "subject": "Biology",
@@ -161,5 +162,76 @@
     "Different numbers or values in the same topic are not automatically duplicates; they need a question-design review for excessive template repetition.",
     "The full within-window semantic candidate queue still needs contextual review; prior same-window checks confirmed five duplicate pairs.",
     "No original CSV question has been changed or removed during this audit."
-  ]
+  ],
+  "confirmed_within_window_duplicates": [
+    {
+      "subject": "Biology",
+      "a": "batch 21 row 14",
+      "b": "batch 27 row 14",
+      "concept": "Bacterial reproduction by binary fission",
+      "retain": "batch 21 row 14",
+      "replace": "batch 27 row 14",
+      "history_note": "Both currently present; no prior replacement commit identified for these locations.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changes_made": false
+    },
+    {
+      "subject": "Economics",
+      "a": "batch 22 row 29",
+      "b": "batch 26 row 27",
+      "concept": "Regressive taxation",
+      "retain": "batch 22 row 29",
+      "replace": "batch 26 row 27",
+      "history_note": "Both currently present; no prior replacement commit identified for these locations.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changes_made": false
+    },
+    {
+      "subject": "Physics",
+      "a": "batch 25 row 23",
+      "b": "batch 29 row 23",
+      "concept": "Ammeter connected in series to measure current",
+      "retain": "batch 25 row 23",
+      "replace": "batch 29 row 23",
+      "history_note": "Both currently present; earlier batch 29 replacement commit changed a different question.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changes_made": false
+    },
+    {
+      "subject": "Mathematics",
+      "a": "batch 27 row 11",
+      "b": "batch 28 row 10",
+      "concept": "Inverse variation with identical values and calculation",
+      "retain": "batch 27 row 11",
+      "replace": "batch 28 row 10",
+      "history_note": "Both currently present; earlier batch 28 and 27 replacement commits changed different rows.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changes_made": false
+    },
+    {
+      "subject": "Government",
+      "a": "batch 32 row 34",
+      "b": "batch 33 row 35",
+      "concept": "Constitutional division of powers in a federation",
+      "retain": "batch 32 row 34",
+      "replace": "batch 33 row 35",
+      "history_note": "batch 33 row 35 was introduced by earlier replacement commit c61f2ffd593deb7ee18f3c123209a85da1b35cbb, replacing a constitutional-amendment question; this replacement created an overlap with batch 32 row 34. Treat as corrective replacement.",
+      "decision": "confirmed_semantic_duplicate",
+      "current_csv_checked": true,
+      "csv_changes_made": false
+    }
+  ],
+  "history_reconciliation": {
+    "prior_replacement_commits_reviewed": "Several key replacement/diversification commits were inspected, including batches 15–40; a full row-by-row ledger of all prior replacement commits is still being reconciled.",
+    "confirmed_prior_replacement_overlap_count": 2,
+    "overlap_locations": [
+      "batch 32 row 34 / batch 33 row 35",
+      "batch 2 row 40 / batch 37 row 41"
+    ],
+    "note": "The complete 1,600-question scan already includes all current previously replaced rows, so their resulting content is not omitted from duplicate screening. The two confirmed overlaps above arose from earlier replacement content and must be corrected only once."
+  }
 }
