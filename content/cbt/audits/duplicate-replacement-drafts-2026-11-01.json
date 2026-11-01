@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 81,
+  "draft_count": 82,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1482,14 +1482,31 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-79",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Infinitive of purpose",
+      "question": "In the sentence “She visited the library to borrow a textbook”, the infinitive phrase “to borrow a textbook” expresses:",
+      "options": [
+        "Reason or purpose",
+        "Possession",
+        "Comparison",
+        "A condition"
+      ],
+      "answer": "A",
+      "explanation": "The infinitive phrase explains the purpose of her visit to the library.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "Added DUP-70, DUP-81 and DUP-89 after full same-subject 1,600-row lexical screening below 0.42 and checking against the current draft bank. Other candidates for DUP-68, 79, 82–87 and 90 were withheld or rejected for bank overlap or unresolved lexical flags.",
+  "revision_note": "DUP-79 infinitive-of-purpose candidate added after a same-subject full-bank lexical score of 0.381 and a cross-check against existing replacement drafts. Other remaining candidates were withheld when they overlapped existing questions or exceeded the lexical flag threshold.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 9,
+  "drafts_missing": 8,
   "drafts_missing_target_ids": [
     "DUP-68",
-    "DUP-79",
     "DUP-82",
     "DUP-83",
     "DUP-84",
