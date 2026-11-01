@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 6,
+  "version": 7,
   "purpose": "Refreshed non-destructive lexical screen of all 59 current replacement proposals against all 1,600 source question rows, including retained and held rows; includes DUP-58/59.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -17,8 +17,8 @@
   },
   "screening_summary": {
     "threshold": 0.42,
-    "flagged_count": 18,
-    "below_threshold_count": 41,
+    "flagged_count": 17,
+    "below_threshold_count": 42,
     "flagged_ids": [
       "DUP-02",
       "DUP-04",
@@ -36,7 +36,6 @@
       "DUP-45",
       "DUP-48",
       "DUP-53",
-      "DUP-58",
       "DUP-59"
     ],
     "manual_contextual_review_complete": false
@@ -1356,23 +1355,23 @@
     {
       "target_id": "DUP-58",
       "subject": "Biology",
-      "flagged": true,
-      "highest_similarity": 0.6638,
+      "flagged": false,
+      "highest_similarity": 0.2895,
       "top_matches": [
         {
-          "location": "batch 23 row 13",
-          "score": 0.6638,
-          "question": "The similarity in basic bone arrangement in the forelimbs of humans, whales and bats is evidence of"
+          "location": "batch 15 row 16",
+          "score": 0.2895,
+          "question": "Which of the following is a biotic factor in an ecosystem?"
         },
         {
-          "location": "held duplicate row",
-          "score": 0.2589,
-          "question": "Which structure in the human female reproductive system is the usual site of fertilisation?"
+          "location": "batch 36 row 14",
+          "score": 0.2841,
+          "question": "Which substances produced during the light-dependent stage are used in the Calvin cycle?"
         },
         {
-          "location": "batch 02 row 15",
-          "score": 0.2235,
-          "question": "The functional unit of the human kidney is the:"
+          "location": "batch 11 row 12",
+          "score": 0.2824,
+          "question": "Which substance is the main structural component of the cell wall in most plants?"
         }
       ]
     },
@@ -1380,22 +1379,22 @@
       "target_id": "DUP-59",
       "subject": "Literature in English",
       "flagged": true,
-      "highest_similarity": 0.5455,
+      "highest_similarity": 0.4771,
       "top_matches": [
         {
-          "location": "batch 27 row 39",
-          "score": 0.5455,
-          "question": "Sarcasm is best described as:"
+          "location": "batch 35 row 38",
+          "score": 0.4771,
+          "question": "Describing a brave person as 'a lion' is an example of"
         },
         {
-          "location": "batch 38 row 37",
-          "score": 0.5106,
-          "question": "In a stage production, a prop is best described as:"
+          "location": "batch 01 row 37",
+          "score": 0.4494,
+          "question": "“Time is a thief” is an example of:"
         },
         {
-          "location": "batch 20 row 37",
-          "score": 0.5063,
-          "question": "A ballad is best described as a:"
+          "location": "batch 04 row 40",
+          "score": 0.4381,
+          "question": "The phrase “deafening silence” is an example of:"
         }
       ]
     }
