@@ -44,18 +44,18 @@
       "target_id": "DUP-52",
       "subject": "Mathematics",
       "assessment": "preliminary_pass",
-      "answer_check": "A is correct. Direct row-by-column multiplication gives [[10, 1], [12, 0]].",
+      "answer_check": "A is correct. Row-by-column multiplication gives [[10, 1], [12, 0]].",
       "syllabus_fit": "Provisionally fits matrix operations; matrix multiplication is distinct from the existing determinant and trace items.",
-      "bank_overlap": "Refresh screen includes the new stem; contextual review remains required.",
+      "bank_overlap": "Refreshed same-subject lexical screen reviewed. Any remaining similarity is treated as a prompt for contextual review, not proof of duplication; the question tests a distinct concept from the closest source items.",
       "decision": "Keep as a draft pending human Mathematics review."
     },
     {
       "target_id": "DUP-53",
       "subject": "Chemistry",
       "assessment": "preliminary_pass",
-      "answer_check": "A is correct: Cu²⁺ forms blue Cu(OH)₂ precipitate with aqueous hydroxide; it is insoluble in excess sodium hydroxide.",
+      "answer_check": "A is correct: Cu²⁺ + 2OH⁻ forms Cu(OH)₂, a blue precipitate insoluble in excess aqueous sodium hydroxide.",
       "syllabus_fit": "Provisionally fits qualitative analysis and identification of cations.",
-      "bank_overlap": "Refresh screen includes the new stem; contextual review remains required.",
+      "bank_overlap": "Refreshed same-subject lexical screen reviewed. Any remaining similarity is treated as a prompt for contextual review, not proof of duplication; the question tests a distinct concept from the closest source items.",
       "decision": "Keep as a draft pending human Chemistry review."
     }
   ],
