@@ -61,8 +61,8 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 27,
-    "draft_count": 63
+    "additional_replacement_drafts_required": 25,
+    "draft_count": 65
   },
   "approval_gate": "The controlled register identifies 90 confirmed duplicate holdouts. The replacement draft file contains 53 proposals, leaving 37 targets (DUP-54 through DUP-90) without drafts. Of the original 47 proposals, 26 are provisionally syllabus-mapped, 16 require subject review, and 5 are blocked by existing-bank overlap; four additional proposals (DUP-48 to DUP-51) are pending subject and bank-wide review. None is approved for insertion. DUP-34 remains a confirmed semantic duplicate with unresolved row-level provenance. Do not edit original-batch CSVs, import or publish questions, deploy production, or merge PR #194 until all 90 replacement targets have suitable drafts, every draft passes bank-wide contextual uniqueness and subject/answer review, and the user explicitly approves the final controlled replacement plan.",
   "pairs": [
@@ -1353,10 +1353,12 @@
       "provenance": "Both rows are present in original batch-creation commits: batch 8 99167dee76f3 and batch 37 8a703b0412de. No replacement-introducing commit was found; original-draft overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "draft_created_needs_subject_and_bankwide_review",
+        "reason": "A separate proposal exists and is below the 0.42 lexical threshold against the 1,600-row staged bank. Independent subject review and contextual clearance remain outstanding.",
+        "draft_question": "A radioactive isotope has a half-life of 6 hours. What fraction of the original sample remains after 18 hours?",
+        "highest_similarity": 0.2623
       }
     },
     {
@@ -1373,10 +1375,12 @@
       "provenance": "Batch 23 row 15 is present in original batch-creation commit f47ce3625ea0. Batch 34 row 15 was introduced by review/diversification commit fcc21f32fac4, replacing an earlier mutualism question. Corrective overlap.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "replacement_required_not_drafted",
+      "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "No replacement draft exists yet for this newly confirmed holdout. Keep this row excluded until a distinct, syllabus-appropriate replacement is drafted, reviewed and approved."
+        "status": "draft_created_needs_subject_and_bankwide_review",
+        "reason": "A separate proposal exists and is below the 0.42 lexical threshold against the 1,600-row staged bank. Independent subject review and contextual clearance remain outstanding.",
+        "draft_question": "The fine terminal branches of an insect's tracheal system that deliver oxygen directly to body cells are called:",
+        "highest_similarity": 0.3462
       }
     },
     {
@@ -1944,14 +1948,14 @@
     "bank_insertion": "not performed"
   },
   "replacement_review_summary": {
-    "drafts_total": 63,
+    "drafts_total": 65,
     "blocked_existing_bank_overlap": 5,
-    "not_yet_cleared": 58,
+    "not_yet_cleared": 60,
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
     "additional_duplicate_targets": 52,
-    "additional_replacement_drafts_required": 27,
+    "additional_replacement_drafts_required": 25,
     "independent_subject_review_status": "incomplete",
     "manual_contextual_review_status": "incomplete",
     "source_row_provenance_reconciliation": "DUP-60 and DUP-61 source locations verified; register row numbers refer to physical CSV rows including the header.",
@@ -1967,5 +1971,5 @@
     ],
     "note": "Forty-seven prior-replacement relationships have commit-backed evidence. Thirteen further current rows are absent from their original batch-creation snapshots and are classified as later replacements, but their exact introducing commit SHAs still need normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the cited batch-38 and batch-39 commits are reformat/rewrite snapshots (the question appears unchanged on both sides), not introducing commits. They confirm the rows pre-date those snapshots but do not establish their earliest introduction or precedence."
   },
-  "revision_note": "DUP-60 to DUP-63 now have separate proposals. All four were screened against all 1,600 staged rows. DUP-62's closest lexical match is a caesura item (distinct concept, requires human contextual review); DUP-63's map-scale proposal is below threshold and requires syllabus confirmation. No source CSVs modified."
+  "revision_note": "DUP-64 and DUP-65 now have separate proposals: Chemistry half-life calculation and Biology insect tracheoles. Both were screened against all 1,600 staged rows and fall below the 0.42 lexical review threshold. Both remain drafts pending independent subject review and contextual clearance. No source CSVs modified."
 }
