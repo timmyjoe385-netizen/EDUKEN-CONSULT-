@@ -62,9 +62,9 @@
       "target_id": "DUP-54",
       "subject": "Economics",
       "assessment": "preliminary_pass",
-      "answer_check": "A is correct. Cross elasticity = −15% ÷ 10% = −1.5; the negative sign indicates complementary goods.",
+      "answer_check": "A is correct. A positive cross elasticity means the goods are substitutes; a negative value would indicate complements.",
       "syllabus_fit": "Provisionally fits elasticity of demand and relationships between goods.",
-      "bank_overlap": "Refreshed screen highest same-subject similarity 0.6049; manual concept comparison still required. Existing bank includes substitute-goods and price-elasticity topics, but this draft assesses cross-price responsiveness between two different goods.",
+      "bank_overlap": "After rewriting the stem to focus on interpreting the sign of cross elasticity, the refreshed screen's highest same-subject score is 0.4141. It remains distinct from own-price elasticity, but human contextual review is required.",
       "decision": "Keep as a draft pending human Economics review and contextual bank-wide clearance."
     },
     {
