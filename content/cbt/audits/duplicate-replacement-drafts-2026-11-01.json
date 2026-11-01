@@ -1504,20 +1504,21 @@
     {
       "target_id": "DUP-84",
       "subject": "Biology",
-      "topic": "Human physiology",
-      "subtopic": "Blood circulation",
-      "question": "Which blood vessel carries oxygenated blood from the lungs to the left atrium of the heart?",
+      "topic": "Genetics",
+      "subtopic": "DNA replication",
+      "question": "During DNA replication, which enzyme joins adjacent Okazaki fragments on the lagging strand?",
       "options": [
-        "Pulmonary artery",
-        "Pulmonary vein",
-        "Vena cava",
-        "Aorta"
+        "DNA ligase",
+        "DNA helicase",
+        "RNA polymerase",
+        "Amylase"
       ],
-      "answer": "B",
-      "explanation": "Pulmonary veins return oxygenated blood from the lungs to the left atrium. The pulmonary artery carries deoxygenated blood from the right ventricle to the lungs.",
+      "answer": "A",
+      "explanation": "DNA ligase seals the breaks between adjacent Okazaki fragments by forming phosphodiester bonds in the sugar-phosphate backbone of the newly synthesised DNA strand.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "draft_needs_subject_and_bankwide_review",
+      "review_note": "The earlier pulmonary-vein candidate was withdrawn after a semantic match was found in the bank (batch 21 row 12). This DNA-ligase candidate replaces it and has been re-screened."
     },
     {
       "target_id": "DUP-87",
@@ -1647,7 +1648,7 @@
       "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "All 25 newly identified holdout targets DUP-66 to DUP-90 now have draft records. Six final drafts (DUP-68, 82, 83, 85, 86 and 90) were added after full same-subject bank screening. This is draft completeness only: flagged, semantically overlapping, blocked and unreviewed candidates remain excluded from insertion until their review gates are satisfied.",
+  "revision_note": "All DUP-01 to DUP-90 target IDs have draft records. DUP-84's earlier pulmonary-vein proposal was withdrawn as a semantic duplicate of batch 21 row 12 and replaced with a DNA-ligase question, re-screened against the complete bank and draft set. Draft coverage is not approval for insertion.",
   "confirmed_duplicate_targets": 90,
   "drafts_missing": 0,
   "drafts_missing_target_ids": []
