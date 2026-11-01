@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 82,
+  "draft_count": 84,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.",
   "items": [
@@ -1500,19 +1500,53 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-84",
+      "subject": "Biology",
+      "topic": "Human physiology",
+      "subtopic": "Blood circulation",
+      "question": "Which blood vessel carries oxygenated blood from the lungs to the left atrium of the heart?",
+      "options": [
+        "Pulmonary artery",
+        "Pulmonary vein",
+        "Vena cava",
+        "Aorta"
+      ],
+      "answer": "B",
+      "explanation": "Pulmonary veins return oxygenated blood from the lungs to the left atrium. The pulmonary artery carries deoxygenated blood from the right ventricle to the lungs.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
+    },
+    {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Specialised vocabulary",
+      "question": "A person who deliberately gives up the use of alcoholic drinks is commonly called a:",
+      "options": [
+        "Teetotaller",
+        "Vegetarian",
+        "Philanthropist",
+        "Pessimist"
+      ],
+      "answer": "A",
+      "explanation": "A teetotaller is a person who abstains from drinking alcohol.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "draft_needs_subject_and_bankwide_review"
     }
   ],
-  "revision_note": "DUP-79 infinitive-of-purpose candidate added after a same-subject full-bank lexical score of 0.381 and a cross-check against existing replacement drafts. Other remaining candidates were withheld when they overlapped existing questions or exceeded the lexical flag threshold.",
+  "revision_note": "DUP-84 and DUP-87 added after full same-subject lexical screening below 0.42 and draft-bank checks. DUP-68, DUP-82, DUP-83, DUP-85, DUP-86 and DUP-90 remain unfilled while candidate overlaps are redesigned or reviewed.",
   "confirmed_duplicate_targets": 90,
-  "drafts_missing": 8,
+  "drafts_missing": 6,
   "drafts_missing_target_ids": [
     "DUP-68",
     "DUP-82",
     "DUP-83",
-    "DUP-84",
     "DUP-85",
     "DUP-86",
-    "DUP-87",
     "DUP-90"
   ]
 }
