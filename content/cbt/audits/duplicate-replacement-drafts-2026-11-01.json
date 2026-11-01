@@ -752,17 +752,17 @@
       "target_id": "DUP-42",
       "subject": "Economics",
       "topic": "Production",
-      "subtopic": "Marginal revenue",
-      "question": "A firm's marginal revenue is the:",
+      "subtopic": "Law of diminishing returns",
+      "question": "In the short run, the law of diminishing returns states that when additional units of a variable factor are combined with fixed factors, the marginal product of the variable factor will eventually:",
       "options": [
-        "total cost of producing all units",
-        "addition to total revenue from selling one extra unit",
-        "average revenue earned on all units sold",
-        "amount paid to a factor of production"
+        "increase without limit",
+        "remain constant at every level of output",
+        "decline",
+        "become negative immediately"
       ],
-      "answer": "B",
-      "explanation": "Marginal revenue is the change in total revenue resulting from the sale of one additional unit of output.",
-      "difficulty": "easy",
+      "answer": "C",
+      "explanation": "With other factors fixed, adding more units of a variable input will eventually cause the marginal product of that input to fall, assuming the production process is otherwise unchanged.",
+      "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "new_draft_pending_subject_review_and_bankwide_screen"
     },
