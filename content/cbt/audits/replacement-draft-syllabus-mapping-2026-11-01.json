@@ -2,7 +2,7 @@
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
   "purpose": "Non-destructive syllabus mapping of the 38 proposed replacement questions. This file does not authorize insertion, CSV edits, publication, PR merge or production deployment.",
-  "source_policy": "Use JAMB's IBASS syllabus as the primary reference. The official Mathematics PDF endpoint was not extractable in this audit session; Mathematics mappings remain provisional and must be checked against the live IBASS document. For every subject, confirm the current IBASS revision before publication.",
+  "source_policy": "Checked against the corresponding JAMB IBASS subject PDFs on 1 November 2026. A term not individually named is not automatically out of scope: distinguish an explicit listed topic/objective from a reasonable application of a broad syllabus topic. Items marked provisionally_aligned are not academically approved or cleared for publication. Subject-review-required items remain held pending subject-competent review.",
   "source_urls": {
     "Use of English": "https://ibass.jamb.gov.ng/assets/uploads/Use-of-English.pdf",
     "Mathematics": "https://ibass.jamb.gov.ng/assets/uploads/Mathematics.pdf",
@@ -15,8 +15,8 @@
   },
   "totals": {
     "replacement_drafts": 38,
-    "provisionally_aligned": 23,
-    "subject_review_required": 10,
+    "provisionally_aligned": 26,
+    "subject_review_required": 7,
     "blocked_existing_bank_overlap": 5,
     "inserted_into_question_csvs": 0
   },
@@ -73,7 +73,9 @@
       "rationale": "Seed dispersal by hooks/barbs is related to fruit/seed biology, but seed-dispersal mechanisms are not expressly named in the accessible syllabus text.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Biology lists sexual reproduction in flowering plants, pollination/fertilization and products of sexual reproduction, but the current syllabus text does not expressly name seed-dispersal mechanisms or animal attachment by hooks/barbs.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf"
     },
     {
       "target_id": "DUP-07",
@@ -154,7 +156,9 @@
       "rationale": "Teacher salaries fit public expenditure; the specific recurrent-versus-capital classification is not expressly named in the accessible topic list.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Economics lists Public Finance and the effects of public expenditure, but does not expressly name recurrent-versus-capital expenditure classification. The specific salary classification needs subject review.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf"
     },
     {
       "target_id": "DUP-16",
@@ -163,7 +167,10 @@
       "rationale": "Separating immiscible liquids is an application of separation methods; the separating-funnel apparatus is not specifically named.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
-      "status": "subject_review_required"
+      "status": "provisionally_aligned",
+      "official_syllabus_evidence": "Chemistry lists separation of mixtures, including decantation, and objectives to specify the principle involved in each separation method and apply separation principles in everyday life. A separating funnel is a practical apparatus for separating immiscible liquid layers; the apparatus name itself is not separately listed.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Chemistry.pdf",
+      "mapping_note": "Promote from subject_review_required to provisionally_aligned on broad topic/objective fit; retain the caveat that the exact apparatus is not expressly named."
     },
     {
       "target_id": "DUP-17",
@@ -190,7 +197,9 @@
       "rationale": "A customs union is a regional trade arrangement; the term itself is not expressly named in the accessible syllabus text.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Economics lists International Trade and International Economic Organizations (including EU and ECOWAS), but does not expressly name customs unions or common external tariffs. The exact customs-union concept needs subject review.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf"
     },
     {
       "target_id": "DUP-20",
@@ -226,7 +235,9 @@
       "rationale": "Foreign direct investment is related to international capital flows and development, but FDI is not expressly named in the accessible syllabus text.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Economics covers international trade, foreign trade and economic growth/development, but the syllabus text does not expressly name foreign direct investment. Confirm the specific FDI concept with a subject reviewer.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf"
     },
     {
       "target_id": "DUP-24",
@@ -235,7 +246,9 @@
       "rationale": "Bacteria/prokaryotes are expressly included; peptidoglycan composition is a supporting structural detail not separately named.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Biology lists cell structure and functions and identifies Monera/prokaryotes such as bacteria, but does not expressly specify peptidoglycan as the chemical composition of bacterial cell walls. The detail needs subject review.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf"
     },
     {
       "target_id": "DUP-25",
@@ -244,7 +257,9 @@
       "rationale": "Taxation is expressly included; the specific term tax evasion is not expressly listed in the accessible topic text.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Economics lists Public Finance, principles of taxation and tax incidence/effects, but does not expressly name tax evasion. Confirm whether this specific tax-compliance concept is acceptable within the syllabus topic.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Economics.pdf"
     },
     {
       "target_id": "DUP-26",
@@ -334,7 +349,10 @@
       "rationale": "Epigraph is a literary term, but it is not individually named in the accessible list; confirm that this extension is acceptable before insertion.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
-      "status": "subject_review_required"
+      "status": "provisionally_aligned",
+      "official_syllabus_evidence": "Literature in English lists General Literary Principles and literary terms followed by 'etc.', with objectives to identify literary terms in drama, prose and poetry and use them appropriately. Epigraph is a recognised literary term; it is not individually named in the examples.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Literature-in-English.pdf",
+      "mapping_note": "Promote from subject_review_required to provisionally_aligned because the syllabus expressly includes a non-exhaustive literary-terms category; retain the note that epigraph is not individually enumerated."
     },
     {
       "target_id": "DUP-36",
@@ -352,7 +370,10 @@
       "rationale": "A private member's bill is a legislative process, but the specific term is not expressly named in the accessible topic list.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
-      "status": "subject_review_required"
+      "status": "provisionally_aligned",
+      "official_syllabus_evidence": "Government lists the Legislature (types, structure, functions and powers), Processes of Legislation, and the objective to analyse processes involved in making laws. A private member's bill is a specific legislative route; the exact term is not individually named.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Government.pdf",
+      "mapping_note": "Promote from subject_review_required to provisionally_aligned on the broad legislative-process objective; retain the caveat that the exact term is not individually named."
     },
     {
       "target_id": "DUP-38",
@@ -361,8 +382,10 @@
       "rationale": "Maternal antibody transfer/passive immunity is not expressly named in the accessible syllabus text; subject-expert confirmation is required.",
       "match_type": "review_required",
       "source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf",
-      "status": "subject_review_required"
+      "status": "subject_review_required",
+      "official_syllabus_evidence": "Biology lists reproduction in mammals, fertilization and embryo development, and separately covers inoculation/vaccination for disease prevention. It does not expressly name passive immunity or placental transfer of maternal antibodies; the specific immunology detail needs subject review.",
+      "official_source_url": "https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf"
     }
   ],
-  "release_gate": "Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, all subject-review-required items are cleared, and every draft passes contextual full-bank duplicate review. Blocked items must be re-drafted before insertion. All questions remain draft until normal academic review and approval."
+  "release_gate": "26 drafts are provisionally mapped to JAMB IBASS topic/objective coverage, 7 remain held for subject review because their specific detail is not expressly named, and 5 remain blocked by confirmed overlap with the existing bank. These mapping statuses are not academic approval. Do not insert any replacement until the user explicitly approves the 38-row retain/replace register, the 7 subject-review items are cleared or replaced, all 5 blocked items receive distinct replacements, and every draft passes contextual full-bank duplicate review. All questions remain draft until normal academic review and approval."
 }
