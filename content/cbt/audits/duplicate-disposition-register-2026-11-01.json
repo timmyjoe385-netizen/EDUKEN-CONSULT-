@@ -2016,7 +2016,58 @@
     "unverified_pair_ids": [
       "DUP-34"
     ],
-    "note": "Staging location joins are verified for all 90 pairs. Forty-eight prior-replacement relationships have commit-backed evidence; 13 later-replacement rows still need exact introducing commit SHA normalization. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the inspected batch-38 and batch-39 commits are formatting/rewrite snapshots and do not establish the earliest introduction or precedence."
+    "note": "Forty-eight prior-replacement relationships have commit-backed evidence. For the 13 later-replacement rows, candidate commits touching the relevant batch files have now been catalogued in provenance_candidate_commits, but the inspected diffs are whole-file rewrites/reformats and do not isolate the exact row introduction. These candidate SHAs are leads only, not verified provenance. Twenty-eight pairs are original-draft overlaps. DUP-34 remains unresolved at row-level provenance: the inspected batch-38 and batch-39 commits are reformat/rewrite snapshots and do not establish earliest introduction or precedence.",
+    "provenance_candidate_commits": {
+      "DUP-69": [
+        "2a1f492c191147537e2d4c38f5252481ba4a7946"
+      ],
+      "DUP-70": [
+        "407dd924e78bd70fb204f8f145dfd05301d9d442",
+        "feaedd421ea4c168cf46f0247674c45b7d13c336"
+      ],
+      "DUP-71": [
+        "f8f748ff815c150ae379b32ee47416bc51780852"
+      ],
+      "DUP-74": [
+        "f8f748ff815c150ae379b32ee47416bc51780852"
+      ],
+      "DUP-75": [
+        "407dd924e78bd70fb204f8f145dfd05301d9d442",
+        "feaedd421ea4c168cf46f0247674c45b7d13c336"
+      ],
+      "DUP-77": [
+        "fcc21f32fac4eeb1311e1db0648919dbff52bc08",
+        "5f5dfd70a5cc729dcfdf0646ccc0f26b2d125454"
+      ],
+      "DUP-79": [
+        "b89aff9b04acd7c1a56052eabdf5594b7495cfae"
+      ],
+      "DUP-82": [
+        "13a25c416f2feab296c6fd67e8729280c49b1099"
+      ],
+      "DUP-83": [
+        "eb5495b92cc96425e39688b5e7a1c5d99f32ed20",
+        "b90178beb74f0e1b2a65c130d6b8bc3f724b45a9"
+      ],
+      "DUP-84": [
+        "431599766ed9d2472d339f151e6a86e50001d64d",
+        "40b3494e22813b2ddd79faced55d215cff0c2caf"
+      ],
+      "DUP-85": [
+        "eb5495b92cc96425e39688b5e7a1c5d99f32ed20",
+        "b90178beb74f0e1b2a65c130d6b8bc3f724b45a9"
+      ],
+      "DUP-86": [
+        "291e05a14d3f406a2d7758bf6372a5cc633b8c8a",
+        "e2b578d110255fa90f701cafab35b8c33a3fb586"
+      ],
+      "DUP-90": [
+        "4f779da95a8f3914629aa7a7bbdab84452dc2525",
+        "f642c0b32f79329017e2de507c59adc31ad39c64"
+      ]
+    },
+    "provenance_candidate_commits_verified_as_introducing_commit": 0,
+    "provenance_candidate_commits_are_leads_only": true
   },
   "revision_note": "DUP-64 and DUP-65 now have separate proposals: Chemistry half-life calculation and Biology insect tracheoles. Both were screened against all 1,600 staged rows and fall below the 0.42 lexical review threshold. Both remain drafts pending independent subject review and contextual clearance. No source CSVs modified.",
   "staging_location_audit": {
@@ -2030,6 +2081,6 @@
     "subject_matches": 90,
     "source_csvs_changed": false,
     "method": "For each DUP-01 to DUP-90, joined the register's retain/replace locations to the retained-batches exports and the matching pair_id, retained_location and held_location in the held-duplicates exports. Physical row identifiers and subjects matched in all 90 cases.",
-    "remaining_provenance_work": "All 90 staging location joins are verified. This does not verify every original Git insertion commit: 13 later-replacement rows still need exact introducing commit SHA normalization; DUP-34 remains provenance-unverified."
+    "remaining_provenance_work": "All 90 staging location joins are verified. For 13 later-replacement rows, candidate batch-file commits have been catalogued as leads only; their whole-file rewrite diffs do not isolate the exact introducing row, so none is counted as a verified introducing commit. DUP-34 remains provenance-unverified."
   }
 }
