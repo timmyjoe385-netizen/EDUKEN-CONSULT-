@@ -1067,19 +1067,19 @@
       "subject": "Literature in English",
       "topic": "Literary devices",
       "subtopic": "Epithet",
-      "question": "The descriptive title “Richard the Lionheart” is an example of:",
+      "question": "In the expression “swift-footed Achilles”, the words “swift-footed” function as a/an:",
       "options": [
-        "An epithet",
-        "A paradox",
-        "An oxymoron",
-        "A euphemism"
+        "Epithet",
+        "Euphemism",
+        "Paradox",
+        "Onomatopoeia"
       ],
       "answer": "A",
-      "explanation": "An epithet is a descriptive word or phrase attached to a person or thing to highlight a notable quality. “The Lionheart” identifies Richard by a characteristic associated with courage.",
+      "explanation": "An epithet is a descriptive expression attached to a person or thing to highlight a characteristic. “Swift-footed” is a recurring descriptive epithet associated with Achilles.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "The stem was made more concrete after the first definition-style wording triggered lexical similarity flags against unrelated 'best described as' stems. Rerun the full-bank screen."
+      "review_note": "Revised to use a clear literary example after the prior wording triggered lexical similarity against metaphor questions. The revised wording is screened against all source rows."
     }
   ],
   "revision_note": "DUP-58 and DUP-59 drafted for the next confirmed Biology and Literature in English holdouts. Both remain separate proposals and are not inserted into source CSVs.",
