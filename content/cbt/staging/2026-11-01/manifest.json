@@ -261,9 +261,9 @@
     "All 390 reconstructed within-window candidates at threshold 0.42 have review statuses; the original report's 41/349 category split differs by one pair from the reconstructed 40/350 split, and its stated 0.43 threshold does not reproduce the reported total.",
     "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
     "The 61 replacement proposals remain drafts outside the original source bank: five are blocked by known existing-bank overlap and 56 remain uncleared for insertion.",
-    "DUP-60 and DUP-61 held-row text is present in the staging holdout CSVs, but the current original-batch CSV rows at their recorded locations do not match that text. Reconcile source-row and commit provenance before final bank assembly; do not modify the original CSVs as a shortcut.",
     "The latest refreshed lexical screen covers all 61 proposals against all 1,600 retained-plus-held staging rows. Sixteen proposals meet or exceed the 0.42 review threshold; these are prompts for contextual review, not duplicate findings.",
-    "Preliminary answer/concept checks now cover DUP-48 through DUP-61 (14 proposals). Independent subject review and contextual bank-wide clearance remain outstanding."
+    "Preliminary answer/concept checks now cover DUP-48 through DUP-61 (14 proposals). Independent subject review and contextual bank-wide clearance remain outstanding.",
+    "The register's batch row references use physical CSV row numbers including the header. DUP-60 and DUP-61 were checked against those exact physical rows and both staging/source records match."
   ],
   "semantic_review_status": {
     "cross_window_candidates": 1304,
@@ -380,5 +380,5 @@
       "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-61; independent subject review remains required."
     }
   ],
-  "source_row_reconciliation_status": "blocking_discrepancy_detected_for_DUP-60_and_DUP-61"
+  "source_row_reconciliation_status": "verified_for_DUP-60_and_DUP-61_physical_csv_row_numbering_includes_header"
 }
