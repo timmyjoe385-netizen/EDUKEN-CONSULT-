@@ -240,7 +240,13 @@
     "subject_review_required": 16,
     "drafts_inserted": 0,
     "new_drafts_added_in_current_revision": 2,
-    "new_drafts_require_subject_and_bankwide_review": 2
+    "new_drafts_require_subject_and_bankwide_review": 2,
+    "proposal_status_counts": {
+      "revised_draft_needs_bank_wide_check": 33,
+      "blocked_duplicate_existing_bank": 5,
+      "new_draft_pending_subject_review_and_bankwide_screen": 9,
+      "draft_needs_subject_and_bankwide_review": 2
+    }
   },
   "source_files_modified": false,
   "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
@@ -291,5 +297,13 @@
       "high_similarity_shortlist_preserved_distinct_or_valid_variants": 33,
       "remaining_unreviewed_cross_window_candidates": 1255
     }
-  }
+  },
+  "audit_reports": [
+    {
+      "path": "content/cbt/audits/bank-wide-uniqueness-screen-2026-11-01.json",
+      "status": "preliminary_automated_screen_only",
+      "retained_rows_screened": 1510,
+      "replacement_proposals_screened": 49
+    }
+  ]
 }
