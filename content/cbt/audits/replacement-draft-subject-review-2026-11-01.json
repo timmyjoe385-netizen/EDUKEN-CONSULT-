@@ -57,6 +57,24 @@
       "syllabus_fit": "Provisionally fits qualitative analysis and identification of cations.",
       "bank_overlap": "Refreshed screen: highest same-subject score 0.458; closest item is a chloride-ion qualitative test. This item tests copper(II) hydroxide precipitation, a different ion and reaction; shared assessment format is not semantic duplication.",
       "decision": "Keep as a draft pending human subject review; lexical flag has been contextually distinguished from the closest source item."
+    },
+    {
+      "target_id": "DUP-54",
+      "subject": "Economics",
+      "assessment": "preliminary_pass",
+      "answer_check": "A is correct. Cross elasticity = −15% ÷ 10% = −1.5; the negative sign indicates complementary goods.",
+      "syllabus_fit": "Provisionally fits elasticity of demand and relationships between goods.",
+      "bank_overlap": "Refreshed screen highest same-subject similarity 0.6049; manual concept comparison still required. Existing bank includes substitute-goods and price-elasticity topics, but this draft assesses cross-price responsiveness between two different goods.",
+      "decision": "Keep as a draft pending human Economics review and contextual bank-wide clearance."
+    },
+    {
+      "target_id": "DUP-55",
+      "subject": "Literature in English",
+      "assessment": "preliminary_pass",
+      "answer_check": "B is correct. Cacophony is the deliberate use of harsh, discordant sounds; the other options describe distinct sound devices.",
+      "syllabus_fit": "Provisionally fits poetic sound devices and literary terminology.",
+      "bank_overlap": "Refreshed screen highest same-subject similarity 0.3396; manual concept comparison still required. The current bank contains assonance, alliteration and sibilance questions, but not an equivalent definition of cacophony identified in the topic index.",
+      "decision": "Keep as a draft pending human Literature review and contextual bank-wide clearance."
     }
   ],
   "release_gate": "These are preliminary assistant checks, not independent academic sign-off. Do not insert any of DUP-48 to DUP-53 into original CSVs or publish them until subject-competent review, full contextual bank review and the user's final controlled replacement approval."
