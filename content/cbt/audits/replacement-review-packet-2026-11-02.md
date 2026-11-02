@@ -2494,3 +2494,45 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 13 — DUP-51 and DUP-52 (2026-11-02)
+
+**DUP-51 — Physics: resonance**
+- **Answer:** B. Resonance occurs when the driving frequency matches the system's natural frequency; a large response is associated with sufficiently low damping.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. No resonance/natural-frequency item was found. Nearest lexical matches concern momentum, work-energy and Doppler effect, which test different concepts.
+- **Similarity:** 0.3952, below the 0.42 threshold.
+- **Official syllabus:** Direct coverage in JAMB Physics Topic 3(i), Simple Harmonic Motion, which includes forced vibration and resonance and asks candidates to enumerate applications of resonance.
+- **Assistant disposition:** Preliminary answer, explanation and contextual checks recorded. Independent Physics review remains required; not approved for import.
+
+**DUP-52 — Mathematics: matrix multiplication**
+- **Answer:** A. Multiplication gives [[10, 1], [12, 0]].
+- **Bank comparison:** All 200 Mathematics retained-plus-held rows were checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests matrix multiplication.
+- **Similarity:** 0.4000, below the 0.42 threshold.
+- **Open issue:** The calculation is correct, but exact JAMB Mathematics syllabus coverage for matrix multiplication must be confirmed by a qualified Mathematics reviewer.
+- **Assistant disposition:** Preliminary answer and contextual checks recorded; not approved for import.
+
+**Pair 13 outcome:** Both candidates compared against all 200 same-subject rows. No same-concept overlap identified. DUP-51 has direct official syllabus coverage; DUP-52 requires syllabus confirmation. 0 independent subject approvals.
+
+---
+
+## Pair 14 — DUP-53 and DUP-54 (2026-11-02)
+
+**DUP-53 — Chemistry: copper(II) hydroxide precipitate**
+- **Answer:** A. Cu²⁺ reacts with OH⁻ to form blue Cu(OH)₂ precipitate; it is insoluble in excess aqueous sodium hydroxide.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. Nearby questions cover neutralisation/salt formation, gas tests, copper electrolysis and displacement, not this cation-identification reaction.
+- **Similarity:** 0.4580, flagged. The lexical matches are related chemical-reaction language but assess different reactions and observations.
+- **Official syllabus:** Broad coverage is supported by JAMB Chemistry Topic 16, including tests for metallic ions, sodium hydroxide precipitation of metallic hydroxides and coloured ions in transition metals. A Chemistry reviewer must confirm the exact Cu²⁺ test and level.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-54 — Economics: cross elasticity of demand**
+- **Answer:** A. A positive cross-elasticity coefficient (+0.8) indicates substitute goods.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. Existing items test own-price elasticity of demand or supply; none tests cross elasticity or interpretation of its positive sign.
+- **Similarity:** 0.4141, below the 0.42 threshold but close enough to note.
+- **Official syllabus:** Direct coverage in JAMB Economics Topic 4(c), which explicitly lists price, income and cross elasticity of demand and requires candidates to compute and interpret elasticity coefficients.
+- **Assistant disposition:** Preliminary answer/context check recorded. Independent Economics review remains required; not approved for import.
+
+**Pair 14 outcome:** Both candidates compared against all 200 same-subject rows. No same-concept overlap identified. DUP-53 is a flagged but conceptually distinct qualitative-analysis candidate; DUP-54 is directly syllabus-aligned. 0 independent subject approvals; neither is cleared for insertion.
+
+---
+
