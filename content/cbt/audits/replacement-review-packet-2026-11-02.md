@@ -2190,8 +2190,8 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 - A. the subject of the relative clause
 - B. the object of the preposition “to”
-- C. a possessive determiner
-- D. a coordinating conjunction
+- C. the direct object of a verb
+- D. the possessor in a noun phrase
 
 **Draft key:** B  
 **Draft explanation:** “Whom” is the object form of the relative pronoun “who”. In this sentence it is governed by the preposition “to” and refers to the person who received the form.  
