@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-62 (36/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-66 (40/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1462,10 +1462,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the 0.42 lexical threshold against the 1,600-row staged bank. Independent subject review and contextual clearance remain outstanding.",
-        "draft_question": "A map has a scale of 1:50,000. What actual distance is represented by 4 cm on the map?",
-        "highest_similarity": 0.3648
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Mathematics retained-plus-held rows checked. No map-scale calculation was found. Nearest matches concern sector fractions, angles in a circle and coordinate distance, not scale conversion. Calculation: 4 cm × 50,000 = 200,000 cm = 2 km, answer C. Similarity 0.3648, below threshold. Confirm map scales/ratio-proportion coverage against the current JAMB Mathematics syllabus with an independent reviewer. Not approved for import."
       }
     },
     {
@@ -1484,10 +1486,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the 0.42 lexical threshold against the 1,600-row staged bank. Independent subject review and contextual clearance remain outstanding.",
-        "draft_question": "A radioactive isotope has a half-life of 6 hours. What fraction of the original sample remains after 18 hours?",
-        "highest_similarity": 0.2623
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows checked. No half-life fraction calculation was found. Nearest matches concern first-order rate-constant units, isotopes and catalysts. After 18 hours there are three half-lives, so the remaining fraction is (1/2)^3 = 1/8, answer C. Similarity 0.2623, below threshold. JAMB Chemistry syllabus Nuclear Chemistry explicitly includes half-life calculations. Direct syllabus coverage confirmed; independent Chemistry reviewer still required. Not approved for import."
       }
     },
     {
@@ -1506,10 +1510,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the 0.42 lexical threshold against the 1,600-row staged bank. Independent subject review and contextual clearance remain outstanding.",
-        "draft_question": "The fine terminal branches of an insect's tracheal system that deliver oxygen directly to body cells are called:",
-        "highest_similarity": 0.3462
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. No insect tracheole item was found. Nearest matches concern ureter, xylem and kidney filtration; no respiratory-system overlap. Answer A is correct: tracheoles are the fine terminal branches of the insect tracheal system where gas exchange with tissues occurs. Similarity 0.3462, below threshold. Independent Biology reviewer must confirm syllabus depth and that the wording distinguishes tracheoles from spiracles. Not approved for import."
       }
     },
     {
@@ -1529,8 +1535,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "A replacement candidate is now recorded in the separate draft bank. It has not been independently approved, inserted into source CSVs or published."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics retained-plus-held rows checked. No transformer-efficiency calculation was found. Nearest matches test resistance/potential difference and general machine efficiency, not transformer input/output power from voltage and current. Input power = 240×0.5 = 120 W; output power = 12×8 = 96 W; efficiency = 80%, answer C. Similarity 0.3285, below threshold. Independent Physics reviewer must confirm syllabus fit and that the voltage/current values represent the relevant primary/secondary RMS quantities. Not approved for import."
       }
     },
     {
@@ -2356,7 +2366,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 36,
+    "assistant_pairwise_reviewed_targets": 40,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
