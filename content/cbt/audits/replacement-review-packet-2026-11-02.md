@@ -2452,3 +2452,45 @@ DUP-39 (Chemistry): Answer B is correct. Cryolite dissolves alumina, lowers oper
 DUP-40 (Chemistry): Answer C is correct. Vanadium(V) oxide catalyses oxidation of sulphur dioxide to sulphur trioxide in the Contact process. All 200 Chemistry retained-plus-held rows were checked; no question naming this catalyst was found. Closest items ask the Contact-process product (batch 22 row 21), general catalyst action (batches 03 row 20, 12 row 21, 25 row 21), and the Haber process (batch 20 row 21). Broad syllabus mapping is Topic 15(c), Contact process, and Topic 16(f), transition-metal catalysis. The syllabus does not name this catalyst; qualified Chemistry review is required.
 
 Pair 07 outcome: both candidates passed preliminary answer/explanation and same-subject bank comparison. No same-concept overlap found. Neither is approved for import; independent Chemistry and syllabus-scope review remain required.
+
+
+## Pair 11 — DUP-47 and DUP-48 (2026-11-02)
+
+**DUP-47 — Government: legislative privilege**
+- **Draft answer:** A is plausible: parliamentary privilege protects speech made as part of legislative proceedings so legislators can debate without fear of proceedings arising from those statements.
+- **Bank comparison:** All 200 Government retained-plus-held rows were checked. Nearest matches concern general legislative functions (batch 02 row 32), freedom of expression (batches 03 row 36 and 14 row 35), and party-whip duties (batch 28 row 33). None tests the specific legal protection for statements made in legislative proceedings.
+- **Similarity:** 0.3893, below the 0.42 lexical flag threshold.
+- **Open issue:** The exact legal scope depends on the applicable constitutional/statutory framework. A qualified Government reviewer must confirm the wording, legal precision and syllabus fit; legislative privilege is not yet confirmed as a specific syllabus item.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-48 — Literature in English: denotation**
+- **Draft answer:** B is correct. Denotation is the direct or literal meaning of a word; connotation concerns associated feelings or ideas.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. The highest lexical match is batch 36 row 38 on diction (0.6667). Diction is a writer's choice/use of words, not the literal meaning of an individual word. Other close matches concern setting and mood; none tests denotation.
+- **Similarity:** Flagged at 0.6667. This is a strong lexical flag but not proof of a semantic duplicate.
+- **Open issue:** Independent Literature reviewer must confirm that the denotation/connotation distinction is appropriately within JAMB depth and that the distinction from diction is clear.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 11 outcome:** Both proposals checked against all 200 same-subject retained-plus-held rows. No same-concept overlap identified. DUP-48 remains a high-similarity contextual-review case. 0 independent subject approvals; neither draft is cleared for insertion.
+
+---
+
+## Pair 12 — DUP-49 and DUP-50 (2026-11-02)
+
+**DUP-49 — Economics: tax incidence**
+- **Draft answer:** C is correct. Tax incidence concerns the final economic distribution of a tax burden after tax shifting, which may differ from the person legally required to remit the tax.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. Nearby questions cover direct/indirect taxes, progressive/regressive taxation, specific and ad valorem taxes, and tax evasion. None tests the distinction between statutory liability and the final economic burden.
+- **Similarity:** 0.2807, below the 0.42 lexical flag threshold.
+- **Open issue:** Qualified Economics reviewer must confirm syllabus scope and appropriate depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-50 — Biology: Golgi apparatus**
+- **Draft answer:** A is correct. The Golgi apparatus modifies, sorts and packages proteins into vesicles for intracellular transport or secretion.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. Nearest questions test nucleus, mitochondrion, chloroplast, ribosome and lysosome functions. These are related organelle questions but test different structures and functions; no Golgi protein-packaging item was found.
+- **Similarity:** 0.3135, below the 0.42 lexical flag threshold.
+- **Open issue:** Qualified Biology reviewer must confirm the exact functional detail and syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 12 outcome:** Both proposals checked against all 200 same-subject retained-plus-held rows. No same-concept overlap identified. 0 independent subject approvals; neither draft is cleared for insertion.
+
+---
+
