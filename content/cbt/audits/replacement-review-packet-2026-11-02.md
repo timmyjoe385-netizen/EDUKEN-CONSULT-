@@ -2536,3 +2536,45 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 15 — DUP-55 and DUP-56 (2026-11-02)
+
+**DUP-55 — Literature in English: cacophony**
+- **Answer:** B. Cacophony is the deliberate use of harsh or discordant sounds to create a jarring effect.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No cacophony item was found. Nearest items test asyndeton and consonance, which assess different sound/language devices.
+- **Similarity:** 0.3396, below the 0.42 threshold.
+- **Open issue:** Cacophony is closely related by contrast to euphony (DUP-56). An independent Literature reviewer should confirm the distinction, syllabus depth and whether both items add useful variety.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-56 — Literature in English: euphony**
+- **Answer:** B. Euphony is the use or arrangement of pleasing, harmonious sounds.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No euphony item was found. Nearest items test rhyme, plot sequence and stream of consciousness.
+- **Similarity:** 0.2793, below the 0.42 threshold.
+- **Open issue:** This is the conceptual counterpart to DUP-55, not a duplicate. A Literature reviewer should confirm both are appropriate and not unnecessarily repetitive within the bank.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 15 outcome:** Both candidates are distinct from the existing same-subject bank. Their complementary relationship requires human review for syllabus fit and question-bank variety. 0 independent subject approvals.
+
+---
+
+## Pair 16 — DUP-57 and DUP-58 (2026-11-02)
+
+**DUP-57 — Use of English: ellipsis as a cohesive device**
+- **Answer:** B. The verb phrase “chose” is recoverable from the first clause and omitted in the second; this is ellipsis.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No ellipsis-as-cohesive-device question was found. Nearest items test adverb function, conditional completion and infinitive phrase function.
+- **Similarity:** 0.3367, below the 0.42 threshold.
+- **Open issue:** Broad fit to cohesion/discourse and grammatical structure is plausible; a qualified English reviewer must confirm exact syllabus mapping and JAMB depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-58 — Biology: quadrat sampling**
+- **Answer:** A. A quadrat is used to estimate abundance, density or frequency of plants and other relatively stationary organisms.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No quadrat-sampling item was found. Nearest items concern biotic factors, photosynthesis and plant cell walls.
+- **Similarity:** 0.2895, below the 0.42 threshold.
+- **Open issue:** Ecology is a relevant Biology domain, but exact syllabus fit for field sampling methods requires qualified Biology review.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 16 outcome:** Both candidates passed preliminary answer and same-subject contextual checks. Syllabus confirmation remains open; 0 independent subject approvals.
+
+---
+
