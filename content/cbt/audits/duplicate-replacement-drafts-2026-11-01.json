@@ -113,7 +113,7 @@
       "explanation": "Hooks and barbs can cling to animal fur or clothing, carrying the fruit or seeds away from the parent plant.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-07",
@@ -258,7 +258,7 @@
       "explanation": "Prokaryotic cells do not have a membrane-bound nucleus; their genetic material is located in a nucleoid region.",
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-15",
@@ -301,18 +301,18 @@
       "subject": "Biology",
       "topic": "Plant physiology",
       "subtopic": "Plant hormones",
-      "question": "Which plant hormone is chiefly associated with promoting cell elongation in shoots? ",
+      "question": "During positive phototropism in a young shoot, which plant hormone accumulates more on the shaded side and promotes greater cell elongation there?",
       "options": [
         "auxin",
-        "insulin",
-        "adrenaline",
-        "glucagon"
+        "gibberellin",
+        "cytokinin",
+        "ethylene"
       ],
       "answer": "A",
-      "explanation": "Auxins promote cell elongation in shoots and are involved in tropic growth responses.",
+      "explanation": "In a young shoot exposed to light from one direction, auxin becomes more concentrated on the shaded side and promotes greater cell elongation there. The unequal growth causes the shoot to bend towards the light.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-18",
@@ -746,7 +746,7 @@
       "explanation": "Prolactin stimulates milk production in the mammary glands. Oxytocin is involved in milk ejection.",
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
-      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-42",
@@ -764,7 +764,7 @@
       "explanation": "With other factors fixed, adding more units of a variable input will eventually cause the marginal product of that input to fall, assuming the production process is otherwise unchanged.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-43",
@@ -1434,7 +1434,7 @@
       "explanation": "Cost-push inflation occurs when rising production costs, such as fuel and imported input costs, push firms to raise prices.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-70",
@@ -1489,7 +1489,7 @@
       "explanation": "/m/ and /n/ are nasal consonants because air passes through the nasal cavity during their production.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-79",
@@ -1544,7 +1544,7 @@
       "explanation": "A teetotaller is a person who abstains from drinking alcohol.",
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-68",
@@ -1654,10 +1654,10 @@
       "explanation": "The dot formula CuSO₄·5H₂O shows five water molecules associated with each formula unit of hydrated copper(II) sulfate.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     }
   ],
-  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review.",
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import.",
   "confirmed_duplicate_targets": 90,
   "drafts_missing": 0,
   "drafts_missing_target_ids": []
