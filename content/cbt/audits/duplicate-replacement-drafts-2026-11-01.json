@@ -638,7 +638,7 @@
       "explanation": "An epigraph is a quotation or brief statement placed at the beginning of a literary work or section, often to introduce its theme.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "revised_draft_bankwide_screen_complete_human_literature_review_required"
     },
     {
       "target_id": "DUP-36",
@@ -648,15 +648,15 @@
       "question": "The document that formally sets out the rules and internal structure of a political party is its:",
       "options": [
         "party constitution",
-        "national budget",
-        "electoral register",
-        "standing orders of the courts"
+        "party manifesto",
+        "party programme",
+        "party campaign slogan"
       ],
       "answer": "A",
-      "explanation": "A party constitution sets out the organisation, membership rules, offices and procedures of the political party.",
+      "explanation": "A party constitution is the party's governing internal document: it sets out its organisation, membership rules, offices and procedures. A manifesto and programme communicate policy proposals, while a campaign slogan is a short political message.",
       "difficulty": "easy",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "revised_draft_bankwide_screen_complete_human_government_review_required"
     },
     {
       "target_id": "DUP-37",
