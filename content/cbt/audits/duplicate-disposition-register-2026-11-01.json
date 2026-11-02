@@ -2027,6 +2027,20 @@
         "corrected": "Variety of organisms — structural adaptations in plants (fruit/seed dispersal; proposed broad fit)",
         "reason": "The item tests hook/barb-mediated dispersal of fruits or seeds by animals, not the process of sexual reproduction. The official syllabus includes structural adaptations and plant adaptation, but does not expressly name fruit/seed dispersal; exact fit therefore remains subject to qualified syllabus review.",
         "status": "assistant_metadata_correction_pending_qualified_syllabus_confirmation"
+      },
+      {
+        "target_id": "DUP-14",
+        "previous": "Variety of organisms — living organisms and cell structure; Monera/prokaryotes",
+        "corrected": "Variety of organisms — A.1(b) cell structure and functions of cell components; A.2(a) Monera (prokaryotes)",
+        "reason": "The question asks for prokaryotic cell classification based on absence of a membrane-bound nucleus. The official Biology syllabus explicitly lists cell structure/functions under A.1(b) and Monera (prokaryotes) under A.2(a).",
+        "status": "assistant_mapping_refinement_official_syllabus_topic_verified_independent_biology_review_pending"
+      },
+      {
+        "target_id": "DUP-17",
+        "previous": "Coordination and control — plant hormones/phytohormones",
+        "corrected": "Form and functions — B.6(a) tropic movements and roles of auxins; B.9(c)(ii) plant hormones and effects on growth/tropism",
+        "reason": "The revised stem specifically tests auxin redistribution and differential elongation in positive phototropism. The official Biology syllabus explicitly lists tropic movements and roles of auxins under B.6(a), and phytohormone effects on growth/tropism under B.9(c)(ii).",
+        "status": "assistant_mapping_refinement_official_syllabus_topic_verified_independent_biology_review_pending"
       }
     ],
     "content_clarity_corrections": [
@@ -2059,6 +2073,27 @@
         "corrected_explanation": "In complete dominance, the dominant allele determines the heterozygote's phenotype, while the recessive allele is masked. Codominance and incomplete dominance describe different patterns in which the heterozygote does not show the complete-dominance pattern.",
         "reason": "The original stem could be read too broadly because codominance and incomplete dominance are also heterozygous inheritance patterns; the previous distractors were weak and non-parallel. Specifying complete dominance makes the intended key unambiguous and improves distractor quality.",
         "status": "assistant_wording_and_distractor_correction_pending_independent_biology_review"
+      },
+      {
+        "target_id": "DUP-17",
+        "previous_question": "Which plant hormone is chiefly associated with promoting cell elongation in shoots?",
+        "corrected_question": "During positive phototropism in a young shoot, which plant hormone accumulates more on the shaded side and promotes greater cell elongation there?",
+        "previous_options": [
+          "auxin",
+          "insulin",
+          "adrenaline",
+          "glucagon"
+        ],
+        "corrected_options": [
+          "auxin",
+          "gibberellin",
+          "cytokinin",
+          "ethylene"
+        ],
+        "previous_explanation": "Auxins promote cell elongation in shoots and are involved in tropic growth responses.",
+        "corrected_explanation": "In a young shoot exposed to light from one direction, auxin becomes more concentrated on the shaded side and promotes greater cell elongation there. The unequal growth causes the shoot to bend towards the light.",
+        "reason": "The original stem was broad because gibberellins can also promote stem elongation, while its animal-hormone distractors were implausibly easy. The revised stem tests the specific auxin-mediated mechanism of positive phototropism and uses plausible plant-hormone distractors.",
+        "status": "assistant_wording_and_distractor_correction_pending_independent_biology_review"
       }
     ]
   },
@@ -2072,7 +2107,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 2 of 90",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 4 of 90",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
@@ -2135,7 +2170,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review. Pair 01 assistant review completed 2026-11-02: DUP-04 wording/distractors refined for complete dominance; DUP-06 syllabus label corrected to proposed plant structural adaptations, with exact topic coverage still requiring qualified confirmation. No source CSV, import, or production data changed.",
+  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review. Pair 01 assistant review completed 2026-11-02: DUP-04 wording/distractors refined for complete dominance; DUP-06 syllabus label corrected to proposed plant structural adaptations, with exact topic coverage still requiring qualified confirmation. No source CSV, import, or production data changed. Pair 02 assistant review completed 2026-11-02: DUP-14 mapping refined to explicit official Biology syllabus sections A.1(b) and A.2(a); DUP-17 question narrowed to auxin-mediated positive phototropism with improved plant-hormone distractors, and mapping tied to B.6(a) and B.9(c)(ii). No source CSV, import, or production data changed.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
