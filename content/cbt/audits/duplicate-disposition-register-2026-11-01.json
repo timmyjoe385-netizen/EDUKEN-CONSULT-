@@ -2004,7 +2004,17 @@
     "structural_validation": "passed",
     "answer_and_explanation_review": "90 preliminary assistant checks recorded; independent subject review outstanding for all drafts",
     "official_jamb_syllabus_mapping": "90 mapped; 26 provisionally aligned and 64 require subject review; none approved",
-    "bank_insertion": "not performed"
+    "bank_insertion": "not performed",
+    "syllabus_mapping_quality_check": "One clear metadata mismatch identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration; corrected to Excretion — kidney structure and urine formation (glomerular ultrafiltration). Corrected label still awaits confirmation against current JAMB IBASS. The other 63 subject-review mappings remain unapproved and require qualified subject review.",
+    "mapping_corrections": [
+      {
+        "target_id": "DUP-74",
+        "previous": "Genetics — DNA replication",
+        "corrected": "Excretion — kidney structure and urine formation (glomerular ultrafiltration)",
+        "reason": "Question tests high glomerular hydrostatic pressure and ultrafiltration in the mammalian kidney; the prior genetics label was plainly inconsistent.",
+        "status": "assistant_metadata_correction_pending_ibass_confirmation"
+      }
+    ]
   },
   "replacement_review_summary": {
     "drafts_total": 90,
