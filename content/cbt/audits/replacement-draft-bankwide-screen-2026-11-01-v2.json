@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 34,
+  "version": 35,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -2347,7 +2347,12 @@
           "score": 0.3217,
           "question": "A person who studies the origin and development of words is a(n) ___."
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No teetotaller definition was found. Nearest lexical match is an item defining an arsonist (batch 40 row 3, 0.4060); same person-definition format but unrelated meaning. Answer A is correct. Similarity 0.4060, below threshold but close. Independent English reviewer should confirm lexical suitability and question variety. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-88",
@@ -2370,7 +2375,12 @@
           "score": 0.3799,
           "question": "A reduction in average cost as a firm increases its scale of production is called:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No cost-push inflation question was found. Nearest items concern the effect of higher input prices on supply and the effect of production-cost increases; these are related mechanisms but the draft asks for the macroeconomic inflation type resulting from rising production costs. Answer B is correct. Similarity 0.4167, below threshold but close. Independent Economics reviewer should confirm the distinction and syllabus coverage. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-89",
@@ -2393,7 +2403,12 @@
           "score": 0.3363,
           "question": "Which word begins with the same consonant sound as 'judge'?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No question asking candidates to identify a pair of nasal consonants was found. Nearest items test individual consonant sounds in word-initial/final positions; those are oral-English phoneme tasks but not classification of a pair as nasal. Answer A is correct: /m/ and /n/ are nasal consonants. Similarity 0.3964, below threshold. Independent English reviewer should confirm phonetic notation and syllabus fit. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-90",
@@ -2416,7 +2431,12 @@
           "score": 0.2599,
           "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No water-of-crystallisation formula interpretation item was found. Nearest items concern copper(II) sulfate electrolysis and sulfur oxidation state, not hydrate stoichiometry. Answer B is correct: CuSO4·5H2O contains five water molecules of crystallisation per formula unit. Similarity 0.3021, below threshold. Official JAMB Chemistry Topic 6(e) explicitly includes water of crystallisation. Direct syllabus coverage supported; independent Chemistry reviewer still required. Not approved for import."
+      }
     }
   ],
   "limitations": [
@@ -2430,5 +2450,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
