@@ -2747,3 +2747,46 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 25 — DUP-75 and DUP-76 (2026-11-02)
+
+**DUP-75 — Economics: comparative advantage**
+- **Answer:** B (Country B). The opportunity cost of cloth is 2 units of rice in A and 1 unit in B, so B has the lower opportunity cost.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. The nearest item (batch 12 row 31) tests absolute advantage, not comparative advantage.
+- **Similarity:** 0.4022, below the 0.42 threshold but close.
+- **Official syllabus:** JAMB Economics Topic 21(a) explicitly includes comparative costs.
+- **Open issue:** Independent Economics reviewer should confirm numerical framing and explanation.
+- **Assistant disposition:** Preliminary calculation/context check recorded; not approved for import.
+
+**DUP-76 — Economics: negative externality**
+- **Answer:** B. Pollution costs imposed on third parties and omitted from the product price are a negative production externality.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No negative-externality question was found. Nearest items concern input-price changes, economies of scale and tax effects.
+- **Similarity:** 0.3622, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm syllabus fit and the distinction from public goods or transfer payments.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 25 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-75 has broad direct syllabus coverage; DUP-76 requires syllabus confirmation. 0 independent subject approvals.
+
+---
+
+## Pair 26 — DUP-77 and DUP-78 (2026-11-02)
+
+**DUP-77 — Government: equality before the law**
+- **Answer:** A. Equality before the law means public officials and ordinary citizens are subject to the same law.
+- **Bank comparison:** All 200 Government retained-plus-held rows were checked. No equality-before-law/rule-of-law question was found. Nearest items concern public accountability, political neutrality and checks and balances.
+- **Similarity:** 0.3724, below the 0.42 threshold.
+- **Open issue:** Independent Government reviewer should confirm syllabus mapping and wording.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-78 — Use of English: semicolon between independent clauses**
+- **Answer:** B. A semicolon can join two closely related independent clauses without a coordinating conjunction.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. The nearest item (batch 20 row 4) also tests semicolon use, but for separating complex list items containing commas. These are distinct functions within the same punctuation family.
+- **Similarity:** 0.4105, below the 0.42 threshold but close.
+- **Open issue:** Independent English reviewer must decide whether this distinction adds sufficient bank variety or whether the candidate should be replaced.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 26 outcome:** DUP-77 is provisionally distinct; DUP-78 remains a human variety decision despite no exact same-function duplicate. 0 independent subject approvals.
+
+---
+
