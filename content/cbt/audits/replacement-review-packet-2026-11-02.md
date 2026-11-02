@@ -20,6 +20,26 @@
 - Assistant preliminary answer/context checks: **90/90**; independent human sign-off: **0**
 - Inserted into source CSVs / Supabase / student feed: **0**
 
+## Pair-by-pair assistant review log (not independent academic approval)
+
+### Pair 01 — DUP-04 and DUP-06 (2026-11-02)
+
+**DUP-04 — Biology: inheritance / dominance**
+- **Answer and explanation:** B is correct for complete dominance.
+- **Quality correction:** The original stem did not distinguish complete dominance from codominance or incomplete dominance, and two distractors (“mutant only”, “incomplete”) were weak/non-parallel. The stem now explicitly specifies a complete-dominance relationship; distractors are now the three alternative inheritance descriptions.
+- **Bank comparison:** The closest same-subject item asks candidates to identify the genotype Tt (heterozygous). This draft asks for the meaning of a dominant allele under complete dominance. The concepts are related but test different definitions; the trigram flag (0.5344) still warrants human contextual review.
+- **Syllabus evidence:** Official JAMB Biology syllabus, section D.2 “Heredity”, specifically “Inheritance of characters in organisms”; this directly supports the broad mapping “Heredity — inheritance of characters”. Source: https://ibass.jamb.gov.ng/assets/uploads/Biology.pdf (section D, lines 1073–1110 in the retrieved official PDF text).
+- **Assistant disposition:** Corrected draft; mapping supported by the official topic; still requires independent Biology review and human decision on bank variety. Not approved for import.
+
+**DUP-06 — Biology: fruit/seed dispersal**
+- **Answer and explanation:** C is correct; hooks/barbs attach fruits to animal fur or clothing (animal-mediated dispersal).
+- **Quality check:** Stem and options are clear; explanation correctly describes the mechanism. No obvious competing option.
+- **Bank comparison:** Highest same-subject trigram score is 0.3284; closest lexical match is an ectoparasite definition, not fruit dispersal. This is only a lexical screen, not proof of semantic uniqueness.
+- **Syllabus mapping correction:** The previous “Reproduction — sexual reproduction in flowering plants” label is too specific for a question about the dispersal mechanism. Proposed broader label: “Variety of organisms — structural adaptations in plants (fruit/seed dispersal)”. The official syllabus includes structural adaptations and plant adaptation, but does not expressly list fruit/seed dispersal by hooks; retain subject_review_required rather than claiming exact syllabus coverage.
+- **Assistant disposition:** Answer/explanation pass at preliminary level; syllabus mapping requires qualified confirmation. Not approved for import.
+
+**Pair 01 outcome:** 2 drafts reviewed; 1 wording/distractor correction (DUP-04); 1 syllabus mapping correction (DUP-06); 0 independent subject approvals; 2 remain blocked from insertion.
+
 ## Assistant contextual triage of the 12 lexical flags (not independent approval)
 
 The refreshed trigram screen produced 12 flags. The following assistant-only comparison checks the actual concept tested by each draft against its closest same-subject match. These are not human subject sign-offs and do not clear any draft for import. No flag is being treated as an automatic duplicate solely because of lexical similarity.
@@ -45,15 +65,15 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ### DUP-04 — Genetics / Alleles and inheritance
 
-**Question:** An allele that is expressed in the phenotype of a heterozygous organism is described as:
+**Question:** In a complete-dominance relationship, an allele whose effect is expressed in the phenotype of a heterozygous organism is described as:
 
 - A. recessive
 - B. dominant
-- C. mutant only
-- D. incomplete
+- C. codominant
+- D. incompletely dominant
 
 **Draft key:** B  
-**Draft explanation:** A dominant allele is expressed in the phenotype when present in a heterozygous pair.  
+**Draft explanation:** In complete dominance, the dominant allele determines the heterozygote's phenotype, while the recessive allele is masked. Codominance and incomplete dominance describe different patterns in which the heterozygote does not show the complete-dominance pattern.  
 **Draft status:** revised_draft_needs_bank_wide_check  
 **Syllabus area:** Heredity — inheritance of characters  
 **Mapping status:** provisionally_aligned
@@ -80,7 +100,7 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 **Draft key:** C  
 **Draft explanation:** Hooks and barbs can cling to animal fur or clothing, carrying the fruit or seeds away from the parent plant.  
 **Draft status:** revised_draft_needs_bank_wide_check  
-**Syllabus area:** Reproduction — sexual reproduction in flowering plants  
+**Syllabus area:** Variety of organisms — structural adaptations in plants (proposed broad fit; fruit/seed dispersal is not expressly named in the syllabus)  
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3284).
