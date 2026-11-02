@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 21,
+  "version": 22,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -938,9 +938,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate defines an epigraph (quotation at the beginning); the closest source defines an epilogue (concluding section). Similar spelling but opposite placement and different literary function. Retain pending Literature reviewer confirmation."
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_review",
+        "note": "Scanned all 200 Literature in English retained-plus-held rows. The draft tests an epigraph (a quotation placed before a work or section). Closest related terms are epilogue (retained batch 20 row 41: concluding section), prologue (retained batch 37 row 37: introductory section), aside (retained batch 35 row 37: remark to audience), and dramatis personae (held batch 30 row 41: list of characters). These are distinct literary terms and functions; no epigraph question was found. The official Literature syllabus lists literary terms under General Literary Principles but does not name epigraph specifically. Human Literature reviewer must confirm level, terminology and suitability."
       }
     },
     {
@@ -966,9 +966,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate asks for a party constitution (internal rules and structure); the closest source asks for a party manifesto (policy promises/programme). Different political documents and functions. Retain pending Government reviewer confirmation."
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_review",
+        "note": "Scanned all 200 Government retained-plus-held rows. No party-constitution question was found. Closest items are retained batch 08 row 39 (general constitution and government/citizen framework), retained batch 26 row 35 (party manifesto and policy proposals), and retained batch 02 row 34 (general political-party function). The candidate asks specifically about the internal governing document of a party; it is distinct from a state constitution and from a manifesto/programme. Distractors were revised to parallel political-party documents/messages. The official Government syllabus includes Political Parties and Party Systems, specifically party definition, organisation and functions, with an objective to assess parties' roles. Human Government reviewer must confirm that the narrower party-constitution detail is suitable."
       }
     },
     {
@@ -2240,5 +2240,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 21 records revised candidates for DUP-02, 05, 08, 30 and 32. Their earlier blocked drafts were withdrawn; each new candidate is below the 0.42 same-subject lexical threshold and is compared against the full 1,600-row source bank. This does not constitute academic approval."
+  "revision_note": "Version 22 — 2026-11-02: Pair 05 DUP-35 and DUP-36 manually compared against all 200 retained-plus-held rows in their respective subjects. DUP-36 options and explanation improved. Both await independent subject review; no draft cleared."
 }
