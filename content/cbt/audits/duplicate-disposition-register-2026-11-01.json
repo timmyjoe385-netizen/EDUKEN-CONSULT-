@@ -2021,6 +2021,17 @@
         "reason": "The stem asks for a general narrative device and provides no dramatic-text or stage context; the narrower Drama label was unsupported by the wording.",
         "status": "assistant_metadata_correction_pending_ibass_confirmation"
       }
+    ],
+    "content_clarity_corrections": [
+      {
+        "target_id": "DUP-38",
+        "previous_question": "A baby may receive temporary passive immunity when antibodies are transferred from its mother through:",
+        "corrected_question": "Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?",
+        "previous_explanation": "Maternal antibodies, especially IgG, cross the placenta and provide the newborn with temporary passive protection.",
+        "corrected_explanation": "Maternal IgG antibodies cross the placenta from the mother to the fetus before birth, providing temporary passive immunity.",
+        "reason": "The original stem could also encompass passive antibody transfer through breast milk; specifying maternal IgG transfer to the fetus before birth removes the alternative-route ambiguity.",
+        "status": "assistant_wording_correction_pending_independent_biology_review"
+      }
     ]
   },
   "replacement_review_summary": {
