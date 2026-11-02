@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 33,
+  "version": 34,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -2235,7 +2235,12 @@
           "score": 0.2431,
           "question": "A character who undergoes a significant change in attitude, behaviour or outlook during a story is described as:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No pseudonym/pen-name definition item found. Nearest items concern poetic speaker, first-person narration and character development. Answer A is correct: a pseudonym is an assumed name used by an author. Similarity 0.3514. Independent Literature reviewer should confirm syllabus fit and usefulness."
+      }
     },
     {
       "target_id": "DUP-84",
@@ -2258,7 +2263,12 @@
           "score": 0.3188,
           "question": "Which enzyme in saliva begins the digestion of starch?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology rows checked. No DNA ligase/Okazaki-fragment item found. Nearest matches are digestive enzymes, not DNA replication. Answer A is correct: DNA ligase seals nicks between adjacent Okazaki fragments on the lagging strand. Similarity 0.3286. Independent Biology reviewer should confirm molecular detail and JAMB depth."
+      }
     },
     {
       "target_id": "DUP-85",
@@ -2281,7 +2291,12 @@
           "score": 0.3429,
           "question": "The feeling of anxious anticipation about what may happen next in a play is known as:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No blocking/planned actor movement item found. Nearest items concern a play script, understatement and suspense. Answer A is correct: blocking is planned actor movement and positioning on stage. Similarity 0.3723. Independent Literature reviewer should confirm theatre terminology and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-86",
@@ -2304,7 +2319,12 @@
           "score": 0.2876,
           "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No brown-ring nitrate test location item found. Nearest matches concern alcohol functional group, hydrogen test and rate-constant units. Answer B is correct: the brown ring forms at the interface between the aqueous layer and concentrated acid layer. Similarity 0.3158. Official JAMB Chemistry syllabus lists specific tests for nitrate ions (NO3−) under non-metals/nitrogen compounds. Direct syllabus coverage supported; independent Chemistry reviewer still required."
+      }
     },
     {
       "target_id": "DUP-87",
@@ -2410,5 +2430,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
