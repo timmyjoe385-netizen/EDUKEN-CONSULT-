@@ -3201,3 +3201,8 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## 2026-11-02 register reconciliation — nine missing pair notes and two key-note corrections
+
+The screening file contains contextual assessments for all 90 replacement candidates. The disposition register previously had nine pairs without corresponding contextual_review entries. Those nine entries (DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-87, DUP-88, DUP-89 and DUP-90) have now been synchronised from the screening assessments, with the candidate key independently checked against the draft record. DUP-17 was corrected to the specific positive-phototropism stem with options auxin/gibberellin/cytokinin/ethylene and key A. DUP-42's key is C (decline); its prior screening note incorrectly stated B. The register now records 88 contextual bankwide reviews complete, one preliminary distinction, and one rejected semantic overlap (DUP-69). Independent subject approvals remain 0/90. No source CSV was changed and no import or publication is authorised.
