@@ -2005,13 +2005,20 @@
     "answer_and_explanation_review": "90 preliminary assistant checks recorded; independent subject review outstanding for all drafts",
     "official_jamb_syllabus_mapping": "90 mapped; 26 provisionally aligned and 64 require subject review; none approved",
     "bank_insertion": "not performed",
-    "syllabus_mapping_quality_check": "One clear metadata mismatch identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration; corrected to Excretion — kidney structure and urine formation (glomerular ultrafiltration). Corrected label still awaits confirmation against current JAMB IBASS. The other 63 subject-review mappings remain unapproved and require qualified subject review.",
+    "syllabus_mapping_quality_check": "Two metadata mismatches have been identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration, and DUP-21 was labelled Drama despite testing a general narrative technique without a dramatic-text context. DUP-74 is now Excretion — kidney structure and urine formation (glomerular ultrafiltration); DUP-21 is now Literary principles and terminology — narrative techniques (flashback). Both corrected labels require detailed IBASS confirmation. The remaining 63 previously subject-review mappings remain unapproved; DUP-21 has been moved from provisional to subject review, leaving 25 provisional mappings.",
     "mapping_corrections": [
       {
         "target_id": "DUP-74",
         "previous": "Genetics — DNA replication",
         "corrected": "Excretion — kidney structure and urine formation (glomerular ultrafiltration)",
         "reason": "Question tests high glomerular hydrostatic pressure and ultrafiltration in the mammalian kidney; the prior genetics label was plainly inconsistent.",
+        "status": "assistant_metadata_correction_pending_ibass_confirmation"
+      },
+      {
+        "target_id": "DUP-21",
+        "previous": "Drama — dramatic techniques",
+        "corrected": "Literary principles and terminology — narrative techniques (flashback)",
+        "reason": "The stem asks for a general narrative device and provides no dramatic-text or stage context; the narrower Drama label was unsupported by the wording.",
         "status": "assistant_metadata_correction_pending_ibass_confirmation"
       }
     ]
@@ -2121,8 +2128,8 @@
       "Geography",
       "Government"
     ],
-    "mapping_effect": "none; no syllabus mapping upgraded to approved",
+    "mapping_effect": "none; no syllabus mapping upgraded to approved; DUP-21 downgraded from provisional to subject review",
     "limitation": "The catalogue exposes View details controls, but the subject detail view did not complete in the browser retrieval attempt. Individual topic/subtopic alignment cannot be certified from the catalogue listing.",
-    "pending": "64 mappings require qualified syllabus review; 26 remain provisional; DUP-74 corrected mapping awaits detailed IBASS confirmation."
+    "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   }
 }
