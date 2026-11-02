@@ -16,7 +16,7 @@
 
 - Draft proposals: **90/90** (unique target IDs)
 - Full-bank screening: **90/90**; 12 lexical flags, 78 below 0.42
-- Syllabus mapping: **90/90**; 26 provisionally aligned, 64 require subject review
+- Syllabus mapping: **90/90**; 25 provisionally aligned, 65 require subject review
 - Assistant preliminary answer/context checks: **90/90**; independent human sign-off: **0**
 - Inserted into source CSVs / Supabase / student feed: **0**
 
@@ -1365,8 +1365,8 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 **Draft key:** B  
 **Draft explanation:** A flashback takes the reader or audience back to an earlier event to provide background or context.  
 **Draft status:** revised_draft_needs_bank_wide_check  
-**Syllabus area:** Drama — dramatic techniques  
-**Mapping status:** provisionally_aligned
+**Syllabus area:** Literary principles and terminology — narrative techniques (flashback)  
+**Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.4103).
 
@@ -2311,8 +2311,12 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ## Official JAMB IBASS source-access note — 2026-11-02
 
-The official IBASS E-syllabus catalogue was retrieved directly at https://ibass.jamb.gov.ng/e-syllabus. Its visible catalogue includes Biology, Chemistry, Economics and Government, with pagination for additional subjects. The catalogue exposes subject “View details” controls, but the detail view did not complete during the browser retrieval attempt. Therefore, this retrieval confirms the official subject catalogue is accessible; it does **not** verify individual topic/subtopic mappings. The existing 64 mappings marked `subject_review_required` remain unapproved, and the 26 provisional mappings remain provisional. DUP-74's corrected Excretion mapping still requires confirmation against the detailed IBASS Biology syllabus. No mapping is upgraded to approved on the basis of the catalogue alone.
+The official IBASS E-syllabus catalogue was retrieved directly at https://ibass.jamb.gov.ng/e-syllabus. Its visible catalogue includes Biology, Chemistry, Economics and Government, with pagination for additional subjects. The catalogue exposes subject “View details” controls, but the detail view did not complete during the browser retrieval attempt. Therefore, this retrieval confirms the official subject catalogue is accessible; it does **not** verify individual topic/subtopic mappings. The 65 mappings marked `subject_review_required` remain unapproved, and 25 mappings remain provisional. DUP-74's corrected Excretion mapping still requires confirmation against the detailed IBASS Biology syllabus. No mapping is upgraded to approved on the basis of the catalogue alone.
+
+## Mapping correction — DUP-21
+
+DUP-21 asks for the general narrative device that presents an earlier event within the present sequence. Its stem does not establish a specifically dramatic text or stage context. The prior label “Drama — dramatic techniques” was therefore too narrow and unsupported by the question wording. The packet label is changed to “Literary principles and terminology — narrative techniques (flashback)” and downgraded from provisionally aligned to subject review required. This is an assistant metadata correction only; it is not an IBASS-confirmed topic mapping or academic approval.
 
 ## Release restriction
 
-No candidate in this packet is approved for insertion. The 12 lexical flags require independent contextual review; the 64 syllabus mappings marked `subject_review_required` require syllabus review; all answers and explanations require independent subject sign-off. Provenance reconciliation is complete: all 13 later-replacement rows have exact row-level introducing commits, DUP-34 is separately verified, and all 90 retained/held staging-location joins match. Original source CSVs remain unchanged. Final import generation, preview admin import testing and any production release remain blocked until all required approvals and explicit user authorization are recorded.
+No candidate in this packet is approved for insertion. The 12 lexical flags require independent contextual review; the 65 syllabus mappings marked `subject_review_required` require syllabus review; all answers and explanations require independent subject sign-off. Provenance reconciliation is complete: all 13 later-replacement rows have exact row-level introducing commits, DUP-34 is separately verified, and all 90 retained/held staging-location joins match. Original source CSVs remain unchanged. Final import generation, preview admin import testing and any production release remain blocked until all required approvals and explicit user authorization are recorded.
