@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 27,
+  "version": 28,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -1583,7 +1583,12 @@
           "score": 0.2963,
           "question": "In a play, the exposition usually serves to:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English retained-plus-held rows checked. No epithet definition/example was found. The nearest lexical match is synecdoche (batch 23 row 40, 0.4113), which uses a part for the whole; the proposed 'swift-footed Achilles' is a descriptive epithet. Other close items are an epilogue and exposition, different terms. Similarity 0.4113, just below threshold. Answer A is correct. A Literature reviewer should confirm that the classical epithet example is appropriate for JAMB level and distinguish it from other descriptive devices. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-60",
@@ -1606,7 +1611,12 @@
           "score": 0.24,
           "question": "In natural selection, individuals with advantageous inherited variations are more likely to:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No Organ of Corti/hair-cell location question was found. Nearest matches concern root-hair osmosis and red blood cell function; they do not assess the cochlear sensory organ. Answer A is correct: the Organ of Corti in the cochlea contains sensory hair cells that transduce sound-related mechanical vibrations. Similarity 0.2783, below threshold. Independent Biology reviewer must confirm exact anatomical wording and syllabus depth. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-61",
@@ -1629,7 +1639,12 @@
           "score": 0.1949,
           "question": "When a plant cell is placed in a strongly concentrated salt solution, its protoplast may shrink away from the cell wall. This is called:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No phototropism/auxin shaded-side cell-elongation question was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis. Answer A is correct: greater cell elongation on the shaded side causes a shoot to bend towards light; auxin is involved in this differential growth. Similarity 0.2262, below threshold. Independent Biology reviewer must confirm syllabus depth and wording. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-62",
@@ -1652,7 +1667,12 @@
           "score": 0.3576,
           "question": "A struggle between a character and forces outside that character is known as:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a poetic line; enjambment is continuation of syntax/sense across a line break without an end-stop. These are related lineation techniques but not duplicates. Answer A is correct. Similarity 0.4046, below threshold but close; an independent Literature reviewer should confirm distinction, syllabus scope and question-bank variety. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-63",
@@ -2310,5 +2330,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
