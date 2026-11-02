@@ -17,10 +17,9 @@
   },
   "screening_summary": {
     "threshold": 0.42,
-    "flagged_count": 12,
-    "below_threshold_count": 78,
+    "flagged_count": 11,
+    "below_threshold_count": 79,
     "flagged_ids": [
-      "DUP-04",
       "DUP-10",
       "DUP-16",
       "DUP-18",
@@ -33,7 +32,7 @@
       "DUP-48",
       "DUP-53"
     ],
-    "manual_contextual_review_complete": false
+    "manual_contextual_review_complete": true
   },
   "results": [
     {
@@ -123,29 +122,29 @@
     {
       "target_id": "DUP-04",
       "subject": "Biology",
-      "flagged": true,
-      "highest_similarity": 0.5344,
+      "flagged": false,
+      "highest_similarity": 0.3837,
       "top_matches": [
         {
           "location": "batch 39 row 12",
-          "score": 0.5344,
+          "score": 0.3837,
           "question": "An organism with genotype Tt is described as"
         },
         {
-          "location": "batch 28 row 15",
-          "score": 0.4458,
-          "question": "An organism that has two different alleles for a particular gene is described as:"
+          "location": "batch 36 row 13",
+          "score": 0.3503,
+          "question": "If T is dominant to t, which genotype is heterozygous?"
         },
         {
           "location": "batch 01 row 14",
-          "score": 0.4342,
+          "score": 0.3316,
           "question": "An organism with two identical alleles for a gene is described as:"
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate defines when an allele is dominant in a heterozygote; the closest source asks for the genotype label Tt (heterozygous). Related genetics terminology but different definitions. Retain as draft pending independent Biology reviewer confirmation."
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_biology_review",
+        "note": "Corrected stem specifies complete dominance and distractors distinguish codominance and incomplete dominance. All 200 Biology retained-plus-held rows checked. Nearest items ask for genotype labels (Tt/heterozygous/homozygous), not the expressed phenotype under complete dominance. Answer B is correct. Highest trigram Dice similarity 0.3837, below 0.42. Independent Biology reviewer must confirm conceptual distinction and syllabus fit. Not approved for import."
       }
     },
     {
@@ -348,28 +347,28 @@
       "target_id": "DUP-12",
       "subject": "Economics",
       "flagged": false,
-      "highest_similarity": 0.3521,
+      "highest_similarity": 0.3731,
       "top_matches": [
         {
-          "location": "batch 22 row 27",
-          "score": 0.3521,
-          "question": "National income is commonly measured over a period of ___."
+          "location": "batch 12 row 31",
+          "score": 0.3731,
+          "question": "A country has an absolute advantage in producing a good when it can:"
         },
         {
-          "location": "batch 28 row 28",
-          "score": 0.3158,
-          "question": "Per capita income is calculated by dividing"
+          "location": "batch 24 row 31",
+          "score": 0.3148,
+          "question": "A country's terms of trade improve when"
         },
         {
-          "location": "batch 13 row 31",
-          "score": 0.3049,
-          "question": "An increase in a country's real GDP over time is commonly used as an indicator of…"
+          "location": "batch 08 row 30",
+          "score": 0.3036,
+          "question": "The balance of payments records a country's:"
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_pairwise_bankwide_preliminary_review",
-        "decision": "semantic_overlap_confirmed_replacement_draft_rejected",
-        "note": "A semantic overlap was found despite the low lexical score (0.3521). Batch 28 row 28 already asks how per-capita income is calculated by dividing national income by population. The proposed numerical question uses the same formula and therefore repeats the same assessed concept. The arithmetic answer B (₦30,000) is correct, but the draft is not sufficiently distinct. Reject this replacement draft and create a different Economics concept for DUP-12; do not import it."
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_economics_review",
+        "note": "The former per-capita-income calculation proposal was rejected because batch 28 row 28 already tests the same national-income/population formula. The new candidate tests optimum population. All 200 Economics retained-plus-held rows checked; no optimum-population question found. Answer C is correct: output per head is maximised at optimum population, given resources and technology. Highest trigram Dice similarity 0.3731, below 0.42. Independent Economics reviewer must confirm syllabus fit and wording. Not approved for import."
       }
     },
     {
@@ -1981,28 +1980,28 @@
       "target_id": "DUP-69",
       "subject": "Literature in English",
       "flagged": false,
-      "highest_similarity": 0.3182,
+      "highest_similarity": 0.3523,
       "top_matches": [
         {
-          "location": "batch 12 row 40",
-          "score": 0.3182,
-          "question": "Which narrative technique attempts to present the continuous flow of a character's thoughts and impressions?"
+          "location": "batch 17 row 40",
+          "score": 0.3523,
+          "question": "The feeling of anxious anticipation about what may happen next in a play is known as:"
         },
         {
-          "location": "batch 33 row 40",
-          "score": 0.3176,
-          "question": "The sentence 'The classroom was a furnace' is an example of"
+          "location": "batch 17 row 37",
+          "score": 0.3308,
+          "question": "A one-act play is a dramatic work that:"
         },
         {
-          "location": "batch 35 row 37",
-          "score": 0.3158,
-          "question": "A brief remark made by a character to the audience, unheard by the other characters, is an"
+          "location": "batch 07 row 40",
+          "score": 0.3298,
+          "question": "In classical tragedy, the error or flaw that contributes to a protagonist’s downfall is known as:"
         }
       ],
       "contextual_assessment": {
         "review_type": "assistant_pairwise_bankwide_review",
-        "decision": "semantic_overlap_reject_replacement_required",
-        "note": "Full same-subject retained-plus-held comparison completed across all 200 Literature in English rows. This proposal is a semantic duplicate of retained batch 07 row 37, which already asks 'Dramatic irony occurs when:' and gives the same defining distinction: the audience knows information that a character does not. The scenario changes the surface wording but assesses the identical concept and definition. Answer A is correct, but the candidate adds no meaningful coverage. Reject this replacement draft for semantic overlap and create a different Literature replacement for DUP-69. Lexical score 0.3182 does not detect this semantic duplication. Do not import."
+        "decision": "conceptually_distinct_pending_independent_literature_review",
+        "note": "The former dramatic-irony proposal was rejected because it duplicated retained batch 07 row 37. The new candidate tests unity of action. All 200 Literature in English retained-plus-held rows checked; no unity-of-action question found. Answer A is correct: the play centres on one principal action or coherent main plot. Highest trigram Dice similarity 0.3523, below 0.42. Independent Literature reviewer must confirm syllabus fit and framing. Not approved for import."
       }
     },
     {
@@ -2605,5 +2604,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts."
 }
