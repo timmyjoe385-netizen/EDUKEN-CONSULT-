@@ -38,7 +38,7 @@
 - **Official syllabus mapping:** Directly within Use of English Section B, Lexis and Structure, which explicitly lists number and agreement/concord and the objective to identify grammatical patterns.
 - **Assistant disposition:** Preliminary answer, explanation, contextual and syllabus checks passed. Independent English reviewer confirmation remains required; not approved for import.
 
-**Pair 04 outcome:** 2 drafts reviewed; 1 existing-bank semantic overlap discovered and corrected by replacing the draft; 1 concord item checked; revised DUP-33 requires fresh full-bank screening; 0 independent subject approvals; neither target is cleared for insertion.
+**Pair 04 outcome:** 2 drafts reviewed; 1 existing-bank semantic overlap discovered and corrected by replacing the draft; 1 concord item checked; revised DUP-33 fresh manual subject-bank check completed; 0 independent subject approvals; neither target is cleared for insertion.
 
 ---
 
