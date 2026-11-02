@@ -22,6 +22,28 @@
 
 ## Pair-by-pair assistant review log (not independent academic approval)
 
+## Pair-by-pair assistant review log (not independent academic approval)
+
+### Pair 02 — DUP-14 and DUP-17 (2026-11-02)
+
+**DUP-14 — Biology: prokaryotic cell classification**
+- **Answer and explanation:** B is correct. Prokaryotic cells lack a membrane-bound nucleus; their genetic material occupies a nucleoid region.
+- **Quality check:** Clear one-best-answer stem; options are distinct classifications. No wording change needed at preliminary review.
+- **Bank comparison:** Highest same-subject trigram score 0.315; closest match concerns selective permeability of the cell membrane, a different cell function. This lexical screen does not independently prove uniqueness.
+- **Official syllabus mapping:** Confirmed broad alignment to Biology syllabus A.1(b), “Cell structure and functions of cell components”, and A.2(a), “Monera (prokaryotes)” (official PDF lines 23–35, objectives lines 46–49). The existing mapping is now made more precise with the actual syllabus headings.
+- **Assistant disposition:** Preliminary answer/quality pass; mapping directly supported by official syllabus. Still requires independent Biology review and full-bank contextual decision. Not approved for import.
+
+**DUP-17 — Biology: auxin and positive phototropism**
+- **Answer and explanation:** A (auxin) is correct for the specified redistribution and differential-elongation mechanism in a young shoot.
+- **Quality correction:** The original wording was too broad: gibberellins can also promote stem elongation, and the original animal-hormone distractors were implausibly easy. The revised stem asks specifically about auxin accumulation on the shaded side during positive phototropism; distractors are now other plant hormones.
+- **Bank comparison:** Highest same-subject trigram score 0.4172, below the 0.42 lexical flag threshold. Closest lexical match concerns human sex chromosomes, not plant hormones. The result is a lexical screen only; full conceptual comparison and human review remain required.
+- **Official syllabus mapping:** Directly aligned to Biology syllabus B.6(a), tropic movements and roles of auxins (official PDF lines 529–533), and B.9(c)(ii), plant hormones and their effects on growth/tropism (lines 688–703).
+- **Assistant disposition:** Revised draft and mapping are supported by the official syllabus. Independent Biology review remains required; not approved for import.
+
+**Pair 02 outcome:** 2 drafts reviewed; 1 question wording/distractor correction (DUP-17); 1 mapping made more precise (DUP-14); both syllabus mappings supported by explicit official syllabus topics; 0 independent subject approvals; both remain blocked from insertion.
+
+
+
 ### Pair 01 — DUP-04 and DUP-06 (2026-11-02)
 
 **DUP-04 — Biology: inheritance / dominance**
@@ -125,7 +147,7 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 **Draft key:** B  
 **Draft explanation:** Prokaryotic cells do not have a membrane-bound nucleus; their genetic material is located in a nucleoid region.  
 **Draft status:** revised_draft_needs_bank_wide_check  
-**Syllabus area:** Variety of organisms — living organisms and cell structure; Monera/prokaryotes  
+**Syllabus area:** Variety of organisms — A.1(b) cell structure and functions of cell components; A.2(a) Monera (prokaryotes)  
 **Mapping status:** provisionally_aligned
 
 **Lexical screen:** below 0.42 (highest score 0.315).
@@ -140,17 +162,17 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ### DUP-17 — Plant physiology / Plant hormones
 
-**Question:** Which plant hormone is chiefly associated with promoting cell elongation in shoots? 
+**Question:** During positive phototropism in a young shoot, which plant hormone accumulates more on the shaded side and promotes greater cell elongation there?
 
 - A. auxin
-- B. insulin
-- C. adrenaline
-- D. glucagon
+- B. gibberellin
+- C. cytokinin
+- D. ethylene
 
 **Draft key:** A  
-**Draft explanation:** Auxins promote cell elongation in shoots and are involved in tropic growth responses.  
+**Draft explanation:** In a young shoot exposed to light from one direction, auxin becomes more concentrated on the shaded side and promotes greater cell elongation there. The unequal growth causes the shoot to bend towards the light.  
 **Draft status:** revised_draft_needs_bank_wide_check  
-**Syllabus area:** Coordination and control — plant hormones/phytohormones  
+**Syllabus area:** Form and functions — B.6(a) tropic movements and roles of auxins; B.9(c)(ii) plant hormones and their effects on growth and tropism  
 **Mapping status:** provisionally_aligned
 
 **Lexical screen:** below 0.42 (highest score 0.4172).
