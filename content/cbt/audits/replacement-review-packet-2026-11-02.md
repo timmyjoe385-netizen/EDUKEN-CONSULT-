@@ -2833,3 +2833,45 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 29 — DUP-83 and DUP-84 (2026-11-02)
+
+**DUP-83 — Literature in English: pseudonym**
+- **Answer:** A. A pseudonym is an assumed or pen name used by an author instead of their actual name.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No pseudonym item was found. Nearest items concern poetic speaker, first-person narration and character development.
+- **Similarity:** 0.3514, below the 0.42 threshold.
+- **Open issue:** Independent Literature reviewer should confirm syllabus fit and usefulness.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-84 — Biology: DNA ligase and Okazaki fragments**
+- **Answer:** A. DNA ligase seals breaks between adjacent Okazaki fragments on the lagging strand.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No DNA ligase/Okazaki-fragment item was found. Nearest matches are digestive-enzyme questions, not DNA replication.
+- **Similarity:** 0.3286, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer should confirm molecular detail and JAMB depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 29 outcome:** Both candidates are distinct from the existing same-subject bank. Independent subject/syllabus review remains required; 0 independent subject approvals.
+
+---
+
+## Pair 30 — DUP-85 and DUP-86 (2026-11-02)
+
+**DUP-85 — Literature in English: blocking**
+- **Answer:** A. Blocking is the planned movement and positioning of actors on stage during a performance.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No blocking item was found. Nearest items concern a play script, understatement and suspense.
+- **Similarity:** 0.3723, below the 0.42 threshold.
+- **Open issue:** Independent Literature reviewer should confirm theatre terminology and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-86 — Chemistry: brown-ring test for nitrate**
+- **Answer:** B. The brown ring forms at the interface between the aqueous solution and concentrated acid layer.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No brown-ring nitrate-test location item was found. Nearest matches concern alcohol functional group, hydrogen test and rate-constant units.
+- **Similarity:** 0.3158, below the 0.42 threshold.
+- **Official syllabus:** JAMB Chemistry lists specific tests for nitrate ions (NO₃⁻) under nitrogen compounds/non-metals.
+- **Assistant disposition:** Preliminary answer/context and syllabus checks recorded; independent Chemistry review remains required; not approved for import.
+
+**Pair 30 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-86 has direct syllabus coverage; DUP-85 requires Literature syllabus confirmation. 0 independent subject approvals.
+
+---
+
