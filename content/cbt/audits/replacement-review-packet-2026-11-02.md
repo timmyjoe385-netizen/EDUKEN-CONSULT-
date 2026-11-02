@@ -2309,6 +2309,10 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ---
 
+## Official JAMB IBASS source-access note — 2026-11-02
+
+The official IBASS E-syllabus catalogue was retrieved directly at https://ibass.jamb.gov.ng/e-syllabus. Its visible catalogue includes Biology, Chemistry, Economics and Government, with pagination for additional subjects. The catalogue exposes subject “View details” controls, but the detail view did not complete during the browser retrieval attempt. Therefore, this retrieval confirms the official subject catalogue is accessible; it does **not** verify individual topic/subtopic mappings. The existing 64 mappings marked `subject_review_required` remain unapproved, and the 26 provisional mappings remain provisional. DUP-74's corrected Excretion mapping still requires confirmation against the detailed IBASS Biology syllabus. No mapping is upgraded to approved on the basis of the catalogue alone.
+
 ## Release restriction
 
 No candidate in this packet is approved for insertion. The 12 lexical flags require independent contextual review; the 64 syllabus mappings marked `subject_review_required` require syllabus review; all answers and explanations require independent subject sign-off. Provenance reconciliation is complete: all 13 later-replacement rows have exact row-level introducing commits, DUP-34 is separately verified, and all 90 retained/held staging-location joins match. Original source CSVs remain unchanged. Final import generation, preview admin import testing and any production release remain blocked until all required approvals and explicit user authorization are recorded.
