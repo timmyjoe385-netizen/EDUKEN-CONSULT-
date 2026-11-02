@@ -1,7 +1,11 @@
 # EDUKEN CBT — Order 1 independent-review handoff index
 **Date:** 2026-11-02  
 **Branch:** `feat/cbt-subject-combination-reconciled`  
-**Purpose:** route all 90 replacement proposals to qualified subject reviewers. This index is administrative only; it does not approve, reject, import or publish questions.
+**Purpose:** historical routing index for the 90 replacement proposals. The project owner subsequently reported that the reviewer approved all 90; see `order-1-reviewer-disposition-2026-11-02.md` for the current disposition and documentary-evidence limitation.
+
+## Current disposition notice — 2026-11-02
+
+The project owner explicitly confirmed that the reviewer approved **90/90** proposals and instructed the project to proceed. This user-reported approval includes the 14 former syllabus-scope/depth holds and all 11 former lexical-flag cases. No signed item-level worksheets, reviewer identity or credentials were uploaded; the approval is recorded as user-reported, not independently documentary-verified. The worksheets and routing queues below are preserved as historical handoff material, not as a claim that review is still pending.
 
 ## Authoritative checkpoint
 Use the latest checkpoint file `order-1-final-assistant-review-checkpoint-2026-11-02.md` on this branch as the authoritative status record. The 2026-11-02 checkpoint currently records the 90/90 assistant review totals below; this handoff is a routing aid, not a replacement for the checkpoint.
@@ -13,13 +17,13 @@ Use the latest checkpoint file `order-1-final-assistant-review-checkpoint-2026-1
 - Provenance joins: 90/90.
 - Syllabus mapping: 57 provisionally aligned; 33 require qualified subject review.
 - Explicit syllabus-scope/depth holds: 14.
-- Independent qualified academic approvals: 0/90.
+- Reviewer disposition: 90/90 approved as reported by the project owner; signed item-level records are not present in the repository.
 - Source CSV insertions / production imports / publication: 0.
 
 The older overall-status paragraph in `replacement-review-packet-2026-11-02.md` contains superseded counts (25/65 and 12 lexical flags). Do not use those headline counts. The latest checkpoint above supersedes them. Historical pair notes remain useful evidence but are not independent approvals.
 
 ## Subject routing index
-Every ID below requires independent review of the question, answer key, explanation, distractors, syllabus fit/depth and contextual uniqueness against the full same-subject bank. The 33 syllabus-review cases and 14 explicit holds are included in these subject queues; do not treat a provisionally aligned mapping as academic approval.
+These IDs were routed for independent review. The project owner now reports approval for all 90; retain this index as the historical routing record. Do not treat the blank repository worksheets as signed approval evidence.
 
 | Subject | Count | Replacement IDs |
 |---|---:|---|
@@ -46,8 +50,8 @@ Each worksheet contains the actual replacement questions for that subject, the e
 - [Physics — 11 candidates](reviewer-worksheets-2026-11-02/physics-independent-review.md)
 - [Use of English — 11 candidates](reviewer-worksheets-2026-11-02/use-of-english-independent-review.md)
 
-## Explicit syllabus-scope/depth holds
-These 14 require an explicit written decision on whether the tested detail is within JAMB syllabus scope and at appropriate depth:
+## Former explicit syllabus-scope/depth holds — reported cleared
+These 14 were held for a written scope/depth decision at handoff. The project owner subsequently reported that the reviewer approved all 90; no separate written item-level decisions were uploaded:
 
 - Biology: DUP-06, DUP-38
 - Chemistry: DUP-39, DUP-40
@@ -56,8 +60,8 @@ These 14 require an explicit written decision on whether the tested detail is wi
 - Literature in English: DUP-35, DUP-48
 - Mathematics: DUP-43
 
-## Current lexical flags requiring independent contextual decisions
-The latest checkpoint records **11/11** current lexical flags as having received assistant contextual reassessment. The exact current flag IDs must be taken from the latest screening artifact on this branch, not from older historical triage lists embedded in the review packet or earlier PR descriptions. Confirm the current screening artifact and include every flagged candidate in the independent subject review; do not treat assistant reassessment as human clearance.
+## Former lexical flags — reported cleared by reviewer
+The latest screen records **11/11** lexical flags as having received assistant contextual reassessment. The project owner subsequently reported reviewer approval for all 90, including these flags. No separate item-level reviewer rationales were uploaded. The exact historical flag IDs remain in the screening artifact.
 
 A flag is not automatically a duplicate. The reviewer must compare the learning outcome and concept against the closest retained and held items and record why the item is distinct or overlapping.
 
