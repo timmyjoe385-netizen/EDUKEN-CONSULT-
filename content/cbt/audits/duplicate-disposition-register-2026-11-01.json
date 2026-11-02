@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "Repository status checkpoint: 24/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the replacement-draft file. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. The register contains 90 duplicate relationships and must not be read as 90 completed replacement reviews. DUP-69's current candidate has been rejected for semantic overlap with retained batch 07 row 37 and requires a new replacement. All remaining drafts and all flagged contextual cases require the documented review process. All replacement drafts remain excluded from import/publication until independent subject approval, flagged/contextual decisions, syllabus mapping and final import validation are complete. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
+  "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -209,6 +209,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Assistant preliminary answer/explanation review completed 2026-11-02. Candidate tests hook/barb-mediated animal dispersal; same-subject lexical screen highest score 0.3284. Independent contextual and syllabus review remains required. Proposed syllabus metadata corrected from sexual reproduction to structural adaptations in plants; official syllabus does not expressly name this dispersal mechanism."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. Hooks/barbs on fruits facilitate animal-mediated dispersal; no same-mechanism duplicate found. Highest same-subject similarity 0.3284. Key C is correct. Candidate is distinct, but exact JAMB syllabus fit is not explicit; qualified Biology syllabus confirmation remains required."
       }
     },
     {
@@ -397,6 +401,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. The candidate defines prokaryotic cells by absence of a membrane-bound nucleus; no same-definition item found. Highest similarity 0.3150. Key B is correct. Broad cell-structure fit is plausible; independent Biology subject/syllabus approval remains required."
       }
     },
     {
@@ -465,6 +473,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "Replacement draft still requires contextual manual review against the full question bank."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. Corrected candidate tests auxin redistribution during positive phototropism, not merely general shoot elongation. No same-mechanism overlap identified. Correct key is A (auxin); the earlier screening note incorrectly said B. Similarity screen's nearest listed score was 0.4172 but its match was unrelated. Independent Biology/syllabus approval remains required."
       }
     },
     {
@@ -1040,6 +1052,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. No prolactin/milk-production question found; nearest hormone items test other hormones and functions. Key B is correct: prolactin stimulates milk production, while oxytocin supports milk ejection. The syllabus lists pituitary hormones/functions but does not expressly name prolactin/lactation; independent Biology scope confirmation required."
       }
     },
     {
@@ -1060,6 +1076,10 @@
       "replacement_review": {
         "status": "not_yet_cleared",
         "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics retained-plus-held rows checked. No law-of-diminishing-returns question found. Nearest items concern fixed costs/economies of scale, not marginal product with fixed factors. Correct key is C (decline); the earlier screening note incorrectly said B. JAMB Economics Topic 8(b) covers TP/AP/MP and the law of variable proportion; independent Economics review required."
       }
     },
     {
@@ -2162,6 +2182,10 @@
       "replacement_review": {
         "status": "draft_needs_subject_and_bankwide_review",
         "reason": "Candidate recorded after full same-subject lexical screening below 0.42 and a check against existing draft proposals. Human academic and contextual review remains outstanding."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English retained-plus-held rows checked. No teetotaller definition found. Nearest lexical match defines an arsonist (0.4060), same person-definition format but unrelated meaning. Key A is correct. Similarity is below 0.42 but close; independent English reviewer should confirm lexical suitability and question variety."
       }
     },
     {
@@ -2183,6 +2207,10 @@
       "replacement_review": {
         "status": "draft_needs_subject_and_bankwide_review",
         "reason": "Candidate added to the separate draft bank after same-subject full-bank lexical screening below 0.42 and a check against existing replacement drafts. Independent subject and contextual semantic review remains required."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics retained-plus-held rows checked. No cost-push inflation question found. Nearest items concern input-cost effects on supply, related but not the macroeconomic inflation type tested. Key B is correct. Similarity 0.4167 is below 0.42 but close; independent Economics reviewer should confirm distinction and syllabus coverage."
       }
     },
     {
@@ -2204,6 +2232,10 @@
       "replacement_review": {
         "status": "draft_needs_subject_and_bankwide_review",
         "reason": "Candidate saved after same-subject screening against all 1,600 staged rows and the existing replacement draft bank. Independent academic and semantic review remains required."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English retained-plus-held rows checked. No item asks candidates to identify a pair of nasal consonants. Nearest items test individual consonant sounds, not classification of a pair as nasal. Key A is correct: /m/ and /n/ are nasal consonants. Similarity 0.3964; independent English reviewer should confirm notation and syllabus fit."
       }
     },
     {
@@ -2225,6 +2257,10 @@
       "replacement_review": {
         "status": "draft_needs_subject_and_bankwide_review",
         "reason": "Candidate saved in the separate draft bank after full same-subject lexical screening and existing-draft comparison. Independent subject and contextual semantic review remains required."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows checked. No water-of-crystallisation formula interpretation item found. Nearest items concern copper(II) sulfate electrolysis and sulfur oxidation state, not hydrate stoichiometry. Key B is correct. Similarity 0.3021. Official JAMB Chemistry Topic 6(e) includes water of crystallisation; independent Chemistry approval remains required."
       }
     }
   ],
@@ -2266,7 +2302,7 @@
     "all_have_explanations": true,
     "all_have_nonempty_question_stems": true,
     "structural_validation": "passed",
-    "answer_and_explanation_review": "90 preliminary assistant checks recorded; pairwise detailed review completed for 14 of 90; independent subject review outstanding for all drafts",
+    "answer_and_explanation_review": "90 preliminary assistant answer/explanation checks recorded; 87 of 90 have explicit contextual bankwide review-complete records after reconciliation. Independent subject review outstanding for all drafts.",
     "official_jamb_syllabus_mapping": "90 mapped; 25 provisionally aligned and 65 require subject review; none approved",
     "bank_insertion": "not performed",
     "syllabus_mapping_quality_check": "Two metadata mismatches have been identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration, and DUP-21 was labelled Drama despite testing a general narrative technique without a dramatic-text context. DUP-74 is now Excretion — kidney structure and urine formation (glomerular ultrafiltration); DUP-21 is now Literary principles and terminology — narrative techniques (flashback). Both corrected labels require detailed IBASS confirmation. The remaining 63 previously subject-review mappings remain unapproved; DUP-21 has been moved from provisional to subject review, leaving 25 provisional mappings.",
@@ -2505,7 +2541,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required.",
+  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
@@ -2542,14 +2578,13 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 90,
+    "assistant_pairwise_reviewed_targets": 87,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0,
     "assistant_pairwise_reviewed_ids": [
       "DUP-01",
       "DUP-02",
       "DUP-03",
-      "DUP-04",
       "DUP-05",
       "DUP-06",
       "DUP-07",
@@ -2557,7 +2592,6 @@
       "DUP-09",
       "DUP-10",
       "DUP-11",
-      "DUP-12",
       "DUP-13",
       "DUP-14",
       "DUP-15",
@@ -2614,7 +2648,6 @@
       "DUP-66",
       "DUP-67",
       "DUP-68",
-      "DUP-69",
       "DUP-70",
       "DUP-71",
       "DUP-72",
@@ -2636,6 +2669,7 @@
       "DUP-88",
       "DUP-89",
       "DUP-90"
-    ]
+    ],
+    "reconciliation_note": "Reconciled against the screening file: all 90 replacement candidates have screening assessments; 88 pair records now have explicit contextual bankwide-review-complete status, DUP-69 remains rejected for semantic overlap and one target remains preliminary. This replaces stale 24/90 and 90/90 progress representations. No independent subject approvals have been recorded."
   }
 }
