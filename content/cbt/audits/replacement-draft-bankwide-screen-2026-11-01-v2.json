@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 41,
+  "version": 42,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -2000,9 +2000,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_pairwise_bankwide_preliminary_review",
-        "decision": "conceptually_distinct_pending_independent_subject_review",
-        "note": "All 200 Literature in English retained-plus-held rows checked. No dramatic-irony question was found. Nearest items concern stream of consciousness, metaphor and aside; none tests the audience knowing something a character does not. Answer A is correct. Similarity 0.3182, below threshold. A Literature reviewer should confirm the scenario is a clear example of dramatic irony and syllabus depth. Not approved for import."
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "semantic_overlap_reject_replacement_required",
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Literature in English rows. This proposal is a semantic duplicate of retained batch 07 row 37, which already asks 'Dramatic irony occurs when:' and gives the same defining distinction: the audience knows information that a character does not. The scenario changes the surface wording but assesses the identical concept and definition. Answer A is correct, but the candidate adds no meaningful coverage. Reject this replacement draft for semantic overlap and create a different Literature replacement for DUP-69. Lexical score 0.3182 does not detect this semantic duplication. Do not import."
       }
     },
     {
@@ -2028,9 +2028,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "review_type": "assistant_pairwise_bankwide_review",
         "decision": "conceptually_distinct_pending_independent_subject_review",
-        "note": "All 200 Biology retained-plus-held rows checked. No vacuole/turgor-pressure function question was found. Nearest items concern vaccination, leaf cuticle and nucleus function; no same cell-structure mechanism. Answer B is correct: water in the large central vacuole contributes to turgor pressure, supporting firmness in mature plant cells. Similarity 0.3333, below threshold. Independent Biology reviewer should confirm exact wording and syllabus depth. Not approved for import."
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Biology rows. No vacuole/turgor-pressure function question was found. Nearest entries concern the nucleus, chloroplast, lysosome, plasmolysis and cell-wall structure; none tests the central vacuole's role in maintaining turgor. Answer B is correct: water held in the large central vacuole contributes to turgor pressure, keeping a mature plant cell firm and helping maintain its shape. JAMB Biology explicitly includes turgidity as a transport mechanism; the exact cell-organelle phrasing remains subject to qualified Biology review. Similarity 0.3333, below 0.42. Conceptually distinct; independent Biology review remains mandatory. Not approved for import."
       }
     },
     {
