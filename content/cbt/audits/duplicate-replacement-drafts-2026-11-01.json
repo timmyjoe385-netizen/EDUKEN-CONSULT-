@@ -1234,7 +1234,8 @@
       "explanation": "The nitrogen atom in NH₃ donates its lone pair to H⁺ to form the N–H bond. Both bonding electrons are supplied by nitrogen, so it is a coordinate covalent bond.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Full same-subject retained-plus-held comparison completed across all 200 Chemistry rows. Seven nearby entries concern generic covalent bonding, the coordinate-bond definition, the ammonium-ion formula, or ammonia release from ammonium salts. None asks how NH₃ forms NH₄⁺ by donating its lone pair to H⁺. Answer C is correct; the nitrogen lone pair supplies both electrons in the coordinate N–H bond at formation. The wording correctly distinguishes the bond's formation from the equivalent N–H bonds in the resulting ion. Highest same-subject lexical score is 0.4094 (batch 28 row 21, ammonium-ion formula), below 0.42. JAMB Chemistry includes coordinate covalent bonding. Conceptually distinct; independent Chemistry subject review remains mandatory. Not approved for import."
     },
     {
       "target_id": "DUP-69",
@@ -1548,18 +1549,19 @@
       "subject": "Use of English",
       "topic": "Vocabulary",
       "subtopic": "Homographs",
-      "question": "In “Strong winds damaged the roof”, the noun “winds” refers to:",
+      "question": "In “Strong winds damaged the roof”, the word “winds” refers to:",
       "options": [
         "Moving air",
-        "A winding path",
-        "A musical instrument",
-        "A direction on a map"
+        "A bend or curve in a road or river",
+        "A turn or coil",
+        "A musical instrument played by blowing air"
       ],
       "answer": "A",
-      "explanation": "Here “winds” means moving air. The word “wind” can also be a verb meaning to turn or twist, with a different pronunciation.",
+      "explanation": "Here “winds” means moving air, pronounced /wɪndz/. The verb “wind”, meaning to turn or twist, has a different pronunciation, /waɪnd/.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Full same-subject retained-plus-held comparison completed across all 200 Use of English rows. No question asks for the meaning of wind/winds in this context; the nearest results concern wind personification and unrelated lexis. Answer A is correct: 'winds' means moving air. The original distractors were weak/non-parallel, so they have been improved to plausible alternate senses. The word 'wind' as moving air is pronounced /wɪnd/; the verb 'wind' meaning to turn or twist is pronounced /waɪnd/. Revised wording and options were re-screened against all 200 rows. The lexical score remains below 0.42. Independent English reviewer must confirm terminology and syllabus fit. Not approved for import."
     },
     {
       "target_id": "DUP-82",
