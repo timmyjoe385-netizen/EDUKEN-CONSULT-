@@ -845,9 +845,21 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate tests the possessive function of “whose”; the closest source tests a defining relative clause introduced by “that”. Related relative-clause grammar but distinct function. Retain pending English reviewer confirmation."
+        "review_type": "assistant_full_bank_contextual_reassessment",
+        "decision": "previous_draft_semantic_overlap_detected_revised_draft_required",
+        "note": "The previous draft testing 'whose' as possession overlaps with retained batch 20 row 2, which also tests 'whose' as possession. It has been replaced with a new item testing 'whom' as object of the preposition 'to'. The revised item requires a fresh full-bank lexical/contextual screen; the old 0.4459 score applies only to the superseded wording."
+      },
+      "manual_bankwide_review": {
+        "previous_draft_overlap": {
+          "location": "retained batch 20 row 2",
+          "question": "Choose the correct relative pronoun: “The scientist ___ discovery changed medicine received an award.”",
+          "finding": "Both items test whose as a possessive relative pronoun."
+        },
+        "revised_draft": {
+          "question": "In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:",
+          "answer": "B",
+          "status": "fresh_screen_required"
+        }
       }
     },
     {
@@ -873,9 +885,16 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
+        "review_type": "assistant_full_bank_contextual_reassessment",
         "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate tests the plural-only noun “cattle” taking a plural verb; the closest sources test agreement with compound subjects/nearest-subject rule. Related concord domain but different rule. Retain pending English reviewer confirmation."
+        "note": "The replacement tests plural agreement with the plural-only noun 'cattle'. The highest lexical matches test nearest-subject agreement after 'neither...nor' and agreement with a singular head noun ('list of items'); inspected retained and held staging entries did not reveal a same cattle-agreement question. Related concord domain, distinct rule. Human English reviewer confirmation required."
+      },
+      "manual_bankwide_review": {
+        "revised_draft": {
+          "question": "Choose the correct verb: “The cattle _____ grazing near the river.”",
+          "answer": "C"
+        },
+        "comparison": "Nearest matches concern neither…nor proximity concord and singular head noun agreement; no same cattle-agreement item found in inspected retained/held staging files."
       }
     },
     {
