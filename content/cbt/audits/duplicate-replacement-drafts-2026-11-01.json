@@ -1006,7 +1006,8 @@
       "explanation": "Cacophony is the deliberate use of harsh or discordant sounds to create a jarring effect. Euphony creates a pleasing sound; assonance repeats vowel sounds; alliteration repeats initial consonant sounds.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Literature in English retained-plus-held rows checked. No cacophony definition/item was found. Nearest items test asyndeton and consonance, different sound/language devices. Answer B is correct: cacophony is the deliberate use of harsh or discordant sounds for a jarring effect. Similarity 0.3396, below threshold. Cacophony is closely related by contrast to euphony; an independent Literature reviewer should confirm the distinction and syllabus depth. Not approved for import."
     },
     {
       "target_id": "DUP-56",
@@ -1024,7 +1025,8 @@
       "explanation": "Euphony is the use or arrangement of pleasing, harmonious sounds. Cacophony produces harsh or discordant sounds; sibilance repeats hissing consonants; onomatopoeia imitates sounds.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Literature in English retained-plus-held rows checked. No euphony definition/item was found. Nearest items test rhyme, plot sequence and stream of consciousness, not harmonious sound effects. Answer B is correct: euphony is the use/arrangement of pleasing, harmonious sounds. Similarity 0.2793, below threshold. It is the conceptual counterpart to DUP-55's cacophony, not a duplicate; a Literature reviewer should confirm both are useful and not overly repetitive in a small bank. Not approved for import."
     },
     {
       "target_id": "DUP-57",
@@ -1042,7 +1044,8 @@
       "explanation": "Ellipsis is the omission of a word or group of words that can be understood from the surrounding text. Here, “chose” is understood after “Tola” and is therefore omitted.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Use of English retained-plus-held rows checked. No ellipsis-as-cohesive-device question was found. Nearest matches test adverb function, conditional completion and infinitive phrase function. Answer B is correct: the verb phrase 'chose' is recoverable from the first clause and omitted in the second; this is ellipsis. Similarity 0.3367, below threshold. Broad fit to cohesion/discourse and grammatical structure is plausible, but exact syllabus mapping requires an English reviewer. Not approved for import."
     },
     {
       "target_id": "DUP-58",
@@ -1060,8 +1063,8 @@
       "explanation": "A quadrat is a square frame placed in sample areas to estimate the abundance, density or frequency of plants and other relatively stationary organisms. Pooters and sweep nets collect mobile small animals, while pitfall traps sample ground-dwelling invertebrates.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "The initial homologous-structures proposal was withdrawn after the full-bank screen found an existing homologous-structures question in batch 23 row 13. This revised quadrat-sampling question tests a different ecological field method; rerun full-bank screen."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The initial homologous-structures proposal was withdrawn after the full-bank screen found an existing homologous-structures question in batch 23 row 13. This revised quadrat-sampling question tests a different ecological field method; rerun full-bank screen. All 200 Biology retained-plus-held rows checked. No quadrat-sampling method question was found. Nearest matches concern biotic factors, photosynthesis and plant cell walls; no same ecological sampling method. Answer A is correct: quadrats estimate abundance/density/frequency of plants and other relatively stationary organisms. Similarity 0.2895, below threshold. Ecology is a relevant Biology domain, but exact JAMB syllabus fit for field sampling methods requires qualified Biology review. Not approved for import."
     },
     {
       "target_id": "DUP-59",
