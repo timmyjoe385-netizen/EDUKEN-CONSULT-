@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded for 69/90 target IDs; the reviewed ID list is recorded in review_progress. Remaining unreviewed targets still require pairwise/contextual checks. Independent qualified subject/answer approval is 0/90. All 12 lexical flags require independent contextual subject review. No question is approved for import or publication. Original source CSVs remain unchanged. Continue remaining checks and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded for 80/90 target IDs; the reviewed ID list is recorded in review_progress. Remaining unreviewed targets still require pairwise/contextual checks. Independent qualified subject/answer approval is 0/90. Lexical flags require independent contextual subject review. No question is approved for import or publication. Original source CSVs remain unchanged. Continue remaining checks and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -415,8 +415,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. No recurrent-expenditure/salary-classification question found. Nearest items concern central-bank securities, public goods and indirect taxation. Answer B is correct: regular teacher salaries are recurrent expenditure. Similarity 0.3827. Independent Economics reviewer should confirm the recurrent/capital distinction and syllabus fit."
       }
     },
     {
@@ -435,12 +439,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate uses a separating funnel for two immiscible liquids; the closest source tests filtration of an insoluble solid from a liquid. Different mixtures and separation methods. Retain pending Chemistry reviewer confirmation."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry rows checked. The highest match (batch 17 row 21, 0.5181) tests filtration of an insoluble solid from a liquid; other matches concern distillation. This candidate asks for a separating funnel for two immiscible liquids, a different mixture and separation method. Answer B is correct. Similarity is flagged at 0.5181, so a qualified Chemistry reviewer must confirm contextual distinctness and syllabus fit. Not approved for import."
       }
     },
     {
@@ -503,8 +507,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. No customs-union definition item found. Nearest items concern transfer payments, trade-union functions and contestable markets. Answer A is correct: a customs union adopts a common external tariff toward non-members and permits freer trade among members. Similarity 0.3519. Independent Economics reviewer should confirm the definition and syllabus fit."
       }
     },
     {
@@ -523,8 +531,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. No commercial-bank loan/deposit-creation question found. Nearest items ask general bank functions, reserve requirements and central-bank open-market operations. Answer B is correct: when a commercial bank grants a loan, it normally credits a deposit account, creating a corresponding loan asset and deposit liability. Similarity 0.3273. Independent Economics reviewer should confirm syllabus depth and careful wording."
       }
     },
     {
@@ -543,8 +555,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English rows checked. No flashback definition item found. Nearest items concern allegory, stream of consciousness and free indirect discourse, distinct narrative techniques. Answer B is correct: a flashback interrupts present action to present an earlier event. Similarity 0.4103, below threshold but close. Independent Literature reviewer should confirm the distinction from other retrospective narrative devices and syllabus fit."
       }
     },
     {
@@ -2486,7 +2502,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 75,
+    "assistant_pairwise_reviewed_targets": 80,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0,
     "assistant_pairwise_reviewed_ids": [
@@ -2497,9 +2513,20 @@
       "DUP-05",
       "DUP-06",
       "DUP-07",
+      "DUP-08",
+      "DUP-09",
+      "DUP-10",
+      "DUP-11",
+      "DUP-12",
+      "DUP-13",
       "DUP-14",
+      "DUP-15",
+      "DUP-16",
       "DUP-17",
       "DUP-18",
+      "DUP-19",
+      "DUP-20",
+      "DUP-21",
       "DUP-22",
       "DUP-33",
       "DUP-34",
