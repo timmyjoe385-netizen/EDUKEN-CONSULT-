@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 31,
+  "version": 33,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -2123,7 +2123,12 @@
           "score": 0.3724,
           "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No infinitive-of-purpose function question found. Nearest items test idiom meaning, unreal condition and relative clause. Answer A is correct: 'to borrow a textbook' states the purpose of the visit. Similarity 0.3810. Independent English reviewer should confirm classification and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-80",
@@ -2146,7 +2151,12 @@
           "score": 0.2919,
           "question": "A progressive income tax is one in which the average tax rate generally:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No mixed-economy definition item found. Nearest item batch 40 row 30 defines a command economy; the candidate contrasts private business with state ownership/regulation and is not the same definition. Answer C is correct. Similarity 0.3524. Independent Economics reviewer should confirm scope and clarity."
+      }
     },
     {
       "target_id": "DUP-81",
@@ -2169,7 +2179,12 @@
           "score": 0.2963,
           "question": "A spring extends by 0.05 m when a force of 10 N is applied. What is its spring constant?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. Nearest item batch 33 row 25 defines the coefficient of linear expansion; this draft calculates it from ΔL = αLΔT. Related same subtopic, but definition versus numerical application. Answer A is correct: 0.002/(2.0×50)=2.0×10^-5 °C^-1. Similarity 0.3587. Independent Physics reviewer should decide if the calculation adds enough variety and confirm units/syllabus fit."
+      }
     },
     {
       "target_id": "DUP-82",
@@ -2192,7 +2207,12 @@
           "score": 0.3543,
           "question": "A consumer maximises utility under the equi-marginal principle when:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "related_concept_requires_human_distinctness_decision",
+        "note": "All 200 Economics rows checked. The closest matches are direct definitions of marginal utility (batches 35 row 30 and 08 row 31); the draft asks for the law of diminishing marginal utility. These are related but distinct: marginal utility is additional satisfaction from one more unit, while the law states that successive marginal utility tends to fall as consumption rises. Answer B is correct. Similarity 0.4130, below threshold but close. Official Economics syllabus Topic 5(b) explicitly includes diminishing marginal utility. Given the close conceptual neighbourhood, independent reviewer must decide whether this is sufficiently distinct or should be replaced with a more applied question."
+      }
     },
     {
       "target_id": "DUP-83",
@@ -2390,5 +2410,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
