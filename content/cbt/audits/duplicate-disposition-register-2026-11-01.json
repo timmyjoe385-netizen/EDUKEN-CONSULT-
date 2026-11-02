@@ -2142,7 +2142,7 @@
         "previous_question": "In the sentence “The girl whose bag was missing reported the matter,” the word “whose” expresses:",
         "corrected_question": "In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:",
         "reason": "The former draft duplicated retained batch 20 row 2, which also tested 'whose' as a possessive relative pronoun. The replacement tests a different relative-pronoun function: 'whom' as the object of a preposition.",
-        "status": "assistant_replacement_due_to_confirmed_existing_bank_overlap_fresh_screen_and_independent_english_review_pending"
+        "status": "assistant_overlap_corrected_fresh_screen_complete_human_review_pending"
       },
       {
         "target_id": "DUP-33",
