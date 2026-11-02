@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-50 (24/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-54 (28/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1174,8 +1174,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "preliminary_ai_review_only_human_review_required",
-        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
+        "status": "assistant_review_complete_not_approved_human_subject_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+        "note": "All 200 Physics retained-plus-held rows checked. No resonance or natural-frequency question was found. The nearest lexical matches concern momentum, work-energy and Doppler effect, not resonance. Answer B is correct: resonance occurs when the driving frequency matches the system's natural frequency (with a sufficiently low damping context for a large response). Similarity 0.3952, below threshold. The official JAMB Physics syllabus explicitly includes forced vibration and resonance under simple harmonic motion and asks candidates to enumerate applications of resonance. Direct syllabus coverage confirmed. Independent Physics reviewer still required; not approved for import."
       }
     },
     {
@@ -1194,8 +1198,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "preliminary_ai_review_only_human_review_required",
-        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
+        "status": "assistant_review_complete_not_approved_human_subject_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+        "note": "All 200 Mathematics retained-plus-held rows checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests 2×2 matrix multiplication. Recalculation confirms AB = [[10, 1], [12, 0]], answer A. Similarity 0.4000, below threshold. The result is mathematically correct, but the exact JAMB Mathematics syllabus coverage of matrix multiplication must be confirmed by a qualified Mathematics reviewer. Not approved for import."
       }
     },
     {
@@ -1214,12 +1222,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "preliminary_ai_review_only_human_review_required",
-        "reason": "A separate draft exists; it remains unapproved and must pass independent subject review and full contextual uniqueness review."
+        "status": "assistant_review_complete_not_approved_human_subject_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject review remains mandatory; no import or publication is authorised."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate identifies Cu(OH)₂ formed from Cu²⁺ and OH⁻; the closest sources ask about salt formation in neutralisation or gas evolution in acid reactions. Different reaction and qualitative identification objective. Retain pending Chemistry reviewer confirmation."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows checked. No Cu²⁺ + OH⁻ precipitate-identification question was found. Nearest questions cover neutralisation/salt formation, gas tests, copper electrolysis and displacement; these are different reaction/identification objectives. Answer A is correct: Cu(OH)₂ is a blue precipitate; it is insoluble in excess aqueous NaOH. Similarity 0.4580, flagged. The official Chemistry syllabus covers tests for metallic ions, sodium hydroxide precipitation of metallic hydroxides and coloured ions in transition metals (Topic 16); broad coverage is supported, but exact Cu²⁺ test suitability needs a Chemistry reviewer. Not approved for import."
       }
     },
     {
@@ -1238,8 +1246,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "preliminary_ai_review_only_human_review_required",
-        "reason": "A separate replacement proposal exists. It must pass independent subject review and contextual uniqueness review before approval or insertion."
+        "status": "assistant_review_complete_not_approved_human_subject_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+        "note": "All 200 Economics retained-plus-held rows checked. Existing elasticity items test own-price elasticity of demand/supply; none tests cross elasticity or interpretation of its positive sign. A coefficient of +0.8 indicates substitute goods, answer A. Similarity 0.4141, just below the 0.42 flag threshold. Official JAMB Economics syllabus Topic 4(c) explicitly includes cross elasticity of demand and interpretation of elasticity coefficients. Direct syllabus coverage confirmed. Independent Economics reviewer still required; not approved for import."
       }
     },
     {
@@ -2318,7 +2330,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 24,
+    "assistant_pairwise_reviewed_targets": 28,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
