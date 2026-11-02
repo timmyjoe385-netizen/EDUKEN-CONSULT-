@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 22,
+  "version": 23,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -992,7 +992,12 @@
           "score": 0.3304,
           "question": "A public corporation is generally established by government to…"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_review",
+        "note": "Scanned all 200 Government retained-plus-held rows. No private-member's-bill item was found. Closest related entries include retained batch 17 row 33 (committee-stage examination of a bill), retained batch 15 row 34 (legislative committee functions), retained batch 24 row 33 (legislative oversight) and retained batch 29 row 35 (standing committees). These concern legislative scrutiny/committee work, not who may introduce a private member's bill. The revised stem specifies a parliamentary system and distinguishes a legislator introducing a non-government bill from a minister presenting an executive bill. Official syllabus mapping is broad to Processes of Legislation — legislative enactments/bills; private members' bills are not expressly named. Human Government review remains required."
+      }
     },
     {
       "target_id": "DUP-38",
@@ -1015,7 +1020,12 @@
           "score": 0.2667,
           "question": "Antibodies are produced mainly by:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_and_syllabus_review",
+        "note": "Scanned all 200 Biology retained-plus-held rows. No item was found asking about maternal IgG transfer across the placenta or natural passive immunity before birth. Closest items concern placenta exchange of nutrients/gases (retained batch 15 row 14 and batch 28 row 12), antibody production by plasma cells (retained batch 08 row 14 and batch 25 row 15), and vaccination-induced active immune memory (retained batch 05 row 15 and batch 15 row 15; held vaccination duplicates also remain excluded). These are related to immunity/reproduction but test different mechanisms. Wording was narrowed to maternal IgG transfer to the fetus before birth to avoid ambiguity with antibodies in breast milk. Official Biology syllabus Part C, Topic 7 (Humans and Environment — Diseases) explicitly includes disease prevention/control and principles of inoculation and vaccination, but does not expressly list maternal passive immunity or placental IgG transfer. The item is therefore not treated as syllabus-confirmed; qualified Biology reviewer must decide whether to retain or replace it."
+      }
     },
     {
       "target_id": "DUP-39",
@@ -2240,5 +2250,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 22 — 2026-11-02: Pair 05 DUP-35 and DUP-36 manually compared against all 200 retained-plus-held rows in their respective subjects. DUP-36 options and explanation improved. Both await independent subject review; no draft cleared."
+  "revision_note": "Version 23 — 2026-11-02: Pair 06 DUP-37 and DUP-38 manually compared against all 200 retained-plus-held rows in their respective subjects. DUP-37 wording/distractors refined; DUP-38 clarity correction propagated into draft file and syllabus-scope issue explicitly recorded. Both await independent subject review."
 }
