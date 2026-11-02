@@ -3139,3 +3139,65 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 08 — DUP-41 and DUP-42 (2026-11-02)
+
+**DUP-41 — Biology: prolactin and lactation**
+- **Answer:** Prolactin stimulates milk production; oxytocin supports milk ejection.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No prolactin/milk-production question was found. Nearest hormone items test insulin, LH/ovulation, ADH/water balance and FSH/follicle development.
+- **Open issue:** JAMB Biology lists pituitary hormones and their functions but does not expressly name prolactin/lactation. Independent Biology reviewer must confirm syllabus scope and exact wording.
+- **Assistant disposition:** Distinct from nearest bank items; not approved for import.
+
+**DUP-42 — Economics: law of diminishing returns**
+- **Answer:** B. Marginal product of a variable factor eventually declines as additional variable inputs are combined with fixed factors.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. Nearest items test economies of scale and diseconomies of scale, which concern long-run average costs as scale changes, not marginal product under the law of variable proportion.
+- **Official syllabus:** JAMB Economics Topic 8(b) includes TP/AP/MP and the law of variable proportion.
+- **Assistant disposition:** Distinct from nearest items; independent Economics review required; not approved for import.
+
+**Pair 08 outcome:** Both proposals have preliminary contextual distinction. 0 independent subject approvals; neither is cleared for insertion.
+
+---
+
+
+
+## Pair 31 — DUP-87 and DUP-88 (2026-11-02)
+
+**DUP-87 — Use of English: teetotaller**
+- **Answer:** A. A teetotaller is a person who deliberately abstains from alcoholic drinks.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No teetotaller item was found. The nearest lexical match is a definition of “arsonist” (batch 40 row 3, 0.4060); it shares a person-definition format but tests an unrelated meaning.
+- **Similarity:** 0.4060, below the 0.42 threshold but close.
+- **Open issue:** Independent English reviewer should confirm lexical suitability and question-bank variety.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-88 — Economics: cost-push inflation**
+- **Answer:** B. Rising production costs, such as imported fuel, can push firms to raise prices and cause cost-push inflation.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No cost-push inflation item was found. Nearest items concern higher input prices and production-cost effects on supply; these are related mechanisms, but the draft asks for the resulting inflation type.
+- **Similarity:** 0.4167, below the 0.42 threshold but close.
+- **Open issue:** Independent Economics reviewer should confirm the distinction and syllabus coverage.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 31 outcome:** Both candidates are distinct from the existing same-subject bank. Both are near-threshold lexical cases and require qualified review; 0 independent subject approvals.
+
+---
+
+## Pair 32 — DUP-89 and DUP-90 (2026-11-02)
+
+**DUP-89 — Use of English: nasal consonants**
+- **Answer:** A. /m/ and /n/ are nasal consonants because air passes through the nasal cavity during their production.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No pair-classification question for nasal consonants was found. Nearest items test individual consonant sounds in word-initial or word-final positions.
+- **Similarity:** 0.3964, below the 0.42 threshold.
+- **Open issue:** Independent English reviewer should confirm phonetic notation and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-90 — Chemistry: water of crystallisation**
+- **Answer:** B. CuSO₄·5H₂O contains five water molecules of crystallisation per formula unit.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No hydrate-formula interpretation item was found. Nearest items concern copper(II) sulfate electrolysis and sulfur oxidation state, not hydrate stoichiometry.
+- **Similarity:** 0.3021, below the 0.42 threshold.
+- **Official syllabus:** JAMB Chemistry Topic 6(e) explicitly includes water of crystallisation.
+- **Assistant disposition:** Preliminary answer/context and syllabus checks recorded; independent Chemistry review remains required; not approved for import.
+
+**Pair 32 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-90 has direct syllabus coverage; DUP-89 requires English syllabus confirmation. 0 independent subject approvals.
+
+---
+
