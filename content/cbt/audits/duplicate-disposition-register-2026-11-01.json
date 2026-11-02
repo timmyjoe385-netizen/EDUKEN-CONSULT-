@@ -895,7 +895,11 @@
       "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+        "reason": "Answer/explanation and full 200-row Chemistry retained-plus-held bank comparison completed. Official syllabus broadly covers aluminium electrolytic extraction but does not expressly name cryolite's role; independent Chemistry reviewer must confirm syllabus scope."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows scanned. No cryolite-role item found. Closest entries: retained batch 19 row 20 (aluminium extraction by electrolysis), batch 36 row 21 (bauxite ore), and general catalyst/electrode items. These do not test cryolite's role. B is correct: cryolite dissolves alumina, lowers operating temperature and improves electrolyte conductivity; it is not the reducing agent. Official syllabus Topic 16(d) covers aluminium electrolytic extraction but does not name cryolite. Qualified Chemistry review required."
       }
     },
     {
@@ -915,7 +919,11 @@
       "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+        "reason": "Answer/explanation and full 200-row Chemistry retained-plus-held bank comparison completed. Official syllabus names the Contact process and transition-metal catalysis generally, but not V2O5 specifically; independent Chemistry review required."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows scanned. No question naming the Contact-process catalyst found. Closest entries: retained batch 22 row 21 asks the product of the Contact process; batches 03 row 20, 12 row 21 and 25 row 21 test general catalyst action; batch 20 row 21 concerns the Haber process. C (vanadium(V) oxide, V2O5) is correct for oxidation of SO2 to SO3. Official syllabus Topic 15(c) specifies commercial preparation of tetraoxosulphate(VI) acid by the Contact process; Topic 16(f) lists catalysis among transition-metal properties, but neither expressly names V2O5. Qualified Chemistry review required."
       }
     },
     {
@@ -2010,7 +2018,7 @@
     "all_have_explanations": true,
     "all_have_nonempty_question_stems": true,
     "structural_validation": "passed",
-    "answer_and_explanation_review": "90 preliminary assistant checks recorded; pairwise detailed review completed for 12 of 90; independent subject review outstanding for all drafts",
+    "answer_and_explanation_review": "90 preliminary assistant checks recorded; pairwise detailed review completed for 14 of 90; independent subject review outstanding for all drafts",
     "official_jamb_syllabus_mapping": "90 mapped; 25 provisionally aligned and 65 require subject review; none approved",
     "bank_insertion": "not performed",
     "syllabus_mapping_quality_check": "Two metadata mismatches have been identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration, and DUP-21 was labelled Drama despite testing a general narrative technique without a dramatic-text context. DUP-74 is now Excretion — kidney structure and urine formation (glomerular ultrafiltration); DUP-21 is now Literary principles and terminology — narrative techniques (flashback). Both corrected labels require detailed IBASS confirmation. The remaining 63 previously subject-review mappings remain unapproved; DUP-21 has been moved from provisional to subject review, leaving 25 provisional mappings.",
@@ -2185,7 +2193,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 12 of 90; DUP-33/DUP-34 compared against all 200 Use of English rows; DUP-35/DUP-36 compared against all 200 Literature in English/Government rows; DUP-37/DUP-38 compared against all 200 Government/Biology rows",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 14 of 90; DUP-33/DUP-34 checked against all 200 Use of English rows; DUP-35/DUP-36 checked against all 200 Literature in English/Government rows; DUP-37/DUP-38 checked against all 200 Government/Biology rows; DUP-39/DUP-40 checked against all 200 Chemistry rows",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete.",
     "previous_draft_overlap_detected_and_corrected": 1
@@ -2249,7 +2257,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "2026-11-02 Pair 06: completed pairwise assistant review and full retained-plus-held subject-bank comparisons for DUP-37 (Government) and DUP-38 (Biology). DUP-37 wording/distractors refined; DUP-38 earlier clarity correction is now propagated to the draft file and syllabus fit explicitly downgraded to subject review required. Neither is approved.",
+  "revision_note": "2026-11-02 Pair 07: DUP-39 and DUP-40 received full 200-row Chemistry retained-plus-held bank comparisons. Both are conceptually distinct from the staged questions. Precise syllabus scope for cryolite's role and V2O5 as Contact-process catalyst remains for qualified Chemistry review.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
