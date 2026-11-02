@@ -33,6 +33,19 @@ Every ID below requires independent review of the question, answer key, explanat
 | Use of English | 11 | DUP-29, DUP-30, DUP-33, DUP-34, DUP-57, DUP-68, DUP-72, DUP-78, DUP-79, DUP-87, DUP-89 |
 | **Total** | **90** | |
 
+## Subject-specific review worksheets
+
+Each worksheet contains the actual replacement questions for that subject, the existing assistant review evidence, and a consolidated reviewer sign-off table. These are blank review forms, not approvals.
+
+- [Biology — 17 candidates](reviewer-worksheets-2026-11-02/biology-independent-review.md)
+- [Chemistry — 13 candidates](reviewer-worksheets-2026-11-02/chemistry-independent-review.md)
+- [Economics — 16 candidates](reviewer-worksheets-2026-11-02/economics-independent-review.md)
+- [Government — 5 candidates](reviewer-worksheets-2026-11-02/government-independent-review.md)
+- [Literature in English — 12 candidates](reviewer-worksheets-2026-11-02/literature-in-english-independent-review.md)
+- [Mathematics — 5 candidates](reviewer-worksheets-2026-11-02/mathematics-independent-review.md)
+- [Physics — 11 candidates](reviewer-worksheets-2026-11-02/physics-independent-review.md)
+- [Use of English — 11 candidates](reviewer-worksheets-2026-11-02/use-of-english-independent-review.md)
+
 ## Explicit syllabus-scope/depth holds
 These 14 require an explicit written decision on whether the tested detail is within JAMB syllabus scope and at appropriate depth:
 
