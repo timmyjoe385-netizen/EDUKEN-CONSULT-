@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-66 (40/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-70 (44/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1560,8 +1560,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "A replacement candidate is now recorded in the separate draft bank. It has not been independently approved, inserted into source CSVs or published."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry rows checked. No ammonium coordinate-bond formation item found; nearest batch 28 row 21 asks for ammonium-ion formula. Answer C: N donates a lone pair to H+ during NH4+ formation. Similarity 0.4094. Official Chemistry Topic 4(c) includes coordinate bonding. Reviewer should confirm formation wording and syllabus depth."
       }
     },
     {
@@ -1581,8 +1585,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved in the separate draft bank after full same-subject lexical screening and existing-draft comparison. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English rows checked. No homograph/heteronym meaning-in-context item found; nearest matches concern lexical stress. Answer A is correct. Wind (air) and wind (turn/twist) are homographs and heteronyms. Similarity 0.2653. Independent English reviewer should confirm terminology and syllabus fit."
       }
     },
     {
@@ -1602,8 +1610,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "A replacement candidate is now recorded in the separate draft bank. It has not been independently approved, inserted into source CSVs or published."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature rows checked. No dramatic-irony item found; nearest items concern stream of consciousness, metaphor and aside. Answer A is correct: audience knows information the character does not. Similarity 0.3182. Independent Literature reviewer should confirm scenario and syllabus depth."
       }
     },
     {
@@ -1623,11 +1635,15 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved after same-subject screening against all 1,600 staged rows and the existing replacement draft bank. Independent academic and semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
       },
       "introducing_commit_sha": "7cd07e64694191998d25971911f2763938068046",
-      "introducing_commit_parent_sha": "7c71ed78f94f62e101d3618f821553d6c64292e7"
+      "introducing_commit_parent_sha": "7c71ed78f94f62e101d3618f821553d6c64292e7",
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology rows checked. No vacuole/turgor-pressure item found; nearest items concern vaccination, cuticle and nucleus. Answer B is correct: vacuolar water contributes to turgor pressure in mature plant cells. Similarity 0.3333. Independent Biology reviewer should confirm wording and syllabus depth."
+      }
     },
     {
       "id": "DUP-71",
@@ -2366,7 +2382,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 40,
+    "assistant_pairwise_reviewed_targets": 44,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
