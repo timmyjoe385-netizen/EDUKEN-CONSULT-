@@ -2405,3 +2405,22 @@ The original stem asked generally how maternal antibodies transfer to a baby. Th
 ## Release restriction
 
 No candidate in this packet is approved for insertion. The 12 lexical flags require independent contextual review; the 65 syllabus mappings marked `subject_review_required` require syllabus review; all answers and explanations require independent subject sign-off. Provenance reconciliation is complete: all 13 later-replacement rows have exact row-level introducing commits, DUP-34 is separately verified, and all 90 retained/held staging-location joins match. Original source CSVs remain unchanged. Final import generation, preview admin import testing and any production release remain blocked until all required approvals and explicit user authorization are recorded.
+
+
+## Pair 05 — DUP-35 and DUP-36 (2026-11-02)
+
+**DUP-35 — Literature in English: epigraph**
+- **Answer and explanation:** A (“epigraph”) is correct. An epigraph is a quotation or brief statement placed at the beginning of a literary work or section, often suggesting its theme.
+- **Quality check:** The stem is clear and the four options identify distinct literary/dramatic terms. No answer-key or explanation defect was found in this preliminary check.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were scanned. Closest related terms are epilogue (retained batch 20 row 41: concluding section), prologue (retained batch 37 row 37: introductory section), aside (retained batch 35 row 37: remark to audience), and dramatis personae (held batch 30 row 41: list of characters). These test different terms and functions; no epigraph item was found. The high lexical flag (0.4311) is explained by the epilogue/prologue terminology and is not itself a duplicate verdict.
+- **Official syllabus mapping:** Broad proposed mapping to General Literary Principles — literary terms. The official syllabus lists literary terms and examples “etc.” but does not expressly name “epigraph”; this is not an exact topic confirmation. Independent Literature reviewer must confirm syllabus scope and appropriateness.
+- **Assistant disposition:** Preliminary answer, explanation and bankwide contextual checks complete. Not approved for import; independent Literature review remains required.
+
+**DUP-36 — Government: party constitution**
+- **Answer and explanation:** A (“party constitution”) is correct. It is the party's internal governing document, setting out its organisation, membership rules, offices and procedures.
+- **Quality correction:** Replaced weak, unrelated distractors with parallel political-party documents/messages: party manifesto, party programme and campaign slogan. The explanation distinguishes the constitution's internal governance role from policy communication.
+- **Bank comparison:** All 200 Government retained-plus-held rows were scanned. No party-constitution item was found. Closest items are retained batch 08 row 39 (general constitution and the framework of government/citizens' rights), retained batch 26 row 35 (party manifesto and policy proposals), and retained batch 02 row 34 (general political-party function). The candidate asks specifically about the internal governing document of a political party; it is distinct from a state constitution and from a manifesto/programme. The lexical flag (0.4459) is a prompt for contextual review, not evidence of duplication.
+- **Official syllabus mapping:** Broad proposed mapping to Part 1, Topic 12, “Political Parties and Party Systems” — party definition, organisation and functions; objective: assess the role of political parties. The syllabus does not expressly name party constitutions, so an independent Government reviewer must confirm the detail is suitable.
+- **Assistant disposition:** Preliminary answer, distractor, explanation and bankwide contextual checks complete. Not approved for import; independent Government review remains required.
+
+**Pair 05 outcome:** 2 drafts reviewed; 1 distractor/explanation improvement (DUP-36); both candidates compared against all 200 same-subject retained-plus-held rows; both have broad official syllabus mappings but need qualified confirmation; 0 independent subject approvals; both remain blocked from insertion.
