@@ -39,16 +39,16 @@
     "cross_window_pairs": 75,
     "within_window_pairs": 15,
     "total_pairs": 90,
-    "prior_replacement_commit_verified": 56,
-    "replacement_after_initial_snapshot_commit_sha_pending": 6,
+    "prior_replacement_commit_verified": 57,
+    "replacement_after_initial_snapshot_commit_sha_pending": 5,
     "original_draft_overlap_pairs": 28,
     "provenance_unverified_pairs": 0,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": true,
-    "provenance_candidate_commits_verified_as_introducing_commit": 8,
+    "provenance_candidate_commits_verified_as_introducing_commit": 9,
     "provenance_candidate_commits_are_leads_only": true,
-    "provenance_note": "Eight exact row-level introducing commits are verified in total: seven later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-75, DUP-77, DUP-79 and DUP-86) plus separately resolved DUP-34. Six later-replacement rows remain unresolved: DUP-74, DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90. Candidate SHAs retained below are investigation leads only, not proof. The candidate checks completed so far found no exact row-level introduction; formatting-only and unrelated-row changes were excluded. Twenty-eight pairs are original-draft overlaps."
+    "provenance_note": "Eight of the 13 later-replacement rows now have exact row-level introducing commits verified (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79 and DUP-86). Five remain unresolved (DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90). DUP-34 is separately verified as introduced at batch 39 row 5 by commit d91278d5c327b24a1f711eb8636d2a9cea1a07cf. The 90/90 staging location join is complete."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -1617,8 +1617,8 @@
       "retain": "batch 20 row 15",
       "replace": "batch 40 row 12",
       "retention_basis": "The retained question is the earlier or more syllabus-appropriate current version. The held counterpart is absent from its original batch-creation snapshot and was introduced in later batch editing; exact introducing commit SHA remains to be normalized.",
-      "provenance": "The current held question is absent from the original batch-creation snapshot and replaced a different question in that batch. This confirms later replacement/diversification provenance; exact introducing commit SHA remains pending row-level history normalization.",
-      "provenance_status": "replacement_after_initial_snapshot_commit_sha_pending",
+      "provenance": "Exact row-level Git diff verified: commit 2a0f113b2326c495454e9ff01e2b24b7c27d06e1 changes batch 40 row 12 from the earlier human-fertilisation-location question to the current embryo-implantation question. Its parent 5f27eb3aab6c5919d8bb7ec8de361c1611188c75 contains the former question; the commit contains the current held-row wording. This confirms the current held wording was introduced by this replacement commit.",
+      "provenance_status": "exact_row_introducing_commit_verified",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
@@ -2014,16 +2014,16 @@
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
     "manual_contextual_review_status": "incomplete",
-    "source_row_provenance_reconciliation": "90/90 retained and held staging-location joins verified; 8 exact row-level introducing commits verified (including DUP-34); 6 later-replacement introducing SHAs remain pending: DUP-74, DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90.",
+    "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; eight of 13 later-replacement introducing commits are exact, five SHAs pending; DUP-34 separately verified.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
   "history_reconciliation_status": {
-    "prior_replacement_commit_verified": 56,
-    "replacement_after_initial_snapshot_commit_sha_pending": 6,
+    "prior_replacement_commit_verified": 57,
+    "replacement_after_initial_snapshot_commit_sha_pending": 5,
     "original_draft_overlap_relationships": 28,
     "unverified_relationships": 0,
     "unverified_pair_ids": [],
-    "note": "Eight exact row-level introducing commits are verified in total: seven later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-75, DUP-77, DUP-79 and DUP-86) plus separately resolved DUP-34. Six later-replacement rows remain unresolved: DUP-74, DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90. Candidate SHAs retained below are investigation leads only, not proof. The candidate checks in this pass found no exact row-level introduction: DUP-74 candidate changed a different row; DUP-82 and DUP-90 candidates changed CSV quoting/formatting only; DUP-83 and DUP-85 candidates changed formatting only or left the target row unchanged; DUP-84 candidates left the target row unchanged. Twenty-eight pairs are original-draft overlaps.",
+    "note": "Fifty-seven prior-replacement relationships have commit-backed evidence. Eight of the 13 later-replacement rows now have exact row-level introducing commits verified (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79 and DUP-86); five remain unresolved (DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90). DUP-34 is separately verified as introduced at batch 39 row 5 by commit d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Twenty-eight pairs are original-draft overlaps.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
@@ -2038,7 +2038,7 @@
         "f8f748ff815c150ae379b32ee47416bc51780852"
       ],
       "DUP-74": [
-        "f8f748ff815c150ae379b32ee47416bc51780852"
+        "2a0f113b2326c495454e9ff01e2b24b7c27d06e1"
       ],
       "DUP-75": [
         "407dd924e78bd70fb204f8f145dfd05301d9d442"
@@ -2076,11 +2076,11 @@
         "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
       ]
     },
-    "provenance_candidate_commits_verified_as_introducing_commit": 8,
+    "provenance_candidate_commits_verified_as_introducing_commit": 9,
     "provenance_candidate_commits_are_leads_only": true,
     "revision_note": " Candidate SHA verification on 2026-11-02 compared each listed candidate commit with its direct parent at the exact physical source row. No candidate was confirmed as the introducing commit for DUP-74, DUP-82, DUP-83, DUP-84, DUP-85 or DUP-90; formatting-only and unrelated-row changes were excluded."
   },
-  "revision_note": "Verified DUP-34 exact row-level introducing commit by comparing batch 39 row 5 with the commit parent and confirming the earlier batch 38 row 2 already contained the overlapping singular-agreement assessment. Original question CSVs remain untouched; replacement remains held pending academic review. On 2026-11-02, reconciled stale top-level summary and release-gate counts to history_reconciliation_status: 8 exact introducing commits verified total (7 later-replacement rows plus DUP-34), 6 pending later-replacement rows, 28 original-draft overlaps, and zero separately unverified relationships. No original question CSVs edited.",
+  "revision_note": "Verified DUP-74 exact row-level introducing commit by comparing batch 40 row 12 with commit 2a0f113b2326c495454e9ff01e2b24b7c27d06e1 and its parent. DUP-34 is also separately verified. Five later-replacement rows still need exact introducing SHAs; original question CSVs remain untouched and replacements remain held pending academic review.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
@@ -2092,6 +2092,6 @@
     "subject_matches": 90,
     "source_csvs_changed": false,
     "method": "For each DUP-01 to DUP-90, joined the register's retain/replace locations to the retained-batches exports and the matching pair_id, retained_location and held_location in the held-duplicates exports. Physical row identifiers and subjects matched in all 90 cases.",
-    "remaining_provenance_work": "All 90 staging location joins are verified. Eight exact row-level introducing commits are verified (DUP-69, DUP-70, DUP-71, DUP-75, DUP-77, DUP-79, DUP-86 and DUP-34); six later-replacement rows remain unresolved: DUP-74, DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90."
+    "remaining_provenance_work": "All 90 staging location joins are verified. Eight later-replacement introducing commits are exact (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79 and DUP-86); five later-replacement rows remain unresolved (DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90). DUP-34 is separately verified."
   }
 }
