@@ -152,7 +152,7 @@
       },
       "contextual_review": {
         "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate defines when an allele is dominant in a heterozygote; the closest source asks for the genotype label Tt (heterozygous). Related genetics terminology but different definitions. Retain as draft pending independent Biology reviewer confirmation."
+        "note": "Candidate asks for the meaning of a dominant allele under complete dominance; closest source asks for the genotype label Tt (heterozygous). Related genetics concepts but different definitions. Stem and distractors were refined on 2026-11-02 to specify complete dominance and distinguish codominance/incomplete dominance. Human Biology reviewer must still assess usefulness and bank variety."
       }
     },
     {
@@ -192,7 +192,7 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "reason": "Assistant preliminary answer/explanation review completed 2026-11-02. Candidate tests hook/barb-mediated animal dispersal; same-subject lexical screen highest score 0.3284. Independent contextual and syllabus review remains required. Proposed syllabus metadata corrected from sexual reproduction to structural adaptations in plants; official syllabus does not expressly name this dispersal mechanism."
       }
     },
     {
@@ -2003,7 +2003,7 @@
     "all_have_nonempty_question_stems": true,
     "structural_validation": "passed",
     "answer_and_explanation_review": "90 preliminary assistant checks recorded; independent subject review outstanding for all drafts",
-    "official_jamb_syllabus_mapping": "90 mapped; 26 provisionally aligned and 64 require subject review; none approved",
+    "official_jamb_syllabus_mapping": "90 mapped; 25 provisionally aligned and 65 require subject review; none approved",
     "bank_insertion": "not performed",
     "syllabus_mapping_quality_check": "Two metadata mismatches have been identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration, and DUP-21 was labelled Drama despite testing a general narrative technique without a dramatic-text context. DUP-74 is now Excretion — kidney structure and urine formation (glomerular ultrafiltration); DUP-21 is now Literary principles and terminology — narrative techniques (flashback). Both corrected labels require detailed IBASS confirmation. The remaining 63 previously subject-review mappings remain unapproved; DUP-21 has been moved from provisional to subject review, leaving 25 provisional mappings.",
     "mapping_corrections": [
@@ -2020,6 +2020,13 @@
         "corrected": "Literary principles and terminology — narrative techniques (flashback)",
         "reason": "The stem asks for a general narrative device and provides no dramatic-text or stage context; the narrower Drama label was unsupported by the wording.",
         "status": "assistant_metadata_correction_pending_ibass_confirmation"
+      },
+      {
+        "target_id": "DUP-06",
+        "previous": "Reproduction — sexual reproduction in flowering plants",
+        "corrected": "Variety of organisms — structural adaptations in plants (fruit/seed dispersal; proposed broad fit)",
+        "reason": "The item tests hook/barb-mediated dispersal of fruits or seeds by animals, not the process of sexual reproduction. The official syllabus includes structural adaptations and plant adaptation, but does not expressly name fruit/seed dispersal; exact fit therefore remains subject to qualified syllabus review.",
+        "status": "assistant_metadata_correction_pending_qualified_syllabus_confirmation"
       }
     ],
     "content_clarity_corrections": [
@@ -2031,6 +2038,27 @@
         "corrected_explanation": "Maternal IgG antibodies cross the placenta from the mother to the fetus before birth, providing temporary passive immunity.",
         "reason": "The original stem could also encompass passive antibody transfer through breast milk; specifying maternal IgG transfer to the fetus before birth removes the alternative-route ambiguity.",
         "status": "assistant_wording_correction_pending_independent_biology_review"
+      },
+      {
+        "target_id": "DUP-04",
+        "previous_question": "An allele that is expressed in the phenotype of a heterozygous organism is described as:",
+        "corrected_question": "In a complete-dominance relationship, an allele whose effect is expressed in the phenotype of a heterozygous organism is described as:",
+        "previous_options": [
+          "recessive",
+          "dominant",
+          "mutant only",
+          "incomplete"
+        ],
+        "corrected_options": [
+          "recessive",
+          "dominant",
+          "codominant",
+          "incompletely dominant"
+        ],
+        "previous_explanation": "A dominant allele is expressed in the phenotype when present in a heterozygous pair.",
+        "corrected_explanation": "In complete dominance, the dominant allele determines the heterozygote's phenotype, while the recessive allele is masked. Codominance and incomplete dominance describe different patterns in which the heterozygote does not show the complete-dominance pattern.",
+        "reason": "The original stem could be read too broadly because codominance and incomplete dominance are also heterozygous inheritance patterns; the previous distractors were weak and non-parallel. Specifying complete dominance makes the intended key unambiguous and improves distractor quality.",
+        "status": "assistant_wording_and_distractor_correction_pending_independent_biology_review"
       }
     ]
   },
@@ -2044,7 +2072,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 2 of 90",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
@@ -2107,7 +2135,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review.",
+  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review. Pair 01 assistant review completed 2026-11-02: DUP-04 wording/distractors refined for complete dominance; DUP-06 syllabus label corrected to proposed plant structural adaptations, with exact topic coverage still requiring qualified confirmation. No source CSV, import, or production data changed.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
