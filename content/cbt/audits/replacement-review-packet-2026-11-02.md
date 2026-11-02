@@ -195,7 +195,7 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ### DUP-38 — Disease / Immunity
 
-**Question:** A baby may receive temporary passive immunity when antibodies are transferred from its mother through:
+**Question:** Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?
 
 - A. the placenta
 - B. the pancreas
@@ -203,7 +203,7 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 - D. the bone marrow
 
 **Draft key:** A  
-**Draft explanation:** Maternal antibodies, especially IgG, cross the placenta and provide the newborn with temporary passive protection.  
+**Draft explanation:** Maternal IgG antibodies cross the placenta from the mother to the fetus before birth, providing temporary passive immunity.  
 **Draft status:** revised_draft_needs_bank_wide_check  
 **Syllabus area:** Humans and environment — disease prevention/vaccination; reproduction and development  
 **Mapping status:** subject_review_required
@@ -2316,6 +2316,10 @@ The official IBASS E-syllabus catalogue was retrieved directly at https://ibass.
 ## Mapping correction — DUP-21
 
 DUP-21 asks for the general narrative device that presents an earlier event within the present sequence. Its stem does not establish a specifically dramatic text or stage context. The prior label “Drama — dramatic techniques” was therefore too narrow and unsupported by the question wording. The packet label is changed to “Literary principles and terminology — narrative techniques (flashback)” and downgraded from provisionally aligned to subject review required. This is an assistant metadata correction only; it is not an IBASS-confirmed topic mapping or academic approval.
+
+## Question-clarity correction — DUP-38
+
+The original stem asked generally how maternal antibodies transfer to a baby. That wording could also describe antibody transfer through breast milk, even though the intended key was placenta. The draft stem is narrowed to maternal IgG transfer to the fetus before birth, making the intended placental route unambiguous. The answer remains A (placenta). This wording correction is not independent Biology approval; the revised item remains subject to full review.
 
 ## Release restriction
 
