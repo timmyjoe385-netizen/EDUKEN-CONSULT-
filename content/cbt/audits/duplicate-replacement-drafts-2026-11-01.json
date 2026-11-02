@@ -663,25 +663,25 @@
       "subject": "Government",
       "topic": "Legislature",
       "subtopic": "Private members' bills",
-      "question": "A private member's bill is generally introduced by: ",
+      "question": "In a parliamentary system, a private member's bill is generally introduced by:",
       "options": [
-        "a legislator who is not acting as a government minister",
-        "the Chief Justice",
-        "the national electoral commission",
-        "a local government chairman"
+        "a legislator who is not introducing it on behalf of the executive",
+        "a minister introducing it on behalf of the executive",
+        "the head of the judiciary",
+        "the national electoral commission"
       ],
       "answer": "A",
-      "explanation": "A private member's bill is introduced by a legislator who is not introducing it on behalf of the executive government.",
+      "explanation": "A private member's bill is introduced by a legislator who is not acting as a minister presenting a government bill. It is distinct from a government bill introduced on behalf of the executive.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "revised_draft_bankwide_screen_complete_human_government_review_required"
     },
     {
       "target_id": "DUP-38",
       "subject": "Biology",
-      "topic": "Disease",
-      "subtopic": "Immunity",
-      "question": "A baby may receive temporary passive immunity when antibodies are transferred from its mother through:",
+      "topic": "Humans and Environment",
+      "subtopic": "Disease prevention and immunity (proposed broad fit; passive maternal immunity not explicitly named)",
+      "question": "Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?",
       "options": [
         "the placenta",
         "the pancreas",
@@ -689,10 +689,10 @@
         "the bone marrow"
       ],
       "answer": "A",
-      "explanation": "Maternal antibodies, especially IgG, cross the placenta and provide the newborn with temporary passive protection.",
+      "explanation": "Maternal IgG antibodies cross the placenta from the mother to the fetus before birth, providing temporary passive immunity.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "revised_draft_needs_bank_wide_check"
+      "status": "revised_draft_bankwide_screen_complete_human_biology_and_syllabus_review_required"
     },
     {
       "target_id": "DUP-39",
