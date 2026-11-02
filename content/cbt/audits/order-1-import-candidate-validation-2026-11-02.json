@@ -117,12 +117,21 @@
     "No question is approved or published by the candidate CSV itself; the API import path forces status=draft."
   ],
   "ci_validation": {
-    "build_workflow_run": 41427542720,
+    "build_workflow_run": 41427697855,
     "build_and_npm_validation_suite": "passed",
     "replacement_import_candidate_regression": "passed as part of npm run test:validation",
-    "playwright_browser_suite": "pending at checkpoint",
-    "isolated_cloudflare_preview_deploy": "queued at checkpoint",
-    "wallet_migration_sql_integration": "in progress at checkpoint"
+    "playwright_workflow_run": 41427697931,
+    "playwright_browser_suite": "passed",
+    "deno_edge_function_typecheck": "passed",
+    "isolated_cbt_api_integration": "passed",
+    "isolated_admin_unauthenticated_access_checks": "passed",
+    "wallet_migration_sql_workflow_run": 41427697829,
+    "wallet_and_cbt_migration_sql_integration": "passed",
+    "cloudflare_preview_workflow_run": 41427698088,
+    "isolated_preview_worker_deployment": "passed",
+    "real_cbt_chromium_smoke": "passed",
+    "isolated_guest_payment_recovery_smoke": "passed",
+    "production_deploy_job": "skipped"
   },
   "isolated_test_project_baseline": {
     "project_id": "wpktzogarfqrgkirzdpy",
@@ -134,5 +143,10 @@
       "published": 8
     },
     "inspection": "Read-only Supabase inspection; no test database writes performed."
+  },
+  "authenticated_admin_e2e": {
+    "status": "not completed",
+    "reason": "The saved EDUKEN Admin Test browser profile is available, but the browser automation run could not start because the TinyFish wallet balance was negative. No retry was made and no import action was attempted.",
+    "required": "An authenticated Google admin browser session is still needed to test the admin UI import/review/publish flow."
   }
 }
