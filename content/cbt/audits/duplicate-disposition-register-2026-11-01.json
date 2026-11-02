@@ -748,11 +748,11 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Previous draft overlapped semantically with retained batch 20 row 2 and was replaced. The revised 'whom' item requires fresh full-bank screening and independent English subject/contextual review."
+        "reason": "The previous draft overlapped with retained batch 20 row 2 and was replaced. The revised 'whom' item has received a fresh subject-bank manual screen; independent qualified English subject/contextual review is still required."
       },
       "contextual_review": {
-        "status": "previous_draft_overlap_detected_revised_draft_requires_fresh_screen",
-        "note": "The former 'whose = possession' draft duplicated the concept tested by retained batch 20 row 2. It has been replaced by a question testing 'whom' as object of preposition 'to'. Old lexical score 0.4459 applies only to the superseded question. Fresh bankwide screen and qualified reviewer decision are required."
+        "status": "assistant_pairwise_and_fresh_bank_screen_complete_human_review_required",
+        "note": "The former 'whose = possession' draft duplicated retained batch 20 row 2 and was replaced. The revised 'whom' as object of preposition item was compared against all 200 Use of English stems in retained-plus-held staging; no same-function item found. Human reviewer decision required."
       }
     },
     {
@@ -772,11 +772,11 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Assistant pairwise answer, explanation, bank-context and syllabus checks recorded; independent qualified English subject/contextual review is still required."
+        "reason": "Assistant pairwise answer, explanation, full subject-bank context and syllabus checks recorded; independent qualified English subject/contextual review is still required."
       },
       "contextual_review": {
-        "status": "assistant_pairwise_review_complete_human_subject_review_required",
-        "note": "The 'cattle are' draft tests plural agreement with a plural-only noun. Closest matches test proximity concord after neither…nor and singular head noun agreement; inspected retained/held staging files showed no same cattle-agreement item. Distinct concord rule; qualified English reviewer confirmation remains required."
+        "status": "assistant_pairwise_and_fresh_bank_screen_complete_human_review_required",
+        "note": "The 'cattle are' draft was compared against all 200 Use of English stems in retained-plus-held staging. No same cattle-agreement item found. Closest matches test nearest-subject concord and singular-head agreement. Human reviewer decision required."
       },
       "provenance_status": "later_replacement_introducing_commit_verified",
       "introducing_commit_sha": "d91278d5c327b24a1f711eb8636d2a9cea1a07cf",
@@ -2155,7 +2155,7 @@
   },
   "replacement_review_summary": {
     "drafts_total": 90,
-    "blocked_existing_bank_overlap": 1,
+    "blocked_existing_bank_overlap": 0,
     "not_yet_cleared": 90,
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
@@ -2163,9 +2163,10 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 8 of 90; DUP-33 previous draft overlap corrected, revised draft fresh screening pending",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 8 of 90; revised DUP-33 and DUP-34 manually compared against all 200 Use of English retained-plus-held stems",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
-    "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
+    "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete.",
+    "previous_draft_overlap_detected_and_corrected": 1
   },
   "history_reconciliation_status": {
     "prior_replacement_commit_verified": 62,
