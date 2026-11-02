@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded for 80/90 target IDs; the reviewed ID list is recorded in review_progress. Remaining unreviewed targets still require pairwise/contextual checks. Independent qualified subject/answer approval is 0/90. Lexical flags require independent contextual subject review. No question is approved for import or publication. Original source CSVs remain unchanged. Continue remaining checks and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "Assistant pairwise contextual review coverage is now 90/90 replacement target IDs. This is not independent academic approval: independent qualified subject/answer approval remains 0/90, and syllabus/contextual reviewer sign-off remains outstanding. DUP-12's numerical per-capita-income draft is rejected due semantic overlap with batch 28 row 28 and needs a new replacement proposal. All 90 target drafts remain excluded from import/publication until independent subject approval, all flagged/contextual decisions, syllabus mapping, and final import validation are complete. Original source CSVs remain unchanged. No production import, publish, deployment, or PR merge is authorised.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -603,8 +603,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. No foreign-direct-investment definition/example found. Nearest items concern ad valorem tax, infrastructure and direct taxation. Answer A is correct: a foreign company establishing/operating a lasting manufacturing plant in Nigeria is foreign direct investment. Similarity 0.2963. Independent Economics reviewer should confirm definition and syllabus fit."
       }
     },
     {
@@ -623,8 +627,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology rows checked. No peptidoglycan cell-wall composition item found. Nearest items concern cellulose in plant cell walls, Rhizobium and red blood cells. Answer C is correct: peptidoglycan is the main structural material in most bacterial cell walls. Similarity 0.3566. Independent Biology reviewer should confirm wording and syllabus depth."
       }
     },
     {
@@ -643,8 +651,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. No tax-evasion definition item found. Nearest items concern progressive taxation and factor rewards; no same legal concealment concept. Answer A is correct: knowingly concealing taxable income to evade legally due tax is tax evasion. Similarity 0.2628. Independent Economics reviewer should confirm wording and distinction from lawful tax avoidance."
       }
     },
     {
@@ -663,8 +675,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics rows checked. Nearest item batch 12 row 25 asks the general purpose of a capacitor (charge storage); another asks resistance from V/I. This candidate tests numerical capacitance using C=Q/V, not merely the device's function. 24 μC/6 V=4 μF, answer B. Similarity 0.3833. Independent Physics reviewer should confirm units and syllabus fit."
       }
     },
     {
@@ -683,8 +699,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Mathematics rows checked. Nearest items test direct variation and inverse variation; none tests joint variation as proportionality to the product xy. Answer B is correct: z=kxy. Similarity 0.3967, below threshold but close. Independent Mathematics reviewer should confirm distinction from direct/inverse variation and syllabus fit."
       }
     },
     {
@@ -703,8 +723,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Government rows checked. Nearest items concern local-government by-laws, general legislative functions and sovereignty; none asks which legislature has authority over the Exclusive Legislative List. Answer C is correct: the National Assembly (federal legislature) legislates on federal exclusive-list matters. Similarity 0.3375. Independent Government reviewer should confirm constitutional precision and syllabus fit."
       }
     },
     {
@@ -723,8 +747,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English rows checked. No 'deprived of' collocation item found. The nearest held item tests the different collocation 'congratulated on'; this draft tests the verb/adjective pattern 'deprived of'. Answer B is correct. Similarity 0.1923. Independent English reviewer should confirm collocation and syllabus fit."
       }
     },
     {
@@ -743,8 +771,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "revised_draft_needs_subject_and_bankwide_review",
-        "reason": "The earlier meticulous-definition candidate was withdrawn because it duplicated batch 5 row 4. This specialised-vocabulary item is distinct from the existing etymologist question; full-bank screen rerun."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English rows checked. No lexicographer definition item found. The register's closest related vocabulary concept is etymologist (study of word origins); a lexicographer compiles/edits dictionaries, so the roles are distinct. Answer A is correct. Similarity 0.2637. Independent English reviewer should confirm lexical precision and syllabus fit."
       }
     },
     {
@@ -763,8 +795,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics rows checked. Nearest matches calculate momentum (batches 06 row 23 and 26 row 26); this candidate uses change in momentum over time to calculate average force (impulse), a different application. Δp=0.2×10=2 kg m/s; F=2/0.5=4 N, answer B. Similarity 0.3766. Independent Physics reviewer should confirm impulse syllabus fit and calculation."
       }
     },
     {
@@ -783,8 +819,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "revised_draft_needs_subject_and_bankwide_review",
-        "reason": "The earlier euphemism candidate was withdrawn because it duplicated batch 6 row 40. This candidate tests a distinct dramatic genre."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English rows checked. No comedy-of-manners genre definition found. Nearest items classify lyric poetry, identify a denouement and describe plot development. Answer A is correct: comedy of manners satirises social conventions and behaviour, often through wit and irony. Similarity 0.3483. Independent Literature reviewer should confirm genre terminology and syllabus fit."
       }
     },
     {
@@ -2502,7 +2542,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 80,
+    "assistant_pairwise_reviewed_targets": 90,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0,
     "assistant_pairwise_reviewed_ids": [
@@ -2528,6 +2568,16 @@
       "DUP-20",
       "DUP-21",
       "DUP-22",
+      "DUP-23",
+      "DUP-24",
+      "DUP-25",
+      "DUP-26",
+      "DUP-27",
+      "DUP-28",
+      "DUP-29",
+      "DUP-30",
+      "DUP-31",
+      "DUP-32",
       "DUP-33",
       "DUP-34",
       "DUP-35",
