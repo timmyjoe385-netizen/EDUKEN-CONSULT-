@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 28,
+  "version": 29,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -1695,7 +1695,12 @@
           "score": 0.3226,
           "question": "What is the distance of the point (−3, 4) from the origin?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics retained-plus-held rows checked. No map-scale calculation was found. Nearest matches concern sector fractions, angles in a circle and coordinate distance, not scale conversion. Calculation: 4 cm × 50,000 = 200,000 cm = 2 km, answer C. Similarity 0.3648, below threshold. Confirm map scales/ratio-proportion coverage against the current JAMB Mathematics syllabus with an independent reviewer. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-64",
@@ -1718,7 +1723,12 @@
           "score": 0.2329,
           "question": "A catalyst increases the rate of a reaction because it"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry retained-plus-held rows checked. No half-life fraction calculation was found. Nearest matches concern first-order rate-constant units, isotopes and catalysts. After 18 hours there are three half-lives, so the remaining fraction is (1/2)^3 = 1/8, answer C. Similarity 0.2623, below threshold. JAMB Chemistry syllabus Nuclear Chemistry explicitly includes half-life calculations. Direct syllabus coverage confirmed; independent Chemistry reviewer still required. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-65",
@@ -1741,7 +1751,12 @@
           "score": 0.3102,
           "question": "Which structure receives the filtrate immediately after it passes from the glomerulus during ultrafiltration?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No insect tracheole item was found. Nearest matches concern ureter, xylem and kidney filtration; no respiratory-system overlap. Answer A is correct: tracheoles are the fine terminal branches of the insect tracheal system where gas exchange with tissues occurs. Similarity 0.3462, below threshold. Independent Biology reviewer must confirm syllabus depth and that the wording distinguishes tracheoles from spiracles. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-66",
@@ -1764,7 +1779,12 @@
           "score": 0.3184,
           "question": "A 4 Ω resistor carries a current of 3 A. What is the potential difference across it?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. No transformer-efficiency calculation was found. Nearest matches test resistance/potential difference and general machine efficiency, not transformer input/output power from voltage and current. Input power = 240×0.5 = 120 W; output power = 12×8 = 96 W; efficiency = 80%, answer C. Similarity 0.3285, below threshold. Independent Physics reviewer must confirm syllabus fit and that the voltage/current values represent the relevant primary/secondary RMS quantities. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-67",
@@ -2330,5 +2350,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
