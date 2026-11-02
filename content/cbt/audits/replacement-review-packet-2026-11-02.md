@@ -22,7 +22,25 @@
 
 ## Pair-by-pair assistant review log (not independent academic approval)
 
-## Pair-by-pair assistant review log (not independent academic approval)
+### Pair 03 — DUP-18 and DUP-22 (2026-11-02)
+
+**DUP-18 — Physics: law of reflection**
+- **Answer and explanation:** B (35°) is correct. By the law of reflection, the angle of reflection equals the angle of incidence; both are measured from the normal.
+- **Quality correction:** The stem now explicitly says the 35° incidence angle is measured to the normal and asks for the reflected angle from the normal. This prevents confusion with an angle measured from the mirror surface.
+- **Bank comparison:** Highest same-subject trigram score 0.4271. The nearest held-bank match is DUP-51 on total internal reflection; another close item tests plane-mirror image formation. The draft tests the equality of incidence and reflection angles, not critical-angle conditions or image characteristics. The similarity flag is therefore a review prompt, not a duplicate verdict.
+- **Official syllabus mapping:** Directly aligned to the official JAMB Physics syllabus Topic 24, “Reflection of Light at Plane and Curved Surfaces”, including the laws of reflection and the objective to interpret those laws.
+- **Assistant disposition:** Preliminary answer, wording and syllabus check passed; independent Physics reviewer must still confirm academic suitability and contextual uniqueness. Not approved for import.
+
+**DUP-22 — Biology: plasma transport**
+- **Answer and explanation:** B (plasma) is correct. Plasma is the liquid portion of blood and carries dissolved nutrients, hormones and metabolic waste products.
+- **Quality correction:** Replaced the vague word “many” with a direct description of plasma as the main transport medium for dissolved substances; explanation now specifies the relevant classes of substances.
+- **Bank comparison:** Highest same-subject trigram score 0.4785. The closest retained-bank item tests haemoglobin and oxygen transport by red blood cells; the held duplicate tests platelet function in clotting. The replacement tests plasma transport of dissolved substances. These are distinct blood components and functions, but the relatively high lexical score requires a human contextual decision.
+- **Official syllabus mapping:** Directly aligned at the broad-topic level to the official JAMB Biology syllabus Topic 3, “Transport”, especially the media/processes section and the objective to know the composition and functions of blood and lymph.
+- **Assistant disposition:** Preliminary answer, wording and syllabus check passed; independent Biology reviewer must still confirm academic suitability and contextual uniqueness. Not approved for import.
+
+**Pair 03 outcome:** 2 drafts reviewed; 2 wording clarifications; 2 official syllabus mappings checked; 2 lexical flags contextually triaged; 0 independent subject approvals; both remain blocked from insertion.
+
+---
 
 ### Pair 02 — DUP-14 and DUP-17 (2026-11-02)
 
@@ -187,7 +205,7 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ### DUP-22 — Human physiology / Blood plasma
 
-**Question:** Which component of blood transports many dissolved nutrients, hormones and waste products? 
+**Question:** Which component of blood is the main medium for transporting dissolved nutrients, hormones and metabolic waste products around the body?
 
 - A. platelets
 - B. plasma
@@ -195,14 +213,14 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 - D. lymphocytes
 
 **Draft key:** B  
-**Draft explanation:** Plasma is the liquid component of blood and carries dissolved substances, including nutrients, hormones and wastes.  
-**Draft status:** revised_draft_needs_bank_wide_check  
-**Syllabus area:** Transport — blood, lymph and media of transportation  
-**Mapping status:** provisionally_aligned
+**Draft explanation:** Plasma is the liquid portion of blood. It carries dissolved substances, including absorbed nutrients, hormones and metabolic waste products, between tissues and organs.  
+**Draft status:** revised_draft_needs_independent_subject_and_contextual_review  
+**Syllabus area:** Biology — Transport: media and processes; composition and functions of blood and lymph  
+**Mapping status:** provisionally_aligned_to_explicit_official_topic
 
-**Lexical flag:** 0.4785 (threshold 0.42); closest match batch 35 row 13 — Which blood component contains haemoglobin and transports most oxygen in humans?.
+**Lexical flag:** 0.4785 (threshold 0.42); closest match batch 35 row 13 — red blood cells contain haemoglobin and transport most oxygen. The held duplicate row tests platelet function in clotting.
 
-**Assistant preliminary check:** Preliminary answer check: B is correct; plasma carries dissolved nutrients, hormones and metabolic wastes. The flagged closest item concerns oxygen transport by red blood cells, a different blood component and function; independent contextual review remains required.  
+**Assistant preliminary check:** B is correct. The replacement tests plasma as the transport medium for dissolved substances; the highest-scoring bank match tests haemoglobin-mediated oxygen transport by red blood cells, while the held duplicate tests platelet-mediated clotting. These are different blood components and functions. The wording now avoids the vague qualifier “many”. This remains a preliminary distinction, not independent proof of uniqueness.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1876,7 +1894,7 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ### DUP-18 — Optics / Law of reflection
 
-**Question:** A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection? 
+**Question:** A ray of light strikes a plane mirror at an angle of incidence of 35° to the normal. What is its angle of reflection, measured from the normal?
 
 - A. 25°
 - B. 35°
@@ -1884,14 +1902,14 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 - D. 70°
 
 **Draft key:** B  
-**Draft explanation:** The law of reflection states that the angle of reflection equals the angle of incidence, measured from the normal.  
-**Draft status:** revised_draft_needs_bank_wide_check  
-**Syllabus area:** Reflection of light at plane and curved surfaces  
-**Mapping status:** provisionally_aligned
+**Draft explanation:** The law of reflection states that the angle of reflection equals the angle of incidence. Both angles are measured between the ray and the normal to the reflecting surface.  
+**Draft status:** revised_draft_needs_independent_subject_and_contextual_review  
+**Syllabus area:** Physics — Reflection of light at plane and curved surfaces (Topic 24: laws of reflection)  
+**Mapping status:** provisionally_aligned_to_explicit_official_topic
 
-**Lexical flag:** 0.4271 (threshold 0.42); closest match held duplicate row — Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:.
+**Lexical flag:** 0.4271 (threshold 0.42); closest match held duplicate row DUP-51 — total internal reflection at a boundary. Other close match: a plane-mirror image question (0.3485).
 
-**Assistant preliminary check:** Preliminary calculation/concept check: B is correct; the angle of reflection equals the 35° angle of incidence, both measured from the normal. The lexical flag's nearest item concerns total internal reflection, a different optical condition; independent contextual review remains required.  
+**Assistant preliminary check:** B is correct. The explicit reference to the normal removes the possible angle-measurement ambiguity. The closest held-bank match tests the critical-angle condition for total internal reflection, not equality of incidence and reflection angles; the other close match tests image formation. These are related optics content but different learning objectives. This is a preliminary distinction, not independent proof of uniqueness.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
