@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-86 (60/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded for 69/90 target IDs; the reviewed ID list is recorded in review_progress. Remaining unreviewed targets still require pairwise/contextual checks. Independent qualified subject/answer approval is 0/90. All 12 lexical flags require independent contextual subject review. No question is approved for import or publication. Original source CSVs remain unchanged. Continue remaining checks and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -87,8 +87,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Mathematics retained-plus-held rows checked. Nearest items concern polygon exterior/interior angles; none tests rectangle diagonal properties. Answer B is correct: rectangle diagonals are equal and bisect one another, but are not necessarily perpendicular. Similarity 0.3500. Independent Mathematics reviewer should confirm syllabus fit and ensure the 'not necessarily perpendicular' distractor is understood."
       }
     },
     {
@@ -107,8 +111,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "revised_draft_needs_subject_and_bankwide_review",
-        "reason": "The earlier esterification candidate was withdrawn because it duplicated batch 38 row 20. This salt-bridge candidate tests a different electrochemical-cell function and has been re-screened against all 1,600 source questions."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows checked. Nearest item batch 23 row 17 asks where oxidation occurs in a galvanic cell; it does not test the salt bridge's ion-migration/electroneutrality function. Answer B is correct. Similarity 0.4144, below threshold but close. Independent Chemistry reviewer should confirm wording and syllabus fit; distinguish ionic conduction through the salt bridge from electron flow through the external circuit."
       }
     },
     {
@@ -127,8 +135,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics retained-plus-held rows checked. Nearest item batch 18 row 22 asks for the power formula in a DC circuit; another asks about Lenz's law. Neither defines alternating current. Answer B is correct: AC periodically reverses direction. Similarity 0.4138, below threshold but close. Independent Physics reviewer should confirm wording and syllabus fit."
       }
     },
     {
@@ -171,8 +183,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "revised_draft_needs_subject_and_bankwide_review",
-        "reason": "The earlier elegy-definition candidate was withdrawn because it duplicated batch 14 row 38. This candidate tests metre; compare carefully with the existing blank-verse question during Literature review."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 13 row 39 on blank verse (0.3673). Blank verse is traditionally unrhymed iambic pentameter, so this replacement tests a key component of a concept already present. It is not a verbatim duplicate, but the assessed knowledge is closely overlapping and may add little variety. Answer B is correct. Independent Literature reviewer should decide whether to retain as complementary or replace with a more distinct literary concept."
       }
     },
     {
@@ -211,8 +227,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics retained-plus-held rows checked. The nearest item batch 11 row 25 defines convection as heat transfer by bulk movement of a fluid; this draft asks which mode can occur through a vacuum. Radiation is correct because it does not require a material medium. Similarity 0.4094, below threshold but close. These test distinct heat-transfer mechanisms, though the shared heat-transfer family merits reviewer confirmation."
       }
     },
     {
@@ -2446,8 +2466,79 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 60,
+    "assistant_pairwise_reviewed_targets": 69,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
-    "independent_subject_approvals": 0
+    "independent_subject_approvals": 0,
+    "assistant_pairwise_reviewed_ids": [
+      "DUP-01",
+      "DUP-02",
+      "DUP-03",
+      "DUP-04",
+      "DUP-05",
+      "DUP-06",
+      "DUP-07",
+      "DUP-14",
+      "DUP-17",
+      "DUP-18",
+      "DUP-22",
+      "DUP-33",
+      "DUP-34",
+      "DUP-35",
+      "DUP-36",
+      "DUP-37",
+      "DUP-38",
+      "DUP-39",
+      "DUP-40",
+      "DUP-41",
+      "DUP-42",
+      "DUP-43",
+      "DUP-44",
+      "DUP-45",
+      "DUP-46",
+      "DUP-47",
+      "DUP-48",
+      "DUP-49",
+      "DUP-50",
+      "DUP-51",
+      "DUP-52",
+      "DUP-53",
+      "DUP-54",
+      "DUP-55",
+      "DUP-56",
+      "DUP-57",
+      "DUP-58",
+      "DUP-59",
+      "DUP-60",
+      "DUP-61",
+      "DUP-62",
+      "DUP-63",
+      "DUP-64",
+      "DUP-65",
+      "DUP-66",
+      "DUP-67",
+      "DUP-68",
+      "DUP-69",
+      "DUP-70",
+      "DUP-71",
+      "DUP-72",
+      "DUP-73",
+      "DUP-74",
+      "DUP-75",
+      "DUP-76",
+      "DUP-77",
+      "DUP-78",
+      "DUP-79",
+      "DUP-80",
+      "DUP-81",
+      "DUP-82",
+      "DUP-83",
+      "DUP-84",
+      "DUP-85",
+      "DUP-86",
+      "DUP-87",
+      "DUP-88",
+      "DUP-89",
+      "DUP-90"
+    ]
   }
 }
