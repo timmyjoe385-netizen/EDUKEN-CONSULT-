@@ -846,8 +846,8 @@
       ],
       "contextual_assessment": {
         "review_type": "assistant_full_bank_contextual_reassessment",
-        "decision": "previous_draft_semantic_overlap_detected_revised_draft_required",
-        "note": "The previous draft testing 'whose' as possession overlaps with retained batch 20 row 2, which also tests 'whose' as possession. It has been replaced with a new item testing 'whom' as object of the preposition 'to'. The revised item requires a fresh full-bank lexical/contextual screen; the old 0.4459 score applies only to the superseded wording."
+        "decision": "previous_draft_semantic_overlap_detected_revised_draft_requires_fresh_screen",
+        "note": "The former draft testing 'whose' as possession overlapped with retained batch 20 row 2, which also tests 'whose' as possession. It has been replaced with a question testing 'whom' as object of the preposition 'to'. The revised item requires a fresh full-bank lexical/contextual screen; the old 0.4459 score applies only to the superseded wording."
       },
       "manual_bankwide_review": {
         "previous_draft_overlap": {
