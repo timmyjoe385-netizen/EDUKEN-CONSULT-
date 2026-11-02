@@ -39,6 +39,8 @@
 
 **Lexical flag:** 0.5344 (threshold 0.42); closest match batch 39 row 12 — An organism with genotype Tt is described as.
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; a dominant allele is expressed in a heterozygote. The flagged comparison asks for the genotype description of Tt, not the expression rule, but both sit within basic inheritance; independent Biology review must decide whether the distinction is sufficiently useful.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -61,6 +63,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3284).
+
+**Assistant preliminary check:** Preliminary answer check: C is correct; hooks or barbs attach to animal fur and aid dispersal. The explanation matches epizoochory; subject/syllabus review remains required.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -85,6 +89,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.315).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; prokaryotic cells lack a membrane-bound nucleus and have DNA in a nucleoid region. The explanation is accurate at the intended introductory level.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -107,6 +113,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical screen:** below 0.42 (highest score 0.4172).
+
+**Assistant preliminary check:** Preliminary answer check: A is correct; auxin promotes shoot-cell elongation and participates in tropic responses. The wording 'chiefly associated' is appropriate for the basic syllabus level.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -131,6 +139,8 @@
 
 **Lexical flag:** 0.4785 (threshold 0.42); closest match batch 35 row 13 — Which blood component contains haemoglobin and transports most oxygen in humans?.
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; plasma carries dissolved nutrients, hormones and metabolic wastes. The flagged closest item concerns oxygen transport by red blood cells, a different blood component and function; independent contextual review remains required.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -153,6 +163,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3566).
+
+**Assistant preliminary check:** Preliminary answer check: C is correct; peptidoglycan is the principal wall material in most bacteria. 'Most' appropriately avoids exceptions such as wall-less bacteria; confirm syllabus depth.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -177,6 +189,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.293).
 
+**Assistant preliminary check:** Preliminary answer check: A is correct; maternal IgG crosses the placenta and provides temporary passive immunity. Breast milk also transfers antibodies, but it is not among the options; the stem asks specifically for the transfer route offered here.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -199,6 +213,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3951).
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; prolactin stimulates milk production, while oxytocin supports milk ejection. The explanation makes the key distinction clear.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -500,6 +516,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3019).
 
+**Assistant preliminary check:** Preliminary answer check: A is correct; dilute sulphuric acid supplies mobile ions and improves water's electrical conductivity during electrolysis. The explanation is accurate; ensure the practical setup specifies inert electrodes elsewhere if products are discussed.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -522,6 +540,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical screen:** below 0.42 (highest score 0.3796).
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; methane chlorination under ultraviolet light proceeds by free-radical substitution. The explanation accurately identifies replacement of hydrogen by chlorine.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -546,6 +566,8 @@
 
 **Lexical flag:** 0.5181 (threshold 0.42); closest match batch 17 row 21 — Which method is most suitable for separating an insoluble solid from a liquid?.
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; a separating funnel is suitable for immiscible liquid layers such as kerosene and water. The nearest flagged comparison concerns separating an insoluble solid from a liquid, which is a different separation method; contextual reviewer confirmation remains required.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -568,6 +590,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3968).
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; cryolite lowers the operating/melting temperature of the electrolyte and improves conductivity during aluminium extraction. The explanation is accurate for the Hall–Héroult process.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -592,6 +616,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3875).
 
+**Assistant preliminary check:** Preliminary answer check: C is correct; vanadium(V) oxide is the catalyst used in the Contact process oxidation of sulphur dioxide. The explanation is accurate.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -614,6 +640,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.2917).
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; brass is primarily copper and zinc, unlike bronze, which is mainly copper and tin. The explanation correctly distinguishes the common alloys.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -765,6 +793,8 @@
 
 **Lexical flag:** 0.4507 (threshold 0.42); closest match batch 02 row 29 — A sustained rise in the general price level is called:.
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; deflation is a sustained fall in the general price level. The flagged comparison defines inflation, the opposite movement; the concepts are related but not the same answer, so independent contextual review should confirm the replacement adds useful coverage.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -787,6 +817,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical screen:** below 0.42 (highest score 0.3521).
+
+**Assistant preliminary check:** Preliminary calculation check: B is correct; ₦900,000,000,000 ÷ 30,000,000 = ₦30,000 per person. The units and arithmetic are consistent.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -811,6 +843,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3827).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; routine teacher salaries are recurrent expenditure rather than capital expenditure. The explanation accurately identifies ongoing operating costs.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -833,6 +867,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3519).
+
+**Assistant preliminary check:** Preliminary answer check: A is correct; a customs union combines internal free trade (or removal of internal tariffs) with a common external tariff. The explanation states both essential features.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -857,6 +893,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3273).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; when a commercial bank grants a loan it normally records a loan asset and credits a deposit in the borrower's account. This is deposit creation, not the printing of central-bank notes.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -879,6 +917,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.2963).
+
+**Assistant preliminary check:** Preliminary answer check: A is correct; establishing and operating a manufacturing plant in another country is foreign direct investment because it creates a lasting business interest. The distractors describe trade restrictions or external-balance outcomes.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -903,6 +943,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.2628).
 
+**Assistant preliminary check:** Preliminary answer check: A is correct; knowingly concealing taxable income to avoid legally due tax is tax evasion. The explanation appropriately distinguishes illegal evasion from lawful tax planning/avoidance.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -926,6 +968,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3211).
 
+**Assistant preliminary check:** Preliminary answer check: C is correct; with fixed factors in the short run, marginal product eventually declines as more units of a variable factor are added. It does not necessarily become negative immediately; the stem correctly says 'eventually decline'.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -948,6 +992,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical flag:** 0.4286 (threshold 0.42); closest match batch 01 row 29 — Which factor of production receives wages as its typical reward?.
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; economic rent is the payment earned above transfer earnings. The definition is sound; the lexical flag is against a question on wages as a factor reward, a related but different concept, and needs independent contextual review.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1149,6 +1195,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3375).
 
+**Assistant preliminary check:** Preliminary answer check: C is correct; under Nigeria's constitutional federal arrangement, the National Assembly legislates on matters in the Exclusive Legislative List. The explanation is appropriately specific to the federal legislature.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1171,6 +1219,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical flag:** 0.4459 (threshold 0.42); closest match batch 26 row 35 — A political party manifesto is primarily a document that.
+
+**Assistant preliminary check:** Preliminary answer check: A is correct; a party constitution sets out internal organisation, membership and procedures. The flagged comparison concerns a party manifesto, which sets out policies/promises rather than internal governing rules; independent contextual review remains required.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1195,6 +1245,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.4167).
 
+**Assistant preliminary check:** Preliminary answer check: A is correct; a private member's bill is introduced by a legislator acting in an individual/non-executive capacity rather than as a government bill. The wording is acceptable, though the precise procedural rules depend on the legislature.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1217,6 +1269,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3893).
+
+**Assistant preliminary check:** Preliminary answer check: A is the intended answer; freedom of speech in legislative proceedings protects statements made as part of those proceedings. The explanation correctly warns that this is not blanket immunity for conduct outside the legislature; subject review should confirm the local constitutional framing.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1293,6 +1347,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.4103).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; a flashback interrupts the present narrative to present an earlier event. The explanation accurately distinguishes it from foreshadowing and the climax/denouement.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1340,6 +1396,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical flag:** 0.4311 (threshold 0.42); closest match batch 20 row 41 — A short concluding section that follows the main action of a play is called an:.
+
+**Assistant preliminary check:** Preliminary answer check: A is correct; an epigraph is a quotation placed at the beginning of a work or section to suggest a theme. The flagged nearest item concerns an epilogue, a concluding section, so the terms are distinct despite lexical similarity; independent Literature review remains required.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1566,6 +1624,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.35).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; a rectangle's diagonals are equal and bisect one another. They are not necessarily perpendicular, so option C is a valid distractor.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1589,6 +1649,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3967).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; joint variation of z with x and y is represented by z = kxy, where k is the constant of variation. The distractors represent different relationships.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1611,6 +1673,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.2143).
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; injectivity means distinct domain elements map to distinct images. Option C instead describes surjectivity, making it a useful contrasting distractor.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1687,6 +1751,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.4138).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; alternating current periodically changes direction, unlike direct current. The explanation matches the defining distinction.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1709,6 +1775,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical screen:** below 0.42 (highest score 0.4094).
+
+**Assistant preliminary check:** Preliminary answer check: C is correct; radiation transfers energy by electromagnetic waves and can travel through a vacuum, unlike conduction and convection. The explanation is accurate.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1733,6 +1801,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3577).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct under the thin-lens/paraxial-ray approximation; a ray through the optical centre emerges with negligible deviation. The stem's thin-lens assumption is important and is stated.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1755,6 +1825,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical flag:** 0.4271 (threshold 0.42); closest match held duplicate row — Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:.
+
+**Assistant preliminary check:** Preliminary calculation/concept check: B is correct; the angle of reflection equals the 35° angle of incidence, both measured from the normal. The lexical flag's nearest item concerns total internal reflection, a different optical condition; independent contextual review remains required.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1779,6 +1851,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3833).
 
+**Assistant preliminary check:** Preliminary calculation check: B is correct; C = Q/V = 24 μC ÷ 6 V = 4 μF. The units are consistent.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1802,6 +1876,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.3766).
 
+**Assistant preliminary check:** Preliminary calculation check: B is correct; the initial momentum is 0.2 × 10 = 2 kg m/s, so the average force magnitude is 2 ÷ 0.5 = 4 N. The explanation is dimensionally consistent.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1824,6 +1900,8 @@
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.325).
+
+**Assistant preliminary check:** Preliminary answer check: B is correct; diffraction is the spreading of waves around obstacles or through openings, especially when dimensions are comparable to wavelength. The explanation includes the key condition.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1950,6 +2028,8 @@
 
 **Lexical screen:** below 0.42 (highest score 0.1923).
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; the standard collocation is 'deprived of sleep'. The distractors do not fit the required preposition.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -1998,6 +2078,8 @@
 
 **Lexical flag:** 0.4459 (threshold 0.42); closest match batch 12 row 2 — In the sentence “The meeting was put off until Friday”, the expression “put off” means….
 
+**Assistant preliminary check:** Preliminary answer check: B is correct; 'whose' is a possessive relative pronoun in the sentence. The lexical flag's nearest match is an unrelated phrasal verb, so it appears to be a lexical false positive; retain independent review of the flagged status.  
+
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
 **Rationale / corrections:** ______________________________________________
@@ -2020,6 +2102,8 @@
 **Mapping status:** provisionally_aligned
 
 **Lexical flag:** 0.5 (threshold 0.42); closest match batch 01 row 3 — Choose the correct verb: “Neither the teacher nor the students ___ ready.”.
+
+**Assistant preliminary check:** Preliminary answer check: C is correct; 'cattle' is a plural-only noun and takes a plural verb in standard usage. The nearest flagged comparison tests concord with a nearer plural subject after 'neither...nor'; both involve agreement but use different grammatical rules, so an English reviewer should confirm the distinction.  
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
