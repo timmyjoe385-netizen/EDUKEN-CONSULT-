@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-58 (32/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-62 (36/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1366,8 +1366,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "preliminary_ai_review_only_human_review_required",
-        "reason": "A separate replacement proposal exists; independent subject review and contextual uniqueness review remain required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English retained-plus-held rows checked. No epithet definition/example was found. The nearest lexical match is synecdoche (batch 23 row 40, 0.4113), which uses a part for the whole; the proposed 'swift-footed Achilles' is a descriptive epithet. Other close items are an epilogue and exposition, different terms. Similarity 0.4113, just below threshold. Answer A is correct. A Literature reviewer should confirm that the classical epithet example is appropriate for JAMB level and distinguish it from other descriptive devices. Not approved for import."
       }
     },
     {
@@ -1386,10 +1390,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review and contextual clearance remain outstanding.",
-        "draft_question": "The sensory hair cells that detect sound vibrations are located in the:",
-        "highest_similarity": 0.2783
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. No Organ of Corti/hair-cell location question was found. Nearest matches concern root-hair osmosis and red blood cell function; they do not assess the cochlear sensory organ. Answer A is correct: the Organ of Corti in the cochlea contains sensory hair cells that transduce sound-related mechanical vibrations. Similarity 0.2783, below threshold. Independent Biology reviewer must confirm exact anatomical wording and syllabus depth. Not approved for import."
       }
     },
     {
@@ -1408,10 +1414,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the lexical threshold against the 1,600-row staged bank. Independent Biology review and contextual clearance remain outstanding.",
-        "draft_question": "A young plant shoot bends towards light because cells on its shaded side undergo greater:",
-        "highest_similarity": 0.2262
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology retained-plus-held rows checked. No phototropism/auxin shaded-side cell-elongation question was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis. Answer A is correct: greater cell elongation on the shaded side causes a shoot to bend towards light; auxin is involved in this differential growth. Similarity 0.2262, below threshold. Independent Biology reviewer must confirm syllabus depth and wording. Not approved for import."
       }
     },
     {
@@ -1430,10 +1438,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_needs_subject_and_bankwide_review",
       "replacement_review": {
-        "status": "draft_created_needs_subject_and_bankwide_review",
-        "reason": "A separate proposal exists and is below the 0.42 lexical threshold against the 1,600-row staged bank. Independent subject review and contextual clearance remain outstanding.",
-        "draft_question": "When a poet carries a sentence beyond the end of a line without a pause, the technique is called:",
-        "highest_similarity": 0.4046
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a poetic line; enjambment is continuation of syntax/sense across a line break without an end-stop. These are related lineation techniques but not duplicates. Answer A is correct. Similarity 0.4046, below threshold but close; an independent Literature reviewer should confirm distinction, syllabus scope and question-bank variety. Not approved for import."
       }
     },
     {
@@ -2346,7 +2356,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 32,
+    "assistant_pairwise_reviewed_targets": 36,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
