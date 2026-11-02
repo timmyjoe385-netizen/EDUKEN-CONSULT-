@@ -982,8 +982,12 @@
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer/explanation and full 200-row same-subject retained-plus-held bank comparison completed. No same-concept overlap found. Independent subject review remains required; do not insert."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Mathematics retained-plus-held rows were checked. No one-to-one-function definition or injective-mapping question was found. The closest function items evaluate f(x), substitute into functions, or calculate a composite function (batches 06 row 11, 15 row 11, 18 row 9, 32 rows 7 and 11, and 37 row 11); none tests whether distinct domain elements have distinct images. B is correct. However, the current JAMB Mathematics syllabus topic list does not expressly list relations/functions or one-to-one mappings. This is a syllabus-scope concern, not a duplicate finding; qualified Mathematics reviewer must confirm or reject this level of content."
       }
     },
     {
@@ -1002,8 +1006,12 @@
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer/explanation and full 200-row same-subject retained-plus-held bank comparison completed. No same-concept overlap found. Independent subject review remains required; do not insert."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics retained-plus-held rows were checked. No diffraction definition or narrow-aperture/obstacle spreading item was found. The closest wave items cover wave speed, frequency, period, wavelength, transverse/longitudinal motion, interference and superposition (including batches 01 row 25, 24 row 26 and 37 row 24); these are distinct wave properties. B is correct: diffraction is wave spreading/bending around an obstacle or through an aperture, particularly pronounced when aperture/obstacle dimensions are comparable to wavelength. The official Physics syllabus Topic 20(c) explicitly names diffraction among wave characteristics/properties and requires candidates to distinguish it from reflection, refraction and plane polarisation. Qualified Physics review remains required."
       }
     },
     {
@@ -1022,12 +1030,12 @@
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer/explanation and full 200-row same-subject retained-plus-held bank comparison completed. No same-concept overlap found. Independent subject review remains required; do not insert."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate defines economic rent as a payment above transfer earnings; the closest sources ask for ordinary factor rewards (wages/interest/rent). Related factor-reward area but distinct economic concept. Retain pending Economics reviewer confirmation."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics retained-plus-held rows were checked. No definition of economic rent as payment above transfer earnings was found. The lexical screen flagged this item (0.4286); closest items ask ordinary factor rewards: wages for labour (batch 01 row 29), interest for capital (batch 10 row 30), and rent for land (batch 35 row 27). These are related factor-pricing concepts but do not assess economic rent versus transfer earnings. B is correct: economic rent is the surplus of actual earnings over transfer earnings. However, the current JAMB Economics syllabus lists factor types/features/rewards and determination of wages, interest and profits, but does not expressly name economic rent or transfer earnings. This is a syllabus-scope concern; do not clear without qualified Economics reviewer confirmation."
       }
     },
     {
@@ -1046,8 +1054,12 @@
       "csv_change_status": "original_csv_unchanged_staging_holdout_created",
       "replacement_status": "draft_created_pending_subject_review_and_bankwide_screen",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "A new proposal has been drafted, but syllabus fit, answer accuracy, explanation quality and full-bank contextual uniqueness still require subject-expert review. Do not insert yet."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer/explanation and full 200-row same-subject retained-plus-held bank comparison completed. No same-concept overlap found. Independent subject review remains required; do not insert."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry retained-plus-held rows were checked. No brass composition question was found. The closest item asks why alloys are often harder than pure metals (batch 27 row 21), which tests alloy structure rather than the constituents of brass. B is correct: brass is primarily copper and zinc; bronze is primarily copper and tin. The JAMB Chemistry syllabus explicitly lists brass and bronze under alloys and specifies constituents and uses only. This is a direct syllabus fit. Qualified Chemistry review remains required."
       }
     },
     {
@@ -2193,7 +2205,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 14 of 90; DUP-33/DUP-34 checked against all 200 Use of English rows; DUP-35/DUP-36 checked against all 200 Literature in English/Government rows; DUP-37/DUP-38 checked against all 200 Government/Biology rows; DUP-39/DUP-40 checked against all 200 Chemistry rows",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 20 of 90; DUP-33/DUP-34 checked against all 200 Use of English rows; DUP-35/DUP-36 checked against all 200 Literature in English/Government rows; DUP-37/DUP-38 checked against all 200 Government/Biology rows; DUP-39/DUP-40 checked against all 200 Chemistry rows; DUP-41 Biology/DUP-42 Economics checked against all 200 same-subject rows; DUP-43 Mathematics/DUP-44 Physics/DUP-45 Economics/DUP-46 Chemistry checked against all 200 same-subject rows.",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete.",
     "previous_draft_overlap_detected_and_corrected": 1
@@ -2257,7 +2269,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "2026-11-02 Pair 07: DUP-39 and DUP-40 received full 200-row Chemistry retained-plus-held bank comparisons. Both are conceptually distinct from the staged questions. Precise syllabus scope for cryolite's role and V2O5 as Contact-process catalyst remains for qualified Chemistry review.",
+  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
