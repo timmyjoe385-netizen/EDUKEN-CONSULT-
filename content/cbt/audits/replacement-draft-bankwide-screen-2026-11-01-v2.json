@@ -846,8 +846,8 @@
       ],
       "contextual_assessment": {
         "review_type": "assistant_full_bank_contextual_reassessment",
-        "decision": "previous_draft_semantic_overlap_detected_revised_draft_requires_fresh_screen",
-        "note": "The former draft testing 'whose' as possession overlapped with retained batch 20 row 2, which also tests 'whose' as possession. It has been replaced with a question testing 'whom' as object of the preposition 'to'. The revised item requires a fresh full-bank lexical/contextual screen; the old 0.4459 score applies only to the superseded wording."
+        "decision": "revised_draft_manual_screen_complete_human_review_required",
+        "note": "The previous 'whose = possession' draft overlapped with retained batch 20 row 2 and was replaced. The revised 'whom' item was compared against all 200 Use of English stems in the retained-plus-held staging bank. No same-function item was found. Highest auxiliary character-trigram Jaccard similarity was 0.2756 to an adverb-function item; the old 0.4459 score belongs only to the superseded wording. Human English review remains required."
       },
       "manual_bankwide_review": {
         "previous_draft_overlap": {
@@ -860,6 +860,15 @@
           "answer": "B",
           "status": "fresh_screen_required"
         }
+      },
+      "revised_draft_manual_screen": {
+        "subject_stems_checked": 200,
+        "comparison_scope": "all Use of English stems in retained-plus-held staging bank",
+        "metric": "auxiliary character-trigram Jaccard similarity; not comparable to the original screen's threshold",
+        "highest_similarity": 0.2756,
+        "closest_match": "In the sentence 'The committee met yesterday', the word 'yesterday' functions as an adverb of",
+        "finding": "No same-function question testing 'whom' as the object of a preposition was found in the inspected subject bank.",
+        "status": "assistant_screen_complete_independent_human_review_required"
       }
     },
     {
@@ -887,7 +896,7 @@
       "contextual_assessment": {
         "review_type": "assistant_full_bank_contextual_reassessment",
         "decision": "conceptually_distinct_pending_human_review",
-        "note": "The replacement tests plural agreement with the plural-only noun 'cattle'. The highest lexical matches test nearest-subject agreement after 'neither...nor' and agreement with a singular head noun ('list of items'); inspected retained and held staging entries did not reveal a same cattle-agreement question. Related concord domain, distinct rule. Human English reviewer confirmation required."
+        "note": "The replacement tests plural agreement with the plural-only noun 'cattle'. Closest semantic matches concern proximity concord after 'neither…nor' and singular-head agreement ('list of items'); no same cattle-agreement question was found in the inspected retained-plus-held Use of English bank. Human English reviewer confirmation required."
       },
       "manual_bankwide_review": {
         "revised_draft": {
@@ -895,6 +904,15 @@
           "answer": "C"
         },
         "comparison": "Nearest matches concern neither…nor proximity concord and singular head noun agreement; no same cattle-agreement item found in inspected retained/held staging files."
+      },
+      "revised_draft_manual_screen": {
+        "subject_stems_checked": 200,
+        "comparison_scope": "all Use of English stems in retained-plus-held staging bank",
+        "metric": "auxiliary character-trigram Jaccard similarity; not comparable to the original screen's threshold",
+        "highest_similarity": 0.3333,
+        "closest_match": "Choose the correct verb: “The list of items ___ on the desk.”",
+        "finding": "No same cattle-agreement question was found; closest matches test singular-head or nearest-subject concord.",
+        "status": "assistant_screen_complete_independent_human_review_required"
       }
     },
     {
