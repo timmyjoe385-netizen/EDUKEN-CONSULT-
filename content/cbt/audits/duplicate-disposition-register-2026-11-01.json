@@ -2073,8 +2073,8 @@
       ]
     },
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
-    "provenance_candidate_commits_are_leads_only": true,
-    "revision_note": "2026-11-02 reconciliation: exact row-level introducing commits are now verified for DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79 and DUP-86, plus the separately verified DUP-34 commit. Five later-replacement rows remain pending exact introducing-commit proof: DUP-82, DUP-83, DUP-84, DUP-85 and DUP-90. Earlier candidate commits for these five were inspected and excluded where they changed formatting or unrelated rows; the remaining history search is not complete. Counts: 57 commit-backed prior/replacement relationships, 28 original-draft overlaps, 5 later-replacement SHA cases pending, and 90/90 staging joins verified. Original source CSVs remain unchanged."
+    "provenance_candidate_commits_are_leads_only": false,
+    "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
   "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review.",
   "staging_location_audit": {
