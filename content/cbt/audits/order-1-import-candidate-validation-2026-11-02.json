@@ -115,5 +115,24 @@
     "Exact-stem and fingerprint checks do not prove semantic uniqueness; they supplement the documented contextual screen and user-reported academic approval.",
     "Projected subject totals assume all 90 candidates are accepted by the isolated admin importer; actual database counts must be confirmed there.",
     "No question is approved or published by the candidate CSV itself; the API import path forces status=draft."
-  ]
+  ],
+  "ci_validation": {
+    "build_workflow_run": 41427542720,
+    "build_and_npm_validation_suite": "passed",
+    "replacement_import_candidate_regression": "passed as part of npm run test:validation",
+    "playwright_browser_suite": "pending at checkpoint",
+    "isolated_cloudflare_preview_deploy": "queued at checkpoint",
+    "wallet_migration_sql_integration": "in progress at checkpoint"
+  },
+  "isolated_test_project_baseline": {
+    "project_id": "wpktzogarfqrgkirzdpy",
+    "project_status": "ACTIVE_HEALTHY",
+    "cbt_questions": 73,
+    "cbt_question_imports": 0,
+    "cbt_question_status_counts": {
+      "draft": 65,
+      "published": 8
+    },
+    "inspection": "Read-only Supabase inspection; no test database writes performed."
+  }
 }
