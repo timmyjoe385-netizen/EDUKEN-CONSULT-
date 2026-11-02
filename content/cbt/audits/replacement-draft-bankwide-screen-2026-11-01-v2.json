@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 37,
+  "version": 38,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -439,7 +439,12 @@
           "score": 0.3448,
           "question": "A tax imposed on goods and services when they are purchased is generally classified as:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No recurrent-expenditure/salary-classification question found. Nearest items concern central-bank securities, public goods and indirect taxation. Answer B is correct: regular teacher salaries are recurrent expenditure. Similarity 0.3827. Independent Economics reviewer should confirm the recurrent/capital distinction and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-16",
@@ -464,9 +469,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate uses a separating funnel for two immiscible liquids; the closest source tests filtration of an insoluble solid from a liquid. Different mixtures and separation methods. Retain pending Chemistry reviewer confirmation."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_human_review_high_similarity",
+        "note": "All 200 Chemistry rows checked. The highest match (batch 17 row 21, 0.5181) tests filtration of an insoluble solid from a liquid; other matches concern distillation. This candidate asks for a separating funnel for two immiscible liquids, a different mixture and separation method. Answer B is correct. Similarity is flagged at 0.5181, so a qualified Chemistry reviewer must confirm contextual distinctness and syllabus fit. Not approved for import."
       }
     },
     {
@@ -541,7 +546,12 @@
           "score": 0.2913,
           "question": "A contestable market is one in which:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No customs-union definition item found. Nearest items concern transfer payments, trade-union functions and contestable markets. Answer A is correct: a customs union adopts a common external tariff toward non-members and permits freer trade among members. Similarity 0.3519. Independent Economics reviewer should confirm the definition and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-20",
@@ -564,7 +574,12 @@
           "score": 0.2817,
           "question": "When a central bank sells government securities to the public, it generally"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No commercial-bank loan/deposit-creation question found. Nearest items ask general bank functions, reserve requirements and central-bank open-market operations. Answer B is correct: when a commercial bank grants a loan, it normally credits a deposit account, creating a corresponding loan asset and deposit liability. Similarity 0.3273. Independent Economics reviewer should confirm syllabus depth and careful wording."
+      }
     },
     {
       "target_id": "DUP-21",
@@ -587,7 +602,12 @@
           "score": 0.3947,
           "question": "Free indirect discourse is a narrative technique that"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No flashback definition item found. Nearest items concern allegory, stream of consciousness and free indirect discourse, distinct narrative techniques. Answer B is correct: a flashback interrupts present action to present an earlier event. Similarity 0.4103, below threshold but close. Independent Literature reviewer should confirm the distinction from other retrospective narrative devices and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-22",
@@ -2485,5 +2505,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case."
 }
