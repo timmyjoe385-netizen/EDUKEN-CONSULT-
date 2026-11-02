@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 35,
+  "version": 36,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -57,7 +57,12 @@
           "score": 0.3077,
           "question": "The sum of the interior angles of a hexagon is:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics retained-plus-held rows checked. Nearest items concern polygon exterior/interior angles; none tests rectangle diagonal properties. Answer B is correct: rectangle diagonals are equal and bisect one another, but are not necessarily perpendicular. Similarity 0.3500. Independent Mathematics reviewer should confirm syllabus fit and ensure the 'not necessarily perpendicular' distractor is understood."
+      }
     },
     {
       "target_id": "DUP-02",
@@ -82,9 +87,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "new_candidate_distinct_pending_human_review",
-        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry retained-plus-held rows checked. Nearest item batch 23 row 17 asks where oxidation occurs in a galvanic cell; it does not test the salt bridge's ion-migration/electroneutrality function. Answer B is correct. Similarity 0.4144, below threshold but close. Independent Chemistry reviewer should confirm wording and syllabus fit; distinguish ionic conduction through the salt bridge from electron flow through the external circuit."
       }
     },
     {
@@ -108,7 +113,12 @@
           "score": 0.3291,
           "question": "Which instrument is connected in series in a circuit to measure electric current?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. Nearest item batch 18 row 22 asks for the power formula in a DC circuit; another asks about Lenz's law. Neither defines alternating current. Answer B is correct: AC periodically reverses direction. Similarity 0.4138, below threshold but close. Independent Physics reviewer should confirm wording and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-04",
@@ -161,9 +171,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "new_candidate_distinct_pending_human_review",
-        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "closely_related_to_existing_blank_verse_item_human_variety_decision",
+        "note": "All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 13 row 39 on blank verse (0.3673). Blank verse is traditionally unrhymed iambic pentameter, so this replacement tests a key component of a concept already present. It is not a verbatim duplicate, but the assessed knowledge is closely overlapping and may add little variety. Answer B is correct. Independent Literature reviewer should decide whether to retain as complementary or replace with a more distinct literary concept."
       }
     },
     {
@@ -210,7 +220,12 @@
           "score": 0.2424,
           "question": "Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. The nearest item batch 11 row 25 defines convection as heat transfer by bulk movement of a fluid; this draft asks which mode can occur through a vacuum. Radiation is correct because it does not require a material medium. Similarity 0.4094, below threshold but close. These test distinct heat-transfer mechanisms, though the shared heat-transfer family merits reviewer confirmation."
+      }
     },
     {
       "target_id": "DUP-08",
@@ -2450,5 +2465,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
