@@ -4,7 +4,7 @@
 **Purpose:** route all 90 replacement proposals to qualified subject reviewers. This index is administrative only; it does not approve, reject, import or publish questions.
 
 ## Authoritative checkpoint
-Use commit `1024881b1e42a1099e1e66f3e1cd8c5db1d9c0fb` and the accompanying `order-1-final-assistant-review-checkpoint-2026-11-02.md` as the latest status record.
+Use the latest checkpoint file `order-1-final-assistant-review-checkpoint-2026-11-02.md` on this branch as the authoritative status record. The 2026-11-02 checkpoint currently records the 90/90 assistant review totals below; this handoff is a routing aid, not a replacement for the checkpoint.
 
 - Replacement drafts: 90/90.
 - Assistant full-bank comparisons: 90/90.
@@ -44,7 +44,7 @@ These 14 require an explicit written decision on whether the tested detail is wi
 - Mathematics: DUP-43
 
 ## Current lexical flags requiring independent contextual decisions
-DUP-10, DUP-16, DUP-18, DUP-22, DUP-33, DUP-34, DUP-35, DUP-36, DUP-45, DUP-48 and DUP-53.
+The latest checkpoint records **11/11** current lexical flags as having received assistant contextual reassessment. The exact current flag IDs must be taken from the latest screening artifact on this branch, not from older historical triage lists embedded in the review packet or earlier PR descriptions. Confirm the current screening artifact and include every flagged candidate in the independent subject review; do not treat assistant reassessment as human clearance.
 
 A flag is not automatically a duplicate. The reviewer must compare the learning outcome and concept against the closest retained and held items and record why the item is distinct or overlapping.
 
