@@ -430,8 +430,10 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 **Draft key:** A  
 **Draft explanation:** The afferent arteriole is wider than the efferent arteriole, creating relatively high hydrostatic pressure in the glomerular capillaries and forcing small molecules into Bowman's capsule.  
 **Draft status:** draft_needs_subject_and_bankwide_review  
-**Syllabus area:** Genetics — DNA replication  
+**Syllabus area:** Excretion — kidney structure and urine formation (glomerular ultrafiltration)  
 **Mapping status:** subject_review_required
+**Mapping correction log (2026-11-02):** The earlier “Genetics — DNA replication” label was an evident metadata mismatch with this kidney-ultrafiltration question and was corrected to the excretion topic. The corrected mapping still requires independent confirmation against the current JAMB IBASS syllabus.
+
 
 **Lexical screen:** below 0.42 (highest score 0.2971).
 
