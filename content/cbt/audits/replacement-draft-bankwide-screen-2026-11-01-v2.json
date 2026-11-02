@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 25,
+  "version": 26,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -1359,7 +1359,12 @@
           "score": 0.36,
           "question": "The apparent change in the observed frequency of a sound due to relative motion between source and observer is called the:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. No resonance or natural-frequency question was found. The nearest lexical matches concern momentum, work-energy and Doppler effect, not resonance. Answer B is correct: resonance occurs when the driving frequency matches the system's natural frequency (with a sufficiently low damping context for a large response). Similarity 0.3952, below threshold. The official JAMB Physics syllabus explicitly includes forced vibration and resonance under simple harmonic motion and asks candidates to enumerate applications of resonance. Direct syllabus coverage confirmed. Independent Physics reviewer still required; not approved for import."
+      }
     },
     {
       "target_id": "DUP-52",
@@ -1382,7 +1387,12 @@
           "score": 0.3896,
           "question": "Find the trace of the matrix [[4, 2], [1, 7]]."
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics retained-plus-held rows checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests 2×2 matrix multiplication. Recalculation confirms AB = [[10, 1], [12, 0]], answer A. Similarity 0.4000, below threshold. The result is mathematically correct, but the exact JAMB Mathematics syllabus coverage of matrix multiplication must be confirmed by a qualified Mathematics reviewer. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-53",
@@ -1407,9 +1417,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate identifies Cu(OH)₂ formed from Cu²⁺ and OH⁻; the closest sources ask about salt formation in neutralisation or gas evolution in acid reactions. Different reaction and qualitative identification objective. Retain pending Chemistry reviewer confirmation."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry retained-plus-held rows checked. No Cu²⁺ + OH⁻ precipitate-identification question was found. Nearest questions cover neutralisation/salt formation, gas tests, copper electrolysis and displacement; these are different reaction/identification objectives. Answer A is correct: Cu(OH)₂ is a blue precipitate; it is insoluble in excess aqueous NaOH. Similarity 0.4580, flagged. The official Chemistry syllabus covers tests for metallic ions, sodium hydroxide precipitation of metallic hydroxides and coloured ions in transition metals (Topic 16); broad coverage is supported, but exact Cu²⁺ test suitability needs a Chemistry reviewer. Not approved for import."
       }
     },
     {
@@ -1433,7 +1443,12 @@
           "score": 0.3333,
           "question": "A country's balance of trade in goods is the difference between the value of its"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics retained-plus-held rows checked. Existing elasticity items test own-price elasticity of demand/supply; none tests cross elasticity or interpretation of its positive sign. A coefficient of +0.8 indicates substitute goods, answer A. Similarity 0.4141, just below the 0.42 flag threshold. Official JAMB Economics syllabus Topic 4(c) explicitly includes cross elasticity of demand and interpretation of elasticity coefficients. Direct syllabus coverage confirmed. Independent Economics reviewer still required; not approved for import."
+      }
     },
     {
       "target_id": "DUP-55",
@@ -2275,5 +2290,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending."
 }
