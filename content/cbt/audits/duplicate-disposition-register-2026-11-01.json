@@ -766,7 +766,7 @@
       "retain": "batch 38 row 2",
       "replace": "batch 39 row 5",
       "retention_basis": "Current rows are substantively redundant: both assess singular verb agreement after 'Each of the players'. Batch 38 row 2 is the provisional retained item; batch 39 row 5 is the provisional replacement target. The two commits previously cited as provenance evidence only reformat/rewrite the CSV rows and do not establish original insertion history.",
-      "provenance": "The two current rows are confirmed semantically redundant. The audit's cited commits 8cb5b369ea05d22955f8320c8b76bd2868ad17d5 (batch 38) and 54b2d2b7de4932a77aa4e511ab53c439387995b0 (batch 39) were inspected: each diff shows the same question on both the removed and added sides, so these are CSV-format/rewrite snapshots, not evidence that either commit introduced the question. They establish that both rows existed before those commits, but do not identify the original insertion commits or establish which was created first. Keep batch 38 row 2 as the provisional retain and batch 39 row 5 as the provisional replacement target; do not edit either source row until the true introduction history is established.",
+      "provenance": "Batch 39 row 5 in the original batch-39 snapshot (commit 89a08c6a0fc7aa55fd8383884d84a31731866aab) contained the different 'Neither the principal nor the teachers...' concord question. Commit d91278d5c327b24a1f711eb8636d2a9cea1a07cf replaced that exact row with the current 'Each of the players ... receives' question. Its parent 8d6bd70357aa8662426acf10f7aea0ed473e47ba has the former question at row 5; the commit has the latter. Batch 38 row 2 already contained the same 'Each of the players ... wears' singular-agreement assessment in the initial batch-38 snapshot. This establishes the later introduction of the semantically duplicate Batch 39 item. Keep the original CSVs unchanged and retain the existing provisional disposition pending academic review.",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
@@ -778,7 +778,9 @@
         "status": "assistant_preliminary_distinction_human_subject_review_required",
         "note": "Preliminary distinction: the candidate tests the plural-only noun “cattle” taking a plural verb; the closest sources test agreement with compound subjects/nearest-subject rule. Related concord domain but different rule. Retain pending English reviewer confirmation."
       },
-      "provenance_status": "provenance_unverified"
+      "provenance_status": "later_replacement_introducing_commit_verified",
+      "introducing_commit_sha": "d91278d5c327b24a1f711eb8636d2a9cea1a07cf",
+      "introducing_commit_parent_sha": "8d6bd70357aa8662426acf10f7aea0ed473e47ba"
     },
     {
       "id": "DUP-35",
@@ -2016,14 +2018,12 @@
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
   "history_reconciliation_status": {
-    "prior_replacement_commit_verified": 55,
+    "prior_replacement_commit_verified": 56,
     "replacement_after_initial_snapshot_commit_sha_pending": 6,
     "original_draft_overlap_relationships": 28,
-    "unverified_relationships": 1,
-    "unverified_pair_ids": [
-      "DUP-34"
-    ],
-    "note": "Fifty-five prior-replacement relationships have commit-backed evidence. Seven of the 13 later-replacement rows now have exact row-level introducing commits verified (DUP-69, DUP-70, DUP-71, DUP-75, DUP-77, DUP-79 and DUP-86); six remain unresolved. Twenty-eight pairs are original-draft overlaps. DUP-34 remains separately unresolved at row-level provenance.",
+    "unverified_relationships": 0,
+    "unverified_pair_ids": [],
+    "note": "Fifty-six prior-replacement relationships have commit-backed evidence. Seven of the 13 later-replacement rows now have exact row-level introducing commits verified (DUP-69, DUP-70, DUP-71, DUP-75, DUP-77, DUP-79 and DUP-86); six remain unresolved. DUP-34 is now separately verified as introduced at batch 39 row 5 by commit d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Twenty-eight pairs are original-draft overlaps.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
@@ -2071,12 +2071,15 @@
       "DUP-90": [
         "4f779da95a8f3914629aa7a7bbdab84452dc2525",
         "f642c0b32f79329017e2de507c59adc31ad39c64"
+      ],
+      "DUP-34": [
+        "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
       ]
     },
-    "provenance_candidate_commits_verified_as_introducing_commit": 7,
+    "provenance_candidate_commits_verified_as_introducing_commit": 8,
     "provenance_candidate_commits_are_leads_only": false
   },
-  "revision_note": "Verified exact introducing commits for DUP-70 and DUP-71 by comparing the specified row in each commit with its parent and confirming absence from the original batch snapshot. Original question CSVs remain untouched; replacement drafts remain held for academic review.",
+  "revision_note": "Verified DUP-34 exact row-level introducing commit by comparing batch 39 row 5 with the commit parent and confirming the earlier batch 38 row 2 already contained the overlapping singular-agreement assessment. Original question CSVs remain untouched; replacement remains held pending academic review.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
