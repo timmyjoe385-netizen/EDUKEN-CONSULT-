@@ -854,7 +854,8 @@
       "explanation": "Parliamentary privilege protects statements made as part of legislative proceedings so members can debate freely. It is not a general immunity from criminal law or unrelated legal duties.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "new_draft_pending_subject_review_and_bankwide_screen"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Compared the replacement with all 200 Government retained-plus-held rows. The bank's nearest matches concern general legislative functions, freedom of expression and party-whip duties; none asks about the distinct legal protection afforded to statements made in legislative proceedings. Preliminary answer A is plausible, but the precise scope of parliamentary privilege depends on the applicable constitutional/statutory framework. The wording should be checked by a qualified Government reviewer, and the syllabus fit of legislative privilege is not yet confirmed. Similarity 0.3893, below the 0.42 flag threshold. Not approved for import."
     },
     {
       "target_id": "DUP-48",
@@ -872,8 +873,8 @@
       "explanation": "Denotation is the direct or dictionary meaning of a word, while connotation refers to the ideas or feelings associated with it.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "A retained-bank text scan found no use of 'denotation' or the same literal-meaning prompt. Full semantic screening and subject review remain required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "A retained-bank text scan found no use of 'denotation' or the same literal-meaning prompt. Full semantic screening and subject review remain required. Compared with all 200 Literature in English retained-plus-held rows. The highest lexical match is batch 36 row 38 on diction (0.6667); the concepts are related but distinct: denotation is a word's direct/literal meaning, while diction is a writer's choice and use of words. Other nearest matches concern setting and mood. The high lexical flag is not proof of duplication, but requires independent Literature reviewer confirmation. Preliminary answer B is correct. Syllabus fit requires confirmation. Not approved for import."
     },
     {
       "target_id": "DUP-49",
@@ -891,8 +892,8 @@
       "explanation": "Tax incidence describes who ultimately bears the economic burden of a tax, which may differ from the person or firm legally required to remit it.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "A retained-bank text scan found no use of 'tax incidence' or the same final-burden prompt. Full semantic screening and subject review remain required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "A retained-bank text scan found no use of 'tax incidence' or the same final-burden prompt. Full semantic screening and subject review remain required. Compared with all 200 Economics retained-plus-held rows. No tax-incidence question was found. Nearby taxation questions test tax types, direct/indirect, progressive/regressive, specific and ad valorem taxes; they do not test statutory remittance versus the final economic burden after tax shifting. Preliminary answer C and explanation are conceptually sound. Confirm that tax incidence is within the intended JAMB syllabus depth. Similarity 0.2807, below the 0.42 flag threshold. Not approved for import."
     },
     {
       "target_id": "DUP-50",
@@ -910,8 +911,8 @@
       "explanation": "The Golgi apparatus modifies, sorts and packages proteins into vesicles for transport to other cell locations or for secretion. Ribosomes synthesise proteins, mitochondria release energy, and lysosomes contain digestive enzymes.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Revised after identifying an existing ABO blood-group inheritance item in the retained bank. The new cell-organelle concept is distinct; subject review and the refreshed full-bank screen are still required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Revised after identifying an existing ABO blood-group inheritance item in the retained bank. The new cell-organelle concept is distinct; subject review and the refreshed full-bank screen are still required. Compared with all 200 Biology retained-plus-held rows. No Golgi apparatus protein-modification/sorting/packaging question was found. Nearest organelle questions test nucleus, mitochondrion, chloroplast, ribosome and lysosome functions; these are related cell-biology material but distinct functions. Preliminary answer A and explanation are sound. Check that the precise Golgi functions are within the intended JAMB syllabus depth. Similarity 0.3135, below the 0.42 flag threshold. Not approved for import."
     },
     {
       "target_id": "DUP-51",
