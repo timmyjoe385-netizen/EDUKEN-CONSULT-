@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-70 (44/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-74 (48/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1662,11 +1662,15 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "A replacement candidate is now recorded in the separate draft bank. It has not been independently approved, inserted into source CSVs or published."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
       },
       "introducing_commit_sha": "35b440ef35ac543f431e34f5f6737c91851dda8b",
-      "introducing_commit_parent_sha": "646b7720e97bed06cdbd965311b2c988863b667f"
+      "introducing_commit_parent_sha": "646b7720e97bed06cdbd965311b2c988863b667f",
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics rows checked. No Coulomb inverse-square numerical item found; nearest are resistor combinations/charging by induction. Answer D: doubling separation gives F/4. Similarity 0.3117. Independent Physics reviewer must confirm syllabus fit."
+      }
     },
     {
       "id": "DUP-72",
@@ -1685,8 +1689,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate added to the separate draft bank after same-subject full-bank lexical screening below 0.42 and a check against existing replacement drafts. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English rows checked. No 'fall through' idiom item found; nearest idioms are 'up in the air', 'at arm's length', 'break the ice'. Answer B: fails to happen/complete. Similarity 0.3894. Independent English review required."
       }
     },
     {
@@ -1706,8 +1714,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate added to the separate draft bank after same-subject full-bank lexical screening below 0.42 and a check against existing replacement drafts. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology rows checked. No spinal withdrawal-reflex coordination item found; nearest are cerebellum balance, neuron structure and ABO blood group. Answer B: spinal cord integrates simple withdrawal reflex before conscious pain interpretation. Similarity 0.3297. Independent Biology review required."
       }
     },
     {
@@ -1727,8 +1739,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate recorded in separate draft bank following same-subject full-bank lexical screen below 0.42. Independent academic and semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology rows checked. No afferent/efferent arteriole pressure mechanism item found; nearest nephron question asks filtration site, not pressure mechanism. Answer A: afferent arteriole wider than efferent, supporting high glomerular pressure. Similarity 0.2971. Independent Biology review required."
       }
     },
     {
@@ -2382,7 +2398,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 44,
+    "assistant_pairwise_reviewed_targets": 48,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
