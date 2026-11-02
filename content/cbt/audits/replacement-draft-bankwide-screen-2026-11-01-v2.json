@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 30,
+  "version": 31,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -1919,7 +1919,12 @@
           "score": 0.2831,
           "question": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. No Coulomb inverse-square numerical question was found. Nearest matches concern resistor combinations and charging by induction. Answer D is correct: doubling separation reduces electrostatic force to F/4. Similarity 0.3117, below threshold. Independent Physics reviewer must confirm syllabus fit and calculation framing. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-72",
@@ -1942,7 +1947,12 @@
           "score": 0.3651,
           "question": "In the sentence “The host told a joke to break the ice”, the expression “break the ice” means to…"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English retained-plus-held rows checked. No 'fall through' idiom item was found. Nearest items test 'up in the air', 'at arm's length' and 'break the ice'; they are different idioms and meanings. Answer B is correct: a plan that falls through fails to happen/be completed. Similarity 0.3894, below threshold. Independent English reviewer should confirm idiomatic usage and syllabus fit. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-73",
@@ -1965,7 +1975,12 @@
           "score": 0.2938,
           "question": "In the ABO blood group system, which allele combination produces blood group O?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No spinal-cord withdrawal-reflex coordination question was found. Nearest items test cerebellum balance, neuron structure and ABO blood group. Answer B is correct: a simple withdrawal reflex is integrated through a spinal reflex arc before conscious pain interpretation. Similarity 0.3297, below threshold. Independent Biology reviewer should confirm the phrase 'before conscious interpretation' is accurate and appropriate for syllabus depth. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-74",
@@ -1988,7 +2003,12 @@
           "score": 0.2805,
           "question": "Which structure in the nephron is the main site where blood is filtered under pressure?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No afferent/efferent arteriole diameter explanation question was found. Nearest items concern the nephron filtration site, antibody production and antibiotic resistance. Answer A is correct: the afferent arteriole is wider than the efferent arteriole, helping maintain high glomerular hydrostatic pressure for ultrafiltration. Similarity 0.2971, below threshold. The existing bank already tests the site of filtration, but not this pressure mechanism. Independent Biology reviewer must confirm syllabus depth. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-75",
@@ -2370,5 +2390,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
