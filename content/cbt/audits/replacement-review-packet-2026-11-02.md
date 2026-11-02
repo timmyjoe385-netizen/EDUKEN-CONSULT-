@@ -2424,3 +2424,22 @@ No candidate in this packet is approved for insertion. The 12 lexical flags requ
 - **Assistant disposition:** Preliminary answer, distractor, explanation and bankwide contextual checks complete. Not approved for import; independent Government review remains required.
 
 **Pair 05 outcome:** 2 drafts reviewed; 1 distractor/explanation improvement (DUP-36); both candidates compared against all 200 same-subject retained-plus-held rows; both have broad official syllabus mappings but need qualified confirmation; 0 independent subject approvals; both remain blocked from insertion.
+
+
+## Pair 06 — DUP-37 and DUP-38 (2026-11-02)
+
+**DUP-37 — Government: private member's bill**
+- **Answer and explanation:** A is correct. A private member's bill is introduced by a legislator who is not acting as a minister presenting a government bill; it is distinct from a government bill introduced on behalf of the executive.
+- **Quality correction:** The stem now specifies a parliamentary system. Distractors were revised to contrast an executive minister, the head of the judiciary and the electoral commission with the legislator introducing a non-government bill.
+- **Bank comparison:** All 200 Government retained-plus-held rows were scanned. No private-member's-bill item was found. Closest related entries are retained batch 17 row 33 (committee-stage examination of a bill), batch 15 row 34 (legislative committee functions), batch 24 row 33 (legislative oversight) and batch 29 row 35 (standing committees). These test scrutiny/committee work, not who may introduce a private member's bill.
+- **Official syllabus mapping:** Broad proposed mapping to Part 1, Topic 9, “Processes of Legislation — Legislative Enactments”. The syllabus does not expressly name private members' bills, so qualified Government review must confirm the detail and depth.
+- **Assistant disposition:** Preliminary answer, wording, distractor and bankwide contextual checks complete. Not approved for import; independent Government review remains required.
+
+**DUP-38 — Biology: maternal passive immunity**
+- **Answer and explanation:** A (placenta) is correct. Maternal IgG antibodies cross the placenta from mother to fetus before birth and provide temporary passive immunity.
+- **Quality correction propagated:** The replacement-draft JSON previously still contained the original ambiguous stem even though the reviewer packet recorded a correction. The draft file is now aligned to the narrowed stem: “Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?” The explanation is correspondingly limited to IgG transfer before birth, avoiding ambiguity with antibodies transferred through breast milk.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were scanned. No maternal IgG/placental passive-immunity item was found. Closest entries concern placenta exchange of nutrients/gases (retained batch 15 row 14 and batch 28 row 12), antibody production by plasma cells (batch 08 row 14 and batch 25 row 15), and vaccine-induced active immune memory (batch 05 row 15 and batch 15 row 15; held vaccination duplicates remain excluded). These are related but test different mechanisms.
+- **Official syllabus mapping:** The official Biology syllabus Part C, Topic 7, “Humans and Environment — Diseases”, includes disease prevention/control and explicitly mentions principles of inoculation and vaccination. It does **not** expressly name passive maternal immunity or placental IgG transfer. The proposed broad mapping is therefore not syllabus-confirmed; an independent Biology reviewer must decide whether this item is within appropriate JAMB depth or should be replaced.
+- **Assistant disposition:** Answer, wording and bankwide contextual checks complete; syllabus scope is an explicit open issue. Not approved for import.
+
+**Pair 06 outcome:** 2 drafts reviewed; DUP-37 wording/distractors refined; DUP-38's earlier clarity correction propagated into the actual draft file and its mapping downgraded to subject review required; both checked against all 200 same-subject retained-plus-held rows; 0 independent subject approvals; both remain blocked from insertion.
