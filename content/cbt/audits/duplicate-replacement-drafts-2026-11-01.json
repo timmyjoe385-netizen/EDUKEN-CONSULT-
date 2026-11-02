@@ -591,15 +591,15 @@
       "subject": "Use of English",
       "topic": "Grammar",
       "subtopic": "Relative pronouns",
-      "question": "In the sentence “The girl whose bag was missing reported the matter,” the word “whose” expresses:",
+      "question": "In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:",
       "options": [
-        "time",
-        "possession",
-        "place",
-        "comparison"
+        "the subject of the relative clause",
+        "the object of the preposition “to”",
+        "a possessive determiner",
+        "a coordinating conjunction"
       ],
       "answer": "B",
-      "explanation": "“Whose” is a possessive relative pronoun; it shows that the missing bag belongs to the girl.",
+      "explanation": "“Whom” is the object form of the relative pronoun “who”. In this sentence it is governed by the preposition “to” and refers to the person who received the form.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "revised_draft_needs_bank_wide_check"
