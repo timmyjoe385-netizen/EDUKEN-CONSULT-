@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 38,
+  "version": 39,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -658,7 +658,12 @@
           "score": 0.2897,
           "question": "Which of the following is an example of a direct tax?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No foreign-direct-investment definition/example found. Nearest items concern ad valorem tax, infrastructure and direct taxation. Answer A is correct: a foreign company establishing/operating a lasting manufacturing plant in Nigeria is foreign direct investment. Similarity 0.2963. Independent Economics reviewer should confirm definition and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-24",
@@ -681,7 +686,12 @@
           "score": 0.3077,
           "question": "The main function of red blood cells in humans is to…"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology rows checked. No peptidoglycan cell-wall composition item found. Nearest items concern cellulose in plant cell walls, Rhizobium and red blood cells. Answer C is correct: peptidoglycan is the main structural material in most bacterial cell walls. Similarity 0.3566. Independent Biology reviewer should confirm wording and syllabus depth."
+      }
     },
     {
       "target_id": "DUP-25",
@@ -704,7 +714,12 @@
           "score": 0.2361,
           "question": "A fall in average cost as a firm expands its scale of production is known as"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No tax-evasion definition item found. Nearest items concern progressive taxation and factor rewards; no same legal concealment concept. Answer A is correct: knowingly concealing taxable income to evade legally due tax is tax evasion. Similarity 0.2628. Independent Economics reviewer should confirm wording and distinction from lawful tax avoidance."
+      }
     },
     {
       "target_id": "DUP-26",
@@ -727,7 +742,12 @@
           "score": 0.3669,
           "question": "A potential difference of 9 V causes a current of 3 A through a conductor. What is its resistance?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. Nearest item batch 12 row 25 asks the general purpose of a capacitor (charge storage); another asks resistance from V/I. This candidate tests numerical capacitance using C=Q/V, not merely the device's function. 24 μC/6 V=4 μF, answer B. Similarity 0.3833. Independent Physics reviewer should confirm units and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-27",
@@ -750,7 +770,12 @@
           "score": 0.368,
           "question": "If y varies inversely as x and y = 6 when x = 4, what is y when x = 8?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics rows checked. Nearest items test direct variation and inverse variation; none tests joint variation as proportionality to the product xy. Answer B is correct: z=kxy. Similarity 0.3967, below threshold but close. Independent Mathematics reviewer should confirm distinction from direct/inverse variation and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-28",
@@ -773,7 +798,12 @@
           "score": 0.2927,
           "question": "The supreme legal authority of a state over its territory is known as ___."
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Government rows checked. Nearest items concern local-government by-laws, general legislative functions and sovereignty; none asks which legislature has authority over the Exclusive Legislative List. Answer C is correct: the National Assembly (federal legislature) legislates on federal exclusive-list matters. Similarity 0.3375. Independent Government reviewer should confirm constitutional precision and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-29",
@@ -796,7 +826,12 @@
           "score": 0.1702,
           "question": "Which connector best completes the sentence? “The road was flooded; ___, the delivery arrived before noon.”"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No 'deprived of' collocation item found. The nearest held item tests the different collocation 'congratulated on'; this draft tests the verb/adjective pattern 'deprived of'. Answer B is correct. Similarity 0.1923. Independent English reviewer should confirm collocation and syllabus fit."
+      }
     },
     {
       "target_id": "DUP-30",
@@ -821,9 +856,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "new_candidate_distinct_pending_human_review",
-        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No lexicographer definition item found. The register's closest related vocabulary concept is etymologist (study of word origins); a lexicographer compiles/edits dictionaries, so the roles are distinct. Answer A is correct. Similarity 0.2637. Independent English reviewer should confirm lexical precision and syllabus fit."
       }
     },
     {
@@ -847,7 +882,12 @@
           "score": 0.3684,
           "question": "A 0.5 kg ball moves at 8 m s⁻¹. What is its momentum?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. Nearest matches calculate momentum (batches 06 row 23 and 26 row 26); this candidate uses change in momentum over time to calculate average force (impulse), a different application. Δp=0.2×10=2 kg m/s; F=2/0.5=4 N, answer B. Similarity 0.3766. Independent Physics reviewer should confirm impulse syllabus fit and calculation."
+      }
     },
     {
       "target_id": "DUP-32",
@@ -872,9 +912,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "new_candidate_distinct_pending_human_review",
-        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No comedy-of-manners genre definition found. Nearest items classify lyric poetry, identify a denouement and describe plot development. Answer A is correct: comedy of manners satirises social conventions and behaviour, often through wit and irony. Similarity 0.3483. Independent Literature reviewer should confirm genre terminology and syllabus fit."
       }
     },
     {
@@ -2505,5 +2545,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal."
 }
