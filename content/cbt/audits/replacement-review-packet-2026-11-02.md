@@ -2,7 +2,7 @@
 
 **Branch:** `feat/cbt-subject-combination-reconciled`  
 **Scope:** 90 replacement proposals for 90 held duplicate rows in the 1,600-question bank.  
-**Purpose:** independent subject-competent review; this packet is not an approval or import file.
+**Purpose:** historical subject-review packet and question evidence; current reviewer disposition is recorded separately in `order-1-reviewer-disposition-2026-11-02.md`.
 
 ## Reviewer instructions
 
@@ -14,15 +14,17 @@
 
 ## Overall status — reconciled to the 2026-11-02 latest checkpoint
 
+**Disposition update:** The project owner explicitly reports that the reviewer approved all **90/90** proposals, including the former scope/depth holds and lexical flags. This is a user-reported approval; no signed item-level reviewer records or reviewer identity/credentials were uploaded. See the reviewer-disposition record. The historical pair notes below remain assistant evidence, not reviewer sign-offs.
+
 - Draft proposals: **90/90** (unique target IDs)
 - Assistant full same-subject bank comparisons: **90/90**
-- Current lexical flags: **11/11** received assistant contextual reassessment; independent human decisions remain outstanding
+- Current lexical flags: **11/11** received assistant contextual reassessment; reviewer approval for all 90 is user-reported (item-level documentary records not supplied)
 - Syllabus mapping: **90/90**; **57 provisionally aligned**, **33 require qualified subject review**
-- Assistant preliminary answer/explanation checks: **90/90**; independent qualified academic sign-off: **0/90**
+- Assistant preliminary answer/explanation checks: **90/90**; reviewer approval: **90/90 as reported by the project owner**
 - Provenance joins: **90/90**
 - Inserted into source CSVs / Supabase / student feed: **0**
 
-The counts above supersede older totals elsewhere in this historical packet. In particular, do not use the former 25/65 syllabus split or former 12-flag headline. Historical pair notes and earlier triage tables are retained as an audit trail; they do not change the latest checkpoint and do not constitute independent academic approval. See `order-1-final-assistant-review-checkpoint-2026-11-02.md` and `order-1-independent-review-handoff-2026-11-02.md` for the current gate and subject routing.
+The counts above supersede older totals elsewhere in this historical packet. In particular, do not use the former 25/65 syllabus split or former 12-flag headline. Historical pair notes and earlier triage tables are retained as an audit trail; they do not constitute reviewer sign-offs. The user-reported approval disposition is documented separately. See `order-1-final-assistant-review-checkpoint-2026-11-02.md` and `order-1-independent-review-handoff-2026-11-02.md` for the current gate and subject routing.
 
 ## Pair-by-pair assistant review log (not independent academic approval)
 
