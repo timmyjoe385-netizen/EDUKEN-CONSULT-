@@ -1082,8 +1082,8 @@
       "explanation": "An epithet is a descriptive expression attached to a person or thing to highlight a characteristic. “Swift-footed” is a recurring descriptive epithet associated with Achilles.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Revised to use a clear literary example after the prior wording triggered lexical similarity against metaphor questions. The revised wording is screened against all source rows."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Revised to use a clear literary example after the prior wording triggered lexical similarity against metaphor questions. The revised wording is screened against all source rows. All 200 Literature in English retained-plus-held rows checked. No epithet definition/example was found. The nearest lexical match is synecdoche (batch 23 row 40, 0.4113), which uses a part for the whole; the proposed 'swift-footed Achilles' is a descriptive epithet. Other close items are an epilogue and exposition, different terms. Similarity 0.4113, just below threshold. Answer A is correct. A Literature reviewer should confirm that the classical epithet example is appropriate for JAMB level and distinguish it from other descriptive devices. Not approved for import."
     },
     {
       "target_id": "DUP-60",
@@ -1101,8 +1101,8 @@
       "explanation": "The Organ of Corti lies within the cochlea and contains hair cells that convert sound-induced mechanical vibrations into nerve impulses carried by the auditory nerve.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required. All 200 Biology retained-plus-held rows checked. No Organ of Corti/hair-cell location question was found. Nearest matches concern root-hair osmosis and red blood cell function; they do not assess the cochlear sensory organ. Answer A is correct: the Organ of Corti in the cochlea contains sensory hair cells that transduce sound-related mechanical vibrations. Similarity 0.2783, below threshold. Independent Biology reviewer must confirm exact anatomical wording and syllabus depth. Not approved for import."
     },
     {
       "target_id": "DUP-61",
@@ -1120,8 +1120,8 @@
       "explanation": "In positive phototropism, auxin promotes greater cell elongation on the shaded side of a shoot. The unequal growth causes the shoot to bend towards the light.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required. All 200 Biology retained-plus-held rows checked. No phototropism/auxin shaded-side cell-elongation question was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis. Answer A is correct: greater cell elongation on the shaded side causes a shoot to bend towards light; auxin is involved in this differential growth. Similarity 0.2262, below threshold. Independent Biology reviewer must confirm syllabus depth and wording. Not approved for import."
     },
     {
       "target_id": "DUP-62",
@@ -1139,8 +1139,8 @@
       "explanation": "Enjambment occurs when the sense of a sentence or phrase continues from one poetic line into the next without a grammatical pause at the line ending. Caesura is a pause within a line.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted against the DUP-62 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.4046 against the existing caesura item (batch 16 row 37). Enjambment and caesura are distinct poetic techniques, but the close wording requires human Literature review and contextual clearance."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-62 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.4046 against the existing caesura item (batch 16 row 37). Enjambment and caesura are distinct poetic techniques, but the close wording requires human Literature review and contextual clearance. All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a poetic line; enjambment is continuation of syntax/sense across a line break without an end-stop. These are related lineation techniques but not duplicates. Answer A is correct. Similarity 0.4046, below threshold but close; an independent Literature reviewer should confirm distinction, syllabus scope and question-bank variety. Not approved for import."
     },
     {
       "target_id": "DUP-63",
