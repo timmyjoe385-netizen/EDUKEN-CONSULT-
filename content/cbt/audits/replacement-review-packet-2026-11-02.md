@@ -2986,3 +2986,54 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 39 — DUP-15 and DUP-16 (2026-11-02)
+
+**DUP-15 — Economics: recurrent expenditure**
+- **Answer:** B. Regular teacher salaries are recurrent expenditure because they are ongoing operating costs.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No recurrent-expenditure/salary-classification item was found. Nearest items concern central-bank securities, public goods and indirect taxation.
+- **Similarity:** 0.3827, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm the recurrent/capital distinction and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-16 — Chemistry: separating immiscible liquids**
+- **Answer:** B. A separating funnel is suitable for two immiscible liquids such as kerosene and water.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. The highest match (batch 17 row 21, 0.5181) tests filtration of an insoluble solid from a liquid; other matches concern distillation. This candidate tests separation of two immiscible liquid layers, a different mixture and method.
+- **Similarity:** 0.5181, flagged.
+- **Open issue:** The high lexical score requires independent Chemistry reviewer confirmation of contextual distinctness and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 39 outcome:** DUP-15 is provisionally distinct. DUP-16 is conceptually different from filtration but remains a high-similarity human-review case. 0 independent subject approvals.
+
+---
+
+## Pair 40 — DUP-19 and DUP-20 (2026-11-02)
+
+**DUP-19 — Economics: customs union**
+- **Answer:** A. A customs union adopts a common external tariff toward non-members and permits freer trade among members.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No customs-union definition item was found. Nearest items concern transfer payments, trade-union functions and contestable markets.
+- **Similarity:** 0.3519, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm definition and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-20 — Economics: commercial-bank deposit creation**
+- **Answer:** B. A commercial bank normally credits a deposit account when granting a loan, creating a corresponding loan asset and deposit liability.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No loan/deposit-creation question was found. Nearest items ask general bank functions, reserve requirements and central-bank open-market operations.
+- **Similarity:** 0.3273, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm syllabus depth and wording.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 40 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 41 — DUP-21 (2026-11-02)
+
+**DUP-21 — Literature in English: flashback**
+- **Answer:** B. A flashback interrupts present action to present an event from an earlier time.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No flashback definition item was found. Nearest items concern allegory, stream of consciousness and free indirect discourse, which are distinct narrative techniques.
+- **Similarity:** 0.4103, below the 0.42 threshold but close.
+- **Open issue:** Independent Literature reviewer should confirm the distinction from other retrospective narrative devices and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
