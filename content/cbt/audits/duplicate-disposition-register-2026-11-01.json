@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "Repository status checkpoint: 22/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the replacement-draft file. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. The register contains 90 duplicate relationships and must not be read as 90 completed replacement reviews. All remaining drafts and all flagged contextual cases require the documented review process. DUP-12's numerical per-capita-income proposal remains rejected for semantic overlap and requires a different replacement. All replacement drafts remain excluded from import/publication until independent subject approval, flagged/contextual decisions, syllabus mapping and final import validation are complete. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
+  "approval_gate": "Repository status checkpoint: 24/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the replacement-draft file. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. The register contains 90 duplicate relationships and must not be read as 90 completed replacement reviews. DUP-69's current candidate has been rejected for semantic overlap with retained batch 07 row 37 and requires a new replacement. All remaining drafts and all flagged contextual cases require the documented review process. All replacement drafts remain excluded from import/publication until independent subject approval, flagged/contextual decisions, syllabus mapping and final import validation are complete. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1704,14 +1704,14 @@
       "provenance_status": "exact_row_introducing_commit_verified",
       "decision": "confirmed_semantic_duplicate",
       "csv_change_status": "not_changed_staging_holdout_created",
-      "replacement_status": "draft_created_not_cleared",
+      "replacement_status": "replacement_rejected_semantic_overlap_new_candidate_required",
       "replacement_review": {
-        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
-        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+        "status": "assistant_pairwise_bankwide_review_complete_rejected_overlap_replacement_required",
+        "reason": "Rejected because the scenario tests the same dramatic-irony definition already present in retained batch 07 row 37. A new, genuinely distinct Literature candidate is required. Do not import or publish this draft."
       },
       "contextual_review": {
-        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
-        "note": "All 200 Literature rows checked. No dramatic-irony item found; nearest items concern stream of consciousness, metaphor and aside. Answer A is correct: audience knows information the character does not. Similarity 0.3182. Independent Literature reviewer should confirm scenario and syllabus depth."
+        "status": "assistant_pairwise_bankwide_review_complete_semantic_overlap_confirmed",
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Literature in English rows. This proposal is a semantic duplicate of retained batch 07 row 37, which already asks 'Dramatic irony occurs when:' and gives the same defining distinction: the audience knows information that a character does not. The scenario changes the surface wording but assesses the identical concept and definition. Answer A is correct, but the candidate adds no meaningful coverage. Reject this replacement draft for semantic overlap and create a different Literature replacement for DUP-69. Lexical score 0.3182 does not detect this semantic duplication. Do not import."
       }
     },
     {
@@ -1731,14 +1731,14 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
-        "reason": "Preliminary answer and full same-subject bank comparison recorded in screening file. Independent qualified subject review remains mandatory; no import or publication is authorised."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "reason": "Answer, explanation, full 200-row same-subject comparison and syllabus triage recorded. Independent qualified Biology review remains mandatory; no import or publication is authorised."
       },
       "introducing_commit_sha": "7cd07e64694191998d25971911f2763938068046",
       "introducing_commit_parent_sha": "7c71ed78f94f62e101d3618f821553d6c64292e7",
       "contextual_review": {
         "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
-        "note": "All 200 Biology rows checked. No vacuole/turgor-pressure item found; nearest items concern vaccination, cuticle and nucleus. Answer B is correct: vacuolar water contributes to turgor pressure in mature plant cells. Similarity 0.3333. Independent Biology reviewer should confirm wording and syllabus depth."
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Biology rows. No vacuole/turgor-pressure function question was found. Nearest entries concern the nucleus, chloroplast, lysosome, plasmolysis and cell-wall structure; none tests the central vacuole's role in maintaining turgor. Answer B is correct: water held in the large central vacuole contributes to turgor pressure, keeping a mature plant cell firm and helping maintain its shape. JAMB Biology explicitly includes turgidity as a transport mechanism; the exact cell-organelle phrasing remains subject to qualified Biology review. Similarity 0.3333, below 0.42. Conceptually distinct; independent Biology review remains mandatory. Not approved for import."
       }
     },
     {
