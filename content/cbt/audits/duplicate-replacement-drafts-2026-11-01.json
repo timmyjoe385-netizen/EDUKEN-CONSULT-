@@ -930,8 +930,8 @@
       "explanation": "Resonance occurs when the driving frequency matches the natural frequency of a system, producing a large response under suitable conditions.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "A retained-bank keyword scan found no 'resonance frequency' item. Full semantic screening and subject review remain required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+      "review_note": "A retained-bank keyword scan found no 'resonance frequency' item. Full semantic screening and subject review remain required. All 200 Physics retained-plus-held rows checked. No resonance or natural-frequency question was found. The nearest lexical matches concern momentum, work-energy and Doppler effect, not resonance. Answer B is correct: resonance occurs when the driving frequency matches the system's natural frequency (with a sufficiently low damping context for a large response). Similarity 0.3952, below threshold. The official JAMB Physics syllabus explicitly includes forced vibration and resonance under simple harmonic motion and asks candidates to enumerate applications of resonance. Direct syllabus coverage confirmed. Independent Physics reviewer still required; not approved for import."
     },
     {
       "target_id": "DUP-52",
@@ -949,8 +949,8 @@
       "explanation": "Multiply each row of A by each column of B. The entries are 1×2 + 2×4 = 10, 1×1 + 2×0 = 1, 0×2 + 3×4 = 12, and 0×1 + 3×0 = 0. Therefore AB = [[10, 1], [12, 0]].",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "The stem was shortened to reduce template-based lexical similarity with unrelated arithmetic questions. The matrix operation is distinct from the existing determinant and trace items."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+      "review_note": "The stem was shortened to reduce template-based lexical similarity with unrelated arithmetic questions. The matrix operation is distinct from the existing determinant and trace items. All 200 Mathematics retained-plus-held rows checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests 2×2 matrix multiplication. Recalculation confirms AB = [[10, 1], [12, 0]], answer A. Similarity 0.4000, below threshold. The result is mathematically correct, but the exact JAMB Mathematics syllabus coverage of matrix multiplication must be confirmed by a qualified Mathematics reviewer. Not approved for import."
     },
     {
       "target_id": "DUP-53",
@@ -968,8 +968,8 @@
       "explanation": "Copper(II) ions react with hydroxide ions to form copper(II) hydroxide, Cu(OH)₂, which is a blue precipitate and is insoluble in excess aqueous sodium hydroxide.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "The stem was shortened to distinguish this cation-identification test from the existing chloride-ion qualitative test. Contextual review remains required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+      "review_note": "The stem was shortened to distinguish this cation-identification test from the existing chloride-ion qualitative test. Contextual review remains required. All 200 Chemistry retained-plus-held rows checked. No Cu²⁺ + OH⁻ precipitate-identification question was found. Nearest questions cover neutralisation/salt formation, gas tests, copper electrolysis and displacement; these are different reaction/identification objectives. Answer A is correct: Cu(OH)₂ is a blue precipitate; it is insoluble in excess aqueous NaOH. Similarity 0.4580, flagged. The official Chemistry syllabus covers tests for metallic ions, sodium hydroxide precipitation of metallic hydroxides and coloured ions in transition metals (Topic 16); broad coverage is supported, but exact Cu²⁺ test suitability needs a Chemistry reviewer. Not approved for import."
     },
     {
       "target_id": "DUP-54",
@@ -987,8 +987,8 @@
       "explanation": "A positive cross elasticity of demand means that an increase in the price of one good is associated with an increase in the quantity demanded of the other. The goods are substitutes.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Reworded after the initial stem triggered a lexical similarity flag against own-price elasticity questions. This version tests interpretation of the sign of cross elasticity, a distinct concept; rerun the full-bank screen."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+      "review_note": "Reworded after the initial stem triggered a lexical similarity flag against own-price elasticity questions. This version tests interpretation of the sign of cross elasticity, a distinct concept; rerun the full-bank screen. All 200 Economics retained-plus-held rows checked. Existing elasticity items test own-price elasticity of demand/supply; none tests cross elasticity or interpretation of its positive sign. A coefficient of +0.8 indicates substitute goods, answer A. Similarity 0.4141, just below the 0.42 flag threshold. Official JAMB Economics syllabus Topic 4(c) explicitly includes cross elasticity of demand and interpretation of elasticity coefficients. Direct syllabus coverage confirmed. Independent Economics reviewer still required; not approved for import."
     },
     {
       "target_id": "DUP-55",
