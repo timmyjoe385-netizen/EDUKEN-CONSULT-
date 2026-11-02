@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 36,
+  "version": 37,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -250,9 +250,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "new_candidate_distinct_pending_human_review",
-        "note": "Earlier candidate was withdrawn for a confirmed semantic overlap. This revised candidate has a new topic and is below the 0.42 same-subject lexical threshold; independent subject review remains required."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No natural-gas principal-constituent item found. Nearest matches concern gas laws and bauxite ore, not natural-gas composition. Answer B is correct: methane is the principal constituent of most natural gas, though composition varies. Similarity 0.3810. Independent Chemistry reviewer must confirm syllabus depth and whether this belongs in the JAMB question bank."
       }
     },
     {
@@ -276,7 +276,12 @@
           "score": 0.2727,
           "question": "Complete neutralisation of dilute sulphuric acid with sodium hydroxide produces which salt?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No question asks why dilute sulfuric acid is added to water before electrolysis. Nearest items test electrode polarity, Faraday's law and neutralisation. Answer A is correct: the acid supplies mobile ions and increases conductivity; it is not intended to produce chlorine. Similarity 0.3019. Independent Chemistry reviewer should confirm wording and conditions."
+      }
     },
     {
       "target_id": "DUP-10",
@@ -301,9 +306,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: the candidate tests deflation (a sustained fall in the general price level); the closest source tests inflation (a sustained rise). Opposite concepts, not the same answer objective. Retain pending Economics reviewer confirmation."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. The highest match (batch 02 row 29, 0.4507) asks for inflation as a sustained rise in the general price level. The candidate asks for deflation, a sustained fall. Opposite directions and distinct concepts, not a duplicate. Answer B is correct. Official JAMB Economics Topic 12(f) explicitly includes deflation. Independent Economics reviewer should confirm the distinction and wording."
       }
     },
     {
@@ -327,7 +332,12 @@
           "score": 0.2615,
           "question": "In uniform circular motion, the centripetal force is directed…"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. No ray-through-optical-centre item found. Nearest item asks for the shape of a convex lens (batch 18 row 24); other matches are unrelated. Answer B is correct for a paraxial ray through the optical centre of a thin lens: it emerges without appreciable deviation. Similarity 0.3577. Independent Physics reviewer must confirm syllabus fit and the paraxial/thin-lens qualification."
+      }
     },
     {
       "target_id": "DUP-12",
@@ -350,7 +360,12 @@
           "score": 0.3049,
           "question": "An increase in a country's real GDP over time is commonly used as an indicator of…"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "semantic_overlap_confirmed_replacement_draft_rejected",
+        "note": "A semantic overlap was found despite the low lexical score (0.3521). Batch 28 row 28 already asks how per-capita income is calculated by dividing national income by population. The proposed numerical question uses the same formula and therefore repeats the same assessed concept. The arithmetic answer B (₦30,000) is correct, but the draft is not sufficiently distinct. Reject this replacement draft and create a different Economics concept for DUP-12; do not import it."
+      }
     },
     {
       "target_id": "DUP-13",
@@ -373,7 +388,12 @@
           "score": 0.3473,
           "question": "What are the products of complete reaction between hydrochloric acid and sodium hydroxide?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No methane-chlorination reaction-classification item found. Nearest items concern acid-base reactions and esterification, which are different reaction types. Answer B is correct: methane reacts with chlorine under UV light by free-radical substitution. Similarity 0.3796. Independent Chemistry reviewer must confirm the radical mechanism is within syllabus depth."
+      }
     },
     {
       "target_id": "DUP-14",
@@ -2465,5 +2485,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending."
 }
