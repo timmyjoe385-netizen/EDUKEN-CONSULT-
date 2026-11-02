@@ -1158,8 +1158,8 @@
       "explanation": "A scale of 1:50,000 means 1 cm on the map represents 50,000 cm on the ground. Therefore 4 cm represents 200,000 cm, which is 2,000 m or 2 km.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted against the DUP-63 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.3648 against a circle-sector question; the concepts are distinct. Confirm map-scale coverage in the current JAMB Mathematics syllabus during independent review."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-63 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.3648 against a circle-sector question; the concepts are distinct. Confirm map-scale coverage in the current JAMB Mathematics syllabus during independent review. All 200 Mathematics retained-plus-held rows checked. No map-scale calculation was found. Nearest matches concern sector fractions, angles in a circle and coordinate distance, not scale conversion. Calculation: 4 cm × 50,000 = 200,000 cm = 2 km, answer C. Similarity 0.3648, below threshold. Confirm map scales/ratio-proportion coverage against the current JAMB Mathematics syllabus with an independent reviewer. Not approved for import."
     },
     {
       "target_id": "DUP-64",
@@ -1177,8 +1177,8 @@
       "explanation": "Eighteen hours represents three half-lives (18 ÷ 6 = 3). The remaining fraction is (1/2)³ = 1/8.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted for the DUP-64 Chemistry holdout (atomic-radius trend). Full 1,600-row same-subject lexical screen: highest Dice score 0.2623 against a first-order rate-constant unit question. The concept is distinct. Independent Chemistry review and contextual bank-wide clearance remain required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted for the DUP-64 Chemistry holdout (atomic-radius trend). Full 1,600-row same-subject lexical screen: highest Dice score 0.2623 against a first-order rate-constant unit question. The concept is distinct. Independent Chemistry review and contextual bank-wide clearance remain required. All 200 Chemistry retained-plus-held rows checked. No half-life fraction calculation was found. Nearest matches concern first-order rate-constant units, isotopes and catalysts. After 18 hours there are three half-lives, so the remaining fraction is (1/2)^3 = 1/8, answer C. Similarity 0.2623, below threshold. JAMB Chemistry syllabus Nuclear Chemistry explicitly includes half-life calculations. Direct syllabus coverage confirmed; independent Chemistry reviewer still required. Not approved for import."
     },
     {
       "target_id": "DUP-65",
@@ -1196,8 +1196,8 @@
       "explanation": "Tracheoles are the fine terminal branches of the insect tracheal system. They extend close to body cells and provide the route for oxygen to diffuse directly to tissues. Spiracles are the external openings of the system.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review",
-      "review_note": "Drafted for the DUP-65 Biology holdout (commensalism). Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a question on the ureter; no concept overlap. Independent Biology review and contextual bank-wide clearance remain required."
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted for the DUP-65 Biology holdout (commensalism). Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a question on the ureter; no concept overlap. Independent Biology review and contextual bank-wide clearance remain required. All 200 Biology retained-plus-held rows checked. No insect tracheole item was found. Nearest matches concern ureter, xylem and kidney filtration; no respiratory-system overlap. Answer A is correct: tracheoles are the fine terminal branches of the insect tracheal system where gas exchange with tissues occurs. Similarity 0.3462, below threshold. Independent Biology reviewer must confirm syllabus depth and that the wording distinguishes tracheoles from spiracles. Not approved for import."
     },
     {
       "target_id": "DUP-66",
@@ -1215,7 +1215,8 @@
       "explanation": "Input power = 240 × 0.5 = 120 W. Output power = 12 × 8 = 96 W. Efficiency = (96/120) × 100 = 80%.",
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
-      "status": "draft_needs_subject_and_bankwide_review"
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Physics retained-plus-held rows checked. No transformer-efficiency calculation was found. Nearest matches test resistance/potential difference and general machine efficiency, not transformer input/output power from voltage and current. Input power = 240×0.5 = 120 W; output power = 12×8 = 96 W; efficiency = 80%, answer C. Similarity 0.3285, below threshold. Independent Physics reviewer must confirm syllabus fit and that the voltage/current values represent the relevant primary/secondary RMS quantities. Not approved for import."
     },
     {
       "target_id": "DUP-67",
