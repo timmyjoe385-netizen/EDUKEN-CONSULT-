@@ -2102,5 +2102,27 @@
     "source_csvs_changed": false,
     "method": "For each DUP-01 to DUP-90, joined the register's retain/replace locations to the retained-batches exports and the matching pair_id, retained_location and held_location in the held-duplicates exports. Physical row identifiers and subjects matched in all 90 cases.",
     "remaining_provenance_work": "No provenance work remains: all 13 later-replacement introducing commits are exact, DUP-34 is separately verified, and all 90 staging location joins are verified."
+  },
+  "official_syllabus_source_access": {
+    "checked_on": "2026-11-02",
+    "official_url": "https://ibass.jamb.gov.ng/e-syllabus",
+    "result": "official_subject_catalogue_retrieved; subject_detail_view_not_retrieved",
+    "visible_subjects": [
+      "Agriculture science",
+      "Arabic",
+      "Art",
+      "Biology",
+      "Chemistry",
+      "Christian religious studies",
+      "Commerce",
+      "Computer studies",
+      "Economics",
+      "French",
+      "Geography",
+      "Government"
+    ],
+    "mapping_effect": "none; no syllabus mapping upgraded to approved",
+    "limitation": "The catalogue exposes View details controls, but the subject detail view did not complete in the browser retrieval attempt. Individual topic/subtopic alignment cannot be certified from the catalogue listing.",
+    "pending": "64 mappings require qualified syllabus review; 26 remain provisional; DUP-74 corrected mapping awaits detailed IBASS confirmation."
   }
 }
