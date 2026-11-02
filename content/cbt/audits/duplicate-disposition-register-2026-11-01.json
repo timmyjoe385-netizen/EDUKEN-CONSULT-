@@ -799,11 +799,11 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "reason": "Assistant preliminary answer/explanation and full 200-row Literature in English retained-plus-held bank comparison completed; the item still requires independent Literature subject review and human confirmation of syllabus scope."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate defines an epigraph (quotation at the beginning); the closest source defines an epilogue (concluding section). Similar spelling but opposite placement and different literary function. Retain pending Literature reviewer confirmation."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+        "note": "Scanned all 200 Literature in English retained-plus-held rows. The draft tests an epigraph (a quotation placed before a work or section). Closest related terms are epilogue (retained batch 20 row 41: concluding section), prologue (retained batch 37 row 37: introductory section), aside (retained batch 35 row 37: remark to audience), and dramatis personae (held batch 30 row 41: list of characters). These are distinct literary terms and functions; no epigraph question was found. The official Literature syllabus lists literary terms under General Literary Principles but does not name epigraph specifically. Human Literature reviewer must confirm level, terminology and suitability."
       }
     },
     {
@@ -823,11 +823,11 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "reason": "Revised distractors and explanation plus full 200-row Government retained-plus-held bank comparison completed; independent Government subject review and confirmation of syllabus scope remain required."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate asks for a party constitution (internal rules and structure); the closest source asks for a party manifesto (policy promises/programme). Different political documents and functions. Retain pending Government reviewer confirmation."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_review_required",
+        "note": "Scanned all 200 Government retained-plus-held rows. No party-constitution question was found. Closest items are retained batch 08 row 39 (general constitution and government/citizen framework), retained batch 26 row 35 (party manifesto and policy proposals), and retained batch 02 row 34 (general political-party function). The candidate asks specifically about the internal governing document of a party; it is distinct from a state constitution and from a manifesto/programme. Distractors were revised to parallel political-party documents/messages. The official Government syllabus includes Political Parties and Party Systems, specifically party definition, organisation and functions, with an objective to assess parties' roles. Human Government reviewer must confirm that the narrower party-constitution detail is suitable."
       }
     },
     {
@@ -2002,7 +2002,7 @@
     "all_have_explanations": true,
     "all_have_nonempty_question_stems": true,
     "structural_validation": "passed",
-    "answer_and_explanation_review": "90 preliminary assistant checks recorded; pairwise detailed review completed for 8 of 90; independent subject review outstanding for all drafts",
+    "answer_and_explanation_review": "90 preliminary assistant checks recorded; pairwise detailed review completed for 10 of 90; independent subject review outstanding for all drafts",
     "official_jamb_syllabus_mapping": "90 mapped; 25 provisionally aligned and 65 require subject review; none approved",
     "bank_insertion": "not performed",
     "syllabus_mapping_quality_check": "Two metadata mismatches have been identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration, and DUP-21 was labelled Drama despite testing a general narrative technique without a dramatic-text context. DUP-74 is now Excretion — kidney structure and urine formation (glomerular ultrafiltration); DUP-21 is now Literary principles and terminology — narrative techniques (flashback). Both corrected labels require detailed IBASS confirmation. The remaining 63 previously subject-review mappings remain unapproved; DUP-21 has been moved from provisional to subject review, leaving 25 provisional mappings.",
@@ -2163,7 +2163,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 8 of 90; revised DUP-33 and DUP-34 manually compared against all 200 Use of English retained-plus-held stems",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 10 of 90; revised DUP-33 and DUP-34 checked against all 200 Use of English retained-plus-held stems; DUP-35 and DUP-36 checked against all 200 respective-subject retained-plus-held stems",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete.",
     "previous_draft_overlap_detected_and_corrected": 1
@@ -2227,7 +2227,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review. Pair 01 assistant review completed 2026-11-02: DUP-04 wording/distractors refined for complete dominance; DUP-06 syllabus label corrected to proposed plant structural adaptations, with exact topic coverage still requiring qualified confirmation. No source CSV, import, or production data changed. Pair 02 assistant review completed 2026-11-02: DUP-14 mapping refined to explicit official Biology syllabus sections A.1(b) and A.2(a); DUP-17 question narrowed to auxin-mediated positive phototropism with improved plant-hormone distractors, and mapping tied to B.6(a) and B.9(c)(ii). No source CSV, import, or production data changed. Pair 03 review added 2026-11-02: DUP-18 and DUP-22 received answer/explanation, wording, full-bank contextual and official syllabus checks. Two wording clarifications and two precise syllabus mappings were recorded. Both remain unapproved pending independent subject review; no source CSV or production data changed. Pair 04 review added 2026-11-02: DUP-33 and DUP-34 reviewed. A full retained-plus-held bank comparison found the prior DUP-33 'whose = possession' draft overlapped with retained batch 20 row 2; it was replaced with a distinct 'whom' as object of preposition item and requires a fresh screen. DUP-34 plural-only 'cattle' concord item was found conceptually distinct from nearest-subject concord and singular-head agreement items. Both remain unapproved pending independent review. Pair 04 review added 2026-11-02: DUP-33 and DUP-34 reviewed. Full retained-plus-held bank comparison found the prior DUP-33 'whose = possession' draft overlapped with retained batch 20 row 2; it was replaced with a distinct 'whom' as object of preposition item and requires a fresh screen. DUP-34 plural-only 'cattle' concord item was found conceptually distinct from nearest-subject concord and singular-head agreement items. Both remain unapproved pending independent review.",
+  "revision_note": "2026-11-02 Pair 05: completed pairwise assistant review and full retained-plus-held subject-bank comparisons for DUP-35 (Literature in English) and DUP-36 (Government). DUP-36 distractors/explanation improved. Both remain blocked pending independent subject review; official syllabus mappings are broad, not exact topic approvals.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
