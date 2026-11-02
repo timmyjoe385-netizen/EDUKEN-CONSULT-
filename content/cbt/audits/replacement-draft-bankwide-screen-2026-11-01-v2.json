@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 23,
+  "version": 24,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -1048,7 +1048,12 @@
           "score": 0.3452,
           "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_and_syllabus_review",
+        "note": "Compared against all 200 Chemistry retained-plus-held rows; no cryolite-role item found. Aluminium electrolysis is in official Topic 16(d), but cryolite is not named. Independent Chemistry review required."
+      }
     },
     {
       "target_id": "DUP-40",
@@ -1071,7 +1076,12 @@
           "score": 0.356,
           "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_and_syllabus_review",
+        "note": "Compared against all 200 Chemistry retained-plus-held rows; no Contact-process catalyst item found. Official syllabus names Contact process and transition-metal catalysis generally, but not V2O5. Independent Chemistry review required."
+      }
     },
     {
       "target_id": "DUP-41",
@@ -2250,5 +2260,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 23 — 2026-11-02: Pair 06 DUP-37 and DUP-38 manually compared against all 200 retained-plus-held rows in their respective subjects. DUP-37 wording/distractors refined; DUP-38 clarity correction propagated into draft file and syllabus-scope issue explicitly recorded. Both await independent subject review."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review."
 }
