@@ -17,8 +17,29 @@
 - Draft proposals: **90/90** (unique target IDs)
 - Full-bank screening: **90/90**; 12 lexical flags, 78 below 0.42
 - Syllabus mapping: **90/90**; 26 provisionally aligned, 64 require subject review
-- Assistant preliminary answer/context checks: **48**; independent human sign-off: **0**
+- Assistant preliminary answer/context checks: **90/90**; independent human sign-off: **0**
 - Inserted into source CSVs / Supabase / student feed: **0**
+
+## Assistant contextual triage of the 12 lexical flags (not independent approval)
+
+The refreshed trigram screen produced 12 flags. The following assistant-only comparison checks the actual concept tested by each draft against its closest same-subject match. These are not human subject sign-offs and do not clear any draft for import. No flag is being treated as an automatic duplicate solely because of lexical similarity.
+
+| Target | Closest match / concept | Preliminary contextual finding | Human reviewer focus |
+|---|---|---|---|
+| DUP-04 | Batch 39 row 12: identify the genotype Tt | Related heredity vocabulary, but the draft tests dominant-allele expression while the match tests genotype description. Distinct learning outcomes; moderate same-topic overlap. | Confirm the bank has adequate variety before retaining both. |
+| DUP-10 | Batch 02 row 29: inflation | Deflation is the opposite movement from inflation, not the same answer. Distinct terms but directly paired concepts. | Confirm deflation is within the intended syllabus depth and adds value beyond the inflation item. |
+| DUP-16 | Batch 17 row 21: separating an insoluble solid from a liquid | Separating immiscible liquids with a separating funnel differs from filtration of a solid-liquid mixture. | Confirm terminology and that the question tests apparatus choice clearly. |
+| DUP-18 | Held row: condition for total internal reflection | Draft tests the law of reflection at a plane mirror; held item tests the conditions for total internal reflection. Different optical principles. | Confirm angle is explicitly measured from the normal (the explanation does so). |
+| DUP-22 | Batch 35 row 13: oxygen transport by haemoglobin in red cells | Draft tests plasma transport of dissolved substances; match tests oxygen transport by red blood cells. Different blood components and functions. | Confirm the scope of the phrase “many dissolved” and expected level. |
+| DUP-33 | Batch 12 row 2: meaning of “put off” | Relative-pronoun possession is unrelated to the meaning of a phrasal verb; likely a lexical false positive. | Confirm grammar objective and the relative-pronoun classification. |
+| DUP-34 | Batch 01 row 3: concord with “neither…nor” | Draft tests plural-only noun “cattle”; match tests proximity concord after “neither…nor”. Same broad grammar area, distinct rules. | Check for excessive concord-question concentration in the English bank. |
+| DUP-35 | Batch 20 row 41: epilogue | Epigraph (opening quotation) and epilogue (concluding section) are distinct literary terms. | Confirm the term is within the relevant Literature syllabus and that distractors are unambiguous. |
+| DUP-36 | Batch 26 row 35: party manifesto | Draft tests internal party rules/structure; match tests a party's policy document. Distinct civic concepts. | Confirm constitutional wording is appropriate to the syllabus context. |
+| DUP-45 | Batch 01 row 29: wages as reward for labour | Economic rent above transfer earnings is distinct from the ordinary reward to labour, though both concern factor rewards. | Confirm the definition and its place in the current Economics syllabus. |
+| DUP-48 | Batch 36 row 38: diction | Denotation (literal meaning of a word) differs from diction (a writer's choice/use of words), but both are literary terminology and can be confused. | Strong review priority: confirm the intended Literature syllabus scope and that this is not too close to existing terminology coverage. |
+| DUP-53 | Batch 17 row 18: salt formed in an acid-base reaction | Copper(II) hydroxide precipitation from Cu²⁺ and OH⁻ is a different qualitative-analysis reaction from salt formation by neutralisation. | Confirm ionic equation, precipitate colour and the “insoluble in excess” explanation. |
+
+**Assistant triage outcome:** 12/12 flags have a written concept-level comparison; 0/12 are confirmed duplicates by this preliminary review. This is not equivalent to independent manual contextual review. All 12 remain awaiting a qualified human decision, and all 90 drafts remain blocked from insertion.
 
 ## Biology (17)
 
