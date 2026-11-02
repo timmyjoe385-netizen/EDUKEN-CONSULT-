@@ -812,14 +812,14 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 - D. Hydrogen bond
 
 **Draft key:** C  
-**Draft explanation:** The nitrogen atom in NH₃ donates its lone pair to H⁺ to form the N–H bond. Both bonding electrons are supplied by nitrogen, so it is a coordinate covalent bond.  
-**Draft status:** draft_needs_subject_and_bankwide_review  
+**Draft explanation:** The nitrogen atom in NH₃ donates its lone pair to H⁺ to form the N–H bond. Both bonding electrons are supplied by nitrogen, so it is a coordinate covalent bond.
+**Draft status:** assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required
 **Syllabus area:** Chemical bonding — coordinate covalent bonding  
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.4094).
 
-**Assistant preliminary check:** preliminary_answer_check_pass_pending_human_review. C is correct: nitrogen donates its lone pair to H⁺ to form a coordinate covalent N–H bond in NH₄⁺. Highest same-subject Dice 0.4094 against the ammonium-ion formula question. Similar species, different learning objective; require Chemistry review. Chemical bonding and coordinate covalent bonds; confirm syllabus scope.
+**Assistant pairwise bankwide review:** Full same-subject retained-plus-held comparison completed across all 200 Chemistry rows. Seven nearby entries concern generic covalent bonding, the coordinate-bond definition, the ammonium-ion formula, or ammonia release from ammonium salts. None asks how NH₃ forms NH₄⁺ by donating its lone pair to H⁺. Answer C is correct; the nitrogen lone pair supplies both electrons in the coordinate N–H bond at formation. The wording correctly distinguishes the bond's formation from the equivalent N–H bonds in the resulting ion. Highest same-subject lexical score is 0.4094 (batch 28 row 21, ammonium-ion formula), below 0.42. JAMB Chemistry includes coordinate covalent bonding. Conceptually distinct; independent Chemistry subject review remains mandatory. Not approved for import.
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -2242,22 +2242,22 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 ### DUP-68 — Vocabulary / Homographs
 
-**Question:** In “Strong winds damaged the roof”, the noun “winds” refers to:
+**Question:** In “Strong winds damaged the roof”, the word “winds” refers to:
 
 - A. Moving air
-- B. A winding path
-- C. A musical instrument
-- D. A direction on a map
+- B. A bend or curve in a road or river
+- C. A turn or coil
+- D. A musical instrument played by blowing air
 
 **Draft key:** A  
-**Draft explanation:** Here “winds” means moving air. The word “wind” can also be a verb meaning to turn or twist, with a different pronunciation.  
-**Draft status:** draft_needs_subject_and_bankwide_review  
+**Draft explanation:** Here “winds” means moving air, pronounced /wɪndz/. The verb “wind”, meaning to turn or twist, has a different pronunciation, /waɪnd/.
+**Draft status:** assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required
 **Syllabus area:** Lexis — homographs and context  
 **Mapping status:** subject_review_required
 
-**Lexical screen:** below 0.42 (highest score 0.2653).
+**Lexical screen:** below 0.42 (highest score 0.2680).
 
-**Assistant preliminary check:** preliminary_answer_check_pass_pending_human_review. A is correct: “winds” means moving air; the homograph “wind” can also mean to turn or twist, with a different pronunciation. Highest same-subject Dice 0.2653; no close conceptual match identified in the lexical screen. Lexis and meaning in context; confirm syllabus scope.
+**Assistant pairwise bankwide review:** Full same-subject retained-plus-held comparison completed across all 200 Use of English rows. No question asks for the meaning of wind/winds in this context; the nearest results concern wind personification and unrelated lexis. Answer A is correct: 'winds' means moving air. The original distractors were weak/non-parallel, so they have been improved to plausible alternate senses. The word 'wind' as moving air is pronounced /wɪnd/; the verb 'wind' meaning to turn or twist is pronounced /waɪnd/. Revised wording and options were re-screened against all 200 rows. The lexical score remains below 0.42. Independent English reviewer must confirm terminology and syllabus fit. Not approved for import.
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
