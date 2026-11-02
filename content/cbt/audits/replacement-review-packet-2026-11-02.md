@@ -459,13 +459,13 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 **Draft key:** B  
 **Draft explanation:** The vacuole stores cell sap. Water entering it creates turgor pressure, which helps keep the plant cell firm and supports the plant.  
-**Draft status:** draft_needs_subject_and_bankwide_review  
+**Draft status:** assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required
 **Syllabus area:** Cell biology — vacuole and turgor  
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3333).
 
-**Assistant preliminary check:** preliminary_answer_check_pass_pending_human_review. B is correct: water in the central vacuole contributes to turgor pressure, helping maintain cell firmness. Highest same-subject Dice 0.3333; no vacuole/turgor match was found in the bank. Cell structure and functions; confirm syllabus scope.
+**Assistant pairwise bankwide review:** Full same-subject retained-plus-held comparison completed across all 200 Biology rows. No vacuole/turgor-pressure function question was found. Nearest entries concern the nucleus, chloroplast, lysosome, plasmolysis and cell-wall structure; none tests the central vacuole's role in maintaining turgor. Answer B is correct: water held in the large central vacuole contributes to turgor pressure, keeping a mature plant cell firm and helping maintain its shape. JAMB Biology explicitly includes turgidity as a transport mechanism; the exact cell-organelle phrasing remains subject to qualified Biology review. Similarity 0.3333, below 0.42. Conceptually distinct; independent Biology review remains mandatory. Not approved for import.
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
@@ -1644,13 +1644,13 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 
 **Draft key:** A  
 **Draft explanation:** Dramatic irony occurs when the audience knows something important that a character does not, creating a contrast between the character's understanding and the audience's knowledge.  
-**Draft status:** draft_needs_subject_and_bankwide_review  
+**Draft status:** assistant_pairwise_bankwide_review_complete_rejected_overlap_replacement_required
 **Syllabus area:** Drama — dramatic irony  
 **Mapping status:** subject_review_required
 
 **Lexical screen:** below 0.42 (highest score 0.3182).
 
-**Assistant preliminary check:** preliminary_answer_check_pass_pending_human_review. A is correct: dramatic irony occurs when the audience knows important information that a character does not. Highest same-subject Dice 0.3182; closest lexical matches concern narrative technique and stage remarks, not dramatic irony. Drama and dramatic techniques; confirm syllabus scope.
+**Assistant pairwise bankwide review:** Full same-subject retained-plus-held comparison completed across all 200 Literature in English rows. This proposal is a semantic duplicate of retained batch 07 row 37, which already asks 'Dramatic irony occurs when:' and gives the same defining distinction: the audience knows information that a character does not. The scenario changes the surface wording but assesses the identical concept and definition. Answer A is correct, but the candidate adds no meaningful coverage. Reject this replacement draft for semantic overlap and create a different Literature replacement for DUP-69. Lexical score 0.3182 does not detect this semantic duplication. Do not import.
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
