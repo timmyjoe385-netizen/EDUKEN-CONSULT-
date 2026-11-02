@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-82 (56/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-86 (60/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1964,8 +1964,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved in the separate draft bank after full same-subject lexical screening and existing-draft comparison. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English rows checked. No pseudonym/pen-name definition item found. Nearest items concern poetic speaker, first-person narration and character development. Answer A is correct: a pseudonym is an assumed name used by an author. Similarity 0.3514. Independent Literature reviewer should confirm syllabus fit and usefulness."
       }
     },
     {
@@ -1985,8 +1989,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "revised_draft_needs_subject_and_bankwide_review",
-        "reason": "The pulmonary-vein candidate was withdrawn because batch 21 row 12 already tests the same return of oxygenated blood from lungs to heart. The replacement is a DNA-ligase/Okazaki-fragment question with a fresh full-bank lexical screen (maximum same-subject Dice 0.3286). Independent Biology and syllabus review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Biology rows checked. No DNA ligase/Okazaki-fragment item found. Nearest matches are digestive enzymes, not DNA replication. Answer A is correct: DNA ligase seals nicks between adjacent Okazaki fragments on the lagging strand. Similarity 0.3286. Independent Biology reviewer should confirm molecular detail and JAMB depth."
       }
     },
     {
@@ -2006,8 +2014,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved in the separate draft bank after full same-subject lexical screening and existing-draft comparison. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Literature in English rows checked. No blocking/planned actor movement item found. Nearest items concern a play script, understatement and suspense. Answer A is correct: blocking is planned actor movement and positioning on stage. Similarity 0.3723. Independent Literature reviewer should confirm theatre terminology and syllabus fit."
       }
     },
     {
@@ -2027,8 +2039,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved in the separate draft bank after full same-subject lexical screening and existing-draft comparison. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry rows checked. No brown-ring nitrate test location item found. Nearest matches concern alcohol functional group, hydrogen test and rate-constant units. Answer B is correct: the brown ring forms at the interface between the aqueous layer and concentrated acid layer. Similarity 0.3158. Official JAMB Chemistry syllabus lists specific tests for nitrate ions (NO3−) under non-metals/nitrogen compounds. Direct syllabus coverage supported; independent Chemistry reviewer still required."
       }
     },
     {
@@ -2430,7 +2446,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 56,
+    "assistant_pairwise_reviewed_targets": 60,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
