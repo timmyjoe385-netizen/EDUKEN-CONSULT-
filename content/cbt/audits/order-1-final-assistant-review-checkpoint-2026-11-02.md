@@ -9,8 +9,11 @@
 - Retained/held source-row provenance joins: **90/90**, previously reconciled.
 - Current syllabus map: **57 provisionally aligned; 33 require qualified subject review**.
 - Explicit syllabus-scope/depth holds: **14** — DUP-06, DUP-15, DUP-19, DUP-23, DUP-25, DUP-35, DUP-37, DUP-38, DUP-39, DUP-40, DUP-43, DUP-45, DUP-47 and DUP-48.
-- Independent qualified subject/syllabus approvals: **0/90**.
-- Current candidates blocked by known existing-bank overlap: **0**.
+- Reviewer disposition: **90/90 approved, as explicitly reported by the project owner on 2026-11-02**. The repository does not contain signed item-level reviewer records or reviewer identity/credentials; see `order-1-reviewer-disposition-2026-11-02.md`.
+- Current candidates blocked by known exact/full-fingerprint overlap: **0**; exact same-subject stem matches in the 1,600-row staged bank: **0**.
+- Replacement-only candidate CSV: **90/90 rows**, one per held duplicate; all 90 target IDs and subjects match the held-row register.
+- Import-format validation: **90/90 passed**; 90 distinct candidate fingerprints; no candidate-to-bank exact collisions or candidate-to-candidate fingerprint collisions.
+- Projected post-replacement balance: **200 questions in each of the eight subjects**.
 - Earlier rejected candidate drafts: **5**, replaced/withdrawn; they are not import candidates.
 - Questions inserted into source CSVs or production: **0**.
 
@@ -29,6 +32,6 @@
 
 ## Release gate
 
-Order 1 is **not closed**. Assistant-side review and the current syllabus-mapping pass are complete, but 33 candidates still need qualified subject review and 14 carry explicit syllabus-scope/depth holds. All 90 candidates still require independent qualified academic approval. These approvals cannot be self-issued by the assistant.
+The reviewer stage is **reported complete (90/90)** based on the project owner's explicit confirmation. The 14 syllabus-scope/depth cases and all 11 lexical-flag cases are included in that reported approval. This is a user-reported disposition, not independently documentary-verified: no signed reviewer worksheets, reviewer identity/credentials or item-level sign-off records were uploaded. Technical replacement-set validation is complete; authenticated admin import/review/publish E2E testing in the isolated preview remains outstanding.
 
-No original source CSVs were modified in this continuation. No question was imported or published. PR #194 remains draft and unmerged. Do not move to Order 2, import, publish, merge or deploy until the independent review gate and the user's final controlled replacement approval are complete.
+No original source CSVs were modified. The 90-row candidate file is staged only; no question was imported into Supabase or published. PR #194 remains draft and unmerged. Next: complete authenticated admin E2E import/review/publish testing in the isolated preview and rerun regression checks. Production import, publication, merge and deployment remain blocked pending successful isolated tests and the user's explicit production-release approval.
