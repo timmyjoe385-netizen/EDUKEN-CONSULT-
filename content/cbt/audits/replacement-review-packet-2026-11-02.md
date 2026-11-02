@@ -2620,3 +2620,45 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 19 — DUP-63 and DUP-64 (2026-11-02)
+
+**DUP-63 — Mathematics: map scale**
+- **Answer:** C (2 km). At a scale of 1:50,000, 4 cm represents 200,000 cm, or 2 km.
+- **Bank comparison:** All 200 Mathematics retained-plus-held rows were checked. No map-scale calculation was found. Nearest items concern sector fractions, circle angles and coordinate distance.
+- **Similarity:** 0.3648, below the 0.42 threshold.
+- **Open issue:** A qualified Mathematics reviewer must confirm map-scale/ratio-proportion coverage against the current JAMB syllabus.
+- **Assistant disposition:** Calculation and contextual check recorded; not approved for import.
+
+**DUP-64 — Chemistry: radioactive half-life**
+- **Answer:** C (1/8). Eighteen hours is three half-lives; the remaining fraction is (1/2)³.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No half-life fraction calculation was found. Nearest items concern rate-constant units, isotopes and catalysts.
+- **Similarity:** 0.2623, below the 0.42 threshold.
+- **Official syllabus:** Direct coverage under JAMB Chemistry Nuclear Chemistry, which includes simple half-life calculations.
+- **Assistant disposition:** Calculation, explanation and syllabus check recorded; independent Chemistry review remains required; not approved for import.
+
+**Pair 19 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-64 has direct syllabus coverage; DUP-63 requires syllabus confirmation. 0 independent subject approvals.
+
+---
+
+## Pair 20 — DUP-65 and DUP-66 (2026-11-02)
+
+**DUP-65 — Biology: tracheoles**
+- **Answer:** A. Tracheoles are the fine terminal branches of the insect tracheal system that deliver oxygen close to body cells.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No tracheole item was found. Nearest items concern ureter, xylem and kidney filtration.
+- **Similarity:** 0.3462, below the 0.42 threshold.
+- **Open issue:** A Biology reviewer must confirm syllabus depth and distinguish tracheoles from spiracles.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-66 — Physics: transformer efficiency**
+- **Answer:** C (80%). Input power = 240 × 0.5 = 120 W; output power = 12 × 8 = 96 W; efficiency = 96/120 × 100 = 80%.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. No transformer-efficiency calculation was found. Nearest items test resistance/potential difference and general machine efficiency, not transformer input/output power.
+- **Similarity:** 0.3285, below the 0.42 threshold.
+- **Open issue:** A Physics reviewer must confirm syllabus fit and that voltage/current values are understood as the relevant primary/secondary RMS quantities.
+- **Assistant disposition:** Calculation and contextual check recorded; not approved for import.
+
+**Pair 20 outcome:** Both candidates are distinct from the existing same-subject bank. Independent subject/syllabus review remains required; 0 independent subject approvals.
+
+---
+
