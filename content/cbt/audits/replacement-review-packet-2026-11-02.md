@@ -12,13 +12,17 @@
 - Record **Approve / Revise / Reject**, reviewer name/qualification, date and concise rationale. Do not mark an item approved based only on the assistant's preliminary checks.
 - Any unresolved issue means the item remains excluded. Original CSVs and production data must remain untouched until the controlled approval gate is passed.
 
-## Overall status
+## Overall status — reconciled to the 2026-11-02 latest checkpoint
 
 - Draft proposals: **90/90** (unique target IDs)
-- Full-bank screening: **90/90**; 12 lexical flags, 78 below 0.42
-- Syllabus mapping: **90/90**; 25 provisionally aligned, 65 require subject review
-- Assistant preliminary answer/context checks: **90/90**; independent human sign-off: **0**
+- Assistant full same-subject bank comparisons: **90/90**
+- Current lexical flags: **11/11** received assistant contextual reassessment; independent human decisions remain outstanding
+- Syllabus mapping: **90/90**; **57 provisionally aligned**, **33 require qualified subject review**
+- Assistant preliminary answer/explanation checks: **90/90**; independent qualified academic sign-off: **0/90**
+- Provenance joins: **90/90**
 - Inserted into source CSVs / Supabase / student feed: **0**
+
+The counts above supersede older totals elsewhere in this historical packet. In particular, do not use the former 25/65 syllabus split or former 12-flag headline. Historical pair notes and earlier triage tables are retained as an audit trail; they do not change the latest checkpoint and do not constitute independent academic approval. See `order-1-final-assistant-review-checkpoint-2026-11-02.md` and `order-1-independent-review-handoff-2026-11-02.md` for the current gate and subject routing.
 
 ## Pair-by-pair assistant review log (not independent academic approval)
 
@@ -100,9 +104,9 @@
 
 **Pair 01 outcome:** 2 drafts reviewed; 1 wording/distractor correction (DUP-04); 1 syllabus mapping correction (DUP-06); 0 independent subject approvals; 2 remain blocked from insertion.
 
-## Assistant contextual triage of the 12 lexical flags (not independent approval)
+## Historical assistant contextual triage of the earlier 12 lexical flags (not independent approval)
 
-The refreshed trigram screen produced 12 flags. The following assistant-only comparison checks the actual concept tested by each draft against its closest same-subject match. These are not human subject sign-offs and do not clear any draft for import. No flag is being treated as an automatic duplicate solely because of lexical similarity.
+The earlier refreshed trigram screen produced 12 flags. The table below preserves that historical assistant-only comparison against the closest same-subject matches. The latest checkpoint now records 11 current flags reassessed by the assistant; use the current 11-flag list in the independent-review handoff for human decisions. These are not human subject sign-offs and do not clear any draft for import. No flag is being treated as an automatic duplicate solely because of lexical similarity.
 
 | Target | Closest match / concept | Preliminary contextual finding | Human reviewer focus |
 |---|---|---|---|
