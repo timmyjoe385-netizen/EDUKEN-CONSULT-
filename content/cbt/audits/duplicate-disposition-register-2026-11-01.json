@@ -440,11 +440,11 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "reason": "Assistant pairwise answer, wording, syllabus and bank-context checks recorded; independent qualified subject/contextual review and explicit approval are still required."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate applies the law of reflection at a plane mirror; the closest held-bank item tests total internal reflection at a boundary. Distinct optical principles. Retain pending Physics reviewer confirmation."
+        "status": "assistant_pairwise_review_complete_human_subject_review_required",
+        "note": "Pairwise review: replacement tests the law of reflection at a plane mirror. Highest lexical match is held DUP-51 on total internal reflection; another close item tests plane-mirror image formation. These are distinct learning objectives. Stem clarified to state both angles are measured from the normal. Official Physics syllabus Topic 24 explicitly covers laws of reflection. Human Physics reviewer decision still required."
       }
     },
     {
@@ -524,11 +524,11 @@
       "replacement_status": "pending_user_approval",
       "replacement_review": {
         "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "reason": "Assistant pairwise answer, wording, syllabus and bank-context checks recorded; independent qualified subject/contextual review and explicit approval are still required."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate tests plasma transport of dissolved substances; the closest source tests red blood cells carrying haemoglobin/oxygen. Different blood components and functions. Retain pending Biology reviewer confirmation."
+        "status": "assistant_pairwise_review_complete_human_subject_review_required",
+        "note": "Pairwise review: replacement tests plasma transport of dissolved nutrients, hormones and metabolic wastes. Highest lexical match tests haemoglobin-mediated oxygen transport by red blood cells; the held duplicate tests platelet-mediated clotting. These are distinct blood components/functions. Stem clarified to remove vague 'many'. Official Biology Transport topic explicitly covers blood composition and functions. Human Biology reviewer decision still required."
       }
     },
     {
@@ -2002,7 +2002,7 @@
     "all_have_explanations": true,
     "all_have_nonempty_question_stems": true,
     "structural_validation": "passed",
-    "answer_and_explanation_review": "90 preliminary assistant checks recorded; independent subject review outstanding for all drafts",
+    "answer_and_explanation_review": "90 preliminary assistant checks recorded; pairwise detailed review completed for 6 of 90; independent subject review outstanding for all drafts",
     "official_jamb_syllabus_mapping": "90 mapped; 25 provisionally aligned and 65 require subject review; none approved",
     "bank_insertion": "not performed",
     "syllabus_mapping_quality_check": "Two metadata mismatches have been identified and corrected during packet QA: DUP-74 was labelled Genetics/DNA replication despite testing kidney ultrafiltration, and DUP-21 was labelled Drama despite testing a general narrative technique without a dramatic-text context. DUP-74 is now Excretion — kidney structure and urine formation (glomerular ultrafiltration); DUP-21 is now Literary principles and terminology — narrative techniques (flashback). Both corrected labels require detailed IBASS confirmation. The remaining 63 previously subject-review mappings remain unapproved; DUP-21 has been moved from provisional to subject review, leaving 25 provisional mappings.",
@@ -2041,6 +2041,20 @@
         "corrected": "Form and functions — B.6(a) tropic movements and roles of auxins; B.9(c)(ii) plant hormones and effects on growth/tropism",
         "reason": "The revised stem specifically tests auxin redistribution and differential elongation in positive phototropism. The official Biology syllabus explicitly lists tropic movements and roles of auxins under B.6(a), and phytohormone effects on growth/tropism under B.9(c)(ii).",
         "status": "assistant_mapping_refinement_official_syllabus_topic_verified_independent_biology_review_pending"
+      },
+      {
+        "target_id": "DUP-18",
+        "previous": "Reflection of light at plane and curved surfaces",
+        "corrected": "Physics — Topic 24: Reflection of Light at Plane and Curved Surfaces (laws of reflection)",
+        "reason": "The replacement tests equality of incidence and reflection angles, explicitly measured from the normal; the official Physics syllabus Topic 24 names laws of reflection and requires candidates to interpret them.",
+        "status": "assistant_mapping_verified_against_official_syllabus_independent_physics_review_pending"
+      },
+      {
+        "target_id": "DUP-22",
+        "previous": "Transport — blood, lymph and media of transportation",
+        "corrected": "Biology — Topic 3: Transport; media/processes and composition and functions of blood and lymph",
+        "reason": "The replacement tests plasma as a medium of transportation. The official Biology Transport topic includes media of transportation and the objective to know the composition and functions of blood and lymph.",
+        "status": "assistant_mapping_verified_against_official_syllabus_independent_biology_review_pending"
       }
     ],
     "content_clarity_corrections": [
@@ -2094,6 +2108,20 @@
         "corrected_explanation": "In a young shoot exposed to light from one direction, auxin becomes more concentrated on the shaded side and promotes greater cell elongation there. The unequal growth causes the shoot to bend towards the light.",
         "reason": "The original stem was broad because gibberellins can also promote stem elongation, while its animal-hormone distractors were implausibly easy. The revised stem tests the specific auxin-mediated mechanism of positive phototropism and uses plausible plant-hormone distractors.",
         "status": "assistant_wording_and_distractor_correction_pending_independent_biology_review"
+      },
+      {
+        "target_id": "DUP-18",
+        "previous_question": "A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection?",
+        "corrected_question": "A ray of light strikes a plane mirror at an angle of incidence of 35° to the normal. What is its angle of reflection, measured from the normal?",
+        "reason": "Makes the reference line explicit for both angles and removes any possible ambiguity about measuring from the mirror surface.",
+        "status": "assistant_wording_clarification_pending_independent_physics_review"
+      },
+      {
+        "target_id": "DUP-22",
+        "previous_question": "Which component of blood transports many dissolved nutrients, hormones and waste products?",
+        "corrected_question": "Which component of blood is the main medium for transporting dissolved nutrients, hormones and metabolic waste products around the body?",
+        "reason": "Removes the vague qualifier 'many' and makes the tested transport function more precise.",
+        "status": "assistant_wording_clarification_pending_independent_biology_review"
       }
     ]
   },
@@ -2107,7 +2135,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 4 of 90",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending; pairwise assistant review 6 of 90",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
@@ -2170,7 +2198,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review. Pair 01 assistant review completed 2026-11-02: DUP-04 wording/distractors refined for complete dominance; DUP-06 syllabus label corrected to proposed plant structural adaptations, with exact topic coverage still requiring qualified confirmation. No source CSV, import, or production data changed. Pair 02 assistant review completed 2026-11-02: DUP-14 mapping refined to explicit official Biology syllabus sections A.1(b) and A.2(a); DUP-17 question narrowed to auxin-mediated positive phototropism with improved plant-hormone distractors, and mapping tied to B.6(a) and B.9(c)(ii). No source CSV, import, or production data changed.",
+  "revision_note": "Completed exact row-level provenance reconciliation for all 13 later-replacement rows. Newly verified introducing commits: DUP-74 2a0f113b2326c495454e9ff01e2b24b7c27d06e1; DUP-82 fb1a7e73db035f91c92f4ace384d97cb873239f4; DUP-83 c7f4e49537c86ee6ad0feabafecda11109aa95d9; DUP-84 d91278d5c327b24a1f711eb8636d2a9cea1a07cf; DUP-85 439e78a7c43dce18283d89291aca5133f8cdd2e0; DUP-90 40167e2f0607e0df4c8d0f2971e5403a9488e10c. DUP-34 is separately verified by d91278d5c327b24a1f711eb8636d2a9cea1a07cf. Original question CSVs remain untouched; replacements remain held pending academic review. Pair 01 assistant review completed 2026-11-02: DUP-04 wording/distractors refined for complete dominance; DUP-06 syllabus label corrected to proposed plant structural adaptations, with exact topic coverage still requiring qualified confirmation. No source CSV, import, or production data changed. Pair 02 assistant review completed 2026-11-02: DUP-14 mapping refined to explicit official Biology syllabus sections A.1(b) and A.2(a); DUP-17 question narrowed to auxin-mediated positive phototropism with improved plant-hormone distractors, and mapping tied to B.6(a) and B.9(c)(ii). No source CSV, import, or production data changed. Pair 03 review added 2026-11-02: DUP-18 and DUP-22 received answer/explanation, wording, full-bank contextual and official syllabus checks. Two wording clarifications and two precise syllabus mappings were recorded. Both remain unapproved pending independent subject review; no source CSV or production data changed.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
