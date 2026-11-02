@@ -1989,7 +1989,10 @@
     "lexical_flags_manually_reviewed": 0,
     "confirmed_draft_duplicates_after_contextual_review": 0,
     "manual_contextual_review_complete": false,
-    "note": "Assistant preliminary contextual assessments are recorded for all 12 flagged candidates; independent human subject review remains outstanding."
+    "note": "All 90 drafts have preliminary assistant answer/context checks. The 12 lexical flags have written assistant-only concept-level triage in the independent review packet; independent human subject review remains outstanding. None are cleared for import.",
+    "assistant_contextual_triage_complete": true,
+    "assistant_contextual_triage_count": 12,
+    "assistant_contextual_triage_outcome": "12/12 lexical flags received written concept-level assistant comparisons against their closest same-subject matches; zero confirmed duplicates in this preliminary assistant-only triage. This does not count as independent manual contextual review or academic approval."
   },
   "draft_validation": {
     "draft_count": 90,
@@ -2013,7 +2016,7 @@
     "additional_duplicate_pairs_added": 52,
     "additional_replacement_drafts_required": 0,
     "independent_subject_review_status": "incomplete",
-    "manual_contextual_review_status": "incomplete",
+    "manual_contextual_review_status": "assistant_triage_complete_12_of_12; independent human review pending",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Lexical screening and assistant preliminary checks are not academic approval. Do not edit original-batch CSVs, import or publish, deploy production or merge PR #194 until independent subject/contextual review, provenance reconciliation, final import validation and explicit user approval are complete."
   },
