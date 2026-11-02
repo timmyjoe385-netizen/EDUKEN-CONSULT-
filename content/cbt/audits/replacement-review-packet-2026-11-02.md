@@ -2662,3 +2662,46 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 21 — DUP-67 and DUP-68 (2026-11-02)
+
+**DUP-67 — Chemistry: coordinate bond in ammonium ion formation**
+- **Answer:** C. Nitrogen in NH₃ donates its lone pair to H⁺ to form NH₄⁺; the bond is described as coordinate covalent at formation.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No ammonium coordinate-bond formation item was found. The nearest item asks for the ammonium-ion formula (batch 28 row 21); other matches concern metallic bonding and ammonia release.
+- **Similarity:** 0.4094, below the 0.42 threshold.
+- **Official syllabus:** JAMB Chemistry Topic 4(c) explicitly includes coordinate bonding and examples of complexes.
+- **Open issue:** Independent Chemistry reviewer should confirm that “coordinate” describes the formation process and that the question is appropriately worded.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-68 — Use of English: homograph/heteronym in context**
+- **Answer:** A. In the sentence, “winds” means moving air. “Wind” meaning to turn/twist is spelled the same but pronounced differently.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No homograph/heteronym meaning-in-context item was found. Nearest items test lexical stress.
+- **Similarity:** 0.2653, below the 0.42 threshold.
+- **Open issue:** Independent English reviewer should confirm terminology and syllabus fit. “Wind” is a homograph and, more specifically, a heteronym because the pronunciations differ.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 21 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-67 has broad direct syllabus coverage; DUP-68 requires English syllabus confirmation. 0 independent subject approvals.
+
+---
+
+## Pair 22 — DUP-69 and DUP-70 (2026-11-02)
+
+**DUP-69 — Literature in English: dramatic irony**
+- **Answer:** A. Dramatic irony occurs when the audience knows something important that a character does not.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No dramatic-irony item was found. Nearest items concern stream of consciousness, metaphor and aside, not the audience/character knowledge contrast.
+- **Similarity:** 0.3182, below the 0.42 threshold.
+- **Open issue:** Independent Literature reviewer should confirm the scenario is an unambiguous example and is within syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-70 — Biology: vacuole and turgor pressure**
+- **Answer:** B. Water in the large central vacuole contributes to turgor pressure, helping maintain firmness in mature plant cells.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No vacuole/turgor-pressure item was found. Nearest items concern vaccination, leaf cuticle and nucleus function.
+- **Similarity:** 0.3333, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer should confirm the exact wording and syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 22 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals; both remain excluded from import pending qualified review.
+
+---
+
