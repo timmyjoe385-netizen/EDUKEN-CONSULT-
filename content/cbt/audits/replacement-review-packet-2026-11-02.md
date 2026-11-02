@@ -2705,3 +2705,45 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 23 — DUP-71 and DUP-72 (2026-11-02)
+
+**DUP-71 — Physics: Coulomb's inverse-square law**
+- **Answer:** D (F/4). Doubling the separation between two point charges reduces electrostatic force to one quarter.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. No Coulomb inverse-square numerical item was found. Nearest items concern resistor combinations and charging by induction.
+- **Similarity:** 0.3117, below the 0.42 threshold.
+- **Open issue:** Independent Physics reviewer must confirm syllabus fit and calculation framing.
+- **Assistant disposition:** Preliminary calculation/context check recorded; not approved for import.
+
+**DUP-72 — Use of English: “fall through”**
+- **Answer:** B. A plan that “falls through” fails to happen or be completed.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No “fall through” item was found. Nearest items test “up in the air”, “at arm's length” and “break the ice”, which are different idioms.
+- **Similarity:** 0.3894, below the 0.42 threshold.
+- **Open issue:** Independent English reviewer should confirm idiomatic usage and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 23 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 24 — DUP-73 and DUP-74 (2026-11-02)
+
+**DUP-73 — Biology: spinal withdrawal reflex**
+- **Answer:** B. A simple withdrawal reflex is integrated through a spinal reflex arc before conscious pain interpretation.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No spinal-cord withdrawal-reflex item was found. Nearest items test cerebellum balance, neuron structure and ABO blood group.
+- **Similarity:** 0.3297, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer should confirm the phrase “before conscious interpretation” is accurate and within syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-74 — Biology: glomerular pressure in ultrafiltration**
+- **Answer:** A. The afferent arteriole is wider than the efferent arteriole, helping maintain high glomerular hydrostatic pressure for ultrafiltration.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No afferent/efferent arteriole diameter explanation item was found. The nearest nephron question asks where filtration occurs; this candidate asks what produces the pressure.
+- **Similarity:** 0.2971, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer must confirm syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 24 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals; both remain excluded from import pending qualified review.
+
+---
+
