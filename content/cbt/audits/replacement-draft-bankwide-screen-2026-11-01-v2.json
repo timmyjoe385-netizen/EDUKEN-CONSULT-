@@ -2,7 +2,7 @@
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
   "version": 21,
-  "purpose": "Refreshed non-destructive lexical screen of all 65 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
+  "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
@@ -2199,8 +2199,8 @@
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
   ],
   "proposals": {
-    "count": 65,
-    "screened": 65,
+    "count": 90,
+    "screened": 90,
     "all_proposals_screened": true
   },
   "revision_note": "Version 21 records revised candidates for DUP-02, 05, 08, 30 and 32. Their earlier blocked drafts were withdrawn; each new candidate is below the 0.42 same-subject lexical threshold and is compared against the full 1,600-row source bank. This does not constitute academic approval."
