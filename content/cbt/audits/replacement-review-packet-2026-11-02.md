@@ -2443,3 +2443,12 @@ No candidate in this packet is approved for insertion. The 12 lexical flags requ
 - **Assistant disposition:** Answer, wording and bankwide contextual checks complete; syllabus scope is an explicit open issue. Not approved for import.
 
 **Pair 06 outcome:** 2 drafts reviewed; DUP-37 wording/distractors refined; DUP-38's earlier clarity correction propagated into the actual draft file and its mapping downgraded to subject review required; both checked against all 200 same-subject retained-plus-held rows; 0 independent subject approvals; both remain blocked from insertion.
+
+
+## Pair 07 — DUP-39 and DUP-40 (2026-11-02)
+
+DUP-39 (Chemistry): Answer B is correct. Cryolite dissolves alumina, lowers operating temperature and improves electrolyte conductivity; it is not the reducing agent. All 200 Chemistry retained-plus-held rows were checked; no cryolite-role item was found. Closest items concern aluminium extraction by electrolysis (retained batch 19 row 20), bauxite ore (batch 36 row 21), and general catalyst/electrode principles. Broad official syllabus mapping is Topic 16(d), Aluminium and electrolytic extraction. Cryolite itself is not expressly named; qualified Chemistry review is required.
+
+DUP-40 (Chemistry): Answer C is correct. Vanadium(V) oxide catalyses oxidation of sulphur dioxide to sulphur trioxide in the Contact process. All 200 Chemistry retained-plus-held rows were checked; no question naming this catalyst was found. Closest items ask the Contact-process product (batch 22 row 21), general catalyst action (batches 03 row 20, 12 row 21, 25 row 21), and the Haber process (batch 20 row 21). Broad syllabus mapping is Topic 15(c), Contact process, and Topic 16(f), transition-metal catalysis. The syllabus does not name this catalyst; qualified Chemistry review is required.
+
+Pair 07 outcome: both candidates passed preliminary answer/explanation and same-subject bank comparison. No same-concept overlap found. Neither is approved for import; independent Chemistry and syllabus-scope review remain required.
