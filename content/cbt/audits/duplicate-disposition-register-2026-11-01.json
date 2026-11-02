@@ -2084,6 +2084,13 @@
         "corrected": "Humans and Environment — diseases and disease prevention/control (passive maternal immunity; proposed broad fit only)",
         "reason": "The revised item tests maternal IgG transfer across the placenta, not vaccine-induced active immunity. The official syllabus explicitly names disease prevention/control and inoculation/vaccination but does not expressly name passive maternal immunity or placental IgG transfer.",
         "status": "assistant_mapping_correction_pending_qualified_biology_syllabus_review"
+      },
+      {
+        "target_id": "DUP-37",
+        "previous": "Legislature — Private members' bills",
+        "corrected": "Processes of Legislation — Legislative Enactments (private members' bills; proposed broad fit)",
+        "reason": "The question tests who introduces a private member's bill. The official syllabus names Processes of Legislation and Legislative Enactments but does not expressly name private members' bills; detailed syllabus fit needs qualified Government review.",
+        "status": "assistant_mapping_correction_pending_qualified_government_syllabus_review"
       }
     ],
     "content_clarity_corrections": [
