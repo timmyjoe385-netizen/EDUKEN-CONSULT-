@@ -3037,3 +3037,105 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 - **Open issue:** Independent Literature reviewer should confirm the distinction from other retrospective narrative devices and syllabus fit.
 - **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
 
+
+
+## Pair 42 — DUP-23 and DUP-24 (2026-11-02)
+
+**DUP-23 — Economics: foreign direct investment**
+- **Answer:** A. A foreign company establishing and operating a lasting manufacturing plant in Nigeria is an example of foreign direct investment.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No FDI definition/example was found. Nearest items concern ad valorem tax, infrastructure and direct taxation.
+- **Similarity:** 0.2963, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm definition and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-24 — Biology: bacterial cell wall**
+- **Answer:** C. Peptidoglycan is the main structural material in most bacterial cell walls.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No peptidoglycan cell-wall composition item was found. Nearest items concern cellulose in plant cell walls, Rhizobium and red blood cells.
+- **Similarity:** 0.3566, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer should confirm wording and syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 42 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 43 — DUP-25 and DUP-26 (2026-11-02)
+
+**DUP-25 — Economics: tax evasion**
+- **Answer:** A. Knowingly concealing taxable income to avoid legally due tax is tax evasion.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No tax-evasion definition item was found. Nearest items concern progressive taxation and factor rewards.
+- **Similarity:** 0.2628, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm the distinction between illegal tax evasion and lawful tax avoidance.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-26 — Physics: capacitance calculation**
+- **Answer:** B (4 μF). C = Q/V = 24 μC/6 V = 4 μF.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. The nearest item (batch 12 row 25) asks the general purpose of a capacitor; this proposal tests numerical capacitance using C = Q/V.
+- **Similarity:** 0.3833, below the 0.42 threshold.
+- **Open issue:** Independent Physics reviewer should confirm units and syllabus fit.
+- **Assistant disposition:** Preliminary calculation/context check recorded; not approved for import.
+
+**Pair 43 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 44 — DUP-27 and DUP-28 (2026-11-02)
+
+**DUP-27 — Mathematics: joint variation**
+- **Answer:** B. If z varies jointly as x and y, z = kxy.
+- **Bank comparison:** All 200 Mathematics retained-plus-held rows were checked. Nearest items test direct variation and inverse variation, not joint variation as proportionality to the product xy.
+- **Similarity:** 0.3967, below the 0.42 threshold but close.
+- **Open issue:** Independent Mathematics reviewer should confirm distinction from direct/inverse variation and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-28 — Government: Exclusive Legislative List**
+- **Answer:** C. The National Assembly (federal legislature) legislates on matters assigned to the Exclusive Legislative List.
+- **Bank comparison:** All 200 Government retained-plus-held rows were checked. Nearest items concern local-government by-laws, general legislative functions and sovereignty; none asks who legislates on the Exclusive List.
+- **Similarity:** 0.3375, below the 0.42 threshold.
+- **Open issue:** Independent Government reviewer should confirm constitutional precision and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 44 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 45 — DUP-29 and DUP-30 (2026-11-02)
+
+**DUP-29 — Use of English: “deprived of”**
+- **Answer:** B. The correct collocation is “deprived of sleep”.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No “deprived of” item was found. The nearest held item tests the different collocation “congratulated on”.
+- **Similarity:** 0.1923, below the 0.42 threshold.
+- **Open issue:** Independent English reviewer should confirm collocation and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-30 — Use of English: lexicographer**
+- **Answer:** A. A lexicographer compiles, edits or writes dictionaries.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No lexicographer definition item was found. The related etymologist concept concerns the origin and development of words; the roles are distinct.
+- **Similarity:** 0.2637, below the 0.42 threshold.
+- **Open issue:** Independent English reviewer should confirm lexical precision and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 45 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 46 — DUP-31 and DUP-32 (2026-11-02)
+
+**DUP-31 — Physics: average force from change in momentum**
+- **Answer:** B (4 N). Change in momentum = 0.2 × 10 = 2 kg m/s; average force = 2/0.5 = 4 N.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. Nearest items calculate momentum (batches 06 row 23 and 26 row 26); this proposal uses change in momentum over time to calculate average force/impulse.
+- **Similarity:** 0.3766, below the 0.42 threshold.
+- **Open issue:** Independent Physics reviewer should confirm impulse syllabus fit and calculation.
+- **Assistant disposition:** Preliminary calculation/context check recorded; not approved for import.
+
+**DUP-32 — Literature in English: comedy of manners**
+- **Answer:** A. Comedy of manners satirises the social conventions and behaviour of a particular class or society, often through wit and irony.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No comedy-of-manners definition was found. Nearest items classify lyric poetry, identify denouement and describe plot development.
+- **Similarity:** 0.3483, below the 0.42 threshold.
+- **Open issue:** Independent Literature reviewer should confirm genre terminology and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 46 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
