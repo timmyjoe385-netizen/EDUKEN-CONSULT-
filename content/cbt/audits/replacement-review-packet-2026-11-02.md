@@ -25,6 +25,26 @@
 ### Pair 04 — DUP-33 and DUP-34 (2026-11-02)
 
 **DUP-33 — Use of English: relative-pronoun function**
+- **Bankwide finding:** The previous replacement draft (“whose” expresses possession) overlapped with retained batch 20 row 2, which also tests “whose” as a possessive relative pronoun. This was a genuine semantic overlap missed by the earlier lexical screen.
+- **Correction:** Replaced it with a new question testing “whom” as the object of the preposition “to” in a relative construction. The correct answer is B. The explanation identifies the objective case form and its relationship to the preposition.
+- **Bank comparison:** Retained batch 33 row 2 and held DUP-33 test “who” as subject relative pronoun; retained batch 20 row 2 tests “whose” possession; batch 36 row 5 asks candidates to identify a relative clause. The revised item tests “whom” as object of a preposition, a different grammatical function. Retained and held staging files were checked for this function; no exact same-function item was found in inspected entries. Independent English review remains required.
+- **Official syllabus mapping:** Broad alignment to Use of English Section B, Lexis and Structure: word classes and their functions; clause and sentence patterns; objective to identify grammatical patterns.
+- **Assistant disposition:** Superseded draft rejected for bank overlap; revised draft is a new proposal, not cleared or approved for import.
+
+**DUP-34 — Use of English: concord with plural-only noun**
+- **Answer and explanation:** C (“are”) is correct. “Cattle” is a plural-only noun in standard English and takes a plural verb in this sentence.
+- **Quality check:** The sentence is grammatical and has one correct answer. The explanation is specific to “cattle”; it should not imply that all nouns denoting groups behave identically.
+- **Bank comparison:** Nearest matches test agreement with a nearer subject after “neither…nor” (batch 01 row 3), a singular head noun (“list of items”, batch 33 row 3), and another proximity-concord pattern (batch 16 row 5). Retained “each of…” items test a different singular agreement trigger. The replacement tests plural-only “cattle”; inspected retained and held staging entries contained no same cattle-agreement question. Related concord domain, different rule.
+- **Official syllabus mapping:** Directly within Use of English Section B, Lexis and Structure, which explicitly lists number and agreement/concord and the objective to identify grammatical patterns.
+- **Assistant disposition:** Preliminary answer, explanation, contextual and syllabus checks passed. Independent English reviewer confirmation remains required; not approved for import.
+
+**Pair 04 outcome:** 2 drafts reviewed; 1 existing-bank semantic overlap discovered and corrected by replacing the draft; 1 concord item checked; revised DUP-33 requires fresh full-bank screening; 0 independent subject approvals; neither target is cleared for insertion.
+
+---
+
+### Pair 04 — DUP-33 and DUP-34 (2026-11-02)
+
+**DUP-33 — Use of English: relative-pronoun function**
 - **Important bankwide finding:** The previous replacement draft (“whose” expresses possession) overlapped with retained batch 20 row 2, which also tests “whose” as a possessive relative pronoun. This was a genuine semantic overlap that the earlier lexical screen had not surfaced. I did not clear the old draft.
 - **Correction:** Replaced it with a new question testing “whom” as the object of the preposition “to” in a relative construction. The correct answer is B. The explanation identifies the objective case form and its relationship to the preposition.
 - **Bank comparison:** Retained batch 33 row 2 and held DUP-33 test “who” as subject relative pronoun; retained batch 20 row 2 tests “whose” possession; batch 36 row 5 asks candidates to identify a relative clause. The revised item tests “whom” as object of a preposition, a different grammatical function. Full retained-plus-held staging files were searched for this function; no exact same-function item was found in the inspected entries. Independent English review is still required.
@@ -2179,11 +2199,11 @@ The refreshed trigram screen produced 12 flags. The following assistant-only com
 **Syllabus area:** Lexis and Structure — word classes and their functions; clause and sentence patterns  
 **Mapping status:** provisionally_aligned_to_explicit_official_topic
 
-**Bankwide collision found and corrected:** The previous draft asked what “whose” expresses. That overlapped semantically with retained batch 20 row 2, which asks candidates to identify “whose” as expressing possession. The earlier lexical screen did not surface this semantic overlap. The draft has therefore been replaced with a different relative-pronoun function: “whom” as the object of a preposition. Full retained-plus-held staging files were checked for this exact function; no same-target item was found in the inspected bank entries. Human English reviewer confirmation remains required.
+**Bankwide collision found and corrected:** The previous draft asked what “whose” expresses. That overlapped semantically with retained batch 20 row 2, which also tests “whose” as a possessive relative pronoun. The earlier lexical screen did not surface this semantic overlap. The draft has therefore been replaced with a different relative-pronoun function: “whom” as the object of a preposition. The retained and held staging files were checked for this function; no same-function item was found in the inspected bank entries. Human English reviewer confirmation remains required.
 
-**Lexical flag:** 0.4459 (threshold 0.42) on the superseded draft. This score must not be treated as a similarity score for the revised question.
+**Lexical flag:** 0.4459 (threshold 0.42) applied only to the superseded draft. It is not a similarity score for this revised question.
 
-**Assistant preliminary check:** B is correct: “whom” is the object form governed by the preposition “to”. The revised draft no longer asks the same possession question as retained batch 20 row 2. Related relative-pronoun content remains in the bank (including “who” as subject), but the grammatical function being tested is different. Independent contextual and subject review remains required.
+**Assistant preliminary check:** B is correct: “whom” is the object form governed by the preposition “to”. The revised draft no longer asks the same possession question as retained batch 20 row 2. Related relative-pronoun content remains in the bank, but the grammatical function tested is different. Independent contextual and subject review remains required.
 
 **Independent reviewer decision:** ☐ Approve  ☐ Revise  ☐ Reject  
 **Reviewer / date:** ____________________  
