@@ -2790,3 +2790,46 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 27 — DUP-79 and DUP-80 (2026-11-02)
+
+**DUP-79 — Use of English: infinitive of purpose**
+- **Answer:** A. “To borrow a textbook” states the purpose of the visit.
+- **Bank comparison:** All 200 Use of English retained-plus-held rows were checked. No infinitive-of-purpose function item was found. Nearest items test idiom meaning, unreal condition and relative clause.
+- **Similarity:** 0.3810, below the 0.42 threshold.
+- **Open issue:** Independent English reviewer should confirm grammatical classification and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-80 — Economics: mixed economy**
+- **Answer:** C. A mixed economy combines private economic activity with government ownership, regulation or provision of selected goods and services.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. No mixed-economy definition item was found. The nearest item (batch 40 row 30) defines a command economy, a contrasting system rather than the same concept.
+- **Similarity:** 0.3524, below the 0.42 threshold.
+- **Open issue:** Independent Economics reviewer should confirm scope and clarity.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 27 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 28 — DUP-81 and DUP-82 (2026-11-02)
+
+**DUP-81 — Physics: coefficient of linear expansion calculation**
+- **Answer:** A. Using ΔL = αLΔT, α = 0.002/(2.0 × 50) = 2.0 × 10⁻⁵ °C⁻¹.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. The nearest item (batch 33 row 25) defines the coefficient of linear expansion; this draft calculates it numerically. These are related but different assessment tasks.
+- **Similarity:** 0.3587, below the 0.42 threshold.
+- **Open issue:** Independent Physics reviewer should decide whether numerical application adds sufficient variety and confirm units/syllabus fit.
+- **Assistant disposition:** Calculation/context check recorded; not approved for import.
+
+**DUP-82 — Economics: law of diminishing marginal utility**
+- **Answer:** B. The law states that successive marginal utility tends to fall as consumption of additional units rises, other things equal.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. The closest items (batches 35 row 30 and 08 row 31) define marginal utility; the draft asks for the law governing the change in marginal utility over successive units. Related but distinct concepts.
+- **Similarity:** 0.4130, below the 0.42 threshold but close.
+- **Official syllabus:** JAMB Economics Topic 5(b) explicitly includes diminishing marginal utility.
+- **Open issue:** Independent Economics reviewer must decide whether the item is sufficiently distinct from the existing marginal-utility definitions or should be replaced with a more applied question.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 28 outcome:** DUP-81 is a numerical application adjacent to a definition item; DUP-82 is a law item adjacent to marginal-utility definitions. Both require human question-bank-variety decisions; 0 independent subject approvals.
+
+---
+
