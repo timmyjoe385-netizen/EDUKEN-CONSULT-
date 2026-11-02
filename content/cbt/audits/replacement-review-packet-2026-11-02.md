@@ -2578,3 +2578,45 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 17 — DUP-59 and DUP-60 (2026-11-02)
+
+**DUP-59 — Literature in English: epithet**
+- **Answer:** A. An epithet is a descriptive expression attached to a person or thing to highlight a characteristic; “swift-footed” is a conventional epithet associated with Achilles.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. No epithet item was found. The nearest lexical match is batch 23 row 40 on synecdoche (0.4113), which tests part-for-whole reference; other close items concern epilogue and exposition.
+- **Similarity:** 0.4113, just below the 0.42 threshold.
+- **Open issue:** A Literature reviewer should confirm that the classical example is appropriate for JAMB level and distinguish the device from other descriptive terms.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-60 — Biology: Organ of Corti**
+- **Answer:** A. The Organ of Corti, located in the cochlea, contains sensory hair cells that transduce sound-related mechanical vibrations.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No Organ of Corti/hair-cell location item was found. Nearest matches concern root-hair osmosis and red blood cell function, not cochlear hearing.
+- **Similarity:** 0.2783, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer must confirm anatomical wording and syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 17 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-59 is a near-threshold lexical case; both require independent subject/syllabus review. 0 independent subject approvals.
+
+---
+
+## Pair 18 — DUP-61 and DUP-62 (2026-11-02)
+
+**DUP-61 — Biology: phototropism**
+- **Answer:** A. Greater cell elongation on the shaded side of a shoot produces differential growth that bends the shoot towards light; auxin is involved.
+- **Bank comparison:** All 200 Biology retained-plus-held rows were checked. No phototropism/auxin shaded-side item was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis.
+- **Similarity:** 0.2262, below the 0.42 threshold.
+- **Open issue:** Independent Biology reviewer must confirm syllabus depth and wording.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-62 — Literature in English: enjambment**
+- **Answer:** A. Enjambment occurs when syntax or sense continues across a poetic line break without an end-stop.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a line. These are related lineation techniques but not duplicates.
+- **Similarity:** 0.4046, below the 0.42 threshold but close.
+- **Open issue:** Independent Literature reviewer should confirm the distinction from caesura, syllabus scope and question-bank variety.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 18 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals; both remain excluded from import pending qualified review.
+
+---
+
