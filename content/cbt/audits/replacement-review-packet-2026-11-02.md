@@ -2875,3 +2875,54 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 
 ---
 
+
+
+## Pair 33 — DUP-01 and DUP-02 (2026-11-02)
+
+**DUP-01 — Mathematics: rectangle diagonals**
+- **Answer:** B. A rectangle's diagonals are equal in length and bisect one another; they are not necessarily perpendicular.
+- **Bank comparison:** All 200 Mathematics retained-plus-held rows were checked. Nearest items concern polygon interior/exterior angles, not rectangle diagonals.
+- **Similarity:** 0.3500, below the 0.42 threshold.
+- **Open issue:** Independent Mathematics reviewer should confirm syllabus fit and the distractor distinction.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-02 — Chemistry: salt bridge**
+- **Answer:** B. Ions migrate through the salt bridge to maintain electrical neutrality and prevent charge build-up in the half-cells.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. The nearest item (batch 23 row 17) asks where oxidation occurs in a galvanic cell; it does not test the salt bridge's ion-migration function.
+- **Similarity:** 0.4144, below the 0.42 threshold but close.
+- **Open issue:** Independent Chemistry reviewer should distinguish ionic conduction through the salt bridge from electron flow through the external circuit and confirm syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 33 outcome:** Both candidates are distinct from the existing same-subject bank. DUP-02 is a near-threshold lexical case; 0 independent subject approvals.
+
+---
+
+## Pair 34 — DUP-03 and DUP-05 (2026-11-02)
+
+**DUP-03 — Physics: alternating current**
+- **Answer:** B. Alternating current periodically reverses direction.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. The nearest item (batch 18 row 22) asks for the power formula in a DC circuit; another asks about Lenz's law. Neither defines alternating current.
+- **Similarity:** 0.4138, below the 0.42 threshold but close.
+- **Open issue:** Independent Physics reviewer should confirm wording and syllabus fit.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-05 — Literature in English: iambic pentameter**
+- **Answer:** B. Five iambic feet form iambic pentameter.
+- **Bank comparison:** All 200 Literature in English retained-plus-held rows were checked. The nearest item is batch 13 row 39 on blank verse. Blank verse is traditionally unrhymed iambic pentameter, so this proposal tests a key component of an existing concept.
+- **Similarity:** 0.3673, below the 0.42 threshold.
+- **Open issue:** This is not a verbatim duplicate, but its assessed knowledge closely overlaps with the existing blank-verse item. Independent Literature reviewer must decide whether it adds sufficient value or should be replaced with a more distinct concept.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 34 outcome:** DUP-03 is provisionally distinct. DUP-05 is held for a human question-bank-variety decision. 0 independent subject approvals.
+
+---
+
+## Pair 35 — DUP-07 (2026-11-02)
+
+**DUP-07 — Physics: heat transfer through a vacuum**
+- **Answer:** C. Radiation can occur through a vacuum because electromagnetic waves do not require a material medium.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. The nearest item (batch 11 row 25) defines convection as heat transfer by bulk movement of a fluid; this candidate tests radiation through a vacuum.
+- **Similarity:** 0.4094, below the 0.42 threshold but close.
+- **Open issue:** The two items concern distinct heat-transfer mechanisms, but a Physics reviewer should confirm syllabus fit and question-bank variety.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
