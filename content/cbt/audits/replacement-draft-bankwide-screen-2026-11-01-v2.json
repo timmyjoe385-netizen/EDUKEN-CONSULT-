@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 24,
+  "version": 25,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -1247,7 +1247,12 @@
           "score": 0.3143,
           "question": "In a legislature, a party whip is primarily responsible for:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared the replacement with all 200 Government retained-plus-held rows. The bank's nearest matches concern general legislative functions, freedom of expression and party-whip duties; none asks about the distinct legal protection afforded to statements made in legislative proceedings. Preliminary answer A is plausible, but the precise scope of parliamentary privilege depends on the applicable constitutional/statutory framework. The wording should be checked by a qualified Government reviewer, and the syllabus fit of legislative privilege is not yet confirmed. Similarity 0.3893, below the 0.42 flag threshold. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-48",
@@ -1272,9 +1277,9 @@
         }
       ],
       "contextual_assessment": {
-        "review_type": "assistant_preliminary_contextual_assessment",
-        "decision": "conceptually_distinct_pending_human_review",
-        "note": "Preliminary distinction: denotation is a word's literal meaning; diction is a writer's choice/use of words. Related literary vocabulary but different concepts. Because the lexical score is high, require an independent Literature reviewer to confirm the distinction."
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared with all 200 Literature in English retained-plus-held rows. The highest lexical match is batch 36 row 38 on diction (0.6667); the concepts are related but distinct: denotation is a word's direct/literal meaning, while diction is a writer's choice and use of words. Other nearest matches concern setting and mood. The high lexical flag is not proof of duplication, but requires independent Literature reviewer confirmation. Preliminary answer B is correct. Syllabus fit requires confirmation. Not approved for import."
       }
     },
     {
@@ -1298,7 +1303,12 @@
           "score": 0.2444,
           "question": "A firm that sells its output at the prevailing market price and cannot influence that price is described as a:"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared with all 200 Economics retained-plus-held rows. No tax-incidence question was found. Nearby taxation questions test tax types, direct/indirect, progressive/regressive, specific and ad valorem taxes; they do not test statutory remittance versus the final economic burden after tax shifting. Preliminary answer C and explanation are conceptually sound. Confirm that tax incidence is within the intended JAMB syllabus depth. Similarity 0.2807, below the 0.42 flag threshold. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-50",
@@ -1321,7 +1331,12 @@
           "score": 0.306,
           "question": "Which organelle contains digestive enzymes that break down worn-out cell components?"
         }
-      ]
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared with all 200 Biology retained-plus-held rows. No Golgi apparatus protein-modification/sorting/packaging question was found. Nearest organelle questions test nucleus, mitochondrion, chloroplast, ribosome and lysosome functions; these are related cell-biology material but distinct functions. Preliminary answer A and explanation are sound. Check that the precise Golgi functions are within the intended JAMB syllabus depth. Similarity 0.3135, below the 0.42 flag threshold. Not approved for import."
+      }
     },
     {
       "target_id": "DUP-51",
@@ -2260,5 +2275,5 @@
     "screened": 90,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review."
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending."
 }
