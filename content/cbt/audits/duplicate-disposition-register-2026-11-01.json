@@ -69,7 +69,7 @@
     "additional_replacement_drafts_required": 0,
     "draft_count": 90
   },
-  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-74 (48/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
+  "approval_gate": "All 90 replacement proposals remain drafts. Pairwise assistant contextual reviews recorded through DUP-78 (52/90 targets); 12 lexical flags require independent contextual subject review; syllabus mappings requiring subject review remain unresolved. Independent qualified subject/answer approval is 0/90. No question is approved for import or publication. Original source CSVs remain unchanged. Continue reviews and reconcile all records before final import validation, deployment, or merge.",
   "pairs": [
     {
       "id": "DUP-01",
@@ -1764,8 +1764,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved in separate draft bank following full same-subject lexical screening below 0.42. Human subject and semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in reviewer packet. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. Nearest match batch 12 row 31 tests absolute advantage, not comparative advantage. Opportunity cost of cloth is 2 rice in A and 1 rice in B; B has comparative advantage, answer B. Similarity 0.4022. Official Economics syllabus Topic 21(a) includes comparative costs. Independent Economics review required."
       }
     },
     {
@@ -1785,8 +1789,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate added to the separate draft bank after same-subject full-bank lexical screening below 0.42 and a check against existing replacement drafts. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in reviewer packet. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. No negative-externality item found; nearest items concern input costs, economies of scale and taxation. Answer B is correct: third-party pollution costs not reflected in price are a negative externality. Similarity 0.3622. Independent Economics reviewer must confirm syllabus fit."
       }
     },
     {
@@ -1806,8 +1814,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate saved in separate draft bank following full same-subject lexical screening below 0.42. Human subject and semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in reviewer packet. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Government rows checked. No equality-before-law/rule-of-law question found; nearest items concern public accountability, political neutrality and checks and balances. Answer A is correct. Similarity 0.3724. Independent Government reviewer must confirm syllabus mapping."
       }
     },
     {
@@ -1827,8 +1839,12 @@
       "csv_change_status": "not_changed_staging_holdout_created",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "draft_needs_subject_and_bankwide_review",
-        "reason": "Candidate added to the separate draft bank after same-subject full-bank lexical screening below 0.42 and a check against existing replacement drafts. Independent subject and contextual semantic review remains required."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded in reviewer packet. Independent qualified subject review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Use of English rows checked. Nearest batch 20 row 4 also tests semicolon use but for complex list items, while this draft tests joining independent clauses. Distinct semicolon functions but same punctuation family; question-bank variety is an open human decision. Answer B correct. Similarity 0.4105. Independent English review required."
       }
     },
     {
@@ -2398,7 +2414,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 48,
+    "assistant_pairwise_reviewed_targets": 52,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0
   }
