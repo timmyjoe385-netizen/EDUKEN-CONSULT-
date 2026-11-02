@@ -251,8 +251,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "draft_created_not_cleared",
       "replacement_review": {
-        "status": "revised_draft_needs_subject_and_bankwide_review",
-        "reason": "The earlier methyl-orange acidity candidate was withdrawn because the bank already tests acid identification with blue litmus. This natural-gas composition question tests a different Chemistry concept."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry rows checked. No natural-gas principal-constituent item found. Nearest matches concern gas laws and bauxite ore, not natural-gas composition. Answer B is correct: methane is the principal constituent of most natural gas, though composition varies. Similarity 0.3810. Independent Chemistry reviewer must confirm syllabus depth and whether this belongs in the JAMB question bank."
       }
     },
     {
@@ -271,8 +275,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry rows checked. No question asks why dilute sulfuric acid is added to water before electrolysis. Nearest items test electrode polarity, Faraday's law and neutralisation. Answer A is correct: the acid supplies mobile ions and increases conductivity; it is not intended to produce chlorine. Similarity 0.3019. Independent Chemistry reviewer should confirm wording and conditions."
       }
     },
     {
@@ -291,12 +299,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
       },
       "contextual_review": {
-        "status": "assistant_preliminary_distinction_human_subject_review_required",
-        "note": "Preliminary distinction: the candidate tests deflation (a sustained fall in the general price level); the closest source tests inflation (a sustained rise). Opposite concepts, not the same answer objective. Retain pending Economics reviewer confirmation."
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Economics rows checked. The highest match (batch 02 row 29, 0.4507) asks for inflation as a sustained rise in the general price level. The candidate asks for deflation, a sustained fall. Opposite directions and distinct concepts, not a duplicate. Answer B is correct. Official JAMB Economics Topic 12(f) explicitly includes deflation. Independent Economics reviewer should confirm the distinction and wording."
       }
     },
     {
@@ -315,8 +323,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Physics rows checked. No ray-through-optical-centre item found. Nearest item asks for the shape of a convex lens (batch 18 row 24); other matches are unrelated. Answer B is correct for a paraxial ray through the optical centre of a thin lens: it emerges without appreciable deviation. Similarity 0.3577. Independent Physics reviewer must confirm syllabus fit and the paraxial/thin-lens qualification."
       }
     },
     {
@@ -335,8 +347,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "draft_rejected_semantic_overlap_new_replacement_required",
+        "reason": "Existing batch 28 row 28 already tests the per-capita-income formula; numerical rewording does not create a distinct concept. A new replacement draft is required."
+      },
+      "contextual_review": {
+        "status": "assistant_review_found_semantic_overlap_replacement_required",
+        "note": "A semantic overlap was found despite the low lexical score (0.3521). Batch 28 row 28 already asks how per-capita income is calculated by dividing national income by population. The proposed numerical question uses the same formula and therefore repeats the same assessed concept. The arithmetic answer B (₦30,000) is correct, but the draft is not sufficiently distinct. Reject this replacement draft and create a different Economics concept for DUP-12; do not import it."
       }
     },
     {
@@ -355,8 +371,12 @@
       "csv_change_status": "not_changed",
       "replacement_status": "pending_user_approval",
       "replacement_review": {
-        "status": "not_yet_cleared",
-        "reason": "Replacement draft still requires contextual manual review against the full question bank."
+        "status": "assistant_review_complete_not_approved_human_subject_and_syllabus_review_required",
+        "reason": "Preliminary answer and full same-subject bank comparison recorded. Independent qualified subject and syllabus review remains mandatory; no import or publication is authorised."
+      },
+      "contextual_review": {
+        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+        "note": "All 200 Chemistry rows checked. No methane-chlorination reaction-classification item found. Nearest items concern acid-base reactions and esterification, which are different reaction types. Answer B is correct: methane reacts with chlorine under UV light by free-radical substitution. Similarity 0.3796. Independent Chemistry reviewer must confirm the radical mechanism is within syllabus depth."
       }
     },
     {
@@ -2466,7 +2486,7 @@
     "pending": "65 mappings require qualified syllabus review (64 previously pending plus DUP-21); 25 remain provisional; DUP-74 and DUP-21 corrected mappings await detailed IBASS confirmation."
   },
   "review_progress": {
-    "assistant_pairwise_reviewed_targets": 69,
+    "assistant_pairwise_reviewed_targets": 75,
     "assistant_pairwise_reviewed_range": "DUP-01–DUP-50, with prior pair records and new Pair 11–12 notes; see reviewer packet",
     "independent_subject_approvals": 0,
     "assistant_pairwise_reviewed_ids": [
