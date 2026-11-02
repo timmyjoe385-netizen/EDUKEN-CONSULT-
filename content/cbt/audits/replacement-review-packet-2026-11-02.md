@@ -2926,3 +2926,63 @@ Pair 07 outcome: both candidates passed preliminary answer/explanation and same-
 - **Open issue:** The two items concern distinct heat-transfer mechanisms, but a Physics reviewer should confirm syllabus fit and question-bank variety.
 - **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
 
+
+
+## Pair 36 — DUP-08 and DUP-09 (2026-11-02)
+
+**DUP-08 — Chemistry: natural gas**
+- **Answer:** B. Methane is the principal constituent of most natural gas, although composition varies by source.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No natural-gas composition item was found. Nearest items concern gas laws and bauxite ore.
+- **Similarity:** 0.3810, below the 0.42 threshold.
+- **Open issue:** Independent Chemistry reviewer must confirm syllabus depth and suitability.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**DUP-09 — Chemistry: acid added before electrolysis of water**
+- **Answer:** A. Dilute sulfuric acid supplies mobile ions and increases the electrical conductivity of water.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No question asks why acid is added before electrolysis. Nearest items test electrode polarity, Faraday's law and neutralisation.
+- **Similarity:** 0.3019, below the 0.42 threshold.
+- **Open issue:** Independent Chemistry reviewer should confirm wording and experimental conditions.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 36 outcome:** Both candidates are distinct from the existing same-subject bank. 0 independent subject approvals.
+
+---
+
+## Pair 37 — DUP-10 and DUP-11 (2026-11-02)
+
+**DUP-10 — Economics: deflation**
+- **Answer:** B. Deflation is a sustained fall in the general price level.
+- **Bank comparison:** All 200 Economics retained-plus-held rows were checked. The highest lexical match (batch 02 row 29, 0.4507) defines inflation as a sustained rise in the general price level. The candidate tests the opposite direction; this is a related contrast, not a duplicate.
+- **Similarity:** 0.4507, flagged for contextual review.
+- **Official syllabus:** JAMB Economics Topic 12(f) explicitly includes deflation.
+- **Assistant disposition:** Preliminary answer/context and syllabus checks recorded; independent Economics review remains required; not approved for import.
+
+**DUP-11 — Physics: ray through the optical centre of a thin lens**
+- **Answer:** B. A paraxial ray through the optical centre of a thin lens emerges without appreciable deviation.
+- **Bank comparison:** All 200 Physics retained-plus-held rows were checked. No optical-centre ray item was found. The nearest item asks for the shape of a convex lens (batch 18 row 24).
+- **Similarity:** 0.3577, below the 0.42 threshold.
+- **Open issue:** Independent Physics reviewer must confirm syllabus fit and the paraxial/thin-lens qualification.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 37 outcome:** DUP-10 is a flagged but conceptually distinct opposite-concept item; DUP-11 is distinct. 0 independent subject approvals.
+
+---
+
+## Pair 38 — DUP-12 and DUP-13 (2026-11-02)
+
+**DUP-12 — Economics: per-capita income calculation**
+- **Proposed answer:** B (₦30,000); the arithmetic is correct.
+- **Bank comparison:** A semantic overlap was found despite the low lexical score (0.3521). Batch 28 row 28 already asks how per-capita income is calculated by dividing national income by population. The proposed numerical version tests the same formula and assessed concept.
+- **Assistant disposition:** **Reject this replacement draft for overlap.** Create a different Economics concept for DUP-12. Do not import the current numerical version.
+
+**DUP-13 — Chemistry: chlorination of methane**
+- **Answer:** B. Methane reacts with chlorine under ultraviolet light by free-radical substitution.
+- **Bank comparison:** All 200 Chemistry retained-plus-held rows were checked. No methane-chlorination reaction-classification item was found. Nearest items concern acid-base reactions and esterification, which are different reaction types.
+- **Similarity:** 0.3796, below the 0.42 threshold.
+- **Open issue:** Independent Chemistry reviewer must confirm the radical mechanism is within syllabus depth.
+- **Assistant disposition:** Preliminary answer/context check recorded; not approved for import.
+
+**Pair 38 outcome:** DUP-12 is rejected and needs a new replacement; DUP-13 remains a distinct draft pending independent Chemistry review. 0 independent subject approvals.
+
+---
+
