@@ -92,6 +92,7 @@ test('admin can import a CSV as drafts and move a question through review states
   await expect(page.getByRole('heading', { name: 'CBT Question Bank', level: 1 })).toBeVisible();
 
   await page.getByRole('button', { name: /Import CSV/i }).click();
+  await expect(page.getByRole('heading', { name: 'Bulk CSV import' })).toBeVisible();
   const csv = [
     'exam_type,subject,topic,subtopic,question_text,option_A,option_B,option_C,option_D,correct_option,explanation,difficulty,source_type,source_name,source_year,provenance_notes,licensing_notes',
     'JAMB,Use of English,Grammar,Nouns,"Which word names a quality?",quickly,happiness,blue,run,B,"Happiness names a quality.",easy,original,,,,',
