@@ -132,6 +132,10 @@ export const api = {
   delete: (path: string) => request(path, { method: 'DELETE' }),
 };
 
+// React StrictMode can run mount effects twice. Share one in-flight OAuth callback
+// so the first effect's cleanup cannot consume the URL fragment and strand the second.
+let oauthCallbackPromise: Promise<any> | null = null;
+
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
   signUpWithPassword: async (email: string, password: string) => {
@@ -191,43 +195,49 @@ export const auth = {
     window.location.assign(url.toString());
     return new Promise(() => undefined);
   },
-  completeOAuthCallback: async () => {
+  completeOAuthCallback: () => {
+    if (oauthCallbackPromise) return oauthCallbackPromise;
     const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
     const accessToken = hash.get('access_token');
     const refreshToken = hash.get('refresh_token');
     const isOAuthResponse = hash.has('access_token') || hash.has('refresh_token') ||
       hash.has('error') || hash.has('error_description');
-    if (!isOAuthResponse) return null;
+    if (!isOAuthResponse) return Promise.resolve(null);
     // Clear OAuth response data before making network requests, but preserve
     // ordinary SPA hashes such as #opportunities and #opportunity/article-slug.
     window.history.replaceState({}, document.title, window.location.pathname);
-    if (!accessToken) {
-      const oauthError = hash.get('error_description') || hash.get('error');
-      if (oauthError) {
-        const readableError = oauthError.replace(/\+/g, ' ').replace(/_/g, ' ');
-        throw new Error('Google sign-in could not finish: ' + readableError + '. Check the Supabase Auth redirect URL allowlist if this is a preview deployment.');
+    oauthCallbackPromise = (async () => {
+      if (!accessToken) {
+        const oauthError = hash.get('error_description') || hash.get('error');
+        if (oauthError) {
+          const readableError = oauthError.replace(/\\+/g, ' ').replace(/_/g, ' ');
+          throw new Error('Google sign-in could not finish: ' + readableError + '. Check the Supabase Auth redirect URL allowlist if this is a preview deployment.');
+        }
+        return null;
       }
-      return null;
-    }
-    const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
-      headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
+      const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
+      });
+      const user = await response.json();
+      if (!response.ok || !user.email) {
+        writeSession(null);
+        throw new Error('Could not verify the Google account.');
+      }
+      // Customer accounts are allowed to sign in. Admin endpoints independently enforce
+      // the server-side ADMIN_EMAILS allowlist; client-side UI visibility is not authorization.
+      const session = {
+        access_token: accessToken,
+        refresh_token: refreshToken || undefined,
+        expires_at: Math.floor(Date.now() / 1000) + Number(hash.get('expires_in') || 3600),
+        user,
+      };
+      writeSession(session);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return { user, session };
+    })().finally(() => {
+      oauthCallbackPromise = null;
     });
-    const user = await response.json();
-    if (!response.ok || !user.email) {
-      writeSession(null);
-      throw new Error('Could not verify the Google account.');
-    }
-    // Customer accounts are allowed to sign in. Admin endpoints independently enforce
-    // the server-side ADMIN_EMAILS allowlist; client-side UI visibility is not authorization.
-    const session = {
-      access_token: accessToken,
-      refresh_token: refreshToken || undefined,
-      expires_at: Math.floor(Date.now() / 1000) + Number(hash.get('expires_in') || 3600),
-      user,
-    };
-    writeSession(session);
-    window.history.replaceState({}, document.title, window.location.pathname);
-    return { user, session };
+    return oauthCallbackPromise;
   },
   signOut: async () => {
     const session = readSession();
