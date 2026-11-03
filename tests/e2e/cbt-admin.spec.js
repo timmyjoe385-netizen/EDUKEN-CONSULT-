@@ -89,7 +89,7 @@ test('admin can import a CSV as drafts and move a question through review states
 
   await expect(page.getByRole('button', { name: /CBT Question Bank/i })).toBeVisible();
   await page.getByRole('button', { name: /CBT Question Bank/i }).click();
-  await expect(page.getByRole('heading', { name: 'CBT Question Bank' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'CBT Question Bank', level: 1 })).toBeVisible();
 
   await page.getByRole('button', { name: /Import CSV/i }).click();
   const csv = [
