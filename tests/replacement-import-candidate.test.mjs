@@ -82,6 +82,7 @@ test("90 replacement import candidates map one-to-one to the 90 held rows and re
     const target = held.find(row => row.pair_id === candidate.target_id);
     assert.ok(target, candidate.target_id + ": held duplicate target must exist.");
     assert.equal(candidate.subject, target.subject, candidate.target_id + ": replacement subject must match held subject.");
+    assert.ok(candidate.provenance_notes.includes(candidate.target_id), candidate.target_id + ": target mapping must survive CSV parsing through the persisted provenance field.");
   }
 
   const retainedCounts = Object.fromEntries(subjects.map(subject => [subject, 0]));
