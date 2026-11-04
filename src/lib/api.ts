@@ -187,9 +187,10 @@ export const auth = {
     return { user: result.user, session };
   },
   signIn: async (_options?: any) => {
-    // Supabase preview redirect allow-lists commonly permit the origin/root but not arbitrary paths.
-    // Carry the private admin intent in a query parameter so OAuth can return to the root safely.
-    const redirectTo = window.location.origin + '/?eduken_admin=1';
+    // Return to the exact preview origin root (commonly allow-listed by Supabase).
+    // Keep the private admin intent in this tab across the Google OAuth round-trip.
+    sessionStorage.setItem('eduken_admin_oauth', '1');
+    const redirectTo = window.location.origin + '/';
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
     url.searchParams.set('redirect_to', redirectTo);
