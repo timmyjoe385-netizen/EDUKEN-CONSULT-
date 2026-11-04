@@ -187,7 +187,9 @@ export const auth = {
     return { user: result.user, session };
   },
   signIn: async (_options?: any) => {
-    const redirectTo = window.location.origin + window.location.pathname;
+    // Supabase preview redirect allow-lists commonly permit the origin/root but not arbitrary paths.
+    // Carry the private admin intent in a query parameter so OAuth can return to the root safely.
+    const redirectTo = window.location.origin + '/?eduken_admin=1';
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
     url.searchParams.set('redirect_to', redirectTo);
@@ -205,7 +207,7 @@ export const auth = {
     if (!isOAuthResponse) return Promise.resolve(null);
     // Clear OAuth response data before making network requests, but preserve
     // ordinary SPA hashes such as #opportunities and #opportunity/article-slug.
-    window.history.replaceState({}, document.title, window.location.pathname);
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
     oauthCallbackPromise = (async () => {
       if (!accessToken) {
         const oauthError = hash.get('error_description') || hash.get('error');
