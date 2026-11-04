@@ -5,7 +5,7 @@
 
 ## Current disposition notice — 2026-11-02
 
-The project owner explicitly confirmed that the reviewer approved **90/90** proposals and instructed the project to proceed. This user-reported approval includes the 14 former syllabus-scope/depth holds and all 11 former lexical-flag cases. No signed item-level worksheets, reviewer identity or credentials were uploaded; the approval is recorded as user-reported, not independently documentary-verified. The worksheets and routing queues below are preserved as historical handoff material, not as a claim that review is still pending.
+The project owner explicitly confirmed that the reviewer approved **90/90** proposals and instructed the project to proceed. This user-reported approval includes the 14 former syllabus-scope/depth holds and all 11 former lexical-flag cases. No signed item-level worksheets, reviewer identity or credentials were uploaded; the approval is recorded as user-reported, not independently documentary-verified. The worksheets and routing queues below are preserved as historical handoff material. The repository contains no signed item-level decisions, reviewer identity or credentials, so the 90/90 disposition is user-reported rather than independently documentary-verified.
 
 ## Authoritative checkpoint
 Use the latest checkpoint file `order-1-final-assistant-review-checkpoint-2026-11-02.md` on this branch as the authoritative status record. The 2026-11-02 checkpoint currently records the 90/90 assistant review totals below; this handoff is a routing aid, not a replacement for the checkpoint.
@@ -15,15 +15,15 @@ Use the latest checkpoint file `order-1-final-assistant-review-checkpoint-2026-1
 - Assistant preliminary answer/explanation checks: 90/90.
 - Assistant contextual reassessment of current lexical flags: 11/11.
 - Provenance joins: 90/90.
-- Syllabus mapping: 57 provisionally aligned; 33 require qualified subject review.
-- Explicit syllabus-scope/depth holds: 14.
-- Reviewer disposition: 90/90 approved as reported by the project owner; signed item-level records are not present in the repository.
+- Syllabus mapping at the time of the assistant screen: 57 provisionally aligned; 33 flagged for qualified subject review.
+- Explicit syllabus-scope/depth holds at that screen: 14.
+- Reviewer disposition: 90/90 approved as reported by the project owner; signed item-level records, reviewer identity and credentials are not present in the repository. Documentary independent approvals therefore remain unverified (0/90 evidenced).
 - Source CSV insertions / production imports / publication: 0.
 
 The older overall-status paragraph in `replacement-review-packet-2026-11-02.md` contains superseded counts (25/65 and 12 lexical flags). Do not use those headline counts. The latest checkpoint above supersedes them. Historical pair notes remain useful evidence but are not independent approvals.
 
 ## Subject routing index
-These IDs were routed for independent review. The project owner now reports approval for all 90; retain this index as the historical routing record. Do not treat the blank repository worksheets as signed approval evidence.
+These IDs were routed for independent review. The project owner subsequently reported approval for all 90; retain this index as the historical routing record. Do not treat the blank repository worksheets as signed approval evidence.
 
 | Subject | Count | Replacement IDs |
 |---|---:|---|
@@ -63,7 +63,7 @@ These 14 were held for a written scope/depth decision at handoff. The project ow
 ## Former lexical flags — reported cleared by reviewer
 The latest screen records **11/11** lexical flags as having received assistant contextual reassessment. The project owner subsequently reported reviewer approval for all 90, including these flags. No separate item-level reviewer rationales were uploaded. The exact historical flag IDs remain in the screening artifact.
 
-A flag is not automatically a duplicate. The reviewer must compare the learning outcome and concept against the closest retained and held items and record why the item is distinct or overlapping.
+A flag is not automatically a duplicate. The reviewer should compare the learning outcome and concept against the closest retained and held items and record why the item is distinct or overlapping. The user's reported approval covers these cases, but no item-level reviewer rationale is present in this repository.
 
 ## Required reviewer record — one record per DUP ID
 For each candidate, record:
@@ -87,4 +87,4 @@ The full question text, options, draft keys, explanations, syllabus mappings and
 Reviewers should use that packet alongside the actual retained-plus-held subject bank and the official JAMB syllabus. This index is not a substitute for those source materials.
 
 ## Release restriction
-Do not modify original source CSVs, generate a production import, import into Supabase, publish to the student feed, merge PR #194 or deploy to production until all required independent reviews are recorded and the user gives the final controlled replacement approval. Authenticated admin import/review/publish testing and release regression checks remain separate later gates.
+The user-reported 90/90 reviewer disposition is recorded, but its underlying independent reviewer evidence is not present in the repository. Keep the 90-row candidate file staged only. Do not modify original source CSVs, import into production Supabase, publish to the student feed, merge PR #194 or deploy to production without the user's separate explicit production-release approval. Authenticated admin import/review/publish testing against the isolated test project and release regression checks remain outstanding technical gates.
