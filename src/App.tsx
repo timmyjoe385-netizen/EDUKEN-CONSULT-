@@ -416,7 +416,7 @@ function App() {
     let active = true;
     // Admin entry stays off the public homepage and navigation.
     // Owners can always open /admin directly, including after signing out.
-    if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || new URLSearchParams(window.location.search).get('eduken_admin') === '1')) {
+    if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
       setLoginOpen(true);
     }
     const params = new URLSearchParams(window.location.search);
@@ -437,7 +437,7 @@ function App() {
       // OAuth can also be used by customers from the public wallet. Completing that
       // callback establishes their customer session, but must never switch the public
       // homepage into the admin dashboard merely because their email is admin-allowlisted.
-      if (!(window.location.pathname.replace(/\/+$/, '') === '/admin' || new URLSearchParams(window.location.search).get('eduken_admin') === '1')) {
+      if (!(window.location.pathname.replace(/\/+$/, '') === '/admin' || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
         setUser(null);
         setAdminView(false);
         return;
@@ -450,12 +450,14 @@ function App() {
         if (!active) return;
         setUser(result.user);
         setAdminView(true);
+        sessionStorage.removeItem('eduken_admin_oauth');
         void loadAdmin('opportunities');
         void loadSystemSettings();
       } catch (error) {
         if (!active) return;
         setUser(null);
         setAdminView(false);
+        sessionStorage.removeItem('eduken_admin_oauth');
         const message = error instanceof Error ? error.message : '';
         setToast(
           /403|admin access required/i.test(message)
@@ -2484,7 +2486,7 @@ function App() {
 
   // Keep the admin route visually separate from the public customer website.
   // Surface OAuth and authorization failures here so the owner can act on them.
-  if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || new URLSearchParams(window.location.search).get('eduken_admin') === '1')) {
+  if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
     return (
       <main className="admin-login-page">
         {toast && (
