@@ -50,6 +50,9 @@ export default function CbtQuestionBankAdmin() {
   const [form,setForm] = useState<Question | null>(null);
   const [filter,setFilter] = useState('all');
   const [search,setSearch] = useState('');
+  const [page,setPage] = useState(1);
+  const [total,setTotal] = useState(0);
+  const pageSize = 50;
   const [loading,setLoading] = useState(false);
   const [saving,setSaving] = useState(false);
   const [message,setMessage] = useState('');
@@ -61,9 +64,18 @@ export default function CbtQuestionBankAdmin() {
   const [filename,setFilename] = useState('');
   const [showImport,setShowImport] = useState(false);
   const [batchRows,setBatchRows] = useState<Record<string,unknown>[] | null>(null);
-  const load = async () => {
+  const load = async (requestedPage = page) => {
     setLoading(true); setError('');
-    try { const result = await api.get('/api/admin/cbt/questions' + (filter !== 'all' ? '?status='+encodeURIComponent(filter) : '')); setItems(result.data?.items || []); }
+    try {
+      const params = new URLSearchParams({ page: String(requestedPage), pageSize: String(pageSize) });
+      if (filter !== 'all') params.set('status', filter);
+      if (search.trim()) params.set('q', search.trim());
+      const result = await api.get('/api/admin/cbt/questions?' + params.toString());
+      const nextItems = result.data?.items || [];
+      setItems(nextItems);
+      setTotal(Number(result.data?.total ?? nextItems.length));
+      setPage(Number(result.data?.page ?? requestedPage));
+    }
     catch(e) { setError(e instanceof Error ? e.message : 'Could not load question bank.'); }
     finally { setLoading(false); }
   };
@@ -78,8 +90,11 @@ export default function CbtQuestionBankAdmin() {
       setLoadingImports(false);
     }
   };
-  useEffect(()=>{ void load(); void loadImportHistory(); },[filter]);
-  const visible = useMemo(()=>items.filter(q => !search || [q.question_text,q.subject,q.topic,q.subtopic].join(' ').toLowerCase().includes(search.toLowerCase())),[items,search]);
+  useEffect(()=>{ void load(1); void loadImportHistory(); },[filter,search]);
+  const visible = items;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const firstRow = total === 0 ? 0 : (page - 1) * pageSize + 1;
+  const lastRow = Math.min(page * pageSize, total);
   const change = (key: keyof Question, value: any) => setForm(current => current ? ({...current,[key]:value}) : current);
   const save = async () => {
     if (!form) return;
@@ -125,7 +140,7 @@ export default function CbtQuestionBankAdmin() {
     <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button><button className="primary" onClick={()=>setShowImport(true)}><Upload size={16}/> Import CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
     {error ? <div className="analytics-error" role="alert"><b>Action needs attention</b><p>{error}</p></div> : null}
     {message ? <div className="system-setting-row" role="status"><CheckCircle2 size={18}/><span>{message}</span></div> : null}
-    <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Question, subject or topic"/></label></div><span>{visible.length} shown</span></div>
+    <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Question, subject or topic"/></label></div><div className="analytics-controls"><small>{firstRow}–{lastRow} of {total} questions · Page {page} of {totalPages}</small><button className="secondary" onClick={()=>void load(page-1)} disabled={loading || page<=1}>Previous</button><button className="secondary" onClick={()=>void load(page+1)} disabled={loading || page>=totalPages}>Next</button></div></div>
     {form ? <div className="system-settings-panel" style={{marginBottom:18}}><div className="analytics-toolbar"><h3>{form.id?'Edit question':'Create question'}</h3><button className="secondary" onClick={()=>setForm(null)}><X size={16}/> Close</button></div>
       <div className="admin-form-grid">
         <label>Exam type<input value={form.exam_type} onChange={e=>change('exam_type',e.target.value)} required/></label>
