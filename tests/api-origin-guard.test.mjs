@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { shouldBlockWrite, resolveSupabaseBackend } from '../src/lib/api-safety.js';
+import { shouldBlockWrite, resolveSupabaseBackend, isTrustedCbtPreviewOrigin } from '../src/lib/api-safety.js';
 
 test('canonical production origin permits write methods', () => {
   for (const method of ['POST', 'PUT', 'PATCH', 'DELETE']) {
@@ -95,4 +95,12 @@ test('canonical production keeps the production backend when no explicit config 
   assert.equal(backend.url, 'https://pphxltbkwygqjtjgkhxu.supabase.co');
   assert.equal(backend.key, 'production-key');
   assert.equal(backend.isolated, false);
+});
+
+
+test('implicit CBT preview writes are limited to EDUKEN Cloudflare preview hosts', () => {
+  assert.equal(isTrustedCbtPreviewOrigin('https://fix-cbt-practice-available-counts-eduken-consult.timmy385.workers.dev'), true);
+  assert.equal(isTrustedCbtPreviewOrigin('https://eduken-consult-preview.timmy385.workers.dev'), true);
+  assert.equal(isTrustedCbtPreviewOrigin('https://attacker.example'), false);
+  assert.equal(isTrustedCbtPreviewOrigin('https://other-worker.workers.dev'), false);
 });
