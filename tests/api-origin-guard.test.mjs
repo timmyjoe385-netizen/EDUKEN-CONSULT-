@@ -84,7 +84,7 @@ test('unconfigured branch previews resolve to the isolated test backend, never p
 
 test('canonical production keeps the production backend when no explicit config is supplied', () => {
   const backend = resolveSupabaseBackend({
-    origin: 'https://eduken-consult.timmy385.workers.dev',
+    origin: 'https://eduken-consult.timmyjoe385.workers.dev',
     suppliedUrl: '',
     suppliedKey: '',
     productionUrl: 'https://pphxltbkwygqjtjgkhxu.supabase.co',
