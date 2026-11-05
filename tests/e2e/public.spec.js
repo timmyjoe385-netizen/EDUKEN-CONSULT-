@@ -1032,7 +1032,8 @@ test('public header exposes customer wallet access but not admin access', async 
   await page.getByRole('button', { name: /Continue with Google/i }).click();
   const authUrl = new URL((await authNavigation).url());
   expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
+  await expect.poll(() => page.evaluate(() => sessionStorage.getItem('eduken_admin_oauth'))).toBe('1');
 });
 
 
