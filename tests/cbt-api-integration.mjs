@@ -18,11 +18,14 @@ const request = async (path, body) => {
   return { response, data };
 };
 
-const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English" });
-assert.equal(started.response.status, 201, "A practice session should start from published isolated sample questions.");
+// The isolated fixture intentionally contains one published Use of English sample.
+// Request exactly one so this test exercises a valid session without adding or
+// publishing database fixtures merely to satisfy the integration test.
+const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
+assert.equal(started.response.status, 201, "A one-question practice session should start from the published isolated sample.");
 assert.match(started.data.attemptToken || "", /^[a-f0-9]{64}$/i, "The server should issue an opaque attempt token.");
-assert.equal(started.data.durationSeconds, 900, "Subject practice should use the expected 15-minute timer.");
-assert.ok(Array.isArray(started.data.questions) && started.data.questions.length > 0, "The session should include published questions.");
+assert.equal(started.data.durationSeconds, 60, "A one-question practice session should use the one-minute timer.");
+assert.ok(Array.isArray(started.data.questions) && started.data.questions.length === 1, "The session should include exactly one published question.");
 
 for (const question of started.data.questions) {
   assert.equal(Object.hasOwn(question, "correct_option"), false, "Correct answers must not be exposed before submission.");
@@ -41,7 +44,7 @@ const submitted = await request("/api/cbt/submit", { attemptToken: started.data.
 assert.equal(submitted.response.status, 200, "The server should accept and grade the practice submission.");
 assert.equal(submitted.data.score, 1, "The server should award one point for the known correct answer.");
 assert.equal(submitted.data.total, started.data.questions.length);
-assert.equal(submitted.data.percent, Math.round(100 / started.data.questions.length));
+assert.equal(submitted.data.percent, 100);
 assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.correctOption, "B");
 assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.isCorrect, true);
 
