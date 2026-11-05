@@ -47,6 +47,7 @@ jobs:
         env:
           # Publishable frontend key and URL are intentionally public. Keep these
           # scoped to the preview build so preview never silently falls back to production.
+          VITE_EDUKEN_ENV: preview
           VITE_SUPABASE_URL: https://wpktzogarfqrgkirzdpy.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB
           VITE_ENABLE_TEST_WRITES: 'true'
