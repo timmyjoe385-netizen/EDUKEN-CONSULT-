@@ -46,6 +46,44 @@ test('CBT practice fallback supports navigation, flagging and answer review', as
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
 });
 
+test('CBT practice count adapts to the published questions available', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'single-published-question',
+      subject: 'Use of English',
+      question_text: 'Choose the correct option.',
+      options: { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' },
+    }] }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.questionCount).toBe(1);
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'c'.repeat(64),
+        durationSeconds: 60,
+        questions: [{
+          id: 'single-published-question',
+          subject: 'Use of English',
+          prompt: 'Choose the correct option.',
+          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const countSelect = page.getByLabel('Questions per subject practice');
+  await expect(countSelect).toHaveValue('1');
+  await expect(countSelect.locator('option')).toHaveCount(1);
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+});
+
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route =>
     route.fulfill({
