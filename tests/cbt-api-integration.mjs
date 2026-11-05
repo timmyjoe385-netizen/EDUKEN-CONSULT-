@@ -35,9 +35,13 @@ for (const question of started.data.questions) {
 
 const fixture = started.data.questions.find(question => question.prompt === "Which word names a person, place, or thing?");
 assert.ok(fixture, "The isolated original Use of English fixture should be included in the practice session.");
+// The deployed API randomizes option order for every attempt. Identify the known
+// correct answer by its displayed text, not by assuming its original letter/index.
+const correctIndex = fixture.options.findIndex(option => option === "Happiness");
+assert.ok(correctIndex >= 0, "The shuffled options should still contain the known correct answer.");
 const answers = Object.fromEntries(started.data.questions.map(question => [
   String(question.id),
-  String(question.id) === String(fixture.id) ? 1 : null,
+  String(question.id) === String(fixture.id) ? correctIndex : null,
 ]));
 
 const submitted = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers });
@@ -45,8 +49,10 @@ assert.equal(submitted.response.status, 200, "The server should accept and grade
 assert.equal(submitted.data.score, 1, "The server should award one point for the known correct answer.");
 assert.equal(submitted.data.total, started.data.questions.length);
 assert.equal(submitted.data.percent, 100);
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.correctOption, "B");
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.isCorrect, true);
+const reviewedFixture = submitted.data.review.find(question => String(question.id) === String(fixture.id));
+assert.equal(reviewedFixture?.selectedOption, ["A", "B", "C", "D"][correctIndex]);
+assert.equal(reviewedFixture?.correctOption, ["A", "B", "C", "D"][correctIndex]);
+assert.equal(reviewedFixture?.isCorrect, true);
 
 const repeated = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers: {} });
 assert.equal(repeated.response.status, 200, "A repeated submission should return the stored result safely.");
