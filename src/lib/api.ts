@@ -1,4 +1,4 @@
-import { shouldBlockWrite, PRODUCTION_SUPABASE_URL } from './api-safety.js';
+import { shouldBlockWrite, PRODUCTION_ORIGIN, PRODUCTION_SUPABASE_URL, resolveSupabaseBackend } from './api-safety.js';
 
 // Use direct Vite env references so the build statically injects preview-scoped values.
 const PRODUCTION_SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
@@ -18,9 +18,9 @@ const ALLOW_CBT_TEST_WRITES =
   SUPABASE_KEY !== PRODUCTION_SUPABASE_KEY;
 
 // Expose the resolved backend mode so preview-only UI reads use the same isolated test project as writes.
-export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;
+export const usesIsolatedTestBackend = backend.isolated;
 // Production Flutterwave UI is opt-in at build time and never enabled in the isolated test preview.
-export const isFlutterwaveLiveUiEnabled = import.meta.env.VITE_ENABLE_FLUTTERWAVE_LIVE === 'true' && !ALLOW_TEST_WRITES;
+export const isFlutterwaveLiveUiEnabled = import.meta.env.VITE_ENABLE_FLUTTERWAVE_LIVE === 'true' && !backend.isolated;
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
 const SESSION_KEY = 'eduken_auth_session';
 
@@ -92,7 +92,7 @@ const request = async (
   const method = String(options.method || 'GET').toUpperCase();
   const isolatedCbtTestWrite =
     ALLOW_CBT_TEST_WRITES &&
-    window.location.origin !== 'https://eduken-consult.timmy385.workers.dev' &&
+    window.location.origin !== PRODUCTION_ORIGIN &&
     SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
     /^\/api\/(?:admin\/)?cbt(?:\/|$)/.test(path);
   if (!isolatedCbtTestWrite && shouldBlockWrite(window.location.origin, method, {
