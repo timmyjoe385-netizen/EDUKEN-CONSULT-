@@ -18,7 +18,7 @@ const request = async (path, body) => {
   return { response, data };
 };
 
-const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English" });
+const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
 assert.equal(started.response.status, 201, "A practice session should start from published isolated sample questions.");
 assert.match(started.data.attemptToken || "", /^[a-f0-9]{64}$/i, "The server should issue an opaque attempt token.");
 assert.equal(started.data.durationSeconds, 900, "Subject practice should use the expected 15-minute timer.");
