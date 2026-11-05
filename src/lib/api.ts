@@ -1,4 +1,4 @@
-import { shouldBlockWrite, PRODUCTION_ORIGIN, PRODUCTION_SUPABASE_URL, resolveSupabaseBackend } from './api-safety.js';
+import { shouldBlockWrite, PRODUCTION_ORIGIN, PRODUCTION_SUPABASE_URL, resolveSupabaseBackend, isTrustedCbtPreviewOrigin } from './api-safety.js';
 
 // Canonical production uses production credentials. Any other origin without
 // an explicit backend config defaults to the isolated test project, never production.
@@ -26,7 +26,7 @@ const ALLOW_CBT_TEST_WRITES =
   (import.meta.env.VITE_ENABLE_CBT_TEST_WRITES === 'true' &&
     backend.explicit &&
     backend.isolated) ||
-  (!backend.explicit && backend.isolated && window.location.origin !== PRODUCTION_ORIGIN);
+  (!backend.explicit && backend.isolated && isTrustedCbtPreviewOrigin(window.location.origin));
 
 // Expose the resolved backend mode so preview-only UI reads use the same isolated test project as writes.
 export const usesIsolatedTestBackend = backend.isolated;
