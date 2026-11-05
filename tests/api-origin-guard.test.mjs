@@ -64,3 +64,21 @@ test('preview writes require explicit opt-in and a separate Supabase backend', (
     'production origin can never write to the test backend',
   );
 });
+
+test('preview public-content and analytics auth use only the isolated Supabase project', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const { resolve } = await import('node:path');
+  const app = await readFile(resolve(process.cwd(), 'src/App.tsx'), 'utf8');
+  const worker = await readFile(resolve(process.cwd(), 'worker/index.js'), 'utf8');
+  const wrangler = JSON.parse(await readFile(resolve(process.cwd(), 'wrangler.jsonc'), 'utf8'));
+
+  assert.match(app, /api\\.get\\(['"]\\/public-content['"]\\)/);
+  assert.doesNotMatch(app, /pphxltbkwygqjtjgkhxu\\.supabase\\.co/);
+  assert.match(worker, /env\\.EDUKEN_ENV === ["']preview["']/);
+  assert.match(worker, /getSupabaseConfig\\(env\\)/);
+  assert.doesNotMatch(worker, /https:\\/\\/pphxltbkwygqjtjgkhxu\\.supabase\\.co\\/functions\\/v1\\/eduken-api\\/public-content/);
+
+  assert.equal(wrangler.env.preview.vars.EDUKEN_ENV, 'preview');
+  assert.equal(wrangler.env.preview.vars.SUPABASE_URL, 'https://wpktzogarfqrgkirzdpy.supabase.co');
+  assert.match(wrangler.env.preview.vars.SUPABASE_PUBLISHABLE_KEY, /^sb_publishable_/);
+});
