@@ -35,7 +35,7 @@ const fixture = started.data.questions.find(question => question.prompt === "Whi
 assert.ok(fixture, "The isolated original Use of English fixture should be included in the practice session.");
 const answers = Object.fromEntries(started.data.questions.map(question => [
   String(question.id),
-  String(question.id) === String(fixture.id) ? 1 : null,
+  String(question.id) === String(fixture.id) ? "B" : null,
 ]));
 
 const submitted = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers });
