@@ -13,7 +13,12 @@ export const resolveSupabaseBackend = ({
   previewUrl,
   previewKey,
 }) => {
-  const url = String(suppliedUrl || '').trim().replace(/\\/+$/, '');
+  const trimTrailingSlashes = (value) => {
+    let result = String(value || '').trim();
+    while (result.endsWith('/')) result = result.slice(0, -1);
+    return result;
+  };
+  const url = trimTrailingSlashes(suppliedUrl);
   const key = String(suppliedKey || '').trim();
   if (url && key) {
     return {
@@ -29,7 +34,7 @@ export const resolveSupabaseBackend = ({
   }
 
   return {
-    url: String(previewUrl || '').trim().replace(/\\/+$/, ''),
+    url: trimTrailingSlashes(previewUrl),
     key: String(previewKey || '').trim(),
     explicit: false,
     isolated: true,
