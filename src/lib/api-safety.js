@@ -2,6 +2,40 @@
 export const PRODUCTION_ORIGIN = 'https://eduken-consult.timmyjoe385.workers.dev';
 export const PRODUCTION_SUPABASE_URL = 'https://pphxltbkwygqjtjgkhxu.supabase.co';
 
+// Resolve preview deployments to the isolated test project when Cloudflare's
+// branch-preview build does not inject Vite environment variables.
+export const resolveSupabaseBackend = ({
+  origin,
+  suppliedUrl,
+  suppliedKey,
+  productionUrl,
+  productionKey,
+  previewUrl,
+  previewKey,
+}) => {
+  const url = String(suppliedUrl || '').trim().replace(/\\/+$/, '');
+  const key = String(suppliedKey || '').trim();
+  if (url && key) {
+    return {
+      url,
+      key,
+      explicit: true,
+      isolated: url !== productionUrl && key !== productionKey,
+    };
+  }
+
+  if (origin === PRODUCTION_ORIGIN) {
+    return { url: productionUrl, key: productionKey, explicit: false, isolated: false };
+  }
+
+  return {
+    url: String(previewUrl || '').trim().replace(/\\/+$/, ''),
+    key: String(previewKey || '').trim(),
+    explicit: false,
+    isolated: true,
+  };
+};
+
 const READ_ONLY_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
 export const shouldBlockWrite = (origin, method = 'GET', options = {}) => {
@@ -14,6 +48,6 @@ export const shouldBlockWrite = (origin, method = 'GET', options = {}) => {
   if (origin === PRODUCTION_ORIGIN) return !isProductionBackend;
 
   // Preview writes require an explicit build-time opt-in and a non-production backend.
-  // If preview secrets are missing, api.ts falls back to production and remains read-only.
+  // If preview secrets are missing, only CBT endpoints may use the isolated preview backend; other writes stay blocked.
   return !(options.allowTestWrites === true && !isProductionBackend);
 };
