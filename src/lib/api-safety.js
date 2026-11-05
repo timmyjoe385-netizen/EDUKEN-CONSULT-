@@ -41,6 +41,16 @@ export const resolveSupabaseBackend = ({
   };
 };
 
+export const isTrustedCbtPreviewOrigin = (origin) => {
+  try {
+    const hostname = new URL(origin).hostname.toLowerCase();
+    return hostname === 'eduken-consult-preview.timmy385.workers.dev' ||
+      /^[a-z0-9-]+-eduken-consult\\.timmy385\\.workers\\.dev$/.test(hostname);
+  } catch {
+    return false;
+  }
+};
+
 const READ_ONLY_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
 export const shouldBlockWrite = (origin, method = 'GET', options = {}) => {
