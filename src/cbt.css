@@ -47,3 +47,34 @@
 .cbt-starter-state{flex:0 0 auto;padding:6px 9px;border-radius:999px;background:#fff0e7;color:#92512b;font-size:9px;font-weight:800;white-space:nowrap}
 .cbt-starter-state.is-ready{background:#e2f2e6;color:#216343}
 @media(max-width:680px){.cbt-starter-card{align-items:flex-start;gap:10px;margin-top:18px;padding:13px}.cbt-starter-icon{width:34px;height:34px;flex-basis:34px}.cbt-starter-card strong{font-size:12px}.cbt-starter-card p{font-size:10px}.cbt-starter-state{font-size:8px;padding:5px 7px}}
+
+
+/* Make unavailable/loading actions unmistakably disabled on touch screens. */
+.cbt-page .cbt-primary-button:disabled,
+.cbt-page .cbt-secondary-button:disabled {
+  opacity: .52;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  filter: saturate(.65);
+}
+.cbt-page .cbt-primary-button:disabled:hover,
+.cbt-page .cbt-secondary-button:disabled:hover {
+  transform: none;
+}
+
+/* Keep the mobile hero focused on starting practice, not the decorative mockup. */
+@media(max-width:680px) {
+  .cbt-hero { gap: 20px; padding-top: 34px; padding-bottom: 34px; }
+  .cbt-hero-visual { min-height: 220px; overflow: visible; }
+  .cbt-visual-orbit { width: min(230px,76%); box-shadow: 0 0 0 20px #f0f6f1, 0 0 0 40px #f6f9f6; }
+  .cbt-preview-panel { width: calc(100% - 34px); padding: 15px; border-radius: 17px; }
+  .cbt-preview-title { font-size: 21px; margin: 16px 0 13px; }
+  .cbt-preview-metrics { gap: 7px; }
+  .cbt-preview-metrics>div { padding: 9px 8px; gap: 5px; }
+  .cbt-preview-metrics b { font-size: 10px; }
+  .cbt-preview-metrics small { font-size: 9px; }
+  .cbt-preview-footer { margin-top: 13px; }
+  .cbt-floating-note { display: none; }
+  .cbt-trust-row { position: relative; z-index: 1; }
+}
