@@ -21,7 +21,8 @@ const request = async (path, body) => {
 const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
 assert.equal(started.response.status, 201, "A practice session should start from published isolated sample questions.");
 assert.match(started.data.attemptToken || "", /^[a-f0-9]{64}$/i, "The server should issue an opaque attempt token.");
-assert.equal(started.data.durationSeconds, 900, "Subject practice should use the expected 15-minute timer.");
+// Non-default practice lengths use one minute per requested question; this fixture requests one.
+assert.equal(started.data.durationSeconds, 60, "A one-question practice session should use a one-minute timer.");
 assert.ok(Array.isArray(started.data.questions) && started.data.questions.length > 0, "The session should include published questions.");
 
 for (const question of started.data.questions) {
