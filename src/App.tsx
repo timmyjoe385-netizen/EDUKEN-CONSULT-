@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
+import { analyticsApi, api, auth, usesIsolatedTestBackend, isPreviewTestCheckoutEnabled } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
@@ -330,7 +330,7 @@ function App() {
       // Preview checkout must use only the isolated test catalogue. Keep a known test-only
       // service visible if public catalogue loading fails; the checkout API still validates
       // the service ID and availability against the isolated database before creating a request.
-      if (usesIsolatedTestBackend) {
+      if (usesIsolatedTestBackend && isPreviewTestCheckoutEnabled) {
         const previewTestService = {
           id: '376b883f-3a8c-490f-a130-ee5adefeaa2b',
           name: 'EDUKEN TEST CHECKOUT SERVICE — TEST ONLY',
