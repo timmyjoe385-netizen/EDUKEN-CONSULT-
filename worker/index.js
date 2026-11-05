@@ -3,7 +3,7 @@ const PRODUCTION_SUPABASE_PUBLISHABLE_KEY = "sb_publishable__qH331oDMJzmjqlOig3C
 
 function getSupabaseConfig(env) {
   const isPreview = env.EDUKEN_ENV === "preview";
-  const configuredUrl = String(env.SUPABASE_URL || "").trim().replace(/\\/+$/, "");
+  const configuredUrl = String(env.SUPABASE_URL || "").trim().replace(/\/+$/, "");
   const configuredKey = String(env.SUPABASE_PUBLISHABLE_KEY || "").trim();
   // Preview must fail closed: never fall back to production if its isolated
   // Supabase URL or publishable key is missing.
@@ -219,13 +219,14 @@ const ANALYTICS_EVENTS = new Set([
 ]);
 const ANALYTICS_ADMIN_EMAILS = new Set(["timmyjoe385@gmail.com", "edukenconsult00@gmail.com"]);
 
-async function isAnalyticsAdmin(request) {
+async function isAnalyticsAdmin(request, env) {
   const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/i, "");
-  if (!token) return false;
+  const config = getSupabaseConfig(env);
+  if (!token || !config) return false;
   try {
-    const response = await fetch("https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/user", {
+    const response = await fetch(config.url + "/auth/v1/user", {
       headers: {
-        apikey: SUPABASE_PUBLISHABLE_KEY,
+        apikey: config.key,
         Authorization: "Bearer " + token,
       },
     });
