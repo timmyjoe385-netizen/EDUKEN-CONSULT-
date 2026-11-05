@@ -258,9 +258,8 @@ export const auth = {
     return oauthCallbackPromise;
   },
   signOut: async () => {
-    assertBackendConfigured();
     const session = readSession();
-    if (session?.access_token) {
+    if (session?.access_token && (!IS_PREVIEW_BUILD || PREVIEW_BACKEND_CONFIGURED)) {
       await fetch(SUPABASE_URL + '/auth/v1/logout', {
         method: 'POST',
         headers: {
