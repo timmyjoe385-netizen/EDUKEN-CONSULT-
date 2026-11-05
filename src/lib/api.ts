@@ -118,7 +118,20 @@ const request = async (
   headers.set('apikey', SUPABASE_KEY);
   if (session?.access_token)
     headers.set('Authorization', 'Bearer ' + session.access_token);
-  const response = await fetch(API_BASE + path, { ...options, headers });
+  // A slow or stalled CBT question-bank request must not leave the student-facing
+  // availability indicator spinning forever. Limit this read to 12 seconds.
+  let response: Response;
+  if (path === '/api/cbt/questions' && method === 'GET') {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 12_000);
+    try {
+      response = await fetch(API_BASE + path, { ...options, headers, signal: controller.signal });
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  } else {
+    response = await fetch(API_BASE + path, { ...options, headers });
+  }
   const text = await response.text();
   let data: any = {};
   try {
