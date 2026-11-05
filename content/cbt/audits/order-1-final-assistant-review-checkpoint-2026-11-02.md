@@ -1,3 +1,30 @@
+# Current technical checkpoint — 2026-11-05
+
+This section supersedes the older "Release gate" paragraph below wherever it describes authenticated admin E2E or the latest CI/preview status. Historical review findings and the question-bank counts remain unchanged.
+
+## Latest verified technical status
+
+- PR #194 head: `0653f73b11e8a321358353681a1dac2a177b08d6`; PR remains open, draft and unmerged.
+- Build and validation workflow `41981412207`: **passed**.
+- Playwright/browser and isolated real-CBT-API workflow `41981412057`: **passed**.
+- Build plus isolated preview deployment workflow `41981412186`: **passed**. Chromium CBT preview smoke and isolated guest-payment recovery smoke passed. Production deploy job was skipped.
+- Wallet and CBT migration integration workflow `41981412079`: **passed**.
+- Authenticated isolated admin E2E: **passed 2026-11-05**. Allowlisted Google admin login, synthetic CSV draft import, duplicate retry, persisted review/approval/publish transitions, student-feed visibility, unpublish/removal, cleanup, sign-out and non-allowlisted HTTP 403 rejection all verified. Test project returned to its baseline; import history was retained. See `isolated-admin-e2e-runbook-2026-11-05.md`.
+- Independent external fetch of the preview hostname currently fails DNS resolution. Therefore CI's deployment and Chromium smoke are verified, but independent public hostname reachability and a fresh external visual inspection remain unconfirmed.
+- Production deployment remains skipped; no production data, Worker, payment settings or student records were changed.
+
+## Current question-bank and release blockers
+
+- Isolated test database has 73 questions total: 65 drafts and 8 published (one published question per subject). It cannot support a 180-question mock. No source CSVs or 90 replacement candidates have been imported.
+- 1,018 cross-window semantic candidates remain unreviewed.
+- 279 within-window different-topic candidates are reported pending; the original 390 versus independently recomputed 352 candidate-count discrepancy (38) remains unresolved.
+- Fourteen replacement-history records still need commit-SHA normalization; one provenance pair remains unverified.
+- The owner-reported 90/90 reviewer approval remains user-reported. Signed item-level reviewer worksheets and reviewer identity/credentials are absent (0/90 documentary records). This is not being represented as independently verified.
+- Keep the 1,600 source drafts and 90 replacements out of Supabase and unpublished until the remaining semantic/provenance gates are closed and the reviewer evidence limitation is resolved or explicitly accepted by the project owner.
+- PR #194 must remain unmerged and production deployment/import/publication must remain blocked until the outstanding gates are resolved and the user separately authorizes production release.
+
+---
+
 # Order 1 — latest assistant review checkpoint (2026-11-02)
 
 ## Verified progress
