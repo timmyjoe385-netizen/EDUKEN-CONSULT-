@@ -105,17 +105,19 @@ The student CBT retrieves published questions only. Server-side attempt snapshot
 
 The isolated test project `wpktzogarfqrgkirzdpy` remains active and separate from production. A fresh read-only query reports 73 CBT rows: 65 drafts and 8 published, with one published row in each of the eight supported subjects (Use of English has 9 drafts; each other subject has 8 drafts). The import-history table has no rows. This is not a completed bank and does not support a full 180-question mock. The API must reject an underfilled full mock clearly. The repository's 1,600 CSV drafts have not been imported into this database.
 
-## Admin workflow and release gates
+## Admin workflow and release gates — updated 5 November 2026
 
-Authenticated admin CSV import-to-review-to-publish UI testing remains outstanding. Unauthenticated access assertions are covered by automated tests, but they do not prove that an authorized administrator can complete the entire workflow safely. Do not claim that the admin workflow is fully verified until an authenticated end-to-end test is completed.
+Authenticated admin CSV import-to-review-to-publish E2E testing is **completed and passed** in the isolated preview/test project. The test used one synthetic question only and verified Google allowlisted sign-in, insert-as-draft, persisted import history, duplicate rejection, review/approval/publish transitions, student-feed visibility, unpublish/feed removal, cleanup, signed-out rejection and non-allowlisted rejection (HTTP 403). See `audits/isolated-admin-e2e-runbook-2026-11-05.md`.
 
-Before a student-facing production release:
-- complete and document the semantic-overlap review across all 1,600 questions;
-- have subject-competent reviewers verify academic accuracy, answer keys, explanations, ambiguity, and syllabus coverage;
-- test the authenticated admin import, review, approval, and publish workflow in isolation;
-- import only reviewed material into the isolated project and confirm that enough published questions exist for the requested exam combinations;
-- rerun all CI, browser, API, and preview checks against the final commit;
-- obtain explicit release approval before any production merge, production database change, or production deployment.
+The isolated test database baseline is 73 questions: 65 drafts and 8 published, with one published question per subject. After cleanup there are zero synthetic question rows; two synthetic import-history entries remain (initial import and duplicate retry). This is expected and is retained for audit. The database is not sufficient for a 180-question mock.
+
+The admin E2E result does not close the academic or semantic review gates. Before a student-facing production release:
+- complete the remaining semantic-overlap review across the 1,600-question source bank (1,018 cross-window candidates and 279 reported within-window different-topic candidates remain pending; the 38-candidate discrepancy remains unresolved);
+- finish replacement-history provenance normalization (14 records await commit-SHA reconciliation; one pair remains unverified);
+- ensure qualified subject review and academic verification are properly evidenced; the 90/90 replacement approval is user-reported, with no signed item-level reviewer records in the repository;
+- import only approved material into an isolated project when explicitly authorised, keep all imported records draft until reviewed through the admin workflow, and verify sufficient published questions for the requested exam combinations;
+- rerun CI, browser, API and preview checks against the final commit;
+- obtain explicit release approval before any production merge, production database change or production deployment.
 
 ## Latest repository verification
 
@@ -127,7 +129,7 @@ Before a student-facing production release:
 - The separate Playwright browser workflow is still running against the latest content head; its result is pending.
 - The isolated guest payment recovery smoke test was skipped, not passed.
 - Production deployment was skipped intentionally; no production release was performed.
-- The isolated test database has only 73 questions (65 drafts, 8 published) and is insufficient for the 180-question mock.
+- The isolated test database has 73 questions (65 drafts, 8 published), one published per subject, and is insufficient for the 180-question mock. Authenticated admin E2E has since passed; see the updated admin workflow section above.
 - Authenticated admin import-to-publish testing and full academic/semantic review remain outstanding.
 - Production database and production question records remain untouched.
 
