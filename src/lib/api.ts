@@ -4,8 +4,17 @@ import { shouldBlockWrite, PRODUCTION_SUPABASE_URL } from './api-safety.js';
 const PRODUCTION_SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
 const suppliedSupabaseUrl = String(import.meta.env.VITE_SUPABASE_URL || '').trim();
 const suppliedPublishableKey = String(import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || '').trim();
-const SUPABASE_URL = (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL).replace(/\/+$/, '');
-const SUPABASE_KEY = suppliedPublishableKey || PRODUCTION_SUPABASE_KEY;
+const IS_PREVIEW_BUILD = import.meta.env.VITE_EDUKEN_ENV === 'preview';
+const SUPABASE_URL = (IS_PREVIEW_BUILD ? suppliedSupabaseUrl : (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL)).replace(/\/+$/, '');
+const SUPABASE_KEY = IS_PREVIEW_BUILD ? suppliedPublishableKey : (suppliedPublishableKey || PRODUCTION_SUPABASE_KEY);
+const PREVIEW_BACKEND_CONFIGURED =
+  SUPABASE_URL.startsWith('https://wpktzogarfqrgkirzdpy.supabase.co') &&
+  Boolean(SUPABASE_KEY);
+const assertBackendConfigured = () => {
+  if (IS_PREVIEW_BUILD && !PREVIEW_BACKEND_CONFIGURED) {
+    throw new Error('Preview safety mode: isolated Supabase is not configured. No request was sent.');
+  }
+};
 const ALLOW_TEST_WRITES =
   import.meta.env.VITE_ENABLE_TEST_WRITES === 'true' &&
   Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
@@ -47,6 +56,7 @@ const writeSession = (session: Session | null) => {
 };
 
 const refreshSession = async (session: Session) => {
+  assertBackendConfigured();
   if (!session.refresh_token) return session;
   const res = await fetch(
     SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token',
@@ -89,6 +99,7 @@ const request = async (
   options: RequestInit = {},
   retry = true
 ): Promise<any> => {
+  assertBackendConfigured();
   const method = String(options.method || 'GET').toUpperCase();
   const isolatedCbtTestWrite =
     ALLOW_CBT_TEST_WRITES &&
@@ -139,6 +150,7 @@ let oauthCallbackPromise: Promise<any> | null = null;
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
   signUpWithPassword: async (email: string, password: string) => {
+    assertBackendConfigured();
     const response = await fetch(SUPABASE_URL + '/auth/v1/signup', {
       method: 'POST',
       headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
@@ -164,6 +176,7 @@ export const auth = {
     return { user: result.user, session: null, confirmationRequired: true };
   },
   signInWithPassword: async (email: string, password: string) => {
+    assertBackendConfigured();
     const response = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
       method: 'POST',
       headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
@@ -187,6 +200,7 @@ export const auth = {
     return { user: result.user, session };
   },
   signIn: async (_options?: any) => {
+    assertBackendConfigured();
     // Return to the exact preview origin root (commonly allow-listed by Supabase).
     // Keep the private admin intent in this tab across the Google OAuth round-trip.
     sessionStorage.setItem('eduken_admin_oauth', '1');
@@ -206,6 +220,7 @@ export const auth = {
     const isOAuthResponse = hash.has('access_token') || hash.has('refresh_token') ||
       hash.has('error') || hash.has('error_description');
     if (!isOAuthResponse) return Promise.resolve(null);
+    assertBackendConfigured();
     // Clear OAuth response data before making network requests, but preserve
     // ordinary SPA hashes such as #opportunities and #opportunity/article-slug.
     window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
@@ -243,6 +258,7 @@ export const auth = {
     return oauthCallbackPromise;
   },
   signOut: async () => {
+    assertBackendConfigured();
     const session = readSession();
     if (session?.access_token) {
       await fetch(SUPABASE_URL + '/auth/v1/logout', {
