@@ -11,17 +11,25 @@ test("CBT question bank admin exposes the stored review audit and paginates the 
   ]) {
     assert.ok(source.includes(field), `Admin question type should include ${field}.`);
   }
-  assert.match(source, /Review audit/);
-  assert.match(source, /Reviewed: \\{auditActor\\(q\\.reviewed_by\\)\\}/);
-  assert.match(source, /Approved: \\{auditActor\\(q\\.approved_by\\)\\}/);
-  assert.match(source, /Published: \\{auditActor\\(q\\.published_by\\)\\}/);
-  assert.match(source, /pageSize: String\\(pageSize\\)/);
-  assert.match(source, /params\\.set\\('q', search\\.trim\\(\\)\\)/);
-  assert.match(source, /setTotal\\(Number\\(result\\.data\\?\\.total/);
-  assert.match(source, /Page \\{page\\} of \\{totalPages\\}/);
-  assert.match(source, /Previous/);
-  assert.match(source, /Next/);
-  assert.match(api, /select\\("\\*", \\{ count: "exact" \\}\\)/);
-  assert.match(api, /query\\.range\\(start, start \\+ pageSize - 1\\)/);
-  assert.match(api, /total: count \\?\\? 0, page, pageSize/);
+  for (const marker of [
+    "Review audit",
+    "Reviewed: {auditActor(q.reviewed_by)}",
+    "Approved: {auditActor(q.approved_by)}",
+    "Published: {auditActor(q.published_by)}",
+    "pageSize: String(pageSize)",
+    "params.set('q', search.trim())",
+    "setTotal(Number(result.data?.total ?? nextItems.length))",
+    "Page {page} of {totalPages}",
+    "Previous",
+    "Next",
+  ]) {
+    assert.ok(source.includes(marker), `Admin question-bank UI should include ${marker}.`);
+  }
+  for (const marker of [
+    'select("*", { count: "exact" })',
+    "query.range(start, start + pageSize - 1)",
+    "total: count ?? 0, page, pageSize",
+  ]) {
+    assert.ok(api.includes(marker), `Admin question API should include ${marker}.`);
+  }
 });
