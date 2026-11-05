@@ -45,7 +45,7 @@ export const isTrustedCbtPreviewOrigin = (origin) => {
   try {
     const hostname = new URL(origin).hostname.toLowerCase();
     return hostname === 'eduken-consult-preview.timmy385.workers.dev' ||
-      /^[a-z0-9-]+-eduken-consult\\.timmy385\\.workers\\.dev$/.test(hostname);
+      /^[a-z0-9-]+-eduken-consult\.timmy385\.workers\.dev$/.test(hostname);
   } catch {
     return false;
   }
