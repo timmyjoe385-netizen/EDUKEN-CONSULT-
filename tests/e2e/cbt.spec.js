@@ -102,6 +102,7 @@ test('mixed mock controls do not offer question counts the published bank cannot
   await expect(mockCountSelect).toBeDisabled();
   await expect(mockCountSelect.locator('option')).toHaveText('Not enough published questions for a mock');
   await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
