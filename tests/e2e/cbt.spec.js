@@ -14,8 +14,8 @@ test('CBT does not expose local samples when the published bank is empty', async
 
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
   await expect(page.getByText(/Student attempts are disabled until reviewed questions are published/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.locator('.cbt-primary-button')).toBeDisabled();
+  await expect(page.locator('.cbt-secondary-button')).toBeDisabled();
   await expect(page.locator('.cbt-question-card')).toHaveCount(0);
 
   const dimensions = await page.evaluate(() => ({
@@ -34,8 +34,8 @@ test('CBT does not fall back to unpublished samples when the published API is un
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByText(/Student attempts are disabled until reviewed questions are published/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.locator('.cbt-primary-button')).toBeDisabled();
+  await expect(page.locator('.cbt-secondary-button')).toBeDisabled();
   await expect(page.locator('.cbt-question-card')).toHaveCount(0);
 });
 
@@ -105,7 +105,7 @@ test('published CBT questions are graded by the server after submission', async 
   await expect(page.getByText('Correct answer:')).toBeVisible();
   await expect(page.getByText('The second option is correct.')).toBeVisible();
   await page.getByRole('button', { name: 'Choose another practice' }).click();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeVisible();
+  await expect(page.locator('.cbt-primary-button')).toBeVisible();
 });
 
 
