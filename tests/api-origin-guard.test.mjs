@@ -72,13 +72,13 @@ test('preview public-content and analytics auth use only the isolated Supabase p
   const worker = await readFile(resolve(process.cwd(), 'worker/index.js'), 'utf8');
   const wrangler = JSON.parse(await readFile(resolve(process.cwd(), 'wrangler.jsonc'), 'utf8'));
 
-  assert.match(app, /api\\.get\\(['"]\\/public-content['"]\\)/);
-  assert.doesNotMatch(app, /pphxltbkwygqjtjgkhxu\\.supabase\\.co/);
-  assert.match(worker, /env\\.EDUKEN_ENV === ["']preview["']/);
-  assert.match(worker, /getSupabaseConfig\\(env\\)/);
-  assert.doesNotMatch(worker, /https:\\/\\/pphxltbkwygqjtjgkhxu\\.supabase\\.co\\/functions\\/v1\\/eduken-api\\/public-content/);
-
+  assert.ok(app.includes("api.get('/public-content')"));
+  assert.equal(app.includes('pphxltbkwygqjtjgkhxu.supabase.co'), false);
+  assert.ok(worker.includes('env.EDUKEN_ENV === "preview"'));
+  assert.ok(worker.includes('getSupabaseConfig(env)'));
+  assert.ok(worker.includes('isAnalyticsAdmin(request, env)'));
+  assert.equal(worker.includes('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content'), false);
   assert.equal(wrangler.env.preview.vars.EDUKEN_ENV, 'preview');
   assert.equal(wrangler.env.preview.vars.SUPABASE_URL, 'https://wpktzogarfqrgkirzdpy.supabase.co');
-  assert.match(wrangler.env.preview.vars.SUPABASE_PUBLISHABLE_KEY, /^sb_publishable_/);
+  assert.ok(wrangler.env.preview.vars.SUPABASE_PUBLISHABLE_KEY.startsWith('sb_publishable_'));
 });
