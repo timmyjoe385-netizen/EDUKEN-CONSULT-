@@ -2122,7 +2122,7 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
             title: 'Current Opportunity Fixture',
             category: 'Scholarship',
             description: 'A test-only opportunity that remains open.',
-            deadline: '30 October 2026',
+            deadline: '30 November 2026',
             is_published: true,
           },
         ],
