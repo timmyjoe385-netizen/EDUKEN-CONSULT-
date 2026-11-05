@@ -1,5 +1,54 @@
 # EDUKEN CBT 1,600-Question Bank Build Plan
 
+## Authoritative operational update — 5 November 2026
+
+This section supersedes older status statements below wherever they conflict. Dated historical audit notes are retained for traceability; use this as the current operational checkpoint.
+
+### Release and preview
+- PR #194 remains open, draft and unmerged. No production merge or deployment is authorised.
+- The isolated preview routes / and /cbt returned HTTP 200 in live checks.
+- Authenticated admin UI E2E is completed and passed in the isolated preview/test project. See `audits/isolated-admin-e2e-runbook-2026-11-05.md`.
+- The test covered real allowlisted Google admin sign-in, synthetic CSV import, duplicate retry, persisted draft/review/approval/publish transitions, student-feed visibility, unpublish/feed removal, deletion, signed-out rejection and non-allowlisted account rejection.
+- The synthetic question was removed. The test-project question baseline was restored to 65 drafts + 8 published = 73 rows; import history was retained. No real student data was used.
+- A preview isolation issue was found in source: the homepage content loader and Worker public-content/analytics-auth code had hardcoded production Supabase endpoints. A branch-only correction now routes frontend reads through the configured API client and makes preview Worker reads/auth use preview-specific Supabase bindings with fail-closed behaviour. CI and a fresh preview deployment/smoke check are required before calling this correction verified at runtime.
+
+### Current question-bank disposition
+- The repository has 40 original CSV batches, 1,600 rows total (200 per subject), all draft-only. Structural CI checks cover the 18-column schema, 40 rows per batch, subject balance, keys/options/explanations/provenance and exact normalized duplicate stems.
+- The latest global duplicate register records 75 cross-window + 15 within-window = 90 confirmed semantic duplicate pairs / 90 unique held rows. The replacement-only candidate file contains 90/90 replacement drafts; target IDs and subjects match the held-row register.
+- Technical replacement-file validation is recorded as 90/90 passed, with 90 distinct fingerprints and no exact candidate-to-bank or candidate-to-candidate fingerprint collisions. These are draft candidates, not published questions.
+- The project owner reported that a qualified reviewer approved all 90/90 replacements, including the former scope/depth holds and lexical flags. This is user-reported approval; signed item-level reviewer records and reviewer identity/credentials are absent from the repository (0/90 documentary evidence).
+- Historical replacement provenance is not fully closed: the current register classifies 47 pairs as prior-replacement-commit verified, 14 as awaiting replacement-commit SHA normalization, 28 as original-draft overlaps and 1 as unverified.
+- Similarity review is still incomplete. The current cross-window screen has 1,304 candidates, of which 286 were reviewed and 1,018 remain unreviewed. The within-window register reports 279 different-topic candidates pending and an unresolved 38-candidate discrepancy between the original 390-candidate report and the independent 352-candidate recomputation. Similarity scores are flags, not duplicate decisions.
+- No original source CSV rows have been imported into Supabase or published. The 90 replacement candidates remain a separate staged CSV; do not import or publish them during this review.
+
+### Isolated test database — verified 5 November
+Project `wpktzogarfqrgkirzdpy`:
+
+| Subject | Draft | Published | Total |
+|---|---:|---:|---:|
+| Use of English | 9 | 1 | 10 |
+| Mathematics | 8 | 1 | 9 |
+| Biology | 8 | 1 | 9 |
+| Chemistry | 8 | 1 | 9 |
+| Physics | 8 | 1 | 9 |
+| Economics | 8 | 1 | 9 |
+| Government | 8 | 1 | 9 |
+| Literature in English | 8 | 1 | 9 |
+| **Total** | **65** | **8** | **73** |
+
+There are zero remaining [TEST ONLY] question rows. This database does not support the 180-question mock. The repository's 1,600 CSV drafts and 90 replacement candidates have not been imported.
+
+### Immediate safe gates
+1. Wait for CI on the preview-isolation correction and inspect the newly deployed preview Worker/build.
+2. Verify preview homepage content, AI assistant content retrieval and analytics authentication resolve only against the isolated test Supabase project; confirm no production fallback if preview bindings are absent.
+3. Correct all stale admin-E2E statements in the historical audit notes and PR description.
+4. Reconcile the 38 within-window candidate discrepancy and complete the 1,018 cross-window / 279 within-window pending similarity reviews, with explicit retain/replace/preserve decisions.
+5. Finish replacement-history provenance normalization for the 14 pending and investigate the one unverified pair.
+6. Keep the full 1,600 bank academically reviewed before any student publication; one published question per subject is not a launch-ready bank.
+7. Keep production merge, import, publication and deployment blocked pending a separate explicit release approval.
+
+---
+
 ## Locked target
 
 Prepare 200 reviewed, publishable questions for each of the eight supported subjects (1,600 total):
