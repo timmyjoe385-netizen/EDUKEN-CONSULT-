@@ -52,8 +52,9 @@ test('isolated preview uses test service catalogue while preserving live public 
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const apiClient = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
 
-  expect(apiClient).toContain('export const usesIsolatedTestBackend = ALLOW_TEST_WRITES;');
-  expect(app).toContain('if (usesIsolatedTestBackend)');
+  expect(apiClient).toContain('export const usesIsolatedTestBackend = backend.isolated;');
+  expect(apiClient).toContain('export const isPreviewTestCheckoutEnabled = ALLOW_TEST_WRITES;');
+  expect(app).toContain('if (usesIsolatedTestBackend && isPreviewTestCheckoutEnabled)');
   expect(app).toContain("const testContent = await api.get('/public-content');");
   expect(app).toContain('const previewTestService');
   expect(app).toContain('live.services = [previewTestService];');
