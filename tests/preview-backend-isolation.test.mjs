@@ -11,6 +11,11 @@ test('preview frontend content reads use the configured isolated API client', as
 test('preview Worker Supabase requests fail closed and use preview environment bindings', async () => {
   const worker = await readFile(new URL('../worker/index.js', import.meta.url), 'utf8');
   const config = JSON.parse(await readFile(new URL('../wrangler.jsonc', import.meta.url), 'utf8'));
+  const api = await readFile(new URL('../src/lib/api.ts', import.meta.url), 'utf8');
+  const workflow = await readFile(new URL('../.github/workflows/deploy-cloudflare.yml', import.meta.url), 'utf8');
+  assert.ok(api.includes("VITE_EDUKEN_ENV === 'preview'"));
+  assert.ok(api.includes('if (IS_PREVIEW_BUILD && !PREVIEW_BACKEND_CONFIGURED)'));
+  assert.ok(workflow.includes('VITE_EDUKEN_ENV: preview'));
   assert.match(worker, /env\.EDUKEN_ENV === ["']preview["']/);
   assert.match(worker, /if \(isPreview\)[\s\S]*?return null/);
   assert.match(worker, /getLiveContent\(env\)/);
