@@ -1,0 +1,167 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidate pairs. Source CSV stems, options and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1154,
+      1155,
+      1156,
+      1157,
+      1158,
+      1159,
+      1160,
+      1161,
+      1162,
+      1163,
+      1164,
+      1165,
+      1166,
+      1167,
+      1168
+    ],
+    "previous_total_manually_reviewed": 611,
+    "now_manually_reviewed": 626,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 678
+  },
+  "preserved": [
+    {
+      "rank": 1154,
+      "subject": "Use of English",
+      "a": "batch 13 row 4",
+      "b": "batch 22 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the irregular comparative form of good (better); the second tests subject–verb concord with the head noun quality. Different grammar objectives."
+    },
+    {
+      "rank": 1155,
+      "subject": "Use of English",
+      "a": "batch 14 row 6",
+      "b": "batch 30 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies an infinitive phrase functioning as sentence subject; the second identifies yesterday as an adverb of time. Different syntax and word-class objectives."
+    },
+    {
+      "rank": 1156,
+      "subject": "Government",
+      "a": "batch 14 row 34",
+      "b": "batch 27 row 32",
+      "decision": "preserve_as_distinct",
+      "reason": "Political culture concerns shared political values, beliefs and orientations; anarchy concerns absence of recognised governing authority. Different political concepts."
+    },
+    {
+      "rank": 1157,
+      "subject": "Government",
+      "a": "batch 15 row 34",
+      "b": "batch 29 row 35",
+      "decision": "preserve_as_distinct",
+      "reason": "The first asks the general purpose of legislative committees—detailed examination and reporting; the second defines a standing committee by its continuing operation and assigned remit. Related but not duplicate learning objectives."
+    },
+    {
+      "rank": 1158,
+      "subject": "Government",
+      "a": "batch 16 row 33",
+      "b": "batch 22 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Nominating candidates is a general function of political parties; scrutiny of government and offering alternatives is a specific role of opposition parties. Complementary but distinct."
+    },
+    {
+      "rank": 1159,
+      "subject": "Literature in English",
+      "a": "batch 16 row 39",
+      "b": "batch 22 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "A novella is a prose-fiction form defined by intermediate length and development; a frame narrative is a narrative structure enclosing one or more inner stories."
+    },
+    {
+      "rank": 1160,
+      "subject": "Literature in English",
+      "a": "batch 17 row 37",
+      "b": "batch 27 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "A one-act play is classified by its single-act dramatic structure; parody is defined by imitation of a recognisable style or work, often for comic or critical effect."
+    },
+    {
+      "rank": 1161,
+      "subject": "Government",
+      "a": "batch 11 row 35",
+      "b": "batch 31 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Political socialisation is how individuals acquire political values and attitudes; a citizens' initiative is a formal mechanism for proposing law or policy."
+    },
+    {
+      "rank": 1162,
+      "subject": "Government",
+      "a": "batch 11 row 35",
+      "b": "batch 33 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "Political socialisation and extradition are unrelated concepts: acquisition of political orientations versus surrender of a person between states under law."
+    },
+    {
+      "rank": 1163,
+      "subject": "Physics",
+      "a": "batch 12 row 22",
+      "b": "batch 39 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests hydrostatic pressure difference ΔP = ρgΔh; the second defines wavelength as the distance between successive points in the same phase. Different physics topics."
+    },
+    {
+      "rank": 1164,
+      "subject": "Use of English",
+      "a": "batch 13 row 4",
+      "b": "batch 32 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Irregular adjective comparison (good/better) and reported-speech backshift (am/now to was/then) are different grammar objectives."
+    },
+    {
+      "rank": 1165,
+      "subject": "Use of English",
+      "a": "batch 13 row 5",
+      "b": "batch 38 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Recognising an imperative sentence differs from identifying a compound sentence formed by two independent clauses."
+    },
+    {
+      "rank": 1166,
+      "subject": "Economics",
+      "a": "batch 20 row 27",
+      "b": "batch 33 row 29",
+      "decision": "preserve_as_distinct",
+      "reason": "Utility is consumer satisfaction or benefit; public debt is accumulated government borrowing. Different economics concepts."
+    },
+    {
+      "rank": 1168,
+      "subject": "Mathematics",
+      "a": "batch 22 row 10",
+      "b": "batch 35 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Mode identifies the most frequent value; range is the difference between the highest and lowest values. Different statistical measures."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1167,
+      "subject": "Literature in English",
+      "a": "batch 21 row 37",
+      "b": "batch 38 row 38",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both ask for the definition of a couplet as a two-line unit of poetry. Options and explanations confirm the same single learning objective; wording changes do not make them distinct.",
+      "retain": "batch 21 row 37",
+      "hold": "batch 38 row 38",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}
