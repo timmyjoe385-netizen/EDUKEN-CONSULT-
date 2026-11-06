@@ -63,7 +63,15 @@
         "DUP-242",
         "DUP-243",
         "DUP-244"
-      ]
+      ],
+      "preliminary_contextual_assessment": "completed",
+      "same_fact_duplicate_recommendations": 18,
+      "high_overlap_near_duplicate_recommendations": 1,
+      "related_skill_variant_recommendations": 9,
+      "cluster_extension_same_fact_recommendations": 3,
+      "cluster_extension_related_skill_recommendations": 3,
+      "qualified_subject_review": "pending",
+      "provenance_classification": "pending"
     }
   },
   "per_batch": [
