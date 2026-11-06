@@ -79,7 +79,7 @@
         "DUP-165"
       ],
       "canonical": "DUP-165",
-      "status": "addendum_directive_recorded"
+      "status": "applied_and_source_memberships_verified"
     },
     {
       "clusters": [
@@ -87,7 +87,7 @@
         "DUP-166"
       ],
       "canonical": "DUP-08",
-      "status": "addendum_directive_recorded"
+      "status": "applied_and_source_memberships_verified"
     }
   ],
   "safety": {
@@ -112,5 +112,37 @@
       "correction": "DUP-213 is the superseded candidate ID, not a separate cluster."
     }
   },
-  "status": "ANCHORS_RESOLVED_SOURCE_VERIFIED_STAGING_RECONCILED"
+  "status": "CANONICAL_CLUSTER_MERGES_APPLIED_SOURCE_MEMBERSHIPS_VERIFIED",
+  "applied_membership_verification": [
+    {
+      "cluster": "PLATELET-CLOTTING-01",
+      "canonical": "DUP-165",
+      "members": [
+        "DUP-22",
+        "DUP-165",
+        "DUP-150"
+      ],
+      "retained_anchor": "batch 1 row 15",
+      "held_locations": [
+        "batch 27 row 12",
+        "batch 38 row 13"
+      ],
+      "source_rows_checked": 3
+    },
+    {
+      "cluster": "PHENOLPHTHALEIN-01",
+      "canonical": "DUP-08",
+      "members": [
+        "DUP-08",
+        "DUP-147",
+        "DUP-166"
+      ],
+      "retained_anchor": "batch 22 row 18",
+      "held_locations": [
+        "batch 20 row 18",
+        "batch 34 row 18"
+      ],
+      "source_rows_checked": 3
+    }
+  ]
 }
