@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "method": "Parsed original CSVs with quoted-field and embedded-newline support. Spreadsheet row locations count the header row. Compared source_type/source_name/provenance_notes and matched staging rows by pair_id/held_location.",
+  "counts": {
+    "new_pair_records": 28,
+    "cluster_extension_references": 8,
+    "source_location_references_checked": 36,
+    "source_rows_marked_original": 36,
+    "unique_new_held_locations": 34,
+    "exact_source_to_staging_subject_matches": 34,
+    "exact_source_to_staging_question_text_matches": 34,
+    "existing_cluster_references_not_new_rows": 2,
+    "mismatches": 0
+  },
+  "provenance": "All 36 source records declare source_type=original and have EDUKEN-authored/original-draft provenance notes; three records omit source_name but explicitly identify the source as original EDUKEN-authored practice content in provenance_notes.",
+  "outstanding": {
+    "contextual_disposition": "qualified subject review pending",
+    "replacement_drafts": 0,
+    "baseline_replacement_commit_sha_normalization": 13
+  },
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "academic_approval": false,
+    "release_authorized": false
+  }
+}
