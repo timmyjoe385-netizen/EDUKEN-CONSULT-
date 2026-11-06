@@ -47,11 +47,13 @@
       "subject": "Biology",
       "retain": "batch 4 row 15",
       "hold": "batch 13 row 16",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-211",
@@ -59,11 +61,13 @@
       "subject": "Use of English",
       "retain": "batch 22 row 6",
       "hold": "batch 33 row 3",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-212",
@@ -71,11 +75,13 @@
       "subject": "Literature in English",
       "retain": "batch 5 row 37",
       "hold": "batch 34 row 38",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-214",
@@ -83,11 +89,13 @@
       "subject": "Chemistry",
       "retain": "batch 10 row 17",
       "hold": "batch 34 row 17",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-215",
@@ -95,11 +103,13 @@
       "subject": "Government",
       "retain": "batch 4 row 32",
       "hold": "batch 21 row 35",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-216",
@@ -107,11 +117,13 @@
       "subject": "Chemistry",
       "retain": "batch 1 row 19",
       "hold": "batch 39 row 17",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-217",
@@ -119,11 +131,13 @@
       "subject": "Mathematics",
       "retain": "batch 14 row 7",
       "hold": "batch 33 row 10",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-218",
@@ -131,11 +145,13 @@
       "subject": "Physics",
       "retain": "batch 1 row 23",
       "hold": "batch 16 row 23",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-219",
@@ -143,11 +159,13 @@
       "subject": "Chemistry",
       "retain": "batch 3 row 21",
       "hold": "batch 16 row 20",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-220",
@@ -155,11 +173,13 @@
       "subject": "Literature in English",
       "retain": "batch 10 row 39",
       "hold": "batch 35 row 41",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-221",
@@ -167,11 +187,13 @@
       "subject": "Government",
       "retain": "batch 6 row 32",
       "hold": "batch 18 row 35",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-222",
@@ -179,11 +201,13 @@
       "subject": "Mathematics",
       "retain": "batch 1 row 7",
       "hold": "batch 17 row 7",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-224",
@@ -191,11 +215,13 @@
       "subject": "Biology",
       "retain": "batch 14 row 12",
       "hold": "batch 30 row 16",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-225",
@@ -203,11 +229,13 @@
       "subject": "Economics",
       "retain": "batch 15 row 29",
       "hold": "batch 31 row 30",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-226",
@@ -215,11 +243,13 @@
       "subject": "Biology",
       "retain": "batch 9 row 15",
       "hold": "batch 37 row 14",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-228",
@@ -227,11 +257,13 @@
       "subject": "Economics",
       "retain": "batch 9 row 28",
       "hold": "batch 15 row 28",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-229",
@@ -239,11 +271,13 @@
       "subject": "Literature in English",
       "retain": "batch 1 row 37",
       "hold": "batch 33 row 40",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-230",
@@ -251,11 +285,13 @@
       "subject": "Government",
       "retain": "batch 7 row 34",
       "hold": "batch 39 row 34",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-231",
@@ -263,11 +299,13 @@
       "subject": "Mathematics",
       "retain": "batch 8 row 7",
       "hold": "batch 26 row 9",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-232",
@@ -275,11 +313,13 @@
       "subject": "Literature in English",
       "retain": "batch 28 row 41",
       "hold": "batch 34 row 37",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-233",
@@ -287,11 +327,13 @@
       "subject": "Literature in English",
       "retain": "batch 16 row 38",
       "hold": "batch 26 row 37",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-235",
@@ -299,11 +341,13 @@
       "subject": "Biology",
       "retain": "batch 29 row 12",
       "hold": "batch 31 row 16",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-236",
@@ -311,11 +355,13 @@
       "subject": "Economics",
       "retain": "batch 6 row 27",
       "hold": "batch 26 row 29",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-237",
@@ -323,11 +369,13 @@
       "subject": "Physics",
       "retain": "batch 6 row 23",
       "hold": "batch 39 row 25",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-240",
@@ -335,11 +383,13 @@
       "subject": "Government",
       "retain": "batch 22 row 33",
       "hold": "batch 33 row 32",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-242",
@@ -347,11 +397,13 @@
       "subject": "Economics",
       "retain": "batch 8 row 31",
       "hold": "batch 35 row 30",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-243",
@@ -359,11 +411,13 @@
       "subject": "Mathematics",
       "retain": "batch 19 row 11",
       "hold": "batch 30 row 7",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "id": "DUP-244",
@@ -371,11 +425,13 @@
       "subject": "Physics",
       "retain": "batch 16 row 25",
       "hold": "batch 39 row 23",
-      "provenance": "original_eduKen_draft_verified_against_source_csv",
+      "provenance": "original_EDUKEN_draft_verified_against_source_CSV",
       "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv",
       "replacement": "not drafted",
       "source_location_check": "verified_against_original_batch_csv",
-      "contextual_academic_disposition": "pending_qualified_subject_review"
+      "contextual_academic_disposition": "pending_qualified_subject_review",
+      "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     }
   ],
   "existing_cluster_extensions": [
@@ -390,7 +446,7 @@
       "counted_as_new_held_location": true,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 738,
@@ -403,7 +459,7 @@
       "counted_as_new_held_location": true,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 746,
@@ -416,7 +472,7 @@
       "counted_as_new_held_location": true,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 794,
@@ -429,7 +485,7 @@
       "counted_as_new_held_location": true,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 768,
@@ -442,7 +498,7 @@
       "counted_as_new_held_location": false,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 885,
@@ -455,7 +511,7 @@
       "counted_as_new_held_location": true,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 898,
@@ -468,7 +524,7 @@
       "counted_as_new_held_location": true,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     },
     {
       "rank": 1304,
@@ -481,7 +537,7 @@
       "counted_as_new_held_location": false,
       "provenance": "pending",
       "contextual_academic_disposition": "pending_qualified_subject_review",
-      "source_provenance": "original_eduKen_draft_verified_against_source_csv"
+      "source_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
     }
   ],
   "new_unique_held_rows_from_this_addendum": 34,
@@ -579,9 +635,9 @@
     }
   ],
   "provenance_and_staging_reconciliation": {
-    "source_provenance_status": "verified_original_EDUKEN_draft_for_all_36_source_location_references",
-    "source_rows_checked": 36,
-    "source_type_original": 36,
+    "source_provenance_status": "verified_original_EDUKEN_draft_for_all_64_source_locations",
+    "source_rows_checked": 64,
+    "source_type_original": 64,
     "staging_join_status": "verified_for_all_34_unique_new_held_locations",
     "new_pair_rows_exactly_matched": 28,
     "cluster_extension_new_rows_exactly_matched": 6,
@@ -590,7 +646,13 @@
     "source_provenance_classification": "original_EDUKEN_authored_drafts",
     "contextual_duplicate_vs_related_skill_review": "pending_qualified_subject_review",
     "replacement_drafts": 0,
-    "note": "All 36 source references were read using spreadsheet row numbering (header included). The 34 newly held locations match their staging row by pair/cluster and held location, with identical subject and question text. Two additional cluster references are not new held rows."
+    "note": "All 36 source references were read using spreadsheet row numbering (header included). The 34 newly held locations match their staging row by pair/cluster and held location, with identical subject and question text. Two additional cluster references are not new held rows.",
+    "source_name_blank_but_provenance_note_explicit": 3,
+    "retained_anchor_rows_checked": 28,
+    "held_pair_rows_checked": 28,
+    "cluster_extension_rows_checked": 8,
+    "unique_new_held_locations": 34,
+    "provenance_classification": "verified_original_EDUKEN_drafts"
   },
   "count_note": "Count of 34 is 28 genuinely new duplicate-held rows plus six new held rows added to existing clusters. Two further cluster links reuse rows already held in the legacy register.",
   "status": "SOURCE_AND_STAGING_JOINS_VERIFIED_PROVENANCE_AND_QUALIFIED_ACADEMIC_REVIEW_PENDING"
