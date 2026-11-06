@@ -75,13 +75,13 @@
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 96,
-    "provenance_classification_complete": false,
-    "staging_location_join_verified_pairs": 90,
+    "provenance_unverified_pairs": 0,
+    "provenance_classification_complete": true,
+    "staging_location_join_verified_pairs": 186,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The baseline 90-pair cohort is provenance-reconciled (62 commit-backed replacement histories + 28 original-draft overlaps). Separately, 96 pair IDs remain explicitly listed as unverified in the later register history. Their unique held-row count is not recomputed because multiple records extend existing clusters. The 6 November staging revision independently verifies 124 held locations (119 pair IDs), including 34 new held locations and their 34 retained anchors; all 124 staging-held locations have source provenance verified. This staging revision does not close the separate later-register queue.",
+    "provenance_note": "Baseline 90 pair provenance is reconciled (62 commit-backed replacement histories + 28 original-draft overlaps). The 96 later-range pair records now have source-origin metadata verified and 178 unique endpoints exactly matched between original source CSVs and current staging exports. These 96 pair IDs remain pending semantic/qualified academic disposition, not source/staging verification. The 6 November staging revision separately contains 124 held locations (119 pair IDs), with 22 of the later queue's target locations already held and 68 still retained.",
     "staging_revision_verification": {
       "date": "2026-11-06",
       "total_source_rows": 1600,
@@ -4987,8 +4987,65 @@
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_relationships": 28,
-    "unverified_relationships": 96,
-    "unverified_pair_ids": [
+    "unverified_relationships": 0,
+    "unverified_pair_ids": [],
+    "note": "All 96 later-range pair records now have exact source/staging endpoint verification: 178 unique source rows were found in original batch CSVs and matched all 18 fields in current staging exports; zero missing rows or content mismatches. All 178 rows declare source_type=original and EDUKEN-authored/no-past-paper provenance notes. The 96 pair IDs remain pending semantic duplicate-versus-related-skill disposition and qualified subject/syllabus review. The 90 unique target locations comprise 22 already held and 68 still retained.",
+    "provenance_candidate_commits": {
+      "DUP-69": [
+        "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
+      ],
+      "DUP-70": [
+        "7cd07e64694191998d25971911f2763938068046",
+        "407dd924e78bd70fb204f8f145dfd05301d9d442",
+        "feaedd421ea4c168cf46f0247674c45b7d13c336"
+      ],
+      "DUP-71": [
+        "35b440ef35ac543f431e34f5f6737c91851dda8b",
+        "f8f748ff815c150ae379b32ee47416bc51780852"
+      ],
+      "DUP-74": [
+        "2a0f113b2326c495454e9ff01e2b24b7c27d06e1"
+      ],
+      "DUP-75": [
+        "407dd924e78bd70fb204f8f145dfd05301d9d442"
+      ],
+      "DUP-77": [
+        "786252f9642c71816b275db45eff729bf3cfb7b4"
+      ],
+      "DUP-79": [
+        "d91b6b1f1799e54b3a502c79692dc1e851a3786d",
+        "b89aff9b04acd7c1a56052eabdf5594b7495cfae"
+      ],
+      "DUP-82": [
+        "fb1a7e73db035f91c92f4ace384d97cb873239f4"
+      ],
+      "DUP-83": [
+        "c7f4e49537c86ee6ad0feabafecda11109aa95d9"
+      ],
+      "DUP-84": [
+        "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
+      ],
+      "DUP-85": [
+        "439e78a7c43dce18283d89291aca5133f8cdd2e0"
+      ],
+      "DUP-86": [
+        "291e05a14d3f406a2d7758bf6372a5cc633b8c8a"
+      ],
+      "DUP-90": [
+        "40167e2f0607e0df4c8d0f2971e5403a9488e10c"
+      ],
+      "DUP-34": [
+        "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
+      ]
+    },
+    "provenance_candidate_commits_verified_as_introducing_commit": 14,
+    "provenance_candidate_commits_are_leads_only": false,
+    "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged.",
+    "source_origin_metadata_verified_relationships": 96,
+    "source_staging_endpoint_rows_verified": 178,
+    "source_staging_content_mismatches": 0,
+    "semantic_disposition_pending_relationships": 96,
+    "semantic_disposition_pending_pair_ids": [
       "DUP-91",
       "DUP-92",
       "DUP-93",
@@ -5086,58 +5143,7 @@
       "DUP-199",
       "DUP-200"
     ],
-    "note": "The original 90-pair set remains fully reconciled. Sixty-nine new pair relationships require provenance checks and represent 70 unique held rows because the xylem cluster adds two held rows. DUP-122, DUP-131, DUP-136 and DUP-142 add relationships inside existing clusters; DUP-153, DUP-159, DUP-162 and DUP-164 also extend existing clusters without re-counting previously held rows. No new staging joins have been verified for these additional targets. DUP-174 extends the catalyst cluster DUP-91: batch 3 row 20 retained; batch 12 row 21 newly held; batch 25 row 21 already held. Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list are not numerically aligned and must be reconciled before provenance completion is claimed. DUP-175 adds the mammalian-feature duplicate (batch 19 row 12 retained; batch 40 row 16 held). Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list remain inconsistent. DUP-176 adds the imagery-definition duplicate (batch 6 row 37 retained; batch 26 row 41 held). Its row-level history and staging join remain pending. Summary-level provenance and explicit unverified-ID counters remain inconsistent. DUP-177 adds a pair relationship within FEDERALISM-01, but both rows were already held (batch 26 row 34 and batch 38 row 36). No additional unique replacement target is added. Row-level provenance and staging joins remain pending. DUP-178 adds the scaled percentage-profit duplicate (retain batch 6 row 8; hold batch 37 row 8). Its row-level history and staging join remain pending; source/staging CSVs remain unchanged. DUP-179 adds the paper-chromatography migration duplicate (retain batch 28 row 20; hold batch 39 row 21). Row-level history and staging join remain pending; no source/staging CSV changes. DUP-180 adds the producer-subsidy duplicate (retain batch 5 row 31; hold batch 30 row 28); DUP-181 adds the reported-speech backshift duplicate (retain batch 4 row 5; hold batch 32 row 2). Row-level provenance and staging joins remain pending; source/staging CSVs unchanged. DUP-182–DUP-187 add six pending-provenance pair relationships from part49; five unique held targets are added and DUP-187 is a cluster relationship only. Source/staging CSVs unchanged. DUP-188–DUP-190 add three pending-provenance pair relationships and three unique held targets from part50. No source/staging CSV changes. DUP-191 adds one pending-provenance relationship and one unique held target from part51. Source/staging CSVs unchanged. DUP-192–DUP-194 add three pending-provenance relationships and three unique held targets from part52. No source/staging CSV changes. DUP-195–DUP-196 add two pending-provenance relationships and two unique held targets from part53. No source/staging CSV changes. DUP-197 adds one pending-provenance relationship and one unique held target from part54. Source/staging CSVs unchanged. DUP-198–DUP-199 add two pending-provenance relationships and two unique held targets from part55. No source/staging CSV changes. DUP-200 adds one pending-provenance relationship and one unique held target from part56. No source/staging CSV changes.",
-    "provenance_candidate_commits": {
-      "DUP-69": [
-        "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
-      ],
-      "DUP-70": [
-        "7cd07e64694191998d25971911f2763938068046",
-        "407dd924e78bd70fb204f8f145dfd05301d9d442",
-        "feaedd421ea4c168cf46f0247674c45b7d13c336"
-      ],
-      "DUP-71": [
-        "35b440ef35ac543f431e34f5f6737c91851dda8b",
-        "f8f748ff815c150ae379b32ee47416bc51780852"
-      ],
-      "DUP-74": [
-        "2a0f113b2326c495454e9ff01e2b24b7c27d06e1"
-      ],
-      "DUP-75": [
-        "407dd924e78bd70fb204f8f145dfd05301d9d442"
-      ],
-      "DUP-77": [
-        "786252f9642c71816b275db45eff729bf3cfb7b4"
-      ],
-      "DUP-79": [
-        "d91b6b1f1799e54b3a502c79692dc1e851a3786d",
-        "b89aff9b04acd7c1a56052eabdf5594b7495cfae"
-      ],
-      "DUP-82": [
-        "fb1a7e73db035f91c92f4ace384d97cb873239f4"
-      ],
-      "DUP-83": [
-        "c7f4e49537c86ee6ad0feabafecda11109aa95d9"
-      ],
-      "DUP-84": [
-        "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
-      ],
-      "DUP-85": [
-        "439e78a7c43dce18283d89291aca5133f8cdd2e0"
-      ],
-      "DUP-86": [
-        "291e05a14d3f406a2d7758bf6372a5cc633b8c8a"
-      ],
-      "DUP-90": [
-        "40167e2f0607e0df4c8d0f2971e5403a9488e10c"
-      ],
-      "DUP-34": [
-        "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
-      ]
-    },
-    "provenance_candidate_commits_verified_as_introducing_commit": 14,
-    "provenance_candidate_commits_are_leads_only": false,
-    "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
+    "replacement_history_commit_crosswalk_status": "source-origin metadata is verified for all 178 endpoints; no later replacement commit is inferred from metadata alone"
   },
   "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed. 2026-11-06 further tail review: 30 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-121) were confirmed; one separate candidate was preserved as a distinct variant. The 30 relations represent 29 new unique held rows because federalism and specific-heat capacity each form a multi-row cluster. All new rows remain outside staging/import pending provenance and final staging joins. No source CSV or production data was changed. 2026-11-06 further lower-tail review: 36 additional duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-127) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relations represent 35 new unique held rows because one denouement relationship is already within a reconciled cluster. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 40 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-131) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relationships represent 38 new unique held rows because two are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 45 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-136) were confirmed; three related pairs were preserved as distinct assessment objectives. The 45 relations represent 42 new unique held rows because three relationships join existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 46 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-137) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 43 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 50 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-141) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 47 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 55 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-146) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relationships represent 52 new unique held rows because three are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 57 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-148) were confirmed; eight other related pairs were preserved as distinct assessment objectives. These relations represent 54 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 61 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-152) were confirmed; nine other related pairs were preserved as distinct assessment objectives. These relations represent 58 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: five more cross-window candidates (ranks 912–916) were checked against complete source text, options and answer keys. Four were preserved as distinct; one median-calculation duplicate was confirmed as DUP-157, adding batch 21 row 11 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 917–921 were checked against complete source stems, options and answer keys. Four were preserved as distinct; one heterozygous-genotype definition duplicate was confirmed as DUP-158, adding batch 39 row 12 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 922–926 were checked against full question content. All five were preserved as distinct concepts (specific heat capacity versus latent heat; complex sentence versus passive voice; different heart structures; no-confidence motion versus cabinet composition; balance of payments versus balance of trade). No duplicate relationship, held target, CSV edit or production change was added. 2026-11-06 continued lower-tail review: candidate ranks 927–931 were checked against full question content. Four were preserved as distinct; rank 931 was confirmed as DUP-159, extending FEDERALISM-01 and adding batch 38 row 36 as one new unique held row (batch 18 row 32 was already in that cluster). No source CSV, staging CSV or production data was changed. 2026-11-06 three-times-sized lower-tail review: ranks 932–946 were checked against full question stems, options, answer keys and explanations. Thirteen candidates were preserved as distinct, rank 933 was confirmed as DUP-160 (ADH-mediated collecting-duct water reabsorption), adding batch 40 row 15 as one new unique held target; rank 937 was deferred for reconciliation with earlier arithmetic-progression candidate relationships. No source CSV, staging CSV or production data was changed. 2026-11-06 follow-on 3x tail review: ranks 947–961 checked in full. Fourteen pairs preserved as distinct; rank 954 (neutralisation products) deferred for qualified Chemistry review. No new duplicate pair or unique target added; no source or staging edits. 2026-11-06 follow-on 3x tail review: ranks 962–976 checked in full. Fourteen candidates preserved; rank 962 confirmed as DUP-161 (set union), adding batch 35 row 11 as one new unique held target. Rank 970's batch 35 row 25 was already held under DUP-44 and was not counted again. No source/staging edits. 2026-11-06 further tail review: ranks 977–991 checked in full. Fourteen preserved; rank 980 confirmed as DUP-162, extending existing esterification cluster DUP-13 and adding batch 6 row 21 as one unique held target. No source/staging edits. 2026-11-06 further lower-tail review: ranks 992–1006 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1001 was confirmed as DUP-163 (green plants as producers/first trophic level), adding batch 37 row 15 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1007–1021 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1018 was confirmed as DUP-164, extending DENOUEMENT-01 and adding batch 11 row 40 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1022–1036 checked against complete question stems, four options, answer keys and explanations. All fifteen were preserved as distinct learning objectives or complementary applications. No new duplicate relationship or held target was added; no source CSV, staging CSV or production data was changed. 2026-11-06: ranks 1049–1063 fully checked; all fifteen preserved as distinct. No source/staging CSV or production question data changed.\n\n6 November rank reconciliation: explicit rank IDs total 973 across 81 tail-review files, 297 addendum segment ranks and 49 mapped high-similarity items. This does not reconcile with the part56 cumulative counter of 921 (difference 52); 331 rank IDs are absent from the inspected explicit records. Aggregate progress remains unverified pending a full crosswalk. No production import/publication authorized.\n\n6 November reconciliation: the 96 explicitly listed unverified pair IDs in history_reconciliation_status are now reflected in duplicate_summary.provenance_unverified_pairs. The current 6 November staging revision is a separate, verified 1,476 retained + 124 held export (119 pair IDs); all 124 held locations have verified original-source provenance and staging matches. Do not conflate the staging export with the later 96-ID register queue. Cross-window review aggregate remains unverified pending the 973-rank / 921-counter crosswalk.",
   "staging_location_audit": {
@@ -5326,6 +5332,9 @@
     "not_found": 0,
     "expected_held_total_if_all_approved": 192,
     "expected_retained_total_if_all_approved": 1408,
-    "status": "LOCATION_PRESENCE_ONLY_PROVENANCE_CONTENT_AND_ANCHOR_JOINS_PENDING"
+    "status": "SOURCE_STAGING_CONTENT_AND_SOURCE_ORIGIN_METADATA_VERIFIED_SEMANTIC_DISPOSITION_PENDING",
+    "source_endpoints_verified": 178,
+    "source_staging_content_mismatches": 0,
+    "source_type_original": 178
   }
 }
