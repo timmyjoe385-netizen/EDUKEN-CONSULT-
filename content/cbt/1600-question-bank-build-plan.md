@@ -313,3 +313,11 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - Fourteen candidates were preserved as distinct. Rank 1262 was confirmed as **DUP-176**: batch 6 row 37 and batch 26 row 41 both define imagery as language that evokes sensory experience. Retain batch 6 row 37; hold batch 26 row 41 pending provenance and staging verification.
 - Cross-window progress is now **731/1,304 manually reviewed; 573 remain**. The duplicate register contains **160 cross-window + 15 within-window = 175 recorded pair relationships**, resolving to **170 unique replacement targets** (90 original + 80 additional). Summary-level provenance count is 81 additional relationships pending; the explicit unverified-ID list contains 72, and remains unreconciled.
 - No source or staging CSV was modified. No replacement draft, import, publication or production deployment occurred.
+
+
+## Eighth lower-tail audit batch — 6 November 2026
+
+- Reviewed cross-window candidate ranks **1274–1288** against complete source rows, options, answer keys and explanations. See `content/cbt/audits/cross-window-tail-review-2026-11-06-part43.json`.
+- All 15 candidates were preserved as distinct assessment objectives; no new duplicate relationship or held target was added.
+- Cross-window progress is now **746/1,304 manually reviewed; 558 remain**. Duplicate register remains **160 cross-window + 15 within-window = 175 pair relationships**, with **170 unique replacement targets**.
+- No source/staging CSV, replacement draft or production data was changed. No import, publication or deployment occurred.
