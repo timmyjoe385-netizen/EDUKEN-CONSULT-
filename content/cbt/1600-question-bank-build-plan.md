@@ -329,3 +329,11 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - All 15 candidates were preserved as distinct assessment objectives; no new duplicate relationship or held target was added.
 - Cross-window progress is now **761/1,304 manually reviewed; 543 remain**. Duplicate register remains **160 cross-window + 15 within-window = 175 pair relationships**, with **170 unique replacement targets**.
 - No source/staging CSV, replacement draft or production data was changed. No import, publication or deployment occurred.
+
+
+## Final ranked-tail candidate — 6 November 2026
+
+- Reviewed candidate rank **1304** against complete source rows, options, answer keys and explanations. See `content/cbt/audits/cross-window-tail-review-2026-11-06-part45.json`.
+- Confirmed **DUP-177**, a further pair relationship in existing **FEDERALISM-01**. Both rows (batch 26 row 34 and batch 38 row 36) were already held; batch 32 row 34 remains the retained anchor. No additional unique replacement target was added.
+- The ranked tail is now reviewed through rank **1304**. Total cross-window manual review is **762/1,304; 542 remain elsewhere in the candidate set**. Duplicate register contains **161 cross-window + 15 within-window = 176 pair relationships**, resolving to **170 unique replacement targets**.
+- No source/staging CSV, replacement draft or production data was changed. No import, publication or deployment occurred.
