@@ -1,1 +1,60 @@
-{"date":"2026-11-06","ranks":[1293,1294,1295,1296,1297,1298,1299,1300,1301,1302,1303,1304],"duplicate_cluster_extension":[{"rank":1304,"cluster":"DUP-223","retained":"batch 2 row 33","additional_hold":"batch 38 row 36","reason":"Same federalism division-of-powers concept."}],"distinct_ranks":[1293,1294,1295,1296,1297,1298,1299,1300,1301,1302,1303],"source_unchanged":true,"staging_unchanged":true,"production_imports":0,"production_publications":0}
+{
+  "date": "2026-11-06",
+  "ranks": [
+    1293,
+    1294,
+    1295,
+    1296,
+    1297,
+    1298,
+    1299,
+    1300,
+    1301,
+    1302,
+    1303,
+    1304
+  ],
+  "duplicate_cluster_extension": [
+    {
+      "rank": 1304,
+      "cluster": "DUP-47",
+      "retained": "batch 2 row 33",
+      "additional_hold": "batch 38 row 36",
+      "reason": "Corrected after comparing the full source row with the canonical FEDERALISM-01 register: this is the same held row previously linked by DUP-177 and belongs to canonical cluster DUP-47. DUP-223 is the superseded candidate ID for rank 738, not this rank-1304 row."
+    }
+  ],
+  "distinct_ranks": [
+    1293,
+    1294,
+    1295,
+    1296,
+    1297,
+    1298,
+    1299,
+    1300,
+    1301,
+    1302,
+    1303
+  ],
+  "source_unchanged": true,
+  "staging_unchanged": true,
+  "production_imports": 0,
+  "production_publications": 0,
+  "cluster_id_reconciliation": {
+    "rank_1304": {
+      "source_location": "batch 38 row 36",
+      "canonical_cluster": "DUP-47",
+      "existing_pair_link": "DUP-177",
+      "retained_anchor": "batch 32 row 34",
+      "duplicate_id_correction": "DUP-223 -> DUP-47",
+      "evidence": "Original source batch rows 2/33, 32/34, 26/34, 33/35 and 38/36 were compared. The exact rank-1304 held row matches the existing DUP-177 relationship and FEDERALISM-01 cluster; addendum rank 1304 independently lists existing_pair DUP-177. DUP-223 is listed in the addendum as superseded at rank 738."
+    },
+    "rank_684": {
+      "source_location": "batch 4 row 10",
+      "canonical_cluster": "DUP-197",
+      "retained_anchor": "batch 20 row 11",
+      "superseded_candidate_id": "DUP-213",
+      "evidence": "The source rows are both Statistics/Range questions. Rank 684 is a cluster extension of DUP-197; DUP-213 is explicitly superseded by the addendum and is not a separate cluster or target."
+    }
+  }
+}
