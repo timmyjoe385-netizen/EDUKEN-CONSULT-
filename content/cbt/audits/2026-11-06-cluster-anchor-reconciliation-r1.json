@@ -24,17 +24,17 @@
       "rank": 746,
       "cluster": "DUP-214",
       "held": "batch 13 row 20",
-      "retained_anchor": "unresolved",
-      "anchor_source": "legacy register contains no DUP-214 record; addendum identifies atomic-number/electron-count cluster but no canonical retained anchor",
-      "status": "blocked_pending_cluster_origin_lookup"
+      "retained_anchor": "batch 10 row 17",
+      "anchor_source": "content/cbt/audits/2026-11-06-DUP-214-anchor-resolution-r1.json; original source rows verified",
+      "status": "anchor_resolved"
     },
     {
       "rank": 794,
       "cluster": "DUP-214",
       "held": "batch 3 row 18",
-      "retained_anchor": "unresolved",
-      "anchor_source": "same unresolved DUP-214 cluster as rank 746",
-      "status": "blocked_pending_cluster_origin_lookup"
+      "retained_anchor": "batch 10 row 17",
+      "anchor_source": "content/cbt/audits/2026-11-06-DUP-214-anchor-resolution-r1.json; original source rows verified",
+      "status": "anchor_resolved"
     },
     {
       "rank": 885,
@@ -55,21 +55,21 @@
   ],
   "totals": {
     "extension_candidates": 6,
-    "anchor_resolved": 4,
-    "anchor_unresolved": 2
+    "anchor_resolved": 6,
+    "anchor_unresolved": 0
   },
   "exclusions": [
     {
       "rank": 768,
       "cluster": "DUP-08",
       "held": "batch 34 row 18",
-      "status": "already_held_as_DUP-166_merge_into_DUP-08"
+      "status": "already held; merge DUP-166 into DUP-08; not a new unique held row"
     },
     {
       "rank": 1304,
       "cluster": "DUP-47",
       "held": "batch 38 row 36",
-      "status": "already_held_as_DUP-177_merge_into_DUP-47"
+      "status": "already held under DUP-177; canonical FEDERALISM-01/DUP-47; not a new unique held row"
     }
   ],
   "pair_cluster_merges": [
@@ -97,5 +97,20 @@
     "production_publications": 0,
     "release_authorized": false
   },
-  "next_step": "Trace the origin and full membership of the DUP-214 atomic-number/electron-count cluster before assigning a retained anchor or changing cluster totals. The two unresolved extension rows remain review-only."
+  "next_step": "Trace the origin and full membership of the DUP-214 atomic-number/electron-count cluster before assigning a retained anchor or changing cluster totals. The two unresolved extension rows remain review-only.",
+  "conflict_resolution": {
+    "rank_1304": {
+      "canonical_cluster": "DUP-47",
+      "existing_pair_link": "DUP-177",
+      "retained_anchor": "batch 32 row 34",
+      "correction": "Part82's former DUP-223 label was erroneous; DUP-223 is superseded at rank 738."
+    },
+    "rank_684": {
+      "canonical_cluster": "DUP-197",
+      "retained_anchor": "batch 20 row 11",
+      "held_location": "batch 4 row 10",
+      "correction": "DUP-213 is the superseded candidate ID, not a separate cluster."
+    }
+  },
+  "status": "ANCHORS_RESOLVED_SOURCE_VERIFIED_STAGING_RECONCILED"
 }
