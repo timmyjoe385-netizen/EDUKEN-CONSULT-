@@ -20,7 +20,7 @@
       "cluster": "DUP-47",
       "retained": "batch 2 row 33",
       "additional_hold": "batch 38 row 36",
-      "reason": "Corrected after comparing the full source row with the canonical FEDERALISM-01 register: this is the same held row previously linked by DUP-177 and belongs to canonical cluster DUP-47. DUP-223 is the superseded candidate ID for rank 738, not this rank-1304 row."
+      "reason": "Canonical cluster verified as DUP-47 / FEDERALISM-01. This is the already-held batch 38 row 36 item linked by existing pair DUP-177; DUP-223 is the superseded candidate at rank 738, not this rank-1304 item."
     }
   ],
   "distinct_ranks": [
@@ -56,5 +56,21 @@
       "superseded_candidate_id": "DUP-213",
       "evidence": "The source rows are both Statistics/Range questions. Rank 684 is a cluster extension of DUP-197; DUP-213 is explicitly superseded by the addendum and is not a separate cluster or target."
     }
+  },
+  "cluster_reference_correction": {
+    "rank": 1304,
+    "canonical_cluster": "DUP-47",
+    "existing_pair_link": "DUP-177",
+    "retained_anchor": "batch 32 row 34",
+    "superseded_candidate_id": "DUP-223",
+    "superseded_candidate_rank": 738,
+    "source_rows_compared": [
+      "batch 2 row 33",
+      "batch 26 row 34",
+      "batch 32 row 34",
+      "batch 33 row 35",
+      "batch 38 row 36"
+    ],
+    "status": "resolved"
   }
 }
