@@ -9,7 +9,7 @@
       "cluster": "DUP-197",
       "held": "batch 4 row 10",
       "retained_anchor": "batch 20 row 11",
-      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json plus exact source-row verification",
       "status": "anchor_resolved"
     },
     {
@@ -25,7 +25,7 @@
       "cluster": "DUP-214",
       "held": "batch 13 row 20",
       "retained_anchor": "batch 10 row 17",
-      "anchor_source": "content/cbt/audits/2026-11-06-DUP-214-anchor-resolution-r1.json; original source rows verified",
+      "anchor_source": "DUP-214 new-pair record provides canonical retained anchor; exact source rows checked",
       "status": "anchor_resolved"
     },
     {
@@ -33,7 +33,7 @@
       "cluster": "DUP-214",
       "held": "batch 3 row 18",
       "retained_anchor": "batch 10 row 17",
-      "anchor_source": "content/cbt/audits/2026-11-06-DUP-214-anchor-resolution-r1.json; original source rows verified",
+      "anchor_source": "DUP-214 new-pair record provides canonical retained anchor; exact source rows checked",
       "status": "anchor_resolved"
     },
     {
@@ -97,7 +97,7 @@
     "production_publications": 0,
     "release_authorized": false
   },
-  "next_step": "Trace the origin and full membership of the DUP-214 atomic-number/electron-count cluster before assigning a retained anchor or changing cluster totals. The two unresolved extension rows remain review-only.",
+  "next_step": "Proceed with qualified academic review and consolidated register reconciliation; all six extension anchors are resolved in the 6 November r2 index. Do not import or publish.",
   "conflict_resolution": {
     "rank_1304": {
       "canonical_cluster": "DUP-47",
