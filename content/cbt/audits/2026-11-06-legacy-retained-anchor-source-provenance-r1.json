@@ -1,0 +1,24 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Verify source metadata for the retained-anchor side of the 96 explicitly unverified legacy pair IDs.",
+  "method": "Parsed original-batch CSV records with quoted-field and embedded-newline support. Retained locations were taken from retain, retain_candidate or a; the combined federalism anchor was checked at both physical source locations.",
+  "result": {
+    "unverified_pair_ids": 96,
+    "unique_retained_location_fields": 85,
+    "physical_retained_source_rows_checked": 86,
+    "source_type_original": 86,
+    "non_original_source_types": 0,
+    "source_name_blank_but_provenance_note_explicit": 4
+  },
+  "limits": [
+    "Source metadata does not establish whether a row was introduced or changed by a later Git commit.",
+    "The 96 pair IDs remain unverified in the register until row-level Git history is checked and cluster membership reconciled."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}
