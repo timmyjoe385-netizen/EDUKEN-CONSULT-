@@ -31,7 +31,17 @@
       "status_code": 200,
       "subject_practice_and_mixed_mock_ui_rendered": true,
       "question_service_state": "Checking questions…",
-      "attempt_creation_and_submission_not_tested": true
+      "attempt_creation_and_submission_not_tested": true,
+      "rendered_state_after_wait": "Free starter practice available",
+      "practice_selector": "1 question",
+      "actual_published_questions_api": {
+        "status_code": 200,
+        "endpoint": "/functions/v1/eduken-api/api/cbt/questions",
+        "returned_items": 8,
+        "distribution": "one published preview sample per each of the eight subjects",
+        "source_label": "EDUKEN original preview sample",
+        "api_read_verified": true
+      }
     },
     "production_homepage": {
       "url": "https://eduken-consult.timmyjoe385.workers.dev/",
@@ -62,10 +72,10 @@
   },
   "correction": "The previously used workers.dev hostname suffix timmy385 was incorrect; Cloudflare account subdomain is timmyjoe385.",
   "limitations": [
-    "Preview bank has one published sample question per subject; it is a wiring/smoke-test bank only and is not suitable for student launch.",
-    "Full subject practice and mixed mock selection counts cannot pass until adequate reviewed questions are available.",
-    "Authenticated allowlisted admin session must be retested; recent unauthenticated admin API calls returned 401 as expected.",
-    "External content fetch is not a full visual acceptance test."
+    "Student-facing published-question GET endpoint has been directly verified (HTTP 200, eight preview samples).",
+    "Attempt creation, answer submission, server grading and results retrieval have not yet been exercised in a real browser session.",
+    "The browser automation provider rejected the run because its wallet balance is negative; the Cloudflare code runner also blocks outbound requests to the Supabase domain.",
+    "The eight preview samples are synthetic/original preview samples, not the 1,600-question reviewed production bank and not represented as official JAMB questions."
   ],
   "safety": {
     "cloudflare_configuration_changes": 0,
@@ -74,7 +84,7 @@
     "production_publications": 0,
     "release_authorized": false
   },
-  "status": "PREVIEW_EXTERNAL_REACHABILITY_AND_UNAUTH_ANALYTICS_GUARD_CONFIRMED_LIVE_AI_AND_AUTHENTICATED_FLOW_PENDING",
+  "status": "PREVIEW_QUESTION_FEED_VERIFIED_EIGHT_SYNTHETIC_SAMPLES_ATTEMPT_SUBMIT_E2E_PENDING",
   "student_api_acceptance": {
     "log_window": "2026-11-06 15:27–15:31 UTC",
     "published_question_feed": {
@@ -134,5 +144,12 @@
     "status": "not_run",
     "blocker": "TinyFish browser automation did not start because its separate wallet balance is -$0.136 USD; no attempt was created and no top-up was made.",
     "manual_or_alternative_test": "API-level published-feed check succeeded; start/submit browser workflow remains unverified."
+  },
+  "edge_function": {
+    "status": "ACTIVE",
+    "version": 43,
+    "verify_jwt": false,
+    "deployed_source_exactly_matches_repository_source": true,
+    "repository_file": "supabase/functions/eduken-api/index.ts"
   }
 }
