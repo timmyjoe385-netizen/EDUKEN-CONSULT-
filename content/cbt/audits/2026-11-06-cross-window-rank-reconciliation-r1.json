@@ -78,32 +78,17 @@
       100,
       101
     ],
-    "explicit_unique_rank_ids_across_tail_and_high_similarity_sources": 1005
-  },
-  "reconciliation": {
-    "prior_cumulative_counter": {
-      "previous_baseline_reported": 286,
-      "part63_persisted_total": 1007,
-      "rank_set_derived_total_before_addendum": 1003,
-      "discrepancy": 4,
-      "note": "Earlier tail-review files contain 717 unique rank IDs; 286 baseline plus 717 equals 1,003, four below the persisted cumulative counter of 1,007."
-    },
-    "post_addendum_crosswalk": {
-      "earlier_tail_review_unique_rank_ids": 717,
-      "addendum_rank_entries": 297,
-      "overlap": 58,
-      "genuinely_new_rank_ids": 239,
-      "union_of_all_tail_review_rank_ids": 956,
-      "high_similarity_mapped_rank_ids": 49,
-      "explicit_unique_rank_ids_across_tail_and_high_similarity_sources": 1005,
-      "baseline_plus_explicit_tail_union_if_baseline_is_disjoint": 1242,
-      "counter_based_total_if_part63_counter_is_accepted": 1246,
-      "total_candidates": 1304,
-      "ranks_without_explicit_tail_record_within_287_to_1304": 62,
-      "remaining_if_rank_set_based": 62,
-      "remaining_if_counter_based": 58,
-      "discrepancy_between_aggregate_methods": 4,
-      "missing_rank_intervals_within_287_to_1304": [
+    "explicit_unique_rank_ids_across_tail_and_high_similarity_sources": 1005,
+    "part83": {
+      "file": "content/cbt/audits/cross-window-tail-review-2026-11-06-part83.json",
+      "newly_explicit_rank_ids": 62,
+      "dispositions": {
+        "same_fact_duplicate_recommendations": 3,
+        "near_duplicate_recommendations": 1,
+        "related_skill_variants_preserved": 8,
+        "nondduplicate_distinct_or_complementary_preserved": 44
+      },
+      "missing_tail_rank_intervals_reviewed": [
         [
           287,
           290
@@ -140,11 +125,45 @@
           1037,
           1048
         ]
-      ],
-      "interpretation": "The 62 rank IDs without explicit tail-review records may be covered by earlier targeted-review artifacts. They are not automatically unreviewed. Resolve the four-count difference and crosswalk the 62 rank IDs before declaring the 1,304-candidate audit complete.",
-      "status": "NOT_RECONCILED"
+      ]
+    }
+  },
+  "reconciliation": {
+    "prior_cumulative_counter": {
+      "previous_baseline_reported": 286,
+      "part63_persisted_total": 1007,
+      "rank_set_derived_total_before_addendum": 1003,
+      "discrepancy": 4,
+      "note": "The 286 baseline review count is not yet itemized by candidate rank. The cumulative counter is four higher than the 286 baseline plus 717 explicit earlier tail-review rank IDs."
     },
-    "status": "PARTIAL_RANK_CROSSWALK_COMPLETE_COUNTER_AND_EARLIER_REVIEW_EVIDENCE_STILL_PENDING"
+    "tail_review_crosswalk": {
+      "earlier_tail_review_unique_rank_ids": 717,
+      "addendum_rank_entries": 297,
+      "overlap_between_earlier_and_addendum": 58,
+      "genuinely_new_rank_ids_from_addendum": 239,
+      "tail_review_union_before_part83": 956,
+      "part83_new_rank_ids": 62,
+      "tail_review_union_after_part83": 1018,
+      "candidate_rank_range_covered": "287–1304",
+      "missing_tail_rank_ids_after_part83": 0,
+      "status": "ALL_TAIL_RANKS_287_TO_1304_HAVE_EXPLICIT_PAIRWISE_DISPOSITIONS"
+    },
+    "baseline_crosswalk": {
+      "baseline_review_count": 286,
+      "high_similarity_rank_ids_mapped": 49,
+      "additional_targeted_review_count_reported": 237,
+      "exact_rank_ids_for_237_targeted_reviews": "not yet mapped",
+      "cumulative_counter_discrepancy": 4,
+      "status": "PENDING"
+    },
+    "aggregate": {
+      "total_candidates": 1304,
+      "current_unique_reviewed_total": null,
+      "current_remaining_total": null,
+      "note": "The 286 baseline count must be crosswalked to exact ranks and reconciled against the four-count cumulative-counter discrepancy before a final aggregate is claimed.",
+      "status": "NOT_FINALIZED"
+    },
+    "status": "TAIL_RANK_GAPS_CLOSED_BASELINE_RANK_CROSSWALK_PENDING"
   },
   "safety": {
     "source_csv_edits": 0,
