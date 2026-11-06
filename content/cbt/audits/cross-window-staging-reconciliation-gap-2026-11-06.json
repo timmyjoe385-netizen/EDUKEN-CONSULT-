@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Non-destructive reconciliation checkpoint comparing the 6 November duplicate addendum with the existing 1 November staging export.",
+  "evidence": {
+    "baseline_staging_manifest": "content/cbt/staging/2026-11-01/manifest.json",
+    "baseline_staging_held_csvs": [
+      "content/cbt/staging/2026-11-01/held-duplicates-01-10.csv",
+      "content/cbt/staging/2026-11-01/held-duplicates-11-20.csv",
+      "content/cbt/staging/2026-11-01/held-duplicates-21-30.csv",
+      "content/cbt/staging/2026-11-01/held-duplicates-31-40.csv"
+    ],
+    "latest_addendum": "content/cbt/audits/duplicate-disposition-addendum-2026-11-06.json",
+    "rank_tail_record": "content/cbt/audits/cross-window-tail-review-2026-11-06-part82.json"
+  },
+  "verified_results": {
+    "baseline_held_rows": 90,
+    "baseline_unique_pair_ids": 90,
+    "addendum_new_pair_records": 28,
+    "addendum_new_pair_ids": [
+      "DUP-210",
+      "DUP-211",
+      "DUP-212",
+      "DUP-214",
+      "DUP-215",
+      "DUP-216",
+      "DUP-217",
+      "DUP-218",
+      "DUP-219",
+      "DUP-220",
+      "DUP-221",
+      "DUP-222",
+      "DUP-224",
+      "DUP-225",
+      "DUP-226",
+      "DUP-228",
+      "DUP-229",
+      "DUP-230",
+      "DUP-231",
+      "DUP-232",
+      "DUP-233",
+      "DUP-235",
+      "DUP-236",
+      "DUP-237",
+      "DUP-240",
+      "DUP-242",
+      "DUP-243",
+      "DUP-244"
+    ],
+    "addendum_new_pair_ids_found_in_baseline_staging": [],
+    "staging_join_status": "NOT_RECONCILED",
+    "source_row_provenance_status": "NOT_RECONCILED_FOR_THE_28_NEW_PAIRS",
+    "original_source_csvs_modified": false,
+    "baseline_staging_csvs_modified": false,
+    "production_imports": 0,
+    "production_publications": 0
+  },
+  "register_conflicts": [
+    {
+      "location": "cross-window-tail-review-2026-11-06-part82.json rank 1304",
+      "part82_cluster": "DUP-223",
+      "addendum_cluster": "DUP-47",
+      "addendum_superseded_pair": "DUP-223",
+      "issue": "The same held row batch 38 row 36 is linked to incompatible cluster identifiers across the tail record and addendum. Resolve against original pair register and exact held-row content before consolidating."
+    },
+    {
+      "location": "duplicate-disposition-addendum-2026-11-06.json rank 684",
+      "addendum_cluster": "DUP-197",
+      "superseded_pair": "DUP-213",
+      "issue": "The extension is assigned to DUP-197, but the referenced superseded pair identifier must be checked against the canonical register and exact source/held rows."
+    }
+  ],
+  "safe_next_steps": [
+    "Fetch original source batches for the 28 retained/held location pairs and verify physical CSV row numbers, subject, stem, options and answers.",
+    "Build a new dated staging revision from source CSVs only after all 28 pair mappings and six additional held-row extensions are validated.",
+    "Reconcile canonical cluster IDs against the complete register; do not merge rank 1304 while DUP-223 versus DUP-47 remains unresolved.",
+    "Recompute retained/held counts per batch and assert 1,600 total rows, unique source locations, and no row both retained and held.",
+    "Keep all staging outputs excluded from Supabase import and publication pending academic approval."
+  ],
+  "status": "AUDIT_ONLY_NO_SOURCE_OR_STAGING_MUTATION"
+}
