@@ -289,3 +289,11 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - Fourteen candidates were preserved as distinct. Rank 980 was confirmed as **DUP-162**, extending existing esterification cluster **DUP-13**: batch 20 row 20 remains the designated retained question, batch 38 row 20 was already held, and batch 6 row 21 is one additional unique held target.
 - Cross-window progress is now **461/1,304 manually reviewed; 843 remain**. The duplicate register now records **146 cross-window + 15 within-window = 161 confirmed pair relationships**, resolving to **158 unique replacement targets** (90 original + 68 additional). The 67 additional pair relationships from DUP-91–DUP-162 require provenance reconciliation and represent 68 unique held rows.
 - No source CSV, staging CSV, replacement draft or production data was changed. No import, publication, merge or deployment was authorised.
+
+
+## Fifth lower-tail audit batch — 6 November 2026
+
+- Reviewed cross-window candidate ranks **1229–1243** against the complete source CSV rows, four options, answer keys and explanations. See `content/cbt/audits/cross-window-tail-review-2026-11-06-part40.json`.
+- Fourteen candidates were preserved as distinct. Rank 1233 was confirmed as **DUP-174**, extending the existing catalyst-mechanism cluster **DUP-91**: batch 3 row 20 remains the earliest retained anchor; batch 25 row 21 was already held; batch 12 row 21 is one additional unique held target.
+- Cross-window progress is now **701/1,304 manually reviewed; 603 remain**. The duplicate register contains **158 cross-window + 15 within-window = 173 recorded pair relationships**, resolving to **168 unique replacement targets** (90 original + 78 additional). The current summary records 79 additional pair relationships pending provenance, while the explicit history unverified-ID list contains 70; this discrepancy is now documented and must be reconciled before provenance completion is claimed.
+- No source CSV or staging CSV was modified. No replacement draft was created, no Supabase import or publication occurred, and no production data or deployment was touched.
