@@ -19,10 +19,14 @@ This update supersedes conflicting older status notes below. Historical entries 
 - Baseline 90 provenance classification is complete: 62 commit-backed replacement histories and 28 original-draft overlaps. Exact introducing commits are verified for all 13 later-replacement rows; DUP-34 edit history is also documented. Separately, the 28 new addendum pair records and six unique cluster-extension rows remain pending provenance/contextual disposition, although all 34 held locations and 34 retained anchors have source/staging joins.
 - Replacement proposals for the 34 new held locations: **0 drafted**. No new held item is approved for insertion or publication.
 
-### 3. Review progress — aggregate not yet reconciled
-- A rank-level crosswalk across 81 tail-review files, the 6 November addendum and the 49-item high-similarity review identifies **973 unique candidate rank IDs**. The legacy cumulative counter in part56 is **921**, a discrepancy of **52**.
-- **331 candidate ranks lack an explicit record in the inspected source set**; some may be represented in earlier targeted-review artifacts. The rank union is not yet an independently validated aggregate. Do not claim 973/1,304 or 921/1,304 as the final reviewed total until the 52-count mismatch and 331 missing-rank crosswalk are resolved.
-- The reconstructed within-window set has 390 candidates reviewed at threshold 0.42. The original report still lists 279 pending candidates and a 38-count discrepancy; that original queue is not reconciled.
+### 3. Review progress — rank crosswalk partly reconciled, aggregate still open
+- The 81 persisted tail-review part files contain **717 unique rank IDs** in the earlier review set.
+- The later persisted segments contain **297 rank IDs** (565–579, 640–909 and 1293–1304); **58 overlap** earlier rank IDs, so only **239 are genuinely new**.
+- The combined tail-review files now contain **956 unique rank IDs**. The separate 49-item high-similarity rank mapping adds 49 explicit IDs, for 1,005 explicit rank IDs across those source sets.
+- The earlier cumulative counter says 1,007 reviewed before the addendum, but the 286 baseline plus 717 explicit earlier rank IDs gives 1,003 — a **four-count discrepancy**.
+- There are 62 rank IDs in the 287–1304 range without an explicit tail-review record. Some may be covered by older review artifacts; do not call them unreviewed until those artifacts are crosswalked.
+- Therefore neither 1,246 (counter-based) nor 1,242 (rank-set-based) is accepted as the final aggregate yet. The 1,304-rank audit is **not complete**.
+- Within-window: the reconstructed set contains 390 candidates at threshold 0.42; the original report still lists 279 pending and a 38-count discrepancy. The original queue remains unreconciled.
 - Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
 ### 4. Preview environment — student API smoke verified
