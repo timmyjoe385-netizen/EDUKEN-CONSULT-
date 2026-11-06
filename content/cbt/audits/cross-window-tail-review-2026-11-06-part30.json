@@ -146,20 +146,24 @@
       "a": "batch 1 row 15",
       "b": "batch 27 row 12",
       "decision": "confirmed_semantic_duplicate_extends_existing_cluster",
-      "cluster": "DUP-150",
-      "reason": "Both questions ask which blood component is responsible for clot formation or the initial platelet plug, and both key platelets. The second is already a held member of DUP-150; this adds a confirmed pair relationship to the existing cluster, not a new unique replacement target.",
-      "retention_note": "Keep the established retained question in batch 1 row 15; batch 27 row 12 remains held under DUP-150."
+      "clusters": [
+        "DUP-22",
+        "DUP-150"
+      ],
+      "reason": "Both ask which blood component is responsible for clot formation or the initial platelet plug, and both key platelets. Batch 1 row 15 is the clearest earlier retained item. Batch 27 row 12 and batch 38 row 13 form a connected duplicate cluster; the new comparison shows batch 27 row 12 should not remain a retained candidate.",
+      "retention_note": "Retain batch 1 row 15; hold batch 27 row 12 and batch 38 row 13. Add batch 27 row 12 as one additional unique replacement target, pending provenance, staging and academic review."
     }
   ],
   "deferred": [],
   "controls": {
     "new_confirmed_duplicate_pair_relationships": 1,
-    "new_unique_replacement_targets": 0,
+    "new_unique_replacement_targets": 1,
     "preserved_as_distinct": 14,
     "source_csv_modified": 0,
     "staging_csv_modified": 0,
     "replacement_drafts_created": 0,
     "production_imports": 0,
-    "production_publications": 0
+    "production_publications": 0,
+    "provenance_reconciliation_required_unique_targets": 1
   }
 }
