@@ -19,34 +19,51 @@
     "qualification": "All referenced rows exist and match their recorded subject/topic and broad skill family. This does not convert a skill-family resemblance into an independently approved duplicate disposition; the pairs remain subject to contextual and qualified academic review."
   },
   "staging_join": {
-    "staging_revision": "content/cbt/staging/2026-11-01/",
+    "staging_revision": "content/cbt/staging/2026-11-06/",
+    "baseline_revision": "content/cbt/staging/2026-11-01/",
     "held_export_files": [
       "held-duplicates-01-10.csv",
       "held-duplicates-11-20.csv",
       "held-duplicates-21-30.csv",
       "held-duplicates-31-40.csv"
     ],
-    "existing_held_rows": 90,
-    "existing_unique_pair_ids": 90,
-    "new_pair_records_joined": 0,
+    "retained_export_files": [
+      "retained-batches-01-10.csv",
+      "retained-batches-11-20.csv",
+      "retained-batches-21-30.csv",
+      "retained-batches-31-40.csv"
+    ],
+    "baseline_retained_rows": 1510,
+    "baseline_held_rows": 90,
+    "new_pair_records_joined": 28,
     "new_pair_records_expected": 28,
-    "new_pair_locations_joined": 0,
-    "extension_locations_joined": 0,
-    "extension_locations_expected": 8,
-    "result": "Still not reconciled: none of the 28 new pair IDs or their 56 source locations, and none of the eight extension locations, is present in the 1 November held exports. A separate dated reconciliation revision is required."
+    "new_pair_locations_joined": 28,
+    "new_pair_locations_expected": 28,
+    "extension_locations_joined": 6,
+    "extension_locations_expected": 6,
+    "already_held_extension_locations_excluded": 2,
+    "total_new_held_locations_joined": 34,
+    "retained_anchor_locations_found": 34,
+    "missing_locations": 0,
+    "duplicate_held_locations": 0,
+    "overlap_between_retained_and_held": 0,
+    "final_retained_rows": 1476,
+    "final_held_rows": 124,
+    "final_total_rows": 1600,
+    "result": "All 34 new held locations and 34 retained anchors matched the 1 November retained export. The six genuinely new cluster-extension rows were added; two extension locations already held in the baseline were excluded. A separate 6 November staging revision was created and verified. The 1 November baseline remains unchanged.",
+    "method": "Matched source_batch/source_csv_row in baseline retained exports and retained_location/held_location references from the addendum. Verified all 40 per-batch totals remain 40; retained/held source locations are unique and non-overlapping."
   },
   "safety": {
     "original_source_csvs_modified": 0,
     "existing_staging_csvs_modified": 0,
-    "new_staging_revision_created": false,
+    "new_staging_revision_created": true,
     "production_imports": 0,
     "production_publications": 0,
     "release_authorized": false
   },
   "next_actions": [
-    "Locate or construct a separate, versioned 6 November reconciliation staging revision from verified source rows; do not append to or overwrite the 1 November snapshot.",
-    "Resolve contextual duplicate-vs-related-skill decisions for each pair, including numerical variants and inverse/related definitions.",
-    "Reconcile pair IDs, cluster merges, superseded IDs and the six genuinely new held rows before updating the consolidated register.",
-    "Keep question imports/publication blocked until independent subject, answer-key and syllabus approval is recorded."
+    "Resolve canonical cluster merge accounting for DUP-22/DUP-165 and DUP-08/DUP-166 in the consolidated register.",
+    "Complete provenance and independent academic/syllabus review for the new 34 held candidates and replacement drafts.",
+    "Keep all questions out of production until release gates are separately approved."
   ]
 }
