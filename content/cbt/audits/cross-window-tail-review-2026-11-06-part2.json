@@ -23,9 +23,10 @@
       436
     ],
     "previous_total_manually_reviewed": 291,
-    "now_manually_reviewed": 308,
+    "now_manually_reviewed": 307,
     "total_cross_window_candidates": 1304,
-    "remaining_not_manually_reviewed": 996
+    "remaining_not_manually_reviewed": 997,
+    "new_confirmed_duplicate_pairs": 16
   },
   "findings": [
     {
@@ -135,33 +136,6 @@
       "answer_b": "A",
       "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
       "reason": "Both ask the purpose of satire and have the same correct learning outcome: expose or criticise faults in people, institutions or society."
-    },
-    {
-      "id": "DUP-100",
-      "rank": 357,
-      "similarity_score": 0.617,
-      "subject": "Physics",
-      "a": "batch 16 row 26",
-      "b": "batch 38 row 26",
-      "concept": "Increasing coil current or turns strengthens an electromagnet.",
-      "question_a": "Which change generally strengthens an iron-core electromagnet?",
-      "options_a": [
-        "Reducing coil current",
-        "Increasing the number of coil turns",
-        "Removing the iron core",
-        "Disconnecting the supply"
-      ],
-      "answer_a": "B",
-      "question_b": "Which change will generally make an electromagnet stronger, all else equal?",
-      "options_b": [
-        "decreasing the current",
-        "increasing the current through its coil",
-        "removing the coil",
-        "replacing its iron core with air in every case"
-      ],
-      "answer_b": "B",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
-      "reason": "Both test the same principle that increasing a coil's magnetic field strength increases electromagnet strength. The specific factor differs (turns vs current), so classify as same objective/template repetition pending reviewer confirmation rather than exact same fact."
     },
     {
       "id": "DUP-101",
@@ -493,10 +467,22 @@
     "staging_csvs_modified": 0,
     "production_imports": 0,
     "production_publications": 0,
-    "provenance_checks_pending": 17,
-    "staging_joins_pending": 17,
+    "provenance_checks_pending": 16,
+    "staging_joins_pending": 16,
     "replacement_drafts_created": 0,
     "user_reported_approved_replacements_remain": 90,
-    "note": "DUP-101 and DUP-105 join existing duplicate clusters: keep batch 37 row 27 for the law-of-supply cluster and batch 9 row 12 for the fertilisation-site cluster; add the new counterpart rows as further held candidates. The other retain candidates are provisional earlier-batch choices pending exact row-level history checks. DUP-100 is a repeated assessment principle (more coil turns vs higher current), not an identical wording pair; preserve as a flagged same-objective repetition pending subject review."
-  }
+    "note": "DUP-101 and DUP-105 join existing duplicate clusters: keep batch 37 row 27 for the law-of-supply cluster and batch 9 row 12 for the fertilisation-site cluster; add the new counterpart rows as further held candidates. The other retain candidates are provisional earlier-batch choices pending exact row-level history checks. DUP-100 is preserved as a distinct application because it tests a different factor (coil turns versus current)."
+  },
+  "preserved_or_flagged": [
+    {
+      "id": "DUP-100",
+      "rank": 357,
+      "similarity_score": 0.617,
+      "subject": "Physics",
+      "a": "batch 16 row 26",
+      "b": "batch 38 row 26",
+      "decision": "preserve_both_distinct_factors_flag_template_repetition",
+      "reason": "One question asks how increasing the number of coil turns strengthens an electromagnet; the other asks how increasing current strengthens it. These are different controllable factors, so they are useful complementary applications rather than the same tested fact. Keep both; flag only for broad-topic balance review."
+    }
+  ]
 }
