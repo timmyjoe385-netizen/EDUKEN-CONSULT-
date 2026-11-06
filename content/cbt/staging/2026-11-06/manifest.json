@@ -9,27 +9,23 @@
   "provisionally_retained_rows": 1476,
   "reconciliation": "1,476 provisionally retained + 124 held = 1,600 source rows; the 124 held locations map to 119 pair IDs because some rows extend existing clusters.",
   "duplicate_provenance": {
-    "prior_replacement_commit_verified": 48,
-    "replacement_after_initial_snapshot_commit_sha_pending": 13,
-    "original_draft_overlap_relationships": 29,
+    "prior_replacement_commit_verified": 62,
+    "replacement_after_initial_snapshot_commit_sha_pending": 0,
+    "original_draft_overlap_relationships": 28,
     "provenance_unverified_relationships": 0,
     "unverified_pair_ids": [],
-    "note": "This classification covers the baseline 90 held relationships only: 48 have prior-replacement commit evidence, 13 replacement-created pairs still need exact introducing commit SHAs normalized, and 29 are original-draft overlaps. DUP-34 was verified as one of the 29 original-draft overlaps. Separately, the 6 November addendum introduces 28 new pair records and six unique cluster-extension rows (34 new held locations); their provenance and contextual retain/hold decisions remain pending.",
+    "note": "The baseline 90 held relationships are fully reconciled: 62 have commit-backed replacement history and 28 are original-draft overlaps. Exact introducing commits are verified for the 13 later-replacement rows; DUP-34 is also separately documented with its exact row-level edit history. This baseline status does not include the separate 28 new pair records plus six unique cluster-extension rows from the 6 November addendum, whose provenance and contextual disposition remain pending.",
     "resolved_pair_evidence": {
       "DUP-34": {
-        "retained_location": "batch 38 row 2",
-        "held_location": "batch 39 row 5",
-        "source_content_verified": true,
-        "source_provenance": "both original EDUKEN-authored drafts",
-        "finding": "Both test concord with the singular subject 'each'; retained item uses 'wears' and held item uses 'receives'. They assess the same narrow rule with different lexical content.",
-        "disposition": "keep held pending qualified English subject review; provenance classified as original-draft overlap, not prior-replacement history"
+        "historical_edit": "The current batch 39 row 5 wording was introduced by commit d91278d5c327b24a1f711eb8636d2a9cea1a07cf; its parent contained a different concord item. Batch 38 row 2 already contained the matching singular-agreement assessment.",
+        "source_provenance": "Both are EDUKEN-authored questions; DUP-34 is classified within the baseline original-draft-overlap group, with the later row's edit history also verified."
       }
     },
     "addendum_provenance": {
       "new_pair_records": 28,
       "unique_cluster_extension_rows": 6,
       "newly_held_locations": 34,
-      "source_locations_verified": 56,
+      "source_locations_verified": 64,
       "staging_held_locations_joined": 34,
       "retained_anchors_found": 34,
       "provenance_and_contextual_disposition": "pending",
@@ -216,7 +212,11 @@
           "staging_join": "verified_in_2026_11_06_held_csv",
           "provenance": "pending"
         }
-      ]
+      ],
+      "source_location_breakdown": {
+        "new_pair_record_locations": 56,
+        "cluster_extension_locations": 8
+      }
     }
   },
   "per_batch": [
@@ -460,12 +460,13 @@
     "The 6 November staging revision is a non-destructive audit export: 1,476 provisionally retained rows + 124 held rows = 1,600; no Supabase import or publication has occurred.",
     "The 124 held locations map to 119 pair IDs because some entries extend existing clusters; all 34 new held locations have source and staging joins, but contextual duplicate-vs-related-skill decisions and provenance remain pending.",
     "The 1,476 provisionally retained rows are not academically approved or deployment-ready; each still requires syllabus, clarity, options, answer-key and explanation review.",
-    "Baseline 90 provenance classification: 48 prior-replacement commits verified, 13 exact introducing commit SHAs still need normalization, and 29 original-draft overlaps including resolved DUP-34.",
-    "The 28 new addendum pair records and six unique cluster-extension rows remain pending provenance classification and contextual academic review; no replacements have been drafted for these 34 held locations.",
+    "Baseline 90 provenance classification is complete: 62 commit-backed replacement histories and 28 original-draft overlaps; exact introducing commits are verified for all 13 later-replacement rows, and DUP-34 edit history is documented.",
+    "The separate 28 new addendum pair records and six unique cluster-extension rows remain pending provenance classification and qualified contextual review; all 34 new held locations and retained anchors have source/staging joins.",
     "The latest persisted cross-window review segments contain 297 rank entries (565–579, 640–909, 1293–1304), but overlap with prior review logs has not been reconciled; do not state a current aggregate reviewed/remaining total yet.",
     "The reconstructed within-window set contains 390 reviewed candidates at threshold 0.42; the original reported queue still lists 279 pending and the 38-count discrepancy remains unresolved.",
     "The 90 baseline replacement proposals remain outside the source bank; independent qualified subject/answer approval and documentary reviewer evidence remain outstanding.",
-    "No production deployment, PR merge, question publication, production database change or student release is authorized by this staging export."
+    "No production deployment, PR merge, question publication, production database change or student release is authorized by this staging export.",
+    "The consolidated register separately contains 96 explicitly listed unverified pair IDs from its later historical range; its summary counters and unique-held-row totals do not reconcile with the current 6 November staging revision. Do not conflate that register-wide queue with the 124-row staging export."
   ],
   "semantic_review_status": {
     "cross_window_candidates": 1304,
@@ -622,7 +623,7 @@
       "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-65; independent subject review remains required."
     }
   ],
-  "source_row_reconciliation_status": "verified_for_DUP-60_and_DUP-61_physical_csv_row_numbering_includes_header",
+  "source_row_reconciliation_status": "Baseline 90 held rows have verified provenance and staging joins; the 6 November addendum source checks cover 56 locations for 28 new pair records plus 8 extension locations, and its staging revision joins 34 new held locations and 34 retained anchors.",
   "revision": "2026-11-06-r2",
   "source_revision": "content/cbt/staging/2026-11-01/",
   "delta": {
