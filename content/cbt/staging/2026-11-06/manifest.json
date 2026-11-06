@@ -255,7 +255,9 @@
       "provenance_records_marked_original": 36,
       "unique_new_held_locations": 34,
       "staging_rows_exactly_matched": 34,
-      "contextual_disposition": "qualified_subject_review_pending"
+      "contextual_disposition": "qualified_subject_review_pending",
+      "item_level_contextual_classification_mapping": "pending",
+      "baseline_90_provenance_status": "complete_62_commit_backed_28_original_draft_zero_unresolved"
     }
   },
   "per_batch": [
