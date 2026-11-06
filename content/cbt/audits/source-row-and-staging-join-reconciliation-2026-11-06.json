@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record source-row existence/content checks and the staging join result for the 6 November cross-window duplicate addendum.",
+  "source_verification": {
+    "new_duplicate_pair_records": 28,
+    "retained_and_held_locations_expected": 56,
+    "source_locations_found": 56,
+    "source_rows_missing": 0,
+    "extension_locations_expected": 8,
+    "extension_source_locations_found": 8,
+    "extension_source_rows_missing": 0,
+    "method": "Fetched the referenced original-batch CSVs from this branch and parsed their headers/data rows. Each referenced location was checked for row existence, subject, topic/subtopic, question stem and correct-option field.",
+    "important_limit": "Existence and broad concept alignment do not by themselves establish an exact semantic duplicate. Some pairs use different figures or question forms within the same skill family; retain/replace decisions still require contextual and qualified subject/syllabus review."
+  },
+  "staging_join": {
+    "staging_revision": "content/cbt/staging/2026-11-01/",
+    "held_export_files": [
+      "held-duplicates-01-10.csv",
+      "held-duplicates-11-20.csv",
+      "held-duplicates-21-30.csv",
+      "held-duplicates-31-40.csv"
+    ],
+    "existing_held_rows": 90,
+    "existing_unique_pair_ids": 90,
+    "new_pair_records_joined": 0,
+    "new_pair_records_expected": 28,
+    "new_pair_locations_joined": 0,
+    "extension_locations_joined": 0,
+    "extension_locations_expected": 8,
+    "result": "No new addendum pair ID or listed extension held_location matched the 1 November held-duplicate staging exports by pair_id or held_location. The 1 November staging snapshot is not a valid complete staging destination for the 6 November addendum."
+  },
+  "safety": {
+    "original_source_csvs_modified": 0,
+    "existing_staging_csvs_modified": 0,
+    "new_staging_revision_created": false,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  },
+  "next_actions": [
+    "Locate or construct a separate, versioned 6 November reconciliation staging revision from verified source rows; do not append to or overwrite the 1 November snapshot.",
+    "Resolve contextual duplicate-vs-related-skill decisions for each pair, including numerical variants and inverse/related definitions.",
+    "Reconcile pair IDs, cluster merges, superseded IDs and the six genuinely new held rows before updating the consolidated register.",
+    "Keep question imports/publication blocked until independent subject, answer-key and syllabus approval is recorded."
+  ]
+}
