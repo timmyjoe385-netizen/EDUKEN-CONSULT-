@@ -4,9 +4,9 @@
   "purpose": "Reconcile explicit candidate-rank identifiers across the 81 persisted cross-window tail-review files, the 6 November addendum segments and the original 49-item high-similarity review.",
   "sources": {
     "tail_review_part_files": 81,
-    "tail_review_rank_entries": 690,
-    "tail_review_unique_rank_ids": 685,
-    "tail_review_duplicate_rank_entries": 5,
+    "tail_review_rank_entries": 1014,
+    "tail_review_unique_rank_ids": 956,
+    "tail_review_duplicate_rank_entries": 58,
     "addendum_review_segments": [
       {
         "start": 565,
@@ -222,9 +222,70 @@
         1048
       ]
     ],
-    "interpretation": "The 973 rank IDs are the union of explicit rank-level records, not an independently validated aggregate of all manual reviews. The 921 cumulative counter in part56 differs by 52. Some unrepresented ranks may be covered by other review artifacts or earlier targeted reviews; the 331 missing identifiers must not be called unreviewed until that crosswalk is complete.",
-    "status": "COUNTER_AND_RANK_CROSSWALK_NOT_RECONCILED",
-    "rank_union_calculation": "685 unique IDs from tail-review parts + 297 addendum segment ranks (58 overlap) + 49 mapped high-similarity ranks = 973 explicit unique rank IDs."
+    "interpretation": "The 297 addendum rank entries are not all new: 58 overlap earlier tail-review rank IDs, leaving 239 genuinely new rank IDs. The cumulative counter and explicit rank crosswalk still differ by four. Sixty-two ranks in 287–1304 lack an explicit rank-level record in the tail-review files; they may be covered by other earlier review artifacts, so they must not be labelled unreviewed until those records are crosswalked.",
+    "status": "PARTIAL_RANK_CROSSWALK_COMPLETE_COUNTER_AND_EARLIER_REVIEW_EVIDENCE_STILL_PENDING",
+    "rank_union_calculation": "685 unique IDs from tail-review parts + 297 addendum segment ranks (58 overlap) + 49 mapped high-similarity ranks = 973 explicit unique rank IDs.",
+    "explicit_unique_rank_ids_across_tail_and_high_similarity_sources": 1005,
+    "tail_review_rank_crosswalk": {
+      "earlier_tail_review_unique_rank_ids": 717,
+      "addendum_segment_rank_ids": 297,
+      "overlap_between_earlier_and_addendum": 58,
+      "genuinely_new_rank_ids_from_addendum": 239,
+      "union_of_all_tail_review_rank_ids": 956
+    },
+    "prior_cumulative_counter": {
+      "previous_baseline_reported": 286,
+      "part63_persisted_total": 1007,
+      "rank_set_derived_total_before_addendum": 1003,
+      "discrepancy": 4,
+      "note": "The earlier cumulative counter is four higher than the 286 baseline plus the 717 unique rank IDs explicitly present in earlier tail-review records."
+    },
+    "post_addendum_crosswalk": {
+      "baseline_plus_explicit_tail_union_if_baseline_is_disjoint": 1242,
+      "total_candidates": 1304,
+      "ranks_without_explicit_tail_record_within_287_to_1304": 62,
+      "missing_rank_intervals_within_287_to_1304": [
+        [
+          287,
+          290
+        ],
+        [
+          292,
+          292
+        ],
+        [
+          294,
+          303
+        ],
+        [
+          305,
+          307
+        ],
+        [
+          309,
+          318
+        ],
+        [
+          320,
+          339
+        ],
+        [
+          460,
+          460
+        ],
+        [
+          462,
+          462
+        ],
+        [
+          1037,
+          1048
+        ]
+      ],
+      "counter_based_total_if_part63_counter_is_accepted": 1246,
+      "remaining_if_counter_based": 58,
+      "status": "NOT_RECONCILED"
+    }
   },
   "safety": {
     "source_csv_edits": 0,
