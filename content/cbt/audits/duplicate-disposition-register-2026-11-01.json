@@ -20,7 +20,7 @@
     "cross_window_additional_targeted_candidates_reviewed": 472,
     "cross_window_manually_reviewed_candidates": 656,
     "cross_window_candidates_remaining_not_manually_reviewed": 648,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 156,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 155,
     "cross_window_review_note": "Full-content lower-tail review continues in 15-candidate batches. Latest ranks 1184–1198: 14 were preserved as distinct; rank 1186 confirmed a new checks-and-balances duplicate pair. See cross-window-tail-review-2026-11-06-part37.json. Current total: 656/1,304 manually reviewed; 648 remain.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
@@ -36,9 +36,9 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 156,
+    "cross_window_pairs": 155,
     "within_window_pairs": 15,
-    "total_pairs": 171,
+    "total_pairs": 170,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
@@ -48,7 +48,7 @@
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-six additional pair relationships from DUP-91–DUP-171 require row-level provenance reconciliation and represent 76 unique held rows because clusters overlap. DUP-165 extends the blood-clotting cluster; DUP-166 connects the phenolphthalein cluster; DUP-167 is a new couplet-definition pair; DUP-168 connects existing natural-selection duplicate groups NATURAL-SELECTION-01/DUP-41; DUP-169 is the 5 kg weight calculation pair; DUP-170 is the government/public expenditure definition pair; DUP-171 is the checks-and-balances pair retaining batch 3 row 32 and holding batch 28 row 32. Staging-location joins remain verified for the original 90 only."
+    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-six additional pair relationships recorded from DUP-91 through DUP-171 require row-level provenance reconciliation and represent 76 unique held rows because clusters overlap. DUP-165 extends the blood-clotting cluster; DUP-166 connects the phenolphthalein cluster; DUP-167 is a new couplet-definition pair; DUP-168 connects existing natural-selection duplicate groups NATURAL-SELECTION-01/DUP-41; DUP-169 is the 5 kg weight calculation pair; DUP-170 is the government/public expenditure definition pair; DUP-171 is the checks-and-balances pair retaining batch 3 row 32 and holding batch 28 row 32. Staging-location joins remain verified for the original 90 only."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
