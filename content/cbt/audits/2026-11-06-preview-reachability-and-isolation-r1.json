@@ -120,5 +120,19 @@
     "analytics_admin_check": "isAnalyticsAdmin requires a Bearer token, validates it against the resolved Supabase /auth/v1/user endpoint, and checks the returned email against the analytics admin allowlist.",
     "limitation": "The live AI assistant POST and authenticated analytics flow have not yet been exercised end-to-end.",
     "live_content_runtime_test": "The isolated public-content endpoint returned HTTP 200. The Worker code path fetches this endpoint using the preview-guarded Supabase config; the full /api/ai-assistant POST interaction remains untested."
+  },
+  "student_question_feed": {
+    "endpoint": "https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/api/cbt/questions",
+    "status_code": 200,
+    "total_published_questions": 8,
+    "per_subject": "one published preview sample per each of the eight supported subjects",
+    "biology_filter_status_code": 200,
+    "biology_filtered_questions": 1,
+    "note": "The endpoint returned only published question fields and did not expose correct answers or explanations in the student feed."
+  },
+  "student_attempt_acceptance": {
+    "status": "not_run",
+    "blocker": "TinyFish browser automation did not start because its separate wallet balance is -$0.136 USD; no attempt was created and no top-up was made.",
+    "manual_or_alternative_test": "API-level published-feed check succeeded; start/submit browser workflow remains unverified."
   }
 }
