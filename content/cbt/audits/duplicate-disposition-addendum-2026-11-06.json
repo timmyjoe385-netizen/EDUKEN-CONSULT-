@@ -48,8 +48,10 @@
       "retain": "batch 4 row 15",
       "hold": "batch 13 row 16",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-211",
@@ -58,8 +60,10 @@
       "retain": "batch 22 row 6",
       "hold": "batch 33 row 3",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-212",
@@ -68,8 +72,10 @@
       "retain": "batch 5 row 37",
       "hold": "batch 34 row 38",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-214",
@@ -78,8 +84,10 @@
       "retain": "batch 10 row 17",
       "hold": "batch 34 row 17",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-215",
@@ -88,8 +96,10 @@
       "retain": "batch 4 row 32",
       "hold": "batch 21 row 35",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-216",
@@ -98,8 +108,10 @@
       "retain": "batch 1 row 19",
       "hold": "batch 39 row 17",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-217",
@@ -108,8 +120,10 @@
       "retain": "batch 14 row 7",
       "hold": "batch 33 row 10",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-218",
@@ -118,8 +132,10 @@
       "retain": "batch 1 row 23",
       "hold": "batch 16 row 23",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-219",
@@ -128,8 +144,10 @@
       "retain": "batch 3 row 21",
       "hold": "batch 16 row 20",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-220",
@@ -138,8 +156,10 @@
       "retain": "batch 10 row 39",
       "hold": "batch 35 row 41",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-221",
@@ -148,8 +168,10 @@
       "retain": "batch 6 row 32",
       "hold": "batch 18 row 35",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-222",
@@ -158,8 +180,10 @@
       "retain": "batch 1 row 7",
       "hold": "batch 17 row 7",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-224",
@@ -168,8 +192,10 @@
       "retain": "batch 14 row 12",
       "hold": "batch 30 row 16",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-225",
@@ -178,8 +204,10 @@
       "retain": "batch 15 row 29",
       "hold": "batch 31 row 30",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-226",
@@ -188,8 +216,10 @@
       "retain": "batch 9 row 15",
       "hold": "batch 37 row 14",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-228",
@@ -198,8 +228,10 @@
       "retain": "batch 9 row 28",
       "hold": "batch 15 row 28",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-229",
@@ -208,8 +240,10 @@
       "retain": "batch 1 row 37",
       "hold": "batch 33 row 40",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-230",
@@ -218,8 +252,10 @@
       "retain": "batch 7 row 34",
       "hold": "batch 39 row 34",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-231",
@@ -228,8 +264,10 @@
       "retain": "batch 8 row 7",
       "hold": "batch 26 row 9",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-232",
@@ -238,8 +276,10 @@
       "retain": "batch 28 row 41",
       "hold": "batch 34 row 37",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-233",
@@ -248,8 +288,10 @@
       "retain": "batch 16 row 38",
       "hold": "batch 26 row 37",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-235",
@@ -258,8 +300,10 @@
       "retain": "batch 29 row 12",
       "hold": "batch 31 row 16",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-236",
@@ -268,8 +312,10 @@
       "retain": "batch 6 row 27",
       "hold": "batch 26 row 29",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-237",
@@ -278,8 +324,10 @@
       "retain": "batch 6 row 23",
       "hold": "batch 39 row 25",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-240",
@@ -288,8 +336,10 @@
       "retain": "batch 22 row 33",
       "hold": "batch 33 row 32",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-242",
@@ -298,8 +348,10 @@
       "retain": "batch 8 row 31",
       "hold": "batch 35 row 30",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-243",
@@ -308,8 +360,10 @@
       "retain": "batch 19 row 11",
       "hold": "batch 30 row 7",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-244",
@@ -318,8 +372,10 @@
       "retain": "batch 16 row 25",
       "hold": "batch 39 row 23",
       "provenance": "pending",
-      "staging_join": "verified_in_2026_11_06_held_csv",
-      "replacement": "not drafted"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "replacement": "not drafted",
+      "source_location_check": "verified_against_original_batch_csv",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     }
   ],
   "existing_cluster_extensions": [
@@ -329,7 +385,11 @@
       "additional_hold": "batch 4 row 10",
       "reason": "Same simple numerical range calculation template; preserve the earlier retained item batch 20 row 11.",
       "new_unique_held_row": true,
-      "staging_join": "verified_in_2026_11_06_held_csv"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": true,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 738,
@@ -337,7 +397,11 @@
       "additional_hold": "batch 2 row 33",
       "reason": "Same federalism division-of-powers concept; batch 26 row 34 is already held in this cluster.",
       "new_unique_held_row": true,
-      "staging_join": "verified_in_2026_11_06_held_csv"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": true,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 746,
@@ -345,7 +409,11 @@
       "additional_hold": "batch 13 row 20",
       "reason": "Reviewed as another item in the atomic-number/electron-count equivalence cluster.",
       "new_unique_held_row": true,
-      "staging_join": "verified_in_2026_11_06_held_csv"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": true,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 794,
@@ -353,7 +421,11 @@
       "additional_hold": "batch 3 row 18",
       "reason": "Reviewed as another item in the atomic-number/electron-count equivalence cluster.",
       "new_unique_held_row": true,
-      "staging_join": "verified_in_2026_11_06_held_csv"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": true,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 768,
@@ -361,7 +433,11 @@
       "additional_hold": "batch 34 row 18",
       "reason": "Same phenolphthalein alkaline colour-change item; merge the overlapping DUP-166 record into this cluster.",
       "new_unique_held_row": false,
-      "staging_join": "not_an_additional_new_held_row"
+      "staging_join": "already_held_in_legacy_register_not_a_new_staging_row",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": false,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 885,
@@ -369,7 +445,11 @@
       "additional_hold": "batch 5 row 5",
       "reason": "Same parallel-structure gerund-list assessment; batch 28 row 4 is already held in this cluster.",
       "new_unique_held_row": true,
-      "staging_join": "verified_in_2026_11_06_held_csv"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": true,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 898,
@@ -377,7 +457,11 @@
       "additional_hold": "batch 14 row 31",
       "reason": "Same tariff-definition concept; batch 38 row 31 is already held in this cluster.",
       "new_unique_held_row": true,
-      "staging_join": "verified_in_2026_11_06_held_csv"
+      "staging_join": "verified_against_2026_11_06_held_duplicate_exports",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": true,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     },
     {
       "rank": 1304,
@@ -385,7 +469,11 @@
       "additional_hold": "batch 38 row 36",
       "reason": "Same federalism division-of-powers concept; batch 26 row 34 is already held in this cluster.",
       "new_unique_held_row": false,
-      "staging_join": "not_an_additional_new_held_row"
+      "staging_join": "already_held_in_legacy_register_not_a_new_staging_row",
+      "source_location_check": "verified_against_original_batch_csv",
+      "counted_as_new_held_location": false,
+      "provenance": "pending",
+      "contextual_academic_disposition": "pending_qualified_subject_review"
     }
   ],
   "new_unique_held_rows_from_this_addendum": 34,
@@ -394,13 +482,13 @@
   "replacement_drafts": 0,
   "production_imports": 0,
   "production_publications": 0,
-  "register_reconciliation": "The legacy duplicate-disposition register is stale at DUP-200 and has internally inconsistent historical counters. This addendum records DUP-210–DUP-244 and three additional existing-cluster relationships without silently rewriting legacy totals. Merge and reconcile the base register after row-level provenance and staging joins.",
+  "register_reconciliation": "Pending: merge the verified 34-row staging reconciliation into the canonical register only after provenance and qualified academic dispositions are resolved. Legacy register counters remain unchanged.",
   "next_required_work": [
-    "Complete source provenance classification for all 34 newly held locations.",
-    "Complete qualified subject review of same-fact duplicates versus related-skill variants.",
-    "Normalize the 13 baseline replacement-created commit SHAs.",
-    "Reconcile and merge the canonical duplicate disposition register without changing source CSVs.",
-    "Draft reviewed replacement questions only after provenance and syllabus checks."
+    "Classify source provenance for the 28 new pair records and six new cluster-extension rows; do not infer original-vs-replacement provenance from content similarity alone.",
+    "Complete qualified subject review of all 34 newly held locations, distinguishing exact same-fact duplicates from related-skill variants.",
+    "Update the consolidated duplicate register and cluster membership after provenance and academic dispositions are approved.",
+    "Draft reviewed replacement questions only for rows approved as duplicates, after syllabus alignment checks.",
+    "Run full CBT validation and release smoke tests; keep production question bank unpublished until separate explicit approval."
   ],
   "new_duplicate_pair_count": 28,
   "cluster_merges": [
@@ -484,16 +572,19 @@
     }
   ],
   "provenance_and_staging_reconciliation": {
-    "staging_join_status": "verified",
+    "source_locations_checked": 56,
+    "source_locations_found": 56,
+    "new_pair_records": 28,
+    "new_pair_records_with_verified_staging_joins": 28,
+    "unique_new_cluster_extension_rows": 6,
+    "unique_new_cluster_extension_rows_with_verified_staging_joins": 6,
+    "already_held_legacy_cluster_links": 2,
     "newly_held_unique_locations": 34,
-    "new_pair_locations_verified": 28,
-    "cluster_extension_locations_verified": 6,
-    "existing_cluster_references_not_counted_as_new_rows": 2,
     "provenance_classification": "pending",
-    "contextual_duplicate_vs_related_skill_review": "pending",
-    "qualified_subject_review": "pending",
-    "replacement_drafts": 0,
-    "note": "All 34 unique new held locations are present in the 6 November held staging CSVs. Two other cluster-extension references are not additional new held rows and were not counted in the 34."
+    "contextual_academic_disposition": "pending_qualified_subject_review",
+    "academic_approval": false,
+    "note": "All 56 source endpoints for the 28 new pair records were checked against original batch CSVs. The 6 new unique cluster-extension rows were checked against original batch CSVs and found in the 6 November held exports. Two other extension references (batch 34 row 18 and batch 38 row 36) are already held in legacy clusters and are not new staging rows."
   },
-  "count_note": "Count of 34 is 28 genuinely new duplicate-held rows plus six new held rows added to existing clusters. Two further cluster links reuse rows already held in the legacy register."
+  "count_note": "Count of 34 is 28 genuinely new duplicate-held rows plus six new held rows added to existing clusters. Two further cluster links reuse rows already held in the legacy register.",
+  "status": "SOURCE_AND_STAGING_JOINS_VERIFIED_PROVENANCE_AND_QUALIFIED_ACADEMIC_REVIEW_PENDING"
 }
