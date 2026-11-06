@@ -1,0 +1,210 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 390-406. Both source CSV records were inspected for full stem, options, key and explanation. Previously reviewed ranks 392 and 394 are excluded.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      390,
+      391,
+      393,
+      395,
+      396,
+      397,
+      398,
+      399,
+      400,
+      401,
+      402,
+      403,
+      404,
+      405,
+      406
+    ],
+    "previous_total_manually_reviewed": 801,
+    "now_manually_reviewed": 816,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 488
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-182",
+      "rank": 396,
+      "subject": "Physics",
+      "a": "batch 15 row 25",
+      "b": "batch 23 row 24",
+      "concept": "Definition and SI unit of electric field strength",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both assess electric field strength as force per unit positive test charge. One asks for the SI unit (N/C) and the other directly asks for the defining relationship; both test the same core definition and answer concept.",
+      "retain": "batch 15 row 25",
+      "hold": "batch 23 row 24",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-183",
+      "rank": 397,
+      "subject": "Mathematics",
+      "a": "batch 25 row 9",
+      "b": "batch 39 row 9",
+      "concept": "Recovering a total from mean and count",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the sum from a stated arithmetic mean and number of values, using total = mean × count. Only the values and count differ; no distinct skill is tested.",
+      "retain": "batch 25 row 9",
+      "hold": "batch 39 row 9",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-184",
+      "rank": 398,
+      "subject": "Physics",
+      "a": "batch 15 row 26",
+      "b": "batch 31 row 25",
+      "concept": "Calculating weight from mass and gravitational field strength",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for weight on Earth using W = mg with g = 10 m/s². Only the mass and resulting numerical answer differ; this is a repeated calculation template rather than a distinct learning objective.",
+      "retain": "batch 15 row 26",
+      "hold": "batch 31 row 25",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-185",
+      "rank": 399,
+      "subject": "Mathematics",
+      "a": "batch 1 row 7",
+      "b": "batch 16 row 7",
+      "concept": "Solving a one-variable linear equation of the form 3x + c = d",
+      "decision": "confirmed_semantic_duplicate_cluster",
+      "reason": "Both are single-step rearrangements of 3x plus a constant equals a constant, solved by isolating x. This is the first link in a three-question repeated linear-equation cluster.",
+      "retain": "batch 1 row 7",
+      "hold": "batch 16 row 7",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-186",
+      "rank": 403,
+      "subject": "Mathematics",
+      "a": "batch 1 row 7",
+      "b": "batch 38 row 7",
+      "concept": "Solving a one-variable linear equation of the form 3x + c = d",
+      "decision": "confirmed_semantic_duplicate_cluster_extension",
+      "reason": "This is another numerical variation of the same 3x plus a constant equals a constant equation already represented by batch 1 row 7. It extends the same duplicate cluster and adds a second unique held target.",
+      "retain": "batch 1 row 7",
+      "hold": "batch 38 row 7",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-187",
+      "rank": 405,
+      "subject": "Mathematics",
+      "a": "batch 16 row 7",
+      "b": "batch 38 row 7",
+      "concept": "Solving a one-variable linear equation of the form 3x + c = d",
+      "decision": "confirmed_semantic_duplicate_cluster_relationship_only",
+      "reason": "Both rows are already held as members of the same three-question linear-equation cluster. This confirms the relationship between the two held variants but adds no new unique replacement target.",
+      "retain": "batch 1 row 7",
+      "hold": "batch 16 row 7; batch 38 row 7",
+      "new_unique_replacement_targets": 0,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 390,
+      "subject": "Use of English",
+      "a": "batch 21 row 3",
+      "b": "batch 38 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Diligent/industrious synonym and hostile/friendly antonym test different target words and different vocabulary relations."
+    },
+    {
+      "rank": 391,
+      "subject": "Literature in English",
+      "a": "batch 22 row 37",
+      "b": "batch 32 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "An epic is a long narrative poem; a short story is brief prose fiction. Different literary forms and defining features."
+    },
+    {
+      "rank": 393,
+      "subject": "Chemistry",
+      "a": "batch 1 row 19",
+      "b": "batch 20 row 18",
+      "decision": "preserve_as_distinct",
+      "reason": "Blue litmus turning red in acid and phenolphthalein turning pink in alkali concern different indicators and different colour responses."
+    },
+    {
+      "rank": 395,
+      "subject": "Physics",
+      "a": "batch 9 row 25",
+      "b": "batch 22 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Wave speed uses v=fλ; period uses T=1/f. Different quantities and formulas."
+    },
+    {
+      "rank": 400,
+      "subject": "Economics",
+      "a": "batch 1 row 27",
+      "b": "batch 13 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "Opportunity cost is the next-best alternative forgone; inflation is a sustained general rise in prices. Similar stem framing only."
+    },
+    {
+      "rank": 401,
+      "subject": "Physics",
+      "a": "batch 6 row 22",
+      "b": "batch 22 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "The area under a velocity-time graph gives displacement; its gradient gives acceleration. Distinct graph interpretations."
+    },
+    {
+      "rank": 402,
+      "subject": "Use of English",
+      "a": "batch 1 row 6",
+      "b": "batch 33 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests an initial vowel sound; the second tests a final consonant sound. Different phonological skills."
+    },
+    {
+      "rank": 404,
+      "subject": "Physics",
+      "a": "batch 16 row 25",
+      "b": "batch 29 row 24",
+      "decision": "preserve_as_distinct",
+      "reason": "Both identify wavelength, but one uses successive crests in a transverse wave and the other successive compressions in a longitudinal wave. Retain as complementary wave-type applications."
+    },
+    {
+      "rank": 406,
+      "subject": "Use of English",
+      "a": "batch 4 row 6",
+      "b": "batch 20 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Confirm means verify a statement; write means form words or letters. Different vocabulary targets despite similar sentence-completion framing."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 6,
+    "new_unique_replacement_targets": 5,
+    "preserved_as_distinct": 9,
+    "previously_reviewed_ranks_skipped": [
+      392,
+      394
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}
