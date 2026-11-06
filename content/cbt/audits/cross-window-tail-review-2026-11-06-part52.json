@@ -1,0 +1,190 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 442-459. Previously reviewed ranks 444, 451 and 456 are excluded. Full stems, options, answer keys and explanations were compared.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      442,
+      443,
+      445,
+      446,
+      447,
+      448,
+      449,
+      450,
+      452,
+      453,
+      454,
+      455,
+      457,
+      458,
+      459
+    ],
+    "previous_total_manually_reviewed": 846,
+    "now_manually_reviewed": 861,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 443
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-192",
+      "rank": 442,
+      "subject": "Government",
+      "a": "batch 29 row 34",
+      "b": "batch 37 row 35",
+      "concept": "Opposition parties scrutinise and challenge government policies",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the principal legislative function of an opposition party and give scrutiny/challenge of government policy as the correct response. The stems and explanations are paraphrases of the same tested function.",
+      "retain": "batch 29 row 34",
+      "hold": "batch 37 row 35",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-193",
+      "rank": 443,
+      "subject": "Government",
+      "a": "batch 2 row 34",
+      "b": "batch 16 row 33",
+      "concept": "Political parties nominate candidates and organise electoral participation",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for a key function of a political party and identify nominating candidates for elections as the correct answer. The wording and options differ slightly but test the same function.",
+      "retain": "batch 2 row 34",
+      "hold": "batch 16 row 33",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-194",
+      "rank": 449,
+      "subject": "Economics",
+      "a": "batch 12 row 28",
+      "b": "batch 36 row 27",
+      "concept": "Product differentiation in monopolistic competition",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the defining product characteristic of firms in monopolistic competition: differentiated products. The second is a direct paraphrase of the first with the same answer.",
+      "retain": "batch 12 row 28",
+      "hold": "batch 36 row 27",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 445,
+      "subject": "Chemistry",
+      "a": "batch 23 row 17",
+      "b": "batch 38 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "Oxidation occurs at the anode; reduction occurs at the cathode. They test complementary but distinct electrode processes."
+    },
+    {
+      "rank": 446,
+      "subject": "Literature in English",
+      "a": "batch 26 row 40",
+      "b": "batch 36 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "Style is a writer's broader distinctive use of language; diction is the specific choice and use of words within style."
+    },
+    {
+      "rank": 447,
+      "subject": "Government",
+      "a": "batch 3 row 34",
+      "b": "batch 18 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Pressure groups seek to influence policy; political parties seek to win and exercise governmental power through elections."
+    },
+    {
+      "rank": 448,
+      "subject": "Mathematics",
+      "a": "batch 16 row 7",
+      "b": "batch 22 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "Both are linear equations but use different structures: direct isolation of x versus a bracketed equation requiring division and inverse operations. Retain as complementary practice."
+    },
+    {
+      "rank": 450,
+      "subject": "Literature in English",
+      "a": "batch 10 row 39",
+      "b": "batch 23 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "Peripeteia is reversal of fortune; hubris is excessive pride or arrogance. Distinct tragic concepts."
+    },
+    {
+      "rank": 452,
+      "subject": "Biology",
+      "a": "batch 29 row 14",
+      "b": "batch 40 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "A flowering-plant ovule develops into a seed; a human embryo implants in the uterus. Different organisms and reproductive processes."
+    },
+    {
+      "rank": 453,
+      "subject": "Use of English",
+      "a": "batch 4 row 4",
+      "b": "batch 18 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "At noon and consists of are distinct preposition collocations; the same general preposition topic does not make them duplicates."
+    },
+    {
+      "rank": 454,
+      "subject": "Economics",
+      "a": "batch 7 row 29",
+      "b": "batch 28 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "CPI measures price changes in a representative consumer basket; the GDP deflator covers domestically produced final goods and services. Related but different measures and scopes."
+    },
+    {
+      "rank": 455,
+      "subject": "Mathematics",
+      "a": "batch 4 row 9",
+      "b": "batch 32 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "One finds a missing angle from two given angles; the other uses a 2:3:4 ratio to find the largest angle. Different data setup and calculation path."
+    },
+    {
+      "rank": 457,
+      "subject": "Mathematics",
+      "a": "batch 16 row 8",
+      "b": "batch 32 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "One uses two known angles; the other uses a ratio. Both apply the triangle angle sum but are complementary question forms."
+    },
+    {
+      "rank": 458,
+      "subject": "Biology",
+      "a": "batch 21 row 12",
+      "b": "batch 33 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Pulmonary veins return oxygenated blood from lungs to the heart; the aorta carries oxygenated blood from the left ventricle to the body."
+    },
+    {
+      "rank": 459,
+      "subject": "Mathematics",
+      "a": "batch 27 row 10",
+      "b": "batch 31 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Trace is the sum of diagonal elements; determinant is a different matrix property and calculation."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 3,
+    "new_unique_replacement_targets": 3,
+    "preserved_as_distinct": 12,
+    "previously_reviewed_ranks_skipped": [
+      444,
+      451,
+      456
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}
