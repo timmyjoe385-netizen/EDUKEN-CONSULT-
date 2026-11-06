@@ -1,0 +1,173 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidates. Source CSV question stems, options and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1214,
+      1215,
+      1216,
+      1217,
+      1218,
+      1219,
+      1220,
+      1221,
+      1222,
+      1223,
+      1224,
+      1225,
+      1226,
+      1227,
+      1228
+    ],
+    "previous_total_manually_reviewed": 671,
+    "now_manually_reviewed": 686,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 618
+  },
+  "preserved": [
+    {
+      "rank": 1214,
+      "subject": "Mathematics",
+      "a": "batch 5 row 10",
+      "b": "batch 33 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Complement probability and matrix trace are unrelated mathematical topics."
+    },
+    {
+      "rank": 1215,
+      "subject": "Biology",
+      "a": "batch 12 row 12",
+      "b": "batch 30 row 16",
+      "decision": "preserve_as_distinct",
+      "reason": "The first asks where most transpiration occurs (stomata); the second asks which vascular tissue transports water from roots to leaves (xylem). Different plant processes and structures."
+    },
+    {
+      "rank": 1216,
+      "subject": "Government",
+      "a": "batch 16 row 32",
+      "b": "batch 21 row 35",
+      "decision": "preserve_as_distinct",
+      "reason": "A constitutional convention is an established non-legal political practice; a constitutional amendment is a formal legal alteration to constitutional provisions."
+    },
+    {
+      "rank": 1217,
+      "subject": "Chemistry",
+      "a": "batch 17 row 19",
+      "b": "batch 21 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "The number of shared electron pairs in ethene's carbon–carbon double bond differs from the maximum electron capacity of the first atomic shell."
+    },
+    {
+      "rank": 1218,
+      "subject": "Mathematics",
+      "a": "batch 12 row 8",
+      "b": "batch 32 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "Both happen to use a 2:3:4 ratio, but one shares money among people and the other uses angle ratios in a triangle. Different contexts and mathematical learning objectives."
+    },
+    {
+      "rank": 1219,
+      "subject": "Use of English",
+      "a": "batch 7 row 4",
+      "b": "batch 14 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "First conditional completion and the verb–preposition collocation insist on test different grammar skills."
+    },
+    {
+      "rank": 1220,
+      "subject": "Use of English",
+      "a": "batch 8 row 2",
+      "b": "batch 14 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The fixed inversion construction no sooner…than and the collocation insist on are different grammar targets."
+    },
+    {
+      "rank": 1221,
+      "subject": "Use of English",
+      "a": "batch 10 row 4",
+      "b": "batch 11 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Punctuation of direct speech and formation of a second conditional sentence are different objectives."
+    },
+    {
+      "rank": 1222,
+      "subject": "Use of English",
+      "a": "batch 10 row 4",
+      "b": "batch 14 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Direct-speech punctuation and the preposition used after insist are unrelated language skills."
+    },
+    {
+      "rank": 1223,
+      "subject": "Mathematics",
+      "a": "batch 5 row 9",
+      "b": "batch 21 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding a coordinate midpoint and finding the median of a numerical data set are different mathematical procedures."
+    },
+    {
+      "rank": 1225,
+      "subject": "Use of English",
+      "a": "batch 14 row 4",
+      "b": "batch 27 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Identifying the present perfect tense differs from identifying a first-conditional sentence expressing a real future possibility."
+    },
+    {
+      "rank": 1226,
+      "subject": "Use of English",
+      "a": "batch 15 row 5",
+      "b": "batch 23 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "A mixed conditional completion and inversion after the restrictive adverb rarely test different sentence structures."
+    },
+    {
+      "rank": 1227,
+      "subject": "Mathematics",
+      "a": "batch 2 row 8",
+      "b": "batch 13 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Area of a rectangle and area of a circle use different geometric formulae and shapes."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1224,
+      "subject": "Literature in English",
+      "a": "batch 1 row 37",
+      "b": "batch 35 row 38",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both ask learners to identify a metaphor from a direct identification of a person or abstract concept with a concrete thing (time as a thief; a brave person as a lion). Both key metaphor and test the same recognition objective.",
+      "retain": "batch 1 row 37",
+      "hold": "batch 35 row 38",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "rank": 1228,
+      "subject": "Biology",
+      "a": "batch 5 row 15",
+      "b": "batch 20 row 16",
+      "decision": "confirmed_semantic_duplicate_connects_existing_cluster",
+      "reason": "Both ask how vaccination protects against infection and key stimulation of immune memory/specific immune response. This connects the existing vaccination relationships DUP-38 and DUP-73; it does not create another unique held row.",
+      "retain": "batch 5 row 15",
+      "hold": "batch 20 row 16",
+      "new_unique_replacement_targets": 0,
+      "cluster_note": "The connected vaccination cluster includes batch 5 row 15, batch 15 row 15, batch 20 row 16 and batch 33 row 16. Retain the earliest batch 5 row 15; the other three remain held pending provenance and staging reconciliation.",
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 2,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 13,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}
