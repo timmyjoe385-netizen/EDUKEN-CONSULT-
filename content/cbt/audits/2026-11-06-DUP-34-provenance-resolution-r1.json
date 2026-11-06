@@ -1,0 +1,43 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Resolve the last explicitly unverified provenance pair in the 6 November staging manifest using the original source CSV rows.",
+  "pair": {
+    "id": "DUP-34",
+    "subject": "Use of English",
+    "retained_location": "batch 38 row 2",
+    "held_location": "batch 39 row 5",
+    "retained_question": "Each of the players _____ a numbered shirt.",
+    "held_question": "Each of the players _____ a medal after the final.",
+    "retained_answer": "wears",
+    "held_answer": "receives"
+  },
+  "evidence": {
+    "source_files": [
+      "content/cbt/original-batch-38-40-questions.csv",
+      "content/cbt/original-batch-39-40-questions.csv"
+    ],
+    "source_rows_fetched_and_compared": true,
+    "both_rows_original_eduKen_authored_drafts": true,
+    "physical_csv_row_numbering_includes_header": true,
+    "provenance_classification": "original_draft_overlap",
+    "semantic_note": "Both questions test concord with the singular determiner/pronoun 'each'. The lexical complements differ, but the assessed rule is the same. This supports retaining the earlier row and keeping the later row held pending qualified English subject review; it is not independent academic approval."
+  },
+  "manifest_delta": {
+    "original_draft_overlap_relationships_before": 28,
+    "original_draft_overlap_relationships_after": 29,
+    "provenance_unverified_relationships_before": 1,
+    "provenance_unverified_relationships_after": 0,
+    "unverified_pair_ids_after": []
+  },
+  "remaining_provenance_work": "Normalize exact introducing commit SHAs for 13 replacement-created pairs; those are evidence-normalization tasks, not unresolved source-origin classifications.",
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "academic_approval": false,
+    "release_authorized": false
+  },
+  "status": "DUP-34_SOURCE_PROVENANCE_RESOLVED_QUALIFIED_SUBJECT_REVIEW_STILL_REQUIRED"
+}
