@@ -44,9 +44,10 @@
   },
   "correction": "The previously used workers.dev hostname suffix timmy385 was incorrect; Cloudflare account subdomain is timmyjoe385.",
   "limitations": [
-    "External HTML/content fetch is not a full visual acceptance test.",
-    "No authenticated student attempt was created, submitted or graded during this check.",
-    "Preview AI content retrieval and analytics authentication flows remain to be tested end-to-end."
+    "Preview bank has one published sample question per subject; it is a wiring/smoke-test bank only and is not suitable for student launch.",
+    "Full subject practice and mixed mock selection counts cannot pass until adequate reviewed questions are available.",
+    "Authenticated allowlisted admin session must be retested; recent unauthenticated admin API calls returned 401 as expected.",
+    "External content fetch is not a full visual acceptance test."
   ],
   "safety": {
     "cloudflare_configuration_changes": 0,
@@ -55,5 +56,44 @@
     "production_publications": 0,
     "release_authorized": false
   },
-  "status": "PREVIEW_EXTERNAL_REACHABILITY_CONFIRMED_ISOLATED_BINDINGS_CONFIRMED_STUDENT_API_ACCEPTANCE_PENDING"
+  "status": "PREVIEW_REACHABILITY_AND_STUDENT_API_LIFECYCLE_SMOKE_CONFIRMED_AUTHENTICATED_ADMIN_AND_FULL_BANK_ACCEPTANCE_PENDING",
+  "student_api_acceptance": {
+    "log_window": "2026-11-06 15:27–15:31 UTC",
+    "published_question_feed": {
+      "http_statuses": [
+        200
+      ],
+      "observed": true,
+      "source": "Supabase function_edge_logs"
+    },
+    "attempt_creation": {
+      "http_statuses": [
+        201
+      ],
+      "observed": true,
+      "source": "Supabase function_edge_logs"
+    },
+    "attempt_submission": {
+      "http_statuses": [
+        200
+      ],
+      "observed": true,
+      "source": "Supabase function_edge_logs"
+    },
+    "insufficient_bank_guard": {
+      "http_statuses": [
+        409
+      ],
+      "observed": true,
+      "meaning": "Mock selection requesting more questions than the one published per subject was rejected safely."
+    },
+    "admin_api": {
+      "http_statuses": [
+        401
+      ],
+      "observed": true,
+      "meaning": "Unauthenticated admin API calls were denied; authenticated allowlisted admin walkthrough remains outstanding."
+    },
+    "note": "These are isolated preview project requests. The test bank currently has one published question per subject and cannot support a 10/20/40/100/180-question student practice or mock. Logs show successful question retrieval, attempt creation and submission against the isolated service."
+  }
 }
