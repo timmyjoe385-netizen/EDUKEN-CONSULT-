@@ -24,7 +24,7 @@ export default function CbtPage() {
   const [selectedSubject, setSelectedSubject] = useState('Use of English');
   const [mode, setMode] = useState<'practice' | 'mock'>('practice');
   const [practiceQuestionCount, setPracticeQuestionCount] = useState(10);
-  const [mockQuestionCount, setMockQuestionCount] = useState(8);
+  const [mockQuestionCount, setMockQuestionCount] = useState(10);
   const [mockSubjects, setMockSubjects] = useState<string[]>(['Biology', 'Chemistry', 'Physics']);
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -276,7 +276,7 @@ export default function CbtPage() {
     setServerResult(null);
 
     let nextQuestions: Question[] = [];
-    let durationSeconds = nextMode === 'mock' ? 30 * 60 : 15 * 60;
+    let durationSeconds = nextMode === 'mock' ? (requestedCount === 180 ? 120 : 30) * 60 : 15 * 60;
     let serverDeadline: number | null = null;
     if (questionLoadError) {
       setStartError('The published question service is unavailable. No local sample questions can be used for an exam attempt. Please try again when the published question bank is available.');
