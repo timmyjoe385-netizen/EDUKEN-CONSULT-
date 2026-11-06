@@ -17,11 +17,11 @@
     "threshold_note": "The 0.42 reconstruction reproduces the reported total of 390. A 0.43 run yields 352. The original reported category split was 41/349; the reconstruction is 40/350, a one-pair classification discrepancy still documented in the audit.",
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
-    "cross_window_additional_targeted_candidates_reviewed": 285,
-    "cross_window_manually_reviewed_candidates": 334,
-    "cross_window_candidates_remaining_not_manually_reviewed": 970,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 97,
-    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Forty-eight further lower-scoring candidates have now been checked against full source stems, options, answer keys and explanations; 45 duplicate pair relationships were confirmed and three related-but-distinct pairs were preserved. The 45 new pair relationships represent 42 additional unique replacement targets because three relationships join existing clusters. The remaining 970 cross-window candidates have not received manual contextual review.",
+    "cross_window_additional_targeted_candidates_reviewed": 288,
+    "cross_window_manually_reviewed_candidates": 337,
+    "cross_window_candidates_remaining_not_manually_reviewed": 967,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 98,
+    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Fifty-one further lower-scoring candidates have now been checked against full source stems, options, answer keys and explanations; 46 duplicate pair relationships were confirmed and five related-but-distinct pairs were preserved. The 46 new pair relationships represent 43 additional unique replacement targets because three relationships join existing clusters. The remaining 967 cross-window candidates have not received manual contextual review.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,28 +36,28 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 120,
+    "cross_window_pairs": 121,
     "within_window_pairs": 15,
-    "total_pairs": 135,
+    "total_pairs": 136,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 42,
+    "provenance_unverified_pairs": 43,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Forty-two additional unique held rows (DUP-91–DUP-99, DUP-101–DUP-121 and DUP-123–DUP-135) still require row-level history and staging reconciliation. DUP-122, DUP-131 and DUP-136 are additional relationships within already reconciled clusters."
+    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Forty-three additional unique held rows (DUP-91–DUP-99, DUP-101–DUP-121 and DUP-123–DUP-137) still require row-level history and staging reconciliation. DUP-122, DUP-131 and DUP-136 are additional relationships within already reconciled clusters."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
     "newly_confirmed_from_reconstructed_candidate_review": 3,
-    "preserved_as_distinct_or_complementary": 277,
+    "preserved_as_distinct_or_complementary": 279,
     "previously_triaged": 70
   },
   "replacement_plan": {
-    "unique_replacement_targets": 132,
+    "unique_replacement_targets": 133,
     "all_targets_unique": false,
     "retain_replace_assignments_complete": false,
     "csv_edits_authorized": false,
@@ -66,10 +66,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 42,
+    "additional_replacement_drafts_required": 43,
     "draft_count": 90,
-    "additional_confirmed_pairs_added_on_2026_11_06": 45,
-    "retain_replace_assignments_pending": 42
+    "additional_confirmed_pairs_added_on_2026_11_06": 46,
+    "retain_replace_assignments_pending": 43
   },
   "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
@@ -3258,6 +3258,27 @@
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part6.json for full question text, options, answer keys and rationale."
       }
+    },
+    {
+      "id": "DUP-137",
+      "scope": "cross_window",
+      "subject": "Literature in English",
+      "a": "batch 5 row 37",
+      "b": "batch 34 row 38",
+      "concept": "A stanza is a grouped unit of lines in a poem",
+      "reason": "Full question text, options, answer key and explanation were checked; both define the same literary term.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 5 row 37",
+      "replace_candidate": "batch 34 row 38",
+      "new_unique_targets_added": 1,
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part7.json for full question text, options, answer keys and rationale."
+      }
     }
   ],
   "draft_screening": {
@@ -3470,20 +3491,20 @@
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "additional_duplicate_pairs_added": 45,
-    "additional_replacement_drafts_required": 42,
+    "additional_duplicate_pairs_added": 46,
+    "additional_replacement_drafts_required": 43,
     "independent_subject_review_status": "incomplete; 0/90 independent approvals",
     "manual_contextual_review_status": "assistant pairwise bankwide review complete 90/90; 11 lexical similarity flags require independent human contextual decisions; independent subject/syllabus approval 0/90.",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
     "rule": "All 90 proposals remain outside the source bank. Zero are approved for insertion. Assistant bankwide screening is complete, but 11 similarity flags require independent human contextual decisions and every draft requires qualified subject/syllabus approval. Do not import, publish, deploy production or merge PR #194 until independent review, final import validation and explicit user approval.",
     "previous_draft_overlap_detected_and_corrected": 1,
-    "newly_discovered_rows_pending_provenance": 42
+    "newly_discovered_rows_pending_provenance": 43
   },
   "history_reconciliation_status": {
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_relationships": 28,
-    "unverified_relationships": 42,
+    "unverified_relationships": 43,
     "unverified_pair_ids": [
       "DUP-91",
       "DUP-92",
@@ -3527,9 +3548,11 @@
       "DUP-132",
       "DUP-133",
       "DUP-134",
-      "DUP-135"
+      "DUP-135",
+      "DUP-136",
+      "DUP-137"
     ],
-    "note": "The original 90-pair set remains fully reconciled. Forty-two new unique held rows identified in the 2026-11-06 lower-scoring cross-window tail review require provenance and staging checks. DUP-122, DUP-131 and DUP-136 add relationships inside existing clusters and do not add new held rows.",
+    "note": "The original 90-pair set remains fully reconciled. Forty-three new unique held rows identified in the 2026-11-06 lower-scoring cross-window tail review require provenance and staging checks. DUP-122, DUP-131 and DUP-136 add relationships inside existing clusters and do not add new held rows.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
@@ -3582,7 +3605,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed. 2026-11-06 further tail review: 30 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-121) were confirmed; one separate candidate was preserved as a distinct variant. The 30 relations represent 29 new unique held rows because federalism and specific-heat capacity each form a multi-row cluster. All new rows remain outside staging/import pending provenance and final staging joins. No source CSV or production data was changed. 2026-11-06 further lower-tail review: 36 additional duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-127) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relations represent 35 new unique held rows because one denouement relationship is already within a reconciled cluster. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 40 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-131) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relationships represent 38 new unique held rows because two are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 45 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-136) were confirmed; three related pairs were preserved as distinct assessment objectives. The 45 relations represent 42 new unique held rows because three relationships join existing clusters. No source CSV, staging CSV or production data was changed.",
+  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed. 2026-11-06 further tail review: 30 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-121) were confirmed; one separate candidate was preserved as a distinct variant. The 30 relations represent 29 new unique held rows because federalism and specific-heat capacity each form a multi-row cluster. All new rows remain outside staging/import pending provenance and final staging joins. No source CSV or production data was changed. 2026-11-06 further lower-tail review: 36 additional duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-127) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relations represent 35 new unique held rows because one denouement relationship is already within a reconciled cluster. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 40 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-131) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relationships represent 38 new unique held rows because two are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 45 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-136) were confirmed; three related pairs were preserved as distinct assessment objectives. The 45 relations represent 42 new unique held rows because three relationships join existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 46 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-137) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 43 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
