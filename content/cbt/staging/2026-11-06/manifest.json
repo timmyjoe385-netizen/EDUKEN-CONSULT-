@@ -677,6 +677,11 @@
       "reported_pending": 279,
       "count_discrepancy": 38,
       "status": "unresolved"
-    }
+    },
+    "explicit_unique_rank_ids_across_inspected_sources": 973,
+    "latest_legacy_cumulative_counter": 921,
+    "counter_discrepancy": 52,
+    "ranks_without_explicit_record_in_inspected_sources": 331,
+    "status": "COUNTER_AND_RANK_CROSSWALK_NOT_RECONCILED"
   }
 }
