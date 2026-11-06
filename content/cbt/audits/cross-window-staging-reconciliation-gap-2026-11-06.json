@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Non-destructive reconciliation checkpoint comparing the 6 November duplicate addendum with the existing 1 November staging export.",
+  "evidence": {
+    "baseline_staging_manifest": "content/cbt/staging/2026-11-01/manifest.json",
+    "baseline_staging_held_csvs": [
+      "content/cbt/staging/2026-11-01/held-duplicates-01-10.csv",
+      "content/cbt/staging/2026-11-01/held-duplicates-11-20.csv",
+      "content/cbt/staging/2026-11-01/held-duplicates-21-30.csv",
+      "content/cbt/staging/2026-11-01/held-duplicates-31-40.csv"
+    ],
+    "latest_addendum": "content/cbt/audits/duplicate-disposition-addendum-2026-11-06.json",
+    "rank_tail_record": "content/cbt/audits/cross-window-tail-review-2026-11-06-part82.json"
+  },
+  "verified_results": {
+    "baseline_held_rows": 90,
+    "baseline_unique_pair_ids": 90,
+    "addendum_new_pair_records": 28,
+    "addendum_new_pair_ids": [
+      "DUP-210",
+      "DUP-211",
+      "DUP-212",
+      "DUP-214",
+      "DUP-215",
+      "DUP-216",
+      "DUP-217",
+      "DUP-218",
+      "DUP-219",
+      "DUP-220",
+      "DUP-221",
+      "DUP-222",
+      "DUP-224",
+      "DUP-225",
+      "DUP-226",
+      "DUP-228",
+      "DUP-229",
+      "DUP-230",
+      "DUP-231",
+      "DUP-232",
+      "DUP-233",
+      "DUP-235",
+      "DUP-236",
+      "DUP-237",
+      "DUP-240",
+      "DUP-242",
+      "DUP-243",
+      "DUP-244"
+    ],
+    "addendum_new_pair_ids_found_in_baseline_staging": [],
+    "staging_join_status": "RECONCILED_IN_SEPARATE_2026_11_06_REVISION",
+    "source_row_provenance_status": "SOURCE_ROW_LOCATIONS_RECHECKED_56_OF_56",
+    "original_source_csvs_modified": false,
+    "baseline_staging_csvs_modified": false,
+    "production_imports": 0,
+    "production_publications": 0,
+    "source_rows_rechecked": 56,
+    "new_pair_records_source_checked": 28,
+    "baseline_held_export_match_count": 0,
+    "new_revision": "content/cbt/staging/2026-11-06/",
+    "new_revision_pair_records_joined": 28,
+    "new_revision_unique_extension_rows_joined": 6,
+    "new_revision_held_locations_joined": 34,
+    "new_revision_retained_anchors_found": 34,
+    "new_revision_retained_rows": 1476,
+    "new_revision_held_rows": 124,
+    "new_revision_total_rows": 1600,
+    "new_revision_retained_held_overlap": 0
+  },
+  "register_conflicts": [
+    {
+      "location": "cross-window-tail-review-2026-11-06-part82.json rank 1304",
+      "prior_conflict": "DUP-223 versus DUP-47",
+      "resolution": "RESOLVED",
+      "canonical_cluster": "DUP-47",
+      "superseded_reference": "DUP-223",
+      "evidence": "The original source row batch 38 row 36 is a Government/Federalism question about constitutional distribution of powers. The addendum separately links this row to existing DUP-177; DUP-223 is superseded at rank 738. The 6 November federalism-cluster reconciliation and corrected part82 record agree.",
+      "resolution_status": "RESOLVED"
+    },
+    {
+      "location": "duplicate-disposition-addendum-2026-11-06.json rank 684",
+      "prior_conflict": "DUP-197 extension versus superseded DUP-213",
+      "resolution": "RESOLVED",
+      "canonical_cluster": "DUP-197",
+      "superseded_reference": "DUP-213",
+      "evidence": "Original batch 4 row 10 and batch 20 row 11 both test statistical range; the legacy register anchors DUP-197 at batch 20 row 11, and the addendum assigns batch 4 row 10 as an additional hold. DUP-213 is superseded, not a separate cluster.",
+      "resolution_status": "RESOLVED"
+    }
+  ],
+  "safe_next_steps": [
+    "Complete contextual duplicate-vs-related-skill decisions and provenance classification for all 34 newly held rows.",
+    "Apply documented cluster merges DUP-22 + DUP-165 -> DUP-165 and DUP-08 + DUP-166 -> DUP-08 in the consolidated register.",
+    "Obtain independent qualified subject, answer-key and syllabus approval before import or publication.",
+    "Run full isolated student/admin CBT validation; do not import or publish the staging revision."
+  ],
+  "status": "AUDIT_ONLY_NEW_2026_11_06_STAGING_REVISION_VERIFIED_RELEASE_BLOCKED",
+  "new_revision_verification": {
+    "files": [
+      "manifest.json",
+      "retained-batches-01-10.csv",
+      "retained-batches-11-20.csv",
+      "retained-batches-21-30.csv",
+      "retained-batches-31-40.csv",
+      "held-duplicates-01-10.csv",
+      "held-duplicates-11-20.csv",
+      "held-duplicates-21-30.csv",
+      "held-duplicates-31-40.csv"
+    ],
+    "files_verified": 9,
+    "retained_rows": 1476,
+    "held_rows": 124,
+    "total_rows": 1600,
+    "delta_records": 34,
+    "held_locations_joined": 34,
+    "retained_anchors_found": 34,
+    "retained_held_overlap": 0,
+    "unique_held_locations": 124,
+    "unique_pair_ids": 119,
+    "method": "Fetched all eight staging CSV chunks and manifest from the PR branch. Recomputed row counts and normalized zero-padded batch numbers in source-location joins. All 34 delta held locations and all 34 anchors resolve; no source location is both retained and held."
+  }
+}

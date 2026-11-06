@@ -1,0 +1,412 @@
+{
+  "audit_date": "2026-11-01",
+  "purpose": "Non-destructive staging export applying the user's rule: retain one question per confirmed duplicate cluster and hold confirmed duplicate rows until replacements are ready.",
+  "source_repository": "timmyjoe385-netizen/EDUKEN-CONSULT-",
+  "source_branch": "feat/cbt-subject-combination-reconciled",
+  "source_batch_files": 40,
+  "source_question_rows": 1600,
+  "confirmed_duplicate_relationships": 90,
+  "unique_held_duplicate_rows": 90,
+  "provisionally_retained_rows": 1510,
+  "reconciliation": "1,510 provisionally retained + 90 held = 1,600 source question rows.",
+  "duplicate_provenance": {
+    "prior_replacement_commit_verified": 48,
+    "replacement_after_initial_snapshot_commit_sha_pending": 13,
+    "original_draft_overlap_relationships": 28,
+    "provenance_unverified_relationships": 1,
+    "unverified_pair_ids": [
+      "DUP-34"
+    ],
+    "note": "Forty-eight duplicate relationships have commit-backed prior-replacement evidence. Thirteen further pairs contain later replacement-created content confirmed against original batch snapshots, but exact introducing commit SHAs remain to be normalized. Twenty-eight are original-draft overlaps; DUP-34 remains provenance-unresolved."
+  },
+  "per_batch": [
+    {
+      "batch": 1,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 2,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 3,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 4,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 5,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 6,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 7,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 8,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 9,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 10,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 11,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 12,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 13,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 14,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 15,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 16,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 17,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 18,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 19,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 20,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 21,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 22,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 23,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 24,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 25,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 26,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 27,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 28,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 29,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 30,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 31,
+      "retained": 34,
+      "held": 6
+    },
+    {
+      "batch": 32,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 33,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 34,
+      "retained": 32,
+      "held": 8
+    },
+    {
+      "batch": 35,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 36,
+      "retained": 33,
+      "held": 7
+    },
+    {
+      "batch": 37,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 38,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 39,
+      "retained": 33,
+      "held": 7
+    },
+    {
+      "batch": 40,
+      "retained": 35,
+      "held": 5
+    }
+  ],
+  "staging_files": [
+    "retained-batches-01-10.csv",
+    "retained-batches-11-20.csv",
+    "retained-batches-21-30.csv",
+    "retained-batches-31-40.csv",
+    "held-duplicates-01-10.csv",
+    "held-duplicates-11-20.csv",
+    "held-duplicates-21-30.csv",
+    "held-duplicates-31-40.csv"
+  ],
+  "replacement_status": {
+    "confirmed_targets": 90,
+    "existing_draft_proposals": 65,
+    "additional_drafts_required": 25,
+    "blocked_existing_bank_overlap": 5,
+    "provisional_syllabus_mapping": 26,
+    "subject_review_required": 65,
+    "drafts_inserted": 0,
+    "new_drafts_added_in_current_revision": 18,
+    "new_drafts_require_subject_and_bankwide_review": 18,
+    "proposal_status_counts": {
+      "revised_draft_needs_bank_wide_check": 33,
+      "blocked_duplicate_existing_bank": 5,
+      "new_draft_pending_subject_review_and_bankwide_screen": 9,
+      "draft_needs_subject_and_bankwide_review": 18
+    }
+  },
+  "source_files_modified": false,
+  "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
+  "status": "STAGING_ONLY_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
+  "restrictions": [
+    "Original 40 source batch CSVs were not edited or deleted.",
+    "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
+    "The 1,510 provisionally retained rows are not academically approved or deployment-ready; each requires review of syllabus fit, question clarity, options, answer key and explanation.",
+    "The 90 held duplicate rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
+    "The 90 confirmed duplicate relationships comprise 48 with verified prior-replacement commits, 13 with replacement-created content whose exact introducing commit SHAs remain to be normalized, 28 original-draft overlaps, and one unresolved-provenance pair (DUP-34).",
+    "All 286 cross-window candidates at or above the 0.65 manual-review threshold have been reviewed; 1,018 lower-scoring candidates remain screened but not manually reviewed.",
+    "All 390 reconstructed within-window candidates at threshold 0.42 have review statuses; the original report's 41/349 category split differs by one pair from the reconstructed 40/350 split, and its stated 0.43 threshold does not reproduce the reported total.",
+    "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
+    "The 61 replacement proposals remain drafts outside the original source bank: five are blocked by known existing-bank overlap and 56 remain uncleared for insertion.",
+    "The latest refreshed lexical screen covers all 61 proposals against all 1,600 retained-plus-held staging rows. Sixteen proposals meet or exceed the 0.42 review threshold; these are prompts for contextual review, not duplicate findings.",
+    "Preliminary answer/concept checks now cover DUP-48 through DUP-61 (14 proposals). Independent subject review and contextual bank-wide clearance remain outstanding.",
+    "The register's batch row references use physical CSV row numbers including the header. DUP-60 and DUP-61 were checked against those exact physical rows and both staging/source records match."
+  ],
+  "semantic_review_status": {
+    "cross_window_candidates": 1304,
+    "manually_reviewed_candidates": 286,
+    "high_similarity_shortlist_reviewed": 49,
+    "additional_targeted_candidates_reviewed": 237,
+    "cross_window_candidates_not_manually_reviewed": 1018,
+    "original_reported_within_window_candidates_pending": 279,
+    "reconstructed_within_window_candidates_reviewed": 390,
+    "unresolved_within_window_count_discrepancy": 38,
+    "note": "Cross-window screen has 1,304 candidates: 286 manually reviewed (including the 49-pair same-subject/topic/subtopic shortlist; 1,018 lower-scoring candidates remain unreviewed). The within-window reconstruction at threshold 0.42 has 390 reviewed candidates, while the original report still has 279 pending candidates and a 38-pair discrepancy against the reconstruction."
+  },
+  "semantic_review": {
+    "within_window": {
+      "reconstructed_candidates": 390,
+      "candidates_at_reconstructed_threshold_0_42_reviewed": 390,
+      "different_topic_or_subtopic_reviewed": 350,
+      "same_topic_and_subtopic_carried_forward_as_reviewed": 40,
+      "remaining_in_reconstructed_candidate_set": 0,
+      "original_reported_same_topic_subtopic_count": 41,
+      "reconstructed_same_topic_subtopic_count": 40,
+      "unresolved_category_boundary_difference": 1,
+      "independent_recomputation_at_threshold_0_43": 352,
+      "interpretation": "The original reported total of 390 is reproduced at threshold 0.42, not the stated 0.43. The 0.42 reconstruction contains 390 candidates (40 same-topic/subtopic and 350 other); all 390 have review statuses. The original report's split was 41/349, leaving a one-pair category boundary mismatch, documented rather than concealed."
+    },
+    "cross_window": {
+      "candidates": 1304,
+      "manually_reviewed_at_or_above_similarity_threshold_0_65": 286,
+      "below_threshold_not_manually_reviewed": 1018,
+      "interpretation": "The 49-pair same-subject/topic/subtopic shortlist is fully dispositioned (15 previously confirmed and 34 newly contextually reviewed: one additional semantic duplicate and 33 distinct/valid variants). This shortlist is not the full 1,304-candidate screen. The overall review log records 286 manually reviewed cross-window candidates; 1,018 below-threshold candidates remain unreviewed.",
+      "high_similarity_shortlist_reviewed": 49,
+      "high_similarity_shortlist_newly_contextually_reviewed": 34,
+      "high_similarity_shortlist_newly_confirmed_duplicates": 1,
+      "high_similarity_shortlist_preserved_distinct_or_valid_variants": 33,
+      "remaining_unreviewed_cross_window_candidates": 1255
+    }
+  },
+  "audit_reports": [
+    {
+      "path": "content/cbt/audits/bank-wide-uniqueness-screen-2026-11-01.json",
+      "status": "preliminary_automated_screen_only_newer_proposals_pending",
+      "retained_rows_screened": 1510,
+      "replacement_proposals_screened": 49,
+      "note": "The existing bank-wide automated screen covers the 1,510 retained rows and the first 49 replacement proposals. DUP-50 and DUP-51 were added after that screen and still require inclusion in a refreshed full-bank contextual uniqueness screen."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 53,
+      "flagged_at_or_above_0_42": 17,
+      "note": "Refreshed report screens all 53 current proposals, including revised DUP-50 and new DUP-52/53, against all 1,600 original source rows. Lexical flags are not duplicate verdicts or academic approval."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 6,
+      "note": "Preliminary answer-key, concept and syllabus-fit review for DUP-48 to DUP-53; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v3.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 55,
+      "flagged_at_or_above_0_42": 17,
+      "note": "Refreshed screen includes all 55 replacement proposals. Lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 8,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-55; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 57,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Refreshed screen includes all 57 replacement proposals; lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 10,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-57; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 59,
+      "flagged_at_or_above_0_42": 18,
+      "note": "Refreshed screen includes all 59 proposals; lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 12,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-59; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "version_9_refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 61,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Version 9 covers all 61 proposals. DUP-60 and DUP-61 have maximum same-subject Dice scores of 0.2783 and 0.2262 respectively. Lexical flags remain prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 14,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-61; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "version_10_refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 63,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Version 10 covers all 63 proposals. DUP-62 and DUP-63 have highest same-subject Dice scores 0.4046 and 0.3648 respectively."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 16,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-63; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "version_11_refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 65,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Version 11 covers all 65 proposals. DUP-64 and DUP-65 have highest same-subject Dice scores 0.2623 and 0.3462 respectively."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 18,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-65; independent subject review remains required."
+    }
+  ],
+  "source_row_reconciliation_status": "verified_for_DUP-60_and_DUP-61_physical_csv_row_numbering_includes_header"
+}

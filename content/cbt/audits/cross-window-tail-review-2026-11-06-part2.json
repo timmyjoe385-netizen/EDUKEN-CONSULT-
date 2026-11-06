@@ -1,0 +1,488 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record 17 additional fully content-checked cross-window duplicate candidates from the lower-scoring tail.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      340,
+      344,
+      346,
+      355,
+      357,
+      360,
+      365,
+      370,
+      373,
+      376,
+      389,
+      392,
+      394,
+      416,
+      421,
+      430,
+      436
+    ],
+    "previous_total_manually_reviewed": 291,
+    "now_manually_reviewed": 307,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 997,
+    "new_confirmed_duplicate_pairs": 16
+  },
+  "findings": [
+    {
+      "id": "DUP-96",
+      "rank": 340,
+      "similarity_score": 0.624,
+      "subject": "Economics",
+      "a": "batch 15 row 27",
+      "b": "batch 28 row 27",
+      "concept": "Binding price ceiling below equilibrium creates a shortage.",
+      "question_a": "If government fixes a maximum price below the equilibrium price, the market is likely to experience:",
+      "options_a": [
+        "A shortage of the good",
+        "A permanent surplus of the good",
+        "No change in quantity demanded",
+        "An automatic increase in supply"
+      ],
+      "answer_a": "A",
+      "question_b": "A maximum legal price set below the equilibrium price is likely to create",
+      "options_b": [
+        "a shortage",
+        "a surplus",
+        "an increase in supply",
+        "market equilibrium"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask the same price-ceiling consequence: quantity demanded exceeds quantity supplied, creating a shortage."
+    },
+    {
+      "id": "DUP-97",
+      "rank": 344,
+      "similarity_score": 0.623,
+      "subject": "Chemistry",
+      "a": "batch 14 row 21",
+      "b": "batch 37 row 21",
+      "concept": "Acid-carbonate reaction releases carbon dioxide.",
+      "question_a": "When a carbonate reacts with a dilute acid, which gas is normally released?",
+      "options_a": [
+        "Hydrogen",
+        "Oxygen",
+        "Carbon dioxide",
+        "Nitrogen"
+      ],
+      "answer_a": "C",
+      "question_b": "Which gas is produced when dilute hydrochloric acid reacts with calcium carbonate?",
+      "options_b": [
+        "Hydrogen",
+        "Oxygen",
+        "Carbon dioxide",
+        "Nitrogen"
+      ],
+      "answer_b": "C",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "The second gives a specific carbonate and acid but asks the same general reaction-product fact; options and correct answer are identical."
+    },
+    {
+      "id": "DUP-98",
+      "rank": 346,
+      "similarity_score": 0.621,
+      "subject": "Mathematics",
+      "a": "batch 4 row 11",
+      "b": "batch 17 row 10",
+      "concept": "Circumference of a radius-7 cm circle using pi = 22/7.",
+      "question_a": "What is the circumference of a circle of radius 7 cm? Use π = 22/7.",
+      "options_a": [
+        "22 cm",
+        "44 cm",
+        "49 cm",
+        "154 cm"
+      ],
+      "answer_a": "B",
+      "question_b": "A circle has radius 7 cm. Using π = 22/7, find its circumference.",
+      "options_b": [
+        "22 cm",
+        "44 cm",
+        "49 cm",
+        "154 cm"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Identical numerical inputs, formula, options, correct answer and explanation; this is an exact assessment duplicate."
+    },
+    {
+      "id": "DUP-99",
+      "rank": 355,
+      "similarity_score": 0.618,
+      "subject": "Literature in English",
+      "a": "batch 5 row 40",
+      "b": "batch 23 row 38",
+      "concept": "Satire uses humour and irony to expose or criticise faults.",
+      "question_a": "Satire uses humour, irony or exaggeration mainly to:",
+      "options_a": [
+        "Criticise human behaviour or institutions",
+        "Describe measurements without interpretation",
+        "Remove all social meaning",
+        "List words alphabetically"
+      ],
+      "answer_a": "A",
+      "question_b": "Satire is a literary mode that uses humour, irony or ridicule mainly to:",
+      "options_b": [
+        "Expose or criticise human faults, institutions or social practices",
+        "Record scientific measurements without interpretation",
+        "Describe only the physical setting of a story",
+        "Present a sequence of unrelated sounds"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask the purpose of satire and have the same correct learning outcome: expose or criticise faults in people, institutions or society."
+    },
+    {
+      "id": "DUP-101",
+      "rank": 360,
+      "similarity_score": 0.615,
+      "subject": "Economics",
+      "a": "batch 10 row 27",
+      "b": "batch 12 row 27",
+      "concept": "Law of supply: higher market price generally increases quantity supplied.",
+      "question_a": "Other things being equal, a rise in the market price of a good generally leads producers to:",
+      "options_a": [
+        "Offer a greater quantity for sale",
+        "Offer a smaller quantity for sale",
+        "Stop production in every case",
+        "Demand more of the good for consumption"
+      ],
+      "answer_a": "A",
+      "question_b": "Other things being equal, the law of supply states that a higher price generally leads to…",
+      "options_b": [
+        "A lower quantity supplied",
+        "A higher quantity supplied",
+        "No production at all",
+        "A lower demand for labour in every industry"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both assess the same direct relationship between price and quantity supplied. The earlier existing DUP-76 already retains batch 37 row 27 and holds batch 10 row 27; this new item adds batch 12 row 27 as another duplicate in that cluster."
+    },
+    {
+      "id": "DUP-102",
+      "rank": 365,
+      "similarity_score": 0.612,
+      "subject": "Government",
+      "a": "batch 2 row 33",
+      "b": "batch 18 row 32",
+      "concept": "Federalism constitutionally divides powers between central and subnational governments.",
+      "question_a": "Federalism involves constitutional division of powers between:",
+      "options_a": [
+        "A ruler and a private company",
+        "National and subnational levels of government",
+        "Only judges and police",
+        "Two political parties only"
+      ],
+      "answer_a": "B",
+      "question_b": "A federal system of government constitutionally divides powers between ___.",
+      "options_b": [
+        "one central authority and component governments",
+        "the ruling party and opposition only",
+        "the courts and the police only",
+        "traditional rulers and trade unions"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask for the same definition of federalism and the same central-versus-component-government allocation."
+    },
+    {
+      "id": "DUP-103",
+      "rank": 370,
+      "similarity_score": 0.611,
+      "subject": "Economics",
+      "a": "batch 23 row 28",
+      "b": "batch 39 row 27",
+      "concept": "Monopsony is a market with one dominant buyer and many sellers.",
+      "question_a": "A market in which there is a single dominant buyer facing many sellers is called:",
+      "options_a": [
+        "Monopoly",
+        "Monopsony",
+        "Perfect competition",
+        "Monopolistic competition"
+      ],
+      "answer_a": "B",
+      "question_b": "A market in which one main buyer purchases from many sellers is called:",
+      "options_b": [
+        "Monopoly",
+        "Monopsony",
+        "Perfect competition",
+        "Oligopoly"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "The stems, concept and answer are substantively identical definitions of monopsony."
+    },
+    {
+      "id": "DUP-104",
+      "rank": 373,
+      "similarity_score": 0.611,
+      "subject": "Government",
+      "a": "batch 3 row 33",
+      "b": "batch 18 row 36",
+      "concept": "Independent electoral body organises and administers elections impartially.",
+      "question_a": "An independent electoral body is primarily expected to:",
+      "options_a": [
+        "Organise and administer elections impartially",
+        "Choose all candidates for every party",
+        "Write every court judgment",
+        "Replace elected representatives permanently"
+      ],
+      "answer_a": "A",
+      "question_b": "An independent electoral commission is primarily responsible for:",
+      "options_b": [
+        "Organising and supervising elections according to the law",
+        "Interpreting every criminal law",
+        "Appointing all members of the cabinet",
+        "Managing private companies' accounts"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask for the core responsibility of an independent electoral body: organising/administering elections under the law."
+    },
+    {
+      "id": "DUP-105",
+      "rank": 376,
+      "similarity_score": 0.608,
+      "subject": "Biology",
+      "a": "batch 9 row 12",
+      "b": "batch 38 row 14",
+      "concept": "Normal site of human fertilisation is the oviduct (fallopian tube).",
+      "question_a": "Where does fertilisation normally occur in the human female reproductive system?",
+      "options_a": [
+        "Uterus",
+        "Ovary",
+        "Oviduct",
+        "Cervix"
+      ],
+      "answer_a": "C",
+      "question_b": "In humans, fertilisation normally occurs in the",
+      "options_b": [
+        "oviduct",
+        "uterus",
+        "vagina",
+        "cervix"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask the same direct fact. Existing DUP-50 already retains batch 9 row 12 and holds batch 31 row 12; this adds batch 38 row 14 as another duplicate in the same cluster."
+    },
+    {
+      "id": "DUP-106",
+      "rank": 389,
+      "similarity_score": 0.604,
+      "subject": "Biology",
+      "a": "batch 18 row 16",
+      "b": "batch 37 row 13",
+      "concept": "Nephron site of blood ultrafiltration is the glomerulus.",
+      "question_a": "Which structure in the nephron is the main site where blood is filtered under pressure?",
+      "options_a": [
+        "Glomerulus",
+        "Loop of Henle",
+        "Distal convoluted tubule",
+        "Collecting duct"
+      ],
+      "answer_a": "A",
+      "question_b": "Which part of a nephron is the site where blood is ultrafiltered?",
+      "options_b": [
+        "Bowman's capsule",
+        "Glomerulus",
+        "Loop of Henle",
+        "Collecting duct"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both test the same site of ultrafiltration in the nephron: the glomerulus."
+    },
+    {
+      "id": "DUP-107",
+      "rank": 392,
+      "similarity_score": 0.603,
+      "subject": "Government",
+      "a": "batch 3 row 36",
+      "b": "batch 14 row 35",
+      "concept": "Freedom of expression protects communication of opinions subject to lawful limits.",
+      "question_a": "Freedom of expression generally protects the right to:",
+      "options_a": [
+        "Share opinions subject to lawful limits",
+        "Threaten anyone without consequence",
+        "Ignore every court order",
+        "Prevent others from speaking in all cases"
+      ],
+      "answer_a": "A",
+      "question_b": "Freedom of expression primarily protects a person's ability to…",
+      "options_b": [
+        "Share opinions within lawful limits",
+        "Ignore every court order",
+        "Prevent others from speaking",
+        "Hold public office without election"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both assess the same civil liberty and use the same correct answer and lawful-limits qualification."
+    },
+    {
+      "id": "DUP-108",
+      "rank": 394,
+      "similarity_score": 0.602,
+      "subject": "Government",
+      "a": "batch 4 row 33",
+      "b": "batch 22 row 35",
+      "concept": "Public accountability requires officials to explain and justify decisions and conduct.",
+      "question_a": "Government accountability means public officials should:",
+      "options_a": [
+        "Explain and answer for their decisions and conduct",
+        "Never disclose any public decision",
+        "Be exempt from all laws",
+        "Choose their own successors without rules"
+      ],
+      "answer_a": "A",
+      "question_b": "Public accountability requires public officials to ___.",
+      "options_b": [
+        "explain and justify their use of public authority and resources",
+        "avoid all public records",
+        "act without oversight",
+        "serve only private interests"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask the same accountability principle: officials must explain and justify their actions and use of public authority/resources."
+    },
+    {
+      "id": "DUP-109",
+      "rank": 416,
+      "similarity_score": 0.595,
+      "subject": "Economics",
+      "a": "batch 8 row 29",
+      "b": "batch 17 row 27",
+      "concept": "Higher consumer income shifts demand for a normal good to the right.",
+      "question_a": "An increase in consumers' income will usually shift demand for a normal good:",
+      "options_a": [
+        "to the left",
+        "to the right",
+        "along the same curve only",
+        "to zero"
+      ],
+      "answer_a": "B",
+      "question_b": "For a normal good, an increase in consumers' income, other things being equal, is likely to ___.",
+      "options_b": [
+        "shift demand to the right",
+        "shift supply to the left",
+        "cause movement down the same demand curve",
+        "eliminate demand"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both test the same income determinant of demand for a normal good and the same rightward shift."
+    },
+    {
+      "id": "DUP-110",
+      "rank": 421,
+      "similarity_score": 0.594,
+      "subject": "Biology",
+      "a": "batch 16 row 12",
+      "b": "batch 29 row 13",
+      "concept": "Enzymes lower activation energy to speed biochemical reactions.",
+      "question_a": "How do enzymes speed up biochemical reactions?",
+      "options_a": [
+        "By lowering activation energy",
+        "By being used up completely",
+        "By permanently raising cell temperature",
+        "By changing products into elements"
+      ],
+      "answer_a": "A",
+      "question_b": "An enzyme speeds up a biochemical reaction mainly by",
+      "options_b": [
+        "raising the reaction temperature permanently",
+        "lowering the activation energy",
+        "increasing the mass of the substrate",
+        "changing the reaction products"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both ask for the same mechanism of enzyme action: lowering activation energy."
+    },
+    {
+      "id": "DUP-111",
+      "rank": 430,
+      "similarity_score": 0.589,
+      "subject": "Physics",
+      "a": "batch 12 row 24",
+      "b": "batch 37 row 25",
+      "concept": "Fuse interrupts a circuit when excessive current flows.",
+      "question_a": "In a domestic electrical circuit, a fuse is designed to…",
+      "options_a": [
+        "Increase the supply voltage",
+        "Break the circuit when excessive current flows",
+        "Store electrical energy for later use",
+        "Prevent all current from entering the appliance"
+      ],
+      "answer_a": "B",
+      "question_b": "The main purpose of a fuse in an electrical circuit is to:",
+      "options_b": [
+        "Increase the supply voltage",
+        "Protect the circuit by breaking it when excessive current flows",
+        "Store electrical charge",
+        "Measure resistance"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both assess the same safety function of a fuse: opening the circuit when current exceeds its rated safe value."
+    },
+    {
+      "id": "DUP-112",
+      "rank": 436,
+      "similarity_score": 0.586,
+      "subject": "Biology",
+      "a": "batch 9 row 13",
+      "b": "batch 33 row 14",
+      "concept": "Xylem transports water and dissolved mineral salts from roots.",
+      "question_a": "Which plant tissue conducts water and dissolved mineral salts from the roots towards the leaves?",
+      "options_a": [
+        "Phloem",
+        "Xylem",
+        "Epidermis",
+        "Cambium"
+      ],
+      "answer_a": "B",
+      "question_b": "The tissue that transports water and mineral salts from roots to other parts of a plant is",
+      "options_b": [
+        "phloem",
+        "epidermis",
+        "cambium",
+        "xylem"
+      ],
+      "answer_b": "D",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both test the same xylem transport function and the same correct answer."
+    }
+  ],
+  "controls": {
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_checks_pending": 16,
+    "staging_joins_pending": 16,
+    "replacement_drafts_created": 0,
+    "user_reported_approved_replacements_remain": 90,
+    "note": "DUP-101 and DUP-105 join existing duplicate clusters: keep batch 37 row 27 for the law-of-supply cluster and batch 9 row 12 for the fertilisation-site cluster; add the new counterpart rows as further held candidates. The other retain candidates are provisional earlier-batch choices pending exact row-level history checks. DUP-100 is preserved as a distinct application because it tests a different factor (coil turns versus current)."
+  },
+  "preserved_or_flagged": [
+    {
+      "id": "DUP-100",
+      "rank": 357,
+      "similarity_score": 0.617,
+      "subject": "Physics",
+      "a": "batch 16 row 26",
+      "b": "batch 38 row 26",
+      "decision": "preserve_both_distinct_factors_flag_template_repetition",
+      "reason": "One question asks how increasing the number of coil turns strengthens an electromagnet; the other asks how increasing current strengthens it. These are different controllable factors, so they are useful complementary applications rather than the same tested fact. Keep both; flag only for broad-topic balance review."
+    }
+  ]
+}

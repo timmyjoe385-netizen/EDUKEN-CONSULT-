@@ -1,0 +1,162 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidate pairs, checking stems, options and explanations in the source CSV batches.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1199,
+      1200,
+      1201,
+      1202,
+      1203,
+      1204,
+      1205,
+      1206,
+      1207,
+      1208,
+      1209,
+      1210,
+      1211,
+      1212,
+      1213
+    ],
+    "previous_total_manually_reviewed": 656,
+    "now_manually_reviewed": 671,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 633
+  },
+  "preserved": [
+    {
+      "rank": 1199,
+      "subject": "Mathematics",
+      "a": "batch 1 row 9",
+      "b": "batch 29 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding a triangle angle from a 2:3:4 angle ratio and sharing a monetary sum in a 3:5 ratio are different applications of ratio."
+    },
+    {
+      "rank": 1200,
+      "subject": "Use of English",
+      "a": "batch 2 row 5",
+      "b": "batch 25 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests apostrophe use for singular possession; the second tests correct modifier attachment to avoid a dangling or misplaced participial phrase."
+    },
+    {
+      "rank": 1201,
+      "subject": "Mathematics",
+      "a": "batch 7 row 7",
+      "b": "batch 27 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "The tangent ratio is opposite over adjacent; the second applies cosine as adjacent over hypotenuse using given side lengths."
+    },
+    {
+      "rank": 1202,
+      "subject": "Use of English",
+      "a": "batch 9 row 5",
+      "b": "batch 31 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Both concern tone, but the first identifies an approving tone from positive evaluation while the second infers a critical tone from negative evidence. Different reading stimuli and interpretive conclusions."
+    },
+    {
+      "rank": 1203,
+      "subject": "Use of English",
+      "a": "batch 15 row 5",
+      "b": "batch 27 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A mixed conditional sentence completion and the fixed collocation comply with test different grammar and vocabulary objectives."
+    },
+    {
+      "rank": 1204,
+      "subject": "Mathematics",
+      "a": "batch 20 row 11",
+      "b": "batch 22 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Range is maximum minus minimum; mode is the most frequently occurring value. Different statistical measures."
+    },
+    {
+      "rank": 1205,
+      "subject": "Use of English",
+      "a": "batch 12 row 3",
+      "b": "batch 38 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Reported-speech tense and pronoun backshift differs from transforming a passive past-simple sentence into active voice."
+    },
+    {
+      "rank": 1206,
+      "subject": "Mathematics",
+      "a": "batch 1 row 8",
+      "b": "batch 12 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Calculating a percentage of a quantity and finding a fraction's reciprocal are distinct arithmetic operations."
+    },
+    {
+      "rank": 1207,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 18 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Subject–verb concord with each is different from converting a simple-past active sentence into passive voice."
+    },
+    {
+      "rank": 1208,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 18 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "Subject–verb concord with each and the fixed prepositional construction consists of test different grammar rules."
+    },
+    {
+      "rank": 1209,
+      "subject": "Mathematics",
+      "a": "batch 4 row 9",
+      "b": "batch 17 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding a triangle's third angle from two given angles differs from solving an algebraic equation formed by supplementary angles on a straight line."
+    },
+    {
+      "rank": 1210,
+      "subject": "Government",
+      "a": "batch 5 row 35",
+      "b": "batch 14 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "Political legitimacy concerns accepted or rightful authority to govern; political apathy concerns lack of interest or participation in political activity."
+    },
+    {
+      "rank": 1211,
+      "subject": "Use of English",
+      "a": "batch 9 row 4",
+      "b": "batch 14 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Recognising a complex sentence with a subordinate clause differs from identifying the present perfect tense."
+    },
+    {
+      "rank": 1212,
+      "subject": "Government",
+      "a": "batch 9 row 33",
+      "b": "batch 15 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "An ombudsman investigates complaints about maladministration; legislative committees examine bills, policies or public matters and report to the chamber. Related accountability functions but distinct institutional roles."
+    },
+    {
+      "rank": 1213,
+      "subject": "Chemistry",
+      "a": "batch 3 row 19",
+      "b": "batch 38 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "The first defines covalent bonding through shared electron pairs; the second identifies O₂ as a specific molecule containing a double covalent bond. General principle and specific application are complementary, not duplicate."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

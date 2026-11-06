@@ -1,0 +1,100 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five more lower-scoring cross-window candidates checked against full source stems, options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      917,
+      918,
+      919,
+      920,
+      921
+    ],
+    "previous_total_manually_reviewed": 386,
+    "now_manually_reviewed": 391,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 913
+  },
+  "preserved": [
+    {
+      "rank": 917,
+      "score": 0.472,
+      "subject": "Use of English",
+      "a": "batch 14 row 3",
+      "b": "batch 39 row 4",
+      "question_a": "Choose the correct completion: “The principal insisted ___ punctuality.”",
+      "answer_a": "B — on",
+      "question_b": "Choose the correct completion: “The new policy will come ___ effect next month.”",
+      "answer_b": "B — into",
+      "decision": "preserve_both_as_distinct_preposition_collocations",
+      "reason": "The first tests the verb–preposition collocation insist on; the second tests the fixed expression come into effect. The governing words and lexical patterns are different."
+    },
+    {
+      "rank": 918,
+      "score": 0.472,
+      "subject": "Physics",
+      "a": "batch 14 row 25",
+      "b": "batch 39 row 22",
+      "question_a": "A current of 2 A flows through a conductor for 5 s. How much charge passes through it?",
+      "answer_a": "D — 10 C",
+      "question_b": "A current of 2 A flows through a 6 Ω resistor. The potential difference is",
+      "answer_b": "C — 12 V",
+      "decision": "preserve_both_as_distinct_electricity_calculations",
+      "reason": "The first applies Q=It to calculate electric charge; the second applies V=IR to calculate potential difference. Different formulas, quantities and units."
+    },
+    {
+      "rank": 919,
+      "score": 0.472,
+      "subject": "Use of English",
+      "a": "batch 17 row 6",
+      "b": "batch 39 row 4",
+      "question_a": "Choose the correct completion: If she had left earlier, she ___ the bus.",
+      "answer_a": "C — would have caught",
+      "question_b": "Choose the correct completion: “The new policy will come ___ effect next month.”",
+      "answer_b": "B — into",
+      "decision": "preserve_both_as_distinct_grammar_assessments",
+      "reason": "The first tests the third conditional (past unreal condition); the second tests the fixed prepositional expression come into effect."
+    },
+    {
+      "rank": 920,
+      "score": 0.472,
+      "subject": "Literature in English",
+      "a": "batch 21 row 40",
+      "b": "batch 39 row 40",
+      "question_a": "Antithesis is a figure of speech that presents:",
+      "answer_a": "A — contrasting ideas in balanced or parallel structure",
+      "question_b": "Synecdoche is a figure of speech in which:",
+      "answer_b": "A — a part represents the whole, or vice versa",
+      "decision": "preserve_both_as_distinct_figures_of_speech",
+      "reason": "Antithesis is based on balanced contrast; synecdoche is a part–whole relationship. They are distinct literary devices and definitions."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 921,
+      "score": 0.472,
+      "subject": "Biology",
+      "a": "batch 28 row 15",
+      "b": "batch 39 row 12",
+      "question_a": "An organism that has two different alleles for a particular gene is described as:",
+      "answer_a": "B — Heterozygous",
+      "question_b": "An organism with genotype Tt is described as",
+      "answer_b": "B — heterozygous",
+      "decision": "confirm_semantic_duplicate",
+      "retain": "batch 28 row 15",
+      "replace": "batch 39 row 12",
+      "new_unique_replacement_target": "batch 39 row 12",
+      "reason": "Both directly test the definition of a heterozygous genotype. The Tt example is simply an instance of the general definition and does not assess a separate genetic principle; retain the clearer general-definition item."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "Four candidate pairs were preserved as distinct; one heterozygous-genotype definition duplicate was confirmed. No source or staging CSV was changed."
+  }
+}

@@ -1,0 +1,979 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Crosswalk the 96 later-range register pair IDs against the current 6 November retained/held staging exports by source location, to distinguish existing held cluster members from new retained targets.",
+  "evidence": {
+    "unverified_pair_ids": 96,
+    "pair_records_found": 96,
+    "target_location_references": 97,
+    "unique_target_locations": 90,
+    "already_held": 22,
+    "still_retained": 68,
+    "not_found": 0,
+    "location_normalization": "batch numbers normalized from zero-padded source_batch values; source_csv_row is physical CSV line number including header"
+  },
+  "interpretation": {
+    "current_staging_held_locations": 124,
+    "current_queue_targets_already_held": 22,
+    "new_unique_targets_still_retained": 68,
+    "expected_held_total_if_all_68_are_approved_and_staged": 192,
+    "expected_retained_total_if_all_68_are_approved_and_staged": 1408,
+    "note": "The 96 pair IDs do not represent 96 new questions. Their 97 target references resolve to 90 unique locations; 22 are already held in the current staging export and 68 remain in retained exports. All 90 target locations are present in current staging. This is a location-presence crosswalk only, not proof of source-content equality, provenance, semantic duplication or retained-anchor joins."
+  },
+  "pair_targets": [
+    {
+      "pair_id": "DUP-91",
+      "targets": [
+        "batch 25 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-92",
+      "targets": [
+        "batch 21 row 20"
+      ]
+    },
+    {
+      "pair_id": "DUP-93",
+      "targets": [
+        "batch 31 row 16"
+      ]
+    },
+    {
+      "pair_id": "DUP-94",
+      "targets": [
+        "batch 40 row 24"
+      ]
+    },
+    {
+      "pair_id": "DUP-95",
+      "targets": [
+        "batch 34 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-96",
+      "targets": [
+        "batch 28 row 27"
+      ]
+    },
+    {
+      "pair_id": "DUP-97",
+      "targets": [
+        "batch 37 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-98",
+      "targets": [
+        "batch 17 row 10"
+      ]
+    },
+    {
+      "pair_id": "DUP-99",
+      "targets": [
+        "batch 23 row 38"
+      ]
+    },
+    {
+      "pair_id": "DUP-101",
+      "targets": [
+        "batch 12 row 27"
+      ]
+    },
+    {
+      "pair_id": "DUP-102",
+      "targets": [
+        "batch 18 row 32"
+      ]
+    },
+    {
+      "pair_id": "DUP-103",
+      "targets": [
+        "batch 39 row 27"
+      ]
+    },
+    {
+      "pair_id": "DUP-104",
+      "targets": [
+        "batch 18 row 36"
+      ]
+    },
+    {
+      "pair_id": "DUP-105",
+      "targets": [
+        "batch 38 row 14"
+      ]
+    },
+    {
+      "pair_id": "DUP-106",
+      "targets": [
+        "batch 37 row 13"
+      ]
+    },
+    {
+      "pair_id": "DUP-107",
+      "targets": [
+        "batch 14 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-108",
+      "targets": [
+        "batch 22 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-109",
+      "targets": [
+        "batch 17 row 27"
+      ]
+    },
+    {
+      "pair_id": "DUP-110",
+      "targets": [
+        "batch 29 row 13"
+      ]
+    },
+    {
+      "pair_id": "DUP-111",
+      "targets": [
+        "batch 37 row 25"
+      ]
+    },
+    {
+      "pair_id": "DUP-112",
+      "targets": [
+        "batch 33 row 14"
+      ]
+    },
+    {
+      "pair_id": "DUP-113",
+      "targets": [
+        "batch 33 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-114",
+      "targets": [
+        "batch 28 row 25"
+      ]
+    },
+    {
+      "pair_id": "DUP-115",
+      "targets": [
+        "batch 34 row 26"
+      ]
+    },
+    {
+      "pair_id": "DUP-116",
+      "targets": [
+        "batch 30 row 15"
+      ]
+    },
+    {
+      "pair_id": "DUP-117",
+      "targets": [
+        "batch 31 row 32"
+      ]
+    },
+    {
+      "pair_id": "DUP-118",
+      "targets": [
+        "batch 32 row 36"
+      ]
+    },
+    {
+      "pair_id": "DUP-119",
+      "targets": [
+        "batch 36 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-120",
+      "targets": [
+        "batch 33 row 32"
+      ]
+    },
+    {
+      "pair_id": "DUP-121",
+      "targets": [
+        "batch 17 row 20"
+      ]
+    },
+    {
+      "pair_id": "DUP-123",
+      "targets": [
+        "batch 20 row 33"
+      ]
+    },
+    {
+      "pair_id": "DUP-124",
+      "targets": [
+        "batch 39 row 23"
+      ]
+    },
+    {
+      "pair_id": "DUP-125",
+      "targets": [
+        "batch 29 row 33"
+      ]
+    },
+    {
+      "pair_id": "DUP-126",
+      "targets": [
+        "batch 22 row 33"
+      ]
+    },
+    {
+      "pair_id": "DUP-127",
+      "targets": [
+        "batch 38 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-128",
+      "targets": [
+        "batch 26 row 33"
+      ]
+    },
+    {
+      "pair_id": "DUP-129",
+      "targets": [
+        "batch 16 row 6"
+      ]
+    },
+    {
+      "pair_id": "DUP-130",
+      "targets": [
+        "batch 13 row 16"
+      ]
+    },
+    {
+      "pair_id": "DUP-132",
+      "targets": [
+        "batch 34 row 3"
+      ]
+    },
+    {
+      "pair_id": "DUP-133",
+      "targets": [
+        "batch 25 row 27"
+      ]
+    },
+    {
+      "pair_id": "DUP-134",
+      "targets": [
+        "batch 35 row 13"
+      ]
+    },
+    {
+      "pair_id": "DUP-135",
+      "targets": [
+        "batch 30 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-137",
+      "targets": [
+        "batch 34 row 38"
+      ]
+    },
+    {
+      "pair_id": "DUP-138",
+      "targets": [
+        "batch 21 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-139",
+      "targets": [
+        "batch 16 row 20"
+      ]
+    },
+    {
+      "pair_id": "DUP-140",
+      "targets": [
+        "batch 35 row 41"
+      ]
+    },
+    {
+      "pair_id": "DUP-141",
+      "targets": [
+        "batch 18 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-143",
+      "targets": [
+        "batch 30 row 16"
+      ]
+    },
+    {
+      "pair_id": "DUP-144",
+      "targets": [
+        "batch 31 row 30"
+      ]
+    },
+    {
+      "pair_id": "DUP-145",
+      "targets": [
+        "batch 37 row 14"
+      ]
+    },
+    {
+      "pair_id": "DUP-146",
+      "targets": [
+        "batch 15 row 28"
+      ]
+    },
+    {
+      "pair_id": "DUP-147",
+      "targets": [
+        "batch 34 row 18"
+      ]
+    },
+    {
+      "pair_id": "DUP-148",
+      "targets": [
+        "batch 39 row 34"
+      ]
+    },
+    {
+      "pair_id": "DUP-149",
+      "targets": [
+        "batch 26 row 37"
+      ]
+    },
+    {
+      "pair_id": "DUP-150",
+      "targets": [
+        "batch 38 row 13"
+      ]
+    },
+    {
+      "pair_id": "DUP-151",
+      "targets": [
+        "batch 31 row 16"
+      ]
+    },
+    {
+      "pair_id": "DUP-152",
+      "targets": [
+        "batch 34 row 34"
+      ]
+    },
+    {
+      "pair_id": "DUP-153",
+      "targets": [
+        "batch 38 row 31"
+      ]
+    },
+    {
+      "pair_id": "DUP-154",
+      "targets": [
+        "batch 35 row 30"
+      ]
+    },
+    {
+      "pair_id": "DUP-155",
+      "targets": [
+        "batch 30 row 7"
+      ]
+    },
+    {
+      "pair_id": "DUP-156",
+      "targets": [
+        "batch 39 row 23"
+      ]
+    },
+    {
+      "pair_id": "DUP-157",
+      "targets": [
+        "batch 21 row 11"
+      ]
+    },
+    {
+      "pair_id": "DUP-158",
+      "targets": [
+        "batch 39 row 12"
+      ]
+    },
+    {
+      "pair_id": "DUP-159",
+      "targets": [
+        "batch 38 row 36"
+      ]
+    },
+    {
+      "pair_id": "DUP-160",
+      "targets": [
+        "batch 40 row 15"
+      ]
+    },
+    {
+      "pair_id": "DUP-161",
+      "targets": [
+        "batch 35 row 11"
+      ]
+    },
+    {
+      "pair_id": "DUP-162",
+      "targets": [
+        "batch 6 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-163",
+      "targets": [
+        "batch 37 row 15"
+      ]
+    },
+    {
+      "pair_id": "DUP-164",
+      "targets": [
+        "batch 11 row 40"
+      ]
+    },
+    {
+      "pair_id": "DUP-174",
+      "targets": [
+        "batch 12 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-175",
+      "targets": [
+        "batch 40 row 16"
+      ]
+    },
+    {
+      "pair_id": "DUP-176",
+      "targets": [
+        "batch 26 row 41"
+      ]
+    },
+    {
+      "pair_id": "DUP-177",
+      "targets": [
+        "batch 38 row 36"
+      ]
+    },
+    {
+      "pair_id": "DUP-178",
+      "targets": [
+        "batch 37 row 8"
+      ]
+    },
+    {
+      "pair_id": "DUP-179",
+      "targets": [
+        "batch 39 row 21"
+      ]
+    },
+    {
+      "pair_id": "DUP-180",
+      "targets": [
+        "batch 30 row 28"
+      ]
+    },
+    {
+      "pair_id": "DUP-181",
+      "targets": [
+        "batch 32 row 2"
+      ]
+    },
+    {
+      "pair_id": "DUP-182",
+      "targets": [
+        "batch 23 row 24"
+      ]
+    },
+    {
+      "pair_id": "DUP-183",
+      "targets": [
+        "batch 39 row 9"
+      ]
+    },
+    {
+      "pair_id": "DUP-184",
+      "targets": [
+        "batch 31 row 25"
+      ]
+    },
+    {
+      "pair_id": "DUP-185",
+      "targets": [
+        "batch 16 row 7"
+      ]
+    },
+    {
+      "pair_id": "DUP-186",
+      "targets": [
+        "batch 38 row 7"
+      ]
+    },
+    {
+      "pair_id": "DUP-187",
+      "targets": [
+        "batch 16 row 7",
+        "batch 38 row 7"
+      ]
+    },
+    {
+      "pair_id": "DUP-188",
+      "targets": [
+        "batch 22 row 11"
+      ]
+    },
+    {
+      "pair_id": "DUP-189",
+      "targets": [
+        "batch 39 row 24"
+      ]
+    },
+    {
+      "pair_id": "DUP-190",
+      "targets": [
+        "batch 18 row 32"
+      ]
+    },
+    {
+      "pair_id": "DUP-191",
+      "targets": [
+        "batch 21 row 11"
+      ]
+    },
+    {
+      "pair_id": "DUP-192",
+      "targets": [
+        "batch 37 row 35"
+      ]
+    },
+    {
+      "pair_id": "DUP-193",
+      "targets": [
+        "batch 16 row 33"
+      ]
+    },
+    {
+      "pair_id": "DUP-194",
+      "targets": [
+        "batch 36 row 27"
+      ]
+    },
+    {
+      "pair_id": "DUP-195",
+      "targets": [
+        "batch 39 row 7"
+      ]
+    },
+    {
+      "pair_id": "DUP-196",
+      "targets": [
+        "batch 16 row 9"
+      ]
+    },
+    {
+      "pair_id": "DUP-197",
+      "targets": [
+        "batch 35 row 9"
+      ]
+    },
+    {
+      "pair_id": "DUP-198",
+      "targets": [
+        "batch 18 row 26"
+      ]
+    },
+    {
+      "pair_id": "DUP-199",
+      "targets": [
+        "batch 35 row 10"
+      ]
+    },
+    {
+      "pair_id": "DUP-200",
+      "targets": [
+        "batch 20 row 6"
+      ]
+    }
+  ],
+  "unique_targets": [
+    {
+      "location": "batch 25 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 21 row 20",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 31 row 16",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 40 row 24",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 34 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 28 row 27",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 37 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 17 row 10",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 23 row 38",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 12 row 27",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 18 row 32",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 27",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 18 row 36",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 38 row 14",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 37 row 13",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 14 row 35",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 22 row 35",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 17 row 27",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 29 row 13",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 37 row 25",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 33 row 14",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 33 row 35",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 28 row 25",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 34 row 26",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 30 row 15",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 31 row 32",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 32 row 36",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 36 row 35",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 33 row 32",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 17 row 20",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 20 row 33",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 23",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 29 row 33",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 22 row 33",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 38 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 26 row 33",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 16 row 6",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 13 row 16",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 34 row 3",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 25 row 27",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 35 row 13",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 30 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 34 row 38",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 21 row 35",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 16 row 20",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 35 row 41",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 18 row 35",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 30 row 16",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 31 row 30",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 37 row 14",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 15 row 28",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 34 row 18",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 34",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 26 row 37",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 38 row 13",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 34 row 34",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 38 row 31",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 35 row 30",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 30 row 7",
+      "status": "already_held"
+    },
+    {
+      "location": "batch 21 row 11",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 12",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 38 row 36",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 40 row 15",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 35 row 11",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 6 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 37 row 15",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 11 row 40",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 12 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 40 row 16",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 26 row 41",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 37 row 8",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 21",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 30 row 28",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 32 row 2",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 23 row 24",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 9",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 31 row 25",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 16 row 7",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 38 row 7",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 22 row 11",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 24",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 37 row 35",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 16 row 33",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 36 row 27",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 39 row 7",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 16 row 9",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 35 row 9",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 18 row 26",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 35 row 10",
+      "status": "still_retained"
+    },
+    {
+      "location": "batch 20 row 6",
+      "status": "still_retained"
+    }
+  ],
+  "limitations": [
+    "Source-row content equality and provenance remain to be verified for this 96-ID queue.",
+    "Retained-anchor locations for all 96 pairs have not yet been fully crosswalked.",
+    "Do not move the 68 retained locations into held staging until provenance and qualified semantic review are complete.",
+    "No source or staging files were changed."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "supabase_imports": 0,
+    "publications": 0,
+    "production_changes": 0,
+    "release_authorized": false
+  },
+  "status": "96_PAIR_IDS_CROSSWALKED_TO_90_UNIQUE_TARGET_LOCATIONS_68_NEW_TARGETS_REMAIN_IN_RETAINED"
+}

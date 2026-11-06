@@ -1,0 +1,655 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "scope": {
+    "candidate_total": 1304,
+    "candidate_ranks_with_full_question_content_checked": [
+      287,
+      288,
+      289,
+      290,
+      292,
+      294,
+      295,
+      296,
+      297,
+      298,
+      299,
+      300,
+      301,
+      302,
+      303,
+      305,
+      306,
+      307,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      320,
+      321,
+      322,
+      323,
+      324,
+      325,
+      326,
+      327,
+      328,
+      329,
+      330,
+      331,
+      332,
+      333,
+      334,
+      335,
+      336,
+      337,
+      338,
+      339,
+      460,
+      462,
+      1037,
+      1038,
+      1039,
+      1040,
+      1041,
+      1042,
+      1043,
+      1044,
+      1045,
+      1046,
+      1047,
+      1048
+    ],
+    "newly_explicitly_reviewed_rank_ids": 62,
+    "rank_source": "global-duplicate-review-cross-window-candidates-2026-11-01.json, 1-indexed candidate order"
+  },
+  "methodology": "Compared the complete original source question stems, options, correct answers and explanations at both source locations. Similarity score was used only to select candidates, not as proof of duplication. Each pair received a content-based disposition recommendation.",
+  "findings": [
+    {
+      "rank": 287,
+      "similarity_score": 0.648,
+      "source_a": "batch 16 row 10",
+      "source_b": "batch 29 row 10",
+      "disposition": "preserve_related_numeric_variant",
+      "rationale": "Both test sharing a sum in a ratio, but use different totals and ratios; these are distinct numerical practice instances.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 288,
+      "similarity_score": 0.647,
+      "source_a": "batch 6 row 30",
+      "source_b": "batch 14 row 29",
+      "disposition": "same_fact_duplicate",
+      "rationale": "Both define an exchange rate as the price/value of one currency expressed in another currency.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 289,
+      "similarity_score": 0.647,
+      "source_a": "batch 11 row 21",
+      "source_b": "batch 27 row 20",
+      "disposition": "preserve_distinct",
+      "rationale": "One tests iodine detection of starch; the other tests bromine-water decolourisation by an alkene. Different chemical tests and analytes.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 290,
+      "similarity_score": 0.647,
+      "source_a": "batch 13 row 36",
+      "source_b": "batch 21 row 36",
+      "disposition": "preserve_distinct",
+      "rationale": "Public policy describes government action on public issues; an embassy is a diplomatic mission. Different Government concepts.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 292,
+      "similarity_score": 0.645,
+      "source_a": "batch 9 row 7",
+      "source_b": "batch 20 row 7",
+      "disposition": "preserve_distinct",
+      "rationale": "One solves an exponential equation; the other evaluates a fractional index. Different mathematical operations.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 294,
+      "similarity_score": 0.645,
+      "source_a": "batch 20 row 37",
+      "source_b": "batch 27 row 39",
+      "disposition": "preserve_distinct",
+      "rationale": "A ballad is a narrative poetic form; sarcasm is a rhetorical mode. Different Literature concepts.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 295,
+      "similarity_score": 0.644,
+      "source_a": "batch 7 row 7",
+      "source_b": "batch 18 row 11",
+      "disposition": "preserve_distinct",
+      "rationale": "Tangent and sine are different trigonometric ratios with different side relationships.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 296,
+      "similarity_score": 0.644,
+      "source_a": "batch 9 row 41",
+      "source_b": "batch 15 row 41",
+      "disposition": "preserve_distinct",
+      "rationale": "Catharsis is audience emotional release; anagnorisis is a character's recognition/discovery. Distinct tragic concepts.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 297,
+      "similarity_score": 0.644,
+      "source_a": "batch 19 row 37",
+      "source_b": "batch 21 row 40",
+      "disposition": "preserve_distinct",
+      "rationale": "Oxymoron combines contradictory terms; antithesis balances contrasting ideas. Distinct figures of speech.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 298,
+      "similarity_score": 0.643,
+      "source_a": "batch 1 row 23",
+      "source_b": "batch 14 row 26",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both apply Ohm's law, but one solves for voltage and the other for resistance. Different unknowns and reasoning steps.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 299,
+      "similarity_score": 0.643,
+      "source_a": "batch 9 row 23",
+      "source_b": "batch 14 row 25",
+      "disposition": "preserve_related_numeric_variant",
+      "rationale": "Both use Q = It to calculate charge, but with different currents, durations and results.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 300,
+      "similarity_score": 0.642,
+      "source_a": "batch 12 row 35",
+      "source_b": "batch 21 row 36",
+      "disposition": "preserve_distinct",
+      "rationale": "An electoral constituency is a voting/representation area; an embassy is a diplomatic mission.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 301,
+      "similarity_score": 0.641,
+      "source_a": "batch 4 row 29",
+      "source_b": "batch 37 row 27",
+      "disposition": "preserve_distinct",
+      "rationale": "Higher production costs can reduce supply (a supply shift); a higher market price raises quantity supplied (movement along supply). These are distinct economic mechanisms.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 302,
+      "similarity_score": 0.641,
+      "source_a": "batch 29 row 32",
+      "source_b": "batch 31 row 33",
+      "disposition": "preserve_distinct",
+      "rationale": "Written and unwritten constitutions are contrasting constitutional forms; the questions test complementary definitions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 303,
+      "similarity_score": 0.64,
+      "source_a": "batch 1 row 23",
+      "source_b": "batch 39 row 22",
+      "disposition": "near_duplicate_same_template",
+      "rationale": "Both ask for voltage using V = IR and both yield 12 V, with different resistance/current pairs. Keep one held pending qualified Physics reviewer; do not auto-release either.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 305,
+      "similarity_score": 0.64,
+      "source_a": "batch 27 row 11",
+      "source_b": "batch 36 row 11",
+      "disposition": "preserve_distinct",
+      "rationale": "Direct and inverse variation are contrasting relationships with different mathematical rules.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 306,
+      "similarity_score": 0.639,
+      "source_a": "batch 10 row 3",
+      "source_b": "batch 38 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Alleviate/relieve synonym and hostile/friendly antonym test different vocabulary items and directions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 307,
+      "similarity_score": 0.638,
+      "source_a": "batch 1 row 4",
+      "source_b": "batch 38 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Concise/brief synonym and hostile/friendly antonym test different vocabulary items and directions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 309,
+      "similarity_score": 0.638,
+      "source_a": "batch 26 row 26",
+      "source_b": "batch 39 row 25",
+      "disposition": "preserve_related_numeric_variant",
+      "rationale": "Both calculate momentum p = mv but use different masses, velocities and results.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 310,
+      "similarity_score": 0.637,
+      "source_a": "batch 18 row 20",
+      "source_b": "batch 26 row 19",
+      "disposition": "preserve_related_numeric_variant",
+      "rationale": "Both convert moles to mass using molar mass, but use different compounds, quantities and molar masses.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 311,
+      "similarity_score": 0.637,
+      "source_a": "batch 23 row 15",
+      "source_b": "batch 34 row 13",
+      "disposition": "preserve_distinct",
+      "rationale": "Commensalism benefits one organism without affecting the other; parasitism benefits one while harming the host. Complementary ecological relationships.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 312,
+      "similarity_score": 0.637,
+      "source_a": "batch 28 row 7",
+      "source_b": "batch 38 row 9",
+      "disposition": "preserve_distinct",
+      "rationale": "One calculates trapezium area; the other calculates right-triangle area. Different shapes and formula applications.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 313,
+      "similarity_score": 0.636,
+      "source_a": "batch 18 row 7",
+      "source_b": "batch 32 row 7",
+      "disposition": "preserve_distinct",
+      "rationale": "Fraction subtraction and evaluating a linear function are different mathematical skills.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 314,
+      "similarity_score": 0.636,
+      "source_a": "batch 22 row 15",
+      "source_b": "batch 33 row 12",
+      "disposition": "preserve_distinct",
+      "rationale": "The pulmonary artery carries deoxygenated blood to the lungs; the aorta carries oxygenated blood to the body. Complementary vessels.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 315,
+      "similarity_score": 0.636,
+      "source_a": "batch 27 row 8",
+      "source_b": "batch 39 row 10",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both assess cosine, but one requires numerical calculation and the other tests the definition. Related but different cognitive tasks.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 316,
+      "similarity_score": 0.635,
+      "source_a": "batch 9 row 7",
+      "source_b": "batch 18 row 7",
+      "disposition": "preserve_distinct",
+      "rationale": "An exponential equation and subtraction of fractions are different mathematical skills.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 317,
+      "similarity_score": 0.634,
+      "source_a": "batch 9 row 41",
+      "source_b": "batch 23 row 37",
+      "disposition": "preserve_distinct",
+      "rationale": "Catharsis and hubris are different tragic concepts: audience emotional release versus excessive pride.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 318,
+      "similarity_score": 0.633,
+      "source_a": "batch 6 row 22",
+      "source_b": "batch 28 row 24",
+      "disposition": "preserve_distinct",
+      "rationale": "Area under a velocity-time graph gives displacement; area under a force-time graph gives impulse. Different physical quantities.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 320,
+      "similarity_score": 0.633,
+      "source_a": "batch 25 row 38",
+      "source_b": "batch 39 row 38",
+      "disposition": "preserve_distinct",
+      "rationale": "A sestet has six lines; an octave has eight. Different stanza forms.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 321,
+      "similarity_score": 0.632,
+      "source_a": "batch 5 row 6",
+      "source_b": "batch 39 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Expand/contract antonym and obsolete/outdated synonym test different vocabulary items and directions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 322,
+      "similarity_score": 0.632,
+      "source_a": "batch 7 row 5",
+      "source_b": "batch 33 row 6",
+      "disposition": "preserve_distinct",
+      "rationale": "One tests an initial consonant sound (/dʒ/); the other tests a final consonant sound (/f/). Different phonological positions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 323,
+      "similarity_score": 0.631,
+      "source_a": "batch 12 row 9",
+      "source_b": "batch 21 row 10",
+      "disposition": "preserve_distinct",
+      "rationale": "Simple interest and compound interest use different calculations and assumptions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 324,
+      "similarity_score": 0.63,
+      "source_a": "batch 20 row 22",
+      "source_b": "batch 39 row 25",
+      "disposition": "preserve_related_numeric_variant",
+      "rationale": "Both calculate momentum but use different mass/velocity pairs and results.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 325,
+      "similarity_score": 0.629,
+      "source_a": "batch 5 row 21",
+      "source_b": "batch 36 row 18",
+      "disposition": "preserve_distinct",
+      "rationale": "Alcohols contain hydroxyl (−OH); carboxylic acids contain carboxyl (−COOH). Different functional groups.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 326,
+      "similarity_score": 0.629,
+      "source_a": "batch 19 row 39",
+      "source_b": "batch 29 row 39",
+      "disposition": "preserve_distinct",
+      "rationale": "A stock character is a conventional type; a round character is complex and multidimensional. Different characterisation terms.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 327,
+      "similarity_score": 0.629,
+      "source_a": "batch 19 row 2",
+      "source_b": "batch 32 row 2",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both test reported-speech backshift, but use different original tenses, pronouns and time expressions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 328,
+      "similarity_score": 0.628,
+      "source_a": "batch 7 row 10",
+      "source_b": "batch 36 row 8",
+      "disposition": "preserve_related_numeric_variant",
+      "rationale": "Both calculate cylinder volume with radius 3 cm but use different heights and results.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 329,
+      "similarity_score": 0.627,
+      "source_a": "batch 7 row 19",
+      "source_b": "batch 32 row 20",
+      "disposition": "preserve_distinct",
+      "rationale": "One asks for the general formula of acyclic alkenes; the other identifies the molecular formula of butane, an alkane.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 330,
+      "similarity_score": 0.626,
+      "source_a": "batch 2 row 4",
+      "source_b": "batch 21 row 4",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both require the objective pronoun 'me', but one follows a coordinated object and the other follows a preposition. Distinct syntax contexts.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 331,
+      "similarity_score": 0.626,
+      "source_a": "batch 10 row 11",
+      "source_b": "batch 29 row 9",
+      "disposition": "preserve_distinct",
+      "rationale": "Two-heads probability and probability of a prime result on a die use different sample spaces and events.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 332,
+      "similarity_score": 0.626,
+      "source_a": "batch 12 row 10",
+      "source_b": "batch 23 row 8",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both use the equation of a straight line, but one finds the y-intercept and the other selects the complete line equation.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 333,
+      "similarity_score": 0.626,
+      "source_a": "batch 15 row 13",
+      "source_b": "batch 27 row 13",
+      "disposition": "preserve_distinct",
+      "rationale": "One identifies the chloroplast as the photosynthesis organelle; the other identifies thylakoid membranes as the light-dependent reaction site. Different levels of biological detail.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 334,
+      "similarity_score": 0.625,
+      "source_a": "batch 5 row 6",
+      "source_b": "batch 34 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Ephemeral/short-lived synonym and expand/contract antonym test different vocabulary items.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 335,
+      "similarity_score": 0.625,
+      "source_a": "batch 9 row 7",
+      "source_b": "batch 37 row 11",
+      "disposition": "preserve_distinct",
+      "rationale": "Composite-function evaluation and solving an exponential equation are different mathematical skills.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 336,
+      "similarity_score": 0.624,
+      "source_a": "batch 4 row 11",
+      "source_b": "batch 13 row 9",
+      "disposition": "preserve_distinct",
+      "rationale": "Circle circumference and circle area are different measurements and formulas.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 337,
+      "similarity_score": 0.624,
+      "source_a": "batch 2 row 3",
+      "source_b": "batch 36 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Scarce/abundant antonym and candid/frank synonym test different vocabulary items and directions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 338,
+      "similarity_score": 0.624,
+      "source_a": "batch 2 row 3",
+      "source_b": "batch 37 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Scarce/abundant antonym and abstain/refrain synonym test different vocabulary items and directions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 339,
+      "similarity_score": 0.624,
+      "source_a": "batch 5 row 6",
+      "source_b": "batch 37 row 3",
+      "disposition": "preserve_distinct",
+      "rationale": "Expand/contract antonym and abstain/refrain synonym test different vocabulary items and directions.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 460,
+      "similarity_score": 0.579,
+      "source_a": "batch 29 row 37",
+      "source_b": "batch 38 row 38",
+      "disposition": "preserve_distinct",
+      "rationale": "A tercet has three lines; a couplet has two. Different poetic forms.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 462,
+      "similarity_score": 0.577,
+      "source_a": "batch 11 row 20",
+      "source_b": "batch 35 row 18",
+      "disposition": "preserve_distinct",
+      "rationale": "The strength of an acid and identification of ethene as an alkene are unrelated Chemistry objectives.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1037,
+      "similarity_score": 0.456,
+      "source_a": "batch 10 row 27",
+      "source_b": "batch 17 row 27",
+      "disposition": "same_fact_duplicate",
+      "rationale": "Both state the law of supply: a higher market price generally increases quantity supplied, other things equal.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1038,
+      "similarity_score": 0.456,
+      "source_a": "batch 3 row 8",
+      "source_b": "batch 35 row 11",
+      "disposition": "preserve_distinct",
+      "rationale": "Solving simultaneous equations and finding the union of two sets are unrelated mathematical skills.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1039,
+      "similarity_score": 0.456,
+      "source_a": "batch 12 row 17",
+      "source_b": "batch 27 row 17",
+      "disposition": "preserve_distinct",
+      "rationale": "Charles' law and the ideal gas equation are related gas-law topics but test different relationships and recall.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1040,
+      "similarity_score": 0.456,
+      "source_a": "batch 15 row 22",
+      "source_b": "batch 39 row 23",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both address wave properties, but one asks node spacing in a stationary wave and the other defines wavelength.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1041,
+      "similarity_score": 0.456,
+      "source_a": "batch 18 row 5",
+      "source_b": "batch 31 row 4",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both identify a critical tone from different negative contexts; the passages/examples differ, so these are separate comprehension applications.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1042,
+      "similarity_score": 0.456,
+      "source_a": "batch 19 row 8",
+      "source_b": "batch 38 row 8",
+      "disposition": "same_fact_duplicate",
+      "rationale": "Both ask for the sale price of an ₦8,000 shirt after a 15% discount, with identical answer and calculation.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1043,
+      "similarity_score": 0.456,
+      "source_a": "batch 30 row 25",
+      "source_b": "batch 35 row 24",
+      "disposition": "preserve_related_skill_variant",
+      "rationale": "Both apply Q = It, but one derives current from charge/time and the other derives charge from current/time.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1044,
+      "similarity_score": 0.455,
+      "source_a": "batch 6 row 7",
+      "source_b": "batch 14 row 11",
+      "disposition": "preserve_distinct",
+      "rationale": "Both solve linear inequalities but have different expressions and opposite inequality directions/results.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1045,
+      "similarity_score": 0.455,
+      "source_a": "batch 6 row 10",
+      "source_b": "batch 20 row 11",
+      "disposition": "preserve_distinct",
+      "rationale": "Median and range are different statistical measures and require different operations.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1046,
+      "similarity_score": 0.455,
+      "source_a": "batch 6 row 39",
+      "source_b": "batch 19 row 39",
+      "disposition": "preserve_distinct",
+      "rationale": "A foil character highlights another character by contrast; a stock character is a conventional recognisable type.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1047,
+      "similarity_score": 0.455,
+      "source_a": "batch 9 row 11",
+      "source_b": "batch 13 row 9",
+      "disposition": "preserve_distinct",
+      "rationale": "Total surface area of a cube and area of a circle are different geometry topics and formulas.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    },
+    {
+      "rank": 1048,
+      "similarity_score": 0.455,
+      "source_a": "batch 1 row 33",
+      "source_b": "batch 26 row 32",
+      "disposition": "preserve_distinct",
+      "rationale": "The judiciary interprets laws; EFCC investigates/prosecutes economic and financial crimes. Different Government/public-institution objectives.",
+      "review_status": "assistant_full_content_pairwise_review_complete_qualified_subject_review_required"
+    }
+  ],
+  "summary": {
+    "total": 62,
+    "same_fact_duplicate_recommendations": 3,
+    "near_duplicate_recommendations": 1,
+    "related_skill_variants_preserved": 8,
+    "nondduplicate_distinct_or_complementary_preserved": 44
+  },
+  "limitations": [
+    "All dispositions are assistant pairwise review recommendations, not independent qualified subject or syllabus approval.",
+    "The three same-fact duplicate recommendations and one near-duplicate remain held; no source or staging CSV was changed.",
+    "Some ranks may have been included in the earlier 286 targeted-review baseline. This part adds explicit rank-level decisions but must not be blindly added to the cumulative counter until baseline rank IDs are crosswalked."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "supabase_imports": 0,
+    "publications": 0,
+    "production_changes": 0,
+    "release_authorized": false
+  },
+  "status": "62_RANKS_NOW_HAVE_EXPLICIT_PAIRWISE_DISPOSITIONS_BASELINE_COUNTER_CROSSWALK_PENDING"
+}

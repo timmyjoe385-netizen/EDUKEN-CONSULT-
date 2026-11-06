@@ -1,0 +1,24 @@
+{
+ "audit_date":"2026-11-06","branch":"feat/cbt-subject-combination-reconciled",
+ "purpose":"Fifteen lower-tail candidate pairs reviewed against full question records.",
+ "scope":{"candidate_ranks_with_full_question_content_checked":[1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063],"previous_total_manually_reviewed":506,"now_manually_reviewed":521,"total_cross_window_candidates":1304,"remaining_not_manually_reviewed":783},
+ "preserved":[
+ {"rank":1049,"decision":"preserve_as_distinct","reason":"The complete records test distinct subject knowledge and learning objectives; no same-answer semantic duplication."},
+ {"rank":1050,"decision":"preserve_as_distinct","reason":"The complete records test distinct subject knowledge and learning objectives; no same-answer semantic duplication."},
+ {"rank":1051,"decision":"preserve_as_distinct","reason":"The complete records test distinct subject knowledge and learning objectives; no same-answer semantic duplication."},
+ {"rank":1052,"decision":"preserve_as_distinct","reason":"The complete records test distinct subject knowledge and learning objectives; no same-answer semantic duplication."},
+ {"rank":1053,"subject":"Mathematics","a":"batch 2 row 7","b":"batch 33 row 11","decision":"preserve_as_distinct","reason":"Set intersection and matrix trace are unrelated mathematical operations."},
+ {"rank":1054,"subject":"Literature in English","a":"batch 3 row 40","b":"batch 35 row 38","decision":"preserve_as_distinct","reason":"Hyperbole is deliberate exaggeration; metaphor is direct figurative comparison."},
+ {"rank":1055,"subject":"Use of English","a":"batch 6 row 5","b":"batch 38 row 4","decision":"preserve_as_distinct","reason":"Irregular plural formation and active/passive transformation are different grammar skills."},
+ {"rank":1056,"subject":"Mathematics","a":"batch 17 row 9","b":"batch 28 row 9","decision":"preserve_as_distinct","reason":"Mode and median are separate measures of central tendency and require different operations."},
+ {"rank":1057,"subject":"Mathematics","a":"batch 14 row 10","b":"batch 38 row 11","decision":"preserve_as_distinct","reason":"A fair coin probability and a selection probability from a mixed bag are separate probability applications."},
+ {"rank":1058,"subject":"Government","a":"batch 21 row 33","b":"batch 31 row 34","decision":"preserve_as_distinct","reason":"A referendum is direct voting on a public issue; a citizens' initiative is a process for proposing legislation or policy."},
+ {"rank":1059,"subject":"Government","a":"batch 21 row 35","b":"batch 38 row 36","decision":"preserve_as_distinct","reason":"Constitutional amendment and the allocation of powers in a federal constitution are distinct concepts."},
+ {"rank":1060,"subject":"Economics","a":"batch 22 row 31","b":"batch 31 row 30","decision":"preserve_as_distinct","reason":"An import tariff is a tax on imports; an import quota is a quantitative restriction."},
+ {"rank":1061,"subject":"Chemistry","a":"batch 25 row 21","b":"batch 33 row 17","decision":"preserve_as_distinct","reason":"Catalysts lower activation energy; powdering a solid increases exposed surface area. Both affect rate through different mechanisms."},
+ {"rank":1062,"subject":"Use of English","a":"batch 8 row 4","b":"batch 13 row 4","decision":"preserve_as_distinct","reason":"Simple present subject-verb agreement for a timetable and irregular adjective comparison are distinct language objectives."},
+ {"rank":1063,"subject":"Mathematics","a":"batch 7 row 10","b":"batch 28 row 11","decision":"preserve_as_distinct","reason":"Cylinder volume and curved surface area are different quantities with different formulae."}
+ ],
+ "confirmed_duplicates":[],"deferred":[],
+ "controls":{"new_confirmed_duplicate_pair_relationships":0,"new_unique_replacement_targets":0,"preserved_as_distinct":15,"source_csv_modified":0,"staging_csv_modified":0,"replacement_drafts_created":0,"production_imports":0,"production_publications":0}
+}

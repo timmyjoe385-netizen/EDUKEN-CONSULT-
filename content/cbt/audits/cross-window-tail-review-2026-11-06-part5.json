@@ -1,0 +1,139 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record four more full-content cross-window duplicate checks, including two additions to existing duplicate clusters.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      549,
+      551,
+      555,
+      565
+    ],
+    "previous_total_manually_reviewed": 325,
+    "now_manually_reviewed": 329,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 975
+  },
+  "findings": [
+    {
+      "id": "DUP-128",
+      "rank": 549,
+      "score": 0.551,
+      "subject": "Government",
+      "a": "batch 8 row 33",
+      "b": "batch 26 row 33",
+      "concept": "Proportional representation seeks to make seat shares broadly reflect vote shares",
+      "question_a": "Proportional representation aims to allocate legislative seats broadly in proportion to the:",
+      "options_a": [
+        "Votes received by parties",
+        "Number of judges in each region",
+        "Age of each candidate",
+        "Size of campaign posters"
+      ],
+      "answer_a": "A",
+      "question_b": "The main aim of proportional representation is to",
+      "options_b": [
+        "award all seats to the largest party.",
+        "make parties' shares of seats broadly reflect their shares of votes.",
+        "prevent smaller parties from winning seats.",
+        "replace voting with hereditary succession."
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "PROPORTIONAL-REPRESENTATION-01",
+      "retain_candidate": "batch 8 row 33",
+      "replace_candidate": "batch 26 row 33",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask for the central aim of proportional representation and use the same vote-share-to-seat-share principle. Batch 8 row 33 is already the retained candidate in DUP-123; batch 26 row 33 is an additional held candidate."
+    },
+    {
+      "id": "DUP-129",
+      "rank": 555,
+      "score": 0.549,
+      "subject": "Use of English",
+      "a": "batch 2 row 5",
+      "b": "batch 16 row 6",
+      "concept": "Singular possessive apostrophe is written apostrophe + s",
+      "question_a": "Which sentence correctly shows that one girl owns the bag?",
+      "options_a": [
+        "The girls bag is new.",
+        "The girl's bag is new.",
+        "The girls' bag is new.",
+        "The girls bag's is new."
+      ],
+      "answer_a": "B",
+      "question_b": "Which sentence shows possession by one girl?",
+      "options_b": [
+        "The girls bag is missing.",
+        "The girl's bag is missing.",
+        "The girls' bag is missing.",
+        "The girl bag's is missing."
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 2 row 5",
+      "replace_candidate": "batch 16 row 6",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess the same singular possessive apostrophe rule, with the same grammatical construction and correct form."
+    },
+    {
+      "id": "DUP-130",
+      "rank": 565,
+      "score": 0.545,
+      "subject": "Biology",
+      "a": "batch 4 row 15",
+      "b": "batch 13 row 16",
+      "concept": "Bacteria and fungi decompose dead organic matter and recycle nutrients",
+      "question_a": "Which group is especially important in breaking down dead organic matter?",
+      "options_a": [
+        "Decomposers such as bacteria and fungi",
+        "Only herbivores",
+        "Only green plants",
+        "Only top predators"
+      ],
+      "answer_a": "A",
+      "question_b": "Which organisms play a major role in breaking down dead organic matter in an ecosystem?",
+      "options_b": [
+        "Green plants",
+        "Decomposers such as bacteria and fungi",
+        "Primary consumers only",
+        "Large predators"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 4 row 15",
+      "replace_candidate": "batch 13 row 16",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask which organisms break down dead organic matter and give bacteria and fungi as the same correct answer."
+    },
+    {
+      "id": "DUP-131",
+      "rank": 551,
+      "score": 0.551,
+      "subject": "Economics",
+      "a": "batch 12 row 27",
+      "b": "batch 37 row 27",
+      "concept": "Law of supply: higher price generally increases quantity supplied",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "LAW-OF-SUPPLY-01",
+      "retain_candidate": "batch 37 row 27",
+      "existing_held_candidates": [
+        "batch 10 row 27",
+        "batch 12 row 27"
+      ],
+      "new_unique_targets_added": 0,
+      "reason": "Both test the same direct relationship between market price and quantity supplied. Existing DUP-76 retains batch 37 row 27 and holds batch 10 row 27; DUP-101 adds batch 12 row 27 as another held item. This candidate confirms the relationship within the same cluster."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 4,
+    "new_unique_replacement_targets": 3,
+    "provenance_checks_pending": 3,
+    "staging_joins_pending": 3,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "DUP-128 extends the proportional-representation cluster; DUP-131 extends the law-of-supply cluster. Neither adds a new unique target beyond the newly recorded held counterpart for DUP-128; DUP-131 adds no new target."
+  }
+}

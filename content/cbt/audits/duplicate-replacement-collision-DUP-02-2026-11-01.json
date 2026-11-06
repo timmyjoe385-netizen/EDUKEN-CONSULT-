@@ -1,0 +1,15 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "target_id": "DUP-02",
+  "draft_question": "When ethanol reacts with ethanoic acid in the presence of concentrated sulphuric acid, the organic product formed is:",
+  "existing_question": {
+    "location": "batch 38, CSV row 20",
+    "question": "The reaction between an alcohol and a carboxylic acid can produce an ester and",
+    "answer": "water"
+  },
+  "assessment": "The replacement asks for the product of ethanol + ethanoic acid esterification; the existing item already tests the defining products of alcohol + carboxylic acid esterification (ester + water). Same reaction family and learning objective.",
+  "decision": "BLOCKED — do not insert.",
+  "next_action": "Draft a different Chemistry syllabus learning objective and rerun full-bank contextual screening.",
+  "scope": "No source CSV, production data or deployment changed."
+}

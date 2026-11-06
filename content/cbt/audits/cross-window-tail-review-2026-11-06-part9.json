@@ -1,0 +1,192 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five further full-content lower-tail duplicate decisions, including two additions to existing clusters.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      738,
+      743,
+      748,
+      764,
+      772
+    ],
+    "previous_total_manually_reviewed": 341,
+    "now_manually_reviewed": 346,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 958
+  },
+  "findings": [
+    {
+      "id": "DUP-142",
+      "rank": 738,
+      "score": 0.5,
+      "subject": "Government",
+      "a": "batch 2 row 33",
+      "b": "batch 26 row 34",
+      "concept": "Federalism divides constitutional powers between central and regional governments",
+      "question_a": "Federalism involves constitutional division of powers between:",
+      "options_a": [
+        "A ruler and a private company",
+        "National and subnational levels of government",
+        "Only judges and police",
+        "Two political parties only"
+      ],
+      "answer_a": "B",
+      "question_b": "In a federal system, constitutional powers are",
+      "options_b": [
+        "held exclusively by local governments.",
+        "divided between central and regional governments.",
+        "given only to the judiciary.",
+        "changed at the discretion of one minister."
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "FEDERALISM-01",
+      "retain_candidate": "batch 32 row 34",
+      "existing_held_candidates": [
+        "batch 26 row 34",
+        "batch 33 row 35",
+        "batch 2 row 33",
+        "batch 18 row 32"
+      ],
+      "new_unique_targets_added": 0,
+      "reason": "Both are already accounted for in the five-row federalism cluster: batch 32 row 34 is retained; batch 26 row 34, batch 33 row 35, batch 2 row 33 and batch 18 row 32 are held. This adds a relationship but no new held row."
+    },
+    {
+      "id": "DUP-143",
+      "rank": 743,
+      "score": 0.5,
+      "subject": "Biology",
+      "a": "batch 14 row 12",
+      "b": "batch 30 row 16",
+      "concept": "Xylem transports water and mineral salts from roots towards leaves",
+      "question_a": "The main function of xylem tissue in a flowering plant is to transport…",
+      "options_a": [
+        "Manufactured food from leaves",
+        "Water and mineral salts from roots",
+        "Hormones to the flowers only",
+        "Oxygen into the root hairs"
+      ],
+      "answer_a": "B",
+      "question_b": "In flowering plants, water is transported from the roots to the leaves mainly through the:",
+      "options_b": [
+        "phloem",
+        "epidermis",
+        "xylem",
+        "cortex"
+      ],
+      "answer_b": "C",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "XYLEM-01",
+      "retain_candidate": "batch 9 row 13",
+      "existing_held_candidate": "batch 33 row 14",
+      "new_held_candidates": [
+        "batch 14 row 12",
+        "batch 30 row 16"
+      ],
+      "new_unique_targets_added": 2,
+      "reason": "Both ask for the same xylem transport function. Existing DUP-112 retains batch 9 row 13 and holds batch 33 row 14; these two new rows are further duplicates in the same cluster."
+    },
+    {
+      "id": "DUP-144",
+      "rank": 748,
+      "score": 0.5,
+      "subject": "Economics",
+      "a": "batch 15 row 29",
+      "b": "batch 31 row 30",
+      "concept": "An import quota sets a quantitative limit on imports",
+      "question_a": "What does an import quota directly restrict?",
+      "options_a": [
+        "The quantity of a specified good imported",
+        "All domestic production",
+        "The price of every exported good",
+        "The number of local consumers"
+      ],
+      "answer_a": "A",
+      "question_b": "An import quota is a government restriction that sets:",
+      "options_b": [
+        "A limit on the quantity or value of a good that may be imported",
+        "A fixed wage for every exporter",
+        "The exchange rate for all currencies",
+        "The maximum number of goods produced domestically"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 15 row 29",
+      "replace_candidate": "batch 31 row 30",
+      "new_unique_targets_added": 1,
+      "reason": "Both define an import quota as a quantitative restriction on the amount or value of a specified good that may be imported."
+    },
+    {
+      "id": "DUP-145",
+      "rank": 764,
+      "score": 0.496,
+      "subject": "Biology",
+      "a": "batch 9 row 15",
+      "b": "batch 37 row 14",
+      "concept": "Meiosis produces haploid gametes/sex cells",
+      "question_a": "Which type of cell division normally produces haploid gametes in humans?",
+      "options_a": [
+        "Mitosis",
+        "Meiosis",
+        "Binary fission",
+        "Budding"
+      ],
+      "answer_a": "B",
+      "question_b": "Which process produces haploid sex cells in animals?",
+      "options_b": [
+        "Mitosis",
+        "Meiosis",
+        "Binary fission",
+        "Fertilisation"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 9 row 15",
+      "replace_candidate": "batch 37 row 14",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask which cell-division process produces haploid gametes in animals and have the same correct answer and explanation."
+    },
+    {
+      "id": "DUP-146",
+      "rank": 772,
+      "score": 0.495,
+      "subject": "Economics",
+      "a": "batch 9 row 28",
+      "b": "batch 15 row 28",
+      "concept": "Fiscal policy uses taxation and public expenditure to influence economic activity",
+      "question_a": "Fiscal policy refers to the government's use of:",
+      "options_a": [
+        "Taxation and public expenditure to influence economic activity",
+        "Interest rates set directly by commercial banks only",
+        "Private firms' advertising budgets",
+        "Foreign exchange trading by households"
+      ],
+      "answer_a": "A",
+      "question_b": "Which pair of government actions is central to fiscal policy?",
+      "options_b": [
+        "Taxation and public expenditure",
+        "Design of banknotes and coins",
+        "Private firms' product branding",
+        "The opening hours of commercial banks"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 9 row 28",
+      "replace_candidate": "batch 15 row 28",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess the two central instruments of fiscal policy: taxation and public expenditure."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 5,
+    "new_unique_replacement_targets": 5,
+    "provenance_checks_pending": 4,
+    "staging_joins_pending": 5,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "DUP-142 is an additional relationship in the existing federalism cluster and adds no target. DUP-143 adds two new held rows to the existing xylem cluster. The three standalone pairs each add one target."
+  }
+}

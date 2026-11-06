@@ -1,0 +1,95 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five additional lower-scoring cross-window candidate pairs checked against full source question content.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      902,
+      903,
+      904,
+      905,
+      906
+    ],
+    "previous_total_manually_reviewed": 371,
+    "now_manually_reviewed": 376,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 928
+  },
+  "preserved": [
+    {
+      "rank": 902,
+      "score": 0.474,
+      "subject": "Literature in English",
+      "a": "batch 28 row 39",
+      "b": "batch 38 row 41",
+      "question_a": "Characterisation in a literary work refers to the way the writer:",
+      "answer_a": "A",
+      "question_b": "A flat character in a literary work is generally one who:",
+      "answer_b": "A",
+      "decision": "preserve_both_as_distinct_literary_concepts",
+      "reason": "The first tests the general technique of creating and developing characters; the second tests a particular character type, the flat character. The broader technique and specific category are not duplicates."
+    },
+    {
+      "rank": 903,
+      "score": 0.474,
+      "subject": "Chemistry",
+      "a": "batch 30 row 18",
+      "b": "batch 36 row 18",
+      "question_a": "Which property is characteristic of many ionic compounds?",
+      "answer_a": "A",
+      "question_b": "Which functional group is characteristic of ethanoic acid?",
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_chemistry_topics",
+      "reason": "The first tests electrical conductivity of molten ionic compounds; the second identifies the carboxyl functional group in ethanoic acid. Different branches and learning outcomes."
+    },
+    {
+      "rank": 904,
+      "score": 0.473,
+      "subject": "Use of English",
+      "a": "batch 3 row 4",
+      "b": "batch 13 row 4",
+      "question_a": "Choose the correct completion: “If I had known, I ___ you.”",
+      "answer_a": "C",
+      "question_b": "Choose the correct comparative form of good.",
+      "answer_b": "D",
+      "decision": "preserve_both_as_distinct_grammar_topics",
+      "reason": "The first tests the third conditional construction; the second tests the irregular comparative form of the adjective good."
+    },
+    {
+      "rank": 905,
+      "score": 0.473,
+      "subject": "Use of English",
+      "a": "batch 6 row 2",
+      "b": "batch 11 row 5",
+      "question_a": "Choose the sentence in which the modifier is placed correctly.",
+      "answer_a": "B",
+      "question_b": "Choose the sentence that correctly expresses an unreal condition in the present.",
+      "answer_b": "A",
+      "decision": "preserve_both_as_distinct_grammar_topics",
+      "reason": "The first tests correct placement of an introductory participial modifier; the second tests second conditional structure. Both concern sentence grammar but assess different skills."
+    },
+    {
+      "rank": 906,
+      "score": 0.473,
+      "subject": "Government",
+      "a": "batch 1 row 33",
+      "b": "batch 28 row 33",
+      "question_a": "Which arm of government is primarily responsible for interpreting laws?",
+      "answer_a": "C",
+      "question_b": "In a legislature, a party whip is primarily responsible for:",
+      "answer_b": "A",
+      "decision": "preserve_both_as_distinct_government_topics",
+      "reason": "The first tests the judiciary's constitutional function; the second tests party discipline and coordination of legislative attendance and voting."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pairs": 0,
+    "new_unique_replacement_targets": 0,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "All five candidate pairs were preserved as distinct after checking full stems, options, keys and explanations."
+  }
+}

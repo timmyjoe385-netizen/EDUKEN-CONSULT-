@@ -1,0 +1,44 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the final ranked cross-window candidate. Complete source rows, options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1304
+    ],
+    "previous_total_manually_reviewed": 761,
+    "now_manually_reviewed": 762,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 542
+  },
+  "preserved": [],
+  "confirmed_duplicates": [
+    {
+      "rank": 1304,
+      "subject": "Government",
+      "a": "batch 26 row 34",
+      "b": "batch 38 row 36",
+      "decision": "confirmed_semantic_duplicate_connects_existing_cluster",
+      "reason": "Both questions test the defining constitutional feature of federalism: distribution of governmental powers among levels of government. Both rows are already held in the existing FEDERALISM-01 cluster; batch 32 row 34 remains the designated retained anchor. Batch 38 row 36 was already held under DUP-159, and batch 26 row 34 was already held under DUP-47/DUP-142. This adds a pair relationship but no new unique held target.",
+      "retain": "batch 32 row 34",
+      "already_held": [
+        "batch 26 row 34",
+        "batch 38 row 36"
+      ],
+      "new_unique_replacement_targets": 0,
+      "cluster_id": "FEDERALISM-01",
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 0,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

@@ -1,0 +1,171 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 520-534. Both source CSV rows were checked for full stems, options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      520,
+      521,
+      522,
+      523,
+      524,
+      525,
+      526,
+      527,
+      528,
+      529,
+      530,
+      531,
+      532,
+      533,
+      534
+    ],
+    "previous_total_manually_reviewed": 906,
+    "now_manually_reviewed": 921,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 383
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-200",
+      "rank": 527,
+      "subject": "Use of English",
+      "a": "batch 5 row 5",
+      "b": "batch 20 row 6",
+      "concept": "Recognising grammatically parallel structures",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask which sentence maintains parallel structure and use a three-item list of gerund forms as the correct pattern. The second is a near-paraphrase with the same tested grammar rule.",
+      "retain": "batch 5 row 5",
+      "hold": "batch 20 row 6",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 520,
+      "subject": "Literature in English",
+      "a": "batch 28 row 40",
+      "b": "batch 36 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "Mood is the atmosphere or emotional effect created for the reader; diction is a writer's choice and use of words."
+    },
+    {
+      "rank": 521,
+      "subject": "Chemistry",
+      "a": "batch 8 row 21",
+      "b": "batch 18 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "The first concerns bromine formed at the anode in molten lead bromide; the second concerns copper deposited at the cathode in aqueous copper sulfate."
+    },
+    {
+      "rank": 522,
+      "subject": "Use of English",
+      "a": "batch 19 row 2",
+      "b": "batch 36 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Reported-speech backshift and question-tag formation test different grammar constructions."
+    },
+    {
+      "rank": 523,
+      "subject": "Mathematics",
+      "a": "batch 28 row 10",
+      "b": "batch 36 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Inverse variation and direct variation use different relationships and equations."
+    },
+    {
+      "rank": 524,
+      "subject": "Mathematics",
+      "a": "batch 1 row 9",
+      "b": "batch 16 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "A triangle angle ratio and sharing money in a ratio apply ratio reasoning to different quantities and contexts."
+    },
+    {
+      "rank": 525,
+      "subject": "Economics",
+      "a": "batch 1 row 28",
+      "b": "batch 17 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "The law of demand concerns a price change and quantity demanded; higher income for a normal good shifts the demand curve. Different demand determinants."
+    },
+    {
+      "rank": 526,
+      "subject": "Economics",
+      "a": "batch 4 row 31",
+      "b": "batch 14 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "Minimum wage is a legal wage floor; a tariff is a tax on imports. Unrelated policy instruments."
+    },
+    {
+      "rank": 528,
+      "subject": "Chemistry",
+      "a": "batch 6 row 17",
+      "b": "batch 22 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "Calculating moles from mass and molar mass differs from identifying Avogadro's number of molecules in one mole."
+    },
+    {
+      "rank": 529,
+      "subject": "Mathematics",
+      "a": "batch 8 row 11",
+      "b": "batch 22 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "The angle in a semicircle theorem and the centre/circumference angle relationship are distinct circle theorems."
+    },
+    {
+      "rank": 530,
+      "subject": "Literature in English",
+      "a": "batch 9 row 37",
+      "b": "batch 28 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "Metre is the overall rhythmic pattern in verse; a metrical foot is a recurring unit within that pattern."
+    },
+    {
+      "rank": 531,
+      "subject": "Literature in English",
+      "a": "batch 10 row 38",
+      "b": "batch 35 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "An unreliable narrator's account may be biased or inaccurate; an intrusive narrator openly comments on events. Distinct narrative features."
+    },
+    {
+      "rank": 532,
+      "subject": "Literature in English",
+      "a": "batch 11 row 41",
+      "b": "batch 21 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "A pun uses wordplay or double meanings; antithesis places contrasting ideas in balanced phrasing."
+    },
+    {
+      "rank": 533,
+      "subject": "Government",
+      "a": "batch 16 row 32",
+      "b": "batch 21 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "A constitutional convention is an unwritten political practice; an embassy is an official diplomatic mission."
+    },
+    {
+      "rank": 534,
+      "subject": "Chemistry",
+      "a": "batch 24 row 20",
+      "b": "batch 31 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Empirical formula derives the simplest atom ratio; molecular formula uses molar mass to find the actual atom counts. Sequential but distinct calculations."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

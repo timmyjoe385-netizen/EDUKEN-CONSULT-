@@ -1,0 +1,162 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Fifteen additional lower-tail cross-window candidate pairs reviewed; full source records were checked for the food-chain comparison.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1109,
+      1110,
+      1111,
+      1112,
+      1113,
+      1114,
+      1115,
+      1116,
+      1117,
+      1118,
+      1119,
+      1120,
+      1121,
+      1122,
+      1123
+    ],
+    "previous_total_manually_reviewed": 566,
+    "now_manually_reviewed": 581,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 723
+  },
+  "preserved": [
+    {
+      "rank": 1109,
+      "subject": "Use of English",
+      "a": "batch 8 row 2",
+      "b": "batch 22 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Inversion after no sooner is a different construction from selecting a tense for a present-habit/today contrast."
+    },
+    {
+      "rank": 1110,
+      "subject": "Biology",
+      "a": "batch 4 row 13",
+      "b": "batch 33 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "Transpiration is loss of water vapour from aerial plant parts; xylem transports water and mineral salts. Different process and tissue."
+    },
+    {
+      "rank": 1111,
+      "subject": "Economics",
+      "a": "batch 4 row 29",
+      "b": "batch 39 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "An increase in production costs tends to reduce supply; improved production technology tends to increase supply. Different causes and curve shifts."
+    },
+    {
+      "rank": 1112,
+      "subject": "Biology",
+      "a": "batch 11 row 15",
+      "b": "batch 27 row 13",
+      "decision": "preserve_as_distinct",
+      "reason": "Oxygen release is a product of the light-dependent reactions; thylakoid membranes are the site containing chlorophyll and the photosystems. Related but different facts."
+    },
+    {
+      "rank": 1113,
+      "subject": "Mathematics",
+      "a": "batch 18 row 9",
+      "b": "batch 26 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Evaluating a linear function and converting a binary numeral to base ten are unrelated mathematical tasks."
+    },
+    {
+      "rank": 1114,
+      "subject": "Mathematics",
+      "a": "batch 26 row 7",
+      "b": "batch 32 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Binary-to-decimal conversion and evaluating a linear function are different number-system and algebra objectives."
+    },
+    {
+      "rank": 1115,
+      "subject": "Use of English",
+      "a": "batch 30 row 3",
+      "b": "batch 31 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Candour means openness or frankness; coherent means logical and well connected. Different vocabulary items and meanings."
+    },
+    {
+      "rank": 1116,
+      "subject": "Mathematics",
+      "a": "batch 10 row 8",
+      "b": "batch 20 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding the mode of a data set and solving a quadratic equation are different mathematical topics."
+    },
+    {
+      "rank": 1117,
+      "subject": "Chemistry",
+      "a": "batch 4 row 21",
+      "b": "batch 28 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "Open-chain alkanes have the formula CnH2n+2; open-chain monoalkenes with one double bond have CnH2n. Distinct homologous series."
+    },
+    {
+      "rank": 1118,
+      "subject": "Biology",
+      "a": "batch 7 row 13",
+      "b": "batch 30 row 16",
+      "decision": "preserve_as_distinct",
+      "reason": "Phloem transports manufactured food; xylem transports water and mineral salts. Different vascular tissues and functions."
+    },
+    {
+      "rank": 1119,
+      "subject": "Use of English",
+      "a": "batch 7 row 2",
+      "b": "batch 32 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Choosing a pronoun to agree with a collective noun and converting direct speech into reported speech test different grammar skills."
+    },
+    {
+      "rank": 1120,
+      "subject": "Mathematics",
+      "a": "batch 14 row 8",
+      "b": "batch 26 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding the common difference and finding a specified later term of an arithmetic progression are different operations and use different sequences."
+    },
+    {
+      "rank": 1121,
+      "subject": "Economics",
+      "a": "batch 11 row 30",
+      "b": "batch 32 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "A public good is classified by non-rivalry and non-excludability; a direct tax is a tax imposed directly on income or wealth. Different public-finance concepts."
+    },
+    {
+      "rank": 1122,
+      "subject": "Use of English",
+      "a": "batch 15 row 5",
+      "b": "batch 39 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A mixed conditional completion and the fixed prepositional phrase come into effect test different grammar structures."
+    },
+    {
+      "rank": 1123,
+      "subject": "Biology",
+      "a": "batch 17 row 12",
+      "b": "batch 33 row 15",
+      "decision": "preserve_as_distinct",
+      "reason": "The first applies the primary-consumer concept to identify a grasshopper in a grassland food chain; the second defines the trophic role of an organism feeding directly on a producer. Complementary application and definition, not duplicate stems."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

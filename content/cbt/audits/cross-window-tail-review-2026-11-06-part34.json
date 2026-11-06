@@ -1,0 +1,162 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Fifteen additional lower-tail cross-window candidates reviewed; full CSV stems, options and explanations were checked for the potentially close momentum, voice, vocabulary and taxation pairs.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1139,
+      1140,
+      1141,
+      1142,
+      1143,
+      1144,
+      1145,
+      1146,
+      1147,
+      1148,
+      1149,
+      1150,
+      1151,
+      1152,
+      1153
+    ],
+    "previous_total_manually_reviewed": 596,
+    "now_manually_reviewed": 611,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 693
+  },
+  "preserved": [
+    {
+      "rank": 1139,
+      "subject": "Government",
+      "a": "batch 7 row 34",
+      "b": "batch 17 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "Civil-service neutrality requires political impartiality; permanence concerns continuity of the career service across changes of government. Different administrative principles."
+    },
+    {
+      "rank": 1140,
+      "subject": "Physics",
+      "a": "batch 8 row 25",
+      "b": "batch 13 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "The first states the general conservation principle for an isolated system; the second applies it to a collision. Complementary definition and application, not duplicate stems."
+    },
+    {
+      "rank": 1141,
+      "subject": "Economics",
+      "a": "batch 9 row 28",
+      "b": "batch 14 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "Fiscal policy concerns government taxation and spending as instruments of macroeconomic management; public expenditure is government spending itself."
+    },
+    {
+      "rank": 1142,
+      "subject": "Use of English",
+      "a": "batch 2 row 5",
+      "b": "batch 27 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Singular possessive apostrophe use and first-conditional sentence structure are different grammar objectives."
+    },
+    {
+      "rank": 1143,
+      "subject": "Mathematics",
+      "a": "batch 5 row 9",
+      "b": "batch 22 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding a coordinate midpoint and finding the mode of a data set are unrelated mathematical tasks."
+    },
+    {
+      "rank": 1144,
+      "subject": "Use of English",
+      "a": "batch 7 row 2",
+      "b": "batch 29 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Pronoun reference with a collective noun and backshift in reported speech test different grammar rules."
+    },
+    {
+      "rank": 1145,
+      "subject": "Literature in English",
+      "a": "batch 8 row 38",
+      "b": "batch 27 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "A protagonist is a central character in a work; parody is a work or treatment that imitates another style for comic or critical effect."
+    },
+    {
+      "rank": 1146,
+      "subject": "Literature in English",
+      "a": "batch 9 row 38",
+      "b": "batch 29 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "A tragic hero is defined by a central tragic role and downfall; a round character is defined by complexity and development."
+    },
+    {
+      "rank": 1147,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 38 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Subject–verb concord and converting a passive sentence to active voice test different grammar skills."
+    },
+    {
+      "rank": 1148,
+      "subject": "Use of English",
+      "a": "batch 3 row 5",
+      "b": "batch 38 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "The first transforms an active past-simple sentence into passive voice; the second transforms a passive past-simple sentence into active voice. Reverse transformations are complementary practice, not duplicate items."
+    },
+    {
+      "rank": 1149,
+      "subject": "Use of English",
+      "a": "batch 4 row 3",
+      "b": "batch 35 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Credible means believable or trustworthy; comprehensive means complete and covering all relevant details. The witness context is shared, but the vocabulary targets differ."
+    },
+    {
+      "rank": 1150,
+      "subject": "Use of English",
+      "a": "batch 7 row 4",
+      "b": "batch 39 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A first-conditional completion and the fixed prepositional phrase come into effect are different grammatical structures."
+    },
+    {
+      "rank": 1151,
+      "subject": "Economics",
+      "a": "batch 7 row 28",
+      "b": "batch 34 row 28",
+      "decision": "preserve_as_distinct",
+      "reason": "An indirect tax is a broad tax category applied to goods and services; an ad valorem tax specifies a method of calculating tax as a percentage of value. Related but not duplicate concepts."
+    },
+    {
+      "rank": 1152,
+      "subject": "Use of English",
+      "a": "batch 8 row 2",
+      "b": "batch 39 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Inversion after no sooner and the fixed phrase come into effect test different grammar rules."
+    },
+    {
+      "rank": 1153,
+      "subject": "Use of English",
+      "a": "batch 13 row 2",
+      "b": "batch 28 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Identifying a transitive verb with a direct object differs from correct colon punctuation."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

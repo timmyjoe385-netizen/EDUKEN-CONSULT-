@@ -1,0 +1,200 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next unique high-similarity cross-window candidates. Previously reviewed ranks 376 and 389 were skipped. Full stems, options, answer keys and explanations were checked in both source CSVs.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      375,
+      377,
+      378,
+      379,
+      380,
+      381,
+      382,
+      383,
+      384,
+      385,
+      386,
+      387,
+      388
+    ],
+    "previous_total_manually_reviewed": 788,
+    "now_manually_reviewed": 801,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 503
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-180",
+      "rank": 380,
+      "subject": "Economics",
+      "similarity_score": 0.605,
+      "a": "batch 5 row 31",
+      "b": "batch 30 row 28",
+      "question_a": "A subsidy to producers is intended to:",
+      "options_a": [
+        "Raise their costs in every case",
+        "Lower costs or encourage production or consumption",
+        "Function as a criminal penalty",
+        "Eliminate all scarcity"
+      ],
+      "answer_a": "B",
+      "explanation_a": "A subsidy provides financial support that can reduce effective costs or encourage an activity.",
+      "question_b": "A government subsidy to producers is most likely to",
+      "options_b": [
+        "raise their production costs",
+        "reduce their effective production costs",
+        "eliminate consumer demand",
+        "turn every firm into a monopoly"
+      ],
+      "answer_b": "B",
+      "explanation_b": "A producer subsidy lowers the effective cost of production and can encourage firms to supply more output.",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask the intended effect of a producer subsidy and identify reducing effective production costs/encouraging production. The stems and correct answer are functionally equivalent; one merely paraphrases the other.",
+      "retain": "batch 5 row 31",
+      "hold": "batch 30 row 28",
+      "provenance": "pending_row_level_commit_reconciliation",
+      "staging_join": "pending",
+      "new_unique_replacement_targets": 1
+    },
+    {
+      "id": "DUP-181",
+      "rank": 381,
+      "subject": "Use of English",
+      "similarity_score": 0.605,
+      "a": "batch 4 row 5",
+      "b": "batch 32 row 2",
+      "question_a": "Direct speech: Ada said, “I am tired.” Choose the usual reported form.",
+      "options_a": [
+        "Ada said that I am tired.",
+        "Ada said that she was tired.",
+        "Ada says she had tired.",
+        "Ada said that she is tire."
+      ],
+      "answer_a": "B",
+      "explanation_a": "In standard backshifted reported speech, “am” becomes “was” and the pronoun changes to match the speaker.",
+      "question_b": "He said, “I am busy now.” Choose the correct reported form.",
+      "options_b": [
+        "He said that he was busy then.",
+        "He said that I am busy now.",
+        "He says that he had been busy then.",
+        "He said that he is busy tomorrow."
+      ],
+      "answer_b": "A",
+      "explanation_b": "After a past reporting verb, “am” commonly changes to “was” and “now” changes to “then”; the pronoun changes to match the speaker.",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both assess the same direct-to-reported-speech transformation after a past reporting verb: first-person am backshifts to was and the pronoun changes to third person. The second adds now→then, a routine adverb shift, but does not materially change the principal grammar skill.",
+      "retain": "batch 4 row 5",
+      "hold": "batch 32 row 2",
+      "provenance": "pending_row_level_commit_reconciliation",
+      "staging_join": "pending",
+      "new_unique_replacement_targets": 1
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 375,
+      "subject": "Physics",
+      "a": "batch 6 row 23",
+      "b": "batch 34 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Both use p=mv but use different mass/velocity values and require separate numerical calculations; complementary practice."
+    },
+    {
+      "rank": 377,
+      "subject": "Physics",
+      "a": "batch 14 row 26",
+      "b": "batch 39 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "One calculates resistance from V/I; the other calculates potential difference from IR. Inverse applications of Ohm's law."
+    },
+    {
+      "rank": 378,
+      "subject": "Mathematics",
+      "a": "batch 4 row 10",
+      "b": "batch 20 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Both calculate range, but use different data sets and numerical answers. Repeated practice of a core statistical operation is not a semantic duplicate."
+    },
+    {
+      "rank": 379,
+      "subject": "Physics",
+      "a": "batch 2 row 26",
+      "b": "batch 36 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Both apply power=work or energy transferred per time, but use different values and calculations."
+    },
+    {
+      "rank": 382,
+      "subject": "Chemistry",
+      "a": "batch 11 row 18",
+      "b": "batch 29 row 18",
+      "decision": "preserve_as_distinct",
+      "reason": "One asks the standard molar volume at STP; the other applies it to 0.5 mol. Recall versus numerical application."
+    },
+    {
+      "rank": 383,
+      "subject": "Physics",
+      "a": "batch 13 row 22",
+      "b": "batch 21 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "The SI unit of power is watt; the SI unit of resistance is ohm. Different physical quantities."
+    },
+    {
+      "rank": 384,
+      "subject": "Mathematics",
+      "a": "batch 20 row 7",
+      "b": "batch 37 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Fractional indices and composite-function evaluation are unrelated mathematical procedures."
+    },
+    {
+      "rank": 385,
+      "subject": "Physics",
+      "a": "batch 3 row 24",
+      "b": "batch 30 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Specific heat capacity concerns temperature change; specific latent heat concerns a change of state at constant temperature."
+    },
+    {
+      "rank": 386,
+      "subject": "Use of English",
+      "a": "batch 2 row 3",
+      "b": "batch 34 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Antonym of scarce and synonym of ephemeral test different target words and meanings."
+    },
+    {
+      "rank": 387,
+      "subject": "Physics",
+      "a": "batch 12 row 22",
+      "b": "batch 26 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Hydrostatic pressure difference is force per area arising from fluid depth; electrical potential difference is work per unit charge."
+    },
+    {
+      "rank": 388,
+      "subject": "Government",
+      "a": "batch 17 row 36",
+      "b": "batch 28 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Permanence and anonymity are distinct civil-service principles: institutional continuity versus public ministerial responsibility and civil-servant anonymity."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 2,
+    "new_unique_replacement_targets": 2,
+    "preserved_as_distinct": 11,
+    "previously_reviewed_ranks_skipped": [
+      376,
+      389
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

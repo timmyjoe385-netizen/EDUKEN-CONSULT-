@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record source-row existence/content checks and the staging join result for the 6 November cross-window duplicate addendum.",
+  "source_verification": {
+    "new_duplicate_pair_records": 28,
+    "retained_and_held_locations_expected": 56,
+    "source_locations_found": 56,
+    "source_rows_missing": 0,
+    "extension_locations_expected": 8,
+    "extension_source_locations_found": 8,
+    "extension_source_rows_missing": 0,
+    "method": "Fetched the referenced original-batch CSVs from this branch and parsed their headers/data rows. Each referenced location was checked for row existence, subject, topic/subtopic, question stem and correct-option field.",
+    "important_limit": "Existence and broad concept alignment do not by themselves establish an exact semantic duplicate. Some pairs use different figures or question forms within the same skill family; retain/replace decisions still require contextual and qualified subject/syllabus review.",
+    "rechecked_on_branch_head": "2026-11-06",
+    "rechecked_pair_locations": 56,
+    "rechecked_pair_records": 28,
+    "row_location_convention": "The numbered source row is the physical CSV line number, including the header as line 1; all 56 retain/hold references were checked at that line.",
+    "qualification": "All referenced rows exist and match their recorded subject/topic and broad skill family. This does not convert a skill-family resemblance into an independently approved duplicate disposition; the pairs remain subject to contextual and qualified academic review."
+  },
+  "staging_join": {
+    "staging_revision": "content/cbt/staging/2026-11-06/",
+    "baseline_revision": "content/cbt/staging/2026-11-01/",
+    "held_export_files": [
+      "held-duplicates-01-10.csv",
+      "held-duplicates-11-20.csv",
+      "held-duplicates-21-30.csv",
+      "held-duplicates-31-40.csv"
+    ],
+    "retained_export_files": [
+      "retained-batches-01-10.csv",
+      "retained-batches-11-20.csv",
+      "retained-batches-21-30.csv",
+      "retained-batches-31-40.csv"
+    ],
+    "baseline_retained_rows": 1510,
+    "baseline_held_rows": 90,
+    "new_pair_records_joined": 28,
+    "new_pair_records_expected": 28,
+    "new_pair_locations_joined": 28,
+    "new_pair_locations_expected": 28,
+    "extension_locations_joined": 6,
+    "extension_locations_expected": 6,
+    "already_held_extension_locations_excluded": 2,
+    "total_new_held_locations_joined": 34,
+    "retained_anchor_locations_found": 34,
+    "missing_locations": 0,
+    "duplicate_held_locations": 0,
+    "overlap_between_retained_and_held": 0,
+    "final_retained_rows": 1476,
+    "final_held_rows": 124,
+    "final_total_rows": 1600,
+    "result": "The 1 November held-export join remains 0/28 because it is immutable and predates this addendum. A separate 6 November revision is present and verified: all 28 new pair records plus six unique cluster-extension rows (34 held locations) are included; all 34 retained anchors are present; 1,476 retained + 124 held = 1,600; no retained/held source-location overlap.",
+    "method": "Matched source_batch/source_csv_row in baseline retained exports and retained_location/held_location references from the addendum. Verified all 40 per-batch totals remain 40; retained/held source locations are unique and non-overlapping.",
+    "new_revision_files_verified": 9,
+    "new_unique_extension_rows_joined": 6,
+    "new_unique_extension_rows_expected": 6,
+    "new_held_locations_joined": 34,
+    "new_held_locations_expected": 34,
+    "retained_anchor_locations_expected": 34,
+    "reconciled_retained_rows": 1476,
+    "reconciled_held_rows": 124,
+    "reconciled_total_rows": 1600,
+    "held_retained_overlap": 0
+  },
+  "safety": {
+    "original_source_csvs_modified": 0,
+    "existing_staging_csvs_modified": 0,
+    "new_staging_revision_created": true,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false,
+    "new_staging_revision": "content/cbt/staging/2026-11-06/"
+  },
+  "next_actions": [
+    "Complete contextual duplicate-vs-related-skill decisions and provenance classification for the 28 new pair records and six cluster extensions.",
+    "Apply the documented canonical merges DUP-22 + DUP-165 -> DUP-165 and DUP-08 + DUP-166 -> DUP-08 in the consolidated register after verifying all memberships.",
+    "Obtain independent qualified subject, answer-key and syllabus approval for all held rows and replacement questions.",
+    "Run full isolated student/admin CBT validation before any release; keep imports and publication blocked."
+  ]
+}

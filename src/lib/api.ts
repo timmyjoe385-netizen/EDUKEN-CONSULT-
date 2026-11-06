@@ -4,8 +4,17 @@ import { shouldBlockWrite, PRODUCTION_SUPABASE_URL } from './api-safety.js';
 const PRODUCTION_SUPABASE_KEY = 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p';
 const suppliedSupabaseUrl = String(import.meta.env.VITE_SUPABASE_URL || '').trim();
 const suppliedPublishableKey = String(import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || '').trim();
-const SUPABASE_URL = (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL).replace(/\/+$/, '');
-const SUPABASE_KEY = suppliedPublishableKey || PRODUCTION_SUPABASE_KEY;
+const IS_PREVIEW_BUILD = import.meta.env.VITE_EDUKEN_ENV === 'preview';
+const SUPABASE_URL = (IS_PREVIEW_BUILD ? suppliedSupabaseUrl : (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL)).replace(/\/+$/, '');
+const SUPABASE_KEY = IS_PREVIEW_BUILD ? suppliedPublishableKey : (suppliedPublishableKey || PRODUCTION_SUPABASE_KEY);
+const PREVIEW_BACKEND_CONFIGURED =
+  SUPABASE_URL.startsWith('https://wpktzogarfqrgkirzdpy.supabase.co') &&
+  Boolean(SUPABASE_KEY);
+const assertBackendConfigured = () => {
+  if (IS_PREVIEW_BUILD && !PREVIEW_BACKEND_CONFIGURED) {
+    throw new Error('Preview safety mode: isolated Supabase is not configured. No request was sent.');
+  }
+};
 const ALLOW_TEST_WRITES =
   import.meta.env.VITE_ENABLE_TEST_WRITES === 'true' &&
   Boolean(suppliedSupabaseUrl && suppliedPublishableKey) &&
@@ -47,6 +56,7 @@ const writeSession = (session: Session | null) => {
 };
 
 const refreshSession = async (session: Session) => {
+  assertBackendConfigured();
   if (!session.refresh_token) return session;
   const res = await fetch(
     SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token',
@@ -89,6 +99,7 @@ const request = async (
   options: RequestInit = {},
   retry = true
 ): Promise<any> => {
+  assertBackendConfigured();
   const method = String(options.method || 'GET').toUpperCase();
   const isolatedCbtTestWrite =
     ALLOW_CBT_TEST_WRITES &&
@@ -107,7 +118,20 @@ const request = async (
   headers.set('apikey', SUPABASE_KEY);
   if (session?.access_token)
     headers.set('Authorization', 'Bearer ' + session.access_token);
-  const response = await fetch(API_BASE + path, { ...options, headers });
+  // A slow or stalled CBT question-bank request must not leave the student-facing
+  // availability indicator spinning forever. Limit this read to 12 seconds.
+  let response: Response;
+  if (path === '/api/cbt/questions' && method === 'GET') {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 12_000);
+    try {
+      response = await fetch(API_BASE + path, { ...options, headers, signal: controller.signal });
+    } finally {
+      window.clearTimeout(timeout);
+    }
+  } else {
+    response = await fetch(API_BASE + path, { ...options, headers });
+  }
   const text = await response.text();
   let data: any = {};
   try {
@@ -132,9 +156,14 @@ export const api = {
   delete: (path: string) => request(path, { method: 'DELETE' }),
 };
 
+// React StrictMode can run mount effects twice. Share one in-flight OAuth callback
+// so the first effect's cleanup cannot consume the URL fragment and strand the second.
+let oauthCallbackPromise: Promise<any> | null = null;
+
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
   signUpWithPassword: async (email: string, password: string) => {
+    assertBackendConfigured();
     const response = await fetch(SUPABASE_URL + '/auth/v1/signup', {
       method: 'POST',
       headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
@@ -160,6 +189,7 @@ export const auth = {
     return { user: result.user, session: null, confirmationRequired: true };
   },
   signInWithPassword: async (email: string, password: string) => {
+    assertBackendConfigured();
     const response = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
       method: 'POST',
       headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
@@ -183,7 +213,11 @@ export const auth = {
     return { user: result.user, session };
   },
   signIn: async (_options?: any) => {
-    const redirectTo = window.location.origin + window.location.pathname;
+    assertBackendConfigured();
+    // Return to the exact preview origin root (commonly allow-listed by Supabase).
+    // Keep the private admin intent in this tab across the Google OAuth round-trip.
+    sessionStorage.setItem('eduken_admin_oauth', '1');
+    const redirectTo = window.location.origin + '/';
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
     url.searchParams.set('redirect_to', redirectTo);
@@ -191,47 +225,54 @@ export const auth = {
     window.location.assign(url.toString());
     return new Promise(() => undefined);
   },
-  completeOAuthCallback: async () => {
+  completeOAuthCallback: () => {
+    if (oauthCallbackPromise) return oauthCallbackPromise;
     const hash = new URLSearchParams(window.location.hash.replace(/^#/, ''));
     const accessToken = hash.get('access_token');
     const refreshToken = hash.get('refresh_token');
     const isOAuthResponse = hash.has('access_token') || hash.has('refresh_token') ||
       hash.has('error') || hash.has('error_description');
-    if (!isOAuthResponse) return null;
+    if (!isOAuthResponse) return Promise.resolve(null);
+    assertBackendConfigured();
     // Clear OAuth response data before making network requests, but preserve
     // ordinary SPA hashes such as #opportunities and #opportunity/article-slug.
-    window.history.replaceState({}, document.title, window.location.pathname);
-    if (!accessToken) {
-      const oauthError = hash.get('error_description') || hash.get('error');
-      if (oauthError) {
-        const readableError = oauthError.replace(/\+/g, ' ').replace(/_/g, ' ');
-        throw new Error('Google sign-in could not finish: ' + readableError + '. Check the Supabase Auth redirect URL allowlist if this is a preview deployment.');
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+    oauthCallbackPromise = (async () => {
+      if (!accessToken) {
+        const oauthError = hash.get('error_description') || hash.get('error');
+        if (oauthError) {
+          const readableError = oauthError.replace(/\\+/g, ' ').replace(/_/g, ' ');
+          throw new Error('Google sign-in could not finish: ' + readableError + '. Check the Supabase Auth redirect URL allowlist if this is a preview deployment.');
+        }
+        return null;
       }
-      return null;
-    }
-    const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
-      headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
+      const response = await fetch(SUPABASE_URL + '/auth/v1/user', {
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + accessToken },
+      });
+      const user = await response.json();
+      if (!response.ok || !user.email) {
+        writeSession(null);
+        throw new Error('Could not verify the Google account.');
+      }
+      // Customer accounts are allowed to sign in. Admin endpoints independently enforce
+      // the server-side ADMIN_EMAILS allowlist; client-side UI visibility is not authorization.
+      const session = {
+        access_token: accessToken,
+        refresh_token: refreshToken || undefined,
+        expires_at: Math.floor(Date.now() / 1000) + Number(hash.get('expires_in') || 3600),
+        user,
+      };
+      writeSession(session);
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return { user, session };
+    })().finally(() => {
+      oauthCallbackPromise = null;
     });
-    const user = await response.json();
-    if (!response.ok || !user.email) {
-      writeSession(null);
-      throw new Error('Could not verify the Google account.');
-    }
-    // Customer accounts are allowed to sign in. Admin endpoints independently enforce
-    // the server-side ADMIN_EMAILS allowlist; client-side UI visibility is not authorization.
-    const session = {
-      access_token: accessToken,
-      refresh_token: refreshToken || undefined,
-      expires_at: Math.floor(Date.now() / 1000) + Number(hash.get('expires_in') || 3600),
-      user,
-    };
-    writeSession(session);
-    window.history.replaceState({}, document.title, window.location.pathname);
-    return { user, session };
+    return oauthCallbackPromise;
   },
   signOut: async () => {
     const session = readSession();
-    if (session?.access_token) {
+    if (session?.access_token && (!IS_PREVIEW_BUILD || PREVIEW_BACKEND_CONFIGURED)) {
       await fetch(SUPABASE_URL + '/auth/v1/logout', {
         method: 'POST',
         headers: {
