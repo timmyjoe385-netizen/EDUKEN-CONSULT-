@@ -469,10 +469,8 @@
   ],
   "semantic_review_status": {
     "cross_window_candidates": 1304,
-    "manually_reviewed_candidates": 286,
     "high_similarity_shortlist_reviewed": 49,
     "additional_targeted_candidates_reviewed": 237,
-    "cross_window_candidates_not_manually_reviewed": 1018,
     "original_reported_within_window_candidates_pending": 279,
     "reconstructed_within_window_candidates_reviewed": 390,
     "unresolved_within_window_count_discrepancy": 38,
@@ -483,7 +481,10 @@
       "status": "historical_not_current"
     },
     "latest_persisted_rank_entries": 297,
-    "aggregate_progress_reconciliation": "pending"
+    "aggregate_progress_reconciliation": "pending",
+    "aggregate_reviewed_candidates": null,
+    "aggregate_remaining_candidates": null,
+    "aggregate_currently_verified": false
   },
   "semantic_review": {
     "within_window": {
@@ -499,15 +500,19 @@
       "interpretation": "The original reported total of 390 is reproduced at threshold 0.42, not the stated 0.43. The 0.42 reconstruction contains 390 candidates (40 same-topic/subtopic and 350 other); all 390 have review statuses. The original report's split was 41/349, leaving a one-pair category boundary mismatch, documented rather than concealed."
     },
     "cross_window": {
-      "candidates": 1304,
-      "manually_reviewed_at_or_above_similarity_threshold_0_65": 286,
-      "below_threshold_not_manually_reviewed": 1018,
-      "interpretation": "The 49-pair same-subject/topic/subtopic shortlist is fully dispositioned (15 previously confirmed and 34 newly contextually reviewed: one additional semantic duplicate and 33 distinct/valid variants). This shortlist is not the full 1,304-candidate screen. The overall review log records 286 manually reviewed cross-window candidates; 1,018 below-threshold candidates remain unreviewed.",
-      "high_similarity_shortlist_reviewed": 49,
-      "high_similarity_shortlist_newly_contextually_reviewed": 34,
-      "high_similarity_shortlist_newly_confirmed_duplicates": 1,
-      "high_similarity_shortlist_preserved_distinct_or_valid_variants": 33,
-      "remaining_unreviewed_cross_window_candidates": 1255
+      "previous_checkpoint": {
+        "manually_reviewed_at_or_above_similarity_threshold_0_65": 286,
+        "below_threshold_not_manually_reviewed": 1018,
+        "as_of": "older checkpoint",
+        "status": "superseded_not_current"
+      },
+      "explicit_rank_crosswalk": {
+        "unique_rank_ids": 973,
+        "cumulative_counter": 921,
+        "discrepancy": 52,
+        "rank_ids_without_explicit_record": 331,
+        "status": "not_reconciled"
+      }
     }
   },
   "audit_reports": [
