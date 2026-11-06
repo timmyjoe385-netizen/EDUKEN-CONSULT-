@@ -34,8 +34,8 @@ This update supersedes conflicting older status notes below. Historical entries 
 - Preview homepage and `/cbt` return HTTP 200. The homepage displays the TEST PREVIEW ONLY banner; the CBT page renders the “Available” state after its question feed loads.
 - The isolated preview question API `GET /api/cbt/questions` returned HTTP 200 with **8 published original preview samples**, one per subject. The subject-practice selector correctly limits the sample session to one question. These are synthetic preview samples, not a reviewed JAMB bank.
 - The preview `eduken-api` Edge Function is ACTIVE at version 43 with `verify_jwt=false`; its deployed `index.ts` exactly matches the repository source. Preview Worker settings point to isolated Supabase project `wpktzogarfqrgkirzdpy`; production and preview analytics D1 bindings are distinct.
-- The page's subject-practice and mixed-mock controls render enabled. However, with only one question per subject, the preview bank cannot satisfy a 10-question mock; the full attempt-start response has not yet been exercised.
-- Attempt creation, answer submission, server grading and results retrieval remain unverified in a real student browser session. Do not mark the full student journey passed from the GET-feed check alone.
+- The page's subject-practice selector resolves to one question per subject. Isolated API logs confirm question-feed 200, attempt-create 201, submit 200, insufficient-bank guard 409 and unauthenticated-admin rejection 401. The deployed-preview Chromium smoke test also passed a real one-question practice flow through answer selection, submission, result and review. The 180-question mock remains unavailable until the reviewed bank is populated.
+- The one-question practice browser journey is verified by the CI Chromium smoke test; a full 180-question mock, authenticated admin journey, live AI assistant POST and authenticated analytics flow remain outstanding. Do not mark the full JAMB mock release-ready from the sample practice test.
 - Production CBT question bank remains empty (0 rows). No production import, publication or deployment was performed by these checks.
 
 ### 5. Remaining gates and safe next actions
@@ -43,7 +43,7 @@ This update supersedes conflicting older status notes below. Historical entries 
 2. Complete contextual duplicate-versus-related-skill decisions for the 28 new pair records and six unique cluster-extension rows; provenance and staging joins are now verified.
 3. Reconcile the consolidated register's 96 explicitly unverified IDs and inconsistent summary counters; apply the two documented canonical cluster merges and recalculate counts only after membership checks.
 4. Draft replacement questions only for items confirmed as true duplicates after qualified subject review and syllabus checks; run a refreshed bank-wide semantic screen.
-5. Complete preview AI retrieval, analytics authentication, authenticated admin acceptance, and device/network performance tests; the isolated student attempt lifecycle has already returned question-feed 200, attempt-create 201 and submit 200.
+5. Complete preview AI retrieval, authenticated analytics/admin acceptance and device/network performance tests; one-question student practice is verified by the CI browser smoke and isolated API logs, but the 180-question mock remains blocked by the eight-sample bank.
 6. Obtain qualified independent subject/answer/syllabus approval before publishing any questions.
 7. Keep production imports, publication, merge and deployment blocked until separate explicit production-release approval.
 
