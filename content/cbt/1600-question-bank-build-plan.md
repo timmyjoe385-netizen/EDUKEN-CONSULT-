@@ -11,16 +11,14 @@ This update supersedes conflicting older status notes below. Historical entries 
 - The isolated admin E2E passed on 5 November using synthetic data only. The isolated database returned to 65 drafts + 8 published = 73 rows. No production data was used.
 - Production CBT question bank remains empty. The isolated test bank remains 73 rows and cannot supply a 180-question mock.
 
-### 2. Current non-destructive staging reconciliation
-- The 6 November staging revision accounts for all 1,600 source rows: **1,476 provisionally retained + 124 held = 1,600**.
-- The 124 held source locations map to **119 pair IDs** because some findings extend existing duplicate clusters. All 34 newly held locations have source-row checks and staging joins; all 34 retained anchors are present; no retained/held overlap was found. This staging revision is not a full reconciliation of every later pair ID in the consolidated register, which still lists 96 explicitly unverified IDs and inconsistent summary counters.
-- Source CSVs and baseline staging CSVs were not modified. The 6 November revision is audit-only and has not been imported or published.
-- The 69 candidate held locations absent from the current export have now been checked against their original source CSVs across 26 batches: all 69 declare `source_type=original` and carry EDUKEN original-authorship provenance notes (three have a blank `source_name`, but explicit provenance notes). This verifies held-side source metadata only; retained-anchor and row-level Git-history checks remain open, and none of the 69 has been added to staging.
-- The legacy register still has 96 explicitly unverified pair IDs. A fresh location crosswalk extracts 91 raw candidate held locations (including five `b`-field fallbacks); 22 match the current 6 November staging export (five baseline links and 17 addendum overlaps), while 69 are absent from that export. This does not yet reconcile the earlier 77 unique-held-target estimate: cluster extensions, reused held rows and five incomplete held-location fields must be resolved before treating 69 or 77 as the final target count.
-- The 124 held rows are not all final academic duplicate decisions. For the separate 6 November addendum, all 64 source-location references were checked (28 retained anchors, 28 held pair rows and eight cluster-extension references); all are original EDUKEN drafts. All 34 newly held locations match their staging rows exactly by subject and question text. Provenance and staging joins are complete for this addendum; contextual duplicate-versus-related-skill decisions and qualified subject review remain pending.
-- The two canonical cluster merges are now applied and source-verified: DUP-22 → DUP-165 for PLATELET-CLOTTING-01 (with DUP-150 linked into the same cluster), and DUP-166 → DUP-08 for PHENOLPHTHALEIN-01. This only reconciles register membership; no source/staging row was changed.
-- Provenance is verified for all 124 held locations in the current staging revision: baseline 90 (62 commit-backed histories + 28 original-draft overlaps) plus 34 new held locations. Exact introducing commits are verified for all 13 later-replacement baseline rows; DUP-34 edit history is documented. The separate consolidated register still lists 96 later-range pair IDs with provenance/staging work outstanding; their unique held-row count is not reconciled because of cluster overlaps. Those 96 IDs are outside the current 6 November staging export.
-- Replacement proposals for the 34 new held locations: **0 drafted**. No new held item is approved for insertion or publication.
+### 2. Current non-destructive staging and later-register reconciliation
+- The 6 November staging revision accounts for all 1,600 source rows: **1,476 provisionally retained + 124 held = 1,600**. Original source CSVs and staging CSVs remain unchanged.
+- Baseline 90 held relationships are provenance-reconciled: **62 commit-backed replacement histories + 28 original-draft overlaps**. The 13 exact introducing commits and DUP-34 edit history are verified.
+- The 28 new addendum pair records plus six unique cluster-extension rows account for **34 new held locations**. All 64 referenced source locations were checked; 34 unique held rows and 34 retained anchors join exactly; all source records are original EDUKEN-authored content. Preliminary contextual screening is complete, but qualified subject/answer/syllabus review is pending. No replacement drafts have been created.
+- The consolidated register separately lists **96 later-range pair IDs** with Git-history classification and final disposition still pending. A new location audit checked all **185 unique references** across those pair records: 33 references are in the held export and 152 in the retained export, with zero missing locations and zero retained/held overlap.
+- Across those 96 pairs, **101 candidate hold locations** were identified. Source rows were found for all 101 and each is marked `source_type=original` with EDUKEN-authored provenance notes. **30** are already in the held export; **71** remain in the retained export. Those 71 are in a separate qualified-review worksheet and have not been moved to held.
+- Source metadata checks do not replace Git-history classification. The 96 pair IDs remain open for exact original-draft versus replacement-history classification and qualified contextual review. Do not treat an assistant screening label as academic approval.
+- The 6 November staging export remains non-destructive: no source edits, no staging CSV edits, no production imports or publications. The 1,476 retained rows are provisional, not academically approved.
 
 ### 3. Review progress — rank crosswalk partly reconciled, aggregate still open
 - The 81 persisted tail-review part files contain **717 unique rank IDs** in the earlier review set.
@@ -32,14 +30,14 @@ This update supersedes conflicting older status notes below. Historical entries 
 - Within-window: the reconstructed set contains 390 candidates at threshold 0.42; the original report still lists 279 pending and a 38-count discrepancy. The original queue remains unreconciled.
 - Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
-### 4. Preview environment — question feed verified; attempt lifecycle still pending
-- Cloudflare account Workers subdomain is `timmyjoe385`. The correct preview URL is `https://eduken-consult-preview.timmyjoe385.workers.dev/`; the earlier `timmy385` hostname was incorrect.
-- Preview homepage and `/cbt` return HTTP 200. The homepage displays the TEST PREVIEW ONLY banner; the CBT page renders the “Available” state after its question feed loads.
-- The isolated preview question API `GET /api/cbt/questions` returned HTTP 200 with **8 published original preview samples**, one per subject. The subject-practice selector correctly limits the sample session to one question. These are synthetic preview samples, not a reviewed JAMB bank.
-- The preview `eduken-api` Edge Function is ACTIVE at version 43 with `verify_jwt=false`; its deployed `index.ts` exactly matches the repository source. Preview Worker settings point to isolated Supabase project `wpktzogarfqrgkirzdpy`; production and preview analytics D1 bindings are distinct.
-- The page's subject-practice selector resolves to one question per subject. Isolated API logs confirm question-feed 200, attempt-create 201, submit 200, insufficient-bank guard 409 and unauthenticated-admin rejection 401. The deployed-preview Chromium smoke test also passed a real one-question practice flow through answer selection, submission, result and review. The 180-question mock remains unavailable until the reviewed bank is populated.
-- The one-question practice browser journey is verified by the CI Chromium smoke test; a full 180-question mock, authenticated admin journey, live AI assistant POST and authenticated analytics flow remain outstanding. Do not mark the full JAMB mock release-ready from the sample practice test.
-- Production CBT question bank remains empty (0 rows). No production import, publication or deployment was performed by these checks.
+### 4. Preview environment — one-question practice lifecycle verified; full mock blocked by bank size
+- Cloudflare account Workers subdomain is `timmyjoe385`. Preview homepage and `/cbt` return HTTP 200; the homepage displays the TEST PREVIEW ONLY banner.
+- The isolated preview question API returns HTTP 200 with **8 published original preview samples**, one per subject. The page hydrates to “Free starter practice available” with a one-question selector. These are synthetic preview samples, not the reviewed 1,600-question bank.
+- The preview `eduken-api` Edge Function is ACTIVE at version 43 with `verify_jwt=false`; deployed `index.ts` exactly matches repository source. Preview Worker settings point to isolated Supabase project `wpktzogarfqrgkirzdpy`; preview and production analytics D1 bindings are distinct.
+- Isolated Supabase function logs recorded question feed **200**, attempt creation **201**, attempt submission **200**, insufficient-bank guard **409**, and unauthenticated admin API **401**. The 409 is the expected safe rejection when a mock requests more questions than the preview bank contains.
+- The CI Chromium smoke test in `tests/cbt-preview-smoke.mjs` passed **4/4 workflow groups** on code commit `a121ee7c19887bca26f7ed03cefa83fc417437d8`. It covered question feed, answer-key hiding, four unique mock subjects with Use of English locked, subject selection, one-question attempt start, answer selection, submit, and results/review.
+- The preview bank has only one published question per subject. A full 10/20/40/100/180-question mock cannot run yet; do not treat the synthetic sample bank as a student-ready question bank.
+- Live AI assistant POST and authenticated analytics/admin walkthrough remain outstanding. Production CBT question bank remains empty (0 rows); no production import, publication or deployment was performed.
 
 ### 5. Remaining gates and safe next actions
 1. Reconcile the 297 persisted rank entries against all prior review segments and compute a unique aggregate reviewed/remaining count.
@@ -363,3 +361,12 @@ This checkpoint supersedes older progress statements above where they conflict. 
 ### Safety
 - This checkpoint changes this build-plan document only. No original source CSV, staging CSV, Supabase row, production setting, payment record, publication or deployment was changed.
 - PR #194 remains open, draft and unmerged. PR #195 and PR #197 remain open, draft and unmerged.
+### 5. Remaining gates and safe next actions
+1. Complete the cross-window rank crosswalk: 58 overlaps are identified and 239 rank IDs are genuinely new, but the cumulative counter still differs by four and 62 rank IDs within 287–1304 lack an explicit tail-review record. Reconcile older review evidence before claiming 1,304/1,304 complete.
+2. Finish Git-history classification for the 96 later-range pair IDs. Source metadata and staging membership are checked; exact introduction commits and original-draft/replacement classification remain outstanding.
+3. Obtain qualified subject, answer-key and syllabus decisions for the 34 new addendum held rows and the 71 candidate targets still in retained staging. Reviewer decisions must be recorded by a qualified person.
+4. Reconcile canonical cluster membership and apply held/retained dispositions only after contextual and qualified academic decisions are recorded.
+5. Draft replacements only for confirmed duplicates after provenance and syllabus checks; then run a refreshed bank-wide semantic screen and validation.
+6. Complete live AI assistant POST and authenticated analytics/admin testing. The one-question student practice lifecycle has passed isolated API logs and CI Chromium smoke; full mocks remain blocked by the sample-bank size.
+7. Keep production import, publication, PR merge, production deployment and student launch blocked until all content and technical gates pass and separate explicit production-release approval is given.
+
