@@ -727,5 +727,17 @@
     "cumulative_counter_discrepancy": 4,
     "aggregate_unique_reviewed_total": null,
     "aggregate_remaining_total": null
+  },
+  "later_register_queue_target_crosswalk": {
+    "pair_ids": 96,
+    "target_location_references": 97,
+    "unique_target_locations": 90,
+    "already_held_in_current_staging": 22,
+    "still_retained_in_current_staging": 68,
+    "not_found": 0,
+    "current_held_locations": 124,
+    "projected_held_locations_if_all_68_approved_and_staged": 192,
+    "projected_retained_locations_if_all_68_approved_and_staged": 1408,
+    "status": "LOCATION_PRESENCE_VERIFIED_SOURCE_CONTENT_PROVENANCE_AND_ANCHOR_JOINS_PENDING"
   }
 }
