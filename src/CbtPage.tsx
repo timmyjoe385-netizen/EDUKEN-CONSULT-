@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Calculator, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target, X } from 'lucide-react';
 import './cbt.css';
+import { DEFAULT_CBT_MOCK_QUESTION_COUNT, getCbtMockFallbackDurationSeconds } from './lib/cbt-mock-config.mjs';
 import { api } from './lib/api';
 
 type Question = { id: string | number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
@@ -43,7 +44,7 @@ export default function CbtPage() {
   const [selectedSubject, setSelectedSubject] = useState('Use of English');
   const [mode, setMode] = useState<'practice' | 'mock'>('practice');
   const [practiceQuestionCount, setPracticeQuestionCount] = useState(10);
-  const [mockQuestionCount, setMockQuestionCount] = useState(8);
+  const [mockQuestionCount, setMockQuestionCount] = useState(DEFAULT_CBT_MOCK_QUESTION_COUNT);
   const [mockSubjects, setMockSubjects] = useState<string[]>(['Biology', 'Chemistry', 'Physics']);
   const [started, setStarted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -313,7 +314,7 @@ export default function CbtPage() {
     setLocalFallbackSession(false);
 
     let nextQuestions: Question[] = [];
-    let durationSeconds = nextMode === 'mock' ? 30 * 60 : 15 * 60;
+    let durationSeconds = nextMode === 'mock' ? getCbtMockFallbackDurationSeconds(requestedCount) : 15 * 60;
     let serverDeadline: number | null = null;
     if (questionLoadError) {
       nextQuestions = (nextMode === 'mock' ? QUESTIONS.filter(question => ['Use of English', ...mockSubjects].includes(question.subject)) : QUESTIONS.filter(question => question.subject === subject)).slice(0, requestedCount);
