@@ -15,7 +15,7 @@ This update supersedes conflicting older status notes below. Historical entries 
 - The 6 November staging revision accounts for all 1,600 source rows: **1,476 provisionally retained + 124 held = 1,600**.
 - The 124 held source locations map to **119 pair IDs** because some findings extend existing duplicate clusters. All 34 newly held locations have source-row checks and staging joins; all 34 retained anchors are present; no retained/held overlap was found. This staging revision is not a full reconciliation of every later pair ID in the consolidated register, which still lists 96 explicitly unverified IDs and inconsistent summary counters.
 - Source CSVs and baseline staging CSVs were not modified. The 6 November revision is audit-only and has not been imported or published.
-- The 124 held rows are not all final academic duplicate decisions. The 28 new pair records and six unique cluster-extension rows still require contextual duplicate-versus-related-skill decisions, provenance classification and qualified subject review.
+- The 124 held rows are not all final academic duplicate decisions. For the separate 6 November addendum, all 64 source-location references were checked (28 retained anchors, 28 held pair rows and eight cluster-extension references); all are original EDUKEN drafts. All 34 newly held locations match their staging rows exactly by subject and question text. Provenance and staging joins are complete for this addendum; contextual duplicate-versus-related-skill decisions and qualified subject review remain pending.
 - Baseline 90 provenance classification is complete: 62 commit-backed replacement histories and 28 original-draft overlaps. Exact introducing commits are verified for all 13 later-replacement rows; DUP-34 edit history is also documented. The separate new 34 held locations now have original-source provenance verified; their qualified contextual/academic disposition remains pending. The consolidated register still lists 96 explicitly unverified pair IDs from its later historical range; those are outside the current 6 November staging revision and its counters remain inconsistent.
 - Replacement proposals for the 34 new held locations: **0 drafted**. No new held item is approved for insertion or publication.
 
@@ -40,10 +40,10 @@ This update supersedes conflicting older status notes below. Historical entries 
 
 ### 5. Remaining gates and safe next actions
 1. Reconcile the 297 persisted rank entries against all prior review segments and compute a unique aggregate reviewed/remaining count.
-2. Finish provenance classification and contextual review for the 28 new pair records and six cluster-extension rows; normalize the 13 baseline introducing commit SHAs.
-3. Apply the documented canonical cluster merges only after checking all memberships; update one consolidated register and its counts.
-4. Draft replacement questions for the 34 newly held locations only after provenance and syllabus checks; run a refreshed bank-wide semantic screen.
-5. Verify preview AI content retrieval and analytics authentication against isolated services; test the student CBT API, attempt creation, timer, answer save, submit and results on the preview environment.
+2. Complete contextual duplicate-versus-related-skill decisions for the 28 new pair records and six unique cluster-extension rows; provenance and staging joins are now verified.
+3. Reconcile the consolidated register's 96 explicitly unverified IDs and inconsistent summary counters; apply the two documented canonical cluster merges and recalculate counts only after membership checks.
+4. Draft replacement questions only for items confirmed as true duplicates after qualified subject review and syllabus checks; run a refreshed bank-wide semantic screen.
+5. Complete preview AI retrieval, analytics authentication, authenticated admin acceptance, and device/network performance tests; the isolated student attempt lifecycle has already returned question-feed 200, attempt-create 201 and submit 200.
 6. Obtain qualified independent subject/answer/syllabus approval before publishing any questions.
 7. Keep production imports, publication, merge and deployment blocked until separate explicit production-release approval.
 
