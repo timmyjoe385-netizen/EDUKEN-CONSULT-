@@ -25,12 +25,14 @@ This update supersedes conflicting older status notes below. Historical entries 
 - The reconstructed within-window set has 390 candidates reviewed at threshold 0.42. The original report still lists 279 pending candidates and a 38-count discrepancy; that original queue is not reconciled.
 - Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
-### 4. Preview environment — external reachability verified
-- Cloudflare account Workers subdomain is `timmyjoe385`. The previously used `timmy385.workers.dev` hostname was incorrect.
-- Correct preview homepage `https://eduken-consult-preview.timmyjoe385.workers.dev/` returned HTTP 200 on live external fetch and displayed the explicit TEST PREVIEW ONLY banner.
-- Correct preview CBT route `/cbt` returned HTTP 200 and rendered subject practice plus mixed mock selection. It displayed “Checking questions…”; live attempt/API completion has not yet been proven.
-- Preview Worker settings bind `EDUKEN_ENV=preview`, `SUPABASE_URL=https://wpktzogarfqrgkirzdpy.supabase.co`, and the isolated analytics D1 database. Production and preview analytics D1 IDs differ.
-- Correct production homepage and `/cbt` routes also returned HTTP 200. This is a reachability/content check, not a full visual or authenticated-flow acceptance test.
+### 4. Preview environment — student API smoke verified
+- Cloudflare account Workers subdomain is `timmyjoe385`; the correct preview hostname is `eduken-consult-preview.timmyjoe385.workers.dev`.
+- Preview homepage and `/cbt` route returned HTTP 200. The page renders subject practice and the exact-three-subject mixed mock selector.
+- Preview Worker uses `EDUKEN_ENV=preview`, isolated Supabase project `wpktzogarfqrgkirzdpy`, and its own analytics D1 binding; production and preview analytics databases are distinct.
+- Supabase preview logs (6 November, 15:27–15:31 UTC) show question-feed GET 200, attempt creation POST 201 and attempt submission POST 200. The student attempt lifecycle is therefore smoke-tested against the isolated service.
+- A request exceeding the available published questions returned 409, confirming the insufficient-bank guard. The preview bank still has only one published question per subject; it cannot support normal practice counts or any meaningful full mock.
+- Recent admin endpoints returned 401 for unauthenticated requests. This is expected for signed-out access but does not satisfy the authenticated allowlisted admin-session walkthrough.
+- External fetch confirms route reachability/content only; visual QA, full mock with a sufficiently populated bank, authenticated admin acceptance and device/network performance tests remain open.
 
 ### 5. Remaining gates and safe next actions
 1. Reconcile the 297 persisted rank entries against all prior review segments and compute a unique aggregate reviewed/remaining count.
