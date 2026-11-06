@@ -53,7 +53,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-211",
@@ -67,7 +69,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-212",
@@ -81,7 +85,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-214",
@@ -95,7 +101,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-215",
@@ -109,7 +117,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-216",
@@ -123,7 +133,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-217",
@@ -137,7 +149,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-218",
@@ -151,7 +165,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-219",
@@ -165,7 +181,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-220",
@@ -179,7 +197,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-221",
@@ -193,7 +213,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-222",
@@ -207,7 +229,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-224",
@@ -221,7 +245,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-225",
@@ -235,7 +261,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-226",
@@ -249,7 +277,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-228",
@@ -263,7 +293,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-229",
@@ -277,7 +309,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-230",
@@ -291,7 +325,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-231",
@@ -305,7 +341,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-232",
@@ -319,7 +357,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-233",
@@ -333,7 +373,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-235",
@@ -347,7 +389,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-236",
@@ -361,7 +405,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-237",
@@ -375,7 +421,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-240",
@@ -389,7 +437,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-242",
@@ -403,7 +453,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-243",
@@ -417,7 +469,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     },
     {
       "id": "DUP-244",
@@ -431,7 +485,9 @@
       "source_location_check": "verified_against_original_batch_csv",
       "contextual_academic_disposition": "pending_qualified_subject_review",
       "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
-      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV"
+      "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+      "rank_audit_status": "confirmed_duplicate_candidate_in_rank_review",
+      "final_disposition": "pending_qualified_subject_review"
     }
   ],
   "existing_cluster_extensions": [
@@ -546,11 +602,12 @@
   "replacement_drafts": 0,
   "production_imports": 0,
   "production_publications": 0,
-  "register_reconciliation": "Pending: merge the verified 34-row staging reconciliation into the canonical register only after provenance and qualified academic dispositions are resolved. Legacy register counters remain unchanged.",
+  "register_reconciliation": "Source provenance and all 34 new held-row staging joins are verified. The canonical register merge remains blocked only on item-level qualified academic/contextual dispositions and explicit cluster membership reconciliation; do not recompute global counters from partial data.",
   "next_required_work": [
-    "Obtain qualified subject review for 18 same-fact recommendations, one high-overlap near-duplicate recommendation, nine related-skill variants, and six cluster-extension recommendations.",
-    "Normalize exact introducing commit SHAs for the separate 13 baseline replacement-created pairs.",
-    "Reconcile and merge the canonical duplicate disposition register without changing source CSVs.",
+    "Map the 18 same-fact, one high-overlap near-duplicate and nine related-skill recommendations to their exact pair IDs; map the six cluster-extension recommendations to exact held locations.",
+    "Obtain qualified subject review of the 34 new held locations and approve each retain/hold/disposition decision.",
+    "Reconcile the 96 explicitly unverified legacy pair IDs and inconsistent global register counters.",
+    "Merge the verified addendum into the canonical register after item-level academic decisions and cluster membership checks.",
     "Draft replacement questions only for held items confirmed as true duplicates after qualified subject review and syllabus checks."
   ],
   "new_duplicate_pair_count": 28,
@@ -667,5 +724,14 @@
     "newly_persisted_reviewed_ranks": 297,
     "explanation": "The 297 newly persisted ranks in the listed segments do not establish that all 1,304 candidates have been manually reviewed. The 1 November canonical register reports 921 manually reviewed and 383 remaining, while its explicit-rank crosswalk separately reports 973 unique rank IDs, a 52-rank discrepancy and 331 ranks without explicit records in the inspected sources. Those legacy totals are themselves unreconciled. Therefore no reliable global remaining count is asserted here.",
     "authoritative_next_step": "Rebuild a rank-by-rank union from every persisted tail-review part, high-similarity review record, targeted review record and addendum; deduplicate ranks and reconcile each rank to a documented disposition before reporting a global completion count."
+  },
+  "preliminary_contextual_assessment": {
+    "item_level_mapping_status": "pending",
+    "same_fact_duplicate_recommendations": 18,
+    "high_overlap_near_duplicate_recommendations": 1,
+    "related_skill_variant_recommendations": 9,
+    "cluster_extension_same_fact_recommendations": 3,
+    "cluster_extension_related_skill_recommendations": 3,
+    "note": "The aggregate categories are recorded, but the addendum does not yet map each category to its individual pair ID/cluster-extension row. Do not select replacement targets from aggregate counts alone."
   }
 }
