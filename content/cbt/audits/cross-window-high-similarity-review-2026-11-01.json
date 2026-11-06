@@ -606,7 +606,7 @@
     "newly_contextually_reviewed": 34,
     "newly_confirmed_semantic_duplicates": 1,
     "preserve_both_distinct_or_valid_variants": 33,
-    "review_scope": "All 34 previously unclassified candidates in the 49-pair same-subject/topic/subtopic cross-window shortlist were contextually checked against the full current CSV rows where necessary. This is not a review of all 1,304 cross-window screening candidates.",
+    "review_scope": "The 49-candidate high-similarity shortlist plus 237 additional candidates ranked 50–286 have been manually reviewed (286/1,304 total). The remaining 1,018 lower-scoring candidates have not received manual contextual review. The 237 additional candidate decisions and reconciled duplicate/provenance totals are tracked in duplicate-disposition-register-2026-11-01.json; this file's candidates array remains the original 49-pair shortlist.",
     "confirmed_new_pair": {
       "a": "batch 2 row 30",
       "b": "batch 28 row 30",
@@ -615,9 +615,14 @@
       "subject": "Economics",
       "concept": "Balance of trade in goods"
     },
-    "remaining_unreviewed_cross_window_candidates": 1255
+    "remaining_unreviewed_cross_window_candidates": 1018,
+    "total_cross_window_screen_candidates": 1304,
+    "additional_targeted_candidates_reviewed": 237,
+    "total_cross_window_candidates_manually_reviewed": 286,
+    "additional_duplicate_pair_records_confirmed": 52
   },
   "notes": [
-    "Contextual review completed for all 34 candidates that were not already marked as confirmed duplicates in the 49-pair high-similarity cross-window shortlist. One additional semantic duplicate was confirmed: batch 2 row 30 / batch 28 row 30 (balance of trade in goods). Retain batch 2 row 30; mark batch 28 row 30 for one controlled replacement. The other 33 pairs were preserved because they test different vocabulary targets, different numerical inputs/data sets, or distinct concepts; some are reusable template variants, not duplicate questions. All decisions are register-only; no original CSV was edited. This does not complete review of the full 1,304 cross-window candidate screen."
+    "Contextual review completed for all 34 candidates that were not already marked as confirmed duplicates in the 49-pair high-similarity cross-window shortlist. One additional semantic duplicate was confirmed: batch 2 row 30 / batch 28 row 30 (balance of trade in goods). Retain batch 2 row 30; mark batch 28 row 30 for one controlled replacement. The other 33 pairs were preserved because they test different vocabulary targets, different numerical inputs/data sets, or distinct concepts; some are reusable template variants, not duplicate questions. All decisions are register-only; no original CSV was edited. This does not complete review of the full 1,304 cross-window candidate screen.",
+    "Reconciled 2026-11-06 against the current duplicate disposition register: 237 additional targeted candidates (ranks 50–286) were reviewed after this 49-pair shortlist. Total cross-window contextual reviews are 286/1,304, with 1,018 lower-scoring candidates still unreviewed. The 237 additional decisions and 52 added confirmed duplicate pair records are recorded in the current duplicate disposition register. This file's candidate array intentionally remains the original 49-pair shortlist and must not be read as the full current review ledger."
   ]
 }
