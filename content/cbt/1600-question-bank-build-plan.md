@@ -289,3 +289,12 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - Fourteen pairs were preserved as distinct. Rank 954 (batch 17 row 18 vs batch 32 row 19) was deferred for qualified Chemistry review: both ask for the salt formed by complete acid-base neutralisation, but use different acid/base reactants and produce different salts. No duplicate or held target is counted until the subject review resolves whether these are sufficiently distinct applications.
 - Cross-window progress is now **431/1,304 manually reviewed; 873 remain**. No new confirmed duplicate relationship or replacement target was added in this batch. Existing register remains **144 cross-window + 15 within-window = 159 confirmed pairs**, resolving to **156 unique replacement targets**.
 - No source CSV, staging CSV, replacement draft or production data was changed. No import, publication, merge or deployment was authorised.
+
+
+## Third lower-tail audit batch — 6 November 2026
+
+- Reviewed cross-window candidate ranks **962–976** against complete source stems, four options, answer keys and explanations. See `content/cbt/audits/cross-window-tail-review-2026-11-06-part23.json`.
+- Fourteen candidates were preserved as distinct. Rank 962 was confirmed as **DUP-161**: batch 19 row 10 and batch 35 row 11 both test the same set-union operation; batch 19 row 10 is retained provisionally and batch 35 row 11 is one new unique held target.
+- Rank 970 was preserved as a distinct formula-based hydrostatic-pressure assessment; its batch 35 row 25 counterpart is already held under DUP-44 and was not counted again.
+- Cross-window progress is now **446/1,304 manually reviewed; 858 remain**. The duplicate register now records **145 cross-window + 15 within-window = 160 confirmed pair relationships**, resolving to **157 unique replacement targets** (90 original + 67 additional). The 66 additional pair relationships from DUP-91–DUP-161 require provenance reconciliation and represent 67 unique held rows.
+- No source CSV, staging CSV, replacement draft or production data was changed. No import, publication, merge or deployment was authorised.
