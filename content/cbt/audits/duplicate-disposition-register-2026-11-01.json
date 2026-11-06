@@ -3735,6 +3735,10 @@
       "DUP-89",
       "DUP-90"
     ],
-    "reconciliation_note": "90/90 assistant pairwise bankwide reviews recorded. DUP-04 corrected and re-screened; DUP-12 and DUP-69 earlier drafts rejected for semantic overlap and replaced. 11 similarity flags remain for independent human contextual review. Independent qualified subject/syllabus approvals 0/90. No candidates authorised for import."
+    "reconciliation_note": "90/90 assistant pairwise bankwide reviews recorded. DUP-04 corrected and re-screened; DUP-12 and DUP-69 earlier drafts rejected for semantic overlap and replaced. 11 similarity flags remain for independent human contextual review. Independent qualified subject/syllabus approvals 0/90. No candidates authorised for import. User-reported reviewer approval for the 90 existing replacement candidates is acknowledged separately from item-level sign-off evidence; 43 newly discovered targets remain outside that approval.",
+    "user_reported_approved_replacement_candidates": 90,
+    "user_reported_reviewer_approval_status": "user_reports all 90 replacement candidates approved",
+    "independent_item_level_approval_evidence_in_repository": 0,
+    "approval_note": "The user has reported that a reviewer approved all 90 existing replacement candidates (90/90). The repository does not contain item-level independent reviewer sign-off records, so this is recorded as user-reported approval rather than independently documented approval. The 43 newly discovered held rows are not part of those 90 and have no replacement drafts or approval yet."
   }
 }
