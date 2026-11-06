@@ -14,9 +14,9 @@
       517
     ],
     "previous_total_manually_reviewed": 317,
-    "now_manually_reviewed": 323,
+    "now_manually_reviewed": 325,
     "total_cross_window_candidates": 1304,
-    "remaining_not_manually_reviewed": 981
+    "remaining_not_manually_reviewed": 979
   },
   "findings": [
     {
