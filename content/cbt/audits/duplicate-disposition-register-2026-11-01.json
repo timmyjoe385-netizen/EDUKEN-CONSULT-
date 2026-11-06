@@ -18,10 +18,10 @@
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
     "cross_window_additional_targeted_candidates_reviewed": 472,
-    "cross_window_manually_reviewed_candidates": 761,
-    "cross_window_candidates_remaining_not_manually_reviewed": 543,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 160,
-    "cross_window_review_note": "Full-content lower-tail review continues in 15-candidate batches. Latest ranks 1289–1303: all 15 preserved as distinct. See cross-window-tail-review-2026-11-06-part44.json. Current total: 761/1,304 manually reviewed; 543 remain.",
+    "cross_window_manually_reviewed_candidates": 762,
+    "cross_window_candidates_remaining_not_manually_reviewed": 542,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 161,
+    "cross_window_review_note": "Full-content lower-tail review of the ranked candidate tail is complete through rank 1304. Latest rank 1304 confirms one additional pair relationship inside existing FEDERALISM-01; no new unique held target. See cross-window-tail-review-2026-11-06-part45.json. Current total: 762/1,304 manually reviewed; 542 remain elsewhere in the candidate set.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,19 +36,19 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 160,
+    "cross_window_pairs": 161,
     "within_window_pairs": 15,
-    "total_pairs": 175,
+    "total_pairs": 176,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 81,
+    "provenance_unverified_pairs": 82,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-eight additional pair relationships recorded from DUP-91 through DUP-173 require row-level provenance reconciliation and represent 77 unique additional held rows because clusters overlap. DUP-165 through DUP-171 are recorded in the 6 November audit entries; DUP-172 is a new metaphor-definition cluster (retain batch 1 row 37; hold batch 35 row 38); DUP-173 connects the vaccination cluster DUP-38/DUP-73 (retain batch 5 row 15; hold batch 15 row 15, batch 20 row 16 and batch 33 row 16). Staging-location joins remain verified for the original 90 only. DUP-174 adds one further pending-provenance pair relationship and one unique held target (batch 12 row 21) within the existing catalyst cluster DUP-91; batch 25 row 21 was already held. The legacy provenance counters do not reconcile with the explicit unverified-ID list and remain a separate reconciliation task. DUP-175 adds one pending-provenance pair and one unique held target (batch 40 row 16); retain batch 19 row 12. Summary-level pending count and explicit unverified-ID list remain numerically inconsistent and are not being represented as reconciled. DUP-176 adds one pending-provenance pair and one unique held target (batch 26 row 41); retain batch 6 row 37. Summary-level pending count and explicit unverified-ID list remain numerically inconsistent."
+    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-eight additional pair relationships recorded from DUP-91 through DUP-173 require row-level provenance reconciliation and represent 77 unique additional held rows because clusters overlap. DUP-165 through DUP-171 are recorded in the 6 November audit entries; DUP-172 is a new metaphor-definition cluster (retain batch 1 row 37; hold batch 35 row 38); DUP-173 connects the vaccination cluster DUP-38/DUP-73 (retain batch 5 row 15; hold batch 15 row 15, batch 20 row 16 and batch 33 row 16). Staging-location joins remain verified for the original 90 only. DUP-174 adds one further pending-provenance pair relationship and one unique held target (batch 12 row 21) within the existing catalyst cluster DUP-91; batch 25 row 21 was already held. The legacy provenance counters do not reconcile with the explicit unverified-ID list and remain a separate reconciliation task. DUP-175 adds one pending-provenance pair and one unique held target (batch 40 row 16); retain batch 19 row 12. Summary-level pending count and explicit unverified-ID list remain numerically inconsistent and are not being represented as reconciled. DUP-176 adds one pending-provenance pair and one unique held target (batch 26 row 41); retain batch 6 row 37. Summary-level pending count and explicit unverified-ID list remain numerically inconsistent. DUP-177 adds one pair relationship inside FEDERALISM-01 (batch 26 row 34 and batch 38 row 36); both were already held. No new unique held target is added. Summary-level provenance count and explicit unverified-ID list remain unreconciled."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -68,7 +68,7 @@
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
     "additional_replacement_drafts_required": 80,
     "draft_count": 90,
-    "additional_confirmed_pairs_added_on_2026_11_06": 85,
+    "additional_confirmed_pairs_added_on_2026_11_06": 86,
     "retain_replace_assignments_pending": 80
   },
   "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
@@ -4171,6 +4171,29 @@
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part42.json, rank 1262. Complete stems, options, keys and explanations were compared; both assess the definition of imagery as sensory language."
       }
+    },
+    {
+      "id": "DUP-177",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 26 row 34",
+      "b": "batch 38 row 36",
+      "concept": "Federalism constitutionally distributes powers between central and constituent levels",
+      "reason": "Both test the defining constitutional feature of federalism: distribution of governmental powers among levels of government. This is another pair relationship inside existing FEDERALISM-01.",
+      "retain": "batch 32 row 34",
+      "replace": "batch 38 row 36",
+      "retention_basis": "Retain batch 32 row 34 as the cluster anchor. Batch 26 row 34 is already held under DUP-47/DUP-142 and batch 38 row 36 is already held under DUP-159; this relationship adds no new unique held row.",
+      "provenance": null,
+      "decision": "confirmed_semantic_duplicate_extend_existing_cluster",
+      "cluster_id": "FEDERALISM-01",
+      "csv_change_status": "not_changed",
+      "replacement_status": "already_counted_in_existing_cluster",
+      "new_unique_targets_added": 0,
+      "retain_replace_assignment_status": "provisional_cluster_anchor_pending_provenance",
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_cluster_merge",
+        "note": "See cross-window-tail-review-2026-11-06-part45.json, rank 1304. Both full question records, options, answer keys and explanations were compared. Both rows are already held in FEDERALISM-01; no additional replacement target is created."
+      }
     }
   ],
   "draft_screening": {
@@ -4396,7 +4419,7 @@
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_relationships": 28,
-    "unverified_relationships": 72,
+    "unverified_relationships": 73,
     "unverified_pair_ids": [
       "DUP-91",
       "DUP-92",
@@ -4469,9 +4492,10 @@
       "DUP-164",
       "DUP-174",
       "DUP-175",
-      "DUP-176"
+      "DUP-176",
+      "DUP-177"
     ],
-    "note": "The original 90-pair set remains fully reconciled. Sixty-nine new pair relationships require provenance checks and represent 70 unique held rows because the xylem cluster adds two held rows. DUP-122, DUP-131, DUP-136 and DUP-142 add relationships inside existing clusters; DUP-153, DUP-159, DUP-162 and DUP-164 also extend existing clusters without re-counting previously held rows. No new staging joins have been verified for these additional targets. DUP-174 extends the catalyst cluster DUP-91: batch 3 row 20 retained; batch 12 row 21 newly held; batch 25 row 21 already held. Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list are not numerically aligned and must be reconciled before provenance completion is claimed. DUP-175 adds the mammalian-feature duplicate (batch 19 row 12 retained; batch 40 row 16 held). Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list remain inconsistent. DUP-176 adds the imagery-definition duplicate (batch 6 row 37 retained; batch 26 row 41 held). Its row-level history and staging join remain pending. Summary-level provenance and explicit unverified-ID counters remain inconsistent.",
+    "note": "The original 90-pair set remains fully reconciled. Sixty-nine new pair relationships require provenance checks and represent 70 unique held rows because the xylem cluster adds two held rows. DUP-122, DUP-131, DUP-136 and DUP-142 add relationships inside existing clusters; DUP-153, DUP-159, DUP-162 and DUP-164 also extend existing clusters without re-counting previously held rows. No new staging joins have been verified for these additional targets. DUP-174 extends the catalyst cluster DUP-91: batch 3 row 20 retained; batch 12 row 21 newly held; batch 25 row 21 already held. Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list are not numerically aligned and must be reconciled before provenance completion is claimed. DUP-175 adds the mammalian-feature duplicate (batch 19 row 12 retained; batch 40 row 16 held). Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list remain inconsistent. DUP-176 adds the imagery-definition duplicate (batch 6 row 37 retained; batch 26 row 41 held). Its row-level history and staging join remain pending. Summary-level provenance and explicit unverified-ID counters remain inconsistent. DUP-177 adds a pair relationship within FEDERALISM-01, but both rows were already held (batch 26 row 34 and batch 38 row 36). No additional unique replacement target is added. Row-level provenance and staging joins remain pending.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
