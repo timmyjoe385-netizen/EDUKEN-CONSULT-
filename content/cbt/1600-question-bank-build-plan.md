@@ -6,20 +6,20 @@ This section supersedes older status statements below wherever they conflict. Da
 
 ### Release and preview
 - PR #194 remains open, draft and unmerged. No production merge, import, publication or deployment is authorised.
-- The latest code-bearing PR #194 commit `a121ee7c19887bca26f7ed03cefa83fc417437d8` passed build/validation, Playwright + isolated CBT API, wallet/CBT migration integration, and isolated preview deployment/Chromium smoke. Production deploy was skipped.
+- Latest PR #194 branch head after audit documentation updates: `7ea7d12846439d2ad19e91fea6dd5617fe808858`. The current build and isolated preview deployment jobs passed; production deploy was skipped. Playwright browser checks were still running at the latest poll, after the real CBT API integration step had passed.
+- Latest code-bearing PR #194 commit `a121ee7c19887bca26f7ed03cefa83fc417437d8` passed build/validation, Playwright + isolated CBT API, wallet/CBT migration integration, and isolated preview deployment/Chromium smoke.
 - Authenticated admin UI E2E passed on 5 November in the isolated preview/test project: allowlisted Google admin sign-in, synthetic CSV import, duplicate retry, persisted draft/review/approval/publish transitions, student-feed visibility, unpublish/feed removal, cleanup, signed-out rejection and non-allowlisted HTTP 403 rejection. The test project returned to its baseline of 65 drafts + 8 published = 73 rows; import history was retained.
-- The newest PR #194 commits after `a121ee7` update audit documentation only. CI on the newest documentation-only head was cancelled during a superseding documentation update; no code changed after the fully passing code-bearing commit.
-- PR #195's current code head `0a2f3a1e2eb21dcaf25876bd63a01774e32ab02e` passed all four CI workflows: build check, wallet migration SQL integration, build/Cloudflare deploy, and Playwright browser checks. The PR remains draft and unmerged.
+- PR #195's current code head `0a2f3a1e2eb21dcaf25876bd63a01774e32ab02e` passed all four CI workflows: build check, wallet migration SQL integration, build/Cloudflare deploy, and Playwright browser checks. It remains draft and unmerged.
 - CI deployment and Chromium smoke have passed; independent preview-hostname DNS reachability and fresh external visual inspection remain unconfirmed.
 - The preview-isolation correction routes preview reads and analytics authentication through isolated test-project configuration with fail-closed behaviour. Do not claim runtime isolation beyond the specific checks actually completed.
 
 ### Current question-bank disposition
 - The repository contains 40 original CSV batches: 1,600 rows total (200 per subject), all draft-only. Structural checks cover the 18-column schema, batch size, subject balance, answer keys, distinct options, explanations, provenance and exact normalized duplicate stems.
-- Current duplicate register: **136 cross-window + 15 within-window = 151 confirmed semantic duplicate pair relationships**. These relationships resolve to **148 unique replacement targets** (90 original targets + 58 additional targets); overlapping clusters mean pair count and unique target count are not interchangeable.
-- The existing replacement candidate CSV contains **90/90 drafts**, technically validated. The additional **61 unique targets still need provenance reconciliation, replacement drafts and review**. No replacement CSV edits or imports are authorised.
-- The project owner reported approval of the original 90/90 replacements. This remains user-reported: signed item-level reviewer records and reviewer identity/credentials are absent (0/90 documentary evidence). The 58 additional targets are outside that reported approval.
-- Provenance status for the 151 relationships: 62 prior-replacement commits verified, 28 original-draft overlaps, and 57 additional relationships still requiring row-level provenance reconciliation (representing 58 unique held rows). Staging-location joins are verified for the original 90 only; the full expanded set is not reconciled.
-- Cross-window semantic review: **376 of 1,304 candidates manually reviewed; 928 remain**. The latest five checks (candidate ranks 902–906) are recorded in `audits/cross-window-tail-review-2026-11-06-part15.json`; all five were preserved as distinct.
+- Current duplicate register: **141 cross-window + 15 within-window = 156 confirmed semantic duplicate pair relationships**. These resolve to **153 unique replacement targets**; overlapping clusters mean pair count and unique target count are not interchangeable.
+- The existing replacement candidate CSV contains **90/90 drafts**, technically validated. A further **63 unique targets** require provenance reconciliation, retain/replace assignment, replacement drafts and review. No replacement CSV edits or imports are authorised.
+- The project owner reported approval of the original 90/90 replacements. This remains user-reported: signed item-level reviewer records and reviewer identity/credentials are absent (0/90 documentary evidence). All 63 additional targets are outside that reported approval.
+- Provenance status: 62 prior-replacement commits verified, 28 original-draft overlaps, and 62 additional pair relationships still requiring row-level provenance reconciliation (representing 63 unique held rows). Staging-location joins are verified for the original 90 only; the expanded set is not reconciled.
+- Cross-window semantic review: **386 of 1,304 candidates manually reviewed; 918 remain**. The latest five checks (candidate ranks 912–916) are recorded in `audits/cross-window-tail-review-2026-11-06-part17.json`; ranks 912, 913, 915 and 916 were preserved as distinct; rank 914 was confirmed as DUP-157, adding batch 21 row 11 as a new held target.
 - Within-window review still has **279 different-topic candidates reported pending** in the original queue, and the 390-versus-352 independently recomputed candidate-count discrepancy (38) remains unresolved. A reconstructed threshold run is not proof that the original pending queue was completed.
 - Similarity scores are screening signals, not proof of duplication or uniqueness. Do not bulk-import or publish based on similarity or structural validation alone.
 
@@ -41,11 +41,11 @@ Project `wpktzogarfqrgkirzdpy`:
 There are zero remaining [TEST ONLY] question rows. This database does not support the 180-question mock. The repository's 1,600 CSV drafts and replacement candidates have not been imported.
 
 ### Immediate safe gates
-1. Confirm CI on the newest PR #194 audit-only head and on the updated PR #195 code branch.
+1. Let PR #194's current Playwright run finish and inspect any failure evidence; keep production deployment skipped.
 2. Independently verify preview hostname DNS and visually inspect the public homepage and CBT screen; confirm homepage content, Worker AI content retrieval and analytics authentication use only the isolated test Supabase project.
-3. Continue the 943 remaining cross-window candidate reviews and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
-4. Reconcile provenance for the 57 new duplicate relationships / 58 unique held rows, including staging joins and cluster assignments.
-5. Draft and review replacements for the 58 additional targets; do not treat the original 90/90 reported approval as covering them.
+3. Continue the 918 remaining cross-window candidate reviews and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
+4. Reconcile provenance and staging joins for the 62 new duplicate relationships / 63 unique held rows, including cluster assignments.
+5. Prepare and review replacement drafts for the 63 additional targets; the original 90/90 reported approval does not cover them.
 6. Keep all source drafts and replacements out of Supabase until academic, semantic, provenance and review gates are closed.
 7. Keep production merge, import, publication and deployment blocked pending separate explicit release approval.
 
