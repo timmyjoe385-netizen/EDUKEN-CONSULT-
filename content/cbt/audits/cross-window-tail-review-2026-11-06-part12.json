@@ -1,0 +1,156 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five additional full-question-content checks from the lower-scoring cross-window candidate list after the 356-reviewed checkpoint.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      886,
+      887,
+      888,
+      890,
+      891
+    ],
+    "previous_total_manually_reviewed": 356,
+    "now_manually_reviewed": 361,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 943,
+    "excluded_already_reviewed_candidate_rank": 889,
+    "excluded_note": "Rank 889 is already represented by DUP-120 and DUP-126 in the CIVIC-DUTY-01 cluster and is not counted again."
+  },
+  "preserved": [
+    {
+      "rank": 886,
+      "score": 0.476,
+      "subject": "Economics",
+      "a": "batch 7 row 29",
+      "b": "batch 25 row 28",
+      "question_a": "A consumer price index is commonly used to measure changes in the:",
+      "options_a": [
+        "average prices of a selected basket of goods and services",
+        "number of people in the labour force",
+        "volume of rainfall in a year",
+        "total land area of a country"
+      ],
+      "answer_a": "A",
+      "question_b": "Which measure is commonly used to summarise inequality in the distribution of income?",
+      "options_b": [
+        "Consumer price index",
+        "Gini coefficient",
+        "Exchange rate",
+        "Terms of trade"
+      ],
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_economic_indicators",
+      "reason": "The consumer price index tracks average price changes in a representative basket; the Gini coefficient summarises income inequality. They are different measures and learning outcomes."
+    },
+    {
+      "rank": 887,
+      "score": 0.476,
+      "subject": "Mathematics",
+      "a": "batch 10 row 8",
+      "b": "batch 27 row 10",
+      "question_a": "Find the mode of 2, 3, 3, 4, 5, 5, 5.",
+      "options_a": [
+        "2",
+        "3",
+        "4",
+        "5"
+      ],
+      "answer_a": "D",
+      "question_b": "Find the trace of the matrix [[4, 2], [1, 7]].",
+      "options_b": [
+        "7",
+        "9",
+        "11",
+        "14"
+      ],
+      "answer_b": "C",
+      "decision": "preserve_both_as_distinct_mathematical_topics",
+      "reason": "The first assesses statistical mode; the second assesses the trace of a square matrix. The common mathematical wording is incidental."
+    },
+    {
+      "rank": 888,
+      "score": 0.476,
+      "subject": "Use of English",
+      "a": "batch 2 row 2",
+      "b": "batch 32 row 2",
+      "question_a": "Choose the correct form: “By the time we arrived, the film ___.”",
+      "options_a": [
+        "starts",
+        "has started",
+        "had started",
+        "will start"
+      ],
+      "answer_a": "C",
+      "question_b": "He said, “I am busy now.” Choose the correct reported form.",
+      "options_b": [
+        "He said that he was busy then.",
+        "He said that I am busy now.",
+        "He says that he had been busy then.",
+        "He said that he is busy tomorrow."
+      ],
+      "answer_b": "A",
+      "decision": "preserve_both_as_distinct_grammar_assessments",
+      "reason": "The first tests past-perfect tense in a time sequence; the second tests reported speech transformations, including pronoun and time-expression changes."
+    },
+    {
+      "rank": 890,
+      "score": 0.476,
+      "subject": "Physics",
+      "a": "batch 23 row 26",
+      "b": "batch 34 row 26",
+      "question_a": "During the melting of a pure substance at its melting point, the temperature remains constant because supplied heat is used to",
+      "options_a": [
+        "increase average kinetic energy",
+        "overcome intermolecular forces",
+        "increase the mass",
+        "reduce the volume to zero"
+      ],
+      "answer_a": "B",
+      "question_b": "The quantity of heat needed to raise the temperature of 1 kg of a substance by 1 K is its",
+      "options_b": [
+        "latent heat",
+        "thermal conductivity",
+        "specific heat capacity",
+        "heat capacity of the universe"
+      ],
+      "answer_b": "C",
+      "decision": "preserve_both_as_distinct_thermal_physics_concepts",
+      "reason": "The first assesses latent heat and change of state; the second defines specific heat capacity and temperature rise. These are related heat topics but not duplicate questions."
+    },
+    {
+      "rank": 891,
+      "score": 0.475,
+      "subject": "Economics",
+      "a": "batch 5 row 27",
+      "b": "batch 22 row 27",
+      "question_a": "National income measured at constant prices is useful because it:",
+      "options_a": [
+        "Adjusts for price changes when comparing output over time",
+        "Counts only the income of government workers",
+        "Always equals the value of imports",
+        "Removes the need to measure production"
+      ],
+      "answer_a": "A",
+      "question_b": "National income is commonly measured over a period of ___.",
+      "options_b": [
+        "one hour only",
+        "one accounting year",
+        "one market transaction",
+        "one election cycle only"
+      ],
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_national_income_concepts",
+      "reason": "The first concerns real national income and constant-price comparisons; the second asks about the accounting period used for national-income measurement."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pairs": 0,
+    "new_unique_replacement_targets": 0,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "Four previously reviewed ranks in the surrounding interval are intentionally not recounted; rank 889 was already logged as DUP-120/DUP-126. No retain/replace assignment or replacement draft was created from these five checks."
+  }
+}
