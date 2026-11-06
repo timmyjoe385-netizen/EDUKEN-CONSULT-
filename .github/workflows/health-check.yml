@@ -105,8 +105,13 @@ jobs:
         if: github.event_name != 'pull_request' && success()
         uses: actions/github-script@v8
         with:
+          retries: 3
           script: |
-            const runs = await github.rest.actions.listWorkflowRuns({
+            // Recovery-email bookkeeping is secondary to the live service checks.
+            // A transient GitHub API failure must never turn healthy services red.
+            core.setOutput('recovered', 'false');
+            try {
+              const runs = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'health-check.yml',
@@ -153,7 +158,11 @@ jobs:
             const recovered = Boolean(latestOutage && !recoveryEmailSentAfterOutage);
             core.setOutput('recovered', recovered ? 'true' : 'false');
             if (recovered) core.info(`Previous run ${latestOutage.run.id} had failed monitored checks: ${latestOutage.failedChecks.join(', ')}. Current checks passed and no successful recovery email was recorded after that outage.`);
-            else core.info('No unreported monitored outage detected; no recovery alert is needed.');
+              else core.info('No unreported monitored outage detected; no recovery alert is needed.');
+            } catch (error) {
+              core.warning(`Recovery-history lookup unavailable; live health checks remain authoritative. Skipping recovery email detection for this run. Details: ${error.message}`);
+              core.setOutput('recovered', 'false');
+            }
 
       - name: Send recovery email
         if: github.event_name != 'pull_request' && success() && steps.recovery.outputs.recovered == 'true' && steps.email_config.outputs.enabled == 'true'
