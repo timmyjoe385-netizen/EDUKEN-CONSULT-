@@ -13,10 +13,10 @@ This update supersedes conflicting older status notes below. Historical entries 
 
 ### 2. Current non-destructive staging reconciliation
 - The 6 November staging revision accounts for all 1,600 source rows: **1,476 provisionally retained + 124 held = 1,600**.
-- The 124 held source locations map to **119 pair IDs** because some findings extend existing duplicate clusters. All 34 newly held locations have source-row checks and staging joins; all 34 retained anchors are present; no retained/held overlap was found.
+- The 124 held source locations map to **119 pair IDs** because some findings extend existing duplicate clusters. All 34 newly held locations have source-row checks and staging joins; all 34 retained anchors are present; no retained/held overlap was found. This staging revision is not a full reconciliation of every later pair ID in the consolidated register, which still lists 96 explicitly unverified IDs and inconsistent summary counters.
 - Source CSVs and baseline staging CSVs were not modified. The 6 November revision is audit-only and has not been imported or published.
 - The 124 held rows are not all final academic duplicate decisions. The 28 new pair records and six unique cluster-extension rows still require contextual duplicate-versus-related-skill decisions, provenance classification and qualified subject review.
-- Baseline 90 provenance classification: 48 prior-replacement commits verified; 13 exact introducing commit SHAs still need normalization; 29 original-draft overlaps, including DUP-34 whose source provenance is now verified. The new 34 held locations remain a separate pending provenance/review group.
+- Baseline 90 provenance classification is complete: 62 commit-backed replacement histories and 28 original-draft overlaps. Exact introducing commits are verified for all 13 later-replacement rows; DUP-34 edit history is also documented. Separately, the 28 new addendum pair records and six unique cluster-extension rows remain pending provenance/contextual disposition, although all 34 held locations and 34 retained anchors have source/staging joins.
 - Replacement proposals for the 34 new held locations: **0 drafted**. No new held item is approved for insertion or publication.
 
 ### 3. Review progress — aggregate not yet reconciled
