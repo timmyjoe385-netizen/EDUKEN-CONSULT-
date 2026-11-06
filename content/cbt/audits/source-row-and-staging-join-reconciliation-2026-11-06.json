@@ -11,7 +11,12 @@
     "extension_source_locations_found": 8,
     "extension_source_rows_missing": 0,
     "method": "Fetched the referenced original-batch CSVs from this branch and parsed their headers/data rows. Each referenced location was checked for row existence, subject, topic/subtopic, question stem and correct-option field.",
-    "important_limit": "Existence and broad concept alignment do not by themselves establish an exact semantic duplicate. Some pairs use different figures or question forms within the same skill family; retain/replace decisions still require contextual and qualified subject/syllabus review."
+    "important_limit": "Existence and broad concept alignment do not by themselves establish an exact semantic duplicate. Some pairs use different figures or question forms within the same skill family; retain/replace decisions still require contextual and qualified subject/syllabus review.",
+    "rechecked_on_branch_head": "2026-11-06",
+    "rechecked_pair_locations": 56,
+    "rechecked_pair_records": 28,
+    "row_location_convention": "The numbered source row is the physical CSV line number, including the header as line 1; all 56 retain/hold references were checked at that line.",
+    "qualification": "All referenced rows exist and match their recorded subject/topic and broad skill family. This does not convert a skill-family resemblance into an independently approved duplicate disposition; the pairs remain subject to contextual and qualified academic review."
   },
   "staging_join": {
     "staging_revision": "content/cbt/staging/2026-11-01/",
@@ -28,7 +33,7 @@
     "new_pair_locations_joined": 0,
     "extension_locations_joined": 0,
     "extension_locations_expected": 8,
-    "result": "No new addendum pair ID or listed extension held_location matched the 1 November held-duplicate staging exports by pair_id or held_location. The 1 November staging snapshot is not a valid complete staging destination for the 6 November addendum."
+    "result": "Still not reconciled: none of the 28 new pair IDs or their 56 source locations, and none of the eight extension locations, is present in the 1 November held exports. A separate dated reconciliation revision is required."
   },
   "safety": {
     "original_source_csvs_modified": 0,
