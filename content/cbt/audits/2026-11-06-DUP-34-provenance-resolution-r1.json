@@ -1,7 +1,7 @@
 {
   "date": "2026-11-06",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "purpose": "Resolve the last explicitly unverified provenance pair in the 6 November staging manifest using the original source CSV rows.",
+  "purpose": "Resolve the remaining provenance classification gap within the baseline 90-row held cohort using the original source CSV rows; this does not close the separate 34-row 6 November addendum provenance gate.",
   "pair": {
     "id": "DUP-34",
     "subject": "Use of English",
@@ -24,13 +24,19 @@
     "semantic_note": "Both questions test concord with the singular determiner/pronoun 'each'. The lexical complements differ, but the assessed rule is the same. This supports retaining the earlier row and keeping the later row held pending qualified English subject review; it is not independent academic approval."
   },
   "manifest_delta": {
-    "original_draft_overlap_relationships_before": 28,
-    "original_draft_overlap_relationships_after": 29,
-    "provenance_unverified_relationships_before": 1,
-    "provenance_unverified_relationships_after": 0,
-    "unverified_pair_ids_after": []
+    "baseline_90_relationships": {
+      "original_draft_overlap_relationships_before": 28,
+      "original_draft_overlap_relationships_after": 29,
+      "explicitly_unverified_relationships_before": 1,
+      "explicitly_unverified_relationships_after": 0
+    },
+    "addendum_34_new_held_locations": {
+      "provenance_status": "pending",
+      "contextual_disposition": "pending",
+      "note": "These are separate from the baseline 90 cohort and remain outstanding."
+    }
   },
-  "remaining_provenance_work": "Normalize exact introducing commit SHAs for 13 replacement-created pairs; those are evidence-normalization tasks, not unresolved source-origin classifications.",
+  "remaining_provenance_work": "Normalize exact introducing commit SHAs for 13 replacement-created baseline pairs, and complete provenance/contextual disposition for the separate 28 new addendum pair records plus six unique cluster-extension rows.",
   "safety": {
     "source_csv_edits": 0,
     "staging_csv_edits": 0,
