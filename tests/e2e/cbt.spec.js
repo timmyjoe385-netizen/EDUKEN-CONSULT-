@@ -46,6 +46,65 @@ test('CBT practice fallback supports navigation, flagging and answer review', as
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
 });
 
+test('CBT practice count adapts to the published questions available', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'single-published-question',
+      subject: 'Use of English',
+      question_text: 'Choose the correct option.',
+      options: { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' },
+    }] }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.questionCount).toBe(1);
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'c'.repeat(64),
+        durationSeconds: 60,
+        questions: [{
+          id: 'single-published-question',
+          subject: 'Use of English',
+          prompt: 'Choose the correct option.',
+          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const countSelect = page.getByLabel('Questions per subject practice');
+  await expect(countSelect).toHaveValue('1');
+  await expect(countSelect.locator('option')).toHaveCount(1);
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+});
+
+test('mixed mock controls do not offer question counts the published bank cannot support', async ({ page }) => {
+  const subjects = ['Use of English', 'Biology', 'Chemistry', 'Physics'];
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: subjects.map((subject, index) => ({
+      id: `published-${index}`,
+      subject,
+      question_text: `A published ${subject} question.`,
+      options: { A: 'Option A', B: 'Option B', C: 'Option C', D: 'Option D' },
+    })) }),
+  }));
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const mockCountSelect = page.getByLabel('Questions per mock');
+  await expect(mockCountSelect).toBeDisabled();
+  await expect(mockCountSelect.locator('option')).toHaveText('Not enough published questions for a mock');
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
+});
+
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route =>
     route.fulfill({

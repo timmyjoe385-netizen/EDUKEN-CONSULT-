@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { shouldBlockWrite } from '../src/lib/api-safety.js';
+import { shouldBlockWrite, resolveSupabaseBackend, isTrustedCbtPreviewOrigin } from '../src/lib/api-safety.js';
 
 test('canonical production origin permits write methods', () => {
   for (const method of ['POST', 'PUT', 'PATCH', 'DELETE']) {
@@ -63,4 +63,44 @@ test('preview writes require explicit opt-in and a separate Supabase backend', (
     true,
     'production origin can never write to the test backend',
   );
+});
+
+
+test('unconfigured branch previews resolve to the isolated test backend, never production', () => {
+  const backend = resolveSupabaseBackend({
+    origin: 'https://fix-cbt-practice-available-counts-eduken-consult.timmy385.workers.dev',
+    suppliedUrl: '',
+    suppliedKey: '',
+    productionUrl: 'https://pphxltbkwygqjtjgkhxu.supabase.co',
+    productionKey: 'production-key',
+    previewUrl: 'https://wpktzogarfqrgkirzdpy.supabase.co',
+    previewKey: 'preview-key',
+  });
+  assert.equal(backend.url, 'https://wpktzogarfqrgkirzdpy.supabase.co');
+  assert.equal(backend.key, 'preview-key');
+  assert.equal(backend.explicit, false);
+  assert.equal(backend.isolated, true);
+});
+
+test('canonical production keeps the production backend when no explicit config is supplied', () => {
+  const backend = resolveSupabaseBackend({
+    origin: 'https://eduken-consult.timmyjoe385.workers.dev',
+    suppliedUrl: '',
+    suppliedKey: '',
+    productionUrl: 'https://pphxltbkwygqjtjgkhxu.supabase.co',
+    productionKey: 'production-key',
+    previewUrl: 'https://wpktzogarfqrgkirzdpy.supabase.co',
+    previewKey: 'preview-key',
+  });
+  assert.equal(backend.url, 'https://pphxltbkwygqjtjgkhxu.supabase.co');
+  assert.equal(backend.key, 'production-key');
+  assert.equal(backend.isolated, false);
+});
+
+
+test('implicit CBT preview writes are limited to EDUKEN Cloudflare preview hosts', () => {
+  assert.equal(isTrustedCbtPreviewOrigin('https://fix-cbt-practice-available-counts-eduken-consult.timmy385.workers.dev'), true);
+  assert.equal(isTrustedCbtPreviewOrigin('https://eduken-consult-preview.timmy385.workers.dev'), true);
+  assert.equal(isTrustedCbtPreviewOrigin('https://attacker.example'), false);
+  assert.equal(isTrustedCbtPreviewOrigin('https://other-worker.workers.dev'), false);
 });
