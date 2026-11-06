@@ -18,10 +18,10 @@
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
     "cross_window_additional_targeted_candidates_reviewed": 472,
-    "cross_window_manually_reviewed_candidates": 701,
-    "cross_window_candidates_remaining_not_manually_reviewed": 603,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 158,
-    "cross_window_review_note": "Full-content lower-tail review continues in 15-candidate batches. Latest ranks 1229–1243: 14 preserved as distinct; one catalyst-mechanism duplicate confirmed as an extension of DUP-91. See cross-window-tail-review-2026-11-06-part40.json. Current total: 701/1,304 manually reviewed; 603 remain.",
+    "cross_window_manually_reviewed_candidates": 716,
+    "cross_window_candidates_remaining_not_manually_reviewed": 588,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 159,
+    "cross_window_review_note": "Full-content lower-tail review continues in 15-candidate batches. Latest ranks 1244–1258: 14 preserved as distinct; one mammalian-feature duplicate confirmed. See cross-window-tail-review-2026-11-06-part41.json. Current total: 716/1,304 manually reviewed; 588 remain.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,19 +36,19 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 158,
+    "cross_window_pairs": 159,
     "within_window_pairs": 15,
-    "total_pairs": 173,
+    "total_pairs": 174,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 79,
+    "provenance_unverified_pairs": 80,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-eight additional pair relationships recorded from DUP-91 through DUP-173 require row-level provenance reconciliation and represent 77 unique additional held rows because clusters overlap. DUP-165 through DUP-171 are recorded in the 6 November audit entries; DUP-172 is a new metaphor-definition cluster (retain batch 1 row 37; hold batch 35 row 38); DUP-173 connects the vaccination cluster DUP-38/DUP-73 (retain batch 5 row 15; hold batch 15 row 15, batch 20 row 16 and batch 33 row 16). Staging-location joins remain verified for the original 90 only. DUP-174 adds one further pending-provenance pair relationship and one unique held target (batch 12 row 21) within the existing catalyst cluster DUP-91; batch 25 row 21 was already held. The legacy provenance counters do not reconcile with the explicit unverified-ID list and remain a separate reconciliation task."
+    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-eight additional pair relationships recorded from DUP-91 through DUP-173 require row-level provenance reconciliation and represent 77 unique additional held rows because clusters overlap. DUP-165 through DUP-171 are recorded in the 6 November audit entries; DUP-172 is a new metaphor-definition cluster (retain batch 1 row 37; hold batch 35 row 38); DUP-173 connects the vaccination cluster DUP-38/DUP-73 (retain batch 5 row 15; hold batch 15 row 15, batch 20 row 16 and batch 33 row 16). Staging-location joins remain verified for the original 90 only. DUP-174 adds one further pending-provenance pair relationship and one unique held target (batch 12 row 21) within the existing catalyst cluster DUP-91; batch 25 row 21 was already held. The legacy provenance counters do not reconcile with the explicit unverified-ID list and remain a separate reconciliation task. DUP-175 adds one pending-provenance pair and one unique held target (batch 40 row 16); retain batch 19 row 12. Summary-level pending count and explicit unverified-ID list remain numerically inconsistent and are not being represented as reconciled."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -57,7 +57,7 @@
     "previously_triaged": 70
   },
   "replacement_plan": {
-    "unique_replacement_targets": 168,
+    "unique_replacement_targets": 169,
     "all_targets_unique": false,
     "retain_replace_assignments_complete": false,
     "csv_edits_authorized": false,
@@ -66,10 +66,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 78,
+    "additional_replacement_drafts_required": 79,
     "draft_count": 90,
-    "additional_confirmed_pairs_added_on_2026_11_06": 83,
-    "retain_replace_assignments_pending": 78
+    "additional_confirmed_pairs_added_on_2026_11_06": 84,
+    "retain_replace_assignments_pending": 79
   },
   "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
@@ -4127,6 +4127,28 @@
         "status": "assistant_contextual_review_confirmed_cluster_merge",
         "note": "See cross-window-tail-review-2026-11-06-part40.json, rank 1233. Full stems, four options, keys and explanations were compared. This extends the existing catalyst cluster DUP-91; batch 3 row 20 remains the anchor, batch 12 row 21 is newly held, and batch 25 row 21 was already held."
       }
+    },
+    {
+      "id": "DUP-175",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 19 row 12",
+      "b": "batch 40 row 16",
+      "concept": "Mammary glands as the defining mammalian feature",
+      "reason": "Both questions ask for the defining or characteristic feature that distinguishes mammals from other vertebrate groups and key mammary glands. Stem variation does not change the single assessed fact.",
+      "retain": "batch 19 row 12",
+      "replace": "batch 40 row 16",
+      "retention_basis": "Retain the earlier batch 19 row 12; hold batch 40 row 16 as one new unique replacement target pending row-level history and staging verification.",
+      "provenance": null,
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "new_unique_targets_added": 1,
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part41.json, rank 1251. Full stems, options, answer keys and explanations were checked; both assess mammary glands as the defining mammalian feature."
+      }
     }
   ],
   "draft_screening": {
@@ -4352,7 +4374,7 @@
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_relationships": 28,
-    "unverified_relationships": 70,
+    "unverified_relationships": 71,
     "unverified_pair_ids": [
       "DUP-91",
       "DUP-92",
@@ -4423,9 +4445,10 @@
       "DUP-162",
       "DUP-163",
       "DUP-164",
-      "DUP-174"
+      "DUP-174",
+      "DUP-175"
     ],
-    "note": "The original 90-pair set remains fully reconciled. Sixty-nine new pair relationships require provenance checks and represent 70 unique held rows because the xylem cluster adds two held rows. DUP-122, DUP-131, DUP-136 and DUP-142 add relationships inside existing clusters; DUP-153, DUP-159, DUP-162 and DUP-164 also extend existing clusters without re-counting previously held rows. No new staging joins have been verified for these additional targets. DUP-174 extends the catalyst cluster DUP-91: batch 3 row 20 retained; batch 12 row 21 newly held; batch 25 row 21 already held. Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list are not numerically aligned and must be reconciled before provenance completion is claimed.",
+    "note": "The original 90-pair set remains fully reconciled. Sixty-nine new pair relationships require provenance checks and represent 70 unique held rows because the xylem cluster adds two held rows. DUP-122, DUP-131, DUP-136 and DUP-142 add relationships inside existing clusters; DUP-153, DUP-159, DUP-162 and DUP-164 also extend existing clusters without re-counting previously held rows. No new staging joins have been verified for these additional targets. DUP-174 extends the catalyst cluster DUP-91: batch 3 row 20 retained; batch 12 row 21 newly held; batch 25 row 21 already held. Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list are not numerically aligned and must be reconciled before provenance completion is claimed. DUP-175 adds the mammalian-feature duplicate (batch 19 row 12 retained; batch 40 row 16 held). Its row-level history and staging join remain pending. The summary-level provenance counter and explicit unverified-ID list remain inconsistent.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
