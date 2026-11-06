@@ -50,8 +50,18 @@
     "final_retained_rows": 1476,
     "final_held_rows": 124,
     "final_total_rows": 1600,
-    "result": "All 34 new held locations and 34 retained anchors matched the 1 November retained export. The six genuinely new cluster-extension rows were added; two extension locations already held in the baseline were excluded. A separate 6 November staging revision was created and verified. The 1 November baseline remains unchanged.",
-    "method": "Matched source_batch/source_csv_row in baseline retained exports and retained_location/held_location references from the addendum. Verified all 40 per-batch totals remain 40; retained/held source locations are unique and non-overlapping."
+    "result": "The 1 November held-export join remains 0/28 because it is immutable and predates this addendum. A separate 6 November revision is present and verified: all 28 new pair records plus six unique cluster-extension rows (34 held locations) are included; all 34 retained anchors are present; 1,476 retained + 124 held = 1,600; no retained/held source-location overlap.",
+    "method": "Matched source_batch/source_csv_row in baseline retained exports and retained_location/held_location references from the addendum. Verified all 40 per-batch totals remain 40; retained/held source locations are unique and non-overlapping.",
+    "new_revision_files_verified": 9,
+    "new_unique_extension_rows_joined": 6,
+    "new_unique_extension_rows_expected": 6,
+    "new_held_locations_joined": 34,
+    "new_held_locations_expected": 34,
+    "retained_anchor_locations_expected": 34,
+    "reconciled_retained_rows": 1476,
+    "reconciled_held_rows": 124,
+    "reconciled_total_rows": 1600,
+    "held_retained_overlap": 0
   },
   "safety": {
     "original_source_csvs_modified": 0,
@@ -59,11 +69,13 @@
     "new_staging_revision_created": true,
     "production_imports": 0,
     "production_publications": 0,
-    "release_authorized": false
+    "release_authorized": false,
+    "new_staging_revision": "content/cbt/staging/2026-11-06/"
   },
   "next_actions": [
-    "Resolve canonical cluster merge accounting for DUP-22/DUP-165 and DUP-08/DUP-166 in the consolidated register.",
-    "Complete provenance and independent academic/syllabus review for the new 34 held candidates and replacement drafts.",
-    "Keep all questions out of production until release gates are separately approved."
+    "Complete contextual duplicate-vs-related-skill decisions and provenance classification for the 28 new pair records and six cluster extensions.",
+    "Apply the documented canonical merges DUP-22 + DUP-165 -> DUP-165 and DUP-08 + DUP-166 -> DUP-08 in the consolidated register after verifying all memberships.",
+    "Obtain independent qualified subject, answer-key and syllabus approval for all held rows and replacement questions.",
+    "Run full isolated student/admin CBT validation before any release; keep imports and publication blocked."
   ]
 }
