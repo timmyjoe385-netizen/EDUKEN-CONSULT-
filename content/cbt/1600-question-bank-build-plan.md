@@ -29,14 +29,14 @@ This update supersedes conflicting older status notes below. Historical entries 
 - Within-window: the reconstructed set contains 390 candidates at threshold 0.42; the original report still lists 279 pending and a 38-count discrepancy. The original queue remains unreconciled.
 - Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
-### 4. Preview environment — student API smoke verified
-- Cloudflare account Workers subdomain is `timmyjoe385`; the correct preview hostname is `eduken-consult-preview.timmyjoe385.workers.dev`.
-- Preview homepage and `/cbt` route returned HTTP 200. The page renders subject practice and the exact-three-subject mixed mock selector.
-- Preview Worker uses `EDUKEN_ENV=preview`, isolated Supabase project `wpktzogarfqrgkirzdpy`, and its own analytics D1 binding; production and preview analytics databases are distinct.
-- Supabase preview logs (6 November, 15:27–15:31 UTC) show question-feed GET 200, attempt creation POST 201 and attempt submission POST 200. The student attempt lifecycle is therefore smoke-tested against the isolated service.
-- A request exceeding the available published questions returned 409, confirming the insufficient-bank guard. The preview bank still has only one published question per subject; it cannot support normal practice counts or any meaningful full mock.
-- Recent admin endpoints returned 401 for unauthenticated requests. This is expected for signed-out access but does not satisfy the authenticated allowlisted admin-session walkthrough.
-- External fetch confirms route reachability/content only; visual QA, full mock with a sufficiently populated bank, authenticated admin acceptance and device/network performance tests remain open.
+### 4. Preview environment — question feed verified; attempt lifecycle still pending
+- Cloudflare account Workers subdomain is `timmyjoe385`. The correct preview URL is `https://eduken-consult-preview.timmyjoe385.workers.dev/`; the earlier `timmy385` hostname was incorrect.
+- Preview homepage and `/cbt` return HTTP 200. The homepage displays the TEST PREVIEW ONLY banner; the CBT page renders the “Available” state after its question feed loads.
+- The isolated preview question API `GET /api/cbt/questions` returned HTTP 200 with **8 published original preview samples**, one per subject. The subject-practice selector correctly limits the sample session to one question. These are synthetic preview samples, not a reviewed JAMB bank.
+- The preview `eduken-api` Edge Function is ACTIVE at version 43 with `verify_jwt=false`; its deployed `index.ts` exactly matches the repository source. Preview Worker settings point to isolated Supabase project `wpktzogarfqrgkirzdpy`; production and preview analytics D1 bindings are distinct.
+- The page's subject-practice and mixed-mock controls render enabled. However, with only one question per subject, the preview bank cannot satisfy a 10-question mock; the full attempt-start response has not yet been exercised.
+- Attempt creation, answer submission, server grading and results retrieval remain unverified in a real student browser session. Do not mark the full student journey passed from the GET-feed check alone.
+- Production CBT question bank remains empty (0 rows). No production import, publication or deployment was performed by these checks.
 
 ### 5. Remaining gates and safe next actions
 1. Reconcile the 297 persisted rank entries against all prior review segments and compute a unique aggregate reviewed/remaining count.
