@@ -305,3 +305,11 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - Fourteen candidates were preserved as distinct. Rank 1251 was confirmed as **DUP-175**: batch 19 row 12 and batch 40 row 16 both test mammary glands as the defining mammalian feature. Retain batch 19 row 12; hold batch 40 row 16 pending provenance and staging verification.
 - Cross-window progress is now **716/1,304 manually reviewed; 588 remain**. The duplicate register contains **159 cross-window + 15 within-window = 174 recorded pair relationships**, resolving to **169 unique replacement targets** (90 original + 79 additional). The summary-level provenance counter now says 80 additional relationships pending, while the explicit unverified-ID list contains 71; this remains an open reconciliation issue.
 - No source or staging CSV was modified. No replacement draft, import, publication or production deployment occurred.
+
+
+## Seventh lower-tail audit batch — 6 November 2026
+
+- Reviewed cross-window candidate ranks **1259–1273** against complete source rows, four options, answer keys and explanations. See `content/cbt/audits/cross-window-tail-review-2026-11-06-part42.json`.
+- Fourteen candidates were preserved as distinct. Rank 1262 was confirmed as **DUP-176**: batch 6 row 37 and batch 26 row 41 both define imagery as language that evokes sensory experience. Retain batch 6 row 37; hold batch 26 row 41 pending provenance and staging verification.
+- Cross-window progress is now **731/1,304 manually reviewed; 573 remain**. The duplicate register contains **160 cross-window + 15 within-window = 175 recorded pair relationships**, resolving to **170 unique replacement targets** (90 original + 80 additional). Summary-level provenance count is 81 additional relationships pending; the explicit unverified-ID list contains 72, and remains unreconciled.
+- No source or staging CSV was modified. No replacement draft, import, publication or production deployment occurred.
