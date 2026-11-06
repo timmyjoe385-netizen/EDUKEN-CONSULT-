@@ -8,7 +8,8 @@ This section supersedes older status statements below wherever they conflict. Da
 - PR #194 remains open, draft and unmerged. No production merge, import, publication or deployment is authorised.
 - The latest code-bearing PR #194 commit `a121ee7c19887bca26f7ed03cefa83fc417437d8` passed build/validation, Playwright + isolated CBT API, wallet/CBT migration integration, and isolated preview deployment/Chromium smoke. Production deploy was skipped.
 - Authenticated admin UI E2E passed on 5 November in the isolated preview/test project: allowlisted Google admin sign-in, synthetic CSV import, duplicate retry, persisted draft/review/approval/publish transitions, student-feed visibility, unpublish/feed removal, cleanup, signed-out rejection and non-allowlisted HTTP 403 rejection. The test project returned to its baseline of 65 drafts + 8 published = 73 rows; import history was retained.
-- The later PR #194 commits update audit documentation and do not change production. CI on the newest audit-only head must be checked separately before treating that head as fully verified.
+- The newest PR #194 commits after `a121ee7` update audit documentation only. CI on the newest documentation-only head was cancelled during a superseding documentation update; no code changed after the fully passing code-bearing commit.
+- PR #195's current code head `0a2f3a1e2eb21dcaf25876bd63a01774e32ab02e` passed all four CI workflows: build check, wallet migration SQL integration, build/Cloudflare deploy, and Playwright browser checks. The PR remains draft and unmerged.
 - CI deployment and Chromium smoke have passed; independent preview-hostname DNS reachability and fresh external visual inspection remain unconfirmed.
 - The preview-isolation correction routes preview reads and analytics authentication through isolated test-project configuration with fail-closed behaviour. Do not claim runtime isolation beyond the specific checks actually completed.
 
