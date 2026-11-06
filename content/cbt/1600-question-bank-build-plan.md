@@ -25,8 +25,8 @@ This update supersedes conflicting older status notes below. Historical entries 
 - The later persisted segments contain **297 rank IDs** (565–579, 640–909 and 1293–1304); **58 overlap** earlier rank IDs, so only **239 are genuinely new**.
 - The combined tail-review files now contain **956 unique rank IDs**. The separate 49-item high-similarity rank mapping adds 49 explicit IDs, for 1,005 explicit rank IDs across those source sets.
 - The earlier cumulative counter says 1,007 reviewed before the addendum, but the 286 baseline plus 717 explicit earlier rank IDs gives 1,003 — a **four-count discrepancy**.
-- There are 62 rank IDs in the 287–1304 range without an explicit tail-review record. Some may be covered by older review artifacts; do not call them unreviewed until those artifacts are crosswalked.
-- Therefore neither 1,246 (counter-based) nor 1,242 (rank-set-based) is accepted as the final aggregate yet. The 1,304-rank audit is **not complete**.
+- The 62 rank IDs previously missing from the tail-review files have now received explicit pairwise dispositions in **part83** (3 same-fact duplicate recommendations, one near-duplicate recommendation, eight related-skill variants and 44 distinct/complementary pairs). The tail-review union now covers all **1,018 ranks from 287–1304**.
+- The remaining crosswalk task is to map the 286 baseline reviews (49 high-similarity ranks mapped; 237 additional targeted reviews still lack exact rank IDs) and resolve the four-count discrepancy. Do not claim a final aggregate reviewed/remaining count until that mapping is complete.
 - Within-window: the reconstructed set contains 390 candidates at threshold 0.42; the original report still lists 279 pending and a 38-count discrepancy. The original queue remains unreconciled.
 - Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
