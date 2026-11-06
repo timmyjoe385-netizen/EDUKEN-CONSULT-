@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "staging_revision": "content/cbt/staging/2026-11-06/review-holdout-index-r1.json",
+  "purpose": "Resolve retained-anchor references for six genuinely new existing-cluster extension candidates without changing the original question bank.",
+  "anchors": [
+    {
+      "rank": 684,
+      "cluster": "DUP-197",
+      "held": "batch 4 row 10",
+      "retained_anchor": "batch 20 row 11",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 738,
+      "cluster": "DUP-47",
+      "held": "batch 2 row 33",
+      "retained_anchor": "batch 32 row 34",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 746,
+      "cluster": "DUP-214",
+      "held": "batch 13 row 20",
+      "retained_anchor": "unresolved",
+      "anchor_source": "legacy register contains no DUP-214 record; addendum identifies atomic-number/electron-count cluster but no canonical retained anchor",
+      "status": "blocked_pending_cluster_origin_lookup"
+    },
+    {
+      "rank": 794,
+      "cluster": "DUP-214",
+      "held": "batch 3 row 18",
+      "retained_anchor": "unresolved",
+      "anchor_source": "same unresolved DUP-214 cluster as rank 746",
+      "status": "blocked_pending_cluster_origin_lookup"
+    },
+    {
+      "rank": 885,
+      "cluster": "DUP-78",
+      "held": "batch 5 row 5",
+      "retained_anchor": "batch 20 row 6",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 898,
+      "cluster": "DUP-19",
+      "held": "batch 14 row 31",
+      "retained_anchor": "batch 9 row 31",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    }
+  ],
+  "totals": {
+    "extension_candidates": 6,
+    "anchor_resolved": 4,
+    "anchor_unresolved": 2
+  },
+  "exclusions": [
+    {
+      "rank": 768,
+      "cluster": "DUP-08",
+      "held": "batch 34 row 18",
+      "status": "already_held_as_DUP-166_merge_into_DUP-08"
+    },
+    {
+      "rank": 1304,
+      "cluster": "DUP-47",
+      "held": "batch 38 row 36",
+      "status": "already_held_as_DUP-177_merge_into_DUP-47"
+    }
+  ],
+  "pair_cluster_merges": [
+    {
+      "clusters": [
+        "DUP-22",
+        "DUP-165"
+      ],
+      "canonical": "DUP-165",
+      "status": "addendum_directive_recorded"
+    },
+    {
+      "clusters": [
+        "DUP-08",
+        "DUP-166"
+      ],
+      "canonical": "DUP-08",
+      "status": "addendum_directive_recorded"
+    }
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "existing_staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  },
+  "next_step": "Trace the origin and full membership of the DUP-214 atomic-number/electron-count cluster before assigning a retained anchor or changing cluster totals. The two unresolved extension rows remain review-only."
+}
