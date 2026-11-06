@@ -299,7 +299,9 @@
     "provenance_checks_pending": 9,
     "staging_joins_pending": 9,
     "new_pair_relationships": 9,
-    "new_unique_replacement_targets": 9,
-    "note": "DUP-113 joins the existing federalism cluster: existing retained batch 32 row 34, existing held batch 33 row 35, plus newly held candidates batch 2 row 33 and batch 18 row 32. DUP-114 and DUP-115 join the existing specific-heat cluster: keep batch 28 row 25, existing held batch 34 row 26, and newly held batch 3 row 24. These cluster assignments are content-based and still require exact row-level history/provenance verification before staging."
+    "new_unique_replacement_targets": 7,
+    "note": "DUP-113 joins the existing federalism cluster: existing retained batch 32 row 34, existing held batch 33 row 35, plus newly held candidates batch 2 row 33 and batch 18 row 32. DUP-114 and DUP-115 join the existing specific-heat cluster: keep batch 28 row 25, existing held batch 34 row 26, and newly held batch 3 row 24. These cluster assignments are content-based and still require exact row-level history/provenance verification before staging.",
+    "additional_cluster_target_reclassified_from_prior_pair": "batch 2 row 33 is also held in the existing federalism cluster, alongside batch 18 row 32; this adds one target to the prior DUP-102 cluster.",
+    "total_incremental_unique_targets_including_cluster_reclassification": 8
   }
 }
