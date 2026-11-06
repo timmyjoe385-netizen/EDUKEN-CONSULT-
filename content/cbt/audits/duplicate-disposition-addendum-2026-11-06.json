@@ -1,9 +1,9 @@
 {
   "date": "2026-11-06",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "scope": "Cross-window candidate review completion addendum",
+  "scope": "Persisted cross-window candidate review segment and duplicate-disposition addendum",
   "candidate_total": 1304,
-  "remaining_candidate_pairs": 0,
+  "remaining_candidate_pairs": null,
   "newly_persisted_review_segments": [
     "ranks 565-579 (part59)",
     "ranks 640-909 (parts64-81)",
@@ -654,6 +654,18 @@
     "unique_new_held_locations": 34,
     "provenance_classification": "verified_original_EDUKEN_drafts"
   },
-  "count_note": "Count of 34 is 28 genuinely new duplicate-held rows plus six new held rows added to existing clusters. Two further cluster links reuse rows already held in the legacy register.",
-  "status": "SOURCE_AND_STAGING_JOINS_VERIFIED_PROVENANCE_AND_QUALIFIED_ACADEMIC_REVIEW_PENDING"
+  "count_note": "Count of 34 is 28 genuinely new duplicate-held rows plus six new held rows added to existing clusters. Two further cluster links reuse rows already held in the legacy register. Global candidate-review completion is not established by this addendum; the 297 newly persisted ranks are a scoped increment only.",
+  "status": "SOURCE_AND_STAGING_JOINS_VERIFIED_PROVENANCE_AND_QUALIFIED_ACADEMIC_REVIEW_PENDING",
+  "rank_review_reconciliation": {
+    "status": "NOT_RECONCILED_DO_NOT_CLAIM_ZERO_REMAINING",
+    "total_ranked_candidate_pool": 1304,
+    "newly_persisted_review_segments": [
+      "ranks 565-579 (part59)",
+      "ranks 640-909 (parts64-81)",
+      "ranks 1293-1304 (part82)"
+    ],
+    "newly_persisted_reviewed_ranks": 297,
+    "explanation": "The 297 newly persisted ranks in the listed segments do not establish that all 1,304 candidates have been manually reviewed. The 1 November canonical register reports 921 manually reviewed and 383 remaining, while its explicit-rank crosswalk separately reports 973 unique rank IDs, a 52-rank discrepancy and 331 ranks without explicit records in the inspected sources. Those legacy totals are themselves unreconciled. Therefore no reliable global remaining count is asserted here.",
+    "authoritative_next_step": "Rebuild a rank-by-rank union from every persisted tail-review part, high-similarity review record, targeted review record and addendum; deduplicate ranks and reconcile each rank to a documented disposition before reporting a global completion count."
+  }
 }
