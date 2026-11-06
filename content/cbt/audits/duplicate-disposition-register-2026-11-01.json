@@ -5228,7 +5228,7 @@
   },
   "cluster_merge_reconciliation": {
     "date": "2026-11-06",
-    "status": "PAIR_RECORDS_LINKED_TO_CANONICAL_CLUSTERS; SUMMARY_COUNTS_NOT_RECOMPUTED",
+    "status": "CANONICAL_CLUSTER_MERGES_RECONCILED; SUMMARY_COUNTS_NOT_RECOMPUTED",
     "merges": [
       {
         "pair_ids": [
@@ -5243,7 +5243,9 @@
           "batch 27 row 12"
         ],
         "source_rows_verified": true,
-        "decision_basis": "Both ask which blood component is responsible for clot formation or platelet-plug formation; all key platelets."
+        "decision_basis": "Both ask which blood component is responsible for clot formation or platelet-plug formation; all key platelets.",
+        "canonical_link_status": "verified_in_register_and_addendum",
+        "staging_revision": "content/cbt/staging/2026-11-06/"
       },
       {
         "pair_ids": [
@@ -5258,12 +5260,14 @@
           "batch 34 row 18"
         ],
         "source_rows_verified": true,
-        "decision_basis": "Both ask phenolphthalein colour behaviour in alkaline solution or its acid/alkaline colour property; same indicator fact."
+        "decision_basis": "Both ask phenolphthalein colour behaviour in alkaline solution or its acid/alkaline colour property; same indicator fact.",
+        "canonical_link_status": "verified_in_register_and_addendum",
+        "staging_revision": "content/cbt/staging/2026-11-06/"
       }
     ],
     "unique_held_rows_preserved": 4,
     "pair_relationships_preserved": 4,
     "summary_count_recalculation_required": true,
-    "note": "Pair records remain individually preserved for audit history; canonical cluster IDs now prevent double-counting cluster membership. Do not reduce held-row count: each cluster has two distinct held source rows."
+    "note": "DUP-22 is linked into canonical DUP-165 and DUP-166 into canonical DUP-08. Both clusters preserve four distinct held source rows in total; no held-row count is reduced. Legacy pair and provenance summary counters remain unreconciled and are intentionally not recomputed from partial addendum data."
   }
 }
