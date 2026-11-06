@@ -1,0 +1,165 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Fifteen lower-tail cross-window candidate pairs reviewed against complete source-bank question records; this continues part29 without repeating prior ranks.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1079,
+      1080,
+      1081,
+      1082,
+      1083,
+      1084,
+      1085,
+      1086,
+      1087,
+      1088,
+      1089,
+      1090,
+      1091,
+      1092,
+      1093
+    ],
+    "previous_total_manually_reviewed": 536,
+    "now_manually_reviewed": 551,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 753
+  },
+  "preserved": [
+    {
+      "rank": 1079,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 13 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Cosine of a special angle and finding the median of an ordered data set test unrelated mathematical concepts."
+    },
+    {
+      "rank": 1081,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 22 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The general sentence-correction item and the specific subject–verb concord item do not establish the same tested rule; retain both pending normal academic review."
+    },
+    {
+      "rank": 1082,
+      "subject": "Biology",
+      "a": "batch 8 row 12",
+      "b": "batch 26 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Ribosomes are the principal site of protein synthesis; smooth endoplasmic reticulum is associated with lipid synthesis. These are distinct organelles and functions."
+    },
+    {
+      "rank": 1083,
+      "subject": "Mathematics",
+      "a": "batch 10 row 8",
+      "b": "batch 21 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding the mode and finding the median are different statistical measures requiring different procedures."
+    },
+    {
+      "rank": 1084,
+      "subject": "Mathematics",
+      "a": "batch 19 row 10",
+      "b": "batch 22 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Set union combines elements from two sets; mode identifies the most frequent value in a data set."
+    },
+    {
+      "rank": 1085,
+      "subject": "Use of English",
+      "a": "batch 13 row 4",
+      "b": "batch 33 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The irregular comparative form of good and subject–verb agreement with a singular head noun are different grammar objectives."
+    },
+    {
+      "rank": 1086,
+      "subject": "Mathematics",
+      "a": "batch 22 row 8",
+      "b": "batch 38 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Both are linear equations, but the distinct coefficients and constants create separate solvable practice items rather than repeated stems or identical answer work."
+    },
+    {
+      "rank": 1087,
+      "subject": "Use of English",
+      "a": "batch 2 row 4",
+      "b": "batch 20 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Selecting an object pronoun after a verb and selecting a possessive relative pronoun in a relative clause test different pronoun functions."
+    },
+    {
+      "rank": 1088,
+      "subject": "Mathematics",
+      "a": "batch 2 row 7",
+      "b": "batch 14 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Intersection identifies elements common to two sets; complement identifies elements in the universal set but not in a specified set."
+    },
+    {
+      "rank": 1089,
+      "subject": "Government",
+      "a": "batch 4 row 32",
+      "b": "batch 19 row 33",
+      "decision": "preserve_as_distinct",
+      "reason": "Constitutional amendment concerns the formal alteration of a constitution; impeachment concerns the process for removing or charging an office holder."
+    },
+    {
+      "rank": 1090,
+      "subject": "Use of English",
+      "a": "batch 6 row 2",
+      "b": "batch 27 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Correct modifier placement and correct semicolon use test different sentence-structure and punctuation rules."
+    },
+    {
+      "rank": 1091,
+      "subject": "Use of English",
+      "a": "batch 7 row 4",
+      "b": "batch 23 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first-conditional construction for a real future possibility differs from inversion after a negative adverb."
+    },
+    {
+      "rank": 1092,
+      "subject": "Economics",
+      "a": "batch 1 row 29",
+      "b": "batch 35 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "The conventional reward for labour is wages, while the reward for land is rent; the questions test different factors of production."
+    },
+    {
+      "rank": 1093,
+      "subject": "Mathematics",
+      "a": "batch 10 row 9",
+      "b": "batch 40 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "The sum of a hexagon's interior angles and the size of each exterior angle of a regular octagon are different geometric quantities."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1080,
+      "subject": "Biology",
+      "a": "batch 1 row 15",
+      "b": "batch 27 row 12",
+      "decision": "confirmed_semantic_duplicate_extends_existing_cluster",
+      "cluster": "DUP-150",
+      "reason": "Both questions ask which blood component is responsible for clot formation or the initial platelet plug, and both key platelets. The second is already a held member of DUP-150; this adds a confirmed pair relationship to the existing cluster, not a new unique replacement target.",
+      "retention_note": "Keep the established retained question in batch 1 row 15; batch 27 row 12 remains held under DUP-150."
+    }
+  ],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}
