@@ -17,7 +17,7 @@ This section supersedes older status statements below wherever they conflict. Da
 - The original replacement-only candidate CSV contains **90/90 drafts** and passed its recorded technical checks. A further **71 unique targets** still require provenance reconciliation, staging joins, replacement drafts and review. No source CSV edits or imports have been made.
 - The project owner reported approval of the original 90/90 replacements. This remains user-reported only: signed item-level reviewer worksheets and reviewer identity/credentials are absent (0/90 documentary evidence). The 71 additional targets are outside that reported approval.
 - Provenance status: 62 prior-replacement commits verified, 28 original-draft overlaps, and 70 additional pair relationships still requiring row-level provenance reconciliation (71 unique held rows). Staging-location joins are verified for the original 90 only.
-- Cross-window full-content review: **581/1,304 manually reviewed; 723 remain**. Latest ranks 1109–1123: all 15 were preserved as distinct learning objectives or complementary applications. See `audits/cross-window-tail-review-2026-11-06-part32.json`.
+- Cross-window full-content review: **596/1,304 manually reviewed; 708 remain**. Latest ranks 1124–1138: all 15 were preserved as distinct learning objectives or complementary applications. See `audits/cross-window-tail-review-2026-11-06-part33.json`.
 - Within-window review: **279 different-topic candidates remain reported pending** in the original queue. The 390-versus-352 candidate-count discrepancy (38) remains unresolved; the reconstructed queue is not proof that the original queue was completed.
 - Similarity scores are screening signals, not proof of duplication or uniqueness. Keep all source drafts and replacement candidates unpublished until semantic, provenance, academic and review gates are closed.
 
@@ -25,7 +25,7 @@ This section supersedes older status statements below wherever they conflict. Da
 Project `wpktzogarfqrgkirzdpy` contains 65 drafts + 8 published = 73 rows (one published sample per subject). It does not support a 180-question mock. The repository's 1,600 CSV drafts and replacement candidates have not been imported.
 
 ### Immediate safe gates
-1. Complete the remaining 723 cross-window full-content reviews in non-overlapping batches and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
+1. Complete the remaining 708 cross-window full-content reviews in non-overlapping batches and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
 2. Reconcile provenance and staging joins for the 70 additional duplicate pair relationships / 71 unique held rows, including cluster assignments.
 3. Prepare and review replacement drafts for the 71 additional unique targets; the original 90/90 reported approval does not cover them.
 4. Independently verify preview hostname DNS and visually inspect the public homepage and CBT screen; confirm homepage content, Worker AI content retrieval and analytics authentication use only the isolated test Supabase project.
