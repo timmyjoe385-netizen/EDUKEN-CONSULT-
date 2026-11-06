@@ -17,11 +17,11 @@
     "threshold_note": "The 0.42 reconstruction reproduces the reported total of 390. A 0.43 run yields 352. The original reported category split was 41/349; the reconstruction is 40/350, a one-pair classification discrepancy still documented in the audit.",
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
-    "cross_window_additional_targeted_candidates_reviewed": 242,
-    "cross_window_manually_reviewed_candidates": 291,
-    "cross_window_candidates_remaining_not_manually_reviewed": 1013,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 57,
-    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Five further candidates at ranks 291, 293, 304, 308 and 319 were fully checked against source question text, options, answer keys and explanations; all five are semantic duplicates. Candidates at ranks 287–336 received an initial stem-level scan, but only those five have complete contextual decisions. The remaining 1,013 cross-window candidates have not received manual contextual review.",
+    "cross_window_additional_targeted_candidates_reviewed": 259,
+    "cross_window_manually_reviewed_candidates": 308,
+    "cross_window_candidates_remaining_not_manually_reviewed": 996,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 73,
+    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Twenty-two further candidates at ranks 291, 293, 304, 308, 319, 340, 344, 346, 355, 357, 360, 365, 370, 373, 376, 389, 392, 394, 416, 421, 430 and 436 were checked against full source question text, options, answer keys and explanations. Twenty-one were confirmed as semantic duplicates; one (rank 357) was preserved as a distinct electromagnet-strength application. The remaining 996 cross-window candidates have not received manual contextual review.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,24 +36,24 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 80,
+    "cross_window_pairs": 96,
     "within_window_pairs": 15,
-    "total_pairs": 95,
+    "total_pairs": 111,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 5,
+    "provenance_unverified_pairs": 21,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Five newly confirmed cross-window duplicate pairs (DUP-91–DUP-95) still require row-level history and staging reconciliation."
+    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Twenty-one newly confirmed pairs (DUP-91–DUP-99 and DUP-101–DUP-112) still require row-level history and staging reconciliation."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
     "newly_confirmed_from_reconstructed_candidate_review": 3,
-    "preserved_as_distinct_or_complementary": 274,
+    "preserved_as_distinct_or_complementary": 275,
     "previously_triaged": 70
   },
   "replacement_plan": {
@@ -66,10 +66,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 5,
+    "additional_replacement_drafts_required": 21,
     "draft_count": 90,
-    "additional_confirmed_pairs_added_on_2026_11_06": 5,
-    "retain_replace_assignments_pending": 5
+    "additional_confirmed_pairs_added_on_2026_11_06": 21,
+    "retain_replace_assignments_pending": 21
   },
   "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
@@ -2364,6 +2364,326 @@
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06.json for both complete question records, answer keys and the item-specific rationale. Do not finalize retention/replacement until row-level history and staging joins are checked."
       }
+    },
+    {
+      "id": "DUP-96",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 15 row 27",
+      "b": "batch 28 row 27",
+      "concept": "Binding price ceiling below equilibrium creates a shortage.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 15 row 27",
+      "replace_candidate": "batch 28 row 27",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-97",
+      "scope": "cross_window",
+      "subject": "Chemistry",
+      "a": "batch 14 row 21",
+      "b": "batch 37 row 21",
+      "concept": "Acid-carbonate reaction releases carbon dioxide.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 14 row 21",
+      "replace_candidate": "batch 37 row 21",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-98",
+      "scope": "cross_window",
+      "subject": "Mathematics",
+      "a": "batch 4 row 11",
+      "b": "batch 17 row 10",
+      "concept": "Circumference of a radius-7 cm circle using pi = 22/7.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 4 row 11",
+      "replace_candidate": "batch 17 row 10",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-99",
+      "scope": "cross_window",
+      "subject": "Literature in English",
+      "a": "batch 5 row 40",
+      "b": "batch 23 row 38",
+      "concept": "Satire uses humour and irony to expose or criticise faults.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 5 row 40",
+      "replace_candidate": "batch 23 row 38",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-101",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 10 row 27",
+      "b": "batch 12 row 27",
+      "concept": "Law of supply: higher market price generally increases quantity supplied.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 37 row 27",
+      "replace_candidate": "batch 12 row 27",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-102",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 2 row 33",
+      "b": "batch 18 row 32",
+      "concept": "Federalism constitutionally divides powers between central and subnational governments.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 2 row 33",
+      "replace_candidate": "batch 18 row 32",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-103",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 23 row 28",
+      "b": "batch 39 row 27",
+      "concept": "Monopsony is a market with one dominant buyer and many sellers.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 23 row 28",
+      "replace_candidate": "batch 39 row 27",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-104",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 3 row 33",
+      "b": "batch 18 row 36",
+      "concept": "Independent electoral body organises and administers elections impartially.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 3 row 33",
+      "replace_candidate": "batch 18 row 36",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-105",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 9 row 12",
+      "b": "batch 38 row 14",
+      "concept": "Normal site of human fertilisation is the oviduct (fallopian tube).",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 9 row 12",
+      "replace_candidate": "batch 38 row 14",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-106",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 18 row 16",
+      "b": "batch 37 row 13",
+      "concept": "Nephron site of blood ultrafiltration is the glomerulus.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 18 row 16",
+      "replace_candidate": "batch 37 row 13",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-107",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 3 row 36",
+      "b": "batch 14 row 35",
+      "concept": "Freedom of expression protects communication of opinions subject to lawful limits.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 3 row 36",
+      "replace_candidate": "batch 14 row 35",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-108",
+      "scope": "cross_window",
+      "subject": "Government",
+      "a": "batch 4 row 33",
+      "b": "batch 22 row 35",
+      "concept": "Public accountability requires officials to explain and justify decisions and conduct.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 4 row 33",
+      "replace_candidate": "batch 22 row 35",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-109",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 8 row 29",
+      "b": "batch 17 row 27",
+      "concept": "Higher consumer income shifts demand for a normal good to the right.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 8 row 29",
+      "replace_candidate": "batch 17 row 27",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-110",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 16 row 12",
+      "b": "batch 29 row 13",
+      "concept": "Enzymes lower activation energy to speed biochemical reactions.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 16 row 12",
+      "replace_candidate": "batch 29 row 13",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-111",
+      "scope": "cross_window",
+      "subject": "Physics",
+      "a": "batch 12 row 24",
+      "b": "batch 37 row 25",
+      "concept": "Fuse interrupts a circuit when excessive current flows.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 12 row 24",
+      "replace_candidate": "batch 37 row 25",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
+    },
+    {
+      "id": "DUP-112",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 9 row 13",
+      "b": "batch 33 row 14",
+      "concept": "Xylem transports water and dissolved mineral salts from roots.",
+      "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 9 row 13",
+      "replace_candidate": "batch 33 row 14",
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
+      }
     }
   ],
   "draft_screening": {
@@ -2576,8 +2896,8 @@
     "inserted_into_question_bank": 0,
     "source_csvs_modified": 0,
     "production_changes": 0,
-    "additional_duplicate_pairs_added": 5,
-    "additional_replacement_drafts_required": 5,
+    "additional_duplicate_pairs_added": 21,
+    "additional_replacement_drafts_required": 21,
     "independent_subject_review_status": "incomplete; 0/90 independent approvals",
     "manual_contextual_review_status": "assistant pairwise bankwide review complete 90/90; 11 lexical similarity flags require independent human contextual decisions; independent subject/syllabus approval 0/90.",
     "source_row_provenance_reconciliation": "90/90 retained and held staging location joins verified; all 13 later-replacement introducing commits are exact; DUP-34 separately verified. No provenance SHA remains pending.",
@@ -2588,15 +2908,31 @@
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_relationships": 28,
-    "unverified_relationships": 5,
+    "unverified_relationships": 21,
     "unverified_pair_ids": [
       "DUP-91",
       "DUP-92",
       "DUP-93",
       "DUP-94",
-      "DUP-95"
+      "DUP-95",
+      "DUP-96",
+      "DUP-97",
+      "DUP-98",
+      "DUP-99",
+      "DUP-101",
+      "DUP-102",
+      "DUP-103",
+      "DUP-104",
+      "DUP-105",
+      "DUP-106",
+      "DUP-107",
+      "DUP-108",
+      "DUP-109",
+      "DUP-110",
+      "DUP-111",
+      "DUP-112"
     ],
-    "note": "The original 90-pair set remains fully reconciled. Five new pairs identified in the 2026-11-06 lower-scoring cross-window tail review require provenance and staging checks; their earlier-batch retain candidates are provisional only.",
+    "note": "The original 90-pair set remains fully reconciled. Twenty-one new pairs identified in the 2026-11-06 lower-scoring cross-window tail review require provenance and staging checks; provisional retain/replace assignments must not be treated as final.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
@@ -2649,7 +2985,7 @@
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged."
   },
-  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed.",
+  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
