@@ -77,11 +77,11 @@
     "original_draft_overlap_pairs": 28,
     "provenance_unverified_pairs": 0,
     "provenance_classification_complete": true,
-    "staging_location_join_verified_pairs": 186,
-    "staging_location_join_complete": false,
+    "staging_location_join_verified_pairs": 199,
+    "staging_location_join_complete": true,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "Baseline 90 pair provenance is reconciled (62 commit-backed replacement histories + 28 original-draft overlaps). The 96 later-range pair records now have source-origin metadata verified and 178 unique endpoints exactly matched between original source CSVs and current staging exports. These 96 pair IDs remain pending semantic/qualified academic disposition, not source/staging verification. The 6 November staging revision separately contains 124 held locations (119 pair IDs), with 22 of the later queue's target locations already held and 68 still retained.",
+    "provenance_note": "All 199 register pair records now have source provenance metadata and staging joins verified. The baseline 90 comprise 62 commit-backed replacement histories and 28 original-draft overlaps. The later 96 pair IDs have 178 unique endpoints exactly matched; 13 additional cluster/extension pair records have 26 unique endpoints exactly matched. All 204 endpoints declare original EDUKEN-authored source metadata; zero missing rows or content mismatches. The 109 later-range/cluster pair decisions remain pending qualified subject, answer-key and syllabus review. The separate 6 November addendum's 28 new pair records plus six unique cluster extensions also have verified original provenance and staging joins. The current staging revision holds 124 locations; 68 additional target locations remain in retained exports pending qualified review.",
     "staging_revision_verification": {
       "date": "2026-11-06",
       "total_source_rows": 1600,
@@ -94,7 +94,8 @@
       "source_staging_mismatches": 0,
       "held_retained_overlap": 0,
       "qualified_academic_review": "pending"
-    }
+    },
+    "qualified_subject_review_pending_pairs": 109
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -3030,9 +3031,9 @@
       "b": "batch 32 row 39",
       "concept": "Denouement/resolution is the concluding stage where the main conflict is resolved",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 20 row 39",
       "replace_candidate": null,
       "cluster_id": "DENOUEMENT-01",
@@ -3042,7 +3043,10 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part4.json for full question text, options, answer keys and rationale. Cluster records share existing retained/held rows; stage only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-123",
@@ -3227,19 +3231,22 @@
       "b": "batch 37 row 27",
       "concept": "Law of supply: higher price increases quantity supplied",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 37 row 27",
       "replace_candidate": null,
       "cluster_id": "LAW-OF-SUPPLY-01",
       "new_unique_targets_added": 0,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part5.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-132",
@@ -3333,9 +3340,9 @@
       "b": "batch 32 row 34",
       "concept": "Federalism constitutionally divides powers between central and constituent governments",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 32 row 34",
       "replace_candidate": null,
       "cluster_id": "FEDERALISM-01",
@@ -3345,7 +3352,10 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part6.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-137",
@@ -3460,19 +3470,22 @@
       "b": "batch 26 row 34",
       "concept": "Federalism divides constitutional powers between central and regional governments",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 32 row 34",
       "replace_candidate": null,
       "cluster_id": "FEDERALISM-01",
       "new_unique_targets_added": 0,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part9.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-143",
@@ -3975,10 +3988,10 @@
       "retain": "batch 1 row 15",
       "replace": "batch 27 row 12",
       "retention_basis": "Retain the earlier, broader blood-clotting question in batch 1 row 15. Batch 27 row 12 asks the same core fact more narrowly and is held; batch 38 row 13 is already held in the connected cluster.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
@@ -3987,7 +4000,10 @@
       },
       "cluster_id": "PLATELET-CLOTTING-01",
       "canonical_pair_id": "DUP-165",
-      "cluster_merge_status": "canonical_cluster_record"
+      "cluster_merge_status": "canonical_cluster_record",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-166",
@@ -4000,8 +4016,8 @@
       "retain": "batch 22 row 18",
       "replace": "batch 34 row 18",
       "retention_basis": "Retain batch 22 row 18 as the current cluster's retained candidate, consistent with DUP-08. Batch 20 row 18 and batch 34 row 18 remain held pending provenance and staging reconciliation.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
       "replacement_status": "already_counted_in_existing_cluster",
       "new_unique_targets_added": 0,
@@ -4012,7 +4028,10 @@
       },
       "cluster_id": "PHENOLPHTHALEIN-01",
       "canonical_pair_id": "DUP-08",
-      "merged_into": "DUP-08"
+      "merged_into": "DUP-08",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-167",
@@ -4025,16 +4044,19 @@
       "retain": "batch 21 row 37",
       "replace": "batch 38 row 38",
       "retention_basis": "Retain batch 21 row 37 as the earlier question. Hold batch 38 row 38 as the duplicate candidate pending provenance and staging verification.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part35.json. This is a new two-row couplet-definition duplicate cluster."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-168",
@@ -4047,16 +4069,19 @@
       "retain": "batch 7 row 16",
       "replace": "batch 19 row 16",
       "retention_basis": "Retain batch 7 row 16 as the provisional cluster anchor. Batch 19 row 16 and batch 40 row 13 remain held; batch 31 row 16 and batch 29 row 12 are already recorded in the connected cluster.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_cluster_anchor_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_cluster_merge",
         "note": "See cross-window-tail-review-2026-11-06-part36.json. Connects NATURAL-SELECTION-01/DUP-93/DUP-151 with DUP-41."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-169",
@@ -4069,16 +4094,19 @@
       "retain": "batch 5 row 22",
       "replace": "batch 31 row 25",
       "retention_basis": "Retain batch 5 row 22 as the earlier question; hold batch 31 row 25 pending provenance and staging checks.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part36.json."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-170",
@@ -4091,16 +4119,19 @@
       "retain": "batch 3 row 29",
       "replace": "batch 14 row 30",
       "retention_basis": "Retain batch 3 row 29 as the earlier question; hold batch 14 row 30 pending provenance and staging checks.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part36.json."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-171",
@@ -4113,16 +4144,19 @@
       "retain": "batch 3 row 32",
       "replace": "batch 28 row 32",
       "retention_basis": "Retain batch 3 row 32 as the earlier question; hold batch 28 row 32 pending row-level provenance and staging verification.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part37.json. This is a new two-row checks-and-balances duplicate cluster."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-172",
@@ -4135,16 +4169,19 @@
       "retain": "batch 1 row 37",
       "replace": "batch 35 row 38",
       "retention_basis": "Retain batch 1 row 37 as the earlier question; hold batch 35 row 38 pending provenance and staging checks.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part39.json."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-173",
@@ -4157,8 +4194,8 @@
       "retain": "batch 5 row 15",
       "replace": "batch 20 row 16",
       "retention_basis": "Retain batch 5 row 15 as the earliest cluster anchor. Hold batch 15 row 15, batch 20 row 16 and batch 33 row 16 pending provenance and staging checks.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
       "replacement_status": "already_counted_in_existing_cluster",
       "new_unique_targets_added": 0,
@@ -4166,7 +4203,10 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_cluster_merge",
         "note": "See cross-window-tail-review-2026-11-06-part39.json. This connects existing DUP-38/DUP-73 vaccination relationships; no extra unique held target is added."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
     },
     {
       "id": "DUP-174",
@@ -4989,7 +5029,7 @@
     "original_draft_overlap_relationships": 28,
     "unverified_relationships": 0,
     "unverified_pair_ids": [],
-    "note": "All 96 later-range pair records now have exact source/staging endpoint verification: 178 unique source rows were found in original batch CSVs and matched all 18 fields in current staging exports; zero missing rows or content mismatches. All 178 rows declare source_type=original and EDUKEN-authored/no-past-paper provenance notes. The 96 pair IDs remain pending semantic duplicate-versus-related-skill disposition and qualified subject/syllabus review. The 90 unique target locations comprise 22 already held and 68 still retained.",
+    "note": "All 199 register pair records now have source/staging joins verified: the baseline 90 were previously reconciled; the 96 later-range pair records have 178 unique endpoints exactly matched; and 13 additional cluster/extension pair records have 26 unique endpoints exactly matched. All 204 later-range/cluster endpoints declare original EDUKEN-authored source metadata, with zero missing rows or content mismatches. The 109 later-range/cluster pair decisions remain pending independent qualified subject, answer-key and syllabus review; source provenance and staging joins are no longer blockers.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
@@ -5041,111 +5081,45 @@
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
     "revision_note": "2026-11-02 final provenance reconciliation: exact row-level introducing commits are verified for all 13 later-replacement rows (DUP-69, DUP-70, DUP-71, DUP-74, DUP-75, DUP-77, DUP-79, DUP-82, DUP-83, DUP-84, DUP-85, DUP-86 and DUP-90), plus separately verified DUP-34. Sixty-two prior/replacement relationships have commit-backed evidence; 28 pairs are original-draft overlaps; zero later-replacement SHA cases remain pending; and all 90/90 staging joins are verified. Each of the 13 row-level records includes the exact introducing commit and parent-row comparison. Original source CSVs remain unchanged.",
-    "source_origin_metadata_verified_relationships": 96,
-    "source_staging_endpoint_rows_verified": 178,
+    "source_origin_metadata_verified_relationships": 109,
+    "source_staging_endpoint_rows_verified": 204,
     "source_staging_content_mismatches": 0,
-    "semantic_disposition_pending_relationships": 96,
+    "semantic_disposition_pending_relationships": 109,
     "semantic_disposition_pending_pair_ids": [
-      "DUP-91",
-      "DUP-92",
-      "DUP-93",
-      "DUP-94",
-      "DUP-95",
-      "DUP-96",
-      "DUP-97",
-      "DUP-98",
-      "DUP-99",
-      "DUP-101",
-      "DUP-102",
-      "DUP-103",
-      "DUP-104",
-      "DUP-105",
-      "DUP-106",
-      "DUP-107",
-      "DUP-108",
-      "DUP-109",
-      "DUP-110",
-      "DUP-111",
-      "DUP-112",
-      "DUP-113",
-      "DUP-114",
-      "DUP-115",
-      "DUP-116",
-      "DUP-117",
-      "DUP-118",
-      "DUP-119",
-      "DUP-120",
-      "DUP-121",
-      "DUP-123",
-      "DUP-124",
-      "DUP-125",
-      "DUP-126",
-      "DUP-127",
-      "DUP-128",
-      "DUP-129",
-      "DUP-130",
-      "DUP-132",
-      "DUP-133",
-      "DUP-134",
-      "DUP-135",
-      "DUP-137",
-      "DUP-138",
-      "DUP-139",
-      "DUP-140",
-      "DUP-141",
-      "DUP-143",
-      "DUP-144",
-      "DUP-145",
-      "DUP-146",
-      "DUP-147",
-      "DUP-148",
-      "DUP-149",
-      "DUP-150",
-      "DUP-151",
-      "DUP-152",
-      "DUP-153",
-      "DUP-154",
-      "DUP-155",
-      "DUP-156",
-      "DUP-157",
-      "DUP-158",
-      "DUP-159",
-      "DUP-160",
-      "DUP-161",
-      "DUP-162",
-      "DUP-163",
-      "DUP-164",
-      "DUP-174",
-      "DUP-175",
-      "DUP-176",
-      "DUP-177",
-      "DUP-178",
-      "DUP-179",
-      "DUP-180",
-      "DUP-181",
-      "DUP-182",
-      "DUP-183",
-      "DUP-184",
-      "DUP-185",
-      "DUP-186",
-      "DUP-187",
-      "DUP-188",
-      "DUP-189",
-      "DUP-190",
-      "DUP-191",
-      "DUP-192",
-      "DUP-193",
-      "DUP-194",
-      "DUP-195",
-      "DUP-196",
-      "DUP-197",
-      "DUP-198",
-      "DUP-199",
-      "DUP-200"
+      "DUP-122",
+      "DUP-131",
+      "DUP-136",
+      "DUP-142",
+      "DUP-165",
+      "DUP-166",
+      "DUP-167",
+      "DUP-168",
+      "DUP-169",
+      "DUP-170",
+      "DUP-171",
+      "DUP-172",
+      "DUP-173"
     ],
-    "replacement_history_commit_crosswalk_status": "source-origin metadata is verified for all 178 endpoints; no later replacement commit is inferred from metadata alone"
+    "replacement_history_commit_crosswalk_status": "source-origin metadata is verified for all 178 endpoints; no later replacement commit is inferred from metadata alone",
+    "staging_join_verified_pair_records": 199,
+    "qualified_subject_review_pending_relationships": 109,
+    "qualified_subject_review_pending_pair_ids": [
+      "DUP-122",
+      "DUP-131",
+      "DUP-136",
+      "DUP-142",
+      "DUP-165",
+      "DUP-166",
+      "DUP-167",
+      "DUP-168",
+      "DUP-169",
+      "DUP-170",
+      "DUP-171",
+      "DUP-172",
+      "DUP-173"
+    ]
   },
-  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed. 2026-11-06 further tail review: 30 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-121) were confirmed; one separate candidate was preserved as a distinct variant. The 30 relations represent 29 new unique held rows because federalism and specific-heat capacity each form a multi-row cluster. All new rows remain outside staging/import pending provenance and final staging joins. No source CSV or production data was changed. 2026-11-06 further lower-tail review: 36 additional duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-127) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relations represent 35 new unique held rows because one denouement relationship is already within a reconciled cluster. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 40 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-131) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relationships represent 38 new unique held rows because two are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 45 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-136) were confirmed; three related pairs were preserved as distinct assessment objectives. The 45 relations represent 42 new unique held rows because three relationships join existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 46 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-137) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 43 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 50 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-141) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 47 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 55 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-146) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relationships represent 52 new unique held rows because three are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 57 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-148) were confirmed; eight other related pairs were preserved as distinct assessment objectives. These relations represent 54 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 61 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-152) were confirmed; nine other related pairs were preserved as distinct assessment objectives. These relations represent 58 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: five more cross-window candidates (ranks 912–916) were checked against complete source text, options and answer keys. Four were preserved as distinct; one median-calculation duplicate was confirmed as DUP-157, adding batch 21 row 11 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 917–921 were checked against complete source stems, options and answer keys. Four were preserved as distinct; one heterozygous-genotype definition duplicate was confirmed as DUP-158, adding batch 39 row 12 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 922–926 were checked against full question content. All five were preserved as distinct concepts (specific heat capacity versus latent heat; complex sentence versus passive voice; different heart structures; no-confidence motion versus cabinet composition; balance of payments versus balance of trade). No duplicate relationship, held target, CSV edit or production change was added. 2026-11-06 continued lower-tail review: candidate ranks 927–931 were checked against full question content. Four were preserved as distinct; rank 931 was confirmed as DUP-159, extending FEDERALISM-01 and adding batch 38 row 36 as one new unique held row (batch 18 row 32 was already in that cluster). No source CSV, staging CSV or production data was changed. 2026-11-06 three-times-sized lower-tail review: ranks 932–946 were checked against full question stems, options, answer keys and explanations. Thirteen candidates were preserved as distinct, rank 933 was confirmed as DUP-160 (ADH-mediated collecting-duct water reabsorption), adding batch 40 row 15 as one new unique held target; rank 937 was deferred for reconciliation with earlier arithmetic-progression candidate relationships. No source CSV, staging CSV or production data was changed. 2026-11-06 follow-on 3x tail review: ranks 947–961 checked in full. Fourteen pairs preserved as distinct; rank 954 (neutralisation products) deferred for qualified Chemistry review. No new duplicate pair or unique target added; no source or staging edits. 2026-11-06 follow-on 3x tail review: ranks 962–976 checked in full. Fourteen candidates preserved; rank 962 confirmed as DUP-161 (set union), adding batch 35 row 11 as one new unique held target. Rank 970's batch 35 row 25 was already held under DUP-44 and was not counted again. No source/staging edits. 2026-11-06 further tail review: ranks 977–991 checked in full. Fourteen preserved; rank 980 confirmed as DUP-162, extending existing esterification cluster DUP-13 and adding batch 6 row 21 as one unique held target. No source/staging edits. 2026-11-06 further lower-tail review: ranks 992–1006 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1001 was confirmed as DUP-163 (green plants as producers/first trophic level), adding batch 37 row 15 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1007–1021 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1018 was confirmed as DUP-164, extending DENOUEMENT-01 and adding batch 11 row 40 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1022–1036 checked against complete question stems, four options, answer keys and explanations. All fifteen were preserved as distinct learning objectives or complementary applications. No new duplicate relationship or held target was added; no source CSV, staging CSV or production data was changed. 2026-11-06: ranks 1049–1063 fully checked; all fifteen preserved as distinct. No source/staging CSV or production question data changed.\n\n6 November rank reconciliation: explicit rank IDs total 973 across 81 tail-review files, 297 addendum segment ranks and 49 mapped high-similarity items. This does not reconcile with the part56 cumulative counter of 921 (difference 52); 331 rank IDs are absent from the inspected explicit records. Aggregate progress remains unverified pending a full crosswalk. No production import/publication authorized.\n\n6 November reconciliation: the 96 explicitly listed unverified pair IDs in history_reconciliation_status are now reflected in duplicate_summary.provenance_unverified_pairs. The current 6 November staging revision is a separate, verified 1,476 retained + 124 held export (119 pair IDs); all 124 held locations have verified original-source provenance and staging matches. Do not conflate the staging export with the later 96-ID register queue. Cross-window review aggregate remains unverified pending the 973-rank / 921-counter crosswalk.",
+  "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed. 2026-11-06 further tail review: 30 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-121) were confirmed; one separate candidate was preserved as a distinct variant. The 30 relations represent 29 new unique held rows because federalism and specific-heat capacity each form a multi-row cluster. All new rows remain outside staging/import pending provenance and final staging joins. No source CSV or production data was changed. 2026-11-06 further lower-tail review: 36 additional duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-127) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relations represent 35 new unique held rows because one denouement relationship is already within a reconciled cluster. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 40 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-131) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relationships represent 38 new unique held rows because two are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 45 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-136) were confirmed; three related pairs were preserved as distinct assessment objectives. The 45 relations represent 42 new unique held rows because three relationships join existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 46 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-137) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 43 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 50 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-141) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 47 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 55 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-146) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relationships represent 52 new unique held rows because three are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 57 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-148) were confirmed; eight other related pairs were preserved as distinct assessment objectives. These relations represent 54 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 61 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-152) were confirmed; nine other related pairs were preserved as distinct assessment objectives. These relations represent 58 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: five more cross-window candidates (ranks 912–916) were checked against complete source text, options and answer keys. Four were preserved as distinct; one median-calculation duplicate was confirmed as DUP-157, adding batch 21 row 11 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 917–921 were checked against complete source stems, options and answer keys. Four were preserved as distinct; one heterozygous-genotype definition duplicate was confirmed as DUP-158, adding batch 39 row 12 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 922–926 were checked against full question content. All five were preserved as distinct concepts (specific heat capacity versus latent heat; complex sentence versus passive voice; different heart structures; no-confidence motion versus cabinet composition; balance of payments versus balance of trade). No duplicate relationship, held target, CSV edit or production change was added. 2026-11-06 continued lower-tail review: candidate ranks 927–931 were checked against full question content. Four were preserved as distinct; rank 931 was confirmed as DUP-159, extending FEDERALISM-01 and adding batch 38 row 36 as one new unique held row (batch 18 row 32 was already in that cluster). No source CSV, staging CSV or production data was changed. 2026-11-06 three-times-sized lower-tail review: ranks 932–946 were checked against full question stems, options, answer keys and explanations. Thirteen candidates were preserved as distinct, rank 933 was confirmed as DUP-160 (ADH-mediated collecting-duct water reabsorption), adding batch 40 row 15 as one new unique held target; rank 937 was deferred for reconciliation with earlier arithmetic-progression candidate relationships. No source CSV, staging CSV or production data was changed. 2026-11-06 follow-on 3x tail review: ranks 947–961 checked in full. Fourteen pairs preserved as distinct; rank 954 (neutralisation products) deferred for qualified Chemistry review. No new duplicate pair or unique target added; no source or staging edits. 2026-11-06 follow-on 3x tail review: ranks 962–976 checked in full. Fourteen candidates preserved; rank 962 confirmed as DUP-161 (set union), adding batch 35 row 11 as one new unique held target. Rank 970's batch 35 row 25 was already held under DUP-44 and was not counted again. No source/staging edits. 2026-11-06 further tail review: ranks 977–991 checked in full. Fourteen preserved; rank 980 confirmed as DUP-162, extending existing esterification cluster DUP-13 and adding batch 6 row 21 as one unique held target. No source/staging edits. 2026-11-06 further lower-tail review: ranks 992–1006 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1001 was confirmed as DUP-163 (green plants as producers/first trophic level), adding batch 37 row 15 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1007–1021 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1018 was confirmed as DUP-164, extending DENOUEMENT-01 and adding batch 11 row 40 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1022–1036 checked against complete question stems, four options, answer keys and explanations. All fifteen were preserved as distinct learning objectives or complementary applications. No new duplicate relationship or held target was added; no source CSV, staging CSV or production data was changed. 2026-11-06: ranks 1049–1063 fully checked; all fifteen preserved as distinct. No source/staging CSV or production question data changed.\n\n6 November rank reconciliation: explicit rank IDs total 973 across 81 tail-review files, 297 addendum segment ranks and 49 mapped high-similarity items. This does not reconcile with the part56 cumulative counter of 921 (difference 52); 331 rank IDs are absent from the inspected explicit records. Aggregate progress remains unverified pending a full crosswalk. No production import/publication authorized.\n\n6 November reconciliation: the 96 explicitly listed unverified pair IDs in history_reconciliation_status are now reflected in duplicate_summary.provenance_unverified_pairs. The current 6 November staging revision is a separate, verified 1,476 retained + 124 held export (119 pair IDs); all 124 held locations have verified original-source provenance and staging matches. Do not conflate the staging export with the later 96-ID register queue. Cross-window review aggregate remains unverified pending the 973-rank / 921-counter crosswalk.\n\n6 November source/staging closure: all 199 pair records in this register now have source/staging joins verified. The 96 later-range IDs contribute 178 unique endpoints; 13 additional cluster/extension IDs contribute 26 endpoints. All 204 endpoints match original source rows and exact current staging rows, with source_type=original and zero mismatches. The 109 later-range/cluster decisions remain pending qualified academic review, not provenance/staging work.",
   "staging_location_audit": {
     "audit_ref": "2bb149ef05a9ee18c54168f8485cb97db8e508ba",
     "retained_staging_rows": 1510,
