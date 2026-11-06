@@ -5316,5 +5316,16 @@
       }
     ],
     "count_effect": "No source row or held location was added or removed. Pair relationships remain in the audit register; canonical cluster membership is now explicit."
+  },
+  "later_register_queue_target_crosswalk": {
+    "pair_ids": 96,
+    "target_location_references": 97,
+    "unique_target_locations": 90,
+    "already_held": 22,
+    "still_retained": 68,
+    "not_found": 0,
+    "expected_held_total_if_all_approved": 192,
+    "expected_retained_total_if_all_approved": 1408,
+    "status": "LOCATION_PRESENCE_ONLY_PROVENANCE_CONTENT_AND_ANCHOR_JOINS_PENDING"
   }
 }
