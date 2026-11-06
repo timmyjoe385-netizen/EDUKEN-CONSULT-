@@ -1,0 +1,184 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Reconcile explicit candidate-rank identifiers across the 81 persisted cross-window tail-review files, the 6 November addendum segments and the original 49-item high-similarity review.",
+  "sources": {
+    "tail_review_part_files": 81,
+    "tail_review_rank_entries": 690,
+    "tail_review_unique_rank_ids": 685,
+    "tail_review_duplicate_rank_entries": 5,
+    "addendum_review_segments": [
+      {
+        "start": 565,
+        "end": 579,
+        "count": 15
+      },
+      {
+        "start": 640,
+        "end": 909,
+        "count": 270
+      },
+      {
+        "start": 1293,
+        "end": 1304,
+        "count": 12
+      }
+    ],
+    "addendum_rank_entries": 297,
+    "high_similarity_items": 49,
+    "high_similarity_rank_mapping": "All 49 high-similarity pair records matched to the global 1,304-candidate ordering by source-row pair; mapped ranks are explicitly listed in the audit computation."
+  },
+  "reconciliation": {
+    "explicit_unique_rank_ids_across_these_sources": 973,
+    "legacy_cumulative_counter_in_part56": 921,
+    "discrepancy_between_rank_union_and_counter": 52,
+    "candidate_ranks_without_an_explicit_record_in_these_sources": 331,
+    "missing_rank_intervals": [
+      [
+        3,
+        4
+      ],
+      [
+        8,
+        9
+      ],
+      [
+        12,
+        13
+      ],
+      [
+        16,
+        18
+      ],
+      [
+        20,
+        23
+      ],
+      [
+        28,
+        28
+      ],
+      [
+        30,
+        30
+      ],
+      [
+        33,
+        33
+      ],
+      [
+        36,
+        36
+      ],
+      [
+        38,
+        38
+      ],
+      [
+        41,
+        45
+      ],
+      [
+        49,
+        49
+      ],
+      [
+        51,
+        51
+      ],
+      [
+        53,
+        55
+      ],
+      [
+        58,
+        61
+      ],
+      [
+        63,
+        63
+      ],
+      [
+        65,
+        67
+      ],
+      [
+        69,
+        71
+      ],
+      [
+        73,
+        73
+      ],
+      [
+        77,
+        77
+      ],
+      [
+        81,
+        83
+      ],
+      [
+        87,
+        89
+      ],
+      [
+        93,
+        95
+      ],
+      [
+        97,
+        97
+      ],
+      [
+        99,
+        99
+      ],
+      [
+        102,
+        339
+      ],
+      [
+        460,
+        460
+      ],
+      [
+        462,
+        462
+      ],
+      [
+        595,
+        596
+      ],
+      [
+        598,
+        607
+      ],
+      [
+        609,
+        609
+      ],
+      [
+        625,
+        629
+      ],
+      [
+        631,
+        639
+      ],
+      [
+        1037,
+        1048
+      ]
+    ],
+    "interpretation": "The 973 rank IDs are the union of explicit rank-level records, not an independently validated aggregate of all manual reviews. The 921 cumulative counter in part56 differs by 52. Some unrepresented ranks may be covered by other review artifacts or earlier targeted reviews; the 331 missing identifiers must not be called unreviewed until that crosswalk is complete.",
+    "status": "COUNTER_AND_RANK_CROSSWALK_NOT_RECONCILED"
+  },
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  }
+}
