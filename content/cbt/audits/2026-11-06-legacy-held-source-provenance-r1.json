@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Verify source-side provenance for the 69 candidate held locations absent from the current 6 November staging export.",
+  "method": "Read the exact original-batch CSV data records using spreadsheet row numbering (header included) and a CSV parser supporting quoted fields and embedded newlines.",
+  "result": {
+    "candidate_held_locations_checked": 69,
+    "unique_source_batches": 26,
+    "source_type_original": 69,
+    "non_original_source_types": 0,
+    "provenance_notes_identify_EDUKEN_original_authorship": 69,
+    "source_name_blank_but_provenance_note_explicit": 3,
+    "current_staging_rows_for_these_locations": 0,
+    "staging_rows_created": 0
+  },
+  "limitations": [
+    "This verifies the source-side provenance fields for the held-side candidate rows only.",
+    "Retained anchors for the 96 legacy pair IDs and row-level Git history for any replacement-introduced content remain to be cross-checked.",
+    "The 77 unique-held-target estimate is not reconciled against the 91 raw candidate locations and 69 absent staging locations."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}
