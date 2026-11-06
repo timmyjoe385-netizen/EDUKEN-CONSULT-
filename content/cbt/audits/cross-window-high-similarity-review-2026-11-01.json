@@ -606,7 +606,7 @@
     "newly_contextually_reviewed": 34,
     "newly_confirmed_semantic_duplicates": 1,
     "preserve_both_distinct_or_valid_variants": 33,
-    "review_scope": "The 49-candidate high-similarity shortlist, 237 additional candidates ranked 50–286, and 60 fully content-checked lower-tail candidates have been manually reviewed (346/1,304 total). Fifty-five new duplicate pair relationships were confirmed and five related-but-distinct pairs preserved. These relations represent 52 new unique held rows because three relationships join existing clusters and one cluster adds two held rows. The remaining 958 candidates have not received manual contextual review. Detailed findings are in the nine cross-window-tail-review-2026-11-06 JSON files.",
+    "review_scope": "The 49-candidate high-similarity shortlist, 237 additional candidates ranked 50–286, and 65 fully content-checked lower-tail candidates have been manually reviewed (351/1,304 total). Fifty-seven new duplicate pair relationships were confirmed and eight related-but-distinct pairs preserved. These relations represent 54 new unique held rows because four relationships join existing clusters and the xylem cluster adds two rows. The remaining 953 candidates have not received manual contextual review. Detailed findings are in the ten cross-window-tail-review-2026-11-06 JSON files.",
     "confirmed_new_pair": {
       "a": "batch 2 row 30",
       "b": "batch 28 row 30",
@@ -615,11 +615,11 @@
       "subject": "Economics",
       "concept": "Balance of trade in goods"
     },
-    "remaining_unreviewed_cross_window_candidates": 958,
+    "remaining_unreviewed_cross_window_candidates": 953,
     "total_cross_window_screen_candidates": 1304,
-    "additional_targeted_candidates_reviewed": 297,
-    "total_cross_window_candidates_manually_reviewed": 346,
-    "additional_duplicate_pair_records_confirmed": 107
+    "additional_targeted_candidates_reviewed": 302,
+    "total_cross_window_candidates_manually_reviewed": 351,
+    "additional_duplicate_pair_records_confirmed": 109
   },
   "notes": [
     "Contextual review completed for all 34 candidates that were not already marked as confirmed duplicates in the 49-pair high-similarity cross-window shortlist. One additional semantic duplicate was confirmed: batch 2 row 30 / batch 28 row 30 (balance of trade in goods). Retain batch 2 row 30; mark batch 28 row 30 for one controlled replacement. The other 33 pairs were preserved because they test different vocabulary targets, different numerical inputs/data sets, or distinct concepts; some are reusable template variants, not duplicate questions. All decisions are register-only; no original CSV was edited. This does not complete review of the full 1,304 cross-window candidate screen.",
@@ -632,6 +632,7 @@
     "2026-11-06 further update: 48 lower-tail candidates were checked against full question content; 45 duplicate pair relationships were confirmed and three related-but-distinct pairs preserved. These add 42 unique held rows; three are extra relationships within existing clusters. See part6 audit file and current duplicate disposition register.",
     "2026-11-06 further update: 51 lower-tail candidates were checked against full question content; 46 duplicate pair relationships were confirmed and five related-but-distinct pairs preserved. These add 43 unique held rows; three are extra relationships within existing clusters. See part7 audit file and current duplicate disposition register.",
     "2026-11-06 further update: 55 lower-tail candidates were checked against full question content; 50 duplicate pair relationships were confirmed and five related-but-distinct pairs preserved. These add 47 unique held rows; three are extra relationships within existing clusters. See part8 audit file and current duplicate disposition register.",
-    "2026-11-06 further update: 60 lower-tail candidates were checked against full question content; 55 duplicate pair relationships were confirmed and five related-but-distinct pairs preserved. These add 52 unique held rows. See part9 audit file and current duplicate disposition register."
+    "2026-11-06 further update: 60 lower-tail candidates were checked against full question content; 55 duplicate pair relationships were confirmed and five related-but-distinct pairs preserved. These add 52 unique held rows. See part9 audit file and current duplicate disposition register.",
+    "2026-11-06 further update: 65 lower-tail candidates were checked against full question content; 57 duplicate pair relationships were confirmed and eight related-but-distinct pairs preserved. These add 54 unique held rows. See part10 audit file and current duplicate disposition register."
   ]
 }
