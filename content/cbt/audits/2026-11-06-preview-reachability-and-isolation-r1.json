@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record external preview and production route reachability and confirm the preview Worker uses isolated data bindings.",
+  "cloudflare": {
+    "account_workers_subdomain": "timmyjoe385",
+    "worker_scripts": {
+      "production": "eduken-consult",
+      "preview": "eduken-consult-preview"
+    },
+    "preview_bindings": {
+      "EDUKEN_ENV": "preview",
+      "SUPABASE_URL": "https://wpktzogarfqrgkirzdpy.supabase.co",
+      "ANALYTICS_DB_ID": "ec1f170c-c00d-4975-a6ca-bb35958772f6"
+    },
+    "production_analytics_d1_id": "fb684d86-f289-4cee-aa34-5767f8c08094",
+    "preview_analytics_d1_id": "ec1f170c-c00d-4975-a6ca-bb35958772f6",
+    "preview_and_production_analytics_databases_are_distinct": true,
+    "preview_subdomain_enabled": true,
+    "preview_versions_enabled": true
+  },
+  "external_fetch": {
+    "preview_homepage": {
+      "url": "https://eduken-consult-preview.timmyjoe385.workers.dev/",
+      "status_code": 200,
+      "visible_test_banner": true,
+      "external_service_and_wallet_checkouts_disabled": true
+    },
+    "preview_cbt": {
+      "url": "https://eduken-consult-preview.timmyjoe385.workers.dev/cbt",
+      "status_code": 200,
+      "subject_practice_and_mixed_mock_ui_rendered": true,
+      "question_service_state": "Checking questions…",
+      "attempt_creation_and_submission_not_tested": true
+    },
+    "production_homepage": {
+      "url": "https://eduken-consult.timmyjoe385.workers.dev/",
+      "status_code": 200
+    },
+    "production_cbt": {
+      "url": "https://eduken-consult.timmyjoe385.workers.dev/cbt",
+      "status_code": 200
+    }
+  },
+  "correction": "The previously used workers.dev hostname suffix timmy385 was incorrect; Cloudflare account subdomain is timmyjoe385.",
+  "limitations": [
+    "External HTML/content fetch is not a full visual acceptance test.",
+    "No authenticated student attempt was created, submitted or graded during this check.",
+    "Preview AI content retrieval and analytics authentication flows remain to be tested end-to-end."
+  ],
+  "safety": {
+    "cloudflare_configuration_changes": 0,
+    "production_database_changes": 0,
+    "production_question_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  },
+  "status": "PREVIEW_EXTERNAL_REACHABILITY_CONFIRMED_ISOLATED_BINDINGS_CONFIRMED_STUDENT_API_ACCEPTANCE_PENDING"
+}
