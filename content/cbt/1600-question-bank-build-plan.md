@@ -1,31 +1,54 @@
 # EDUKEN CBT 1,600-Question Bank Build Plan
 
-## Authoritative operational update — 5 November 2026
+## Authoritative operational update — 6 November 2026
 
 This section supersedes older status statements below wherever they conflict. Dated historical audit notes are retained for traceability; use this as the current operational checkpoint.
 
 ### Release and preview
-- PR #194 remains open, draft and unmerged. No production merge or deployment is authorised.
-- The isolated preview routes / and /cbt returned HTTP 200 in live checks.
-- Authenticated admin UI E2E is completed and passed in the isolated preview/test project. See `audits/isolated-admin-e2e-runbook-2026-11-05.md`.
-- The test covered real allowlisted Google admin sign-in, synthetic CSV import, duplicate retry, persisted draft/review/approval/publish transitions, student-feed visibility, unpublish/feed removal, deletion, signed-out rejection and non-allowlisted account rejection.
-- The synthetic question was removed. The test-project question baseline was restored to 65 drafts + 8 published = 73 rows; import history was retained. No real student data was used.
-- A preview isolation issue was found in source: the homepage content loader and Worker public-content/analytics-auth code had hardcoded production Supabase endpoints. A branch-only correction now routes frontend reads through the configured API client and makes preview Worker reads/auth use preview-specific Supabase bindings with fail-closed behaviour. CI and a fresh preview deployment/smoke check are required before calling this correction verified at runtime.
+- PR #194 remains open, draft and unmerged. No production merge, import, publication or deployment is authorised.
+- The latest code-bearing PR #194 commit `a121ee7c19887bca26f7ed03cefa83fc417437d8` passed build/validation, Playwright + isolated CBT API, wallet/CBT migration integration, and isolated preview deployment/Chromium smoke. Production deploy was skipped.
+- Authenticated admin UI E2E passed on 5 November in the isolated preview/test project: allowlisted Google admin sign-in, synthetic CSV import, duplicate retry, persisted draft/review/approval/publish transitions, student-feed visibility, unpublish/feed removal, cleanup, signed-out rejection and non-allowlisted HTTP 403 rejection. The test project returned to its baseline of 65 drafts + 8 published = 73 rows; import history was retained.
+- The later PR #194 commits update audit documentation and do not change production. CI on the newest audit-only head must be checked separately before treating that head as fully verified.
+- CI deployment and Chromium smoke have passed; independent preview-hostname DNS reachability and fresh external visual inspection remain unconfirmed.
+- The preview-isolation correction routes preview reads and analytics authentication through isolated test-project configuration with fail-closed behaviour. Do not claim runtime isolation beyond the specific checks actually completed.
 
 ### Current question-bank disposition
-- The repository has 40 original CSV batches, 1,600 rows total (200 per subject), all draft-only. Structural CI checks cover the 18-column schema, 40 rows per batch, subject balance, keys/options/explanations/provenance and exact normalized duplicate stems.
-- The latest global duplicate register records 75 cross-window + 15 within-window = 90 confirmed semantic duplicate pairs / 90 unique held rows. The replacement-only candidate file contains 90/90 replacement drafts; target IDs and subjects match the held-row register.
-- Technical replacement-file validation is recorded as 90/90 passed, with 90 distinct fingerprints and no exact candidate-to-bank or candidate-to-candidate fingerprint collisions. These are draft candidates, not published questions.
-- The project owner reported that a qualified reviewer approved all 90/90 replacements, including the former scope/depth holds and lexical flags. This is user-reported approval; signed item-level reviewer records and reviewer identity/credentials are absent from the repository (0/90 documentary evidence).
-- Historical replacement provenance is not fully closed: the current register classifies 47 pairs as prior-replacement-commit verified, 14 as awaiting replacement-commit SHA normalization, 28 as original-draft overlaps and 1 as unverified.
-- Similarity review is still incomplete. The current cross-window screen has 1,304 candidates, of which 286 were reviewed and 1,018 remain unreviewed. The within-window register reports 279 different-topic candidates pending and an unresolved 38-candidate discrepancy between the original 390-candidate report and the independent 352-candidate recomputation. Similarity scores are flags, not duplicate decisions.
-- No original source CSV rows have been imported into Supabase or published. The 90 replacement candidates remain a separate staged CSV; do not import or publish them during this review.
+- The repository contains 40 original CSV batches: 1,600 rows total (200 per subject), all draft-only. Structural checks cover the 18-column schema, batch size, subject balance, answer keys, distinct options, explanations, provenance and exact normalized duplicate stems.
+- Current duplicate register: **136 cross-window + 15 within-window = 151 confirmed semantic duplicate pair relationships**. These relationships resolve to **148 unique replacement targets** (90 original targets + 58 additional targets); overlapping clusters mean pair count and unique target count are not interchangeable.
+- The existing replacement candidate CSV contains **90/90 drafts**, technically validated. The additional **58 unique targets still need provenance reconciliation, replacement drafts and review**. No replacement CSV edits or imports are authorised.
+- The project owner reported approval of the original 90/90 replacements. This remains user-reported: signed item-level reviewer records and reviewer identity/credentials are absent (0/90 documentary evidence). The 58 additional targets are outside that reported approval.
+- Provenance status for the 151 relationships: 62 prior-replacement commits verified, 28 original-draft overlaps, and 57 additional relationships still requiring row-level provenance reconciliation (representing 58 unique held rows). Staging-location joins are verified for the original 90 only; the full expanded set is not reconciled.
+- Cross-window semantic review: **361 of 1,304 candidates manually reviewed; 943 remain**. The latest five checks are recorded in `audits/cross-window-tail-review-2026-11-06-part12.json`; all five were preserved as distinct. Candidate rank 889 was already covered by the CIVIC-DUTY-01 cluster and was not recounted.
+- Within-window review still has **279 different-topic candidates reported pending** in the original queue, and the 390-versus-352 independently recomputed candidate-count discrepancy (38) remains unresolved. A reconstructed threshold run is not proof that the original pending queue was completed.
+- Similarity scores are screening signals, not proof of duplication or uniqueness. Do not bulk-import or publish based on similarity or structural validation alone.
 
 ### Isolated test database — verified 5 November
 Project `wpktzogarfqrgkirzdpy`:
 
 | Subject | Draft | Published | Total |
 |---|---:|---:|---:|
+| Use of English | 9 | 1 | 10 |
+| Mathematics | 8 | 1 | 9 |
+| Biology | 8 | 1 | 9 |
+| Chemistry | 8 | 1 | 9 |
+| Physics | 8 | 1 | 9 |
+| Economics | 8 | 1 | 9 |
+| Government | 8 | 1 | 9 |
+| Literature in English | 8 | 1 | 9 |
+| **Total** | **65** | **8** | **73** |
+
+There are zero remaining [TEST ONLY] question rows. This database does not support the 180-question mock. The repository's 1,600 CSV drafts and replacement candidates have not been imported.
+
+### Immediate safe gates
+1. Confirm CI on the newest PR #194 audit-only head and on the updated PR #195 code branch.
+2. Independently verify preview hostname DNS and visually inspect the public homepage and CBT screen; confirm homepage content, Worker AI content retrieval and analytics authentication use only the isolated test Supabase project.
+3. Continue the 943 remaining cross-window candidate reviews and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
+4. Reconcile provenance for the 57 new duplicate relationships / 58 unique held rows, including staging joins and cluster assignments.
+5. Draft and review replacements for the 58 additional targets; do not treat the original 90/90 reported approval as covering them.
+6. Keep all source drafts and replacements out of Supabase until academic, semantic, provenance and review gates are closed.
+7. Keep production merge, import, publication and deployment blocked pending separate explicit release approval.
+
+---|---:|---:|---:|
 | Use of English | 9 | 1 | 10 |
 | Mathematics | 8 | 1 | 9 |
 | Biology | 8 | 1 | 9 |
