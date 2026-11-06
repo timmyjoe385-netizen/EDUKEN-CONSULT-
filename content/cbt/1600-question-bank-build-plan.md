@@ -2,59 +2,44 @@
 
 ## Authoritative operational update — 6 November 2026
 
-This section supersedes older status statements below wherever they conflict. Dated historical audit notes are retained for traceability.
+This update supersedes conflicting older status notes below. Historical entries remain for traceability; do not reuse their counts as current without reconciliation.
 
-### Release and preview
-- PR #194 remains open, draft and unmerged. Its latest code-bearing commit passed build/validation, Playwright + isolated CBT API, wallet/CBT migration integration, and isolated preview deployment/Chromium smoke. The newest documentation-only updates are being checked separately. Production deployment remains skipped.
-- PR #195 remains open, draft and unmerged. Its current code head `0a2f3a1e2eb21dcaf25876bd63a01774e32ab02e` passed all four workflows: build check, wallet migration SQL integration, build/Cloudflare deploy, and Playwright browser checks.
-- PR #197 remains open, draft and unmerged. Its current head `56d6ed5837a7e2a341692f66be824b9e78c8372f` passed all four workflows. It exposes existing audit metadata and server-side pagination; an authenticated live admin-session walkthrough remains outstanding.
-- The isolated admin E2E passed on 5 November: allowlisted admin login, synthetic CSV import and duplicate retry, persisted draft/review/approval/publish transitions, student-feed visibility, unpublish/feed removal, cleanup, signed-out rejection, and non-allowlisted HTTP 403 rejection. The isolated project returned to its baseline of 65 drafts + 8 published = 73 rows; import history was retained.
-- CI deployment and Chromium smoke have passed. Independent preview-hostname DNS reachability and fresh external visual inspection remain unconfirmed.
+### 1. Code, PRs and CI
+- PR #194 remains open, draft and unmerged. Its latest code-bearing baseline passed all four required workflow groups; later audit-only documentation commits do not change application code. No production deployment is authorized.
+- PR #195 remains open, draft and unmerged; its current code head passed all four workflow groups.
+- PR #197 remains open, draft and unmerged; its current code head passed all four workflow groups. The authenticated live admin-session walkthrough remains outstanding.
+- The isolated admin E2E passed on 5 November using synthetic data only. The isolated database returned to 65 drafts + 8 published = 73 rows. No production data was used.
+- Production CBT question bank remains empty. The isolated test bank remains 73 rows and cannot supply a 180-question mock.
 
-### Current question-bank disposition
-- The repository contains 40 original CSV batches: 1,600 rows total (200 per subject), all draft-only. Structural validation does not replace academic review.
-- Current duplicate register: **157 cross-window + 15 within-window = 172 recorded semantic duplicate pair relationships**, resolving to **167 unique replacement targets**. Pair relationships and unique held rows are not interchangeable because existing clusters overlap.
-- The original replacement-only candidate CSV contains **90/90 drafts** and passed its recorded technical checks. A further **77 unique targets** still require provenance reconciliation, staging joins, replacement drafts and review. No source CSV edits or imports have been made.
-- The project owner reported approval of the original 90/90 replacements. This remains user-reported only: signed item-level reviewer worksheets and reviewer identity/credentials are absent (0/90 documentary evidence). The 77 additional targets are outside that reported approval.
-- Provenance status: 62 prior-replacement commits verified, 28 original-draft overlaps, and 78 additional pair relationships still requiring row-level provenance reconciliation (77 unique held rows). Staging-location joins are verified for the original 90 only.
-- Cross-window full-content review: **686/1,304 manually reviewed; 618 remain**. Latest ranks 1214–1228: 13 were preserved as distinct; one new metaphor duplicate pair was confirmed and one vaccination pair connected existing duplicate relationships DUP-38/DUP-73. See `audits/cross-window-tail-review-2026-11-06-part39.json`.
-- Within-window review: **279 different-topic candidates remain reported pending** in the original queue. The 390-versus-352 candidate-count discrepancy (38) remains unresolved; the reconstructed queue is not proof that the original queue was completed.
-- Similarity scores are screening signals, not proof of duplication or uniqueness. Keep all source drafts and replacement candidates unpublished until semantic, provenance, academic and review gates are closed.
+### 2. Current non-destructive staging reconciliation
+- The 6 November staging revision accounts for all 1,600 source rows: **1,476 provisionally retained + 124 held = 1,600**.
+- The 124 held source locations map to **119 pair IDs** because some findings extend existing duplicate clusters. All 34 newly held locations have source-row checks and staging joins; all 34 retained anchors are present; no retained/held overlap was found.
+- Source CSVs and baseline staging CSVs were not modified. The 6 November revision is audit-only and has not been imported or published.
+- The 124 held rows are not all final academic duplicate decisions. The 28 new pair records and six unique cluster-extension rows still require contextual duplicate-versus-related-skill decisions, provenance classification and qualified subject review.
+- Baseline 90 provenance classification: 48 prior-replacement commits verified; 13 exact introducing commit SHAs still need normalization; 29 original-draft overlaps, including DUP-34 whose source provenance is now verified. The new 34 held locations remain a separate pending provenance/review group.
+- Replacement proposals for the 34 new held locations: **0 drafted**. No new held item is approved for insertion or publication.
 
-### Isolated test database — verified 5 November
-Project `wpktzogarfqrgkirzdpy` contains 65 drafts + 8 published = 73 rows (one published sample per subject). It does not support a 180-question mock. The repository's 1,600 CSV drafts and replacement candidates have not been imported.
+### 3. Review progress — aggregate not yet reconciled
+- The latest persisted review segments contain **297 rank entries** across ranks 565–579, 640–909 and 1293–1304.
+- These segments have not yet been deduplicated against all earlier review logs. Therefore the current unique aggregate reviewed count and remaining count are **not verified**. Do not add 297 to the older 686 checkpoint or claim 0 remaining.
+- The reconstructed within-window set has 390 candidates reviewed at threshold 0.42. The original report still lists 279 pending candidates and a 38-count discrepancy; that original queue is not reconciled.
+- Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
-### Immediate safe gates
-1. Complete the remaining 618 cross-window full-content reviews in non-overlapping batches and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
-2. Reconcile provenance and staging joins for the 75 additional duplicate pair relationships / 75 unique held rows, including cluster assignments.
-3. Prepare and review replacement drafts for the 75 additional unique targets; the original 90/90 reported approval does not cover them.
-4. Independently verify preview hostname DNS and visually inspect the public homepage and CBT screen; confirm homepage content, Worker AI content retrieval and analytics authentication use only the isolated test Supabase project.
-5. Keep all source drafts and replacements out of Supabase until semantic, provenance, academic and reviewer gates are closed.
-6. Obtain separate explicit production-release approval before any production import, publication, merge or deployment.
+### 4. Preview environment — external reachability verified
+- Cloudflare account Workers subdomain is `timmyjoe385`. The previously used `timmy385.workers.dev` hostname was incorrect.
+- Correct preview homepage `https://eduken-consult-preview.timmyjoe385.workers.dev/` returned HTTP 200 on live external fetch and displayed the explicit TEST PREVIEW ONLY banner.
+- Correct preview CBT route `/cbt` returned HTTP 200 and rendered subject practice plus mixed mock selection. It displayed “Checking questions…”; live attempt/API completion has not yet been proven.
+- Preview Worker settings bind `EDUKEN_ENV=preview`, `SUPABASE_URL=https://wpktzogarfqrgkirzdpy.supabase.co`, and the isolated analytics D1 database. Production and preview analytics D1 IDs differ.
+- Correct production homepage and `/cbt` routes also returned HTTP 200. This is a reachability/content check, not a full visual or authenticated-flow acceptance test.
 
----|---:|---:|---:|
-| Use of English | 9 | 1 | 10 |
-| Mathematics | 8 | 1 | 9 |
-| Biology | 8 | 1 | 9 |
-| Chemistry | 8 | 1 | 9 |
-| Physics | 8 | 1 | 9 |
-| Economics | 8 | 1 | 9 |
-| Government | 8 | 1 | 9 |
-| Literature in English | 8 | 1 | 9 |
-| **Total** | **65** | **8** | **73** |
-
-There are zero remaining [TEST ONLY] question rows. This database does not support the 180-question mock. The repository's 1,600 CSV drafts and 90 replacement candidates have not been imported.
-
-### Immediate safe gates
-1. Wait for CI on the preview-isolation correction and inspect the newly deployed preview Worker/build.
-2. Verify preview homepage content, AI assistant content retrieval and analytics authentication resolve only against the isolated test Supabase project; confirm no production fallback if preview bindings are absent.
-3. Correct all stale admin-E2E statements in the historical audit notes and PR description.
-4. Reconcile the 38 within-window candidate discrepancy and complete the 1,018 cross-window / 279 within-window pending similarity reviews, with explicit retain/replace/preserve decisions.
-5. Finish replacement-history provenance normalization for the 14 pending and investigate the one unverified pair.
-6. Keep the full 1,600 bank academically reviewed before any student publication; one published question per subject is not a launch-ready bank.
-7. Keep production merge, import, publication and deployment blocked pending a separate explicit release approval.
-
----
+### 5. Remaining gates and safe next actions
+1. Reconcile the 297 persisted rank entries against all prior review segments and compute a unique aggregate reviewed/remaining count.
+2. Finish provenance classification and contextual review for the 28 new pair records and six cluster-extension rows; normalize the 13 baseline introducing commit SHAs.
+3. Apply the documented canonical cluster merges only after checking all memberships; update one consolidated register and its counts.
+4. Draft replacement questions for the 34 newly held locations only after provenance and syllabus checks; run a refreshed bank-wide semantic screen.
+5. Verify preview AI content retrieval and analytics authentication against isolated services; test the student CBT API, attempt creation, timer, answer save, submit and results on the preview environment.
+6. Obtain qualified independent subject/answer/syllabus approval before publishing any questions.
+7. Keep production imports, publication, merge and deployment blocked until separate explicit production-release approval.
 
 ## Locked target
 
