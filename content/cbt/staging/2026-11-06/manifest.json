@@ -746,8 +746,23 @@
     "source_provenance_metadata": "all source rows declare original EDUKEN-authored content and no past-paper copying"
   },
   "later_register_queue_semantic_review": {
-    "pair_ids": 96,
-    "status": "qualified_contextual_and_subject_review_pending",
-    "note": "Source provenance metadata and exact source/staging endpoint joins are complete; these pair relationships still need duplicate-versus-related-skill disposition and qualified subject/syllabus approval."
+    "pair_ids": 109,
+    "status": "qualified_subject_answer_key_and_syllabus_review_pending",
+    "note": "All source provenance metadata and staging joins are complete for all 199 register pair records. The 109 later-range/cluster decisions still need independent qualified review."
+  },
+  "register_wide_source_staging_verification": {
+    "pair_records": 199,
+    "baseline_pair_records": 90,
+    "later_range_pair_records": 96,
+    "additional_cluster_extension_pair_records": 13,
+    "unique_later_and_cluster_endpoints": 204,
+    "source_rows_found": 204,
+    "staging_rows_found": 204,
+    "exact_full_row_matches": 204,
+    "source_type_original": 204,
+    "content_mismatches": 0,
+    "missing_source_or_staging_rows": 0,
+    "qualified_subject_review_pending_pair_records": 109,
+    "status": "ALL_REGISTER_PAIR_SOURCE_AND_STAGING_JOINS_VERIFIED_QUALIFIED_REVIEW_PENDING"
   }
 }
