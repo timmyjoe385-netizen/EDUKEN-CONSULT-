@@ -18,10 +18,10 @@
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
     "cross_window_additional_targeted_candidates_reviewed": 472,
-    "cross_window_manually_reviewed_candidates": 671,
-    "cross_window_candidates_remaining_not_manually_reviewed": 633,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 155,
-    "cross_window_review_note": "Full-content lower-tail review continues in 15-candidate batches. Latest ranks 1199–1213: all 15 were preserved as distinct learning objectives or complementary applications. See cross-window-tail-review-2026-11-06-part38.json. Current total: 671/1,304 manually reviewed; 633 remain.",
+    "cross_window_manually_reviewed_candidates": 686,
+    "cross_window_candidates_remaining_not_manually_reviewed": 618,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 157,
+    "cross_window_review_note": "Full-content lower-tail review continues in 15-candidate batches. Latest ranks 1214–1228: 13 were preserved as distinct; one new metaphor duplicate pair was confirmed and one vaccination pair connected the existing DUP-38/DUP-73 cluster. See cross-window-tail-review-2026-11-06-part39.json. Current total: 686/1,304 manually reviewed; 618 remain.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,19 +36,19 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 155,
+    "cross_window_pairs": 157,
     "within_window_pairs": 15,
-    "total_pairs": 170,
+    "total_pairs": 172,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 76,
+    "provenance_unverified_pairs": 78,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-six additional pair relationships recorded from DUP-91 through DUP-171 require row-level provenance reconciliation and represent 76 unique held rows because clusters overlap. DUP-165 extends the blood-clotting cluster; DUP-166 connects the phenolphthalein cluster; DUP-167 is a new couplet-definition pair; DUP-168 connects existing natural-selection duplicate groups NATURAL-SELECTION-01/DUP-41; DUP-169 is the 5 kg weight calculation pair; DUP-170 is the government/public expenditure definition pair; DUP-171 is the checks-and-balances pair retaining batch 3 row 32 and holding batch 28 row 32. Staging-location joins remain verified for the original 90 only."
+    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Seventy-eight additional pair relationships recorded from DUP-91 through DUP-173 require row-level provenance reconciliation and represent 77 unique additional held rows because clusters overlap. DUP-165 through DUP-171 are recorded in the 6 November audit entries; DUP-172 is a new metaphor-definition cluster (retain batch 1 row 37; hold batch 35 row 38); DUP-173 connects the vaccination cluster DUP-38/DUP-73 (retain batch 5 row 15; hold batch 15 row 15, batch 20 row 16 and batch 33 row 16). Staging-location joins remain verified for the original 90 only."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -57,7 +57,7 @@
     "previously_triaged": 70
   },
   "replacement_plan": {
-    "unique_replacement_targets": 166,
+    "unique_replacement_targets": 167,
     "all_targets_unique": false,
     "retain_replace_assignments_complete": false,
     "csv_edits_authorized": false,
@@ -66,10 +66,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 76,
+    "additional_replacement_drafts_required": 77,
     "draft_count": 90,
-    "additional_confirmed_pairs_added_on_2026_11_06": 80,
-    "retain_replace_assignments_pending": 76
+    "additional_confirmed_pairs_added_on_2026_11_06": 82,
+    "retain_replace_assignments_pending": 77
   },
   "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
@@ -1013,9 +1013,12 @@
         "reason": "Corrected stem/explanation and full 200-row Biology retained-plus-held bank comparison completed; independent Biology review and explicit syllabus-scope decision required because passive maternal IgG transfer is not expressly named in the syllabus."
       },
       "contextual_review": {
-        "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
-        "note": "Scanned all 200 Biology retained-plus-held rows. No item was found asking about maternal IgG transfer across the placenta or natural passive immunity before birth. Closest items concern placenta exchange of nutrients/gases (retained batch 15 row 14 and batch 28 row 12), antibody production by plasma cells (retained batch 08 row 14 and batch 25 row 15), and vaccination-induced active immune memory (retained batch 05 row 15 and batch 15 row 15; held vaccination duplicates also remain excluded). These are related to immunity/reproduction but test different mechanisms. Wording was narrowed to maternal IgG transfer to the fetus before birth to avoid ambiguity with antibodies in breast milk. Official Biology syllabus Part C, Topic 7 (Humans and Environment — Diseases) explicitly includes disease prevention/control and principles of inoculation and vaccination, but does not expressly list maternal passive immunity or placental IgG transfer. The item is therefore not treated as syllabus-confirmed; qualified Biology reviewer must decide whether to retain or replace it."
-      }
+        "status": "assistant_contextual_review_confirmed_cluster_merge",
+        "note": "Rank 1228 (part39) connects this vaccination pair with DUP-73. Use earliest batch 5 row 15 as cluster anchor; hold batch 15 row 15, batch 20 row 16 and batch 33 row 16 pending provenance and staging joins."
+      },
+      "retain_candidate": "batch 5 row 15",
+      "replace_candidate": "batch 20 row 16",
+      "retain_replace_assignment_status": "provisional_cluster_anchor_pending_provenance"
     },
     {
       "id": "DUP-39",
@@ -4057,6 +4060,50 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part37.json. This is a new two-row checks-and-balances duplicate cluster."
+      }
+    },
+    {
+      "id": "DUP-172",
+      "scope": "cross_window",
+      "subject": "Literature in English",
+      "a": "batch 1 row 37",
+      "b": "batch 35 row 38",
+      "concept": "Recognising metaphor through direct identification",
+      "reason": "Both items ask learners to identify a metaphor from direct identification (time as a thief; a brave person as a lion) and key metaphor.",
+      "retain": "batch 1 row 37",
+      "replace": "batch 35 row 38",
+      "retention_basis": "Retain batch 1 row 37 as the earlier question; hold batch 35 row 38 pending provenance and staging checks.",
+      "provenance": null,
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "new_unique_targets_added": 1,
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part39.json."
+      }
+    },
+    {
+      "id": "DUP-173",
+      "scope": "cross_window",
+      "subject": "Biology",
+      "a": "batch 5 row 15",
+      "b": "batch 20 row 16",
+      "concept": "Vaccination stimulates immune memory and specific protection",
+      "reason": "Both ask how vaccination protects against infection and key stimulation of immune memory or a specific immune response. This connects existing vaccination duplicate relationships DUP-38 and DUP-73.",
+      "retain": "batch 5 row 15",
+      "replace": "batch 20 row 16",
+      "retention_basis": "Retain batch 5 row 15 as the earliest cluster anchor. Hold batch 15 row 15, batch 20 row 16 and batch 33 row 16 pending provenance and staging checks.",
+      "provenance": null,
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "already_counted_in_existing_cluster",
+      "new_unique_targets_added": 0,
+      "retain_replace_assignment_status": "provisional_cluster_anchor_pending_provenance",
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_cluster_merge",
+        "note": "See cross-window-tail-review-2026-11-06-part39.json. This connects existing DUP-38/DUP-73 vaccination relationships; no extra unique held target is added."
       }
     }
   ],
