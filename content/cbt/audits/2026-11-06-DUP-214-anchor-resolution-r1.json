@@ -1,0 +1,67 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "cluster": "DUP-214",
+  "status": "RETAINED_ANCHOR_RESOLVED",
+  "canonical_retained_anchor": "batch 10 row 17",
+  "source_pair_record": {
+    "pair_id": "DUP-214",
+    "rank": 695,
+    "retain": "batch 10 row 17",
+    "hold": "batch 34 row 17"
+  },
+  "additional_held_members": [
+    {
+      "rank": 746,
+      "location": "batch 13 row 20"
+    },
+    {
+      "rank": 794,
+      "location": "batch 3 row 18"
+    }
+  ],
+  "retained_anchor_evidence": {
+    "subject": "Chemistry",
+    "topic": "Atomic structure",
+    "subtopic": "Electronic configuration",
+    "stem": "How many electrons are present in a neutral atom of chlorine with atomic number 17?",
+    "answer": "17",
+    "source_provenance": "Original EDUKEN-authored draft; not copied from a past paper.",
+    "staging_presence": "Present in 2026-11-01 retained-batches-11-20.csv as source_batch 10, source_csv_row 17."
+  },
+  "cluster_member_comparison": [
+    {
+      "location": "batch 10 row 17",
+      "tested_skill": "Apply neutrality and atomic number to determine electron count for chlorine",
+      "answer": "17 electrons"
+    },
+    {
+      "location": "batch 34 row 17",
+      "tested_skill": "Apply neutrality to infer atomic number from a stated electron count",
+      "answer": "Atomic number 10"
+    },
+    {
+      "location": "batch 13 row 20",
+      "tested_skill": "Recall that a neutral atom has equal numbers of electrons and protons",
+      "answer": "Protons"
+    },
+    {
+      "location": "batch 3 row 18",
+      "tested_skill": "Recall that atomic number equals proton number",
+      "answer": "Protons"
+    }
+  ],
+  "disposition_note": "The canonical retained anchor is now unambiguous: the original DUP-214 pair explicitly retains batch 10 row 17, and the two extension records attach to that same cluster. The four items share the atomic-number/proton/electron equivalence family. However, they vary between definition recall and numerical application; a qualified Chemistry reviewer should confirm whether all three held variants are sufficiently redundant for the intended practice bank before replacement drafting.",
+  "counts": {
+    "new_pair_anchor_resolved": true,
+    "extension_anchors_resolved": 2,
+    "previously_unresolved_extension_anchors_remaining": 0
+  },
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_snapshot_overwrites": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "academic_approval": false
+  }
+}
