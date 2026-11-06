@@ -12,12 +12,20 @@
   "duplicate_provenance": {
     "prior_replacement_commit_verified": 48,
     "replacement_after_initial_snapshot_commit_sha_pending": 13,
-    "original_draft_overlap_relationships": 28,
-    "provenance_unverified_relationships": 1,
-    "unverified_pair_ids": [
-      "DUP-34"
-    ],
-    "note": "Forty-eight duplicate relationships have commit-backed prior-replacement evidence. Thirteen further pairs contain later replacement-created content confirmed against original batch snapshots, but exact introducing commit SHAs remain to be normalized. Twenty-eight are original-draft overlaps; DUP-34 remains provenance-unresolved."
+    "original_draft_overlap_relationships": 29,
+    "provenance_unverified_relationships": 0,
+    "unverified_pair_ids": [],
+    "note": "Forty-eight duplicate relationships have commit-backed prior-replacement evidence. Thirteen further pairs contain replacement-created content confirmed against original batch snapshots, but exact introducing commit SHAs remain to be normalized. Twenty-nine are original-draft overlaps, including DUP-34, whose retained and held source rows were directly checked in original batches 38 and 39. No pair remains in the unresolved-provenance bucket; the 13 introducing commit SHAs still require normalization.",
+    "resolved_pair_evidence": {
+      "DUP-34": {
+        "retained_location": "batch 38 row 2",
+        "held_location": "batch 39 row 5",
+        "source_content_verified": true,
+        "source_provenance": "both original EDUKEN-authored drafts",
+        "finding": "Both test concord with the singular subject 'each'; retained item uses 'wears' and held item uses 'receives'. They assess the same narrow rule with different lexical content.",
+        "disposition": "keep held pending qualified English subject review; provenance classified as original-draft overlap, not prior-replacement history"
+      }
+    }
   },
   "per_batch": [
     {
