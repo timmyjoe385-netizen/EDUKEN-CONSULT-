@@ -15,11 +15,11 @@ This section supersedes older status statements below wherever they conflict. Da
 
 ### Current question-bank disposition
 - The repository contains 40 original CSV batches: 1,600 rows total (200 per subject), all draft-only. Structural checks cover the 18-column schema, batch size, subject balance, answer keys, distinct options, explanations, provenance and exact normalized duplicate stems.
-- Current duplicate register: **141 cross-window + 15 within-window = 156 confirmed semantic duplicate pair relationships**. These resolve to **153 unique replacement targets**; overlapping clusters mean pair count and unique target count are not interchangeable.
-- The existing replacement candidate CSV contains **90/90 drafts**, technically validated. A further **63 unique targets** require provenance reconciliation, retain/replace assignment, replacement drafts and review. No replacement CSV edits or imports are authorised.
-- The project owner reported approval of the original 90/90 replacements. This remains user-reported: signed item-level reviewer records and reviewer identity/credentials are absent (0/90 documentary evidence). All 63 additional targets are outside that reported approval.
-- Provenance status: 62 prior-replacement commits verified, 28 original-draft overlaps, and 62 additional pair relationships still requiring row-level provenance reconciliation (representing 63 unique held rows). Staging-location joins are verified for the original 90 only; the expanded set is not reconciled.
-- Cross-window semantic review: **386 of 1,304 candidates manually reviewed; 918 remain**. The latest five checks (candidate ranks 912–916) are recorded in `audits/cross-window-tail-review-2026-11-06-part17.json`; ranks 912, 913, 915 and 916 were preserved as distinct; rank 914 was confirmed as DUP-157, adding batch 21 row 11 as a new held target.
+- Current duplicate register: **142 cross-window + 15 within-window = 157 confirmed semantic duplicate pair relationships**. These resolve to **154 unique replacement targets**; overlapping clusters mean pair count and unique target count are not interchangeable.
+- The existing replacement candidate CSV contains **90/90 drafts**, technically validated. A further **64 unique targets** require provenance reconciliation, retain/replace assignment, replacement drafts and review. No replacement CSV edits or imports are authorised.
+- The project owner reported approval of the original 90/90 replacements. This remains user-reported: signed item-level reviewer records and reviewer identity/credentials are absent (0/90 documentary evidence). All 64 additional targets are outside that reported approval.
+- Provenance status: 62 prior-replacement commits verified, 28 original-draft overlaps, and 63 additional pair relationships still requiring row-level provenance reconciliation (representing 64 unique held rows). Staging-location joins are verified for the original 90 only; the expanded set is not reconciled.
+- Cross-window semantic review: **391 of 1,304 candidates manually reviewed; 913 remain**. The latest five checks (candidate ranks 917–921) are recorded in `audits/cross-window-tail-review-2026-11-06-part18.json`; ranks 917–920 were preserved as distinct; rank 921 was confirmed as DUP-158, adding batch 39 row 12 as a new held target.
 - Within-window review still has **279 different-topic candidates reported pending** in the original queue, and the 390-versus-352 independently recomputed candidate-count discrepancy (38) remains unresolved. A reconstructed threshold run is not proof that the original pending queue was completed.
 - Similarity scores are screening signals, not proof of duplication or uniqueness. Do not bulk-import or publish based on similarity or structural validation alone.
 
@@ -44,8 +44,8 @@ There are zero remaining [TEST ONLY] question rows. This database does not suppo
 1. Let PR #194's current Playwright run finish and inspect any failure evidence; keep production deployment skipped.
 2. Independently verify preview hostname DNS and visually inspect the public homepage and CBT screen; confirm homepage content, Worker AI content retrieval and analytics authentication use only the isolated test Supabase project.
 3. Continue the 918 remaining cross-window candidate reviews and reconcile the 279 original within-window pending candidates plus the 38-count discrepancy.
-4. Reconcile provenance and staging joins for the 62 new duplicate relationships / 63 unique held rows, including cluster assignments.
-5. Prepare and review replacement drafts for the 63 additional targets; the original 90/90 reported approval does not cover them.
+4. Reconcile provenance and staging joins for the 63 new duplicate relationships / 64 unique held rows, including cluster assignments.
+5. Prepare and review replacement drafts for the 64 additional targets; the original 90/90 reported approval does not cover them.
 6. Keep all source drafts and replacements out of Supabase until academic, semantic, provenance and review gates are closed.
 7. Keep production merge, import, publication and deployment blocked pending separate explicit release approval.
 
