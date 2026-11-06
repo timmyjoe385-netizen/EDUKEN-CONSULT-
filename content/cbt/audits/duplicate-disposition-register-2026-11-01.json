@@ -17,11 +17,11 @@
     "threshold_note": "The 0.42 reconstruction reproduces the reported total of 390. A 0.43 run yields 352. The original reported category split was 41/349; the reconstruction is 40/350, a one-pair classification discrepancy still documented in the audit.",
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
-    "cross_window_additional_targeted_candidates_reviewed": 317,
-    "cross_window_manually_reviewed_candidates": 366,
-    "cross_window_candidates_remaining_not_manually_reviewed": 938,
-    "cross_window_targeted_duplicate_pair_records_confirmed": 113,
-    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Lower-scoring candidates are being checked against complete source stems, options, answer keys and explanations in the dated tail-review files. The latest five checks (candidate ranks 892–896) all preserved the pairs as distinct; see cross-window-tail-review-2026-11-06-part13.json. Current total: 366 of 1,304 manually reviewed; 938 remain.",
+    "cross_window_additional_targeted_candidates_reviewed": 322,
+    "cross_window_manually_reviewed_candidates": 371,
+    "cross_window_candidates_remaining_not_manually_reviewed": 933,
+    "cross_window_targeted_duplicate_pair_records_confirmed": 116,
+    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Lower-scoring candidates are checked against complete source stems, options, answer keys and explanations in dated tail-review files. Latest five checks (ranks 897–901): ranks 897 and 900 were preserved as distinct; ranks 898, 899 and 901 confirmed semantic duplicates. Rank 898 extends existing tariff cluster DUP-19 and adds one new unique held row. See cross-window-tail-review-2026-11-06-part14.json. Current total: 371 of 1,304 manually reviewed; 933 remain.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -36,19 +36,19 @@
     "within_window_count_difference_note": "The original reported queue and reconstructed 0.42 candidate set differ by 38 pairs (3 same-topic and 35 different-topic). The original generator/candidate list needed to reconcile this discrepancy has not been found. Do not claim the original 279 pending candidates are complete."
   },
   "duplicate_summary": {
-    "cross_window_pairs": 136,
+    "cross_window_pairs": 139,
     "within_window_pairs": 15,
-    "total_pairs": 151,
+    "total_pairs": 154,
     "prior_replacement_commit_verified": 62,
     "replacement_after_initial_snapshot_commit_sha_pending": 0,
     "original_draft_overlap_pairs": 28,
-    "provenance_unverified_pairs": 57,
+    "provenance_unverified_pairs": 60,
     "provenance_classification_complete": false,
     "staging_location_join_verified_pairs": 90,
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Fifty-seven additional pair relationships require row-level provenance reconciliation (DUP-91–DUP-99, DUP-101–DUP-121, DUP-123–DUP-130, DUP-132–DUP-135, DUP-137–DUP-141 and DUP-143–DUP-152); these represent 58 unique held rows. DUP-122, DUP-131, DUP-136 and DUP-142 are additional relationships within existing clusters."
+    "provenance_note": "The original 90-pair set remains reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Fifty-seven additional relationships from DUP-91–DUP-152 require row-level provenance reconciliation and represent 58 unique held rows. Three further relationships DUP-153–DUP-155 have now been confirmed, bringing the additional unresolved provenance set to 60 relationships and 61 unique held rows. DUP-153 extends the existing TARIFF-01/DUP-19 cluster; DUP-154 and DUP-155 add separate targets. Staging-location joins remain verified for the original 90 only."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -57,7 +57,7 @@
     "previously_triaged": 70
   },
   "replacement_plan": {
-    "unique_replacement_targets": 148,
+    "unique_replacement_targets": 151,
     "all_targets_unique": false,
     "retain_replace_assignments_complete": false,
     "csv_edits_authorized": false,
@@ -66,10 +66,10 @@
     "draft_bankwide_screen_complete": true,
     "drafts_inserted": 0,
     "additional_confirmed_pairs_added_on_2026_11_01": 52,
-    "additional_replacement_drafts_required": 58,
+    "additional_replacement_drafts_required": 61,
     "draft_count": 90,
-    "additional_confirmed_pairs_added_on_2026_11_06": 61,
-    "retain_replace_assignments_pending": 58
+    "additional_confirmed_pairs_added_on_2026_11_06": 64,
+    "retain_replace_assignments_pending": 61
   },
   "approval_gate": "Repository status checkpoint: 87/90 replacement target IDs have explicit assistant pairwise bankwide review-complete statuses in the disposition register. The screening file contains 90/90 contextual assessments. DUP-69 remains rejected for semantic overlap and requires a new replacement; one other target remains at preliminary distinction status. This is not independent academic approval. Independent qualified subject/answer approval remains 0/90. All remaining similarity-flag contextual decisions, syllabus mapping and final import validation must be closed before import/publication. All replacement drafts remain excluded from import/publication. Original source CSVs remain unchanged. No production import, publish, deployment or PR merge is authorised.",
   "pairs": [
@@ -3633,6 +3633,70 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part11.json for full question text, options, answer keys and rationale."
+      }
+    },
+    {
+      "id": "DUP-153",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 14 row 31",
+      "b": "batch 38 row 31",
+      "concept": "A tariff is a customs duty on imported goods",
+      "reason": "Both full question records define a tariff as a tax/customs duty on imports; the options and explanations test the same definition.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 9 row 31",
+      "replace_candidate": "batch 14 row 31",
+      "cluster_id": "TARIFF-01",
+      "new_unique_targets_added": 1,
+      "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part14.json. Batch 38 row 31 is already a held target in DUP-19; this finding adds batch 14 row 31 to the existing tariff-definition cluster."
+      }
+    },
+    {
+      "id": "DUP-154",
+      "scope": "cross_window",
+      "subject": "Economics",
+      "a": "batch 8 row 31",
+      "b": "batch 35 row 30",
+      "concept": "Marginal utility is the additional satisfaction from consuming one more unit",
+      "reason": "Both full question records directly test the same definition of marginal utility.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 8 row 31",
+      "replace_candidate": "batch 35 row 30",
+      "new_unique_targets_added": 1,
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part14.json for full question text, options, keys and explanations."
+      }
+    },
+    {
+      "id": "DUP-155",
+      "scope": "cross_window",
+      "subject": "Mathematics",
+      "a": "batch 19 row 11",
+      "b": "batch 30 row 7",
+      "concept": "Volume of a cuboid calculated as length × width × height",
+      "reason": "Both items are the same direct substitution exercise for cuboid volume, with only the dimensions changed.",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "csv_change_status": "not_changed",
+      "replacement_status": "pending_provenance_and_staging",
+      "retain_candidate": "batch 19 row 11",
+      "replace_candidate": "batch 30 row 7",
+      "new_unique_targets_added": 1,
+      "retain_replace_assignment_status": "provisional_pending_provenance",
+      "provenance": null,
+      "contextual_review": {
+        "status": "assistant_contextual_review_confirmed_semantic_duplicate",
+        "note": "See cross-window-tail-review-2026-11-06-part14.json for full question text, options, keys and explanations."
       }
     }
   ],
