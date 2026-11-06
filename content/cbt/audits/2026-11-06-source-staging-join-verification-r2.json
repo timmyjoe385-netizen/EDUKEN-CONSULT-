@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "source_files_checked": "content/cbt/original-batch-01-40-questions.csv through content/cbt/original-batch-40-40-questions.csv (only referenced batch files fetched; no source edits)",
+  "staging_files_checked": [
+    "content/cbt/staging/2026-11-06/held-duplicates-01-10.csv",
+    "content/cbt/staging/2026-11-06/held-duplicates-11-20.csv",
+    "content/cbt/staging/2026-11-06/held-duplicates-21-30.csv",
+    "content/cbt/staging/2026-11-06/held-duplicates-31-40.csv"
+  ],
+  "results": {
+    "new_pair_records": 28,
+    "source_endpoints_verified": 56,
+    "new_pair_records_found_in_staging": 28,
+    "new_unique_cluster_extension_rows": 6,
+    "new_unique_cluster_extension_rows_found_in_staging": 6,
+    "preexisting_legacy_cluster_links": 2,
+    "preexisting_links": [
+      "batch 34 row 18",
+      "batch 38 row 36"
+    ],
+    "newly_held_unique_locations": 34
+  },
+  "boundary": {
+    "provenance_classification": "pending",
+    "contextual_academic_disposition": "pending_qualified_subject_review",
+    "qualified_subject_approval": false,
+    "replacement_drafts_created": 0,
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "production_release_authorized": false
+  },
+  "status": "STAGING_SOURCE_JOIN_VERIFICATION_COMPLETE_NO_ACADEMIC_OR_PRODUCTION_APPROVAL"
+}
