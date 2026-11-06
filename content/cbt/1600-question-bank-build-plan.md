@@ -298,3 +298,11 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - Rank 970 was preserved as a distinct formula-based hydrostatic-pressure assessment; its batch 35 row 25 counterpart is already held under DUP-44 and was not counted again.
 - Cross-window progress is now **446/1,304 manually reviewed; 858 remain**. The duplicate register now records **145 cross-window + 15 within-window = 160 confirmed pair relationships**, resolving to **157 unique replacement targets** (90 original + 67 additional). The 66 additional pair relationships from DUP-91–DUP-161 require provenance reconciliation and represent 67 unique held rows.
 - No source CSV, staging CSV, replacement draft or production data was changed. No import, publication, merge or deployment was authorised.
+
+
+## Fourth lower-tail audit batch — 6 November 2026
+
+- Reviewed cross-window candidate ranks **977–991** against complete source stems, options, answer keys and explanations. See `content/cbt/audits/cross-window-tail-review-2026-11-06-part24.json`.
+- Fourteen candidates were preserved as distinct. Rank 980 was confirmed as **DUP-162**, extending existing esterification cluster **DUP-13**: batch 20 row 20 remains the designated retained question, batch 38 row 20 was already held, and batch 6 row 21 is one additional unique held target.
+- Cross-window progress is now **461/1,304 manually reviewed; 843 remain**. The duplicate register now records **146 cross-window + 15 within-window = 161 confirmed pair relationships**, resolving to **158 unique replacement targets** (90 original + 68 additional). The 67 additional pair relationships from DUP-91–DUP-162 require provenance reconciliation and represent 68 unique held rows.
+- No source CSV, staging CSV, replacement draft or production data was changed. No import, publication, merge or deployment was authorised.
