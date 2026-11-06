@@ -371,3 +371,24 @@ This checkpoint supersedes older progress statements above where they conflict. 
 6. Complete live AI assistant POST and authenticated analytics/admin testing. The one-question student practice lifecycle has passed isolated API logs and CI Chromium smoke; full mocks remain blocked by the sample-bank size.
 7. Keep production import, publication, PR merge, production deployment and student launch blocked until all content and technical gates pass and separate explicit production-release approval is given.
 
+
+
+## Authoritative fast-path checkpoint — 6 November 2026, latest audit reconciliation
+
+This section supersedes earlier cross-window review-count statements in this file wherever they conflict. It is a documentation-only reconciliation; it does not approve content or release.
+
+### Cross-window rank coverage
+- The 81 earlier tail-review files contain 717 unique rank IDs. The three 6 November addendum segments contain 297 entries, of which 58 overlap the earlier tail set; this yields 956 unique tail ranks before part83.
+- Part83 adds 62 previously missing explicit rank dispositions. The resulting tail-review union is 1,018 unique ranks, covering every rank from 287 through 1,304 with no missing tail ranks.
+- The original 1 November report separately states 286 manually reviewed high-similarity candidates (49 shortlist items plus 237 targeted reviews). The 49 shortlist ranks are mapped, but the exact rank IDs for the other 237 targeted reviews are not yet crosswalked.
+- The historical cumulative counter of 1,007 differs by four from the rank-derived pre-addendum count of 1,003 (286 + 717). Do not report 1,304/1,304 as a reconciled unique-rank total, or calculate a final remaining count, until the 237 baseline rank IDs and four-count discrepancy are resolved. The accurate status is: **1,018/1,018 tail ranks explicitly dispositioned; baseline crosswalk pending**.
+- The within-window candidate set also remains unreconciled: the 0.42 reconstruction has 390 candidates (40 same-topic and 350 different-topic), while the original report records 390 with a 41/349 split and 279 pending from an earlier 70-reviewed count. Do not treat the reconstructed 0-pending count as proof that the original queue is closed.
+
+### Current isolated database count — read-only query, 6 November 2026
+- Direct grouped query of `public.cbt_questions` in isolated project `wpktzogarfqrgkirzdpy` returned **73 rows: 65 draft and 8 published**.
+- Published distribution is exactly one question for each of the eight supported subjects. Draft distribution is eight each for seven subjects and nine for Use of English.
+- This is a preview/sample bank only; it cannot support the 180-question JAMB mock (60 Use of English plus 40 each from three additional subjects). No rows were inserted, updated or deleted. Production Supabase was not queried or changed in this check.
+
+### Release controls
+- Keep source CSVs, staging CSVs and database content unchanged pending qualified academic decisions.
+- Keep production import, publication, PR merge and production deployment blocked pending documented independent subject/answer-key/syllabus review, complete student mock validation, authenticated admin acceptance and separate explicit production-release approval.
