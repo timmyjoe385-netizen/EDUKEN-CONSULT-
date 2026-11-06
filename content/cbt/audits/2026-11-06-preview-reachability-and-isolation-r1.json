@@ -151,5 +151,16 @@
     "verify_jwt": false,
     "deployed_source_exactly_matches_repository_source": true,
     "repository_file": "supabase/functions/eduken-api/index.ts"
+  },
+  "student_attempt_database_observation": {
+    "project_id": "wpktzogarfqrgkirzdpy",
+    "observed_total_sessions": 1501,
+    "submitted_sessions": 1496,
+    "active_sessions": 5,
+    "active_but_expired_sessions": 5,
+    "first_started_at": "2026-10-29T07:33:53.223Z",
+    "last_started_at": "2026-11-06T15:37:57.176Z",
+    "interpretation": "These are pre-existing rows in the isolated test project; the TinyFish browser run did not start, so it created none of them. Five sessions are still marked active although their expires_at values are in the past.",
+    "safety": "No attempt rows were updated or deleted. Cleanup of existing test sessions is not performed without explicit authorization."
   }
 }
