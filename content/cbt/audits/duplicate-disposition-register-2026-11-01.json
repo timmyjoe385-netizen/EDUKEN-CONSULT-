@@ -81,7 +81,7 @@
     "staging_location_join_complete": true,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "All 199 register pair records now have source provenance metadata and staging joins verified. The baseline 90 comprise 62 commit-backed replacement histories and 28 original-draft overlaps. The later 96 pair IDs have 178 unique endpoints exactly matched; 13 additional cluster/extension pair records have 26 unique endpoints exactly matched. All 204 endpoints declare original EDUKEN-authored source metadata; zero missing rows or content mismatches. The 109 later-range/cluster pair decisions remain pending qualified subject, answer-key and syllabus review. The separate 6 November addendum's 28 new pair records plus six unique cluster extensions also have verified original provenance and staging joins. The current staging revision holds 124 locations; 68 additional target locations remain in retained exports pending qualified review.",
+    "provenance_note": "All 199 register pair records now have source provenance metadata and staging joins verified. The baseline 90 comprise 62 commit-backed replacement histories and 28 original-draft overlaps. The later 109 pair records (96 later-range plus 13 cluster/extension relationships) have 204 unique endpoints exactly matched; all declare original EDUKEN-authored source metadata and there are zero missing rows or content mismatches. The 109 later-range/cluster pair decisions remain pending qualified subject, answer-key and syllabus review. The separate 6 November addendum's 28 new pair records plus six unique cluster extensions also have verified original provenance and staging joins. The current staging revision holds 124 locations; 68 additional target locations remain in retained exports pending qualified review.",
     "staging_revision_verification": {
       "date": "2026-11-06",
       "total_source_rows": 1600,
@@ -2388,17 +2388,21 @@
       "b": "batch 25 row 21",
       "concept": "Catalyst lowers activation energy",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 3 row 20",
       "replace_candidate": "batch 25 row 21",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06.json for both complete question records, answer keys and the item-specific rationale. Do not finalize retention/replacement until row-level history and staging joins are checked."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-92",
@@ -2408,17 +2412,21 @@
       "b": "batch 21 row 20",
       "concept": "Balancing H2 + O2 -> H2O; oxygen coefficient",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 19",
       "replace_candidate": "batch 21 row 20",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06.json for both complete question records, answer keys and the item-specific rationale. Do not finalize retention/replacement until row-level history and staging joins are checked."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-93",
@@ -2428,13 +2436,13 @@
       "b": "batch 31 row 16",
       "concept": "Natural selection and reproductive success",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 7 row 16",
       "replace_candidate": "batch 31 row 16",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06.json for both complete question records, answer keys and the item-specific rationale. Do not finalize retention/replacement until row-level history and staging joins are checked."
@@ -2443,7 +2451,11 @@
       "additional_related_row": "batch 19 row 16",
       "additional_held_candidate": "batch 19 row 16",
       "cluster_retained_candidate": "batch 7 row 16",
-      "existing_held_candidate": "batch 31 row 16"
+      "existing_held_candidate": "batch 31 row 16",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-94",
@@ -2453,17 +2465,21 @@
       "b": "batch 40 row 24",
       "concept": "Pascal's principle",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 23",
       "replace_candidate": "batch 40 row 24",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06.json for both complete question records, answer keys and the item-specific rationale. Do not finalize retention/replacement until row-level history and staging joins are checked."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-95",
@@ -2473,17 +2489,21 @@
       "b": "batch 34 row 21",
       "concept": "Temperature effect on reaction rate",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 24 row 17",
       "replace_candidate": "batch 34 row 21",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06.json for both complete question records, answer keys and the item-specific rationale. Do not finalize retention/replacement until row-level history and staging joins are checked."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-96",
@@ -2493,17 +2513,21 @@
       "b": "batch 28 row 27",
       "concept": "Binding price ceiling below equilibrium creates a shortage.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 15 row 27",
       "replace_candidate": "batch 28 row 27",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-97",
@@ -2513,17 +2537,21 @@
       "b": "batch 37 row 21",
       "concept": "Acid-carbonate reaction releases carbon dioxide.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 14 row 21",
       "replace_candidate": "batch 37 row 21",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-98",
@@ -2533,17 +2561,21 @@
       "b": "batch 17 row 10",
       "concept": "Circumference of a radius-7 cm circle using pi = 22/7.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 11",
       "replace_candidate": "batch 17 row 10",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-99",
@@ -2553,17 +2585,21 @@
       "b": "batch 23 row 38",
       "concept": "Satire uses humour and irony to expose or criticise faults.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 5 row 40",
       "replace_candidate": "batch 23 row 38",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-101",
@@ -2573,17 +2609,21 @@
       "b": "batch 12 row 27",
       "concept": "Law of supply: higher market price generally increases quantity supplied.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 37 row 27",
       "replace_candidate": "batch 12 row 27",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-102",
@@ -2593,13 +2633,13 @@
       "b": "batch 18 row 32",
       "concept": "Federalism constitutionally divides powers between central and subnational governments.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 32 row 34",
       "replace_candidate": null,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate_cluster",
         "note": "DUP-113 and existing DUP-28 show this is a four-row federalism-definition cluster. Retain batch 32 row 34 provisionally; hold batch 33 row 35 (already recorded), batch 2 row 33 and batch 18 row 32. Verify all row-level histories before staging."
@@ -2609,7 +2649,11 @@
         "batch 2 row 33",
         "batch 18 row 32"
       ],
-      "existing_held_candidate": "batch 33 row 35"
+      "existing_held_candidate": "batch 33 row 35",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-103",
@@ -2619,17 +2663,21 @@
       "b": "batch 39 row 27",
       "concept": "Monopsony is a market with one dominant buyer and many sellers.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 23 row 28",
       "replace_candidate": "batch 39 row 27",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-104",
@@ -2639,17 +2687,21 @@
       "b": "batch 18 row 36",
       "concept": "Independent electoral body organises and administers elections impartially.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 3 row 33",
       "replace_candidate": "batch 18 row 36",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-105",
@@ -2659,17 +2711,21 @@
       "b": "batch 38 row 14",
       "concept": "Normal site of human fertilisation is the oviduct (fallopian tube).",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 9 row 12",
       "replace_candidate": "batch 38 row 14",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-106",
@@ -2679,17 +2735,21 @@
       "b": "batch 37 row 13",
       "concept": "Nephron site of blood ultrafiltration is the glomerulus.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 18 row 16",
       "replace_candidate": "batch 37 row 13",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-107",
@@ -2699,17 +2759,21 @@
       "b": "batch 14 row 35",
       "concept": "Freedom of expression protects communication of opinions subject to lawful limits.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 3 row 36",
       "replace_candidate": "batch 14 row 35",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-108",
@@ -2719,17 +2783,21 @@
       "b": "batch 22 row 35",
       "concept": "Public accountability requires officials to explain and justify decisions and conduct.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 33",
       "replace_candidate": "batch 22 row 35",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-109",
@@ -2739,17 +2807,21 @@
       "b": "batch 17 row 27",
       "concept": "Higher consumer income shifts demand for a normal good to the right.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 29",
       "replace_candidate": "batch 17 row 27",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-110",
@@ -2759,17 +2831,21 @@
       "b": "batch 29 row 13",
       "concept": "Enzymes lower activation energy to speed biochemical reactions.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 16 row 12",
       "replace_candidate": "batch 29 row 13",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-111",
@@ -2779,17 +2855,21 @@
       "b": "batch 37 row 25",
       "concept": "Fuse interrupts a circuit when excessive current flows.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 12 row 24",
       "replace_candidate": "batch 37 row 25",
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-112",
@@ -2799,13 +2879,13 @@
       "b": "batch 33 row 14",
       "concept": "Xylem transports water and dissolved mineral salts from roots.",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 9 row 13",
       "replace_candidate": "batch 33 row 14",
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part2.json for the complete question records, options, answer keys and rationale. DUP-101 and DUP-105 are additional members of existing duplicate clusters; retain candidates follow the already recorded cluster decisions."
@@ -2815,7 +2895,11 @@
       "new_held_candidates": [
         "batch 14 row 12",
         "batch 30 row 16"
-      ]
+      ],
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-113",
@@ -2825,9 +2909,9 @@
       "b": "batch 33 row 35",
       "concept": "Federalism divides constitutional powers between central and component governments",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 32 row 34",
       "replace_candidate": null,
       "cluster_id": "FEDERALISM-01",
@@ -2837,11 +2921,15 @@
       ],
       "new_unique_targets_added": 0,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-114",
@@ -2851,20 +2939,24 @@
       "b": "batch 28 row 25",
       "concept": "Specific heat capacity definition",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 28 row 25",
       "replace_candidate": null,
       "cluster_id": "SPECIFIC-HEAT-01",
       "new_held_candidate": "batch 3 row 24",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-115",
@@ -2874,20 +2966,24 @@
       "b": "batch 34 row 26",
       "concept": "Specific heat capacity definition",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 28 row 25",
       "replace_candidate": null,
       "cluster_id": "SPECIFIC-HEAT-01",
       "new_held_candidate": "batch 3 row 24",
       "new_unique_targets_added": 0,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-116",
@@ -2897,18 +2993,22 @@
       "b": "batch 30 row 15",
       "concept": "Epiglottis prevents food entering the trachea during swallowing",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 17 row 15",
       "replace_candidate": "batch 30 row 15",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-117",
@@ -2918,18 +3018,22 @@
       "b": "batch 31 row 32",
       "concept": "Successful no-confidence motion shows the government has lost legislative support",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 7 row 33",
       "replace_candidate": "batch 31 row 32",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-118",
@@ -2939,18 +3043,22 @@
       "b": "batch 32 row 36",
       "concept": "African Union promotes unity, cooperation and development",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 7 row 36",
       "replace_candidate": "batch 32 row 36",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-119",
@@ -2960,18 +3068,22 @@
       "b": "batch 36 row 35",
       "concept": "Election petition challenges the conduct or result of an election",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 27 row 34",
       "replace_candidate": "batch 36 row 35",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-120",
@@ -2981,14 +3093,14 @@
       "b": "batch 33 row 32",
       "concept": "Obeying the law is a civic duty/responsibility",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 12 row 33",
       "replace_candidate": "batch 33 row 32",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
@@ -3000,7 +3112,11 @@
         "batch 33 row 32",
         "batch 22 row 33"
       ],
-      "cluster_retained_candidate": "batch 12 row 33"
+      "cluster_retained_candidate": "batch 12 row 33",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-121",
@@ -3010,18 +3126,22 @@
       "b": "batch 17 row 20",
       "concept": "General formula of open-chain alkanes",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 21",
       "replace_candidate": "batch 17 row 20",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part3.json for full question text, options, answer keys and rationale. Cluster records share a single retained item and must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-122",
@@ -3046,7 +3166,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-123",
@@ -3056,14 +3177,14 @@
       "b": "batch 20 row 33",
       "concept": "Proportional representation allocates seats broadly in proportion to votes received",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 33",
       "replace_candidate": "batch 20 row 33",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part4.json for full question text, options, answer keys and rationale. Cluster records share existing retained/held rows; stage only once per unique held row."
@@ -3071,7 +3192,11 @@
       "cluster_id": "PROPORTIONAL-REPRESENTATION-01",
       "additional_related_row": "batch 26 row 33",
       "additional_held_candidate": "batch 26 row 33",
-      "cluster_retained_candidate": "batch 8 row 33"
+      "cluster_retained_candidate": "batch 8 row 33",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-124",
@@ -3081,18 +3206,22 @@
       "b": "batch 39 row 23",
       "concept": "Wavelength is the distance between successive points in the same phase",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 29 row 24",
       "replace_candidate": "batch 39 row 23",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part4.json for full question text, options, answer keys and rationale. Cluster records share existing retained/held rows; stage only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-125",
@@ -3102,18 +3231,22 @@
       "b": "batch 29 row 33",
       "concept": "Secret ballot protects the privacy of a voter's choice",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 1 row 34",
       "replace_candidate": "batch 29 row 33",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part4.json for full question text, options, answer keys and rationale. Cluster records share existing retained/held rows; stage only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-126",
@@ -3123,19 +3256,23 @@
       "b": "batch 22 row 33",
       "concept": "Obeying laws/regulations is a civic duty",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 12 row 33",
       "replace_candidate": "batch 22 row 33",
       "cluster_id": "CIVIC-DUTY-01",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part4.json for full question text, options, answer keys and rationale. Cluster records share existing retained/held rows; stage only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-127",
@@ -3145,19 +3282,23 @@
       "b": "batch 38 row 21",
       "concept": "Simple distillation separates a liquid from a dissolved non-volatile solid",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 17",
       "replace_candidate": "batch 38 row 21",
       "cluster_id": "SIMPLE-DISTILLATION-01",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part4.json for full question text, options, answer keys and rationale. Cluster records share existing retained/held rows; stage only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-128",
@@ -3167,19 +3308,23 @@
       "b": "batch 26 row 33",
       "concept": "Proportional representation seats reflect vote shares",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 33",
       "replace_candidate": "batch 26 row 33",
       "cluster_id": "PROPORTIONAL-REPRESENTATION-01",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part5.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-129",
@@ -3189,18 +3334,22 @@
       "b": "batch 16 row 6",
       "concept": "Singular possessive apostrophe is apostrophe plus s",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 2 row 5",
       "replace_candidate": "batch 16 row 6",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part5.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-130",
@@ -3210,18 +3359,22 @@
       "b": "batch 13 row 16",
       "concept": "Bacteria and fungi decompose dead organic matter",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 15",
       "replace_candidate": "batch 13 row 16",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part5.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-131",
@@ -3246,7 +3399,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-132",
@@ -3256,18 +3410,22 @@
       "b": "batch 34 row 3",
       "concept": "Ephemeral means short-lived",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 22 row 3",
       "replace_candidate": "batch 34 row 3",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part6.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-133",
@@ -3277,18 +3435,22 @@
       "b": "batch 25 row 27",
       "concept": "Negative externality imposes external costs on third parties",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 14 row 28",
       "replace_candidate": "batch 25 row 27",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part6.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-134",
@@ -3298,18 +3460,22 @@
       "b": "batch 35 row 13",
       "concept": "Most oxygen is carried by haemoglobin in red blood cells",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 30 row 14",
       "replace_candidate": "batch 35 row 13",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part6.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-135",
@@ -3319,18 +3485,22 @@
       "b": "batch 30 row 21",
       "concept": "Crystallisation obtains pure crystals of a soluble solid from solution",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 2 row 17",
       "replace_candidate": "batch 30 row 21",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part6.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-136",
@@ -3355,7 +3525,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-137",
@@ -3365,18 +3536,22 @@
       "b": "batch 34 row 38",
       "concept": "A stanza is a grouped unit of lines in a poem",
       "reason": "Full question text, options, answer key and explanation were checked; both define the same literary term.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 5 row 37",
       "replace_candidate": "batch 34 row 38",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part7.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-138",
@@ -3386,18 +3561,22 @@
       "b": "batch 21 row 35",
       "concept": "Constitutional amendment is a formal change made through prescribed procedure",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 32",
       "replace_candidate": "batch 21 row 35",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part8.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-139",
@@ -3407,18 +3586,22 @@
       "b": "batch 16 row 20",
       "concept": "Boyle's law: pressure inversely proportional to volume at constant temperature",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 3 row 21",
       "replace_candidate": "batch 16 row 20",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part8.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-140",
@@ -3428,18 +3611,22 @@
       "b": "batch 35 row 41",
       "concept": "Peripeteia is a sudden reversal in a tragedy",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 10 row 39",
       "replace_candidate": "batch 35 row 41",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part8.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-141",
@@ -3449,18 +3636,22 @@
       "b": "batch 18 row 35",
       "concept": "Judicial independence protects decisions from improper interference",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 6 row 32",
       "replace_candidate": "batch 18 row 35",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part8.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-142",
@@ -3485,7 +3676,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-143",
@@ -3495,9 +3687,9 @@
       "b": "batch 30 row 16",
       "concept": "Xylem transports water and mineral salts from roots towards leaves",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 9 row 13",
       "replace_candidate": null,
       "cluster_id": "XYLEM-01",
@@ -3508,11 +3700,15 @@
       ],
       "existing_held_candidate": "batch 33 row 14",
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part9.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-144",
@@ -3522,18 +3718,22 @@
       "b": "batch 31 row 30",
       "concept": "An import quota sets a quantitative limit on imports",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 15 row 29",
       "replace_candidate": "batch 31 row 30",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part9.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-145",
@@ -3543,18 +3743,22 @@
       "b": "batch 37 row 14",
       "concept": "Meiosis produces haploid gametes/sex cells",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 9 row 15",
       "replace_candidate": "batch 37 row 14",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part9.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-146",
@@ -3564,18 +3768,22 @@
       "b": "batch 15 row 28",
       "concept": "Fiscal policy uses taxation and public expenditure",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 9 row 28",
       "replace_candidate": "batch 15 row 28",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part9.json for full question text, options, answer keys and rationale. Cluster rows must be staged only once per unique held row."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-147",
@@ -3585,19 +3793,23 @@
       "b": "batch 34 row 18",
       "concept": "Phenolphthalein is colourless in acidic solution and pink in alkaline solution",
       "reason": "Full question text, options, answer key and explanation were checked; both test the same indicator colour change.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 22 row 18",
       "replace_candidate": "batch 34 row 18",
       "cluster_id": "PHENOLPHTHALEIN-01",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate_cluster",
         "note": "Rank 1096 (part31) connects batch 22 row 18 and batch 34 row 18, both phenolphthalein indicator questions, to batch 20 row 18. Align the provisional cluster disposition with DUP-08: retain batch 22 row 18; hold batch 20 row 18 and batch 34 row 18. Provenance and staging remain pending."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-148",
@@ -3607,18 +3819,22 @@
       "b": "batch 39 row 34",
       "concept": "Political neutrality requires civil servants to serve impartially regardless of party",
       "reason": "Full question text, options, answer key and explanation were checked; both assess the same civil-service neutrality principle.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 7 row 34",
       "replace_candidate": "batch 39 row 34",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part10.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-149",
@@ -3628,18 +3844,22 @@
       "b": "batch 26 row 37",
       "concept": "An aside is a brief remark directed to the audience and unheard by other characters",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 16 row 38",
       "replace_candidate": "batch 26 row 37",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part11.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-150",
@@ -3649,14 +3869,14 @@
       "b": "batch 38 row 13",
       "concept": "Platelets initiate clotting and form a platelet plug",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 1 row 15",
       "replace_candidate": "batch 38 row 13",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate_cluster",
         "note": "Ranks 1080 (part30) and prior pair DUP-22 establish a three-row blood-clotting cluster. Batch 1 row 15 is the retained earlier question; batch 27 row 12 and batch 38 row 13 are held. Provenance and staging reconciliation remain required."
@@ -3665,7 +3885,11 @@
       "canonical_cluster_pair_id": "DUP-165",
       "cluster_role": "link_between_two_existing_held_rows",
       "retained_anchor": "batch 1 row 15",
-      "unique_held_target_added": false
+      "unique_held_target_added": false,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-151",
@@ -3675,22 +3899,26 @@
       "b": "batch 31 row 16",
       "concept": "Natural selection favours heritable traits that improve survival and reproductive success",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 7 row 16",
       "replace_candidate": "batch 29 row 12",
       "cluster_id": "NATURAL-SELECTION-01",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part11.json for full question text, options, answer keys and rationale."
       },
       "additional_related_row": "batch 7 row 16",
       "additional_held_candidate": "batch 19 row 16",
-      "cluster_retained_candidate": "batch 7 row 16"
+      "cluster_retained_candidate": "batch 7 row 16",
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-152",
@@ -3700,18 +3928,22 @@
       "b": "batch 34 row 34",
       "concept": "Legislative committees examine bills and issues in detail",
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 15 row 34",
       "replace_candidate": "batch 34 row 34",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part11.json for full question text, options, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-153",
@@ -3721,19 +3953,23 @@
       "b": "batch 38 row 31",
       "concept": "A tariff is a customs duty on imported goods",
       "reason": "Both full question records define a tariff as a tax/customs duty on imports; the options and explanations test the same definition.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 9 row 31",
       "replace_candidate": "batch 14 row 31",
       "cluster_id": "TARIFF-01",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part14.json. Batch 38 row 31 is already a held target in DUP-19; this finding adds batch 14 row 31 to the existing tariff-definition cluster."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-154",
@@ -3743,18 +3979,22 @@
       "b": "batch 35 row 30",
       "concept": "Marginal utility is the additional satisfaction from consuming one more unit",
       "reason": "Both full question records directly test the same definition of marginal utility.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 31",
       "replace_candidate": "batch 35 row 30",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part14.json for full question text, options, keys and explanations."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-155",
@@ -3764,18 +4004,22 @@
       "b": "batch 30 row 7",
       "concept": "Volume of a cuboid calculated as length × width × height",
       "reason": "Both items are the same direct substitution exercise for cuboid volume, with only the dimensions changed.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 19 row 11",
       "replace_candidate": "batch 30 row 7",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part14.json for full question text, options, keys and explanations."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-156",
@@ -3785,18 +4029,22 @@
       "b": "batch 39 row 23",
       "concept": "Wavelength is the distance between successive points in the same phase",
       "reason": "Both items test the same definition of wavelength; crest-to-crest is an example of two successive points in the same phase.",
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_candidate": "batch 16 row 25",
       "replace_candidate": "batch 39 row 23",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
-      "provenance": null,
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part16.json for full source wording, answer keys and rationale."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-157",
@@ -3809,15 +4057,19 @@
       "retain": "batch 13 row 11",
       "replace": "batch 21 row 11",
       "retention_basis": "Retain the clearer stem that explicitly states the values are ordered; hold the later numerical variant.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_mathematics_and_syllabus_review_required",
         "note": "Both items assess the same median calculation skill with five observations. Different numerical values and an unordered input list do not create a distinct learning outcome. Batch 13 row 11 is retained; batch 21 row 11 is the new held target. No import or publication is authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-158",
@@ -3830,15 +4082,19 @@
       "retain": "batch 28 row 15",
       "replace": "batch 39 row 12",
       "retention_basis": "Retain the clearer general-definition item; hold the later genotype-example version as a duplicate.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_biology_and_syllabus_review_required",
         "note": "The two stems test the same definition of heterozygous. The specific Tt genotype is an example of the general definition, not a distinct inheritance concept. Batch 28 row 15 is retained; batch 39 row 12 is the new held target. No import or publication is authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-159",
@@ -3851,16 +4107,20 @@
       "retain": "batch 32 row 34",
       "replace": "batch 38 row 36",
       "retention_basis": "Extend the existing FEDERALISM-01 cluster. Retain batch 32 row 34 as the designated retained question; batch 18 row 32 is already held in the cluster, and batch 38 row 36 is the newly identified held row.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_extend_existing_cluster",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_cluster_extension_pending_qualified_subject_review",
       "cluster_id": "FEDERALISM-01",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_cluster_expansion_pending_provenance_and_government_syllabus_review",
         "note": "Candidate rank 931 compared batch 18 row 32 with batch 38 row 36. Both assess the same constitutional distribution of powers that defines federalism. Batch 18 row 32 was already held in FEDERALISM-01; batch 38 row 36 is one additional unique held row. Retain batch 32 row 34 provisionally. No staging edit or publication is authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-160",
@@ -3873,15 +4133,19 @@
       "retain": "batch 25 row 13",
       "replace": "batch 40 row 15",
       "retention_basis": "Retain the earlier, direct ADH-action item; hold the later reversed-stem version as a repeated assessment of the same fact.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_biology_and_syllabus_review_required",
         "note": "Cross-window candidate rank 933; both full stems, four options, answer keys and explanations were checked. No source or staging row was edited and no import/publication is authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-161",
@@ -3894,15 +4158,19 @@
       "retain": "batch 19 row 10",
       "replace": "batch 35 row 11",
       "retention_basis": "Retain the earlier batch 19 version; hold the later repeated union exercise.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_mathematics_and_syllabus_review_required",
         "note": "Candidate rank 962. Full stems, four options, answer keys and explanations checked. Both answers correctly list each element in either set exactly once. No source or staging row was edited; no import or publication is authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-162",
@@ -3915,18 +4183,22 @@
       "retain": "batch 20 row 20",
       "replace": "batch 6 row 21",
       "retention_basis": "Extend existing esterification duplicate record DUP-13. Batch 20 row 20 remains the designated retained item; batch 38 row 20 is already held; batch 6 row 21 is an additional unique held row.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_extend_existing_cluster",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_cluster_extension_pending_qualified_subject_review",
       "cluster_id": "ESTERIFICATION-01",
       "existing_duplicate_record": "DUP-13",
       "existing_held_row": "batch 38 row 20",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_chemistry_and_syllabus_review_required",
         "note": "Candidate rank 980. Full stems, four options, answer keys and explanations checked. Both ask about the same carboxylic-acid plus alcohol esterification reaction yielding ester and water. Existing retained batch 20 row 20 remains designated; batch 38 row 20 was already held, and batch 6 row 21 is the only new unique held target. No source/staging edit, import or publication authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-163",
@@ -3939,15 +4211,19 @@
       "retain": "batch 1 row 13",
       "replace": "batch 37 row 15",
       "retention_basis": "Retain the earlier batch 1 producer-classification item; hold the later batch 37 first-trophic-level restatement.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_biology_and_syllabus_review_required",
         "note": "Candidate rank 1001. Full stems, four options, answer keys and explanations checked. Both questions test that green plants are producers at the first trophic level. No source/staging edit, import or publication authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-164",
@@ -3960,8 +4236,8 @@
       "retain": "batch 20 row 39",
       "replace": "batch 11 row 40",
       "retention_basis": "Extend existing DENOUEMENT-01. Retain the designated batch 20 row 39 item; batch 32 row 39 is already held; hold batch 11 row 40 as the additional repeated item.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_extend_existing_cluster",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_cluster_extension_pending_qualified_subject_review",
       "cluster_id": "DENOUEMENT-01",
       "existing_duplicate_records": [
         "DUP-21",
@@ -3970,12 +4246,16 @@
       ],
       "existing_held_row": "batch 32 row 39",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_replacement_draft",
+      "replacement_status": "pending_qualified_subject_review_and_replacement_draft",
       "contextual_review": {
         "status": "assistant_full_content_pair_review_complete_independent_literature_and_syllabus_review_required",
         "note": "Candidate rank 1018. Full stems, four options, answer keys and explanations checked. Both define resolution/denouement as the ending where the central conflict is settled. Batch 32 row 39 is already held in DENOUEMENT-01; batch 11 row 40 is the new unique held target. No source/staging edit, import or publication authorised."
       },
-      "new_unique_replacement_target": true
+      "new_unique_replacement_target": true,
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-165",
@@ -4003,7 +4283,8 @@
       "cluster_merge_status": "canonical_cluster_record",
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-166",
@@ -4031,7 +4312,8 @@
       "merged_into": "DUP-08",
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-167",
@@ -4056,7 +4338,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-168",
@@ -4081,7 +4364,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-169",
@@ -4106,7 +4390,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-170",
@@ -4131,7 +4416,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-171",
@@ -4156,7 +4442,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-172",
@@ -4181,7 +4468,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-173",
@@ -4206,7 +4494,8 @@
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
-      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review"
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-cluster-pair-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-174",
@@ -4219,16 +4508,20 @@
       "retain": "batch 3 row 20",
       "replace": "batch 12 row 21",
       "retention_basis": "Keep batch 3 row 20 as the earliest retained anchor in the three-row cluster. Batch 25 row 21 is already held under DUP-91; batch 12 row 21 is the one additional unique held target from this review.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_cluster_anchor_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_cluster_merge",
         "note": "See cross-window-tail-review-2026-11-06-part40.json, rank 1233. Full stems, four options, keys and explanations were compared. This extends the existing catalyst cluster DUP-91; batch 3 row 20 remains the anchor, batch 12 row 21 is newly held, and batch 25 row 21 was already held."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-175",
@@ -4241,16 +4534,20 @@
       "retain": "batch 19 row 12",
       "replace": "batch 40 row 16",
       "retention_basis": "Retain the earlier batch 19 row 12; hold batch 40 row 16 as one new unique replacement target pending row-level history and staging verification.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part41.json, rank 1251. Full stems, options, answer keys and explanations were checked; both assess mammary glands as the defining mammalian feature."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-176",
@@ -4263,16 +4560,20 @@
       "retain": "batch 6 row 37",
       "replace": "batch 26 row 41",
       "retention_basis": "Retain the earlier batch 6 row 37; hold batch 26 row 41 as one new unique replacement target pending row-level history and staging verification.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_provenance_and_staging",
+      "replacement_status": "pending_qualified_subject_review",
       "new_unique_targets_added": 1,
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part42.json, rank 1262. Complete stems, options, keys and explanations were compared; both assess the definition of imagery as sensory language."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-177",
@@ -4285,8 +4586,8 @@
       "retain": "batch 32 row 34",
       "replace": "batch 38 row 36",
       "retention_basis": "Retain batch 32 row 34 as the cluster anchor. Batch 26 row 34 is already held under DUP-47/DUP-142 and batch 38 row 36 is already held under DUP-159; this relationship adds no new unique held row.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate_extend_existing_cluster",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "confirmed_semantic_duplicate_cluster_extension_pending_qualified_subject_review",
       "cluster_id": "FEDERALISM-01",
       "csv_change_status": "not_changed",
       "replacement_status": "already_counted_in_existing_cluster",
@@ -4295,7 +4596,11 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_cluster_merge",
         "note": "See cross-window-tail-review-2026-11-06-part45.json, rank 1304. Both full question records, options, answer keys and explanations were compared. Both rows are already held in FEDERALISM-01; no additional replacement target is created."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-178",
@@ -4308,16 +4613,20 @@
       "retain": "batch 6 row 8",
       "replace": "batch 37 row 8",
       "retention_basis": "Both are present as original draft questions in their source batch files. Retain the earlier batch 6 formulation and provisionally hold batch 37; row-level commit provenance and staging location remain to be reconciled.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part46.json, rank 342. Full stems, options, answer keys and explanations compared. No source or staging CSV was changed; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-179",
@@ -4330,16 +4639,20 @@
       "retain": "batch 28 row 20",
       "replace": "batch 39 row 21",
       "retention_basis": "Retain the earlier batch 28 formulation and provisionally hold batch 39. Row-level provenance and staging location must be reconciled before any CSV edit or replacement import.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part47.json, rank 367. Full stems, options, keys and explanations compared. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-180",
@@ -4352,16 +4665,20 @@
       "retain": "batch 5 row 31",
       "replace": "batch 30 row 28",
       "retention_basis": "Retain the earlier batch 5 question and provisionally hold batch 30; row-level provenance and staging join remain pending.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part48 rank 380. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-181",
@@ -4374,16 +4691,20 @@
       "retain": "batch 4 row 5",
       "replace": "batch 32 row 2",
       "retention_basis": "Retain the earlier batch 4 question and provisionally hold batch 32; row-level provenance and staging join remain pending.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part48 rank 381. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-182",
@@ -4396,16 +4717,20 @@
       "retain": "batch 15 row 25",
       "replace": "batch 23 row 24",
       "retention_basis": "Provisional retain/hold assignment based on original source-batch ordering; row-level commit provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part49.json. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-183",
@@ -4418,16 +4743,20 @@
       "retain": "batch 25 row 9",
       "replace": "batch 39 row 9",
       "retention_basis": "Provisional retain/hold assignment based on original source-batch ordering; row-level commit provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part49.json. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-184",
@@ -4440,16 +4769,20 @@
       "retain": "batch 15 row 26",
       "replace": "batch 31 row 25",
       "retention_basis": "Provisional retain/hold assignment based on original source-batch ordering; row-level commit provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part49.json. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-185",
@@ -4462,16 +4795,20 @@
       "retain": "batch 1 row 7",
       "replace": "batch 16 row 7",
       "retention_basis": "Provisional retain/hold assignment based on original source-batch ordering; row-level commit provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part49.json. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-186",
@@ -4484,16 +4821,20 @@
       "retain": "batch 1 row 7",
       "replace": "batch 38 row 7",
       "retention_basis": "Provisional retain/hold assignment based on original source-batch ordering; row-level commit provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part49.json. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-187",
@@ -4506,16 +4847,20 @@
       "retain": "batch 1 row 7",
       "replace": "batch 16 row 7; batch 38 row 7",
       "retention_basis": "Provisional retain/hold assignment based on original source-batch ordering; row-level commit provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 0,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part49.json. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-188",
@@ -4528,16 +4873,20 @@
       "retain": "batch 7 row 10",
       "replace": "batch 22 row 11",
       "retention_basis": "Provisional cluster assignment; row-level introducing commit and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part50.json. Full stems, options, keys and explanations compared. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-189",
@@ -4550,16 +4899,20 @@
       "retain": "batch 26 row 23",
       "replace": "batch 39 row 24",
       "retention_basis": "Provisional cluster assignment; row-level introducing commit and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part50.json. Full stems, options, keys and explanations compared. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-190",
@@ -4572,16 +4925,20 @@
       "retain": "batch 26 row 34 / batch 38 row 36",
       "replace": "batch 18 row 32",
       "retention_basis": "Provisional cluster assignment; row-level introducing commit and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See cross-window-tail-review-2026-11-06-part50.json. Full stems, options, keys and explanations compared. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-191",
@@ -4594,16 +4951,20 @@
       "retain": "batch 6 row 10",
       "replace": "batch 21 row 11",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part51 rank 437. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-192",
@@ -4616,16 +4977,20 @@
       "retain": "batch 29 row 34",
       "replace": "batch 37 row 35",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part52. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-193",
@@ -4638,16 +5003,20 @@
       "retain": "batch 2 row 34",
       "replace": "batch 16 row 33",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part52. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-194",
@@ -4660,16 +5029,20 @@
       "retain": "batch 12 row 28",
       "replace": "batch 36 row 27",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part52. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-195",
@@ -4682,16 +5055,20 @@
       "retain": "batch 20 row 10",
       "replace": "batch 39 row 7",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part53. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-196",
@@ -4704,16 +5081,20 @@
       "retain": "batch 1 row 10",
       "replace": "batch 16 row 9",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part53. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-197",
@@ -4726,16 +5107,20 @@
       "retain": "batch 20 row 11",
       "replace": "batch 35 row 9",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part54 rank489. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-198",
@@ -4748,16 +5133,20 @@
       "retain": "batch 2 row 23",
       "replace": "batch 18 row 26",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part55. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-199",
@@ -4770,16 +5159,20 @@
       "retain": "batch 1 row 11",
       "replace": "batch 35 row 10",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part55. Full stems, options, keys and explanations compared. No source/staging CSV changes; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     },
     {
       "id": "DUP-200",
@@ -4792,16 +5185,20 @@
       "retain": "batch 5 row 5",
       "replace": "batch 20 row 6",
       "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
-      "provenance": null,
-      "decision": "confirmed_semantic_duplicate",
+      "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
+      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "draft_not_created",
+      "replacement_status": "pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
         "note": "See part56 rank527. Source/staging CSVs unchanged; do not import or publish."
-      }
+      },
+      "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
+      "staging_join_status": "verified_exact_source_content_match",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
     }
   ],
   "draft_screening": {
@@ -5029,7 +5426,7 @@
     "original_draft_overlap_relationships": 28,
     "unverified_relationships": 0,
     "unverified_pair_ids": [],
-    "note": "All 199 register pair records now have source/staging joins verified: the baseline 90 were previously reconciled; the 96 later-range pair records have 178 unique endpoints exactly matched; and 13 additional cluster/extension pair records have 26 unique endpoints exactly matched. All 204 later-range/cluster endpoints declare original EDUKEN-authored source metadata, with zero missing rows or content mismatches. The 109 later-range/cluster pair decisions remain pending independent qualified subject, answer-key and syllabus review; source provenance and staging joins are no longer blockers.",
+    "note": "All 199 register pair records now have source/staging joins verified: baseline 90 plus all 109 later-range/cluster records. The 96 later-range pair IDs have 178 unique endpoints exactly matched; 13 additional cluster/extension pair IDs have 26 unique endpoints exactly matched. All 204 later-range/cluster endpoints declare original EDUKEN-authored source metadata, with zero missing rows or content mismatches. The 109 later-range/cluster pair decisions remain pending independent qualified subject, answer-key and syllabus review; source provenance and staging joins are no longer blockers.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
@@ -5086,10 +5483,79 @@
     "source_staging_content_mismatches": 0,
     "semantic_disposition_pending_relationships": 109,
     "semantic_disposition_pending_pair_ids": [
+      "DUP-91",
+      "DUP-92",
+      "DUP-93",
+      "DUP-94",
+      "DUP-95",
+      "DUP-96",
+      "DUP-97",
+      "DUP-98",
+      "DUP-99",
+      "DUP-101",
+      "DUP-102",
+      "DUP-103",
+      "DUP-104",
+      "DUP-105",
+      "DUP-106",
+      "DUP-107",
+      "DUP-108",
+      "DUP-109",
+      "DUP-110",
+      "DUP-111",
+      "DUP-112",
+      "DUP-113",
+      "DUP-114",
+      "DUP-115",
+      "DUP-116",
+      "DUP-117",
+      "DUP-118",
+      "DUP-119",
+      "DUP-120",
+      "DUP-121",
       "DUP-122",
+      "DUP-123",
+      "DUP-124",
+      "DUP-125",
+      "DUP-126",
+      "DUP-127",
+      "DUP-128",
+      "DUP-129",
+      "DUP-130",
       "DUP-131",
+      "DUP-132",
+      "DUP-133",
+      "DUP-134",
+      "DUP-135",
       "DUP-136",
+      "DUP-137",
+      "DUP-138",
+      "DUP-139",
+      "DUP-140",
+      "DUP-141",
       "DUP-142",
+      "DUP-143",
+      "DUP-144",
+      "DUP-145",
+      "DUP-146",
+      "DUP-147",
+      "DUP-148",
+      "DUP-149",
+      "DUP-150",
+      "DUP-151",
+      "DUP-152",
+      "DUP-153",
+      "DUP-154",
+      "DUP-155",
+      "DUP-156",
+      "DUP-157",
+      "DUP-158",
+      "DUP-159",
+      "DUP-160",
+      "DUP-161",
+      "DUP-162",
+      "DUP-163",
+      "DUP-164",
       "DUP-165",
       "DUP-166",
       "DUP-167",
@@ -5098,16 +5564,112 @@
       "DUP-170",
       "DUP-171",
       "DUP-172",
-      "DUP-173"
+      "DUP-173",
+      "DUP-174",
+      "DUP-175",
+      "DUP-176",
+      "DUP-177",
+      "DUP-178",
+      "DUP-179",
+      "DUP-180",
+      "DUP-181",
+      "DUP-182",
+      "DUP-183",
+      "DUP-184",
+      "DUP-185",
+      "DUP-186",
+      "DUP-187",
+      "DUP-188",
+      "DUP-189",
+      "DUP-190",
+      "DUP-191",
+      "DUP-192",
+      "DUP-193",
+      "DUP-194",
+      "DUP-195",
+      "DUP-196",
+      "DUP-197",
+      "DUP-198",
+      "DUP-199",
+      "DUP-200"
     ],
     "replacement_history_commit_crosswalk_status": "source-origin metadata is verified for all 178 endpoints; no later replacement commit is inferred from metadata alone",
     "staging_join_verified_pair_records": 199,
     "qualified_subject_review_pending_relationships": 109,
     "qualified_subject_review_pending_pair_ids": [
+      "DUP-91",
+      "DUP-92",
+      "DUP-93",
+      "DUP-94",
+      "DUP-95",
+      "DUP-96",
+      "DUP-97",
+      "DUP-98",
+      "DUP-99",
+      "DUP-101",
+      "DUP-102",
+      "DUP-103",
+      "DUP-104",
+      "DUP-105",
+      "DUP-106",
+      "DUP-107",
+      "DUP-108",
+      "DUP-109",
+      "DUP-110",
+      "DUP-111",
+      "DUP-112",
+      "DUP-113",
+      "DUP-114",
+      "DUP-115",
+      "DUP-116",
+      "DUP-117",
+      "DUP-118",
+      "DUP-119",
+      "DUP-120",
+      "DUP-121",
       "DUP-122",
+      "DUP-123",
+      "DUP-124",
+      "DUP-125",
+      "DUP-126",
+      "DUP-127",
+      "DUP-128",
+      "DUP-129",
+      "DUP-130",
       "DUP-131",
+      "DUP-132",
+      "DUP-133",
+      "DUP-134",
+      "DUP-135",
       "DUP-136",
+      "DUP-137",
+      "DUP-138",
+      "DUP-139",
+      "DUP-140",
+      "DUP-141",
       "DUP-142",
+      "DUP-143",
+      "DUP-144",
+      "DUP-145",
+      "DUP-146",
+      "DUP-147",
+      "DUP-148",
+      "DUP-149",
+      "DUP-150",
+      "DUP-151",
+      "DUP-152",
+      "DUP-153",
+      "DUP-154",
+      "DUP-155",
+      "DUP-156",
+      "DUP-157",
+      "DUP-158",
+      "DUP-159",
+      "DUP-160",
+      "DUP-161",
+      "DUP-162",
+      "DUP-163",
+      "DUP-164",
       "DUP-165",
       "DUP-166",
       "DUP-167",
@@ -5116,7 +5678,34 @@
       "DUP-170",
       "DUP-171",
       "DUP-172",
-      "DUP-173"
+      "DUP-173",
+      "DUP-174",
+      "DUP-175",
+      "DUP-176",
+      "DUP-177",
+      "DUP-178",
+      "DUP-179",
+      "DUP-180",
+      "DUP-181",
+      "DUP-182",
+      "DUP-183",
+      "DUP-184",
+      "DUP-185",
+      "DUP-186",
+      "DUP-187",
+      "DUP-188",
+      "DUP-189",
+      "DUP-190",
+      "DUP-191",
+      "DUP-192",
+      "DUP-193",
+      "DUP-194",
+      "DUP-195",
+      "DUP-196",
+      "DUP-197",
+      "DUP-198",
+      "DUP-199",
+      "DUP-200"
     ]
   },
   "revision_note": "2026-11-02 Pair 09 and Pair 10: DUP-43 to DUP-46 received preliminary answer/explanation and full 200-row same-subject bank comparisons. No same-concept overlap found. DUP-43 and DUP-45 have unresolved JAMB syllabus-scope concerns; DUP-44 diffraction and DUP-46 brass constituents map directly to listed syllabus content. Independent subject review remains required. Reconciled 2026-11-02: nine missing pair contextual-review records added from the 90-row screening file; DUP-17 wording/key and DUP-42 key-note discrepancies corrected; progress count now reflects 88 completed assistant contextual reviews, one preliminary distinction and one rejected overlap. Human subject approvals remain zero. 2026-11-06 tail review: five additional cross-window semantic duplicate pairs (DUP-91–DUP-95) were confirmed by checking full stems, options, answer keys and explanations. They remain outside staging/import; provenance and final retain/replace assignments are pending. No source CSV or production data was changed. 2026-11-06 continued tail review: 21 additional cross-window semantic duplicate pairs (DUP-91–DUP-99 and DUP-101–DUP-112) were confirmed by checking full question stems, options, answer keys and explanations; one additional pair (DUP-100) was preserved as a distinct application. New pairs remain outside staging/import pending provenance and final row-location reconciliation. No source CSV or production data was changed. 2026-11-06 further tail review: 30 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-121) were confirmed; one separate candidate was preserved as a distinct variant. The 30 relations represent 29 new unique held rows because federalism and specific-heat capacity each form a multi-row cluster. All new rows remain outside staging/import pending provenance and final staging joins. No source CSV or production data was changed. 2026-11-06 further lower-tail review: 36 additional duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-127) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relations represent 35 new unique held rows because one denouement relationship is already within a reconciled cluster. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 40 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-131) were confirmed; three other related pairs were preserved as distinct assessment objectives. These relationships represent 38 new unique held rows because two are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 45 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-136) were confirmed; three related pairs were preserved as distinct assessment objectives. The 45 relations represent 42 new unique held rows because three relationships join existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 46 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-137) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 43 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: 50 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-141) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relations represent 47 new unique held rows because three are additional relationships within existing clusters. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 55 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-146) were confirmed; five other related pairs were preserved as distinct assessment objectives. These relationships represent 52 new unique held rows because three are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 57 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-148) were confirmed; eight other related pairs were preserved as distinct assessment objectives. These relations represent 54 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued tail review: 61 additional cross-window duplicate pair relationships (DUP-91–DUP-99 and DUP-101–DUP-152) were confirmed; nine other related pairs were preserved as distinct assessment objectives. These relations represent 58 new unique held rows because four are additional relationships within existing clusters and the xylem cluster adds two rows. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: five more cross-window candidates (ranks 912–916) were checked against complete source text, options and answer keys. Four were preserved as distinct; one median-calculation duplicate was confirmed as DUP-157, adding batch 21 row 11 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 917–921 were checked against complete source stems, options and answer keys. Four were preserved as distinct; one heterozygous-genotype definition duplicate was confirmed as DUP-158, adding batch 39 row 12 as one new held target. No source CSV, staging CSV or production data was changed. 2026-11-06 continued lower-tail review: candidate ranks 922–926 were checked against full question content. All five were preserved as distinct concepts (specific heat capacity versus latent heat; complex sentence versus passive voice; different heart structures; no-confidence motion versus cabinet composition; balance of payments versus balance of trade). No duplicate relationship, held target, CSV edit or production change was added. 2026-11-06 continued lower-tail review: candidate ranks 927–931 were checked against full question content. Four were preserved as distinct; rank 931 was confirmed as DUP-159, extending FEDERALISM-01 and adding batch 38 row 36 as one new unique held row (batch 18 row 32 was already in that cluster). No source CSV, staging CSV or production data was changed. 2026-11-06 three-times-sized lower-tail review: ranks 932–946 were checked against full question stems, options, answer keys and explanations. Thirteen candidates were preserved as distinct, rank 933 was confirmed as DUP-160 (ADH-mediated collecting-duct water reabsorption), adding batch 40 row 15 as one new unique held target; rank 937 was deferred for reconciliation with earlier arithmetic-progression candidate relationships. No source CSV, staging CSV or production data was changed. 2026-11-06 follow-on 3x tail review: ranks 947–961 checked in full. Fourteen pairs preserved as distinct; rank 954 (neutralisation products) deferred for qualified Chemistry review. No new duplicate pair or unique target added; no source or staging edits. 2026-11-06 follow-on 3x tail review: ranks 962–976 checked in full. Fourteen candidates preserved; rank 962 confirmed as DUP-161 (set union), adding batch 35 row 11 as one new unique held target. Rank 970's batch 35 row 25 was already held under DUP-44 and was not counted again. No source/staging edits. 2026-11-06 further tail review: ranks 977–991 checked in full. Fourteen preserved; rank 980 confirmed as DUP-162, extending existing esterification cluster DUP-13 and adding batch 6 row 21 as one unique held target. No source/staging edits. 2026-11-06 further lower-tail review: ranks 992–1006 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1001 was confirmed as DUP-163 (green plants as producers/first trophic level), adding batch 37 row 15 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1007–1021 checked against complete question stems, four options, answer keys and explanations. Fourteen candidates were preserved; rank 1018 was confirmed as DUP-164, extending DENOUEMENT-01 and adding batch 11 row 40 as one new unique held target. No source CSV, staging CSV or production data was changed. 2026-11-06 further lower-tail review: ranks 1022–1036 checked against complete question stems, four options, answer keys and explanations. All fifteen were preserved as distinct learning objectives or complementary applications. No new duplicate relationship or held target was added; no source CSV, staging CSV or production data was changed. 2026-11-06: ranks 1049–1063 fully checked; all fifteen preserved as distinct. No source/staging CSV or production question data changed.\n\n6 November rank reconciliation: explicit rank IDs total 973 across 81 tail-review files, 297 addendum segment ranks and 49 mapped high-similarity items. This does not reconcile with the part56 cumulative counter of 921 (difference 52); 331 rank IDs are absent from the inspected explicit records. Aggregate progress remains unverified pending a full crosswalk. No production import/publication authorized.\n\n6 November reconciliation: the 96 explicitly listed unverified pair IDs in history_reconciliation_status are now reflected in duplicate_summary.provenance_unverified_pairs. The current 6 November staging revision is a separate, verified 1,476 retained + 124 held export (119 pair IDs); all 124 held locations have verified original-source provenance and staging matches. Do not conflate the staging export with the later 96-ID register queue. Cross-window review aggregate remains unverified pending the 973-rank / 921-counter crosswalk.\n\n6 November source/staging closure: all 199 pair records in this register now have source/staging joins verified. The 96 later-range IDs contribute 178 unique endpoints; 13 additional cluster/extension IDs contribute 26 endpoints. All 204 endpoints match original source rows and exact current staging rows, with source_type=original and zero mismatches. The 109 later-range/cluster decisions remain pending qualified academic review, not provenance/staging work.",
