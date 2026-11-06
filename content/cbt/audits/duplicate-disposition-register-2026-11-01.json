@@ -273,7 +273,9 @@
       "additional_related_row": "batch 34 row 18",
       "additional_held_candidate": "batch 34 row 18",
       "cluster_retained_candidate": "batch 20 row 18",
-      "existing_held_candidate": "batch 22 row 18"
+      "existing_held_candidate": "batch 22 row 18",
+      "canonical_pair_id": "DUP-08",
+      "cluster_merge_status": "canonical_cluster_record"
     },
     {
       "id": "DUP-09",
@@ -616,7 +618,10 @@
       "contextual_review": {
         "status": "assistant_pairwise_review_complete_human_subject_review_required",
         "note": "Pairwise review: replacement tests plasma transport of dissolved nutrients, hormones and metabolic wastes. Highest lexical match tests haemoglobin-mediated oxygen transport by red blood cells; the held duplicate tests platelet-mediated clotting. These are distinct blood components/functions. Stem clarified to remove vague 'many'. Official Biology Transport topic explicitly covers blood composition and functions. Human Biology reviewer decision still required."
-      }
+      },
+      "cluster_id": "PLATELET-CLOTTING-01",
+      "canonical_pair_id": "DUP-165",
+      "merged_into": "DUP-165"
     },
     {
       "id": "DUP-23",
@@ -3928,7 +3933,10 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate",
         "note": "See cross-window-tail-review-2026-11-06-part30.json. This pair connects two previously recorded relationships (DUP-22 and DUP-150) into one cluster; batch 27 row 12 becomes one additional unique held target."
-      }
+      },
+      "cluster_id": "PLATELET-CLOTTING-01",
+      "canonical_pair_id": "DUP-165",
+      "cluster_merge_status": "canonical_cluster_record"
     },
     {
       "id": "DUP-166",
@@ -3950,7 +3958,10 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate_cluster",
         "note": "See cross-window-tail-review-2026-11-06-part31.json. This adds a pair relationship within the existing three-row phenolphthalein cluster and does not add a unique held target."
-      }
+      },
+      "cluster_id": "PHENOLPHTHALEIN-01",
+      "canonical_pair_id": "DUP-08",
+      "merged_into": "DUP-08"
     },
     {
       "id": "DUP-167",
@@ -5214,5 +5225,45 @@
     "user_reported_reviewer_approval_status": "user_reports all 90 replacement candidates approved",
     "independent_item_level_approval_evidence_in_repository": 0,
     "approval_note": "The user has reported that a reviewer approved all 90 existing replacement candidates (90/90). The repository does not contain item-level independent reviewer sign-off records, so this is recorded as user-reported approval rather than independently documented approval. The 58 newly discovered held rows are not part of those 90 and have no replacement drafts or approval yet."
+  },
+  "cluster_merge_reconciliation": {
+    "date": "2026-11-06",
+    "status": "PAIR_RECORDS_LINKED_TO_CANONICAL_CLUSTERS; SUMMARY_COUNTS_NOT_RECOMPUTED",
+    "merges": [
+      {
+        "pair_ids": [
+          "DUP-22",
+          "DUP-165"
+        ],
+        "canonical_pair_id": "DUP-165",
+        "cluster_id": "PLATELET-CLOTTING-01",
+        "retained_anchor": "batch 1 row 15",
+        "held_locations": [
+          "batch 38 row 13",
+          "batch 27 row 12"
+        ],
+        "source_rows_verified": true,
+        "decision_basis": "Both ask which blood component is responsible for clot formation or platelet-plug formation; all key platelets."
+      },
+      {
+        "pair_ids": [
+          "DUP-08",
+          "DUP-166"
+        ],
+        "canonical_pair_id": "DUP-08",
+        "cluster_id": "PHENOLPHTHALEIN-01",
+        "retained_anchor": "batch 22 row 18",
+        "held_locations": [
+          "batch 20 row 18",
+          "batch 34 row 18"
+        ],
+        "source_rows_verified": true,
+        "decision_basis": "Both ask phenolphthalein colour behaviour in alkaline solution or its acid/alkaline colour property; same indicator fact."
+      }
+    ],
+    "unique_held_rows_preserved": 4,
+    "pair_relationships_preserved": 4,
+    "summary_count_recalculation_required": true,
+    "note": "Pair records remain individually preserved for audit history; canonical cluster IDs now prevent double-counting cluster membership. Do not reduce held-row count: each cluster has two distinct held source rows."
   }
 }
