@@ -51,7 +51,7 @@
       "answer": "Protons"
     }
   ],
-  "disposition_note": "The canonical retained anchor is now unambiguous: the original DUP-214 pair explicitly retains batch 10 row 17, and the two extension records attach to that same cluster. The four items share the atomic-number/proton/electron equivalence family. However, they vary between definition recall and numerical application; a qualified Chemistry reviewer should confirm whether all three held variants are sufficiently redundant for the intended practice bank before replacement drafting.",
+  "disposition_note": "The canonical retained anchor is unambiguous and all four source rows have now been directly verified. Independent comparison finds the numerical pair (batch 10 row 17 and batch 34 row 17) tests the same electron/proton equality in opposite directions; the two definition items (batch 13 row 20 and batch 3 row 18) are closely overlapping statements of that same atomic-structure relationship. Keep the three held members excluded from student publication pending qualified Chemistry review of whether the reverse numerical application and both definitions provide meaningful practice variety. Do not draft replacements or alter the held count until that review is recorded.",
   "counts": {
     "new_pair_anchor_resolved": true,
     "extension_anchors_resolved": 2,
@@ -63,5 +63,36 @@
     "production_imports": 0,
     "production_publications": 0,
     "academic_approval": false
+  },
+  "source_row_verification": {
+    "method": "Fetched original batch CSVs from the PR branch and parsed CSV records with quoted-field handling. Physical row numbering includes the header row.",
+    "verified_locations": [
+      {
+        "location": "batch 10 row 17",
+        "question": "How many electrons are present in a neutral atom of chlorine with atomic number 17?",
+        "answer": "17",
+        "finding": "Numerical application of neutrality and atomic number."
+      },
+      {
+        "location": "batch 34 row 17",
+        "question": "A neutral atom has 10 electrons. What is its atomic number?",
+        "answer": "10",
+        "finding": "Reverse numerical application of the same neutrality relationship."
+      },
+      {
+        "location": "batch 13 row 20",
+        "question": "In an electrically neutral atom, the number of electrons is equal to the number of…",
+        "answer": "Protons",
+        "finding": "Definition/relationship recall."
+      },
+      {
+        "location": "batch 3 row 18",
+        "question": "The atomic number of an element equals the number of:",
+        "answer": "Protons in its nucleus",
+        "finding": "Definition recall; overlaps the same underlying proton/electron neutrality concept."
+      }
+    ],
+    "independent_triage": "The anchor and three held members are all in the same atomic-structure knowledge family. The two numerical items test the same equality in opposite directions; the two definition items are very close conceptually. This supports retaining the established anchor and keeping the three members on hold pending qualified Chemistry review, but does not constitute academic approval or prove that all three require replacement.",
+    "csv_edits": 0
   }
 }
