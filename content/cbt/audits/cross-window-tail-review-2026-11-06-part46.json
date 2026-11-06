@@ -1,0 +1,189 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 previously unreviewed cross-window similarity candidates. Both source CSV rows, stems, four options, answer keys and explanations were checked. Similarity was treated as a screening signal only.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      341,
+      342,
+      343,
+      345,
+      347,
+      348,
+      349,
+      350,
+      351,
+      352,
+      353,
+      354,
+      356,
+      358,
+      359
+    ],
+    "previous_total_manually_reviewed": 762,
+    "now_manually_reviewed": 777,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 527
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-178",
+      "rank": 342,
+      "subject": "Mathematics",
+      "similarity_score": 0.623,
+      "a": "batch 6 row 8",
+      "b": "batch 37 row 8",
+      "question_a": "An item bought for ₦800 is sold for ₦1,000. What is the profit percentage on cost?",
+      "options_a": [
+        "20%",
+        "25%",
+        "30%",
+        "40%"
+      ],
+      "answer_a": "B",
+      "explanation_a": "Profit = ₦200; profit percentage = 200/800 × 100 = 25%.",
+      "question_b": "A trader buys an item for ₦8,000 and sells it for ₦10,000. What is the percentage profit?",
+      "options_b": [
+        "20%",
+        "25%",
+        "30%",
+        "40%"
+      ],
+      "answer_b": "B",
+      "explanation_b": "Profit = ₦10,000 − ₦8,000 = ₦2,000. Percentage profit = (2,000 ÷ 8,000) × 100 = 25%.",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "The second question is an exact tenfold scaling of the first. Both use the same cost-to-selling-price ratio, produce the same 25% answer, use identical options and assess the same percentage-profit calculation. The changed currency magnitude does not create a meaningfully different assessment.",
+      "retain": "batch 6 row 8",
+      "hold": "batch 37 row 8",
+      "provenance": "pending_row_level_commit_reconciliation",
+      "staging_join": "pending",
+      "new_unique_replacement_targets": 1
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 341,
+      "subject": "Physics",
+      "a": "batch 1 row 26",
+      "b": "batch 14 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "A thermometer measures temperature; a barometer measures atmospheric pressure."
+    },
+    {
+      "rank": 343,
+      "subject": "Use of English",
+      "a": "batch 12 row 3",
+      "b": "batch 29 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Both use reported speech, but one backshifts the present copula am to was while the other backshifts the modal can to could. Different verb forms and sentence transformations; retain as complementary practice."
+    },
+    {
+      "rank": 345,
+      "subject": "Chemistry",
+      "a": "batch 24 row 21",
+      "b": "batch 38 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Fractional distillation separates miscible liquids with different boiling points; simple distillation separates a liquid from a dissolved non-volatile solid."
+    },
+    {
+      "rank": 347,
+      "subject": "Use of English",
+      "a": "batch 4 row 3",
+      "b": "batch 26 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Credible means believable or worthy of trust; candid means frank or open. Similar sentence context does not make the vocabulary targets equivalent."
+    },
+    {
+      "rank": 348,
+      "subject": "Mathematics",
+      "a": "batch 10 row 9",
+      "b": "batch 29 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "One calculates the interior-angle sum of a hexagon; the other works backwards from a given polygon angle sum to determine its number of sides."
+    },
+    {
+      "rank": 349,
+      "subject": "Use of English",
+      "a": "batch 4 row 3",
+      "b": "batch 31 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Credible means believable; coherent means logically connected and well organised. Different lexical meanings and correct answers."
+    },
+    {
+      "rank": 350,
+      "subject": "Mathematics",
+      "a": "batch 13 row 7",
+      "b": "batch 29 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "The first determines side count from one exterior angle of a regular polygon; the second determines side count from the sum of interior angles. Different angle relationships and procedures."
+    },
+    {
+      "rank": 351,
+      "subject": "Mathematics",
+      "a": "batch 29 row 8",
+      "b": "batch 33 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "The first derives side count from an interior-angle sum; the second derives it from a regular polygon's exterior angle. Related geometry but distinct procedures."
+    },
+    {
+      "rank": 352,
+      "subject": "Chemistry",
+      "a": "batch 8 row 21",
+      "b": "batch 27 row 18",
+      "decision": "preserve_as_distinct",
+      "reason": "Molten lead(II) bromide produces bromine at the anode; molten sodium chloride produces chlorine. Different electrolytes and discharged anions."
+    },
+    {
+      "rank": 353,
+      "subject": "Biology",
+      "a": "batch 1 row 14",
+      "b": "batch 39 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Homozygous describes two identical alleles; heterozygous describes two different alleles. They are contrasting genotype terms, not duplicate questions."
+    },
+    {
+      "rank": 354,
+      "subject": "Chemistry",
+      "a": "batch 5 row 17",
+      "b": "batch 20 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "Acid-base neutralisation produces salt and water; esterification between an alcohol and carboxylic acid produces an ester and water. Different reaction classes."
+    },
+    {
+      "rank": 356,
+      "subject": "Chemistry",
+      "a": "batch 28 row 19",
+      "b": "batch 32 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "The first asks for the general formula of an acyclic monoalkene; the second asks for the molecular formula of a specific four-carbon alkane."
+    },
+    {
+      "rank": 358,
+      "subject": "Physics",
+      "a": "batch 5 row 22",
+      "b": "batch 15 row 26",
+      "decision": "preserve_as_distinct",
+      "reason": "Both apply W = mg, but use different masses and equivalent gravitational-field units and require separate numerical evaluations. Retained as distinct numerical practice rather than treating every shared formula as a duplicate."
+    },
+    {
+      "rank": 359,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 18 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Evaluating cos 60° is a special-angle trigonometry fact; evaluating f(4) for a linear function is function substitution. The stems share only generic wording."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}
