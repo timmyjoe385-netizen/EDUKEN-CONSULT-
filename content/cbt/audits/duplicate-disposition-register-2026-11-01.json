@@ -17,11 +17,11 @@
     "threshold_note": "The 0.42 reconstruction reproduces the reported total of 390. A 0.43 run yields 352. The original reported category split was 41/349; the reconstruction is 40/350, a one-pair classification discrepancy still documented in the audit.",
     "cross_window_total_candidates": 1304,
     "cross_window_high_similarity_shortlist_reviewed": 49,
-    "cross_window_additional_targeted_candidates_reviewed": 307,
-    "cross_window_manually_reviewed_candidates": 356,
-    "cross_window_candidates_remaining_not_manually_reviewed": 948,
+    "cross_window_additional_targeted_candidates_reviewed": 312,
+    "cross_window_manually_reviewed_candidates": 361,
+    "cross_window_candidates_remaining_not_manually_reviewed": 943,
     "cross_window_targeted_duplicate_pair_records_confirmed": 113,
-    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Seventy further lower-scoring candidates have now been checked against full source stems, options, answer keys and explanations; 61 duplicate pair relationships were confirmed and nine related-but-distinct pairs were preserved. The 61 new pair relationships represent 58 additional unique replacement targets because four relationships join existing clusters and one cluster pair adds two held rows. The remaining 948 cross-window candidates have not received manual contextual review.",
+    "cross_window_review_note": "The 49-candidate high-similarity shortlist and 237 additional candidates ranked 50–286 were previously reviewed. Lower-scoring candidates have been checked against full source stems, options, answer keys and explanations in the dated tail-review files. The latest five checks (candidate ranks 886, 887, 888, 890 and 891) preserved all five pairs as distinct; rank 889 was already logged in the CIVIC-DUTY-01 cluster and was not recounted. Current total: 361 of 1,304 manually reviewed; 943 remain.",
     "within_window_original_reported_total": 390,
     "within_window_original_reported_same_topic_or_subtopic": 41,
     "within_window_original_reported_different_topic_or_subtopic": 349,
@@ -4104,10 +4104,10 @@
       "DUP-89",
       "DUP-90"
     ],
-    "reconciliation_note": "90/90 assistant pairwise bankwide reviews recorded. DUP-04 corrected and re-screened; DUP-12 and DUP-69 earlier drafts rejected for semantic overlap and replaced. 11 similarity flags remain for independent human contextual review. Independent qualified subject/syllabus approvals 0/90. No candidates authorised for import. User-reported reviewer approval for the 90 existing replacement candidates is acknowledged separately from item-level sign-off evidence; 43 newly discovered targets remain outside that approval.",
+    "reconciliation_note": "90/90 assistant pairwise bankwide reviews recorded. DUP-04 corrected and re-screened; DUP-12 and DUP-69 earlier drafts rejected for semantic overlap and replaced. 11 similarity flags remain for independent human contextual review. Independent qualified subject/syllabus approvals 0/90. No candidates authorised for import. User-reported reviewer approval for the 90 existing replacement candidates is acknowledged separately from item-level sign-off evidence; 58 newly discovered targets remain outside that approval.",
     "user_reported_approved_replacement_candidates": 90,
     "user_reported_reviewer_approval_status": "user_reports all 90 replacement candidates approved",
     "independent_item_level_approval_evidence_in_repository": 0,
-    "approval_note": "The user has reported that a reviewer approved all 90 existing replacement candidates (90/90). The repository does not contain item-level independent reviewer sign-off records, so this is recorded as user-reported approval rather than independently documented approval. The 43 newly discovered held rows are not part of those 90 and have no replacement drafts or approval yet."
+    "approval_note": "The user has reported that a reviewer approved all 90 existing replacement candidates (90/90). The repository does not contain item-level independent reviewer sign-off records, so this is recorded as user-reported approval rather than independently documented approval. The 58 newly discovered held rows are not part of those 90 and have no replacement drafts or approval yet."
   }
 }
