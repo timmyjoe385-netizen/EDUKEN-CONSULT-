@@ -71,7 +71,152 @@
       "cluster_extension_same_fact_recommendations": 3,
       "cluster_extension_related_skill_recommendations": 3,
       "qualified_subject_review": "pending",
-      "provenance_classification": "pending"
+      "provenance_classification": "pending",
+      "staging_join_status": "verified",
+      "cluster_extension_unique_new_rows_verified": 6,
+      "existing_cluster_references_not_new_rows": 2,
+      "pair_records": [
+        {
+          "id": "DUP-210",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-211",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-212",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-214",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-215",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-216",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-217",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-218",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-219",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-220",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-221",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-222",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-224",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-225",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-226",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-228",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-229",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-230",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-231",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-232",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-233",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-235",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-236",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-237",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-240",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-242",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-243",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        },
+        {
+          "id": "DUP-244",
+          "staging_join": "verified_in_2026_11_06_held_csv",
+          "provenance": "pending"
+        }
+      ]
     }
   },
   "per_batch": [
@@ -309,7 +454,7 @@
   },
   "source_files_modified": false,
   "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
-  "status": "STAGING_ONLY_SOURCE_AND_STAGING_JOINS_VERIFIED_PROVENANCE_AND_ACADEMIC_REVIEW_PENDING_NOT_DEPLOYMENT_READY",
+  "status": "STAGING_JOINS_VERIFIED_PROVENANCE_AND_ACADEMIC_REVIEW_PENDING_NOT_DEPLOYMENT_READY",
   "restrictions": [
     "Original 40 source batch CSVs were not edited or deleted.",
     "The 6 November staging revision is a non-destructive audit export: 1,476 provisionally retained rows + 124 held rows = 1,600; no Supabase import or publication has occurred.",
