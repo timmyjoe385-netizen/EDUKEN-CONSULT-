@@ -48,7 +48,7 @@
     "staging_location_join_complete": false,
     "provenance_candidate_commits_verified_as_introducing_commit": 14,
     "provenance_candidate_commits_are_leads_only": false,
-    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Forty-three additional unique held rows (DUP-91–DUP-99, DUP-101–DUP-121 and DUP-123–DUP-137) still require row-level history and staging reconciliation. DUP-122, DUP-131 and DUP-136 are additional relationships within already reconciled clusters."
+    "provenance_note": "The original 90-pair set remains fully reconciled (62 commit-backed prior-replacement relationships, 28 original-draft overlaps, zero unverified). Forty-three additional unique held rows (DUP-91–DUP-99, DUP-101–DUP-121, DUP-123–DUP-130, DUP-132–DUP-135 and DUP-137) still require row-level history and staging reconciliation. DUP-122, DUP-131 and DUP-136 are additional relationships within already reconciled clusters."
   },
   "dispositions": {
     "already_logged_duplicate_candidates": 3,
@@ -3544,15 +3544,13 @@
       "DUP-128",
       "DUP-129",
       "DUP-130",
-      "DUP-131",
       "DUP-132",
       "DUP-133",
       "DUP-134",
       "DUP-135",
-      "DUP-136",
       "DUP-137"
     ],
-    "note": "The original 90-pair set remains fully reconciled. Forty-three new unique held rows identified in the 2026-11-06 lower-scoring cross-window tail review require provenance and staging checks. DUP-122, DUP-131 and DUP-136 add relationships inside existing clusters and do not add new held rows.",
+    "note": "The original 90-pair set remains fully reconciled. Forty-three new unique held rows identified in the 2026-11-06 lower-scoring cross-window tail review require provenance and staging checks: DUP-91–DUP-99, DUP-101–DUP-121, DUP-123–DUP-130, DUP-132–DUP-135 and DUP-137. DUP-122, DUP-131 and DUP-136 add relationships inside existing clusters and do not add new held rows.",
     "provenance_candidate_commits": {
       "DUP-69": [
         "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
