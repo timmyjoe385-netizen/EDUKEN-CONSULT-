@@ -337,3 +337,35 @@ Candidate review remains open: the original triage reports 279 different-topic c
 - Confirmed **DUP-177**, a further pair relationship in existing **FEDERALISM-01**. Both rows (batch 26 row 34 and batch 38 row 36) were already held; batch 32 row 34 remains the retained anchor. No additional unique replacement target was added.
 - The ranked tail is now reviewed through rank **1304**. Total cross-window manual review is **762/1,304; 542 remain elsewhere in the candidate set**. Duplicate register contains **161 cross-window + 15 within-window = 176 pair relationships**, resolving to **170 unique replacement targets**.
 - No source/staging CSV, replacement draft or production data was changed. No import, publication or deployment occurred.
+
+
+## Fast-path verified checkpoint — 6 November 2026, 16:16 WAT
+
+This checkpoint supersedes older progress statements above where they conflict. It records verification only; it does not authorise release.
+
+### Audit and staging reconciliation
+- Cross-window addendum records all **1,304/1,304 candidate ranks reviewed** (remaining_candidate_pairs = 0). The new addendum contains 28 new pair records and eight cluster-extension links; six extension links add unique held rows and two reuse rows already held. The two previously conflicting references are resolved: rank 684 belongs to DUP-197 (DUP-213 superseded); rank 1304 belongs to DUP-47 / FEDERALISM-01 via DUP-177 (DUP-223 superseded).
+- Canonical pair history is preserved for DUP-22 + DUP-165 -> DUP-165 and DUP-08 + DUP-166 -> DUP-08. These merges do not remove any of the four distinct held source rows.
+- The separate 6 November staging revision is verified: **1,476 retained + 124 held = 1,600**; 34 new held locations and 34 retained anchors join; two already-held rows are excluded; no missing locations, duplicate held locations or retained/held overlap. The 1 November baseline and all 40 original source CSVs remain unchanged.
+- All 34 unique new held source rows were fetched from their original batch CSVs and checked at their recorded physical row numbers. Each has source_type=original, draft status, original EDUKEN-authored provenance notes and no third-party question text claimed. This verifies the source-row metadata, **not** the exact Git introducing-commit history for every row; commit-level provenance reconciliation remains open.
+- Within-window review: the reconstructed 0.42 candidate set contains 390 pairs and all 390 have explicit review status; all 350 different-topic/subtopic candidates are contextually reviewed and reconstructed pending = 0. The 38-count discrepancy is explained by the threshold mismatch (0.42 gives 390; 0.43 gives 352). One category split remains unresolved: reconstructed 40 same-topic / 350 different-topic versus the original 41 / 349.
+- The 34-row independent subject-review worksheet is a blank reviewer handoff, not approval. Qualified subject, answer-key and syllabus decisions remain outstanding. The earlier 90 replacement candidates have user-reported approval only; the repository still has 0/90 item-level independent sign-off evidence. The 34 additional held rows are outside that reported approval.
+
+### Current technical verification
+- PR #194 head: b8ab2b9616c50eb9707aa327d2439d2682a26f67. Current GitHub check-runs show build, wallet SQL integration, preview deployment and public browser checks successful; production deploy skipped.
+- PR #195 head: 0a2f3a1e2eb21dcaf25876bd63a01774e32ab02e; its current recorded checks are successful, with production deploy skipped.
+- PR #197 head: 56d6ed5837a7e2a341692f66be824b9e78c8372f; its current recorded checks are successful, with production deploy skipped.
+- The PR #194 preview hostname resolves and serves the public homepage, /cbt and signed-out /admin page. This is reachability/page-content verification, not an authenticated admin walkthrough or full interactive student-session test.
+- Read-only inspection of the isolated test project wpktzogarfqrgkirzdpy shows 73 CBT questions: 65 drafts and 8 published (one published per subject). This pool cannot satisfy the 180-question JAMB blueprint (60 Use of English + 40 from each of three additional subjects). No production Supabase project was queried or changed in this checkpoint.
+
+### Remaining launch blockers
+1. Complete exact Git introducing-commit / replacement-history provenance reconciliation for the 34 new held rows and reconcile legacy summary counters with explicit pair-ID lists.
+2. Obtain qualified independent subject, answer-key and syllabus review for the 124 held rows and replacement candidates; retain the blank worksheet as a handoff until real reviewer sign-off is recorded.
+3. Prepare, compare and validate replacement drafts for targets that reviewers confirm must be replaced; do not assume every cluster extension requires a replacement.
+4. Build and approve a sufficiently large published-only pool, then pass the complete 180-question student mock, timer, navigation, answer persistence, submission, grading and results checks.
+5. Complete an authenticated admin-session walkthrough and full isolated preview verification.
+6. Keep all imports, publication, PR merges and production deployment blocked until separate explicit release approval.
+
+### Safety
+- This checkpoint changes this build-plan document only. No original source CSV, staging CSV, Supabase row, production setting, payment record, publication or deployment was changed.
+- PR #194 remains open, draft and unmerged. PR #195 and PR #197 remain open, draft and unmerged.
