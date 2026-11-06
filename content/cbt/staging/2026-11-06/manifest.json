@@ -712,6 +712,20 @@
     "remaining_if_rank_set_based": 62,
     "remaining_if_counter_based": 58,
     "ranks_without_explicit_tail_record_within_287_to_1304": 62,
-    "status": "NOT_RECONCILED_DO_NOT_CLAIM_AUDIT_COMPLETE"
+    "status": "TAIL_RANK_GAPS_CLOSED_BASELINE_RANK_CROSSWALK_PENDING",
+    "tail_review_union_before_part83": 956,
+    "part83_new_rank_ids": 62,
+    "tail_review_union_after_part83": 1018,
+    "candidate_rank_range_covered": "287–1304",
+    "missing_tail_rank_ids_after_part83": 0,
+    "baseline_review_count": 286,
+    "high_similarity_rank_ids_mapped": 49,
+    "additional_targeted_review_count_reported": 237,
+    "targeted_review_rank_ids": "not yet mapped",
+    "cumulative_counter_part63": 1007,
+    "rank_set_derived_before_addendum": 1003,
+    "cumulative_counter_discrepancy": 4,
+    "aggregate_unique_reviewed_total": null,
+    "aggregate_remaining_total": null
   }
 }
