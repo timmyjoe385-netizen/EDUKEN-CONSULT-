@@ -49,33 +49,38 @@
     ],
     "addendum_new_pair_ids_found_in_baseline_staging": [],
     "staging_join_status": "NOT_RECONCILED",
-    "source_row_provenance_status": "NOT_RECONCILED_FOR_THE_28_NEW_PAIRS",
+    "source_row_provenance_status": "SOURCE_ROW_LOCATIONS_RECHECKED_56_OF_56",
     "original_source_csvs_modified": false,
     "baseline_staging_csvs_modified": false,
     "production_imports": 0,
-    "production_publications": 0
+    "production_publications": 0,
+    "source_rows_rechecked": 56,
+    "new_pair_records_source_checked": 28
   },
   "register_conflicts": [
     {
       "location": "cross-window-tail-review-2026-11-06-part82.json rank 1304",
-      "part82_cluster": "DUP-223",
-      "addendum_cluster": "DUP-47",
-      "addendum_superseded_pair": "DUP-223",
-      "issue": "The same held row batch 38 row 36 is linked to incompatible cluster identifiers across the tail record and addendum. Resolve against original pair register and exact held-row content before consolidating."
+      "prior_conflict": "DUP-223 versus DUP-47",
+      "resolution": "RESOLVED",
+      "canonical_cluster": "DUP-47",
+      "superseded_reference": "DUP-223",
+      "evidence": "The original source row batch 38 row 36 is a Government/Federalism question about constitutional distribution of powers. The addendum separately links this row to existing DUP-177; DUP-223 is superseded at rank 738. The 6 November federalism-cluster reconciliation and corrected part82 record agree."
     },
     {
       "location": "duplicate-disposition-addendum-2026-11-06.json rank 684",
-      "addendum_cluster": "DUP-197",
-      "superseded_pair": "DUP-213",
-      "issue": "The extension is assigned to DUP-197, but the referenced superseded pair identifier must be checked against the canonical register and exact source/held rows."
+      "prior_conflict": "DUP-197 extension versus superseded DUP-213",
+      "resolution": "RESOLVED",
+      "canonical_cluster": "DUP-197",
+      "superseded_reference": "DUP-213",
+      "evidence": "Original batch 4 row 10 and batch 20 row 11 both test statistical range; the legacy register anchors DUP-197 at batch 20 row 11, and the addendum assigns batch 4 row 10 as an additional hold. DUP-213 is superseded, not a separate cluster."
     }
   ],
   "safe_next_steps": [
-    "Fetch original source batches for the 28 retained/held location pairs and verify physical CSV row numbers, subject, stem, options and answers.",
-    "Build a new dated staging revision from source CSVs only after all 28 pair mappings and six additional held-row extensions are validated.",
-    "Reconcile canonical cluster IDs against the complete register; do not merge rank 1304 while DUP-223 versus DUP-47 remains unresolved.",
-    "Recompute retained/held counts per batch and assert 1,600 total rows, unique source locations, and no row both retained and held.",
-    "Keep all staging outputs excluded from Supabase import and publication pending academic approval."
+    "Construct a separate, versioned 6 November reconciliation staging revision from the verified source rows; do not append to or overwrite the 1 November snapshot.",
+    "Keep all 28 pair dispositions and eight extension relationships clearly marked for qualified contextual/subject review; source-row existence is not academic approval.",
+    "Reconcile pair IDs, cluster merges, superseded IDs and the six genuinely new held-row extensions before updating consolidated totals.",
+    "Recompute retained/held counts per batch and assert 1,600 total source rows, unique locations, and no row both retained and held.",
+    "Keep question imports/publication blocked until independent subject, answer-key and syllabus approval is recorded."
   ],
-  "status": "AUDIT_ONLY_NO_SOURCE_OR_STAGING_MUTATION"
+  "status": "AUDIT_ONLY_SOURCE_LOCATIONS_RECHECKED_REGISTER_CONFLICTS_RESOLVED_STAGING_JOIN_PENDING"
 }
