@@ -21,9 +21,10 @@
       359
     ],
     "previous_total_manually_reviewed": 762,
-    "now_manually_reviewed": 777,
+    "now_manually_reviewed": 773,
     "total_cross_window_candidates": 1304,
-    "remaining_not_manually_reviewed": 527
+    "remaining_not_manually_reviewed": 531,
+    "reconciliation_note": "Corrected after cross-checking earlier audit parts: ranks 344, 346, 355 and 357 had already been reviewed in part2 and are excluded from the new count. This part adds 11 unique candidate ranks, not 15."
   },
   "confirmed_duplicates": [
     {
