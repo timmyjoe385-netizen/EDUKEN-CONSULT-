@@ -67,149 +67,177 @@
       "cluster_extension_same_fact_recommendations": 3,
       "cluster_extension_related_skill_recommendations": 3,
       "qualified_subject_review": "pending",
-      "provenance_classification": "pending",
+      "provenance_classification": "verified_original_EDUKEN_drafts",
       "staging_join_status": "verified_exact_question_and_subject_match",
       "cluster_extension_unique_new_rows_verified": 6,
       "existing_cluster_references_not_new_rows": 2,
       "pair_records": [
         {
           "id": "DUP-210",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-211",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-212",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-214",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-215",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-216",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-217",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-218",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-219",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-220",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-221",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-222",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-224",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-225",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-226",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-228",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-229",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-230",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-231",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-232",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-233",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-235",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-236",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-237",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-240",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-242",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-243",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         },
         {
           "id": "DUP-244",
-          "provenance": "original_eduKen_draft_verified_against_source_csv",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
           "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
         }
       ],
@@ -217,9 +245,12 @@
         "new_pair_record_locations": 56,
         "cluster_extension_locations": 8
       },
-      "source_provenance_status": "verified_original_EDUKEN_draft_for_all_36_source_location_references",
-      "source_rows_checked": 36,
-      "source_type_original": 36
+      "source_provenance_status": "verified_original_EDUKEN_draft_for_all_64_source_locations",
+      "source_rows_checked": 64,
+      "source_type_original": 64,
+      "retained_anchor_rows_checked": 28,
+      "held_pair_rows_checked": 28,
+      "cluster_extension_rows_checked": 8
     }
   },
   "per_batch": [
