@@ -5,17 +5,16 @@
   "source_branch": "feat/cbt-subject-combination-reconciled",
   "source_batch_files": 40,
   "source_question_rows": 1600,
-  "confirmed_duplicate_relationships": 124,
   "unique_held_duplicate_rows": 124,
   "provisionally_retained_rows": 1476,
-  "reconciliation": "1,476 provisionally retained + 124 held = 1,600 source question rows.",
+  "reconciliation": "1,476 provisionally retained + 124 held = 1,600 source rows; the 124 held locations map to 119 pair IDs because some rows extend existing clusters.",
   "duplicate_provenance": {
     "prior_replacement_commit_verified": 48,
     "replacement_after_initial_snapshot_commit_sha_pending": 13,
     "original_draft_overlap_relationships": 29,
     "provenance_unverified_relationships": 0,
     "unverified_pair_ids": [],
-    "note": "Forty-eight duplicate relationships have commit-backed prior-replacement evidence. Thirteen further pairs contain replacement-created content confirmed against original batch snapshots, but exact introducing commit SHAs remain to be normalized. Twenty-nine are original-draft overlaps, including DUP-34, whose retained and held source rows were directly checked in original batches 38 and 39. No pair remains in the unresolved-provenance bucket; the 13 introducing commit SHAs still require normalization.",
+    "note": "This classification covers the baseline 90 held relationships only: 48 have prior-replacement commit evidence, 13 replacement-created pairs still need exact introducing commit SHAs normalized, and 29 are original-draft overlaps. DUP-34 was verified as one of the 29 original-draft overlaps. Separately, the 6 November addendum introduces 28 new pair records and six unique cluster-extension rows (34 new held locations); their provenance and contextual retain/hold decisions remain pending.",
     "resolved_pair_evidence": {
       "DUP-34": {
         "retained_location": "batch 38 row 2",
@@ -25,6 +24,46 @@
         "finding": "Both test concord with the singular subject 'each'; retained item uses 'wears' and held item uses 'receives'. They assess the same narrow rule with different lexical content.",
         "disposition": "keep held pending qualified English subject review; provenance classified as original-draft overlap, not prior-replacement history"
       }
+    },
+    "addendum_provenance": {
+      "new_pair_records": 28,
+      "unique_cluster_extension_rows": 6,
+      "newly_held_locations": 34,
+      "source_locations_verified": 56,
+      "staging_held_locations_joined": 34,
+      "retained_anchors_found": 34,
+      "provenance_and_contextual_disposition": "pending",
+      "replacement_drafts": "not drafted",
+      "pair_ids": [
+        "DUP-210",
+        "DUP-211",
+        "DUP-212",
+        "DUP-214",
+        "DUP-215",
+        "DUP-216",
+        "DUP-217",
+        "DUP-218",
+        "DUP-219",
+        "DUP-220",
+        "DUP-221",
+        "DUP-222",
+        "DUP-224",
+        "DUP-225",
+        "DUP-226",
+        "DUP-228",
+        "DUP-229",
+        "DUP-230",
+        "DUP-231",
+        "DUP-232",
+        "DUP-233",
+        "DUP-235",
+        "DUP-236",
+        "DUP-237",
+        "DUP-240",
+        "DUP-242",
+        "DUP-243",
+        "DUP-244"
+      ]
     }
   },
   "per_batch": [
@@ -254,24 +293,26 @@
       "blocked_duplicate_existing_bank": 5,
       "new_draft_pending_subject_review_and_bankwide_screen": 9,
       "draft_needs_subject_and_bankwide_review": 18
-    }
+    },
+    "addendum_new_unique_held_locations": 34,
+    "addendum_replacement_drafts_created": 0,
+    "addendum_replacement_drafts_required": 34,
+    "academic_review_complete": false
   },
   "source_files_modified": false,
   "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
-  "status": "STAGING_ONLY_NOT_ACADEMICALLY_APPROVED_NOT_DEPLOYMENT_READY",
+  "status": "STAGING_ONLY_SOURCE_AND_STAGING_JOINS_VERIFIED_PROVENANCE_AND_ACADEMIC_REVIEW_PENDING_NOT_DEPLOYMENT_READY",
   "restrictions": [
     "Original 40 source batch CSVs were not edited or deleted.",
-    "Staging CSVs are a non-destructive export only; no Supabase import or publication has occurred.",
-    "The 1,510 provisionally retained rows are not academically approved or deployment-ready; each requires review of syllabus fit, question clarity, options, answer key and explanation.",
-    "The 90 held duplicate rows must remain excluded until suitable non-duplicate replacements are created, reviewed and approved.",
-    "The 90 confirmed duplicate relationships comprise 48 with verified prior-replacement commits, 13 with replacement-created content whose exact introducing commit SHAs remain to be normalized, 28 original-draft overlaps, and one unresolved-provenance pair (DUP-34).",
-    "All 286 cross-window candidates at or above the 0.65 manual-review threshold have been reviewed; 1,018 lower-scoring candidates remain screened but not manually reviewed.",
-    "All 390 reconstructed within-window candidates at threshold 0.42 have review statuses; the original report's 41/349 category split differs by one pair from the reconstructed 40/350 split, and its stated 0.43 threshold does not reproduce the reported total.",
-    "No production deployment, PR merge, question publication or production database change is authorised by this staging export.",
-    "The 61 replacement proposals remain drafts outside the original source bank: five are blocked by known existing-bank overlap and 56 remain uncleared for insertion.",
-    "The latest refreshed lexical screen covers all 61 proposals against all 1,600 retained-plus-held staging rows. Sixteen proposals meet or exceed the 0.42 review threshold; these are prompts for contextual review, not duplicate findings.",
-    "Preliminary answer/concept checks now cover DUP-48 through DUP-61 (14 proposals). Independent subject review and contextual bank-wide clearance remain outstanding.",
-    "The register's batch row references use physical CSV row numbers including the header. DUP-60 and DUP-61 were checked against those exact physical rows and both staging/source records match."
+    "The 6 November staging revision is a non-destructive audit export: 1,476 provisionally retained rows + 124 held rows = 1,600; no Supabase import or publication has occurred.",
+    "The 124 held locations map to 119 pair IDs because some entries extend existing clusters; all 34 new held locations have source and staging joins, but contextual duplicate-vs-related-skill decisions and provenance remain pending.",
+    "The 1,476 provisionally retained rows are not academically approved or deployment-ready; each still requires syllabus, clarity, options, answer-key and explanation review.",
+    "Baseline 90 provenance classification: 48 prior-replacement commits verified, 13 exact introducing commit SHAs still need normalization, and 29 original-draft overlaps including resolved DUP-34.",
+    "The 28 new addendum pair records and six unique cluster-extension rows remain pending provenance classification and contextual academic review; no replacements have been drafted for these 34 held locations.",
+    "The latest persisted cross-window review segments contain 297 rank entries (565–579, 640–909, 1293–1304), but overlap with prior review logs has not been reconciled; do not state a current aggregate reviewed/remaining total yet.",
+    "The reconstructed within-window set contains 390 reviewed candidates at threshold 0.42; the original reported queue still lists 279 pending and the 38-count discrepancy remains unresolved.",
+    "The 90 baseline replacement proposals remain outside the source bank; independent qualified subject/answer approval and documentary reviewer evidence remain outstanding.",
+    "No production deployment, PR merge, question publication, production database change or student release is authorized by this staging export."
   ],
   "semantic_review_status": {
     "cross_window_candidates": 1304,
@@ -282,7 +323,14 @@
     "original_reported_within_window_candidates_pending": 279,
     "reconstructed_within_window_candidates_reviewed": 390,
     "unresolved_within_window_count_discrepancy": 38,
-    "note": "Cross-window screen has 1,304 candidates: 286 manually reviewed (including the 49-pair same-subject/topic/subtopic shortlist; 1,018 lower-scoring candidates remain unreviewed). The within-window reconstruction at threshold 0.42 has 390 reviewed candidates, while the original report still has 279 pending candidates and a 38-pair discrepancy against the reconstruction."
+    "note": "Cross-window screen has 1,304 candidates: 286 manually reviewed (including the 49-pair same-subject/topic/subtopic shortlist; 1,018 lower-scoring candidates remain unreviewed). The within-window reconstruction at threshold 0.42 has 390 reviewed candidates, while the original report still has 279 pending candidates and a 38-pair discrepancy against the reconstruction.",
+    "previous_aggregate_checkpoint": {
+      "manually_reviewed": 286,
+      "remaining": 1018,
+      "status": "historical_not_current"
+    },
+    "latest_persisted_rank_entries": 297,
+    "aggregate_progress_reconciliation": "pending"
   },
   "semantic_review": {
     "within_window": {
@@ -444,5 +492,38 @@
     "Complete provenance reconciliation for new relationships and unresolved historic register entries.",
     "Obtain independent qualified subject, answer-key and syllabus approval for all 34 new held rows and replacement questions.",
     "Run full isolated student/admin CBT validation before any release."
-  ]
+  ],
+  "recorded_duplicate_pair_ids": 119,
+  "review_progress_reconciliation": {
+    "latest_persisted_segments": [
+      {
+        "start": 565,
+        "end": 579,
+        "count": 15
+      },
+      {
+        "start": 640,
+        "end": 909,
+        "count": 270
+      },
+      {
+        "start": 1293,
+        "end": 1304,
+        "count": 12
+      }
+    ],
+    "persisted_rank_entries": 297,
+    "aggregate_unique_rank_total": "not reconciled; segment overlap with earlier review logs has not been computed",
+    "remaining_cross_window_candidate_count": "not verified; do not derive by subtracting 297 from the earlier 686 checkpoint",
+    "within_window_reconstruction": {
+      "candidates": 390,
+      "reviewed": 390,
+      "threshold": 0.42
+    },
+    "original_within_window_queue": {
+      "reported_pending": 279,
+      "count_discrepancy": 38,
+      "status": "unresolved"
+    }
+  }
 }
