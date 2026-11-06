@@ -695,40 +695,23 @@
   ],
   "recorded_duplicate_pair_ids": 119,
   "review_progress_reconciliation": {
-    "latest_persisted_segments": [
-      {
-        "start": 565,
-        "end": 579,
-        "count": 15
-      },
-      {
-        "start": 640,
-        "end": 909,
-        "count": 270
-      },
-      {
-        "start": 1293,
-        "end": 1304,
-        "count": 12
-      }
-    ],
-    "persisted_rank_entries": 297,
-    "aggregate_unique_rank_total": "not reconciled; segment overlap with earlier review logs has not been computed",
-    "remaining_cross_window_candidate_count": "not verified; do not derive by subtracting 297 from the earlier 686 checkpoint",
-    "within_window_reconstruction": {
-      "candidates": 390,
-      "reviewed": 390,
-      "threshold": 0.42
-    },
-    "original_within_window_queue": {
-      "reported_pending": 279,
-      "count_discrepancy": 38,
-      "status": "unresolved"
-    },
-    "explicit_unique_rank_ids_across_inspected_sources": 973,
-    "latest_legacy_cumulative_counter": 921,
-    "counter_discrepancy": 52,
-    "ranks_without_explicit_record_in_inspected_sources": 331,
-    "status": "COUNTER_AND_RANK_CROSSWALK_NOT_RECONCILED"
+    "earlier_tail_review_unique_rank_ids": 717,
+    "addendum_rank_entries": 297,
+    "overlap_between_earlier_and_addendum": 58,
+    "genuinely_new_rank_ids_from_addendum": 239,
+    "union_of_all_tail_review_rank_ids": 956,
+    "high_similarity_mapped_rank_ids": 49,
+    "explicit_unique_rank_ids_across_tail_and_high_similarity_sources": 1005,
+    "previous_baseline_reported": 286,
+    "part63_persisted_total": 1007,
+    "rank_set_derived_total_before_addendum": 1003,
+    "pre_addendum_counter_discrepancy": 4,
+    "rank_set_based_total_after_addendum": 1242,
+    "counter_based_total_after_addendum": 1246,
+    "total_candidates": 1304,
+    "remaining_if_rank_set_based": 62,
+    "remaining_if_counter_based": 58,
+    "ranks_without_explicit_tail_record_within_287_to_1304": 62,
+    "status": "NOT_RECONCILED_DO_NOT_CLAIM_AUDIT_COMPLETE"
   }
 }
