@@ -271,3 +271,13 @@ The 14 verified pairs cover:
 These are 14 duplicate pairs, not 14 questions; some pairs have both questions introduced by earlier replacement commits. The remaining 19 confirmed pairs still need row-level provenance checks. No question CSV has been modified.
 
 Candidate review remains open: the original triage reports 279 different-topic candidates still pending after its reported 70 reviewed, and its 390 total does not match the independent 352-pair recomputation. The 38-pair discrepancy remains unresolved. Do not start replacement edits yet.
+
+
+## Three-times-sized lower-tail audit update — 6 November 2026
+
+- Reviewed cross-window candidate ranks **932–946** against the complete source stems, four answer options, correct-option keys and explanations. The review record is `content/cbt/audits/cross-window-tail-review-2026-11-06-part21.json`.
+- Thirteen candidates were preserved as distinct assessment objectives. Rank 933 was confirmed as **DUP-160**: batch 25 row 13 and batch 40 row 15 both assess ADH-mediated water reabsorption in the collecting ducts. Batch 25 row 13 is the provisional retain; batch 40 row 15 is one new unique held target.
+- Rank 937 (arithmetic-progression nth-term items) is deferred for reconciliation with earlier candidate ranks 5, 14, 19, 802 and 1120, which share one or both source rows. No new duplicate or held target is counted until those prior decisions are reconciled.
+- Current cross-window progress: **416/1,304 manually reviewed; 888 remain**. Current duplicate register: **144 cross-window + 15 within-window = 159 confirmed pair relationships**, resolving to **156 unique replacement targets** (90 original + 66 additional). The 65 additional pair relationships from DUP-91–DUP-160 still require row-level provenance reconciliation and represent 66 unique held rows.
+- The original source CSVs and staging CSVs remain unchanged. No replacement draft was created, no Supabase import or publication occurred, and no production data or deployment was touched.
+- PR #194 remains open, draft and unmerged. This update is documentation/audit-only; it does not authorise merge, production import, publication or deployment.
