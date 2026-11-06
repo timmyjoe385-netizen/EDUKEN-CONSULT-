@@ -333,7 +333,7 @@
       "held_location": "batch 4 row 10",
       "source_row_check": "found_and_content_checked",
       "staging_status": "new_cluster_extension_candidate",
-      "retained_anchor": "canonical_cluster_register_lookup_required",
+      "retained_anchor": "batch 20 row 11",
       "reason": "Same simple numerical range calculation template; preserve the earlier retained item batch 20 row 11."
     },
     {
@@ -342,7 +342,7 @@
       "held_location": "batch 2 row 33",
       "source_row_check": "found_and_content_checked",
       "staging_status": "new_cluster_extension_candidate",
-      "retained_anchor": "canonical_cluster_register_lookup_required",
+      "retained_anchor": "batch 32 row 34",
       "reason": "Same federalism division-of-powers concept; batch 26 row 34 is already held in this cluster."
     },
     {
@@ -375,7 +375,7 @@
       "held_location": "batch 5 row 5",
       "source_row_check": "found_and_content_checked",
       "staging_status": "new_cluster_extension_candidate",
-      "retained_anchor": "canonical_cluster_register_lookup_required",
+      "retained_anchor": "batch 20 row 6",
       "reason": "Same parallel-structure gerund-list assessment; batch 28 row 4 is already held in this cluster."
     },
     {
@@ -384,7 +384,7 @@
       "held_location": "batch 14 row 31",
       "source_row_check": "found_and_content_checked",
       "staging_status": "new_cluster_extension_candidate",
-      "retained_anchor": "canonical_cluster_register_lookup_required",
+      "retained_anchor": "batch 9 row 31",
       "reason": "Same tariff-definition concept; batch 38 row 31 is already held in this cluster."
     }
   ],
@@ -404,14 +404,26 @@
   ],
   "staging_join": {
     "previous_snapshot": "content/cbt/staging/2026-11-01/",
-    "match_count_for_new_pairs": 0,
-    "match_count_for_new_extensions": 0,
-    "disposition": "Keep 2026-11-01 immutable. This index is the separate 2026-11-06 review revision."
+    "previous_snapshot_match_count_for_new_pairs": 0,
+    "new_revision": "content/cbt/staging/2026-11-06/",
+    "new_pair_records_joined": 28,
+    "new_pair_records_expected": 28,
+    "new_cluster_extension_rows_joined": 6,
+    "new_cluster_extension_rows_expected": 6,
+    "new_held_locations_joined": 34,
+    "new_held_locations_expected": 34,
+    "retained_anchor_locations_found": 34,
+    "retained_anchor_locations_expected": 34,
+    "retained_rows": 1476,
+    "held_rows": 124,
+    "total_rows": 1600,
+    "retained_held_overlap": 0,
+    "disposition": "The 1 November snapshot remains immutable. The separate 6 November r2 revision contains all 34 new held candidates and all 34 anchors, with a complete 1,600-row reconciliation."
   },
   "release_gate": {
     "importable": false,
     "publication_authorized": false,
-    "reason": "Pair-level semantic review, canonical cluster anchor joins, provenance classification, replacement drafting, independent subject/answer/syllabus approval and full bank validation remain open."
+    "reason": "Import/publication remains blocked: contextual pair disposition, provenance classification, replacement drafting, independent subject/answer/syllabus approval and full isolated bank validation remain open."
   },
   "source_and_staging_mutations": 0,
   "production_mutations": 0,
