@@ -42,7 +42,7 @@
         "source_label": "EDUKEN original preview sample",
         "api_read_verified": true
       },
-      "rendering_note": "The earlier 'Checking questions…' text was the initial pre-hydration snapshot; after the feed loads the page shows the available one-question practice state."
+      "rendering_note": "The initial 'Checking questions…' text is the pre-hydration snapshot; after the question feed loads the page shows 'Free starter practice available' with a one-question selector."
     },
     "production_homepage": {
       "url": "https://eduken-consult.timmyjoe385.workers.dev/",
@@ -73,10 +73,11 @@
   },
   "correction": "The previously used workers.dev hostname suffix timmy385 was incorrect; Cloudflare account subdomain is timmyjoe385.",
   "limitations": [
-    "The preview feed and one-question practice lifecycle are verified by live API logs and the CI Chromium smoke test.",
-    "A 180-question JAMB mock cannot run until enough reviewed questions are published; the current eight synthetic preview samples are not the production bank.",
-    "The live AI assistant POST and authenticated analytics flow remain untested end-to-end.",
-    "The isolated test project contains historical attempt rows including five active-but-expired sessions; none were changed during this check."
+    "The isolated API attempt lifecycle is verified by Supabase function logs (question feed 200, start 201, submit 200, insufficient-bank guard 409).",
+    "The deployed-preview Chromium smoke test passed a complete one-question practice journey through result review.",
+    "The full 180-question JAMB mock is blocked by the eight-sample preview bank and must not be treated as tested.",
+    "The live AI assistant POST and authenticated analytics/admin flows remain outstanding.",
+    "Five historical test sessions remain marked active although expired; no session rows were changed."
   ],
   "safety": {
     "cloudflare_configuration_changes": 0,
@@ -85,7 +86,7 @@
     "production_publications": 0,
     "release_authorized": false
   },
-  "status": "PREVIEW_PRACTICE_API_AND_CI_BROWSER_SMOKE_VERIFIED_FULL_MOCK_AND_ACADEMIC_BANK_PENDING",
+  "status": "PREVIEW_ONE_QUESTION_PRACTICE_API_AND_CI_BROWSER_SMOKE_VERIFIED_FULL_MOCK_AND_ACADEMIC_BANK_PENDING",
   "student_api_acceptance": {
     "log_window": "2026-11-06 15:27–15:31 UTC",
     "published_question_feed": {
@@ -142,37 +143,72 @@
     "note": "The endpoint returned only published question fields and did not expose correct answers or explanations in the student feed."
   },
   "student_attempt_acceptance": {
-    "status": "API_LIFECYCLE_AND_CI_BROWSER_PRACTICE_SMOKE_VERIFIED",
+    "status": "ISOLATED_API_LIFECYCLE_AND_CI_BROWSER_PRACTICE_SMOKE_VERIFIED",
     "api_evidence": {
       "log_window": "2026-11-06 15:27–15:31 UTC",
-      "question_feed": 200,
-      "attempt_creation": 201,
-      "attempt_submission": 200,
-      "insufficient_bank_guard": 409,
-      "unauthenticated_admin": 401,
-      "source": "Supabase function_edge_logs for isolated test project"
+      "published_question_feed": {
+        "http_statuses": [
+          200
+        ],
+        "observed": true,
+        "source": "Supabase function_edge_logs"
+      },
+      "attempt_creation": {
+        "http_statuses": [
+          201
+        ],
+        "observed": true,
+        "source": "Supabase function_edge_logs"
+      },
+      "attempt_submission": {
+        "http_statuses": [
+          200
+        ],
+        "observed": true,
+        "source": "Supabase function_edge_logs"
+      },
+      "insufficient_bank_guard": {
+        "http_statuses": [
+          409
+        ],
+        "observed": true,
+        "meaning": "Mock selection requesting more questions than the one published per subject was rejected safely."
+      },
+      "admin_api": {
+        "http_statuses": [
+          401
+        ],
+        "observed": true,
+        "meaning": "Unauthenticated admin API calls were denied; authenticated allowlisted admin walkthrough remains outstanding."
+      },
+      "note": "These are isolated preview project requests. The test bank currently has one published question per subject and cannot support a 10/20/40/100/180-question student practice or mock. Logs show successful question retrieval, attempt creation and submission against the isolated service."
     },
     "ci_browser_smoke": {
       "commit": "a121ee7c19887bca26f7ed03cefa83fc417437d8",
-      "all_four_workflow_groups": "success",
+      "workflow_groups": "4/4 passed",
       "test_file": "tests/cbt-preview-smoke.mjs",
-      "coverage": [
-        "live preview question fetch",
-        "student feed hides answer keys and explanations",
-        "exactly four unique mock subjects with Use of English locked",
-        "subject practice dropdown",
-        "start one-question practice",
+      "current_core_code_files_match_tested_commit": true,
+      "covered": [
+        "question feed 200",
+        "answer keys and explanations hidden",
+        "four unique mock subjects including locked Use of English",
+        "practice subject dropdown",
+        "one-question attempt start",
         "answer selection",
-        "submit practice",
-        "result and review screen"
-      ],
-      "current_code_tree_match": "12 core code/config/test files have identical Git blob SHAs at the current branch and this tested commit."
+        "submit",
+        "results and review"
+      ]
     },
     "manual_tinyfish_run": {
       "status": "not_started",
-      "reason": "Separate TinyFish wallet balance is -$0.136 USD; no top-up was made and no attempt was created by that run."
+      "reason": "TinyFish wallet balance is -$0.136 USD; no top-up was made and this separate manual run created no attempt."
     },
-    "full_mock": "not verified and not currently possible: the preview bank has only one published sample per subject, and the API correctly rejects requests requiring more questions."
+    "full_mock": {
+      "status": "blocked_by_bank_size",
+      "published_samples": 8,
+      "per_subject": 1,
+      "insufficient_bank_response": 409
+    }
   },
   "edge_function": {
     "status": "ACTIVE",
