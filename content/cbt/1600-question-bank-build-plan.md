@@ -20,8 +20,8 @@ This update supersedes conflicting older status notes below. Historical entries 
 - Replacement proposals for the 34 new held locations: **0 drafted**. No new held item is approved for insertion or publication.
 
 ### 3. Review progress — aggregate not yet reconciled
-- The latest persisted review segments contain **297 rank entries** across ranks 565–579, 640–909 and 1293–1304.
-- These segments have not yet been deduplicated against all earlier review logs. Therefore the current unique aggregate reviewed count and remaining count are **not verified**. Do not add 297 to the older 686 checkpoint or claim 0 remaining.
+- A rank-level crosswalk across 81 tail-review files, the 6 November addendum and the 49-item high-similarity review identifies **973 unique candidate rank IDs**. The legacy cumulative counter in part56 is **921**, a discrepancy of **52**.
+- **331 candidate ranks lack an explicit record in the inspected source set**; some may be represented in earlier targeted-review artifacts. The rank union is not yet an independently validated aggregate. Do not claim 973/1,304 or 921/1,304 as the final reviewed total until the 52-count mismatch and 331 missing-rank crosswalk are resolved.
 - The reconstructed within-window set has 390 candidates reviewed at threshold 0.42. The original report still lists 279 pending candidates and a 38-count discrepancy; that original queue is not reconciled.
 - Similarity scores remain screening signals, not proof of duplication or uniqueness.
 
