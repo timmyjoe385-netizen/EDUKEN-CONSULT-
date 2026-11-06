@@ -389,9 +389,25 @@
     "importable": false
   },
   "next_steps": [
-    "Join the 34 unique held source locations and their retained anchors to baseline retained/held CSVs using source_batch and source_csv_row.",
-    "Resolve cluster merges DUP-22/DUP-165 and DUP-08/DUP-166 in the consolidated register without double-counting existing held rows.",
-    "Create a separate dated held CSV only after exact baseline joins and per-batch counts are reconciled.",
-    "Keep all candidates excluded from publication until qualified subject, answer-key and syllabus review is recorded."
-  ]
+    "Apply canonical pair/cluster merge accounting in the consolidated register (DUP-22/DUP-165 and DUP-08/DUP-166).",
+    "Complete source provenance review and independent academic/syllabus approval.",
+    "Keep all staged questions out of Supabase publication until every approval and release gate is closed."
+  ],
+  "staging_join": {
+    "baseline_revision": "2026-11-01",
+    "new_hold_locations_joined": 34,
+    "expected": 34,
+    "retained_anchor_locations_found": 34,
+    "expected_anchors": 34,
+    "already_held": 0,
+    "missing_locations": 0,
+    "validation": "All 34 held locations existed in baseline retained CSVs; all 34 retained anchors existed in baseline retained CSVs; 34 held rows moved to the new dated revision; all per-window row counts reconcile to 1,600.",
+    "new_revision": "content/cbt/staging/2026-11-06/",
+    "counts": {
+      "retained": 1476,
+      "held": 124,
+      "total": 1600
+    },
+    "files_created": 9
+  }
 }
