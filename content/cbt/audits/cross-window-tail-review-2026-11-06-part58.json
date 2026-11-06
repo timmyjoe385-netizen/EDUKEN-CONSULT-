@@ -1,0 +1,185 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 550-564. Both original source records, full stems, four options, answer keys and explanations were checked; similarity was used only for screening.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      550,
+      551,
+      552,
+      553,
+      554,
+      555,
+      556,
+      557,
+      558,
+      559,
+      560,
+      561,
+      562,
+      563,
+      564
+    ],
+    "previous_total_manually_reviewed": 936,
+    "now_manually_reviewed": 951,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 353
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-202",
+      "rank": 550,
+      "subject": "Physics",
+      "a": "batch 15 row 22",
+      "b": "batch 28 row 22",
+      "concept": "Distance corresponding to half a wavelength",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Adjacent nodes in a stationary wave are separated by half a wavelength; a crest and its adjacent trough are also separated by half a wavelength. Both ask for the same λ/2 relationship.",
+      "retain": "batch 15 row 22",
+      "hold": "batch 28 row 22",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-203",
+      "rank": 551,
+      "subject": "Economics",
+      "a": "batch 12 row 27",
+      "b": "batch 37 row 27",
+      "concept": "Law of supply: higher price leads to higher quantity supplied",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the direct relationship between price and quantity supplied, other things equal. The stems and explanations are paraphrases of the same law of supply.",
+      "retain": "batch 12 row 27",
+      "hold": "batch 37 row 27",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-204",
+      "rank": 555,
+      "subject": "Use of English",
+      "a": "batch 2 row 5",
+      "b": "batch 16 row 6",
+      "concept": "Singular possessive apostrophe for one girl's ownership",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the correct apostrophe form showing that one girl owns an item. The correct construction is girl's in both; the wording and options are minor variations of the same grammar item.",
+      "retain": "batch 2 row 5",
+      "hold": "batch 16 row 6",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 552,
+      "subject": "Use of English",
+      "a": "batch 28 row 5",
+      "b": "batch 38 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Correct colon placement after a complete clause and recognition of a compound sentence test different punctuation and sentence-structure knowledge."
+    },
+    {
+      "rank": 553,
+      "subject": "Mathematics",
+      "a": "batch 6 row 9",
+      "b": "batch 28 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Pythagoras' theorem finds a right triangle's hypotenuse; trapezium area uses the average of parallel sides multiplied by height."
+    },
+    {
+      "rank": 554,
+      "subject": "Literature in English",
+      "a": "batch 10 row 38",
+      "b": "batch 39 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "An unreliable narrator may be biased or inaccurate; an omniscient narrator has broad knowledge of characters and events. Different narrative properties."
+    },
+    {
+      "rank": 556,
+      "subject": "Mathematics",
+      "a": "batch 5 row 8",
+      "b": "batch 12 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Simple interest is calculated on the original principal; compound interest applies interest to accumulated amounts. Different interest methods."
+    },
+    {
+      "rank": 557,
+      "subject": "Chemistry",
+      "a": "batch 3 row 21",
+      "b": "batch 40 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Boyle's law relates pressure and volume at constant temperature; the pressure law relates pressure and absolute temperature at constant volume."
+    },
+    {
+      "rank": 558,
+      "subject": "Government",
+      "a": "batch 27 row 35",
+      "b": "batch 31 row 32",
+      "decision": "preserve_as_distinct",
+      "reason": "Cabinet composition concerns senior ministers; a no-confidence vote concerns the legislature's support for the government."
+    },
+    {
+      "rank": 559,
+      "subject": "Use of English",
+      "a": "batch 29 row 6",
+      "b": "batch 37 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies a long vowel /iː/; the second identifies a voiced consonant /ʒ/."
+    },
+    {
+      "rank": 560,
+      "subject": "Economics",
+      "a": "batch 18 row 29",
+      "b": "batch 31 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "Elastic demand has a percentage quantity response greater than the percentage price change; inelastic demand has a smaller percentage quantity response. They test contrasting elasticity categories."
+    },
+    {
+      "rank": 561,
+      "subject": "Government",
+      "a": "batch 29 row 34",
+      "b": "batch 34 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Opposition parties scrutinise government policy; legislative committees examine specific matters and support legislative oversight. Related accountability roles, but different institutions and functions."
+    },
+    {
+      "rank": 562,
+      "subject": "Literature in English",
+      "a": "batch 3 row 37",
+      "b": "batch 18 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "One asks for the definition of alliteration; the other asks learners to identify an example in a phrase. Retain as definition and application practice."
+    },
+    {
+      "rank": 563,
+      "subject": "Use of English",
+      "a": "batch 10 row 3",
+      "b": "batch 12 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Alleviate and abundant are unrelated vocabulary targets despite the shared synonym-question format."
+    },
+    {
+      "rank": 564,
+      "subject": "Use of English",
+      "a": "batch 29 row 6",
+      "b": "batch 33 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies a vowel sound; the second identifies a final consonant sound. Different phonological targets."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 3,
+    "new_unique_replacement_targets": 3,
+    "preserved_as_distinct": 12,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}
