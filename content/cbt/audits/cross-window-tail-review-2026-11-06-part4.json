@@ -1,0 +1,243 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record six additional fully content-checked cross-window duplicate relationships and two pairs preserved as distinct.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      490,
+      491,
+      496,
+      504,
+      506,
+      510,
+      513,
+      517
+    ],
+    "previous_total_manually_reviewed": 317,
+    "now_manually_reviewed": 323,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 981
+  },
+  "findings": [
+    {
+      "id": "DUP-122",
+      "rank": 496,
+      "score": 0.566,
+      "subject": "Literature in English",
+      "a": "batch 25 row 37",
+      "b": "batch 32 row 39",
+      "concept": "Denouement/resolution is the concluding stage where the main conflict is resolved",
+      "question_a": "The denouement of a narrative is the stage at which:",
+      "options_a": [
+        "conflicts are resolved and loose ends are brought together",
+        "the main characters are first introduced",
+        "the setting is described for the first time",
+        "the narrator changes from first person to third person"
+      ],
+      "answer_a": "A",
+      "question_b": "The resolution of a narrative is the part in which:",
+      "options_b": [
+        "The main conflict is brought to a conclusion or settled",
+        "The setting and main characters are first introduced",
+        "A new conflict is introduced without development",
+        "The author lists sources used in writing"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "DENOUEMENT-01",
+      "retain_candidate": "batch 20 row 39",
+      "existing_held_candidates": [
+        "batch 25 row 37",
+        "batch 32 row 39"
+      ],
+      "new_unique_targets_added": 0,
+      "reason": "Both rows are already recorded as held against batch 20 row 39 in DUP-21 and DUP-83. This candidate confirms another relationship in the same three-row cluster; no new replacement target is added."
+    },
+    {
+      "id": "DUP-123",
+      "rank": 491,
+      "score": 0.567,
+      "subject": "Government",
+      "a": "batch 8 row 33",
+      "b": "batch 20 row 33",
+      "concept": "Proportional representation allocates seats broadly in proportion to votes received",
+      "question_a": "Proportional representation aims to allocate legislative seats broadly in proportion to the:",
+      "options_a": [
+        "Votes received by parties",
+        "Number of judges in each region",
+        "Age of each candidate",
+        "Size of campaign posters"
+      ],
+      "answer_a": "A",
+      "question_b": "Under a proportional representation electoral system, legislative seats are allocated mainly according to:",
+      "options_b": [
+        "the number of votes each party receives.",
+        "the age of each party's leader.",
+        "the number of local government areas in the country.",
+        "the order in which parties were registered."
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 8 row 33",
+      "replace_candidate": "batch 20 row 33",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess the same defining principle of proportional representation and use the same correct answer."
+    },
+    {
+      "id": "DUP-124",
+      "rank": 504,
+      "score": 0.564,
+      "subject": "Physics",
+      "a": "batch 29 row 24",
+      "b": "batch 39 row 23",
+      "concept": "Wavelength is the distance between successive points in the same phase",
+      "question_a": "The distance between two successive compressions in a longitudinal wave is called its:",
+      "options_a": [
+        "amplitude",
+        "frequency",
+        "wavelength",
+        "period"
+      ],
+      "answer_a": "C",
+      "question_b": "The wavelength of a wave is the distance between two successive points that are:",
+      "options_b": [
+        "in the same phase",
+        "in opposite phases",
+        "permanently at rest",
+        "moving at different speeds"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 29 row 24",
+      "replace_candidate": "batch 39 row 23",
+      "new_unique_targets_added": 1,
+      "reason": "The longitudinal-wave wording gives a specific example of the same general wavelength definition; both assess the distance between successive points in the same phase."
+    },
+    {
+      "id": "DUP-125",
+      "rank": 506,
+      "score": 0.563,
+      "subject": "Government",
+      "a": "batch 1 row 34",
+      "b": "batch 29 row 33",
+      "concept": "Secret ballot protects the privacy of a voter's choice",
+      "question_a": "A secret ballot is intended mainly to protect a voter’s:",
+      "options_a": [
+        "Occupation",
+        "Privacy of choice",
+        "Tax status",
+        "Place of birth"
+      ],
+      "answer_a": "B",
+      "question_b": "The secret ballot is designed mainly to:",
+      "options_b": [
+        "Protect the privacy of each voter's choice",
+        "Allow party officials to see every vote",
+        "Prevent citizens from registering",
+        "Make election results available before voting"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 1 row 34",
+      "replace_candidate": "batch 29 row 33",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask for the same purpose of a secret ballot: protecting the privacy of each voter's selection."
+    },
+    {
+      "id": "DUP-126",
+      "rank": 510,
+      "score": 0.563,
+      "subject": "Government",
+      "a": "batch 12 row 33",
+      "b": "batch 22 row 33",
+      "concept": "Obeying laws/regulations is a civic duty",
+      "question_a": "Which of the following is a civic duty commonly expected of citizens in a democracy?",
+      "options_a": [
+        "Ignoring lawful public notices",
+        "Obeying the laws of the country",
+        "Preventing others from voting",
+        "Rejecting every court decision"
+      ],
+      "answer_a": "B",
+      "question_b": "Which action is a common civic duty of citizens?",
+      "options_b": [
+        "obeying lawful regulations",
+        "refusing all public obligations",
+        "preventing others from voting",
+        "destroying public property"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "CIVIC-DUTY-01",
+      "retain_candidate": "batch 12 row 33",
+      "existing_held_candidate": "batch 33 row 32",
+      "new_held_candidate": "batch 22 row 33",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask for obeying the law as a basic civic duty. Existing DUP-120 retains batch 12 row 33 and holds batch 33 row 32; this adds batch 22 row 33 as another duplicate in the cluster."
+    },
+    {
+      "id": "DUP-127",
+      "rank": 513,
+      "score": 0.562,
+      "subject": "Chemistry",
+      "a": "batch 21 row 18",
+      "b": "batch 38 row 21",
+      "concept": "Simple distillation separates a liquid from a dissolved non-volatile solid",
+      "question_a": "Simple distillation is suitable for obtaining pure water from salt solution because water ___.",
+      "options_a": [
+        "is insoluble in salt",
+        "has a lower boiling point and can be condensed",
+        "is attracted to a magnet",
+        "forms a precipitate"
+      ],
+      "answer_a": "B",
+      "question_b": "Simple distillation is most suitable for separating a liquid from",
+      "options_b": [
+        "a dissolved non-volatile solid",
+        "two solids of similar size",
+        "two insoluble solids",
+        "a mixture of magnetic metals"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "SIMPLE-DISTILLATION-01",
+      "retain_candidate": "batch 4 row 17",
+      "existing_held_candidate": "batch 21 row 18",
+      "new_held_candidate": "batch 38 row 21",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess simple distillation of a liquid from a dissolved non-volatile solid. Existing DUP-40 retains batch 4 row 17 and holds batch 21 row 18; this adds batch 38 row 21 as another duplicate in the same cluster."
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 490,
+      "score": 0.567,
+      "subject": "Biology",
+      "a": "batch 4 row 13",
+      "b": "batch 12 row 12",
+      "decision": "preserve_both_distinct_assessment_objectives",
+      "reason": "Batch 4 asks for the definition of transpiration (loss of water vapour from aerial plant parts); batch 12 asks which leaf structure is the main route of water-vapour loss (stomata). The latter is already paired with batch 34 row 14 in DUP-17. These are related but test definition versus route; keep both."
+    },
+    {
+      "rank": 517,
+      "score": 0.559,
+      "subject": "Government",
+      "a": "batch 1 row 35",
+      "b": "batch 33 row 32",
+      "decision": "preserve_both_distinct_civic_responsibilities",
+      "reason": "Batch 1 asks about lawful participation in civic processes, while batch 33 asks about obeying laws. Both are civic responsibilities but test different duties; preserve both."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 6,
+    "new_unique_replacement_targets": 5,
+    "one_relationship_already_covered_by_existing_denouement_cluster": 1,
+    "provenance_checks_pending": 5,
+    "staging_joins_pending": 5,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "DUP-122 adds a relationship within the existing denouement cluster but no new held row. DUP-126 and DUP-127 join existing civic-duty and simple-distillation clusters. Two related pairs (transpiration definition versus stomatal route; participating lawfully versus obeying laws) were preserved as distinct."
+  }
+}
