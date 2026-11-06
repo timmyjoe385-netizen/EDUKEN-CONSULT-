@@ -1,0 +1,170 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Three-times-sized lower-tail review batch: fifteen candidate pairs checked against complete source stems, four options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      962,
+      963,
+      964,
+      965,
+      966,
+      967,
+      968,
+      969,
+      970,
+      971,
+      972,
+      973,
+      974,
+      975,
+      976
+    ],
+    "previous_total_manually_reviewed": 431,
+    "now_manually_reviewed": 446,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 858
+  },
+  "preserved": [
+    {
+      "rank": 963,
+      "subject": "Use of English",
+      "a": "batch 5 row 3",
+      "b": "batch 12 row 3",
+      "decision": "preserve_as_distinct_grammar_objectives",
+      "reason": "Article selection before hour and backshift in reported speech are unrelated grammatical skills."
+    },
+    {
+      "rank": 964,
+      "subject": "Use of English",
+      "a": "batch 6 row 2",
+      "b": "batch 11 row 6",
+      "decision": "preserve_as_distinct_grammar_objectives",
+      "reason": "Correct placement of an introductory modifier and identification of an adverb are distinct."
+    },
+    {
+      "rank": 965,
+      "subject": "Mathematics",
+      "a": "batch 7 row 10",
+      "b": "batch 26 row 11",
+      "decision": "preserve_as_distinct_solid_volumes",
+      "reason": "Cylinder and cone volume use different formulae and solids; numerical overlap in radius does not make them duplicates."
+    },
+    {
+      "rank": 966,
+      "subject": "Use of English",
+      "a": "batch 8 row 2",
+      "b": "batch 27 row 4",
+      "decision": "preserve_as_distinct_grammar_objectives",
+      "reason": "The correlative construction no sooner…than and the collocation comply with test different language features."
+    },
+    {
+      "rank": 967,
+      "subject": "Literature in English",
+      "a": "batch 1 row 37",
+      "b": "batch 32 row 40",
+      "decision": "preserve_as_distinct_figures_of_speech",
+      "reason": "A metaphor directly identifies one thing with another; a simile makes an explicit comparison, commonly using like or as."
+    },
+    {
+      "rank": 968,
+      "subject": "Mathematics",
+      "a": "batch 3 row 8",
+      "b": "batch 37 row 11",
+      "decision": "preserve_as_distinct_algebra_skills",
+      "reason": "Solving simultaneous linear equations and evaluating a composite function are different procedures."
+    },
+    {
+      "rank": 969,
+      "subject": "Government",
+      "a": "batch 18 row 34",
+      "b": "batch 26 row 35",
+      "decision": "preserve_as_distinct_political_party_concepts",
+      "reason": "The first asks for the primary objective of a political party; the second asks the purpose of its manifesto."
+    },
+    {
+      "rank": 970,
+      "subject": "Physics",
+      "a": "batch 12 row 22",
+      "b": "batch 35 row 25",
+      "decision": "preserve_as_related_but_distinct_hydrostatic_pressure_assessments",
+      "reason": "The first tests the pressure-difference relationship ΔP = ρgΔh; the second tests the qualitative increase of pressure with depth. Batch 35 row 25 is already held in the existing DUP-44 cluster, so no new held row is counted."
+    },
+    {
+      "rank": 971,
+      "subject": "Biology",
+      "a": "batch 16 row 16",
+      "b": "batch 34 row 13",
+      "decision": "preserve_as_distinct_ecological_relationships",
+      "reason": "Mutualism benefits both organisms; parasitism benefits one and harms the host. These are contrasting ecological relationships, not duplicate definitions."
+    },
+    {
+      "rank": 972,
+      "subject": "Government",
+      "a": "batch 25 row 35",
+      "b": "batch 35 row 35",
+      "decision": "preserve_as_distinct_government_accountability_concepts",
+      "reason": "Separation of powers limits concentration of state power; a code of conduct establishes ethical standards for public officers."
+    },
+    {
+      "rank": 973,
+      "subject": "Physics",
+      "a": "batch 28 row 22",
+      "b": "batch 39 row 23",
+      "decision": "preserve_as_distinct_wave_relationships",
+      "reason": "Crest to adjacent trough is half a wavelength; wavelength is measured between successive points in the same phase."
+    },
+    {
+      "rank": 974,
+      "subject": "Biology",
+      "a": "batch 10 row 12",
+      "b": "batch 15 row 13",
+      "decision": "preserve_as_distinct_cell_organelle_functions",
+      "reason": "The nucleus contains most genetic material and helps control cell activities; chloroplasts contain chlorophyll and are the main site of photosynthesis."
+    },
+    {
+      "rank": 975,
+      "subject": "Mathematics",
+      "a": "batch 9 row 7",
+      "b": "batch 26 row 7",
+      "decision": "preserve_as_distinct_number_skills",
+      "reason": "Solving an exponential equation and converting a binary numeral to base ten are distinct."
+    },
+    {
+      "rank": 976,
+      "subject": "Chemistry",
+      "a": "batch 3 row 17",
+      "b": "batch 32 row 18",
+      "decision": "preserve_as_distinct_pH_classification_knowledge",
+      "reason": "One tests the neutral pH of water at 25°C; the other classifies a solution with pH 3 as acidic."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 962,
+      "subject": "Mathematics",
+      "a": "batch 19 row 10",
+      "b": "batch 35 row 11",
+      "question_a": "If A = {1, 2, 3} and B = {3, 4, 5}, find A ∪ B.",
+      "answer_a": "A — {1, 2, 3, 4, 5}",
+      "question_b": "If A = {2, 4, 6} and B = {4, 6, 8}, what is A ∪ B?",
+      "answer_b": "C — {2, 4, 6, 8}",
+      "decision": "confirm_semantic_duplicate",
+      "retain": "batch 19 row 10",
+      "replace": "batch 35 row 11",
+      "new_unique_replacement_target": "batch 35 row 11",
+      "reason": "Both ask learners to perform exactly the same set-union operation and identify the elements appearing in either set without repetition. Changing the numerical members does not create a distinct learning objective. Retain the earlier batch 19 item and hold batch 35 row 11."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "All fifteen pairs were inspected in full. One set-union duplicate was confirmed; fourteen were preserved as distinct. Rank 970 references batch 35 row 25, already held under DUP-44, and does not add a target. No source, staging or production question data was changed."
+  }
+}
