@@ -3645,7 +3645,12 @@
       "contextual_review": {
         "status": "assistant_contextual_review_confirmed_semantic_duplicate_cluster",
         "note": "Ranks 1080 (part30) and prior pair DUP-22 establish a three-row blood-clotting cluster. Batch 1 row 15 is the retained earlier question; batch 27 row 12 and batch 38 row 13 are held. Provenance and staging reconciliation remain required."
-      }
+      },
+      "cluster_id": "PLATELET-CLOTTING-01",
+      "canonical_cluster_pair_id": "DUP-165",
+      "cluster_role": "link_between_two_existing_held_rows",
+      "retained_anchor": "batch 1 row 15",
+      "unique_held_target_added": false
     },
     {
       "id": "DUP-151",
@@ -5271,47 +5276,43 @@
     "approval_note": "The user has reported that a reviewer approved all 90 existing replacement candidates (90/90). The repository does not contain item-level independent reviewer sign-off records, so this is recorded as user-reported approval rather than independently documented approval. The 58 newly discovered held rows are not part of those 90 and have no replacement drafts or approval yet."
   },
   "cluster_merge_reconciliation": {
-    "date": "2026-11-06",
-    "status": "CANONICAL_CLUSTER_MERGES_RECONCILED; SUMMARY_COUNTS_NOT_RECOMPUTED",
+    "status": "APPLIED_AND_SOURCE_MEMBERSHIPS_VERIFIED",
     "merges": [
       {
-        "pair_ids": [
-          "DUP-22",
-          "DUP-165"
-        ],
-        "canonical_pair_id": "DUP-165",
+        "from": "DUP-22",
+        "canonical": "DUP-165",
         "cluster_id": "PLATELET-CLOTTING-01",
         "retained_anchor": "batch 1 row 15",
-        "held_locations": [
-          "batch 38 row 13",
-          "batch 27 row 12"
+        "pair_members": [
+          "DUP-22",
+          "DUP-165",
+          "DUP-150"
         ],
-        "source_rows_verified": true,
-        "decision_basis": "Both ask which blood component is responsible for clot formation or platelet-plug formation; all key platelets.",
-        "canonical_link_status": "verified_in_register_and_addendum",
-        "staging_revision": "content/cbt/staging/2026-11-06/"
+        "held_locations": [
+          "batch 27 row 12",
+          "batch 38 row 13"
+        ],
+        "unique_held_locations": 2,
+        "source_question_match_verified": true
       },
       {
-        "pair_ids": [
-          "DUP-08",
-          "DUP-166"
-        ],
-        "canonical_pair_id": "DUP-08",
+        "from": "DUP-166",
+        "canonical": "DUP-08",
         "cluster_id": "PHENOLPHTHALEIN-01",
         "retained_anchor": "batch 22 row 18",
+        "pair_members": [
+          "DUP-08",
+          "DUP-147",
+          "DUP-166"
+        ],
         "held_locations": [
           "batch 20 row 18",
           "batch 34 row 18"
         ],
-        "source_rows_verified": true,
-        "decision_basis": "Both ask phenolphthalein colour behaviour in alkaline solution or its acid/alkaline colour property; same indicator fact.",
-        "canonical_link_status": "verified_in_register_and_addendum",
-        "staging_revision": "content/cbt/staging/2026-11-06/"
+        "unique_held_locations": 2,
+        "source_question_match_verified": true
       }
     ],
-    "unique_held_rows_preserved": 4,
-    "pair_relationships_preserved": 4,
-    "summary_count_recalculation_required": true,
-    "note": "DUP-22 is linked into canonical DUP-165 and DUP-166 into canonical DUP-08. Both clusters preserve four distinct held source rows in total; no held-row count is reduced. Legacy pair and provenance summary counters remain unreconciled and are intentionally not recomputed from partial addendum data."
+    "count_effect": "No source row or held location was added or removed. Pair relationships remain in the audit register; canonical cluster membership is now explicit."
   }
 }
