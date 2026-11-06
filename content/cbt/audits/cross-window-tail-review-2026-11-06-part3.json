@@ -1,0 +1,305 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record nine additional lower-scoring cross-window duplicate relationships after full question-content checks.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      440,
+      444,
+      451,
+      456,
+      461,
+      463,
+      466,
+      473,
+      477
+    ],
+    "previous_total_manually_reviewed": 308,
+    "now_manually_reviewed": 317,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 987
+  },
+  "findings": [
+    {
+      "id": "DUP-113",
+      "rank": 451,
+      "score": 0.58,
+      "subject": "Government",
+      "a": "batch 2 row 33",
+      "b": "batch 33 row 35",
+      "concept": "Federalism constitutionally divides powers between central and component governments",
+      "question_a": "Federalism involves constitutional division of powers between:",
+      "options_a": [
+        "A ruler and a private company",
+        "National and subnational levels of government",
+        "Only judges and police",
+        "Two political parties only"
+      ],
+      "answer_a": "B",
+      "question_b": "In a federal system of government, constitutional powers are divided between:",
+      "options_b": [
+        "the central government and component units",
+        "only the traditional rulers",
+        "the judiciary and political parties",
+        "local communities without a central authority"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "FEDERALISM-01",
+      "retain_candidate": "batch 32 row 34",
+      "new_held_candidates": [
+        "batch 2 row 33",
+        "batch 18 row 32"
+      ],
+      "existing_held_candidate": "batch 33 row 35",
+      "reason": "Both are the same federalism definition. The existing register already retains batch 32 row 34 and holds batch 33 row 35; the new pair DUP-102 adds batch 18 row 32. This candidate confirms batch 2 row 33 is another duplicate in the same four-row cluster."
+    },
+    {
+      "id": "DUP-114",
+      "rank": 440,
+      "score": 0.583,
+      "subject": "Physics",
+      "a": "batch 3 row 24",
+      "b": "batch 28 row 25",
+      "concept": "Definition of specific heat capacity as energy per unit mass per degree temperature rise",
+      "question_a": "Specific heat capacity is the energy required to raise the temperature of unit mass of a substance by:",
+      "options_a": [
+        "One degree of temperature",
+        "Ten degrees only",
+        "Its melting point",
+        "Any amount regardless of mass"
+      ],
+      "answer_a": "A",
+      "question_b": "The heat needed to raise the temperature of 1 kg of a substance by 1 K is its",
+      "options_b": [
+        "latent heat",
+        "specific heat capacity",
+        "thermal conductivity",
+        "heat of fusion"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "SPECIFIC-HEAT-01",
+      "retain_candidate": "batch 28 row 25",
+      "new_held_candidate": "batch 3 row 24",
+      "existing_held_candidate": "batch 34 row 26",
+      "reason": "Both test the same definition of specific heat capacity. Existing DUP-07 retains batch 28 row 25 and holds batch 34 row 26; this adds batch 3 row 24 as a further duplicate. Keep the existing retention pending provenance review."
+    },
+    {
+      "id": "DUP-115",
+      "rank": 473,
+      "score": 0.573,
+      "subject": "Physics",
+      "a": "batch 3 row 24",
+      "b": "batch 34 row 26",
+      "concept": "Definition of specific heat capacity as energy per unit mass per degree temperature rise",
+      "question_a": "Specific heat capacity is the energy required to raise the temperature of unit mass of a substance by:",
+      "options_a": [
+        "One degree of temperature",
+        "Ten degrees only",
+        "Its melting point",
+        "Any amount regardless of mass"
+      ],
+      "answer_a": "A",
+      "question_b": "The quantity of heat needed to raise the temperature of 1 kg of a substance by 1 K is its",
+      "options_b": [
+        "latent heat",
+        "thermal conductivity",
+        "specific heat capacity",
+        "heat capacity of the universe"
+      ],
+      "answer_b": "C",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "SPECIFIC-HEAT-01",
+      "retain_candidate": "batch 28 row 25",
+      "new_held_candidate": "batch 3 row 24",
+      "existing_held_candidate": "batch 34 row 26",
+      "reason": "This is the same three-row specific-heat-capacity cluster documented in DUP-114 and DUP-07; it does not create another unique replacement target."
+    },
+    {
+      "id": "DUP-116",
+      "rank": 444,
+      "score": 0.582,
+      "subject": "Biology",
+      "a": "batch 17 row 15",
+      "b": "batch 30 row 15",
+      "concept": "Epiglottis prevents food from entering the trachea during swallowing",
+      "question_a": "Which structure closes over the opening of the trachea during swallowing?",
+      "options_a": [
+        "Epiglottis",
+        "Diaphragm",
+        "Alveolus",
+        "Bronchiole"
+      ],
+      "answer_a": "A",
+      "question_b": "During swallowing, which structure helps prevent food from entering the trachea?",
+      "options_b": [
+        "Epiglottis",
+        "Alveolus",
+        "Diaphragm",
+        "Bronchiole"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 17 row 15",
+      "replace_candidate": "batch 30 row 15",
+      "reason": "Same structure, function, answer and explanation; the wording change does not create a different assessment objective."
+    },
+    {
+      "id": "DUP-117",
+      "rank": 456,
+      "score": 0.579,
+      "subject": "Government",
+      "a": "batch 7 row 33",
+      "b": "batch 31 row 32",
+      "concept": "A successful vote of no confidence shows the government has lost legislative support",
+      "question_a": "A successful motion of no confidence in a parliamentary system usually indicates that:",
+      "options_a": [
+        "The government has lost the confidence of the legislature",
+        "The courts have been dissolved",
+        "The constitution has been suspended",
+        "The opposition has been banned"
+      ],
+      "answer_a": "A",
+      "question_b": "What is the main purpose of a vote of no confidence in a parliamentary system?",
+      "options_b": [
+        "To show that the legislature no longer supports the government",
+        "To appoint the head of state directly",
+        "To dissolve the judiciary",
+        "To approve the national census"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 7 row 33",
+      "replace_candidate": "batch 31 row 32",
+      "reason": "Both ask what a successful no-confidence motion means: the government no longer commands the legislature's support."
+    },
+    {
+      "id": "DUP-118",
+      "rank": 461,
+      "score": 0.578,
+      "subject": "Government",
+      "a": "batch 7 row 36",
+      "b": "batch 32 row 36",
+      "concept": "African Union promotes unity, cooperation and development among African states",
+      "question_a": "The African Union primarily promotes:",
+      "options_a": [
+        "cooperation and integration among African states",
+        "a single global currency",
+        "the abolition of all national governments",
+        "the administration of European courts"
+      ],
+      "answer_a": "A",
+      "question_b": "The African Union was established to promote",
+      "options_b": [
+        "colonial administration of African territories",
+        "the dissolution of all African states",
+        "a single compulsory political party",
+        "African unity, cooperation and development"
+      ],
+      "answer_b": "D",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 7 row 36",
+      "replace_candidate": "batch 32 row 36",
+      "reason": "Both assess the AU's central purpose of promoting unity, cooperation and integration/development among African states."
+    },
+    {
+      "id": "DUP-119",
+      "rank": 463,
+      "score": 0.577,
+      "subject": "Government",
+      "a": "batch 27 row 34",
+      "b": "batch 36 row 35",
+      "concept": "Election petition is a legal challenge to an election's conduct or declared result",
+      "question_a": "An election petition is primarily a legal process used to:",
+      "options_a": [
+        "challenge the conduct or declared result of an election",
+        "register a new political party",
+        "appoint members of the electoral commission",
+        "prepare the national budget"
+      ],
+      "answer_a": "A",
+      "question_b": "An election petition is a formal legal challenge to:",
+      "options_b": [
+        "The conduct or result of an election",
+        "The annual national budget",
+        "The appointment of a school principal",
+        "The publication of a political party manifesto only"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 27 row 34",
+      "replace_candidate": "batch 36 row 35",
+      "reason": "Both define the same legal process and identify the same object of challenge."
+    },
+    {
+      "id": "DUP-120",
+      "rank": 466,
+      "score": 0.576,
+      "subject": "Government",
+      "a": "batch 12 row 33",
+      "b": "batch 33 row 32",
+      "concept": "Obeying the law is a civic duty/responsibility",
+      "question_a": "Which of the following is a civic duty commonly expected of citizens in a democracy?",
+      "options_a": [
+        "Ignoring lawful public notices",
+        "Obeying the laws of the country",
+        "Preventing others from voting",
+        "Rejecting every court decision"
+      ],
+      "answer_a": "B",
+      "question_b": "Which of the following is a civic responsibility of a citizen?",
+      "options_b": [
+        "ignoring lawful court summons",
+        "refusing all public duties",
+        "obeying the laws of the state",
+        "preventing others from voting"
+      ],
+      "answer_b": "C",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 12 row 33",
+      "replace_candidate": "batch 33 row 32",
+      "reason": "Both ask for the same basic civic duty and use obeying the law as the correct response."
+    },
+    {
+      "id": "DUP-121",
+      "rank": 477,
+      "score": 0.571,
+      "subject": "Chemistry",
+      "a": "batch 4 row 21",
+      "b": "batch 17 row 20",
+      "concept": "General formula of open-chain alkanes is CnH2n+2",
+      "question_a": "The general formula for open-chain alkanes is:",
+      "options_a": [
+        "CₙH₂ₙ",
+        "CₙH₂ₙ₊₂",
+        "CₙHₙ",
+        "CₙH₂ₙ₋₂"
+      ],
+      "answer_a": "B",
+      "question_b": "Which general formula represents the alkanes?",
+      "options_b": [
+        "CnH2n",
+        "CnH2n+2",
+        "CnH2n-2",
+        "CnHn"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 4 row 21",
+      "replace_candidate": "batch 17 row 20",
+      "reason": "Both ask for the same general formula of saturated acyclic alkanes and have the same correct answer."
+    }
+  ],
+  "controls": {
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_checks_pending": 9,
+    "staging_joins_pending": 9,
+    "new_pair_relationships": 9,
+    "new_unique_replacement_targets": 9,
+    "note": "DUP-113 joins the existing federalism cluster: existing retained batch 32 row 34, existing held batch 33 row 35, plus newly held candidates batch 2 row 33 and batch 18 row 32. DUP-114 and DUP-115 join the existing specific-heat cluster: keep batch 28 row 25, existing held batch 34 row 26, and newly held batch 3 row 24. These cluster assignments are content-based and still require exact row-level history/provenance verification before staging."
+  }
+}
