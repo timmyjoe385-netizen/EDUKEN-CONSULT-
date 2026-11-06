@@ -738,6 +738,16 @@
     "current_held_locations": 124,
     "projected_held_locations_if_all_68_approved_and_staged": 192,
     "projected_retained_locations_if_all_68_approved_and_staged": 1408,
-    "status": "LOCATION_PRESENCE_VERIFIED_SOURCE_CONTENT_PROVENANCE_AND_ANCHOR_JOINS_PENDING"
+    "status": "SOURCE_STAGING_CONTENT_AND_SOURCE_ORIGIN_METADATA_VERIFIED_SEMANTIC_DISPOSITION_PENDING",
+    "source_endpoints_verified": 178,
+    "source_staging_exact_matches": 178,
+    "source_staging_content_mismatches": 0,
+    "source_type_original": 178,
+    "source_provenance_metadata": "all source rows declare original EDUKEN-authored content and no past-paper copying"
+  },
+  "later_register_queue_semantic_review": {
+    "pair_ids": 96,
+    "status": "qualified_contextual_and_subject_review_pending",
+    "note": "Source provenance metadata and exact source/staging endpoint joins are complete; these pair relationships still need duplicate-versus-related-skill disposition and qualified subject/syllabus approval."
   }
 }
