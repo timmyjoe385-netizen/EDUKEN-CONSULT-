@@ -75,7 +75,10 @@
     "remaining_targeted_review_count_reported": 237,
     "exact_rank_ids_for_remaining_237": null,
     "status": "PENDING_INDIVIDUAL_RECORD_CROSSWALK",
-    "clarification": "Ranks 1–286 are the 286 candidates meeting the score threshold in the sorted source array. That does not prove every one of those 286 ranks was individually reviewed. The previous r2 incorrectly labelled ranks 1–286 as baseline_reviewed_rank_ids and treated the numerical complement of 49 as 237 proven reviewed ranks. That inference is withdrawn."
+    "clarification": "Ranks 1–286 are the 286 candidates meeting the score threshold in the sorted source array. That does not prove every one of those 286 ranks was individually reviewed. The previous r2 incorrectly labelled ranks 1–286 as baseline_reviewed_rank_ids and treated the numerical complement of 49 as 237 proven reviewed ranks. That inference is withdrawn.",
+    "high_similarity_rank_ids_mapping_method": "All 49 high-similarity review pairs were matched to the 1,304 source candidate list by exact unordered batch/row endpoint pair; all 49 mapped uniquely.",
+    "remaining_targeted_review_rank_ids": null,
+    "note": "The 237 additional targeted reviews are reported by the findings and progress note but no individual pairwise endpoint/rank list was found in the inspected evidence. Do not assign the complement ranks as reviewed solely by arithmetic."
   },
   "counter_reconciliation": {
     "part63_persisted_cumulative_counter": 1007,
@@ -83,7 +86,38 @@
     "difference": 4,
     "exact_four_records_identified": false,
     "status": "OPEN",
-    "clarification": "The four-count difference cannot be attributed to particular candidate ranks until the underlying baseline review records and counter lineage are mapped."
+    "clarification": "The four-count difference cannot be attributed to particular candidate ranks until the underlying baseline review records and counter lineage are mapped.",
+    "additional_conflicts": [
+      {
+        "field": "duplicate-disposition-register.candidate_review.cross_window_additional_targeted_candidates_reviewed",
+        "value": 472,
+        "conflicts_with": "cross_window_review_note and cross_window_progress_reconciliation",
+        "reported_value": 237,
+        "status": "INTERNAL_REGISTER_FIELD_CONFLICT"
+      },
+      {
+        "field": "duplicate-disposition-register.candidate_review.explicit_rank_crosswalk.unique_rank_ids_in_tail_files",
+        "value": 685,
+        "conflicts_with": "cross_window_progress_reconciliation.earlier_tail_review_unique_rank_ids",
+        "reported_value": 717,
+        "status": "INTERNAL_REGISTER_FIELD_CONFLICT"
+      },
+      {
+        "field": "duplicate-disposition-register.candidate_review.explicit_rank_crosswalk.combined_explicit_unique_rank_ids",
+        "value": 973,
+        "conflicts_with": "cross_window_progress_reconciliation.tail_review_union_after_part83 plus baseline count",
+        "reported_value": 973,
+        "status": "CROSSWALK_TOTAL_NOT_EQUIVALENT_TO_FULL_REVIEW_TOTAL"
+      },
+      {
+        "field": "duplicate-disposition-register.candidate_review.explicit_rank_crosswalk.cumulative_counter_in_part56",
+        "value": 921,
+        "conflicts_with": "part56.scope.now_manually_reviewed",
+        "reported_value": 921,
+        "status": "COUNTER_IS_A_CHECKPOINT_NOT_FINAL_AGGREGATE"
+      }
+    ],
+    "note": "The separate part63 arithmetic remains 1,007 versus 1,003 (difference 4). In addition, the disposition register contains stale/conflicting progress fields: 472 additional targeted reviews versus 237 in the progress note; and 685 unique tail rank IDs versus 717 in the progress reconciliation. The explicit crosswalk reports 973 combined rank IDs versus a 921 part56 cumulative counter (difference 52). These are distinct inconsistencies and must not be collapsed into one number. Final reviewed/remaining totals remain null until the source records and register counters are reconciled."
   },
   "safety": {
     "question_content_changed": 0,
