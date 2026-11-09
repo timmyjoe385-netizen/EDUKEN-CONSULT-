@@ -6235,18 +6235,101 @@
         "merged": false,
         "authenticated_live_walkthrough": "pending"
       },
-      "release_boundary": "isolated project only; no production import, publication, merge or deployment authorized"
+      "release_boundary": "isolated project only; no production import, publication, merge or deployment authorized",
+      "source_bank_staging_r2_direct_audit": {
+        "revision": "content/cbt/staging/2026-11-09-r2/",
+        "manifest": "content/cbt/staging/2026-11-09-r2/manifest.json",
+        "retained_rows": 1437,
+        "held_rows": 163,
+        "total_rows": 1600,
+        "subject_balance": "200 source rows per subject across all eight UTME subjects",
+        "retained_structural_checks": {
+          "missing_stem": 0,
+          "missing_topic": 0,
+          "missing_explanation": 0,
+          "missing_option": 0,
+          "invalid_A_to_D_key": 0,
+          "duplicate_normalized_stems_within_retained": 0
+        },
+        "held_structural_checks": {
+          "missing_stem": 0,
+          "missing_topic": 0,
+          "missing_explanation": 0,
+          "missing_option": 0,
+          "invalid_A_to_D_key": 0,
+          "duplicate_normalized_stems_within_held_export": 0
+        },
+        "qualification": "Structural and within-export normalized-stem checks only; does not establish answer correctness, contextual duplicate disposition, or syllabus approval.",
+        "source_and_staging_mutations": 0
+      },
+      "isolated_question_bank_direct_audit": {
+        "project_id": "wpktzogarfqrgkirzdpy",
+        "total_rows": 73,
+        "draft_rows": 65,
+        "published_rows": 8,
+        "subjects_represented": 8,
+        "structural_issues_in_question_fields": 0,
+        "mutation_performed": false,
+        "note": "Synthetic test data only; not the 1,600-row source bank."
+      },
+      "integration_branch_safety": {
+        "base_common_commit": "1fae9adabb570d71b2b634362389dff146a69631",
+        "finding": "PR194 and PR197/PR199 branches diverged; whole-branch merge or broad API replacement is unsafe without a deliberate integration review.",
+        "protected_PR194_behaviour": {
+          "mock_question_selector_default": 10,
+          "full_mock_count": 180,
+          "full_mock_duration_minutes": 120,
+          "server_side_option_shuffle_and_answer_key_remapping": true
+        },
+        "excluded_PR199_branch_regressions": {
+          "mock_question_selector_default": 8,
+          "mock_timer_minutes": 30,
+          "local_fallback_samples": true,
+          "server_side_option_shuffle_and_answer_key_remapping": false
+        },
+        "integration_action": "Ported only the CBT admin UI audit/search/pagination component and its targeted tests; did not port the PR199 CbtPage or API implementation.",
+        "api_or_student_flow_regression_introduced": false
+      },
+      "admin_ui_audit_and_pagination_port": {
+        "commit": "deec8ddeffc21a8c4c620ce12870bf7828f31764",
+        "files_changed": [
+          "src/CbtQuestionBankAdmin.tsx",
+          "tests/cbt-admin-audit-ui.test.mjs",
+          "tests/worker-analytics.test.mjs",
+          "tests/e2e/cbt-admin-search-audit.spec.js",
+          "package.json"
+        ],
+        "preserved_existing_validation_tests": true,
+        "added_validation_tests": [
+          "tests/cbt-admin-audit-ui.test.mjs",
+          "tests/worker-analytics.test.mjs"
+        ],
+        "added_mocked_e2e": "tests/e2e/cbt-admin-search-audit.spec.js",
+        "authenticated_live_acceptance": "not_completed"
+      },
+      "current_commit_workflows": {
+        "commit": "deec8ddeffc21a8c4c620ce12870bf7828f31764",
+        "status": "in_progress_at_checkpoint",
+        "groups": [
+          "build_check",
+          "wallet_migration_integration",
+          "build_and_isolated_preview",
+          "playwright_browser_checks"
+        ],
+        "note": "Do not mark passed until GitHub reports each workflow completed successfully."
+      }
     },
     "next_work": {
       "parallel_tracks": [
-        "Run the existing authenticated acceptance checklist on the isolated preview with a real authorized test-admin login; do not repeat mocked CI.",
-        "Reconcile the exact baseline review source records and the 4-count discrepancy; preserve null for unverified rank IDs.",
-        "Continue assistant-only screening and prepare replacement drafts only where existing source evidence supports them; do not approve.",
-        "Complete mobile/slow-network acceptance on the preview and record evidence in this master register."
+        "Collect the four workflow results for the current PR194 branch commit; fix only actual failures.",
+        "Perform the authenticated admin acceptance checklist in isolated preview when an authorized test-admin session is available; mocked CI is not a substitute.",
+        "Continue exact baseline cross-window rank mapping and reconcile the four-count discrepancy; keep unverified totals null.",
+        "Continue assistant-only subject screening and prepare replacements only for evidence-supported true duplicates; do not approve or publish.",
+        "Complete mobile and slow-network preview checks without touching production."
       ],
       "blockers": [
-        "No qualified subject reviewers are currently recorded; academic approvals remain zero.",
-        "Real authenticated admin walkthrough is not yet evidenced.",
+        "No qualified subject reviewers are currently recorded; independent academic approvals remain zero.",
+        "Real authenticated admin walkthrough remains outstanding.",
         "Cross-window historical rank/counter reconciliation remains open."
       ]
     }
