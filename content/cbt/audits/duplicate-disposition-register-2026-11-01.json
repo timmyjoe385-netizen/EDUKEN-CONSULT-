@@ -2057,9 +2057,9 @@
       "b": "batch 28 row 4",
       "concept": "Both use the identical example list 'reading, swimming and cycling' to test parallel structure",
       "reason": "Both use the identical example list 'reading, swimming and cycling' to test parallel structure.",
-      "retain": "batch 20 row 6",
+      "retain": "batch 5 row 5",
       "replace": "batch 28 row 4",
-      "retention_basis": "Both questions are present in their original batch-creation snapshots. Retain the earlier batch version and hold the later duplicate.",
+      "retention_basis": "The three-row cluster has one canonical retained item: the earliest original source row, batch 5 row 5. Batch 20 row 6 and batch 28 row 4 are held variants; DUP-200 records the batch 5-to-20 relationship.",
       "provenance": "Both rows are present in their original batch-creation snapshots; original-draft overlap.",
       "provenance_status": "original_batch_creation_overlap",
       "decision": "confirmed_semantic_duplicate",
@@ -2072,7 +2072,15 @@
       "contextual_review": {
         "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
         "note": "All 200 Use of English rows checked. Nearest batch 20 row 4 also tests semicolon use but for complex list items, while this draft tests joining independent clauses. Distinct semicolon functions but same punctuation family; question-bank variety is an open human decision. Answer B correct. Similarity 0.4105. Independent English review required."
-      }
+      },
+      "previous_retain_before_r3": "batch 20 row 6",
+      "cluster_id": "PARALLEL-STRUCTURE-01",
+      "canonical_retained_anchor": "batch 5 row 5",
+      "canonical_held_locations": [
+        "batch 20 row 6",
+        "batch 28 row 4"
+      ],
+      "anchor_reconciliation_status": "corrected_in_2026_11_09_r3"
     },
     {
       "id": "DUP-79",
@@ -4688,23 +4696,28 @@
       "b": "batch 32 row 2",
       "concept": "Reported speech backshift from first-person am to third-person was",
       "reason": "Both assess the same direct-to-reported-speech transformation after a past reporting verb: first-person am backshifts to was and the pronoun changes to third person. The second adds now→then, a routine adverb shift, but does not materially change the principal grammar skill.",
-      "retain": "batch 4 row 5",
-      "replace": "batch 32 row 2",
+      "retain": null,
+      "replace": null,
       "retention_basis": "Retain the earlier batch 4 question and provisionally hold batch 32; row-level provenance and staging join remain pending.",
       "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
-      "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
+      "decision": "related_skill_variant_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "not_required_for_this_pair",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
-        "status": "assistant_pairwise_review_complete_human_subject_and_syllabus_review_required",
-        "note": "See part48 rank 381. Source/staging CSVs unchanged; do not import or publish."
+        "status": "assistant_screening_related_skill_variant_human_subject_and_syllabus_review_required",
+        "note": "The 109-pair review CSV explicitly records S — distinct related-skill variant; retain both. The existing hold on batch 4 row 5 is independently explained by DUP-79 and is not a reason to hold batch 32 row 2."
       },
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "previous_decision_before_r3": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
+      "previous_retain": "batch 4 row 5",
+      "previous_replace": "batch 32 row 2",
+      "assistant_screening_disposition": "S",
+      "current_staging_effect": "Keep batch 32 row 2 retained; batch 4 row 5 remains held separately under DUP-79 with canonical anchor batch 12 row 3."
     },
     {
       "id": "DUP-182",
@@ -4974,9 +4987,9 @@
       "b": "batch 37 row 35",
       "concept": "Opposition parties scrutinise and challenge government policies",
       "reason": "Both test the same legislative oversight function; wording and explanation are paraphrases.",
-      "retain": "batch 29 row 34",
+      "retain": "batch 22 row 34",
       "replace": "batch 37 row 35",
-      "retention_basis": "Provisional retain/hold assignment based on source-batch ordering; provenance and staging join must be verified before edits.",
+      "retention_basis": "Batch 29 row 34 is already held under DUP-36; the cluster's retained anchor is batch 22 row 34. Batch 37 row 35 is the additional held duplicate.",
       "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
@@ -4990,7 +5003,15 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "previous_retain_before_r3": "batch 29 row 34",
+      "canonical_retained_anchor": "batch 22 row 34",
+      "cluster_id": "LEGISLATIVE-OVERSIGHT-01",
+      "canonical_held_locations": [
+        "batch 29 row 34",
+        "batch 37 row 35"
+      ],
+      "anchor_reconciliation_status": "canonical_anchor_followed_through_DUP-36_in_2026_11_09_r3"
     },
     {
       "id": "DUP-193",
