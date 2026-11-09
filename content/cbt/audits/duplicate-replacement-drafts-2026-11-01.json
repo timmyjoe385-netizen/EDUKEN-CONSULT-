@@ -1,1 +1,1807 @@
-{"audit_date":"2026-11-01","purpose":"Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.","draft_count":90,"source_register":"content/cbt/audits/duplicate-disposition-register-2026-11-01.json","important":"All 65 proposals remain separate, unpublished drafts. DUP-60 to DUP-65 have been added and screened against the 1,600-row retained-plus-held staging bank. Five earlier proposals remain blocked for existing-bank overlap; all other proposals still require the appropriate independent subject and contextual review. The 16 existing lexical flags remain review prompts, not duplicate verdicts.","items":[{"target_id":"DUP-01","subject":"Mathematics","topic":"Geometry","subtopic":"Properties of rectangles","question":"Which statement about the diagonals of a rectangle is correct?","options":["They are unequal and do not bisect each other","They are equal in length and bisect each other","They are perpendicular in every rectangle","They are parallel to the shorter sides"],"answer":"B","explanation":"The diagonals of a rectangle are equal in length and bisect one another.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-02","subject":"Chemistry","topic":"Electrochemistry","subtopic":"Salt bridge","question":"In a simple galvanic cell, the main function of the salt bridge is to:","options":["Supply electrons to the cathode","Maintain electrical neutrality by allowing ions to migrate","Increase the temperature of the electrolyte","Prevent the redox reaction from occurring"],"answer":"B","explanation":"Ions migrate through the salt bridge to prevent charge build-up in the half-cells and maintain electrical neutrality, allowing the cell to continue operating.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The earlier esterification candidate was withdrawn because it duplicated batch 38 row 20. This salt-bridge candidate tests a different electrochemical-cell function and has been re-screened against all 1,600 source questions."},{"target_id":"DUP-03","subject":"Physics","topic":"Electricity","subtopic":"Alternating current","question":"An electric current that repeatedly changes direction at regular intervals is called:","options":["direct current","alternating current","static charge","induced resistance"],"answer":"B","explanation":"Alternating current periodically reverses direction, unlike direct current, which flows in one direction.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-04","subject":"Biology","topic":"Genetics","subtopic":"Alleles and inheritance","question":"In a complete-dominance relationship, an allele whose effect is expressed in the phenotype of a heterozygous organism is described as:","options":["recessive","dominant","codominant","incompletely dominant"],"answer":"B","explanation":"In complete dominance, the dominant allele determines the heterozygote's phenotype, while the recessive allele is masked. Codominance and incomplete dominance describe different patterns in which the heterozygote does not show the complete-dominance pattern.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_biology_and_syllabus_review_required","review_note":"Corrected to specify complete dominance and replace weak distractors. Re-screened against all 200 Biology retained-plus-held rows. No duplicate found; highest trigram Dice similarity 0.3837 to batch 39 row 12 (heterozygous genotype Tt), below 0.42. Human Biology reviewer must confirm distinction and syllabus fit."},{"target_id":"DUP-05","subject":"Literature in English","topic":"Poetry","subtopic":"Iambic pentameter","question":"A line of verse made up of five iambic feet is said to be written in:","options":["Iambic tetrameter","Iambic pentameter","Trochaic trimeter","Dactylic hexameter"],"answer":"B","explanation":"An iambic foot has an unstressed syllable followed by a stressed syllable. Five such feet form iambic pentameter.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The earlier elegy-definition candidate was withdrawn because it duplicated batch 14 row 38. This candidate tests metre; compare carefully with the existing blank-verse question during Literature review."},{"target_id":"DUP-06","subject":"Biology","topic":"Reproduction","subtopic":"Seed dispersal","question":"The presence of hooks or barbs on the surface of some fruits helps in:","options":["dispersal by wind","dispersal by water","dispersal by attaching to animals","self-pollination"],"answer":"C","explanation":"Hooks and barbs can cling to animal fur or clothing, carrying the fruit or seeds away from the parent plant.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-07","subject":"Physics","topic":"Heat","subtopic":"Heat transfer by radiation","question":"Which method of heat transfer can occur through a vacuum?","options":["conduction","convection","radiation","evaporation"],"answer":"C","explanation":"Radiation transfers energy by electromagnetic waves and does not require a material medium.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-08","subject":"Chemistry","topic":"Organic chemistry","subtopic":"Natural gas","question":"The principal constituent of most natural gas is:","options":["Ethene","Methane","Carbon monoxide","Sulfur dioxide"],"answer":"B","explanation":"Natural gas consists mainly of methane, although its exact composition varies by source and it may contain smaller amounts of other hydrocarbons and gases.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The earlier methyl-orange acidity candidate was withdrawn because the bank already tests acid identification with blue litmus. This natural-gas composition question tests a different Chemistry concept."},{"target_id":"DUP-09","subject":"Chemistry","topic":"Electrochemistry","subtopic":"Electrolysis of water","question":"A small amount of dilute sulphuric acid is added to water before electrolysis mainly to: ","options":["increase the electrical conductivity","remove all dissolved ions","produce chlorine gas","prevent the electrodes from conducting"],"answer":"A","explanation":"Pure water conducts electricity poorly. The acid supplies ions and increases conductivity.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-10","subject":"Economics","topic":"Inflation","subtopic":"Deflation","question":"A continuous fall in the general price level of goods and services in an economy is known as:","options":["inflation","deflation","devaluation","stagflation"],"answer":"B","explanation":"Deflation is a sustained decrease in the general price level, meaning the purchasing power of money rises.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-11","subject":"Physics","topic":"Optics","subtopic":"Thin lenses","question":"A ray of light directed through the optical centre of a thin lens emerges:","options":["parallel to the principal axis in every case","without deviation","through the principal focus","perpendicular to the principal axis"],"answer":"B","explanation":"A paraxial ray passing through the optical centre of a thin lens is transmitted without appreciable deviation.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-12","subject":"Economics","topic":"Population","subtopic":"Optimum population","question":"According to the theory of optimum population, a country has an optimum population when:","options":["The population is as large as possible","The birth rate is equal to the death rate","Output per person is at its maximum, given available resources and technology","Every person is employed in agriculture"],"answer":"C","explanation":"Optimum population is the population size at which output or income per head is maximised, given the country's resources, capital and state of technology. A population below or above that level produces a lower average output per person.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_economics_and_syllabus_review_required","review_note":"The former per-capita-income calculation candidate was rejected because batch 28 row 28 already tested the same national-income/population formula. This new candidate tests optimum population, a distinct concept. All 200 Economics retained-plus-held rows checked; no optimum-population question found. Highest trigram Dice similarity 0.3731 (batch 12 row 31, absolute advantage), below 0.42. Human Economics reviewer must confirm syllabus fit, wording and answer."},{"target_id":"DUP-13","subject":"Chemistry","topic":"Organic chemistry","subtopic":"Substitution reactions of alkanes","question":"The reaction between methane and chlorine in ultraviolet light is classified as: ","options":["addition","substitution","neutralisation","polymerisation"],"answer":"B","explanation":"Ultraviolet light initiates free-radical substitution, replacing a hydrogen atom in methane with chlorine.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-14","subject":"Biology","topic":"Cell biology","subtopic":"Prokaryotic cells","question":"A cell that lacks a membrane-bound nucleus is classified as:","options":["eukaryotic","prokaryotic","multicellular","specialised"],"answer":"B","explanation":"Prokaryotic cells do not have a membrane-bound nucleus; their genetic material is located in a nucleoid region.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-15","subject":"Economics","topic":"Public finance","subtopic":"Recurrent expenditure","question":"Government payment of monthly salaries to public school teachers is generally classified as:","options":["capital expenditure","recurrent expenditure","public debt repayment only","foreign investment"],"answer":"B","explanation":"Recurrent expenditure covers regular operating costs such as salaries, utilities and routine administration.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-16","subject":"Chemistry","topic":"Separation techniques","subtopic":"Separating immiscible liquids","question":"Which apparatus is most suitable for separating two immiscible liquids such as kerosene and water?","options":["Burette","Separating funnel","Evaporating dish","Condenser"],"answer":"B","explanation":"A separating funnel allows the immiscible liquids to form separate layers and be drained off individually.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-17","subject":"Biology","topic":"Plant physiology","subtopic":"Plant hormones","question":"During positive phototropism in a young shoot, which plant hormone accumulates more on the shaded side and promotes greater cell elongation there?","options":["auxin","gibberellin","cytokinin","ethylene"],"answer":"A","explanation":"In a young shoot exposed to light from one direction, auxin becomes more concentrated on the shaded side and promotes greater cell elongation there. The unequal growth causes the shoot to bend towards the light.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-18","subject":"Physics","topic":"Optics","subtopic":"Law of reflection","question":"A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection? ","options":["25°","35°","55°","70°"],"answer":"B","explanation":"The law of reflection states that the angle of reflection equals the angle of incidence, measured from the normal.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-19","subject":"Economics","topic":"International trade","subtopic":"Customs unions","question":"A customs union is a trade arrangement in which member countries: ","options":["apply a common external tariff to non-members","ban all trade among themselves","use different external tariffs for every non-member","abolish all domestic taxes"],"answer":"A","explanation":"A customs union removes or reduces trade barriers among members and adopts a common external tariff toward non-members.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-20","subject":"Economics","topic":"Money and banking","subtopic":"Commercial banking","question":"When a commercial bank grants a loan to a customer, it primarily creates:","options":["a new tax liability","a deposit balance in the borrower's account","new currency notes issued by the central bank","a government budget surplus"],"answer":"B","explanation":"When a bank makes a loan, it normally credits the borrower's deposit account, creating a corresponding bank deposit and loan asset.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-21","subject":"Literature in English","topic":"Narrative structure","subtopic":"Flashback","question":"A narrative technique that interrupts the present action to show an event from an earlier time is called:","options":["foreshadowing","flashback","climax","denouement"],"answer":"B","explanation":"A flashback takes the reader or audience back to an earlier event to provide background or context.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-22","subject":"Biology","topic":"Human physiology","subtopic":"Blood plasma","question":"Which component of blood transports many dissolved nutrients, hormones and waste products? ","options":["platelets","plasma","red blood cells","lymphocytes"],"answer":"B","explanation":"Plasma is the liquid component of blood and carries dissolved substances, including nutrients, hormones and wastes.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-23","subject":"Economics","topic":"International trade","subtopic":"Foreign direct investment","question":"A foreign company establishes and operates a manufacturing plant in Nigeria. This is an example of:","options":["foreign direct investment","an import quota","a trade embargo","a balance-of-trade deficit"],"answer":"A","explanation":"Foreign direct investment involves an investor from another country establishing or acquiring a lasting business interest in the host country.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-24","subject":"Biology","topic":"Microbiology","subtopic":"Bacterial structure","question":"The rigid cell wall of most bacteria is made mainly of:","options":["cellulose","chitin","peptidoglycan","starch"],"answer":"C","explanation":"Most bacterial cell walls contain peptidoglycan, which helps maintain cell shape and resist osmotic pressure.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-25","subject":"Economics","topic":"Public finance","subtopic":"Tax avoidance and evasion","question":"Knowingly concealing taxable income to avoid paying legally due tax is known as:","options":["tax evasion","tax incidence","tax shifting","public borrowing"],"answer":"A","explanation":"Tax evasion is the illegal concealment or misrepresentation of income or transactions to avoid tax liability.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-26","subject":"Physics","topic":"Electricity","subtopic":"Capacitance calculations","question":"A capacitor stores a charge of 24 μC when connected to a 6 V supply. What is its capacitance?","options":["2 μF","4 μF","6 μF","12 μF"],"answer":"B","explanation":"C = Q/V = 24 μC ÷ 6 V = 4 μF.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-27","subject":"Mathematics","topic":"Variation","subtopic":"Joint variation","question":"If z varies jointly as x and y, which equation represents the relationship?","options":["z = k(x + y)","z = kxy","z = k/x + y","z = kx/y²"],"answer":"B","explanation":"Joint variation means z is proportional to the product of x and y, so z = kxy.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-28","subject":"Government","topic":"Federalism","subtopic":"Exclusive legislative powers","question":"In Nigeria, which government has exclusive legislative authority over matters on the Exclusive Legislative List?","options":["Local government councils","State governments","The federal government","Traditional councils"],"answer":"C","explanation":"Under the Constitution, the National Assembly exercises federal legislative authority over matters assigned to the Exclusive Legislative List.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-29","subject":"Use of English","topic":"Grammar","subtopic":"Prepositions","question":"The patient was deprived _____ sleep during the long journey. ","options":["from","of","with","by"],"answer":"B","explanation":"The correct expression is “deprived of” something.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-30","subject":"Use of English","topic":"Vocabulary","subtopic":"Specialised vocabulary","question":"A person whose profession involves compiling dictionaries is called a:","options":["Lexicographer","Biographer","Cartographer","Choreographer"],"answer":"A","explanation":"A lexicographer is a person who compiles, edits or writes dictionaries.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The earlier meticulous-definition candidate was withdrawn because it duplicated batch 5 row 4. This specialised-vocabulary item is distinct from the existing etymologist question; full-bank screen rerun."},{"target_id":"DUP-31","subject":"Physics","topic":"Mechanics","subtopic":"Impulse and momentum","question":"A 0.2 kg ball moving at 10 m/s is brought to rest in 0.5 s. What is the magnitude of the average force applied?","options":["2 N","4 N","5 N","20 N"],"answer":"B","explanation":"Average force equals change in momentum divided by time: F = (0.2 × 10) ÷ 0.5 = 4 N.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-32","subject":"Literature in English","topic":"Drama","subtopic":"Comedy of manners","question":"A comedy that satirises the manners, social conventions and behaviour of a particular social class is called a:","options":["Comedy of manners","Tragedy","Pastoral elegy","Epic"],"answer":"A","explanation":"Comedy of manners uses wit, irony and satire to expose the artificial behaviour and social conventions of a particular class or society.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The earlier euphemism candidate was withdrawn because it duplicated batch 6 row 40. This candidate tests a distinct dramatic genre."},{"target_id":"DUP-33","subject":"Use of English","topic":"Grammar","subtopic":"Relative pronouns","question":"In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:","options":["the subject of the relative clause","the object of the preposition “to”","the direct object of a verb","the possessor in a noun phrase"],"answer":"B","explanation":"“Whom” is the object form of the relative pronoun “who”. In this sentence it is governed by the preposition “to” and refers to the person who received the form.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-34","subject":"Use of English","topic":"Grammar","subtopic":"Concord","question":"Choose the correct verb: “The cattle _____ grazing near the river.”","options":["is","was","are","has"],"answer":"C","explanation":"“Cattle” is a plural noun and takes a plural verb: “are.”","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-35","subject":"Literature in English","topic":"Literary criticism","subtopic":"Epigraph","question":"A short quotation placed at the beginning of a book or chapter to suggest its theme is called an:","options":["epigraph","epilogue","aside","prologue"],"answer":"A","explanation":"An epigraph is a quotation or brief statement placed at the beginning of a literary work or section, often to introduce its theme.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-36","subject":"Government","topic":"Political parties","subtopic":"Party organisation","question":"The document that formally sets out the rules and internal structure of a political party is its:","options":["party constitution","party manifesto","party programme","party campaign slogan"],"answer":"A","explanation":"A party constitution is the party's governing internal document: it sets out its organisation, membership rules, offices and procedures. A manifesto and programme communicate policy proposals, while a campaign slogan is a short political message.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-37","subject":"Government","topic":"Processes of Legislation","subtopic":"Private members' bills (proposed broad fit; not expressly named in syllabus)","question":"In a parliamentary system, a private member's bill is generally introduced by:","options":["a legislator who is not introducing it on behalf of the executive","a minister introducing it on behalf of the executive","the head of the judiciary","the national electoral commission"],"answer":"A","explanation":"A private member's bill is introduced by a legislator who is not acting as a minister presenting a government bill. It is distinct from a government bill introduced on behalf of the executive.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-38","subject":"Biology","topic":"Humans and Environment","subtopic":"Disease prevention and immunity (proposed broad fit; passive maternal immunity not explicitly named)","question":"Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?","options":["the placenta","the pancreas","the kidney","the bone marrow"],"answer":"A","explanation":"Maternal IgG antibodies cross the placenta from the mother to the fetus before birth, providing temporary passive immunity.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-39","subject":"Chemistry","topic":"Metals","subtopic":"Extraction of aluminium","question":"During the electrolytic extraction of aluminium, cryolite is added to alumina mainly to:","options":["raise the melting point of alumina","lower the melting point of the mixture and improve its electrical conductivity","act as the reducing agent that forms aluminium","prevent oxygen from being released at the anode"],"answer":"B","explanation":"Cryolite dissolves alumina, lowers the operating temperature and improves the conductivity of the electrolyte, reducing the energy required for extraction.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-40","subject":"Chemistry","topic":"Chemical industry","subtopic":"Contact process catalyst","question":"In the Contact process, which substance is commonly used as the catalyst for converting sulphur dioxide to sulphur trioxide?","options":["iron","nickel","vanadium(V) oxide","manganese(IV) oxide"],"answer":"C","explanation":"Vanadium(V) oxide, V₂O₅, catalyses the oxidation of sulphur dioxide to sulphur trioxide in the Contact process.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-41","subject":"Biology","topic":"Human physiology","subtopic":"Endocrine hormones","question":"Which hormone stimulates the production of milk in the mammary glands after childbirth?","options":["oxytocin","prolactin","adrenaline","thyroxine"],"answer":"B","explanation":"Prolactin stimulates milk production in the mammary glands. Oxytocin is involved in milk ejection.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-42","subject":"Economics","topic":"Production","subtopic":"Law of diminishing returns","question":"In the short run, the law of diminishing returns states that when additional units of a variable factor are combined with fixed factors, the marginal product of the variable factor will eventually:","options":["increase without limit","remain constant at every level of output","decline","become negative immediately"],"answer":"C","explanation":"With other factors fixed, adding more units of a variable input will eventually cause the marginal product of that input to fall, assuming the production process is otherwise unchanged.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-43","subject":"Mathematics","topic":"Functions","subtopic":"One-to-one functions","question":"A function is one-to-one if:","options":["every element of its domain has the same image","different elements of its domain have different images","every element of the codomain must be an image","the function has no inverse"],"answer":"B","explanation":"A one-to-one function maps distinct domain elements to distinct values; no two different inputs share the same output.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-44","subject":"Physics","topic":"Waves","subtopic":"Diffraction","question":"The bending or spreading of waves as they pass through a narrow opening or around an obstacle is called:","options":["reflection","diffraction","refraction","polarisation"],"answer":"B","explanation":"Diffraction is the spreading of waves when they pass through an opening or around an obstacle. It is most noticeable when the opening or obstacle is comparable in size to the wavelength.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-45","subject":"Economics","topic":"Factors of production","subtopic":"Economic rent","question":"Economic rent is the payment received by a factor of production in excess of its:","options":["marginal product","transfer earnings","total revenue","fixed cost"],"answer":"B","explanation":"Economic rent is the surplus payment to a factor over the minimum amount required to keep it in its present use, known as transfer earnings.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-46","subject":"Chemistry","topic":"Chemical bonding","subtopic":"Alloys","question":"Brass is an alloy made mainly from:","options":["copper and tin","copper and zinc","iron and carbon","aluminium and magnesium"],"answer":"B","explanation":"Brass is primarily an alloy of copper and zinc. Bronze, by contrast, is mainly copper and tin.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-47","subject":"Government","topic":"Legislature","subtopic":"Legislative privilege","question":"The privilege of freedom of speech in legislative proceedings primarily allows a legislator to:","options":["express views during parliamentary proceedings without being sued or prosecuted for those statements","avoid criminal responsibility for offences committed outside the legislature","ignore lawful court orders","prevent the public from scrutinising legislative debates"],"answer":"A","explanation":"Parliamentary privilege protects statements made as part of legislative proceedings so members can debate freely. It is not a general immunity from criminal law or unrelated legal duties.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Compared the replacement with all 200 Government retained-plus-held rows. The bank's nearest matches concern general legislative functions, freedom of expression and party-whip duties; none asks about the distinct legal protection afforded to statements made in legislative proceedings. Preliminary answer A is plausible, but the precise scope of parliamentary privilege depends on the applicable constitutional/statutory framework. The wording should be checked by a qualified Government reviewer, and the syllabus fit of legislative privilege is not yet confirmed. Similarity 0.3893, below the 0.42 flag threshold. Not approved for import."},{"target_id":"DUP-48","subject":"Literature in English","topic":"Literary criticism","subtopic":"Denotation and connotation","question":"In literary analysis, the denotation of a word refers to its:","options":["Emotional associations in a particular context","Literal or direct meaning","Sound pattern when spoken","Historical origin and development"],"answer":"B","explanation":"Denotation is the direct or dictionary meaning of a word, while connotation refers to the ideas or feelings associated with it.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"A retained-bank text scan found no use of 'denotation' or the same literal-meaning prompt. Full semantic screening and subject review remain required. Compared with all 200 Literature in English retained-plus-held rows. The highest lexical match is batch 36 row 38 on diction (0.6667); the concepts are related but distinct: denotation is a word's direct/literal meaning, while diction is a writer's choice and use of words. Other nearest matches concern setting and mood. The high lexical flag is not proof of duplication, but requires independent Literature reviewer confirmation. Preliminary answer B is correct. Syllabus fit requires confirmation. Not approved for import."},{"target_id":"DUP-49","subject":"Economics","topic":"Public finance","subtopic":"Tax incidence","question":"After the effects of tax shifting have worked through a market, the tax incidence refers to:","options":["The authority that collects the tax","The date on which the tax becomes payable","The final distribution of the tax burden between buyers and sellers","The total quantity of goods produced before the tax"],"answer":"C","explanation":"Tax incidence describes who ultimately bears the economic burden of a tax, which may differ from the person or firm legally required to remit it.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"A retained-bank text scan found no use of 'tax incidence' or the same final-burden prompt. Full semantic screening and subject review remain required. Compared with all 200 Economics retained-plus-held rows. No tax-incidence question was found. Nearby taxation questions test tax types, direct/indirect, progressive/regressive, specific and ad valorem taxes; they do not test statutory remittance versus the final economic burden after tax shifting. Preliminary answer C and explanation are conceptually sound. Confirm that tax incidence is within the intended JAMB syllabus depth. Similarity 0.2807, below the 0.42 flag threshold. Not approved for import."},{"target_id":"DUP-50","subject":"Biology","topic":"Cell biology","subtopic":"Golgi apparatus and protein packaging","question":"Which organelle modifies, sorts and packages proteins into vesicles for transport within or out of a cell?","options":["Golgi apparatus","Ribosome","Mitochondrion","Lysosome"],"answer":"A","explanation":"The Golgi apparatus modifies, sorts and packages proteins into vesicles for transport to other cell locations or for secretion. Ribosomes synthesise proteins, mitochondria release energy, and lysosomes contain digestive enzymes.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Revised after identifying an existing ABO blood-group inheritance item in the retained bank. The new cell-organelle concept is distinct; subject review and the refreshed full-bank screen are still required. Compared with all 200 Biology retained-plus-held rows. No Golgi apparatus protein-modification/sorting/packaging question was found. Nearest organelle questions test nucleus, mitochondrion, chloroplast, ribosome and lysosome functions; these are related cell-biology material but distinct functions. Preliminary answer A and explanation are sound. Check that the precise Golgi functions are within the intended JAMB syllabus depth. Similarity 0.3135, below the 0.42 flag threshold. Not approved for import."},{"target_id":"DUP-51","subject":"Physics","topic":"Waves","subtopic":"Resonance","question":"A system is said to be in resonance when the frequency of an applied periodic force is equal to its:","options":["amplitude","natural frequency","wavelength","wave speed"],"answer":"B","explanation":"Resonance occurs when the driving frequency matches the natural frequency of a system, producing a large response under suitable conditions.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"A retained-bank keyword scan found no 'resonance frequency' item. Full semantic screening and subject review remain required. All 200 Physics retained-plus-held rows checked. No resonance or natural-frequency question was found. The nearest lexical matches concern momentum, work-energy and Doppler effect, not resonance. Answer B is correct: resonance occurs when the driving frequency matches the system's natural frequency (with a sufficiently low damping context for a large response). Similarity 0.3952, below threshold. The official JAMB Physics syllabus explicitly includes forced vibration and resonance under simple harmonic motion and asks candidates to enumerate applications of resonance. Direct syllabus coverage confirmed. Independent Physics reviewer still required; not approved for import."},{"target_id":"DUP-52","subject":"Mathematics","topic":"Matrices","subtopic":"Matrix multiplication","question":"Evaluate the matrix product [[1, 2], [0, 3]] × [[2, 1], [4, 0]].","options":["[[10, 1], [12, 0]]","[[2, 4], [0, 9]]","[[10, 4], [12, 3]]","[[6, 1], [12, 0]]"],"answer":"A","explanation":"Multiply each row of A by each column of B. The entries are 1×2 + 2×4 = 10, 1×1 + 2×0 = 1, 0×2 + 3×4 = 12, and 0×1 + 3×0 = 0. Therefore AB = [[10, 1], [12, 0]].","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The stem was shortened to reduce template-based lexical similarity with unrelated arithmetic questions. The matrix operation is distinct from the existing determinant and trace items. All 200 Mathematics retained-plus-held rows checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests 2×2 matrix multiplication. Recalculation confirms AB = [[10, 1], [12, 0]], answer A. Similarity 0.4000, below threshold. The result is mathematically correct, but the exact JAMB Mathematics syllabus coverage of matrix multiplication must be confirmed by a qualified Mathematics reviewer. Not approved for import."},{"target_id":"DUP-53","subject":"Chemistry","topic":"Qualitative analysis","subtopic":"Identification of copper(II) ions","question":"Which solid is formed when Cu²⁺(aq) reacts with OH⁻(aq)?","options":["Cu(OH)₂, a blue precipitate","Cu₂O, a red precipitate","CuCO₃, a green precipitate","CuS, a black precipitate"],"answer":"A","explanation":"Copper(II) ions react with hydroxide ions to form copper(II) hydroxide, Cu(OH)₂, which is a blue precipitate and is insoluble in excess aqueous sodium hydroxide.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The stem was shortened to distinguish this cation-identification test from the existing chloride-ion qualitative test. Contextual review remains required. All 200 Chemistry retained-plus-held rows checked. No Cu²⁺ + OH⁻ precipitate-identification question was found. Nearest questions cover neutralisation/salt formation, gas tests, copper electrolysis and displacement; these are different reaction/identification objectives. Answer A is correct: Cu(OH)₂ is a blue precipitate; it is insoluble in excess aqueous NaOH. Similarity 0.4580, flagged. The official Chemistry syllabus covers tests for metallic ions, sodium hydroxide precipitation of metallic hydroxides and coloured ions in transition metals (Topic 16); broad coverage is supported, but exact Cu²⁺ test suitability needs a Chemistry reviewer. Not approved for import."},{"target_id":"DUP-54","subject":"Economics","topic":"Demand and supply","subtopic":"Cross elasticity of demand","question":"The cross elasticity of demand between two goods is +0.8. What does this value indicate about the relationship between the goods?","options":["They are substitutes.","They are complements.","They are unrelated goods.","Both are inferior goods."],"answer":"A","explanation":"A positive cross elasticity of demand means that an increase in the price of one good is associated with an increase in the quantity demanded of the other. The goods are substitutes.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Reworded after the initial stem triggered a lexical similarity flag against own-price elasticity questions. This version tests interpretation of the sign of cross elasticity, a distinct concept; rerun the full-bank screen. All 200 Economics retained-plus-held rows checked. Existing elasticity items test own-price elasticity of demand/supply; none tests cross elasticity or interpretation of its positive sign. A coefficient of +0.8 indicates substitute goods, answer A. Similarity 0.4141, just below the 0.42 flag threshold. Official JAMB Economics syllabus Topic 4(c) explicitly includes cross elasticity of demand and interpretation of elasticity coefficients. Direct syllabus coverage confirmed. Independent Economics reviewer still required; not approved for import."},{"target_id":"DUP-55","subject":"Literature in English","topic":"Sound devices","subtopic":"Cacophony","question":"A poet deliberately uses harsh, discordant combinations of sounds to create an unpleasant or jarring effect. This sound device is called:","options":["Euphony","Cacophony","Assonance","Alliteration"],"answer":"B","explanation":"Cacophony is the deliberate use of harsh or discordant sounds to create a jarring effect. Euphony creates a pleasing sound; assonance repeats vowel sounds; alliteration repeats initial consonant sounds.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"All 200 Literature in English retained-plus-held rows checked. No cacophony definition/item was found. Nearest items test asyndeton and consonance, different sound/language devices. Answer B is correct: cacophony is the deliberate use of harsh or discordant sounds for a jarring effect. Similarity 0.3396, below threshold. Cacophony is closely related by contrast to euphony; an independent Literature reviewer should confirm the distinction and syllabus depth. Not approved for import."},{"target_id":"DUP-56","subject":"Literature in English","topic":"Sound devices","subtopic":"Euphony","question":"A poet arranges words and sounds to produce a smooth, harmonious and pleasing auditory effect. This technique is known as:","options":["Cacophony","Euphony","Sibilance","Onomatopoeia"],"answer":"B","explanation":"Euphony is the use or arrangement of pleasing, harmonious sounds. Cacophony produces harsh or discordant sounds; sibilance repeats hissing consonants; onomatopoeia imitates sounds.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"All 200 Literature in English retained-plus-held rows checked. No euphony definition/item was found. Nearest items test rhyme, plot sequence and stream of consciousness, not harmonious sound effects. Answer B is correct: euphony is the use/arrangement of pleasing, harmonious sounds. Similarity 0.2793, below threshold. It is the conceptual counterpart to DUP-55's cacophony, not a duplicate; a Literature reviewer should confirm both are useful and not overly repetitive in a small bank. Not approved for import."},{"target_id":"DUP-57","subject":"Use of English","topic":"Cohesion","subtopic":"Ellipsis as a cohesive device","question":"In the sentence “Ada chose the blue dress, while Tola the red one,” which cohesive device allows the verb phrase “chose” to be omitted from the second clause?","options":["Substitution","Ellipsis","Reference","Conjunction"],"answer":"B","explanation":"Ellipsis is the omission of a word or group of words that can be understood from the surrounding text. Here, “chose” is understood after “Tola” and is therefore omitted.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"All 200 Use of English retained-plus-held rows checked. No ellipsis-as-cohesive-device question was found. Nearest matches test adverb function, conditional completion and infinitive phrase function. Answer B is correct: the verb phrase 'chose' is recoverable from the first clause and omitted in the second; this is ellipsis. Similarity 0.3367, below threshold. Broad fit to cohesion/discourse and grammatical structure is plausible, but exact syllabus mapping requires an English reviewer. Not approved for import."},{"target_id":"DUP-58","subject":"Biology","topic":"Ecology","subtopic":"Quadrat sampling","question":"Which field method is most suitable for estimating the abundance of grasses in a study area?","options":["Using a quadrat","Using a pooter","Using a sweep net","Using a pitfall trap"],"answer":"A","explanation":"A quadrat is a square frame placed in sample areas to estimate the abundance, density or frequency of plants and other relatively stationary organisms. Pooters and sweep nets collect mobile small animals, while pitfall traps sample ground-dwelling invertebrates.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The initial homologous-structures proposal was withdrawn after the full-bank screen found an existing homologous-structures question in batch 23 row 13. This revised quadrat-sampling question tests a different ecological field method; rerun full-bank screen. All 200 Biology retained-plus-held rows checked. No quadrat-sampling method question was found. Nearest matches concern biotic factors, photosynthesis and plant cell walls; no same ecological sampling method. Answer A is correct: quadrats estimate abundance/density/frequency of plants and other relatively stationary organisms. Similarity 0.2895, below threshold. Ecology is a relevant Biology domain, but exact JAMB syllabus fit for field sampling methods requires qualified Biology review. Not approved for import."},{"target_id":"DUP-59","subject":"Literature in English","topic":"Literary devices","subtopic":"Epithet","question":"In the expression “swift-footed Achilles”, the words “swift-footed” function as a/an:","options":["Epithet","Euphemism","Paradox","Onomatopoeia"],"answer":"A","explanation":"An epithet is a descriptive expression attached to a person or thing to highlight a characteristic. “Swift-footed” is a recurring descriptive epithet associated with Achilles.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Revised to use a clear literary example after the prior wording triggered lexical similarity against metaphor questions. The revised wording is screened against all source rows. All 200 Literature in English retained-plus-held rows checked. No epithet definition/example was found. The nearest lexical match is synecdoche (batch 23 row 40, 0.4113), which uses a part for the whole; the proposed 'swift-footed Achilles' is a descriptive epithet. Other close items are an epilogue and exposition, different terms. Similarity 0.4113, just below threshold. Answer A is correct. A Literature reviewer should confirm that the classical epithet example is appropriate for JAMB level and distinguish it from other descriptive devices. Not approved for import."},{"target_id":"DUP-60","subject":"Biology","topic":"Sense organs","subtopic":"Hearing","question":"The sensory hair cells that detect sound vibrations are located in the:","options":["Organ of Corti","Semicircular canals","Eustachian tube","Auditory nerve"],"answer":"A","explanation":"The Organ of Corti lies within the cochlea and contains hair cells that convert sound-induced mechanical vibrations into nerve impulses carried by the auditory nerve.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required. All 200 Biology retained-plus-held rows checked. No Organ of Corti/hair-cell location question was found. Nearest matches concern root-hair osmosis and red blood cell function; they do not assess the cochlear sensory organ. Answer A is correct: the Organ of Corti in the cochlea contains sensory hair cells that transduce sound-related mechanical vibrations. Similarity 0.2783, below threshold. Independent Biology reviewer must confirm exact anatomical wording and syllabus depth. Not approved for import."},{"target_id":"DUP-61","subject":"Biology","topic":"Plant physiology","subtopic":"Phototropism","question":"A young plant shoot bends towards light because cells on its shaded side undergo greater:","options":["cell elongation","cell division only","loss of chlorophyll","water loss"],"answer":"A","explanation":"In positive phototropism, auxin promotes greater cell elongation on the shaded side of a shoot. The unequal growth causes the shoot to bend towards the light.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required. All 200 Biology retained-plus-held rows checked. No phototropism/auxin shaded-side cell-elongation question was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis. Answer A is correct: greater cell elongation on the shaded side causes a shoot to bend towards light; auxin is involved in this differential growth. Similarity 0.2262, below threshold. Independent Biology reviewer must confirm syllabus depth and wording. Not approved for import."},{"target_id":"DUP-62","subject":"Literature in English","topic":"Poetic techniques","subtopic":"Enjambment","question":"When a poet carries a sentence beyond the end of a line without a pause, the technique is called:","options":["Enjambment","Caesura","Alliteration","Refrain"],"answer":"A","explanation":"Enjambment occurs when the sense of a sentence or phrase continues from one poetic line into the next without a grammatical pause at the line ending. Caesura is a pause within a line.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Drafted against the DUP-62 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.4046 against the existing caesura item (batch 16 row 37). Enjambment and caesura are distinct poetic techniques, but the close wording requires human Literature review and contextual clearance. All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a poetic line; enjambment is continuation of syntax/sense across a line break without an end-stop. These are related lineation techniques but not duplicates. Answer A is correct. Similarity 0.4046, below threshold but close; an independent Literature reviewer should confirm distinction, syllabus scope and question-bank variety. Not approved for import."},{"target_id":"DUP-63","subject":"Mathematics","topic":"Ratio and proportion","subtopic":"Map scales","question":"A map has a scale of 1:50,000. What actual distance is represented by 4 cm on the map?","options":["500 m","1 km","2 km","20 km"],"answer":"C","explanation":"A scale of 1:50,000 means 1 cm on the map represents 50,000 cm on the ground. Therefore 4 cm represents 200,000 cm, which is 2,000 m or 2 km.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Drafted against the DUP-63 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.3648 against a circle-sector question; the concepts are distinct. Confirm map-scale coverage in the current JAMB Mathematics syllabus during independent review. All 200 Mathematics retained-plus-held rows checked. No map-scale calculation was found. Nearest matches concern sector fractions, angles in a circle and coordinate distance, not scale conversion. Calculation: 4 cm × 50,000 = 200,000 cm = 2 km, answer C. Similarity 0.3648, below threshold. Confirm map scales/ratio-proportion coverage against the current JAMB Mathematics syllabus with an independent reviewer. Not approved for import."},{"target_id":"DUP-64","subject":"Chemistry","topic":"Nuclear chemistry","subtopic":"Half-life","question":"A radioactive isotope has a half-life of 6 hours. What fraction of the original sample remains after 18 hours?","options":["1/2","1/4","1/8","1/16"],"answer":"C","explanation":"Eighteen hours represents three half-lives (18 ÷ 6 = 3). The remaining fraction is (1/2)³ = 1/8.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Drafted for the DUP-64 Chemistry holdout (atomic-radius trend). Full 1,600-row same-subject lexical screen: highest Dice score 0.2623 against a first-order rate-constant unit question. The concept is distinct. Independent Chemistry review and contextual bank-wide clearance remain required. All 200 Chemistry retained-plus-held rows checked. No half-life fraction calculation was found. Nearest matches concern first-order rate-constant units, isotopes and catalysts. After 18 hours there are three half-lives, so the remaining fraction is (1/2)^3 = 1/8, answer C. Similarity 0.2623, below threshold. JAMB Chemistry syllabus Nuclear Chemistry explicitly includes half-life calculations. Direct syllabus coverage confirmed; independent Chemistry reviewer still required. Not approved for import."},{"target_id":"DUP-65","subject":"Biology","topic":"Animal physiology","subtopic":"Insect respiration","question":"The fine terminal branches of an insect's tracheal system that deliver oxygen directly to body cells are called:","options":["Tracheoles","Spiracles","Malpighian tubules","Air sacs"],"answer":"A","explanation":"Tracheoles are the fine terminal branches of the insect tracheal system. They extend close to body cells and provide the route for oxygen to diffuse directly to tissues. Spiracles are the external openings of the system.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Drafted for the DUP-65 Biology holdout (commensalism). Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a question on the ureter; no concept overlap. Independent Biology review and contextual bank-wide clearance remain required. All 200 Biology retained-plus-held rows checked. No insect tracheole item was found. Nearest matches concern ureter, xylem and kidney filtration; no respiratory-system overlap. Answer A is correct: tracheoles are the fine terminal branches of the insect tracheal system where gas exchange with tissues occurs. Similarity 0.3462, below threshold. Independent Biology reviewer must confirm syllabus depth and that the wording distinguishes tracheoles from spiracles. Not approved for import."},{"target_id":"DUP-66","subject":"Physics","topic":"Electromagnetism","subtopic":"Transformer efficiency","question":"A transformer receives 240 V on its primary coil and supplies 12 V across its secondary coil. If the primary current is 0.5 A and the secondary current is 8 A, what is its efficiency?","options":["60%","70%","80%","90%"],"answer":"C","explanation":"Input power = 240 × 0.5 = 120 W. Output power = 12 × 8 = 96 W. Efficiency = (96/120) × 100 = 80%.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"All 200 Physics retained-plus-held rows checked. No transformer-efficiency calculation was found. Nearest matches test resistance/potential difference and general machine efficiency, not transformer input/output power from voltage and current. Input power = 240×0.5 = 120 W; output power = 12×8 = 96 W; efficiency = 80%, answer C. Similarity 0.3285, below threshold. Independent Physics reviewer must confirm syllabus fit and that the voltage/current values represent the relevant primary/secondary RMS quantities. Not approved for import."},{"target_id":"DUP-67","subject":"Chemistry","topic":"Chemical bonding","subtopic":"Coordinate covalent bond","question":"In the formation of the ammonium ion, NH₄⁺, the bond formed when NH₃ combines with H⁺ is initially described as a:","options":["Ionic bond","Metallic bond","Coordinate covalent bond","Hydrogen bond"],"answer":"C","explanation":"The nitrogen atom in NH₃ donates its lone pair to H⁺ to form the N–H bond. Both bonding electrons are supplied by nitrogen, so it is a coordinate covalent bond.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Full same-subject retained-plus-held comparison completed across all 200 Chemistry rows. Seven nearby entries concern generic covalent bonding, the coordinate-bond definition, the ammonium-ion formula, or ammonia release from ammonium salts. None asks how NH₃ forms NH₄⁺ by donating its lone pair to H⁺. Answer C is correct; the nitrogen lone pair supplies both electrons in the coordinate N–H bond at formation. The wording correctly distinguishes the bond's formation from the equivalent N–H bonds in the resulting ion. Highest same-subject lexical score is 0.4094 (batch 28 row 21, ammonium-ion formula), below 0.42. JAMB Chemistry includes coordinate covalent bonding. Conceptually distinct; independent Chemistry subject review remains mandatory. Not approved for import."},{"target_id":"DUP-69","subject":"Literature in English","topic":"Drama","subtopic":"Unity of action","question":"The classical dramatic principle that a play should centre on one principal plot is known as the unity of:","options":["Action","Time","Place","Character"],"answer":"A","explanation":"Unity of action requires a play's events to be organised around one principal action or coherent main plot, rather than several unrelated plots.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_literature_and_syllabus_review_required","review_note":"The former dramatic-irony candidate was rejected as a semantic duplicate of retained batch 07 row 37. This new candidate tests the classical unity of action. All 200 Literature in English retained-plus-held rows checked; no unity-of-action question found. Highest trigram Dice similarity 0.3523 (batch 17 row 40, dramatic suspense), below 0.42. Human Literature reviewer must confirm syllabus fit and that the definition is appropriately framed."},{"target_id":"DUP-71","subject":"Physics","topic":"Electrostatics","subtopic":"Coulomb's law","question":"Two point charges are separated by a distance r and exert an electrostatic force F on each other. If their separation is increased to 2r without changing the charges, what is the new force?","options":["4F","2F","F/2","F/4"],"answer":"D","explanation":"By Coulomb's law, electrostatic force is inversely proportional to the square of separation. Doubling the distance gives F/(2²) = F/4.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-74","subject":"Biology","topic":"Excretion","subtopic":"Ultrafiltration","question":"The high pressure that drives ultrafiltration in a mammalian kidney is produced mainly because the:","options":["Afferent arteriole is wider than the efferent arteriole","Efferent arteriole is wider than the afferent arteriole","Bowman's capsule has a muscular wall","Collecting duct actively pumps blood"],"answer":"A","explanation":"The afferent arteriole is wider than the efferent arteriole, creating relatively high hydrostatic pressure in the glomerular capillaries and forcing small molecules into Bowman's capsule.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-75","subject":"Economics","topic":"International trade","subtopic":"Comparative advantage","question":"Country A can produce either 10 units of rice or 5 units of cloth with the same resources. Country B can produce either 8 units of rice or 8 units of cloth. Which country has a comparative advantage in cloth?","options":["Country A","Country B","Both countries equally","Neither country"],"answer":"B","explanation":"The opportunity cost of one unit of cloth is 2 units of rice in A and 1 unit of rice in B. B has the lower opportunity cost and therefore the comparative advantage in cloth.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-77","subject":"Government","topic":"Political concepts","subtopic":"Rule of law","question":"Which principle of the rule of law requires that public officials and ordinary citizens are subject to the same law?","options":["Equality before the law","Collective responsibility","Separation of powers","Political neutrality"],"answer":"A","explanation":"Equality before the law means that no person is above the law and that the law applies to public officials and ordinary citizens alike.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-72","subject":"Use of English","topic":"Lexis and structure","subtopic":"Idiomatic expressions","question":"When someone says that a plan “fell through”, the expression means that the plan:","options":["Was completed successfully","Failed to happen","Was postponed for one hour","Was kept secret"],"answer":"B","explanation":"“Fall through” means to fail or not be completed as planned.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-73","subject":"Biology","topic":"Coordination","subtopic":"Reflex action","question":"Which part of the central nervous system coordinates a simple withdrawal reflex before conscious interpretation of pain?","options":["Cerebrum","Spinal cord","Cerebellum","Hypothalamus"],"answer":"B","explanation":"A simple withdrawal reflex is coordinated through a reflex arc in the spinal cord, allowing a rapid response before conscious processing by the brain.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-76","subject":"Economics","topic":"Market failure","subtopic":"Negative externalities","question":"A factory releases untreated waste into a river, imposing costs on nearby residents that are not reflected in the market price of its product. This is an example of:","options":["A positive externality","A negative externality","A public good","A transfer payment"],"answer":"B","explanation":"A negative externality occurs when production or consumption imposes external costs on third parties that are not included in the market price.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-78","subject":"Use of English","topic":"Lexis and structure","subtopic":"Punctuation","question":"Which punctuation mark should separate the two independent clauses in this sentence when no coordinating conjunction is used: “The rain stopped _____ the match resumed”?","options":["Apostrophe","Semicolon","Hyphen","Quotation mark"],"answer":"B","explanation":"A semicolon can join two closely related independent clauses when no coordinating conjunction is used.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-80","subject":"Economics","topic":"Economic systems","subtopic":"Mixed economy","question":"An economy in which private businesses operate alongside state-owned enterprises and government regulation is generally described as:","options":["A command economy","A traditional economy","A mixed economy","A subsistence economy"],"answer":"C","explanation":"A mixed economy combines private economic activity with government ownership, regulation or provision of selected goods and services.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-88","subject":"Economics","topic":"Inflation","subtopic":"Cost-push inflation","question":"A sharp increase in the cost of imported fuel raises production expenses across an economy. This is most likely to cause:","options":["Demand-pull inflation","Cost-push inflation","Deflation","A fall in the general price level"],"answer":"B","explanation":"Cost-push inflation occurs when rising production costs, such as fuel and imported input costs, push firms to raise prices.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-70","subject":"Biology","topic":"Cell biology","subtopic":"Vacuole","question":"In a mature plant cell, the large central vacuole helps maintain the cell's shape mainly by:","options":["Producing proteins","Maintaining turgor pressure","Releasing digestive enzymes into blood","Carrying genetic information"],"answer":"B","explanation":"The vacuole stores cell sap. Water entering it creates turgor pressure, which helps keep the plant cell firm and supports the plant.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Full same-subject retained-plus-held comparison completed across all 200 Biology rows. No vacuole/turgor-pressure function question was found. Nearest entries concern the nucleus, chloroplast, lysosome, plasmolysis and cell-wall structure; none tests the central vacuole's role in maintaining turgor. Answer B is correct: water held in the large central vacuole contributes to turgor pressure, keeping a mature plant cell firm and helping maintain its shape. JAMB Biology explicitly includes turgidity as a transport mechanism; the exact cell-organelle phrasing remains subject to qualified Biology review. Similarity 0.3333, below 0.42. Conceptually distinct; independent Biology review remains mandatory. Not approved for import."},{"target_id":"DUP-81","subject":"Physics","topic":"Heat","subtopic":"Linear expansion","question":"A metal rod of length 2.0 m increases in length by 0.002 m when heated through 50 °C. What is its coefficient of linear expansion?","options":["2.0 × 10⁻⁵ °C⁻¹","5.0 × 10⁻⁵ °C⁻¹","2.0 × 10⁻⁴ °C⁻¹","5.0 × 10⁻⁴ °C⁻¹"],"answer":"A","explanation":"Using ΔL = αLΔT, α = 0.002 ÷ (2.0 × 50) = 0.00002 °C⁻¹ = 2.0 × 10⁻⁵ °C⁻¹.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-89","subject":"Use of English","topic":"Oral English","subtopic":"Nasal consonants","question":"Which pair consists of two nasal consonant sounds in English?","options":["/m/ and /n/","/p/ and /b/","/f/ and /v/","/s/ and /z/"],"answer":"A","explanation":"/m/ and /n/ are nasal consonants because air passes through the nasal cavity during their production.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-79","subject":"Use of English","topic":"Grammar","subtopic":"Infinitive of purpose","question":"In the sentence “She visited the library to borrow a textbook”, the infinitive phrase “to borrow a textbook” expresses:","options":["Reason or purpose","Possession","Comparison","A condition"],"answer":"A","explanation":"The infinitive phrase explains the purpose of her visit to the library.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-84","subject":"Biology","topic":"Genetics","subtopic":"DNA replication","question":"During DNA replication, which enzyme joins adjacent Okazaki fragments on the lagging strand?","options":["DNA ligase","DNA helicase","RNA polymerase","Amylase"],"answer":"A","explanation":"DNA ligase seals the breaks between adjacent Okazaki fragments by forming phosphodiester bonds in the sugar-phosphate backbone of the newly synthesised DNA strand.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"The earlier pulmonary-vein candidate was withdrawn after a semantic match was found in the bank (batch 21 row 12). This DNA-ligase candidate replaces it and has been re-screened."},{"target_id":"DUP-87","subject":"Use of English","topic":"Vocabulary","subtopic":"Specialised vocabulary","question":"A person who deliberately gives up the use of alcoholic drinks is commonly called a:","options":["Teetotaller","Vegetarian","Philanthropist","Pessimist"],"answer":"A","explanation":"A teetotaller is a person who abstains from drinking alcohol.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-68","subject":"Use of English","topic":"Vocabulary","subtopic":"Homographs","question":"In “Strong winds damaged the roof”, the word “winds” refers to:","options":["Moving air","A bend or curve in a road or river","A turn or coil","A musical instrument played by blowing air"],"answer":"A","explanation":"Here “winds” means moving air, pronounced /wɪndz/. The verb “wind”, meaning to turn or twist, has a different pronunciation, /waɪnd/.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Full same-subject retained-plus-held comparison completed across all 200 Use of English rows. No question asks for the meaning of wind/winds in this context; the nearest results concern wind personification and unrelated lexis. Answer A is correct: 'winds' means moving air. The original distractors were weak/non-parallel, so they have been improved to plausible alternate senses. The word 'wind' as moving air is pronounced /wɪnd/; the verb 'wind' meaning to turn or twist is pronounced /waɪnd/. Revised wording and options were re-screened against all 200 rows. The lexical score remains below 0.42. Independent English reviewer must confirm terminology and syllabus fit. Not approved for import."},{"target_id":"DUP-82","subject":"Economics","topic":"Consumer behaviour","subtopic":"Law of diminishing marginal utility","question":"As a consumer consumes additional units of a good within a given period, the marginal utility from each successive unit generally:","options":["Increases continuously","Diminishes","Remains permanently zero","Becomes equal to total expenditure"],"answer":"B","explanation":"The law of diminishing marginal utility states that, other things being equal, the additional satisfaction from each extra unit consumed tends to fall as consumption increases.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required","review_note":"Lexical score is below 0.42 but close to existing marginal-utility definition items; independent Economics reviewer must confirm the law-of-diminishing-utility distinction before approval."},{"target_id":"DUP-83","subject":"Literature in English","topic":"Literary terms","subtopic":"Pseudonym","question":"A writer who publishes under an assumed name different from their own is using a:","options":["Pseudonym","Prologue","Refrain","Soliloquy"],"answer":"A","explanation":"A pseudonym is an assumed or pen name used by an author instead of their actual name.","difficulty":"easy","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-85","subject":"Literature in English","topic":"Drama and stagecraft","subtopic":"Blocking","question":"In theatre, the planned movement and positioning of actors on stage during a performance is known as:","options":["Blocking","Casting","Diction","Catharsis"],"answer":"A","explanation":"Blocking is the planned arrangement and movement of performers on stage to support the action and visual composition of a production.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-86","subject":"Chemistry","topic":"Qualitative analysis","subtopic":"Test for nitrate ions","question":"In the brown-ring test for nitrate ions, the characteristic brown ring forms at the:","options":["Bottom of the test tube","Junction of the two liquid layers","Surface of the solution","Outside of the test tube"],"answer":"B","explanation":"In the brown-ring test, freshly prepared iron(II) sulfate is added, followed carefully by concentrated sulfuric acid. A brown ring forms at the interface between the two liquid layers.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"},{"target_id":"DUP-90","subject":"Chemistry","topic":"Crystallisation","subtopic":"Water of crystallisation","question":"In hydrated copper(II) sulfate, CuSO₄·5H₂O, the number 5 indicates that each formula unit contains:","options":["Five sulfate ions","Five water molecules of crystallisation","Five copper ions","Five hydrogen ions"],"answer":"B","explanation":"The dot formula CuSO₄·5H₂O shows five water molecules associated with each formula unit of hydrated copper(II) sulfate.","difficulty":"medium","source":"EDUKEN original replacement draft","status":"assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"}],"revision_note":"The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import.","confirmed_duplicate_targets":90,"drafts_missing":0,"drafts_missing_target_ids":[]}
+{
+  "audit_date": "2026-11-01",
+  "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
+  "draft_count": 97,
+  "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
+  "important": "All 97 proposals remain separate, unpublished drafts. The original 90 proposals plus seven target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the 90 existing proposals. One new lexical flag (DUP-47-ADD-2026-11-09) was contextually assessed as a confederation question distinct from the federation revenue-allocation match; the flag remains a review prompt, not a duplicate verdict. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
+  "items": [
+    {
+      "target_id": "DUP-01",
+      "subject": "Mathematics",
+      "topic": "Geometry",
+      "subtopic": "Properties of rectangles",
+      "question": "Which statement about the diagonals of a rectangle is correct?",
+      "options": [
+        "They are unequal and do not bisect each other",
+        "They are equal in length and bisect each other",
+        "They are perpendicular in every rectangle",
+        "They are parallel to the shorter sides"
+      ],
+      "answer": "B",
+      "explanation": "The diagonals of a rectangle are equal in length and bisect one another.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-02",
+      "subject": "Chemistry",
+      "topic": "Electrochemistry",
+      "subtopic": "Salt bridge",
+      "question": "In a simple galvanic cell, the main function of the salt bridge is to:",
+      "options": [
+        "Supply electrons to the cathode",
+        "Maintain electrical neutrality by allowing ions to migrate",
+        "Increase the temperature of the electrolyte",
+        "Prevent the redox reaction from occurring"
+      ],
+      "answer": "B",
+      "explanation": "Ions migrate through the salt bridge to prevent charge build-up in the half-cells and maintain electrical neutrality, allowing the cell to continue operating.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The earlier esterification candidate was withdrawn because it duplicated batch 38 row 20. This salt-bridge candidate tests a different electrochemical-cell function and has been re-screened against all 1,600 source questions."
+    },
+    {
+      "target_id": "DUP-03",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "subtopic": "Alternating current",
+      "question": "An electric current that repeatedly changes direction at regular intervals is called:",
+      "options": [
+        "direct current",
+        "alternating current",
+        "static charge",
+        "induced resistance"
+      ],
+      "answer": "B",
+      "explanation": "Alternating current periodically reverses direction, unlike direct current, which flows in one direction.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-04",
+      "subject": "Biology",
+      "topic": "Genetics",
+      "subtopic": "Alleles and inheritance",
+      "question": "In a complete-dominance relationship, an allele whose effect is expressed in the phenotype of a heterozygous organism is described as:",
+      "options": [
+        "recessive",
+        "dominant",
+        "codominant",
+        "incompletely dominant"
+      ],
+      "answer": "B",
+      "explanation": "In complete dominance, the dominant allele determines the heterozygote's phenotype, while the recessive allele is masked. Codominance and incomplete dominance describe different patterns in which the heterozygote does not show the complete-dominance pattern.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_biology_and_syllabus_review_required",
+      "review_note": "Corrected to specify complete dominance and replace weak distractors. Re-screened against all 200 Biology retained-plus-held rows. No duplicate found; highest trigram Dice similarity 0.3837 to batch 39 row 12 (heterozygous genotype Tt), below 0.42. Human Biology reviewer must confirm distinction and syllabus fit."
+    },
+    {
+      "target_id": "DUP-05",
+      "subject": "Literature in English",
+      "topic": "Poetry",
+      "subtopic": "Iambic pentameter",
+      "question": "A line of verse made up of five iambic feet is said to be written in:",
+      "options": [
+        "Iambic tetrameter",
+        "Iambic pentameter",
+        "Trochaic trimeter",
+        "Dactylic hexameter"
+      ],
+      "answer": "B",
+      "explanation": "An iambic foot has an unstressed syllable followed by a stressed syllable. Five such feet form iambic pentameter.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The earlier elegy-definition candidate was withdrawn because it duplicated batch 14 row 38. This candidate tests metre; compare carefully with the existing blank-verse question during Literature review."
+    },
+    {
+      "target_id": "DUP-06",
+      "subject": "Biology",
+      "topic": "Reproduction",
+      "subtopic": "Seed dispersal",
+      "question": "The presence of hooks or barbs on the surface of some fruits helps in:",
+      "options": [
+        "dispersal by wind",
+        "dispersal by water",
+        "dispersal by attaching to animals",
+        "self-pollination"
+      ],
+      "answer": "C",
+      "explanation": "Hooks and barbs can cling to animal fur or clothing, carrying the fruit or seeds away from the parent plant.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-07",
+      "subject": "Physics",
+      "topic": "Heat",
+      "subtopic": "Heat transfer by radiation",
+      "question": "Which method of heat transfer can occur through a vacuum?",
+      "options": [
+        "conduction",
+        "convection",
+        "radiation",
+        "evaporation"
+      ],
+      "answer": "C",
+      "explanation": "Radiation transfers energy by electromagnetic waves and does not require a material medium.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-08",
+      "subject": "Chemistry",
+      "topic": "Organic chemistry",
+      "subtopic": "Natural gas",
+      "question": "The principal constituent of most natural gas is:",
+      "options": [
+        "Ethene",
+        "Methane",
+        "Carbon monoxide",
+        "Sulfur dioxide"
+      ],
+      "answer": "B",
+      "explanation": "Natural gas consists mainly of methane, although its exact composition varies by source and it may contain smaller amounts of other hydrocarbons and gases.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The earlier methyl-orange acidity candidate was withdrawn because the bank already tests acid identification with blue litmus. This natural-gas composition question tests a different Chemistry concept."
+    },
+    {
+      "target_id": "DUP-09",
+      "subject": "Chemistry",
+      "topic": "Electrochemistry",
+      "subtopic": "Electrolysis of water",
+      "question": "A small amount of dilute sulphuric acid is added to water before electrolysis mainly to: ",
+      "options": [
+        "increase the electrical conductivity",
+        "remove all dissolved ions",
+        "produce chlorine gas",
+        "prevent the electrodes from conducting"
+      ],
+      "answer": "A",
+      "explanation": "Pure water conducts electricity poorly. The acid supplies ions and increases conductivity.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-10",
+      "subject": "Economics",
+      "topic": "Inflation",
+      "subtopic": "Deflation",
+      "question": "A continuous fall in the general price level of goods and services in an economy is known as:",
+      "options": [
+        "inflation",
+        "deflation",
+        "devaluation",
+        "stagflation"
+      ],
+      "answer": "B",
+      "explanation": "Deflation is a sustained decrease in the general price level, meaning the purchasing power of money rises.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-11",
+      "subject": "Physics",
+      "topic": "Optics",
+      "subtopic": "Thin lenses",
+      "question": "A ray of light directed through the optical centre of a thin lens emerges:",
+      "options": [
+        "parallel to the principal axis in every case",
+        "without deviation",
+        "through the principal focus",
+        "perpendicular to the principal axis"
+      ],
+      "answer": "B",
+      "explanation": "A paraxial ray passing through the optical centre of a thin lens is transmitted without appreciable deviation.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-12",
+      "subject": "Economics",
+      "topic": "Population",
+      "subtopic": "Optimum population",
+      "question": "According to the theory of optimum population, a country has an optimum population when:",
+      "options": [
+        "The population is as large as possible",
+        "The birth rate is equal to the death rate",
+        "Output per person is at its maximum, given available resources and technology",
+        "Every person is employed in agriculture"
+      ],
+      "answer": "C",
+      "explanation": "Optimum population is the population size at which output or income per head is maximised, given the country's resources, capital and state of technology. A population below or above that level produces a lower average output per person.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_economics_and_syllabus_review_required",
+      "review_note": "The former per-capita-income calculation candidate was rejected because batch 28 row 28 already tested the same national-income/population formula. This new candidate tests optimum population, a distinct concept. All 200 Economics retained-plus-held rows checked; no optimum-population question found. Highest trigram Dice similarity 0.3731 (batch 12 row 31, absolute advantage), below 0.42. Human Economics reviewer must confirm syllabus fit, wording and answer."
+    },
+    {
+      "target_id": "DUP-13",
+      "subject": "Chemistry",
+      "topic": "Organic chemistry",
+      "subtopic": "Substitution reactions of alkanes",
+      "question": "The reaction between methane and chlorine in ultraviolet light is classified as: ",
+      "options": [
+        "addition",
+        "substitution",
+        "neutralisation",
+        "polymerisation"
+      ],
+      "answer": "B",
+      "explanation": "Ultraviolet light initiates free-radical substitution, replacing a hydrogen atom in methane with chlorine.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-14",
+      "subject": "Biology",
+      "topic": "Cell biology",
+      "subtopic": "Prokaryotic cells",
+      "question": "A cell that lacks a membrane-bound nucleus is classified as:",
+      "options": [
+        "eukaryotic",
+        "prokaryotic",
+        "multicellular",
+        "specialised"
+      ],
+      "answer": "B",
+      "explanation": "Prokaryotic cells do not have a membrane-bound nucleus; their genetic material is located in a nucleoid region.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-15",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "subtopic": "Recurrent expenditure",
+      "question": "Government payment of monthly salaries to public school teachers is generally classified as:",
+      "options": [
+        "capital expenditure",
+        "recurrent expenditure",
+        "public debt repayment only",
+        "foreign investment"
+      ],
+      "answer": "B",
+      "explanation": "Recurrent expenditure covers regular operating costs such as salaries, utilities and routine administration.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-16",
+      "subject": "Chemistry",
+      "topic": "Separation techniques",
+      "subtopic": "Separating immiscible liquids",
+      "question": "Which apparatus is most suitable for separating two immiscible liquids such as kerosene and water?",
+      "options": [
+        "Burette",
+        "Separating funnel",
+        "Evaporating dish",
+        "Condenser"
+      ],
+      "answer": "B",
+      "explanation": "A separating funnel allows the immiscible liquids to form separate layers and be drained off individually.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-17",
+      "subject": "Biology",
+      "topic": "Plant physiology",
+      "subtopic": "Plant hormones",
+      "question": "During positive phototropism in a young shoot, which plant hormone accumulates more on the shaded side and promotes greater cell elongation there?",
+      "options": [
+        "auxin",
+        "gibberellin",
+        "cytokinin",
+        "ethylene"
+      ],
+      "answer": "A",
+      "explanation": "In a young shoot exposed to light from one direction, auxin becomes more concentrated on the shaded side and promotes greater cell elongation there. The unequal growth causes the shoot to bend towards the light.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-18",
+      "subject": "Physics",
+      "topic": "Optics",
+      "subtopic": "Law of reflection",
+      "question": "A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection? ",
+      "options": [
+        "25°",
+        "35°",
+        "55°",
+        "70°"
+      ],
+      "answer": "B",
+      "explanation": "The law of reflection states that the angle of reflection equals the angle of incidence, measured from the normal.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-19",
+      "subject": "Economics",
+      "topic": "International trade",
+      "subtopic": "Customs unions",
+      "question": "A customs union is a trade arrangement in which member countries: ",
+      "options": [
+        "apply a common external tariff to non-members",
+        "ban all trade among themselves",
+        "use different external tariffs for every non-member",
+        "abolish all domestic taxes"
+      ],
+      "answer": "A",
+      "explanation": "A customs union removes or reduces trade barriers among members and adopts a common external tariff toward non-members.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-20",
+      "subject": "Economics",
+      "topic": "Money and banking",
+      "subtopic": "Commercial banking",
+      "question": "When a commercial bank grants a loan to a customer, it primarily creates:",
+      "options": [
+        "a new tax liability",
+        "a deposit balance in the borrower's account",
+        "new currency notes issued by the central bank",
+        "a government budget surplus"
+      ],
+      "answer": "B",
+      "explanation": "When a bank makes a loan, it normally credits the borrower's deposit account, creating a corresponding bank deposit and loan asset.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-21",
+      "subject": "Literature in English",
+      "topic": "Narrative structure",
+      "subtopic": "Flashback",
+      "question": "A narrative technique that interrupts the present action to show an event from an earlier time is called:",
+      "options": [
+        "foreshadowing",
+        "flashback",
+        "climax",
+        "denouement"
+      ],
+      "answer": "B",
+      "explanation": "A flashback takes the reader or audience back to an earlier event to provide background or context.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-22",
+      "subject": "Biology",
+      "topic": "Human physiology",
+      "subtopic": "Blood plasma",
+      "question": "Which component of blood transports many dissolved nutrients, hormones and waste products? ",
+      "options": [
+        "platelets",
+        "plasma",
+        "red blood cells",
+        "lymphocytes"
+      ],
+      "answer": "B",
+      "explanation": "Plasma is the liquid component of blood and carries dissolved substances, including nutrients, hormones and wastes.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-23",
+      "subject": "Economics",
+      "topic": "International trade",
+      "subtopic": "Foreign direct investment",
+      "question": "A foreign company establishes and operates a manufacturing plant in Nigeria. This is an example of:",
+      "options": [
+        "foreign direct investment",
+        "an import quota",
+        "a trade embargo",
+        "a balance-of-trade deficit"
+      ],
+      "answer": "A",
+      "explanation": "Foreign direct investment involves an investor from another country establishing or acquiring a lasting business interest in the host country.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-24",
+      "subject": "Biology",
+      "topic": "Microbiology",
+      "subtopic": "Bacterial structure",
+      "question": "The rigid cell wall of most bacteria is made mainly of:",
+      "options": [
+        "cellulose",
+        "chitin",
+        "peptidoglycan",
+        "starch"
+      ],
+      "answer": "C",
+      "explanation": "Most bacterial cell walls contain peptidoglycan, which helps maintain cell shape and resist osmotic pressure.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-25",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "subtopic": "Tax avoidance and evasion",
+      "question": "Knowingly concealing taxable income to avoid paying legally due tax is known as:",
+      "options": [
+        "tax evasion",
+        "tax incidence",
+        "tax shifting",
+        "public borrowing"
+      ],
+      "answer": "A",
+      "explanation": "Tax evasion is the illegal concealment or misrepresentation of income or transactions to avoid tax liability.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-26",
+      "subject": "Physics",
+      "topic": "Electricity",
+      "subtopic": "Capacitance calculations",
+      "question": "A capacitor stores a charge of 24 μC when connected to a 6 V supply. What is its capacitance?",
+      "options": [
+        "2 μF",
+        "4 μF",
+        "6 μF",
+        "12 μF"
+      ],
+      "answer": "B",
+      "explanation": "C = Q/V = 24 μC ÷ 6 V = 4 μF.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-27",
+      "subject": "Mathematics",
+      "topic": "Variation",
+      "subtopic": "Joint variation",
+      "question": "If z varies jointly as x and y, which equation represents the relationship?",
+      "options": [
+        "z = k(x + y)",
+        "z = kxy",
+        "z = k/x + y",
+        "z = kx/y²"
+      ],
+      "answer": "B",
+      "explanation": "Joint variation means z is proportional to the product of x and y, so z = kxy.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-28",
+      "subject": "Government",
+      "topic": "Federalism",
+      "subtopic": "Exclusive legislative powers",
+      "question": "In Nigeria, which government has exclusive legislative authority over matters on the Exclusive Legislative List?",
+      "options": [
+        "Local government councils",
+        "State governments",
+        "The federal government",
+        "Traditional councils"
+      ],
+      "answer": "C",
+      "explanation": "Under the Constitution, the National Assembly exercises federal legislative authority over matters assigned to the Exclusive Legislative List.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-29",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Prepositions",
+      "question": "The patient was deprived _____ sleep during the long journey. ",
+      "options": [
+        "from",
+        "of",
+        "with",
+        "by"
+      ],
+      "answer": "B",
+      "explanation": "The correct expression is “deprived of” something.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-30",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Specialised vocabulary",
+      "question": "A person whose profession involves compiling dictionaries is called a:",
+      "options": [
+        "Lexicographer",
+        "Biographer",
+        "Cartographer",
+        "Choreographer"
+      ],
+      "answer": "A",
+      "explanation": "A lexicographer is a person who compiles, edits or writes dictionaries.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The earlier meticulous-definition candidate was withdrawn because it duplicated batch 5 row 4. This specialised-vocabulary item is distinct from the existing etymologist question; full-bank screen rerun."
+    },
+    {
+      "target_id": "DUP-31",
+      "subject": "Physics",
+      "topic": "Mechanics",
+      "subtopic": "Impulse and momentum",
+      "question": "A 0.2 kg ball moving at 10 m/s is brought to rest in 0.5 s. What is the magnitude of the average force applied?",
+      "options": [
+        "2 N",
+        "4 N",
+        "5 N",
+        "20 N"
+      ],
+      "answer": "B",
+      "explanation": "Average force equals change in momentum divided by time: F = (0.2 × 10) ÷ 0.5 = 4 N.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-32",
+      "subject": "Literature in English",
+      "topic": "Drama",
+      "subtopic": "Comedy of manners",
+      "question": "A comedy that satirises the manners, social conventions and behaviour of a particular social class is called a:",
+      "options": [
+        "Comedy of manners",
+        "Tragedy",
+        "Pastoral elegy",
+        "Epic"
+      ],
+      "answer": "A",
+      "explanation": "Comedy of manners uses wit, irony and satire to expose the artificial behaviour and social conventions of a particular class or society.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The earlier euphemism candidate was withdrawn because it duplicated batch 6 row 40. This candidate tests a distinct dramatic genre."
+    },
+    {
+      "target_id": "DUP-33",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Relative pronouns",
+      "question": "In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:",
+      "options": [
+        "the subject of the relative clause",
+        "the object of the preposition “to”",
+        "the direct object of a verb",
+        "the possessor in a noun phrase"
+      ],
+      "answer": "B",
+      "explanation": "“Whom” is the object form of the relative pronoun “who”. In this sentence it is governed by the preposition “to” and refers to the person who received the form.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-34",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Concord",
+      "question": "Choose the correct verb: “The cattle _____ grazing near the river.”",
+      "options": [
+        "is",
+        "was",
+        "are",
+        "has"
+      ],
+      "answer": "C",
+      "explanation": "“Cattle” is a plural noun and takes a plural verb: “are.”",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-35",
+      "subject": "Literature in English",
+      "topic": "Literary criticism",
+      "subtopic": "Epigraph",
+      "question": "A short quotation placed at the beginning of a book or chapter to suggest its theme is called an:",
+      "options": [
+        "epigraph",
+        "epilogue",
+        "aside",
+        "prologue"
+      ],
+      "answer": "A",
+      "explanation": "An epigraph is a quotation or brief statement placed at the beginning of a literary work or section, often to introduce its theme.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-36",
+      "subject": "Government",
+      "topic": "Political parties",
+      "subtopic": "Party organisation",
+      "question": "The document that formally sets out the rules and internal structure of a political party is its:",
+      "options": [
+        "party constitution",
+        "party manifesto",
+        "party programme",
+        "party campaign slogan"
+      ],
+      "answer": "A",
+      "explanation": "A party constitution is the party's governing internal document: it sets out its organisation, membership rules, offices and procedures. A manifesto and programme communicate policy proposals, while a campaign slogan is a short political message.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-37",
+      "subject": "Government",
+      "topic": "Processes of Legislation",
+      "subtopic": "Private members' bills (proposed broad fit; not expressly named in syllabus)",
+      "question": "In a parliamentary system, a private member's bill is generally introduced by:",
+      "options": [
+        "a legislator who is not introducing it on behalf of the executive",
+        "a minister introducing it on behalf of the executive",
+        "the head of the judiciary",
+        "the national electoral commission"
+      ],
+      "answer": "A",
+      "explanation": "A private member's bill is introduced by a legislator who is not acting as a minister presenting a government bill. It is distinct from a government bill introduced on behalf of the executive.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-38",
+      "subject": "Biology",
+      "topic": "Humans and Environment",
+      "subtopic": "Disease prevention and immunity (proposed broad fit; passive maternal immunity not explicitly named)",
+      "question": "Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?",
+      "options": [
+        "the placenta",
+        "the pancreas",
+        "the kidney",
+        "the bone marrow"
+      ],
+      "answer": "A",
+      "explanation": "Maternal IgG antibodies cross the placenta from the mother to the fetus before birth, providing temporary passive immunity.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-39",
+      "subject": "Chemistry",
+      "topic": "Metals",
+      "subtopic": "Extraction of aluminium",
+      "question": "During the electrolytic extraction of aluminium, cryolite is added to alumina mainly to:",
+      "options": [
+        "raise the melting point of alumina",
+        "lower the melting point of the mixture and improve its electrical conductivity",
+        "act as the reducing agent that forms aluminium",
+        "prevent oxygen from being released at the anode"
+      ],
+      "answer": "B",
+      "explanation": "Cryolite dissolves alumina, lowers the operating temperature and improves the conductivity of the electrolyte, reducing the energy required for extraction.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-40",
+      "subject": "Chemistry",
+      "topic": "Chemical industry",
+      "subtopic": "Contact process catalyst",
+      "question": "In the Contact process, which substance is commonly used as the catalyst for converting sulphur dioxide to sulphur trioxide?",
+      "options": [
+        "iron",
+        "nickel",
+        "vanadium(V) oxide",
+        "manganese(IV) oxide"
+      ],
+      "answer": "C",
+      "explanation": "Vanadium(V) oxide, V₂O₅, catalyses the oxidation of sulphur dioxide to sulphur trioxide in the Contact process.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-41",
+      "subject": "Biology",
+      "topic": "Human physiology",
+      "subtopic": "Endocrine hormones",
+      "question": "Which hormone stimulates the production of milk in the mammary glands after childbirth?",
+      "options": [
+        "oxytocin",
+        "prolactin",
+        "adrenaline",
+        "thyroxine"
+      ],
+      "answer": "B",
+      "explanation": "Prolactin stimulates milk production in the mammary glands. Oxytocin is involved in milk ejection.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-42",
+      "subject": "Economics",
+      "topic": "Production",
+      "subtopic": "Law of diminishing returns",
+      "question": "In the short run, the law of diminishing returns states that when additional units of a variable factor are combined with fixed factors, the marginal product of the variable factor will eventually:",
+      "options": [
+        "increase without limit",
+        "remain constant at every level of output",
+        "decline",
+        "become negative immediately"
+      ],
+      "answer": "C",
+      "explanation": "With other factors fixed, adding more units of a variable input will eventually cause the marginal product of that input to fall, assuming the production process is otherwise unchanged.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-43",
+      "subject": "Mathematics",
+      "topic": "Functions",
+      "subtopic": "One-to-one functions",
+      "question": "A function is one-to-one if:",
+      "options": [
+        "every element of its domain has the same image",
+        "different elements of its domain have different images",
+        "every element of the codomain must be an image",
+        "the function has no inverse"
+      ],
+      "answer": "B",
+      "explanation": "A one-to-one function maps distinct domain elements to distinct values; no two different inputs share the same output.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-44",
+      "subject": "Physics",
+      "topic": "Waves",
+      "subtopic": "Diffraction",
+      "question": "The bending or spreading of waves as they pass through a narrow opening or around an obstacle is called:",
+      "options": [
+        "reflection",
+        "diffraction",
+        "refraction",
+        "polarisation"
+      ],
+      "answer": "B",
+      "explanation": "Diffraction is the spreading of waves when they pass through an opening or around an obstacle. It is most noticeable when the opening or obstacle is comparable in size to the wavelength.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-45",
+      "subject": "Economics",
+      "topic": "Factors of production",
+      "subtopic": "Economic rent",
+      "question": "Economic rent is the payment received by a factor of production in excess of its:",
+      "options": [
+        "marginal product",
+        "transfer earnings",
+        "total revenue",
+        "fixed cost"
+      ],
+      "answer": "B",
+      "explanation": "Economic rent is the surplus payment to a factor over the minimum amount required to keep it in its present use, known as transfer earnings.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-46",
+      "subject": "Chemistry",
+      "topic": "Chemical bonding",
+      "subtopic": "Alloys",
+      "question": "Brass is an alloy made mainly from:",
+      "options": [
+        "copper and tin",
+        "copper and zinc",
+        "iron and carbon",
+        "aluminium and magnesium"
+      ],
+      "answer": "B",
+      "explanation": "Brass is primarily an alloy of copper and zinc. Bronze, by contrast, is mainly copper and tin.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-47",
+      "subject": "Government",
+      "topic": "Legislature",
+      "subtopic": "Legislative privilege",
+      "question": "The privilege of freedom of speech in legislative proceedings primarily allows a legislator to:",
+      "options": [
+        "express views during parliamentary proceedings without being sued or prosecuted for those statements",
+        "avoid criminal responsibility for offences committed outside the legislature",
+        "ignore lawful court orders",
+        "prevent the public from scrutinising legislative debates"
+      ],
+      "answer": "A",
+      "explanation": "Parliamentary privilege protects statements made as part of legislative proceedings so members can debate freely. It is not a general immunity from criminal law or unrelated legal duties.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Compared the replacement with all 200 Government retained-plus-held rows. The bank's nearest matches concern general legislative functions, freedom of expression and party-whip duties; none asks about the distinct legal protection afforded to statements made in legislative proceedings. Preliminary answer A is plausible, but the precise scope of parliamentary privilege depends on the applicable constitutional/statutory framework. The wording should be checked by a qualified Government reviewer, and the syllabus fit of legislative privilege is not yet confirmed. Similarity 0.3893, below the 0.42 flag threshold. Not approved for import."
+    },
+    {
+      "target_id": "DUP-48",
+      "subject": "Literature in English",
+      "topic": "Literary criticism",
+      "subtopic": "Denotation and connotation",
+      "question": "In literary analysis, the denotation of a word refers to its:",
+      "options": [
+        "Emotional associations in a particular context",
+        "Literal or direct meaning",
+        "Sound pattern when spoken",
+        "Historical origin and development"
+      ],
+      "answer": "B",
+      "explanation": "Denotation is the direct or dictionary meaning of a word, while connotation refers to the ideas or feelings associated with it.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "A retained-bank text scan found no use of 'denotation' or the same literal-meaning prompt. Full semantic screening and subject review remain required. Compared with all 200 Literature in English retained-plus-held rows. The highest lexical match is batch 36 row 38 on diction (0.6667); the concepts are related but distinct: denotation is a word's direct/literal meaning, while diction is a writer's choice and use of words. Other nearest matches concern setting and mood. The high lexical flag is not proof of duplication, but requires independent Literature reviewer confirmation. Preliminary answer B is correct. Syllabus fit requires confirmation. Not approved for import."
+    },
+    {
+      "target_id": "DUP-49",
+      "subject": "Economics",
+      "topic": "Public finance",
+      "subtopic": "Tax incidence",
+      "question": "After the effects of tax shifting have worked through a market, the tax incidence refers to:",
+      "options": [
+        "The authority that collects the tax",
+        "The date on which the tax becomes payable",
+        "The final distribution of the tax burden between buyers and sellers",
+        "The total quantity of goods produced before the tax"
+      ],
+      "answer": "C",
+      "explanation": "Tax incidence describes who ultimately bears the economic burden of a tax, which may differ from the person or firm legally required to remit it.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "A retained-bank text scan found no use of 'tax incidence' or the same final-burden prompt. Full semantic screening and subject review remain required. Compared with all 200 Economics retained-plus-held rows. No tax-incidence question was found. Nearby taxation questions test tax types, direct/indirect, progressive/regressive, specific and ad valorem taxes; they do not test statutory remittance versus the final economic burden after tax shifting. Preliminary answer C and explanation are conceptually sound. Confirm that tax incidence is within the intended JAMB syllabus depth. Similarity 0.2807, below the 0.42 flag threshold. Not approved for import."
+    },
+    {
+      "target_id": "DUP-50",
+      "subject": "Biology",
+      "topic": "Cell biology",
+      "subtopic": "Golgi apparatus and protein packaging",
+      "question": "Which organelle modifies, sorts and packages proteins into vesicles for transport within or out of a cell?",
+      "options": [
+        "Golgi apparatus",
+        "Ribosome",
+        "Mitochondrion",
+        "Lysosome"
+      ],
+      "answer": "A",
+      "explanation": "The Golgi apparatus modifies, sorts and packages proteins into vesicles for transport to other cell locations or for secretion. Ribosomes synthesise proteins, mitochondria release energy, and lysosomes contain digestive enzymes.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Revised after identifying an existing ABO blood-group inheritance item in the retained bank. The new cell-organelle concept is distinct; subject review and the refreshed full-bank screen are still required. Compared with all 200 Biology retained-plus-held rows. No Golgi apparatus protein-modification/sorting/packaging question was found. Nearest organelle questions test nucleus, mitochondrion, chloroplast, ribosome and lysosome functions; these are related cell-biology material but distinct functions. Preliminary answer A and explanation are sound. Check that the precise Golgi functions are within the intended JAMB syllabus depth. Similarity 0.3135, below the 0.42 flag threshold. Not approved for import."
+    },
+    {
+      "target_id": "DUP-51",
+      "subject": "Physics",
+      "topic": "Waves",
+      "subtopic": "Resonance",
+      "question": "A system is said to be in resonance when the frequency of an applied periodic force is equal to its:",
+      "options": [
+        "amplitude",
+        "natural frequency",
+        "wavelength",
+        "wave speed"
+      ],
+      "answer": "B",
+      "explanation": "Resonance occurs when the driving frequency matches the natural frequency of a system, producing a large response under suitable conditions.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "A retained-bank keyword scan found no 'resonance frequency' item. Full semantic screening and subject review remain required. All 200 Physics retained-plus-held rows checked. No resonance or natural-frequency question was found. The nearest lexical matches concern momentum, work-energy and Doppler effect, not resonance. Answer B is correct: resonance occurs when the driving frequency matches the system's natural frequency (with a sufficiently low damping context for a large response). Similarity 0.3952, below threshold. The official JAMB Physics syllabus explicitly includes forced vibration and resonance under simple harmonic motion and asks candidates to enumerate applications of resonance. Direct syllabus coverage confirmed. Independent Physics reviewer still required; not approved for import."
+    },
+    {
+      "target_id": "DUP-52",
+      "subject": "Mathematics",
+      "topic": "Matrices",
+      "subtopic": "Matrix multiplication",
+      "question": "Evaluate the matrix product [[1, 2], [0, 3]] × [[2, 1], [4, 0]].",
+      "options": [
+        "[[10, 1], [12, 0]]",
+        "[[2, 4], [0, 9]]",
+        "[[10, 4], [12, 3]]",
+        "[[6, 1], [12, 0]]"
+      ],
+      "answer": "A",
+      "explanation": "Multiply each row of A by each column of B. The entries are 1×2 + 2×4 = 10, 1×1 + 2×0 = 1, 0×2 + 3×4 = 12, and 0×1 + 3×0 = 0. Therefore AB = [[10, 1], [12, 0]].",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The stem was shortened to reduce template-based lexical similarity with unrelated arithmetic questions. The matrix operation is distinct from the existing determinant and trace items. All 200 Mathematics retained-plus-held rows checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests 2×2 matrix multiplication. Recalculation confirms AB = [[10, 1], [12, 0]], answer A. Similarity 0.4000, below threshold. The result is mathematically correct, but the exact JAMB Mathematics syllabus coverage of matrix multiplication must be confirmed by a qualified Mathematics reviewer. Not approved for import."
+    },
+    {
+      "target_id": "DUP-53",
+      "subject": "Chemistry",
+      "topic": "Qualitative analysis",
+      "subtopic": "Identification of copper(II) ions",
+      "question": "Which solid is formed when Cu²⁺(aq) reacts with OH⁻(aq)?",
+      "options": [
+        "Cu(OH)₂, a blue precipitate",
+        "Cu₂O, a red precipitate",
+        "CuCO₃, a green precipitate",
+        "CuS, a black precipitate"
+      ],
+      "answer": "A",
+      "explanation": "Copper(II) ions react with hydroxide ions to form copper(II) hydroxide, Cu(OH)₂, which is a blue precipitate and is insoluble in excess aqueous sodium hydroxide.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The stem was shortened to distinguish this cation-identification test from the existing chloride-ion qualitative test. Contextual review remains required. All 200 Chemistry retained-plus-held rows checked. No Cu²⁺ + OH⁻ precipitate-identification question was found. Nearest questions cover neutralisation/salt formation, gas tests, copper electrolysis and displacement; these are different reaction/identification objectives. Answer A is correct: Cu(OH)₂ is a blue precipitate; it is insoluble in excess aqueous NaOH. Similarity 0.4580, flagged. The official Chemistry syllabus covers tests for metallic ions, sodium hydroxide precipitation of metallic hydroxides and coloured ions in transition metals (Topic 16); broad coverage is supported, but exact Cu²⁺ test suitability needs a Chemistry reviewer. Not approved for import."
+    },
+    {
+      "target_id": "DUP-54",
+      "subject": "Economics",
+      "topic": "Demand and supply",
+      "subtopic": "Cross elasticity of demand",
+      "question": "The cross elasticity of demand between two goods is +0.8. What does this value indicate about the relationship between the goods?",
+      "options": [
+        "They are substitutes.",
+        "They are complements.",
+        "They are unrelated goods.",
+        "Both are inferior goods."
+      ],
+      "answer": "A",
+      "explanation": "A positive cross elasticity of demand means that an increase in the price of one good is associated with an increase in the quantity demanded of the other. The goods are substitutes.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Reworded after the initial stem triggered a lexical similarity flag against own-price elasticity questions. This version tests interpretation of the sign of cross elasticity, a distinct concept; rerun the full-bank screen. All 200 Economics retained-plus-held rows checked. Existing elasticity items test own-price elasticity of demand/supply; none tests cross elasticity or interpretation of its positive sign. A coefficient of +0.8 indicates substitute goods, answer A. Similarity 0.4141, just below the 0.42 flag threshold. Official JAMB Economics syllabus Topic 4(c) explicitly includes cross elasticity of demand and interpretation of elasticity coefficients. Direct syllabus coverage confirmed. Independent Economics reviewer still required; not approved for import."
+    },
+    {
+      "target_id": "DUP-55",
+      "subject": "Literature in English",
+      "topic": "Sound devices",
+      "subtopic": "Cacophony",
+      "question": "A poet deliberately uses harsh, discordant combinations of sounds to create an unpleasant or jarring effect. This sound device is called:",
+      "options": [
+        "Euphony",
+        "Cacophony",
+        "Assonance",
+        "Alliteration"
+      ],
+      "answer": "B",
+      "explanation": "Cacophony is the deliberate use of harsh or discordant sounds to create a jarring effect. Euphony creates a pleasing sound; assonance repeats vowel sounds; alliteration repeats initial consonant sounds.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Literature in English retained-plus-held rows checked. No cacophony definition/item was found. Nearest items test asyndeton and consonance, different sound/language devices. Answer B is correct: cacophony is the deliberate use of harsh or discordant sounds for a jarring effect. Similarity 0.3396, below threshold. Cacophony is closely related by contrast to euphony; an independent Literature reviewer should confirm the distinction and syllabus depth. Not approved for import."
+    },
+    {
+      "target_id": "DUP-56",
+      "subject": "Literature in English",
+      "topic": "Sound devices",
+      "subtopic": "Euphony",
+      "question": "A poet arranges words and sounds to produce a smooth, harmonious and pleasing auditory effect. This technique is known as:",
+      "options": [
+        "Cacophony",
+        "Euphony",
+        "Sibilance",
+        "Onomatopoeia"
+      ],
+      "answer": "B",
+      "explanation": "Euphony is the use or arrangement of pleasing, harmonious sounds. Cacophony produces harsh or discordant sounds; sibilance repeats hissing consonants; onomatopoeia imitates sounds.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Literature in English retained-plus-held rows checked. No euphony definition/item was found. Nearest items test rhyme, plot sequence and stream of consciousness, not harmonious sound effects. Answer B is correct: euphony is the use/arrangement of pleasing, harmonious sounds. Similarity 0.2793, below threshold. It is the conceptual counterpart to DUP-55's cacophony, not a duplicate; a Literature reviewer should confirm both are useful and not overly repetitive in a small bank. Not approved for import."
+    },
+    {
+      "target_id": "DUP-57",
+      "subject": "Use of English",
+      "topic": "Cohesion",
+      "subtopic": "Ellipsis as a cohesive device",
+      "question": "In the sentence “Ada chose the blue dress, while Tola the red one,” which cohesive device allows the verb phrase “chose” to be omitted from the second clause?",
+      "options": [
+        "Substitution",
+        "Ellipsis",
+        "Reference",
+        "Conjunction"
+      ],
+      "answer": "B",
+      "explanation": "Ellipsis is the omission of a word or group of words that can be understood from the surrounding text. Here, “chose” is understood after “Tola” and is therefore omitted.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Use of English retained-plus-held rows checked. No ellipsis-as-cohesive-device question was found. Nearest matches test adverb function, conditional completion and infinitive phrase function. Answer B is correct: the verb phrase 'chose' is recoverable from the first clause and omitted in the second; this is ellipsis. Similarity 0.3367, below threshold. Broad fit to cohesion/discourse and grammatical structure is plausible, but exact syllabus mapping requires an English reviewer. Not approved for import."
+    },
+    {
+      "target_id": "DUP-58",
+      "subject": "Biology",
+      "topic": "Ecology",
+      "subtopic": "Quadrat sampling",
+      "question": "Which field method is most suitable for estimating the abundance of grasses in a study area?",
+      "options": [
+        "Using a quadrat",
+        "Using a pooter",
+        "Using a sweep net",
+        "Using a pitfall trap"
+      ],
+      "answer": "A",
+      "explanation": "A quadrat is a square frame placed in sample areas to estimate the abundance, density or frequency of plants and other relatively stationary organisms. Pooters and sweep nets collect mobile small animals, while pitfall traps sample ground-dwelling invertebrates.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The initial homologous-structures proposal was withdrawn after the full-bank screen found an existing homologous-structures question in batch 23 row 13. This revised quadrat-sampling question tests a different ecological field method; rerun full-bank screen. All 200 Biology retained-plus-held rows checked. No quadrat-sampling method question was found. Nearest matches concern biotic factors, photosynthesis and plant cell walls; no same ecological sampling method. Answer A is correct: quadrats estimate abundance/density/frequency of plants and other relatively stationary organisms. Similarity 0.2895, below threshold. Ecology is a relevant Biology domain, but exact JAMB syllabus fit for field sampling methods requires qualified Biology review. Not approved for import."
+    },
+    {
+      "target_id": "DUP-59",
+      "subject": "Literature in English",
+      "topic": "Literary devices",
+      "subtopic": "Epithet",
+      "question": "In the expression “swift-footed Achilles”, the words “swift-footed” function as a/an:",
+      "options": [
+        "Epithet",
+        "Euphemism",
+        "Paradox",
+        "Onomatopoeia"
+      ],
+      "answer": "A",
+      "explanation": "An epithet is a descriptive expression attached to a person or thing to highlight a characteristic. “Swift-footed” is a recurring descriptive epithet associated with Achilles.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Revised to use a clear literary example after the prior wording triggered lexical similarity against metaphor questions. The revised wording is screened against all source rows. All 200 Literature in English retained-plus-held rows checked. No epithet definition/example was found. The nearest lexical match is synecdoche (batch 23 row 40, 0.4113), which uses a part for the whole; the proposed 'swift-footed Achilles' is a descriptive epithet. Other close items are an epilogue and exposition, different terms. Similarity 0.4113, just below threshold. Answer A is correct. A Literature reviewer should confirm that the classical epithet example is appropriate for JAMB level and distinguish it from other descriptive devices. Not approved for import."
+    },
+    {
+      "target_id": "DUP-60",
+      "subject": "Biology",
+      "topic": "Sense organs",
+      "subtopic": "Hearing",
+      "question": "The sensory hair cells that detect sound vibrations are located in the:",
+      "options": [
+        "Organ of Corti",
+        "Semicircular canals",
+        "Eustachian tube",
+        "Auditory nerve"
+      ],
+      "answer": "A",
+      "explanation": "The Organ of Corti lies within the cochlea and contains hair cells that convert sound-induced mechanical vibrations into nerve impulses carried by the auditory nerve.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-60 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2783 against batch 17 row 16; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required. All 200 Biology retained-plus-held rows checked. No Organ of Corti/hair-cell location question was found. Nearest matches concern root-hair osmosis and red blood cell function; they do not assess the cochlear sensory organ. Answer A is correct: the Organ of Corti in the cochlea contains sensory hair cells that transduce sound-related mechanical vibrations. Similarity 0.2783, below threshold. Independent Biology reviewer must confirm exact anatomical wording and syllabus depth. Not approved for import."
+    },
+    {
+      "target_id": "DUP-61",
+      "subject": "Biology",
+      "topic": "Plant physiology",
+      "subtopic": "Phototropism",
+      "question": "A young plant shoot bends towards light because cells on its shaded side undergo greater:",
+      "options": [
+        "cell elongation",
+        "cell division only",
+        "loss of chlorophyll",
+        "water loss"
+      ],
+      "answer": "A",
+      "explanation": "In positive phototropism, auxin promotes greater cell elongation on the shaded side of a shoot. The unequal growth causes the shoot to bend towards the light.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-61 held-row record in the 1,600-row staging set. Its highest same-subject trigram Dice score is 0.2262 against batch 09 row 13; the closest concept is unrelated. The cited source locations were verified using physical CSV row numbers (including the header) and match the staging holdout records. Independent Biology review remains required. All 200 Biology retained-plus-held rows checked. No phototropism/auxin shaded-side cell-elongation question was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis. Answer A is correct: greater cell elongation on the shaded side causes a shoot to bend towards light; auxin is involved in this differential growth. Similarity 0.2262, below threshold. Independent Biology reviewer must confirm syllabus depth and wording. Not approved for import."
+    },
+    {
+      "target_id": "DUP-62",
+      "subject": "Literature in English",
+      "topic": "Poetic techniques",
+      "subtopic": "Enjambment",
+      "question": "When a poet carries a sentence beyond the end of a line without a pause, the technique is called:",
+      "options": [
+        "Enjambment",
+        "Caesura",
+        "Alliteration",
+        "Refrain"
+      ],
+      "answer": "A",
+      "explanation": "Enjambment occurs when the sense of a sentence or phrase continues from one poetic line into the next without a grammatical pause at the line ending. Caesura is a pause within a line.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-62 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.4046 against the existing caesura item (batch 16 row 37). Enjambment and caesura are distinct poetic techniques, but the close wording requires human Literature review and contextual clearance. All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a poetic line; enjambment is continuation of syntax/sense across a line break without an end-stop. These are related lineation techniques but not duplicates. Answer A is correct. Similarity 0.4046, below threshold but close; an independent Literature reviewer should confirm distinction, syllabus scope and question-bank variety. Not approved for import."
+    },
+    {
+      "target_id": "DUP-63",
+      "subject": "Mathematics",
+      "topic": "Ratio and proportion",
+      "subtopic": "Map scales",
+      "question": "A map has a scale of 1:50,000. What actual distance is represented by 4 cm on the map?",
+      "options": [
+        "500 m",
+        "1 km",
+        "2 km",
+        "20 km"
+      ],
+      "answer": "C",
+      "explanation": "A scale of 1:50,000 means 1 cm on the map represents 50,000 cm on the ground. Therefore 4 cm represents 200,000 cm, which is 2,000 m or 2 km.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted against the DUP-63 staged holdout. Full 1,600-row same-subject lexical screen: highest Dice score 0.3648 against a circle-sector question; the concepts are distinct. Confirm map-scale coverage in the current JAMB Mathematics syllabus during independent review. All 200 Mathematics retained-plus-held rows checked. No map-scale calculation was found. Nearest matches concern sector fractions, angles in a circle and coordinate distance, not scale conversion. Calculation: 4 cm × 50,000 = 200,000 cm = 2 km, answer C. Similarity 0.3648, below threshold. Confirm map scales/ratio-proportion coverage against the current JAMB Mathematics syllabus with an independent reviewer. Not approved for import."
+    },
+    {
+      "target_id": "DUP-64",
+      "subject": "Chemistry",
+      "topic": "Nuclear chemistry",
+      "subtopic": "Half-life",
+      "question": "A radioactive isotope has a half-life of 6 hours. What fraction of the original sample remains after 18 hours?",
+      "options": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "1/16"
+      ],
+      "answer": "C",
+      "explanation": "Eighteen hours represents three half-lives (18 ÷ 6 = 3). The remaining fraction is (1/2)³ = 1/8.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted for the DUP-64 Chemistry holdout (atomic-radius trend). Full 1,600-row same-subject lexical screen: highest Dice score 0.2623 against a first-order rate-constant unit question. The concept is distinct. Independent Chemistry review and contextual bank-wide clearance remain required. All 200 Chemistry retained-plus-held rows checked. No half-life fraction calculation was found. Nearest matches concern first-order rate-constant units, isotopes and catalysts. After 18 hours there are three half-lives, so the remaining fraction is (1/2)^3 = 1/8, answer C. Similarity 0.2623, below threshold. JAMB Chemistry syllabus Nuclear Chemistry explicitly includes half-life calculations. Direct syllabus coverage confirmed; independent Chemistry reviewer still required. Not approved for import."
+    },
+    {
+      "target_id": "DUP-65",
+      "subject": "Biology",
+      "topic": "Animal physiology",
+      "subtopic": "Insect respiration",
+      "question": "The fine terminal branches of an insect's tracheal system that deliver oxygen directly to body cells are called:",
+      "options": [
+        "Tracheoles",
+        "Spiracles",
+        "Malpighian tubules",
+        "Air sacs"
+      ],
+      "answer": "A",
+      "explanation": "Tracheoles are the fine terminal branches of the insect tracheal system. They extend close to body cells and provide the route for oxygen to diffuse directly to tissues. Spiracles are the external openings of the system.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted for the DUP-65 Biology holdout (commensalism). Full 1,600-row same-subject lexical screen: highest Dice score 0.3462 against a question on the ureter; no concept overlap. Independent Biology review and contextual bank-wide clearance remain required. All 200 Biology retained-plus-held rows checked. No insect tracheole item was found. Nearest matches concern ureter, xylem and kidney filtration; no respiratory-system overlap. Answer A is correct: tracheoles are the fine terminal branches of the insect tracheal system where gas exchange with tissues occurs. Similarity 0.3462, below threshold. Independent Biology reviewer must confirm syllabus depth and that the wording distinguishes tracheoles from spiracles. Not approved for import."
+    },
+    {
+      "target_id": "DUP-66",
+      "subject": "Physics",
+      "topic": "Electromagnetism",
+      "subtopic": "Transformer efficiency",
+      "question": "A transformer receives 240 V on its primary coil and supplies 12 V across its secondary coil. If the primary current is 0.5 A and the secondary current is 8 A, what is its efficiency?",
+      "options": [
+        "60%",
+        "70%",
+        "80%",
+        "90%"
+      ],
+      "answer": "C",
+      "explanation": "Input power = 240 × 0.5 = 120 W. Output power = 12 × 8 = 96 W. Efficiency = (96/120) × 100 = 80%.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "All 200 Physics retained-plus-held rows checked. No transformer-efficiency calculation was found. Nearest matches test resistance/potential difference and general machine efficiency, not transformer input/output power from voltage and current. Input power = 240×0.5 = 120 W; output power = 12×8 = 96 W; efficiency = 80%, answer C. Similarity 0.3285, below threshold. Independent Physics reviewer must confirm syllabus fit and that the voltage/current values represent the relevant primary/secondary RMS quantities. Not approved for import."
+    },
+    {
+      "target_id": "DUP-67",
+      "subject": "Chemistry",
+      "topic": "Chemical bonding",
+      "subtopic": "Coordinate covalent bond",
+      "question": "In the formation of the ammonium ion, NH₄⁺, the bond formed when NH₃ combines with H⁺ is initially described as a:",
+      "options": [
+        "Ionic bond",
+        "Metallic bond",
+        "Coordinate covalent bond",
+        "Hydrogen bond"
+      ],
+      "answer": "C",
+      "explanation": "The nitrogen atom in NH₃ donates its lone pair to H⁺ to form the N–H bond. Both bonding electrons are supplied by nitrogen, so it is a coordinate covalent bond.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Full same-subject retained-plus-held comparison completed across all 200 Chemistry rows. Seven nearby entries concern generic covalent bonding, the coordinate-bond definition, the ammonium-ion formula, or ammonia release from ammonium salts. None asks how NH₃ forms NH₄⁺ by donating its lone pair to H⁺. Answer C is correct; the nitrogen lone pair supplies both electrons in the coordinate N–H bond at formation. The wording correctly distinguishes the bond's formation from the equivalent N–H bonds in the resulting ion. Highest same-subject lexical score is 0.4094 (batch 28 row 21, ammonium-ion formula), below 0.42. JAMB Chemistry includes coordinate covalent bonding. Conceptually distinct; independent Chemistry subject review remains mandatory. Not approved for import."
+    },
+    {
+      "target_id": "DUP-69",
+      "subject": "Literature in English",
+      "topic": "Drama",
+      "subtopic": "Unity of action",
+      "question": "The classical dramatic principle that a play should centre on one principal plot is known as the unity of:",
+      "options": [
+        "Action",
+        "Time",
+        "Place",
+        "Character"
+      ],
+      "answer": "A",
+      "explanation": "Unity of action requires a play's events to be organised around one principal action or coherent main plot, rather than several unrelated plots.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_literature_and_syllabus_review_required",
+      "review_note": "The former dramatic-irony candidate was rejected as a semantic duplicate of retained batch 07 row 37. This new candidate tests the classical unity of action. All 200 Literature in English retained-plus-held rows checked; no unity-of-action question found. Highest trigram Dice similarity 0.3523 (batch 17 row 40, dramatic suspense), below 0.42. Human Literature reviewer must confirm syllabus fit and that the definition is appropriately framed."
+    },
+    {
+      "target_id": "DUP-71",
+      "subject": "Physics",
+      "topic": "Electrostatics",
+      "subtopic": "Coulomb's law",
+      "question": "Two point charges are separated by a distance r and exert an electrostatic force F on each other. If their separation is increased to 2r without changing the charges, what is the new force?",
+      "options": [
+        "4F",
+        "2F",
+        "F/2",
+        "F/4"
+      ],
+      "answer": "D",
+      "explanation": "By Coulomb's law, electrostatic force is inversely proportional to the square of separation. Doubling the distance gives F/(2²) = F/4.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-74",
+      "subject": "Biology",
+      "topic": "Excretion",
+      "subtopic": "Ultrafiltration",
+      "question": "The high pressure that drives ultrafiltration in a mammalian kidney is produced mainly because the:",
+      "options": [
+        "Afferent arteriole is wider than the efferent arteriole",
+        "Efferent arteriole is wider than the afferent arteriole",
+        "Bowman's capsule has a muscular wall",
+        "Collecting duct actively pumps blood"
+      ],
+      "answer": "A",
+      "explanation": "The afferent arteriole is wider than the efferent arteriole, creating relatively high hydrostatic pressure in the glomerular capillaries and forcing small molecules into Bowman's capsule.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-75",
+      "subject": "Economics",
+      "topic": "International trade",
+      "subtopic": "Comparative advantage",
+      "question": "Country A can produce either 10 units of rice or 5 units of cloth with the same resources. Country B can produce either 8 units of rice or 8 units of cloth. Which country has a comparative advantage in cloth?",
+      "options": [
+        "Country A",
+        "Country B",
+        "Both countries equally",
+        "Neither country"
+      ],
+      "answer": "B",
+      "explanation": "The opportunity cost of one unit of cloth is 2 units of rice in A and 1 unit of rice in B. B has the lower opportunity cost and therefore the comparative advantage in cloth.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-77",
+      "subject": "Government",
+      "topic": "Political concepts",
+      "subtopic": "Rule of law",
+      "question": "Which principle of the rule of law requires that public officials and ordinary citizens are subject to the same law?",
+      "options": [
+        "Equality before the law",
+        "Collective responsibility",
+        "Separation of powers",
+        "Political neutrality"
+      ],
+      "answer": "A",
+      "explanation": "Equality before the law means that no person is above the law and that the law applies to public officials and ordinary citizens alike.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-72",
+      "subject": "Use of English",
+      "topic": "Lexis and structure",
+      "subtopic": "Idiomatic expressions",
+      "question": "When someone says that a plan “fell through”, the expression means that the plan:",
+      "options": [
+        "Was completed successfully",
+        "Failed to happen",
+        "Was postponed for one hour",
+        "Was kept secret"
+      ],
+      "answer": "B",
+      "explanation": "“Fall through” means to fail or not be completed as planned.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-73",
+      "subject": "Biology",
+      "topic": "Coordination",
+      "subtopic": "Reflex action",
+      "question": "Which part of the central nervous system coordinates a simple withdrawal reflex before conscious interpretation of pain?",
+      "options": [
+        "Cerebrum",
+        "Spinal cord",
+        "Cerebellum",
+        "Hypothalamus"
+      ],
+      "answer": "B",
+      "explanation": "A simple withdrawal reflex is coordinated through a reflex arc in the spinal cord, allowing a rapid response before conscious processing by the brain.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-76",
+      "subject": "Economics",
+      "topic": "Market failure",
+      "subtopic": "Negative externalities",
+      "question": "A factory releases untreated waste into a river, imposing costs on nearby residents that are not reflected in the market price of its product. This is an example of:",
+      "options": [
+        "A positive externality",
+        "A negative externality",
+        "A public good",
+        "A transfer payment"
+      ],
+      "answer": "B",
+      "explanation": "A negative externality occurs when production or consumption imposes external costs on third parties that are not included in the market price.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-78",
+      "subject": "Use of English",
+      "topic": "Lexis and structure",
+      "subtopic": "Punctuation",
+      "question": "Which punctuation mark should separate the two independent clauses in this sentence when no coordinating conjunction is used: “The rain stopped _____ the match resumed”?",
+      "options": [
+        "Apostrophe",
+        "Semicolon",
+        "Hyphen",
+        "Quotation mark"
+      ],
+      "answer": "B",
+      "explanation": "A semicolon can join two closely related independent clauses when no coordinating conjunction is used.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-80",
+      "subject": "Economics",
+      "topic": "Economic systems",
+      "subtopic": "Mixed economy",
+      "question": "An economy in which private businesses operate alongside state-owned enterprises and government regulation is generally described as:",
+      "options": [
+        "A command economy",
+        "A traditional economy",
+        "A mixed economy",
+        "A subsistence economy"
+      ],
+      "answer": "C",
+      "explanation": "A mixed economy combines private economic activity with government ownership, regulation or provision of selected goods and services.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-88",
+      "subject": "Economics",
+      "topic": "Inflation",
+      "subtopic": "Cost-push inflation",
+      "question": "A sharp increase in the cost of imported fuel raises production expenses across an economy. This is most likely to cause:",
+      "options": [
+        "Demand-pull inflation",
+        "Cost-push inflation",
+        "Deflation",
+        "A fall in the general price level"
+      ],
+      "answer": "B",
+      "explanation": "Cost-push inflation occurs when rising production costs, such as fuel and imported input costs, push firms to raise prices.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-70",
+      "subject": "Biology",
+      "topic": "Cell biology",
+      "subtopic": "Vacuole",
+      "question": "In a mature plant cell, the large central vacuole helps maintain the cell's shape mainly by:",
+      "options": [
+        "Producing proteins",
+        "Maintaining turgor pressure",
+        "Releasing digestive enzymes into blood",
+        "Carrying genetic information"
+      ],
+      "answer": "B",
+      "explanation": "The vacuole stores cell sap. Water entering it creates turgor pressure, which helps keep the plant cell firm and supports the plant.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Full same-subject retained-plus-held comparison completed across all 200 Biology rows. No vacuole/turgor-pressure function question was found. Nearest entries concern the nucleus, chloroplast, lysosome, plasmolysis and cell-wall structure; none tests the central vacuole's role in maintaining turgor. Answer B is correct: water held in the large central vacuole contributes to turgor pressure, keeping a mature plant cell firm and helping maintain its shape. JAMB Biology explicitly includes turgidity as a transport mechanism; the exact cell-organelle phrasing remains subject to qualified Biology review. Similarity 0.3333, below 0.42. Conceptually distinct; independent Biology review remains mandatory. Not approved for import."
+    },
+    {
+      "target_id": "DUP-81",
+      "subject": "Physics",
+      "topic": "Heat",
+      "subtopic": "Linear expansion",
+      "question": "A metal rod of length 2.0 m increases in length by 0.002 m when heated through 50 °C. What is its coefficient of linear expansion?",
+      "options": [
+        "2.0 × 10⁻⁵ °C⁻¹",
+        "5.0 × 10⁻⁵ °C⁻¹",
+        "2.0 × 10⁻⁴ °C⁻¹",
+        "5.0 × 10⁻⁴ °C⁻¹"
+      ],
+      "answer": "A",
+      "explanation": "Using ΔL = αLΔT, α = 0.002 ÷ (2.0 × 50) = 0.00002 °C⁻¹ = 2.0 × 10⁻⁵ °C⁻¹.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-89",
+      "subject": "Use of English",
+      "topic": "Oral English",
+      "subtopic": "Nasal consonants",
+      "question": "Which pair consists of two nasal consonant sounds in English?",
+      "options": [
+        "/m/ and /n/",
+        "/p/ and /b/",
+        "/f/ and /v/",
+        "/s/ and /z/"
+      ],
+      "answer": "A",
+      "explanation": "/m/ and /n/ are nasal consonants because air passes through the nasal cavity during their production.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-79",
+      "subject": "Use of English",
+      "topic": "Grammar",
+      "subtopic": "Infinitive of purpose",
+      "question": "In the sentence “She visited the library to borrow a textbook”, the infinitive phrase “to borrow a textbook” expresses:",
+      "options": [
+        "Reason or purpose",
+        "Possession",
+        "Comparison",
+        "A condition"
+      ],
+      "answer": "A",
+      "explanation": "The infinitive phrase explains the purpose of her visit to the library.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-84",
+      "subject": "Biology",
+      "topic": "Genetics",
+      "subtopic": "DNA replication",
+      "question": "During DNA replication, which enzyme joins adjacent Okazaki fragments on the lagging strand?",
+      "options": [
+        "DNA ligase",
+        "DNA helicase",
+        "RNA polymerase",
+        "Amylase"
+      ],
+      "answer": "A",
+      "explanation": "DNA ligase seals the breaks between adjacent Okazaki fragments by forming phosphodiester bonds in the sugar-phosphate backbone of the newly synthesised DNA strand.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "The earlier pulmonary-vein candidate was withdrawn after a semantic match was found in the bank (batch 21 row 12). This DNA-ligase candidate replaces it and has been re-screened."
+    },
+    {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Specialised vocabulary",
+      "question": "A person who deliberately gives up the use of alcoholic drinks is commonly called a:",
+      "options": [
+        "Teetotaller",
+        "Vegetarian",
+        "Philanthropist",
+        "Pessimist"
+      ],
+      "answer": "A",
+      "explanation": "A teetotaller is a person who abstains from drinking alcohol.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-68",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Homographs",
+      "question": "In “Strong winds damaged the roof”, the word “winds” refers to:",
+      "options": [
+        "Moving air",
+        "A bend or curve in a road or river",
+        "A turn or coil",
+        "A musical instrument played by blowing air"
+      ],
+      "answer": "A",
+      "explanation": "Here “winds” means moving air, pronounced /wɪndz/. The verb “wind”, meaning to turn or twist, has a different pronunciation, /waɪnd/.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Full same-subject retained-plus-held comparison completed across all 200 Use of English rows. No question asks for the meaning of wind/winds in this context; the nearest results concern wind personification and unrelated lexis. Answer A is correct: 'winds' means moving air. The original distractors were weak/non-parallel, so they have been improved to plausible alternate senses. The word 'wind' as moving air is pronounced /wɪnd/; the verb 'wind' meaning to turn or twist is pronounced /waɪnd/. Revised wording and options were re-screened against all 200 rows. The lexical score remains below 0.42. Independent English reviewer must confirm terminology and syllabus fit. Not approved for import."
+    },
+    {
+      "target_id": "DUP-82",
+      "subject": "Economics",
+      "topic": "Consumer behaviour",
+      "subtopic": "Law of diminishing marginal utility",
+      "question": "As a consumer consumes additional units of a good within a given period, the marginal utility from each successive unit generally:",
+      "options": [
+        "Increases continuously",
+        "Diminishes",
+        "Remains permanently zero",
+        "Becomes equal to total expenditure"
+      ],
+      "answer": "B",
+      "explanation": "The law of diminishing marginal utility states that, other things being equal, the additional satisfaction from each extra unit consumed tends to fall as consumption increases.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Lexical score is below 0.42 but close to existing marginal-utility definition items; independent Economics reviewer must confirm the law-of-diminishing-utility distinction before approval."
+    },
+    {
+      "target_id": "DUP-83",
+      "subject": "Literature in English",
+      "topic": "Literary terms",
+      "subtopic": "Pseudonym",
+      "question": "A writer who publishes under an assumed name different from their own is using a:",
+      "options": [
+        "Pseudonym",
+        "Prologue",
+        "Refrain",
+        "Soliloquy"
+      ],
+      "answer": "A",
+      "explanation": "A pseudonym is an assumed or pen name used by an author instead of their actual name.",
+      "difficulty": "easy",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-85",
+      "subject": "Literature in English",
+      "topic": "Drama and stagecraft",
+      "subtopic": "Blocking",
+      "question": "In theatre, the planned movement and positioning of actors on stage during a performance is known as:",
+      "options": [
+        "Blocking",
+        "Casting",
+        "Diction",
+        "Catharsis"
+      ],
+      "answer": "A",
+      "explanation": "Blocking is the planned arrangement and movement of performers on stage to support the action and visual composition of a production.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-86",
+      "subject": "Chemistry",
+      "topic": "Qualitative analysis",
+      "subtopic": "Test for nitrate ions",
+      "question": "In the brown-ring test for nitrate ions, the characteristic brown ring forms at the:",
+      "options": [
+        "Bottom of the test tube",
+        "Junction of the two liquid layers",
+        "Surface of the solution",
+        "Outside of the test tube"
+      ],
+      "answer": "B",
+      "explanation": "In the brown-ring test, freshly prepared iron(II) sulfate is added, followed carefully by concentrated sulfuric acid. A brown ring forms at the interface between the two liquid layers.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-90",
+      "subject": "Chemistry",
+      "topic": "Crystallisation",
+      "subtopic": "Water of crystallisation",
+      "question": "In hydrated copper(II) sulfate, CuSO₄·5H₂O, the number 5 indicates that each formula unit contains:",
+      "options": [
+        "Five sulfate ions",
+        "Five water molecules of crystallisation",
+        "Five copper ions",
+        "Five hydrogen ions"
+      ],
+      "answer": "B",
+      "explanation": "The dot formula CuSO₄·5H₂O shows five water molecules associated with each formula unit of hydrated copper(II) sulfate.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-47-ADD-2026-11-09",
+      "source_pair_id": "DUP-47",
+      "target_location": "batch 2 row 33",
+      "subject": "Government",
+      "topic": "Political systems",
+      "subtopic": "Confederation",
+      "question": "In a confederation, the member states generally:",
+      "options": [
+        "Retain sovereignty and delegate limited powers to a common authority",
+        "Surrender all sovereignty to a central government",
+        "Have no common institutions",
+        "Allow the central authority to appoint all local officials"
+      ],
+      "answer": "A",
+      "explanation": "A confederation is an association of sovereign states that delegate limited powers to common institutions. The member states retain their sovereignty rather than transferring all constitutional authority to a central government.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-19-ADD-2026-11-09",
+      "source_pair_id": "DUP-19",
+      "target_location": "batch 14 row 31",
+      "subject": "Economics",
+      "topic": "Welfare economics",
+      "subtopic": "Producer surplus",
+      "question": "The area between the market price and the supply curve, up to the quantity sold, represents:",
+      "options": [
+        "Producer surplus",
+        "Consumer surplus",
+        "Total fixed cost",
+        "Tax revenue"
+      ],
+      "answer": "A",
+      "explanation": "Producer surplus is the benefit producers receive when the market price exceeds the minimum price they would be willing to accept. On a standard supply-and-demand diagram, it is the area above the supply curve and below the market price, up to the quantity sold.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-126",
+      "source_pair_id": "DUP-126",
+      "target_location": "batch 22 row 33",
+      "subject": "Government",
+      "topic": "International organisations",
+      "subtopic": "Organisation of African Unity and African Union",
+      "question": "The African Union replaced which earlier continental organisation in 2002?",
+      "options": [
+        "Organisation of African Unity (OAU)",
+        "Economic Community of West African States (ECOWAS)",
+        "Commonwealth of Nations",
+        "Organisation of Islamic Cooperation (OIC)"
+      ],
+      "answer": "A",
+      "explanation": "The African Union succeeded the Organisation of African Unity in 2002. The AU retained the goal of continental cooperation while developing a broader institutional framework.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-216",
+      "source_pair_id": "DUP-216",
+      "target_location": "batch 39 row 17",
+      "subject": "Chemistry",
+      "topic": "Water and its compounds",
+      "subtopic": "Temporary hardness",
+      "question": "Temporary hardness in water is mainly caused by dissolved:",
+      "options": [
+        "Calcium and magnesium hydrogencarbonates",
+        "Calcium and magnesium sulphates",
+        "Sodium and potassium chlorides",
+        "Sodium and potassium nitrates"
+      ],
+      "answer": "A",
+      "explanation": "Temporary hardness is caused mainly by dissolved calcium and magnesium hydrogencarbonates. Boiling decomposes these hydrogencarbonates and produces insoluble substances that can be removed from the water.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-217",
+      "source_pair_id": "DUP-217",
+      "target_location": "batch 33 row 10",
+      "subject": "Mathematics",
+      "topic": "Matrices",
+      "subtopic": "Singular matrices",
+      "question": "A square matrix is singular when its determinant is:",
+      "options": [
+        "Zero",
+        "One",
+        "A negative number",
+        "Equal to its trace"
+      ],
+      "answer": "A",
+      "explanation": "A square matrix is singular when its determinant is zero. A singular matrix does not have an inverse.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-232",
+      "source_pair_id": "DUP-232",
+      "target_location": "batch 34 row 37",
+      "subject": "Literature in English",
+      "topic": "Literary terms",
+      "subtopic": "Epithet",
+      "question": "A descriptive word or phrase used to characterise a person or thing by highlighting a notable quality is called an:",
+      "options": [
+        "Epithet",
+        "Euphemism",
+        "Epilogue",
+        "Allusion"
+      ],
+      "answer": "A",
+      "explanation": "An epithet is a descriptive word or phrase that draws attention to a characteristic of a person, place or thing. A euphemism softens an expression, an epilogue concludes a work, and an allusion makes an indirect reference.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-240",
+      "source_pair_id": "DUP-240",
+      "target_location": "batch 33 row 32",
+      "subject": "Government",
+      "topic": "International relations",
+      "subtopic": "International Court of Justice",
+      "question": "In contentious cases before the International Court of Justice, the parties are generally:",
+      "options": [
+        "Sovereign states",
+        "Individual citizens",
+        "Private companies",
+        "Political parties"
+      ],
+      "answer": "A",
+      "explanation": "The International Court of Justice hears contentious legal disputes between states. It is distinct from the International Criminal Court, which prosecutes individuals for specified international crimes.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    }
+  ],
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import.",
+  "confirmed_duplicate_targets": 97,
+  "drafts_missing": 0,
+  "drafts_missing_target_ids": [],
+  "last_updated": "2026-11-09"
+}
