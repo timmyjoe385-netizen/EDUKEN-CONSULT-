@@ -1,0 +1,92 @@
+{
+  "audit_date": "2026-11-09",
+  "revision": "r2",
+  "purpose": "Second provisional staging reconciliation applying all clear duplicate/distinct outcomes after review of the remaining 18 previously uncertain pair rows. Preserves the r1 revision.",
+  "source_revision": "content/cbt/staging/2026-11-09/",
+  "source_register": "content/cbt/review-packets/2026-11-06-register-pair-review-109.csv",
+  "addendum_ledger": "content/cbt/review-packets/2026-11-09-addendum-disposition-ledger.csv",
+  "totals": {
+    "retained": 1437,
+    "held": 163,
+    "total": 1600
+  },
+  "per_subject": {
+    "Biology": {
+      "retained": 169,
+      "held": 31,
+      "total": 200
+    },
+    "Chemistry": {
+      "retained": 179,
+      "held": 21,
+      "total": 200
+    },
+    "Economics": {
+      "retained": 172,
+      "held": 28,
+      "total": 200
+    },
+    "Government": {
+      "retained": 174,
+      "held": 26,
+      "total": 200
+    },
+    "Literature in English": {
+      "retained": 180,
+      "held": 20,
+      "total": 200
+    },
+    "Mathematics": {
+      "retained": 193,
+      "held": 7,
+      "total": 200
+    },
+    "Physics": {
+      "retained": 185,
+      "held": 15,
+      "total": 200
+    },
+    "Use of English": {
+      "retained": 185,
+      "held": 15,
+      "total": 200
+    }
+  },
+  "decision_summary": {
+    "register_rows": 110,
+    "register_decisions": {
+      "D": 78,
+      "S": 32,
+      "Q": 0
+    },
+    "unique_addendum_endpoint_pairs": 17,
+    "addendum_decisions": {
+      "D": 6,
+      "S": 11
+    },
+    "combined_decision_rows": 127,
+    "unique_target_locations": 120
+  },
+  "staging_actions": {
+    "moved_retained_to_held": 8,
+    "moved_held_to_retained": 1,
+    "already_held_D": 72,
+    "already_retained_S": 39,
+    "unmatched": 0,
+    "conflicting_targets": 0
+  },
+  "academic_review": {
+    "independent_subject_review_rows": 105,
+    "reviewer_name_and_date": "blank; no reviewer identity/date invented",
+    "answer_key_and_syllabus_signoff": "pending",
+    "status": "NOT_ACADEMICALLY_APPROVED"
+  },
+  "safety": {
+    "prior_staging_revisions_modified": 0,
+    "source_question_csvs_modified": 0,
+    "question_text_options_answers_explanations_changed": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  }
+}
