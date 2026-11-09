@@ -90,7 +90,8 @@ export default function CbtQuestionBankAdmin() {
       setLoadingImports(false);
     }
   };
-  useEffect(()=>{ void load(1); void loadImportHistory(); },[filter,search]);
+  useEffect(()=>{ void load(page); },[filter,search,page]);
+  useEffect(()=>{ void loadImportHistory(); },[]);
   const visible = items;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const firstRow = total === 0 ? 0 : (page - 1) * pageSize + 1;
