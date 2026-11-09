@@ -1,6 +1,7 @@
 const ALLOWED_STATUSES = new Set(["draft", "reviewed", "approved", "published", "unpublished"]);
 const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
 const ALLOWED_SOURCE_TYPES = new Set(["original", "past_question", "licensed", "other"]);
+const ALLOWED_JAMB_SUBJECTS = new Set(["Use of English", "Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"]);
 const OPTION_KEYS = ["A", "B", "C", "D"];
 
 export function normalizeQuestionInput(raw = {}) {
@@ -54,6 +55,9 @@ export function validateQuestionInput(raw, { allowStatus = false } = {}) {
   const errors = [];
   if (!question.exam_type) errors.push("Exam type is required.");
   if (!question.subject) errors.push("Subject is required.");
+  if (question.exam_type.toUpperCase() === "JAMB" && !ALLOWED_JAMB_SUBJECTS.has(question.subject)) {
+    errors.push("JAMB subject must be one of the eight supported UTME subjects.");
+  }
   if (!question.topic) errors.push("Topic is required.");
   if (question.question_text.length < 5) errors.push("Question text must contain at least 5 characters.");
   if (question.question_text.length > 10000) errors.push("Question text must not exceed 10,000 characters.");
