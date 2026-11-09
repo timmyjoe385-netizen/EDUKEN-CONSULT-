@@ -124,6 +124,7 @@ function App() {
   const [settingsError, setSettingsError] = useState('');
   const [adminItems, setAdminItems] = useState<Item[]>([]);
   const [consultations, setConsultations] = useState<Item[]>([]);
+  const [consultationView, setConsultationView] = useState<'active' | 'completed' | 'archived' | 'all'>('active');
   const [serviceRequests, setServiceRequests] = useState<Item[]>([]);
   const [uploadingDeliverableFor, setUploadingDeliverableFor] = useState<string | null>(null);
   const [deliverableAdminMessage, setDeliverableAdminMessage] = useState('');
@@ -1144,7 +1145,11 @@ function App() {
     try {
       await api.put('/api/admin/consultations/' + item.id, { status });
       await loadAdmin('consultations');
-      showToast('Consultation status updated.');
+      showToast(status === 'Completed'
+        ? 'Consultation marked completed and moved out of the active list. You can find it under Completed.'
+        : status === 'Archived'
+          ? 'Consultation archived and moved out of the active list.'
+          : 'Consultation status updated.');
     } catch {
       showToast('Could not update consultation.');
     }
@@ -1827,35 +1832,81 @@ function App() {
                 ))}
               </div>
             ) : adminTab === 'consultations' ? (
-              <div className="admin-list">
-                {consultations.length === 0 ? (
-                  <div className="admin-empty">
-                    No consultation requests yet.
-                  </div>
-                ) : (
-                  consultations.map(item => (
-                    <article className="admin-item" key={item.id}>
-                      <div>
-                        <span className="tag">{item.status}</span>
-                        <h3>{item.name}</h3>
-                        <p>{item.message}</p>
-                        <small>
-                          {item.whatsapp} • {item.email || 'No email'} •{' '}
-                          {item.createdAt}
-                        </small>
-                      </div>
-                      <select
-                        value={item.status || 'New'}
-                        onChange={e => updateConsultation(item, e.target.value)}
-                      >
-                        <option>New</option>
-                        <option>Contacted</option>
-                        <option>Completed</option>
-                        <option>Archived</option>
-                      </select>
-                    </article>
-                  ))
-                )}
+              <div>
+                <div className="consultation-view-filters" role="group" aria-label="Filter consultations" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+                  {([
+                    ['active', 'Active'],
+                    ['completed', 'Completed'],
+                    ['archived', 'Archived'],
+                    ['all', 'All records'],
+                  ] as const).map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={consultationView === value ? 'primary' : 'secondary'}
+                      aria-pressed={consultationView === value}
+                      onClick={() => setConsultationView(value)}
+                    >
+                      {label}{' '}
+                      ({consultations.filter(item => {
+                        const status = String(item.status || 'New').trim().toLowerCase();
+                        if (value === 'active') return !['completed', 'archived', 'cancelled'].includes(status);
+                        if (value === 'completed') return status === 'completed';
+                        if (value === 'archived') return status === 'archived';
+                        return true;
+                      }).length})
+                    </button>
+                  ))}
+                </div>
+                <div className="admin-list">
+                  {consultations.filter(item => {
+                    const status = String(item.status || 'New').trim().toLowerCase();
+                    if (consultationView === 'active') return !['completed', 'archived', 'cancelled'].includes(status);
+                    if (consultationView === 'completed') return status === 'completed';
+                    if (consultationView === 'archived') return status === 'archived';
+                    return true;
+                  }).length === 0 ? (
+                    <div className="admin-empty">
+                      {consultationView === 'active'
+                        ? 'No active consultations. Completed and archived records are kept separately.'
+                        : consultationView === 'completed'
+                          ? 'No completed consultations.'
+                          : consultationView === 'archived'
+                            ? 'No archived consultations.'
+                            : 'No consultation requests yet.'}
+                    </div>
+                  ) : (
+                    consultations.filter(item => {
+                      const status = String(item.status || 'New').trim().toLowerCase();
+                      if (consultationView === 'active') return !['completed', 'archived', 'cancelled'].includes(status);
+                      if (consultationView === 'completed') return status === 'completed';
+                      if (consultationView === 'archived') return status === 'archived';
+                      return true;
+                    }).map(item => (
+                      <article className="admin-item" key={item.id}>
+                        <div>
+                          <span className="tag">{item.status || 'New'}</span>
+                          <h3>{item.name}</h3>
+                          <p>{item.message}</p>
+                          <small>
+                            {item.whatsapp} • {item.email || 'No email'} •{' '}
+                            {item.createdAt}
+                          </small>
+                        </div>
+                        <select
+                          aria-label={'Status for consultation from ' + (item.name || 'customer')}
+                          value={item.status || 'New'}
+                          onChange={e => updateConsultation(item, e.target.value)}
+                        >
+                          <option>New</option>
+                          <option>Contacted</option>
+                          <option>Completed</option>
+                          <option>Archived</option>
+                        </select>
+                      </article>
+                    ))
+                  )}
+                </div>
               </div>
             ) : (
               <div className="admin-grid">
@@ -3427,7 +3478,7 @@ function App() {
 
       {pendingEmailAction && (
         <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1100, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16 }}>
-          <section role="dialog" aria-modal="true" aria-labelledby="email-alert-action-title" style={{ width: '100%', maxWidth: 480, background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+          <section className="email-alert-action-dialog" role="dialog" aria-modal="true" aria-labelledby="email-alert-action-title" style={{ width: '100%', maxWidth: 480, borderRadius: 18, padding: 22 }}>
             <span className="kicker">EDUKEN EMAIL ALERTS</span>
             <h2 id="email-alert-action-title">{pendingEmailAction.type === 'verify' ? 'Confirm your email alerts?' : 'Unsubscribe from email alerts?'}</h2>
             <p>{pendingEmailAction.type === 'verify'
@@ -3455,7 +3506,7 @@ function App() {
       )}
       {selectedService && (
         <div role="presentation" onClick={e => { if (e.target === e.currentTarget && !serviceSubmitting) setSelectedService(null); }} style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16, overflowY: 'auto' }}>
-          <section role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', background: '#fff', color: '#17251d', borderRadius: 18, padding: 22 }}>
+          <section className="service-request-dialog" role="dialog" aria-modal="true" aria-labelledby="service-request-title" style={{ width: '100%', maxWidth: 520, maxHeight: '90vh', overflowY: 'auto', borderRadius: 18, padding: 22 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: 12 }}>
               <div><span className="kicker">SERVICE REQUEST</span><h2 id="service-request-title">{selectedService.name}</h2><p>Price: {selectedService.price !== null && selectedService.price !== undefined && String(selectedService.price).trim() !== '' ? '₦' + Number(selectedService.price).toLocaleString('en-NG') : 'To be confirmed'}. Submit your details to continue to secure checkout for priced services. If a price needs confirmation, EDUKEN will contact you before payment.</p></div>
               <button type="button" aria-label="Close service request" disabled={serviceSubmitting} onClick={() => setSelectedService(null)}><X size={20} /></button>
