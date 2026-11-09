@@ -18,10 +18,11 @@ const request = async (path, body) => {
   return { response, data };
 };
 
-const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English" });
+const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
 assert.equal(started.response.status, 201, "A practice session should start from published isolated sample questions.");
 assert.match(started.data.attemptToken || "", /^[a-f0-9]{64}$/i, "The server should issue an opaque attempt token.");
-assert.equal(started.data.durationSeconds, 900, "Subject practice should use the expected 15-minute timer.");
+// Non-default practice lengths use one minute per requested question; this fixture requests one.
+assert.equal(started.data.durationSeconds, 60, "A one-question practice session should use a one-minute timer.");
 assert.ok(Array.isArray(started.data.questions) && started.data.questions.length > 0, "The session should include published questions.");
 
 for (const question of started.data.questions) {
@@ -32,9 +33,14 @@ for (const question of started.data.questions) {
 
 const fixture = started.data.questions.find(question => question.prompt === "Which word names a person, place, or thing?");
 assert.ok(fixture, "The isolated original Use of English fixture should be included in the practice session.");
+// The API shuffles answer options for every attempt. Select the known correct
+// answer by its displayed text rather than assuming its original database letter.
+const fixtureCorrectIndex = fixture.options.findIndex(option => option === "Happiness");
+assert.notEqual(fixtureCorrectIndex, -1, "The known correct answer should appear among the shuffled options.");
+const optionKeys = ["A", "B", "C", "D"];
 const answers = Object.fromEntries(started.data.questions.map(question => [
   String(question.id),
-  String(question.id) === String(fixture.id) ? 1 : null,
+  String(question.id) === String(fixture.id) ? fixtureCorrectIndex : null,
 ]));
 
 const submitted = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers });
@@ -42,12 +48,33 @@ assert.equal(submitted.response.status, 200, "The server should accept and grade
 assert.equal(submitted.data.score, 1, "The server should award one point for the known correct answer.");
 assert.equal(submitted.data.total, started.data.questions.length);
 assert.equal(submitted.data.percent, Math.round(100 / started.data.questions.length));
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.correctOption, "B");
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.isCorrect, true);
+const fixtureReview = submitted.data.review.find(question => String(question.id) === String(fixture.id));
+assert.equal(fixtureReview?.correctOption, optionKeys[fixtureCorrectIndex], "The server-side correct key should follow the shuffled option order.");
+assert.equal(fixtureReview?.options[fixtureCorrectIndex], "Happiness", "The correct key should identify the known correct answer text.");
+assert.equal(fixtureReview?.isCorrect, true);
 
 const repeated = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers: {} });
 assert.equal(repeated.response.status, 200, "A repeated submission should return the stored result safely.");
 assert.equal(repeated.data.alreadySubmitted, true, "A repeated submission should be marked as already submitted.");
 assert.equal(repeated.data.score, submitted.data.score, "Repeated submission must not change the stored score.");
 
-console.log("CBT API integration passed: published-only question payload, hidden answer key, server grading and idempotent repeat submission.");
+const miniMock = await request("/api/cbt/start", {
+  mode: "mock",
+  questionCount: 4,
+  subjectCombination: ["Biology", "Chemistry", "Physics"],
+});
+assert.equal(miniMock.response.status, 201, "A four-question mixed starter mock should work with one published question per selected subject.");
+assert.equal(miniMock.data.questions.length, 4, "The starter mock should contain exactly four questions.");
+assert.equal(miniMock.data.durationSeconds, 4 * 60, "The four-question starter mock should use a four-minute timer.");
+const miniMockSubjects = miniMock.data.questions.reduce((counts, question) => {
+  counts[question.subject] = (counts[question.subject] || 0) + 1;
+  return counts;
+}, {});
+assert.deepEqual(miniMockSubjects, {
+  "Use of English": 1,
+  Biology: 1,
+  Chemistry: 1,
+  Physics: 1,
+}, "The starter mock should select one question from each required subject.");
+
+console.log("CBT API integration passed: published-only practice, hidden answers, server grading, idempotent submission and four-subject starter mock.");
