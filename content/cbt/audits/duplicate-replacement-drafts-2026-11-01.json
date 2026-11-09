@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 109,
+  "draft_count": 115,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 109 proposals remain separate, unpublished drafts. The original 90 proposals plus 19 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The latest six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
+  "important": "All 115 proposals remain separate, unpublished drafts. The original 90 proposals plus 25 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The latest six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -2037,10 +2037,130 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-109",
+      "source_pair_id": "DUP-109",
+      "target_location": "batch 17 row 27",
+      "subject": "Economics",
+      "topic": "Macroeconomics",
+      "subtopic": "Recession",
+      "question": "A recession is a period of significant decline in overall economic activity, often accompanied by falling output and rising unemployment.",
+      "options": [
+        "A sustained decline in economic activity",
+        "A continuous rise in the general price level",
+        "A period of full employment and rapid growth",
+        "A persistent increase in the value of a currency"
+      ],
+      "answer": "A",
+      "explanation": "A recession is a significant downturn in economic activity. It is commonly associated with reduced production, income and employment, although the precise statistical definition can vary.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-102",
+      "source_pair_id": "DUP-102",
+      "target_location": "batch 18 row 32",
+      "subject": "Government",
+      "topic": "International organisations",
+      "subtopic": "Commonwealth of Nations",
+      "question": "The Commonwealth of Nations is a voluntary association of sovereign states that promotes cooperation among its members.",
+      "options": [
+        "It is a voluntary association of independent states that cooperate on shared interests",
+        "It is a supranational government with authority to legislate for all members",
+        "It is a military alliance with a common armed force",
+        "It is a customs union with a common external tariff"
+      ],
+      "answer": "A",
+      "explanation": "The Commonwealth is a voluntary association of independent and sovereign states. It promotes cooperation and shared values, but it is not a single government, military alliance or customs union.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-221",
+      "source_pair_id": "DUP-221",
+      "target_location": "batch 18 row 35",
+      "subject": "Government",
+      "topic": "Executive",
+      "subtopic": "Caretaker government",
+      "question": "A caretaker government is a temporary administration that handles routine affairs until a new government takes office.",
+      "options": [
+        "It maintains routine administration pending the formation of a substantive government",
+        "It permanently replaces the constitution",
+        "It exercises legislative authority without a legislature",
+        "It is a permanent non-elected civil service"
+      ],
+      "answer": "A",
+      "explanation": "A caretaker government temporarily manages the routine affairs of the state during a transition. It is generally expected to avoid major policy decisions that should be made by the incoming substantive government.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-104",
+      "source_pair_id": "DUP-104",
+      "target_location": "batch 18 row 36",
+      "subject": "Government",
+      "topic": "Electoral systems",
+      "subtopic": "Electoral college",
+      "question": "An electoral college is a body of representatives selected to elect a head of state or another public office holder.",
+      "options": [
+        "A body of designated representatives who cast votes to choose an office holder",
+        "A court that hears election petitions",
+        "A commission that registers voters and conducts elections",
+        "A legislature that passes the national budget"
+      ],
+      "answer": "A",
+      "explanation": "An electoral college is a group of electors chosen to select a person for a public office. It is different from an electoral commission, which administers elections, and an election tribunal, which resolves election disputes.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-200",
+      "source_pair_id": "DUP-200",
+      "target_location": "batch 20 row 6",
+      "subject": "Use of English",
+      "topic": "Word formation",
+      "subtopic": "Clipping",
+      "question": "The shortening of a word by removing part of its original form while retaining its meaning is known as:",
+      "options": [
+        "Clipping",
+        "Blending",
+        "Compounding",
+        "Back-formation"
+      ],
+      "answer": "A",
+      "explanation": "Clipping forms a shorter word by removing part of a longer word, as in 'advertisement' becoming 'ad' or 'examination' becoming 'exam'. Blending combines parts of two words, while compounding joins complete words.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-123",
+      "source_pair_id": "DUP-123",
+      "target_location": "batch 20 row 33",
+      "subject": "Government",
+      "topic": "Political ideas and culture",
+      "subtopic": "Political ideology",
+      "question": "A political ideology is a set of beliefs and values about how society and government should be organised.",
+      "options": [
+        "A coherent set of political ideas and principles that guides views on government and society",
+        "A record of the number of votes cast in an election",
+        "A list of court judgments on constitutional disputes",
+        "A schedule of government revenue and expenditure"
+      ],
+      "answer": "A",
+      "explanation": "A political ideology is a connected set of ideas and values about political authority, society and the role of government. It provides a framework for interpreting political issues and proposing how society should be organised.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     }
   ],
-  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 third supplement: six additional target-specific drafts added for held locations batch 15 row 28, batch 16 row 6, batch 16 row 20, batch 16 row 33, batch 17 row 10 and batch 17 row 20. Each was screened against all 1,600 r3 source rows and the 103 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review.",
-  "confirmed_duplicate_targets": 109,
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 third supplement: six additional target-specific drafts added for held locations batch 15 row 28, batch 16 row 6, batch 16 row 20, batch 16 row 33, batch 17 row 10 and batch 17 row 20. Each was screened against all 1,600 r3 source rows and the 103 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 fourth supplement: six additional target-specific drafts added for held locations batch 17 row 27, batch 18 row 32, batch 18 row 35, batch 18 row 36, batch 20 row 6 and batch 20 row 33. Each was screened against all 1,600 r3 source rows and the 109 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review.",
+  "confirmed_duplicate_targets": 115,
   "drafts_missing": 0,
   "drafts_missing_target_ids": [],
   "last_updated": "2026-11-09"
