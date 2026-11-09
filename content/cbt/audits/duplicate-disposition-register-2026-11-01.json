@@ -6134,5 +6134,75 @@
       ],
       "note": "These correct pair/cluster references; they do not authorize new held rows, source edits or publication."
     }
-  }
+  },
+  "authoritative_checkpoint_2026_11_09": {
+    "purpose": "Single current reporting point. This checkpoint supersedes conflicting historical progress counters below; do not infer missing reviewed ranks by arithmetic.",
+    "source_bank": {
+      "total_source_rows": 1600,
+      "provisionally_retained": 1437,
+      "held_locations": 163,
+      "rows_per_subject": 200,
+      "retained_exact_same_subject_duplicate_stems": 0,
+      "retained_rows_have_four_options_and_valid_A_to_D_keys": true,
+      "academic_status": "provisional_not_qualified_approved"
+    },
+    "assistant_academic_screen": {
+      "ledger_rows": 105,
+      "unique_candidate_ids": 102,
+      "answer_checks_correct": 105,
+      "explanation_checks_correct": 105,
+      "qualified_approvals": 0,
+      "reviewer_names_dates_recorded": 0,
+      "subject_rows": {
+        "Mathematics": 17,
+        "Government": 19,
+        "Chemistry": 16,
+        "Use of English": 6,
+        "Biology": 17,
+        "Physics": 10,
+        "Economics": 12,
+        "Literature in English": 8
+      },
+      "status": "assistant_screening_only_independent_signoff_pending"
+    },
+    "qualified_review_queue": {
+      "later_register_pair_records": 109,
+      "subject_rows": {
+        "Chemistry": 13,
+        "Biology": 19,
+        "Physics": 11,
+        "Economics": 13,
+        "Mathematics": 15,
+        "Literature in English": 9,
+        "Government": 25,
+        "Use of English": 4
+      },
+      "qualified_approvals": 0,
+      "status": "handoff_prepared_not_approved"
+    },
+    "cross_window_reconciliation": {
+      "register_pairs_exactly_mapped": 184,
+      "high_similarity_shortlist_rows": 49,
+      "high_similarity_shortlist_exactly_mapped": 49,
+      "baseline_rank_ids_represented_by_register_crosswalk": 75,
+      "baseline_candidate_ranks_not_represented_by_these_pair_crosswalks": 178,
+      "reported_additional_targeted_reviews": 237,
+      "rank_ids_for_those_237": null,
+      "baseline_286_individual_review_rank_ids": null,
+      "part63_vs_rank_derived_counter_difference": 4,
+      "final_reviewed_total": null,
+      "final_remaining_total": null,
+      "status": "open_do_not_infer_missing_rank_ids_or_totals"
+    },
+    "release_safety": {
+      "source_question_content_changed": 0,
+      "staging_question_rows_changed": 0,
+      "academic_approvals_created": 0,
+      "production_imports": 0,
+      "production_publications": 0,
+      "production_release_authorized": false
+    },
+    "maintenance_rule": "Update this checkpoint in this master register only when new source evidence or actual review data changes. Preserve historical audit files as evidence, not as competing current totals."
+  },
+  "legacy_counter_policy": "Historical candidate_review and explicit_rank_crosswalk counters are retained for audit traceability. They contain known conflicting/stale values (including 472 vs 237 and 685 vs 717); use authoritative_checkpoint_2026_11_09 for current reporting. Do not sum, subtract, or infer candidate ranks from these legacy counters."
 }
