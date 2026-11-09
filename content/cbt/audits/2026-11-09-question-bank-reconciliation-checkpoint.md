@@ -2,25 +2,25 @@
 
 ## Scope and safety
 
-Read-only reconciliation of the existing 6 November staging and audit records. This checkpoint does not change original question CSVs, retained/held staging rows, question wording, answer keys, reviewer decisions, database records, or publication state. It does not authorize imports, publication, merge, or production deployment.
+Non-destructive provisional reconciliation. A new 9 November staging revision was created from the 6 November snapshot; the original question CSVs and 6 November staging files remain unchanged. Only row membership between retained and held exports changed in the new revision, following the user-delegated duplicate/distinct screening decisions. Question wording, options and answer keys were not edited. This is not independent academic approval and does not authorize import, publication, merge or production deployment.
 
 ## 1. Staging inventory — reconciled by subject
 
-The 6 November staging manifest accounts for all 1,600 source rows: 1,476 provisionally retained + 124 held. A fresh count of the four retained and four held CSV exports gives:
+The 6 November snapshot contained 1,476 provisionally retained + 124 held. The new **9 November provisional revision** applies 45 retained-to-held moves and 13 held-to-retained moves, producing 1,444 retained + 156 held. The 18 Q cases remain in their previous staging positions.
 
-| Subject | Retained (provisional) | Held | Source total |
+| Subject | Retained (9 Nov) | Held (9 Nov) | Source total |
 |---|---:|---:|---:|
-| Use of English | 187 | 13 | 200 |
-| Mathematics | 190 | 10 | 200 |
-| Biology | 179 | 21 | 200 |
-| Chemistry | 182 | 18 | 200 |
+| Use of English | 185 | 15 | 200 |
+| Mathematics | 193 | 7 | 200 |
+| Biology | 171 | 29 | 200 |
+| Chemistry | 179 | 21 | 200 |
 | Physics | 186 | 14 | 200 |
-| Economics | 179 | 21 | 200 |
-| Government | 190 | 10 | 200 |
-| Literature in English | 183 | 17 | 200 |
-| **Total** | **1,476** | **124** | **1,600** |
+| Economics | 173 | 27 | 200 |
+| Government | 176 | 24 | 200 |
+| Literature in English | 181 | 19 | 200 |
+| **Total** | **1,444** | **156** | **1,600** |
 
-The subject counts reconcile exactly to 200 original source rows per subject. Retained rows are provisional, not academically approved. Held rows are not all confirmed duplicates; do not replace or discard them until qualified review determines whether each is a true duplicate or a distinct/related-skill variant.
+All 1,600 source locations were rechecked between the two revisions: zero missing locations, zero added locations, zero retained/held overlap, and zero changes to question text, options, correct answers or explanations. Every subject still totals exactly 200 source rows. The new revision is provisional; retained does not mean academically approved, and held does not automatically mean a question is invalid.
 
 ## 2. Independent academic-review queue
 
@@ -55,7 +55,7 @@ The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or c
 
 ## 3a. New addendum disposition ledger
 
-The 6 November addendum contains 34 target records: 17 exact retained/held endpoint pairs already present in the 109-pair register, plus 17 unique additional endpoint pairs. The 17 overlaps were merged into their canonical existing register rows (16 D, one S) and are listed in `2026-11-09-addendum-overlap-crosswalk.csv` to prevent double-counting. The separate addendum ledger now contains only the 17 unique additional pairs: **6 D** and **11 S**. The high-overlap numerical near-duplicate is D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These remain user-delegated assistant screening dispositions only; independent subject, answer-key and syllabus sign-off is pending. No reviewer name/date is invented. No staging row has been moved and no question has been deleted, imported or published.
+The 6 November addendum contains 34 target records: 17 exact retained/held endpoint pairs already present in the 109-pair register, plus 17 unique additional endpoint pairs. The 17 overlaps were merged into their canonical existing register rows (16 D, one S) and are listed in `2026-11-09-addendum-overlap-crosswalk.csv` to prevent double-counting. The separate addendum ledger now contains only the 17 unique additional pairs: **6 D** and **11 S**. The high-overlap numerical near-duplicate is D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These remain user-delegated assistant screening dispositions only; independent subject, answer-key and syllabus sign-off is pending. No reviewer name/date is invented. The 9 November provisional staging revision applies the corresponding 45 D and 13 S moves; no question content was deleted or edited, and nothing was imported or published.
 
 ## 4. Cross-window rank reconciliation
 
@@ -74,10 +74,10 @@ The 38-candidate count difference is explained by comparing two similarity thres
 
 ## 6. Remaining work — no repeated completed checks
 
-1. Obtain qualified subject reviewers to complete the 105 independent worksheet rows and the 109-pair packet; capture reviewer names, dates, decisions, answer-key checks, syllabus fit, and notes.
+1. Continue the sole-reviewer workflow with assistant support to complete the 105 independent worksheet rows and 18 Q cases; verify academic accuracy, answer keys and syllabus fit, and record a reviewer name/date only when an actual review is completed.
 2. Resolve the cross-window baseline source-record-to-rank mapping and the four-count counter discrepancy; reconcile stale register fields without inferring rank IDs from score order.
 3. Complete the one-pair within-window category-boundary check; do not rerun the already reconciled 0.42/0.43 threshold comparison.
-4. After qualified review, move only confirmed duplicates to held staging and draft replacements only where needed; preserve distinct related-skill variants.
+4. After the remaining academic checks, reconcile the 9 November provisional staging revision and draft replacements only where required; preserve distinct related-skill variants.
 5. Run refreshed bank-wide uniqueness and per-subject counts after approved dispositions and replacement drafting.
 6. Only after independent academic approval, validate the final 200 publishable questions per subject and prepare an isolated import/test plan.
 
