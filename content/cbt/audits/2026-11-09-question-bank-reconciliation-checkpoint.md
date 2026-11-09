@@ -22,7 +22,7 @@ The 6 November snapshot contained 1,476 provisionally retained + 124 held. Two n
 
 All 1,600 source locations were rechecked between r1 and r2: zero missing locations, zero added locations, zero retained/held overlap, and zero changes to question text, options, correct answers or explanations. Every subject still totals exactly 200 source rows. The revisions are provisional; retained does not mean academically approved, and held does not automatically mean a question is invalid.
 
-A fresh integrity check of the r2 exports independently counted 1,437 retained and 163 held rows (1,600 total), with 200 per subject. The 163 held source locations are unique and do not overlap the retained set. An exact normalized-stem scan of the 1,437 retained questions found zero duplicate stems within a subject; all retained rows have non-empty question text, four populated options and a valid A–D answer key. This is an exact-duplicate/structure check only, not a semantic uniqueness guarantee or academic approval.
+A fresh integrity check of the r2 exports independently counted 1,437 retained and 163 held rows (1,600 total), with 200 per subject. The 163 held source locations are unique and do not overlap the retained set. An exact normalized-stem scan of the 1,437 retained questions found zero duplicate stems within a subject; all retained rows have non-empty question text, four populated and distinct options, a valid A–D answer key, and a non-empty explanation. This is an exact-duplicate/structure check only, not a semantic uniqueness guarantee or academic approval.
 
 ## 2. Independent academic-review queue
 
