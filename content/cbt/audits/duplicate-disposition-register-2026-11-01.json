@@ -5990,7 +5990,6 @@
     "next_actions_in_order": [
       "Complete PR #199 authenticated admin acceptance and confirm merge requirements; do not merge without explicit user approval.",
       "Obtain individual baseline review records for the 286 reported reviews and reconcile the 237 targeted-review claim and four-count discrepancy.",
-      "Apply the two documented canonical register merges: DUP-22 + DUP-165 -> DUP-165; DUP-08 + DUP-166 -> DUP-08.",
       "Obtain qualified contextual decisions for 34 new held locations and 109 later-range/cluster pair records.",
       "Prepare and screen missing replacement drafts; obtain independent subject, answer-key and syllabus approval.",
       "Run isolated student/admin CBT acceptance, then prepare a release package for explicit approval."
@@ -6003,6 +6002,46 @@
       "publications": 0,
       "production_deployments": 0,
       "release_authorized": false
+    },
+    "cluster_reconciliation": {
+      "status": "APPLIED_AND_SOURCE_MEMBERSHIPS_VERIFIED",
+      "merges_already_applied": [
+        {
+          "from": "DUP-22",
+          "canonical": "DUP-165",
+          "cluster_id": "PLATELET-CLOTTING-01",
+          "retained_anchor": "batch 1 row 15",
+          "pair_members": [
+            "DUP-22",
+            "DUP-165",
+            "DUP-150"
+          ],
+          "held_locations": [
+            "batch 27 row 12",
+            "batch 38 row 13"
+          ],
+          "unique_held_locations": 2,
+          "source_question_match_verified": true
+        },
+        {
+          "from": "DUP-166",
+          "canonical": "DUP-08",
+          "cluster_id": "PHENOLPHTHALEIN-01",
+          "retained_anchor": "batch 22 row 18",
+          "pair_members": [
+            "DUP-08",
+            "DUP-147",
+            "DUP-166"
+          ],
+          "held_locations": [
+            "batch 20 row 18",
+            "batch 34 row 18"
+          ],
+          "unique_held_locations": 2,
+          "source_question_match_verified": true
+        }
+      ],
+      "count_effect": "No source row or held location was added or removed. These canonical merges are already recorded; do not repeat them."
     }
   }
 }
