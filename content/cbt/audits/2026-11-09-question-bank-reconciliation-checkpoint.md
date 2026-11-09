@@ -53,6 +53,10 @@ A delegated screening pass has now populated the disposition field for all 110 r
 
 The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or confirmed by the user. The other 58 mapped outcomes follow the existing assistant triage classifications under the user's express delegation; 32 rows had no matching triage recommendation and remain Q. These are screening dispositions only, not independent subject-expert approval, answer-key verification, syllabus sign-off, or publication authorization. No reviewer name or review date has been invented. The two independent subject-review worksheets still require academic checks.
 
+## 3a. New addendum disposition ledger
+
+A separate ledger now covers the 28 new pair relationships and six cluster-extension rows in the 6 November addendum (34 target rows): **22 D** recommendations, **12 S** related-skill variants, and **0 Q**. The one high-overlap numerical near-duplicate is classified D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These are user-delegated assistant screening dispositions only; the ledger deliberately leaves reviewer name/date blank and records independent subject, answer-key and syllabus sign-off as pending. No staging row has been moved and no question has been deleted, imported or published.
+
 ## 4. Cross-window rank reconciliation
 
 - The cross-window candidate set contains 1,304 ranks.
