@@ -6317,6 +6317,51 @@
           "playwright_browser_checks"
         ],
         "note": "Do not mark passed until GitHub reports each workflow completed successfully."
+      },
+      "isolated_security_audit": {
+        "project_id": "wpktzogarfqrgkirzdpy",
+        "project_name": "EDUKEN Wallet Test",
+        "checked_at": "2026-11-09T16:46:02.964Z",
+        "cbt_tables": {
+          "tables": [
+            "cbt_questions",
+            "cbt_question_imports",
+            "cbt_attempt_sessions",
+            "cbt_attempts"
+          ],
+          "rls_enabled": true,
+          "anon_and_authenticated_table_grants": false,
+          "service_role_access_only": true,
+          "policies_found": 0
+        },
+        "public_schema_rls": {
+          "policies_found": 0,
+          "advisor_rls_enabled_no_policy_tables": 16,
+          "interpretation": "Direct table access remains blocked by RLS where no policies exist; public-content tables have anon/auth grants but no RLS policies. CBT tables have no anon/auth grants."
+        },
+        "security_advisor": {
+          "leaked_password_protection": "disabled",
+          "severity": "WARN",
+          "rls_enabled_no_policy_tables": 16,
+          "severity_for_rls_notice": "INFO"
+        },
+        "performance_advisor": {
+          "unindexed_foreign_keys": 2,
+          "unused_indexes": 4,
+          "action": "No indexes dropped or schema changes made; unused-index notices are not sufficient reason to remove indexes in a low-volume isolated test project."
+        },
+        "mutation_performed": false,
+        "production_touched": false
+      },
+      "jamb_subject_validation": {
+        "commit": "547275dc66ff0d8ffbed244fffaca4d89952693e",
+        "files": [
+          "supabase/functions/eduken-api/question-bank-validation.mjs",
+          "tests/question-bank-validation.test.mjs"
+        ],
+        "change": "JAMB question validation now accepts only the eight supported UTME subjects; non-JAMB exam types retain their separate subject catalogue.",
+        "automated_checks": "in_progress",
+        "production_touched": false
       }
     },
     "next_work": {
