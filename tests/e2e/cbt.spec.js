@@ -84,7 +84,7 @@ test('CBT practice count adapts to the published questions available', async ({ 
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
 });
 
-test('mixed mock controls do not offer question counts the published bank cannot support', async ({ page }) => {
+test('mixed mock offers a four-question starter when one question is published per subject', async ({ page }) => {
   const subjects = ['Use of English', 'Biology', 'Chemistry', 'Physics'];
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
@@ -96,13 +96,34 @@ test('mixed mock controls do not offer question counts the published bank cannot
       options: { A: 'Option A', B: 'Option B', C: 'Option C', D: 'Option D' },
     })) }),
   }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.mode).toBe('mock');
+    expect(payload.questionCount).toBe(4);
+    expect(payload.subjectCombination).toEqual(['Biology', 'Chemistry', 'Physics']);
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'd'.repeat(64),
+        durationSeconds: 240,
+        questions: subjects.map((subject, index) => ({
+          id: `published-${index}`,
+          subject,
+          prompt: `A published ${subject} question.`,
+          options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        })),
+      }),
+    });
+  });
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   const mockCountSelect = page.getByLabel('Questions per mock');
-  await expect(mockCountSelect).toBeDisabled();
-  await expect(mockCountSelect.locator('option')).toHaveText('Not enough published questions for a mock');
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
+  await expect(mockCountSelect).toHaveValue('4');
+  await expect(mockCountSelect.locator('option')).toHaveText('4-question starter mock');
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
+  await page.getByRole('button', { name: /Start mixed mock/i }).click();
+  await expect(page.getByText('Question 1 of 4')).toBeVisible();
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
