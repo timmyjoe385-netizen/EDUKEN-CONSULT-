@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 103,
+  "draft_count": 109,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 103 proposals remain separate, unpublished drafts. The original 90 proposals plus 13 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The new six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
+  "important": "All 109 proposals remain separate, unpublished drafts. The original 90 proposals plus 19 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The latest six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -1917,10 +1917,130 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-228",
+      "source_pair_id": "DUP-228",
+      "target_location": "batch 15 row 28",
+      "subject": "Economics",
+      "topic": "International economics",
+      "subtopic": "Capital movement",
+      "question": "Capital flight occurs when investors move financial assets from their home country to other countries.",
+      "options": [
+        "Capital flight",
+        "Capital formation",
+        "Capital deepening",
+        "Capital consumption"
+      ],
+      "answer": "A",
+      "explanation": "Capital flight is the movement of financial assets out of a country, often in response to economic or political uncertainty or the expectation of better returns elsewhere.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-129",
+      "source_pair_id": "DUP-129",
+      "target_location": "batch 16 row 6",
+      "subject": "Use of English",
+      "topic": "Vocabulary and usage",
+      "subtopic": "Phrasal verbs",
+      "question": "In the phrasal verb 'look after', the words mean:",
+      "options": [
+        "Take care of",
+        "Search for",
+        "Postpone",
+        "Resemble"
+      ],
+      "answer": "A",
+      "explanation": "To look after someone or something means to take care of that person or thing. It does not mean to search for, postpone or resemble.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-219",
+      "source_pair_id": "DUP-219",
+      "target_location": "batch 16 row 20",
+      "subject": "Chemistry",
+      "topic": "Acids, bases and salts",
+      "subtopic": "Amphoteric oxides",
+      "question": "An oxide that reacts with both acids and bases is described as:",
+      "options": [
+        "Amphoteric",
+        "Acidic",
+        "Basic",
+        "Neutral"
+      ],
+      "answer": "A",
+      "explanation": "An amphoteric oxide reacts with both acids and bases. Aluminium oxide and zinc oxide are common examples.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-193",
+      "source_pair_id": "DUP-193",
+      "target_location": "batch 16 row 33",
+      "subject": "Government",
+      "topic": "Forms of government",
+      "subtopic": "Oligarchy",
+      "question": "Rule by a small and privileged group is known as:",
+      "options": [
+        "Oligarchy",
+        "Democracy",
+        "Monarchy",
+        "Anarchy"
+      ],
+      "answer": "A",
+      "explanation": "Oligarchy is a form of government in which political power is concentrated in the hands of a small group. Democracy places governing authority in the people, while monarchy centres on a monarch.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-98",
+      "source_pair_id": "DUP-98",
+      "target_location": "batch 17 row 10",
+      "subject": "Mathematics",
+      "topic": "Set theory",
+      "subtopic": "Types of sets",
+      "question": "A set that contains no elements is called a:",
+      "options": [
+        "Empty set",
+        "Universal set",
+        "Finite set",
+        "Singleton set"
+      ],
+      "answer": "A",
+      "explanation": "An empty set contains no elements and is commonly represented by ∅ or {}. A singleton set contains exactly one element.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-121",
+      "source_pair_id": "DUP-121",
+      "target_location": "batch 17 row 20",
+      "subject": "Chemistry",
+      "topic": "Gas laws",
+      "subtopic": "Graham's law of diffusion",
+      "question": "The law used to compare the relative rates of diffusion of gases from their molar masses is:",
+      "options": [
+        "Graham's law",
+        "Boyle's law",
+        "Charles's law",
+        "Avogadro's law"
+      ],
+      "answer": "A",
+      "explanation": "Graham's law states that the rate of diffusion of a gas is inversely proportional to the square root of its molar mass. Under comparable conditions, a lighter gas diffuses faster than a heavier one.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     }
   ],
-  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review.",
-  "confirmed_duplicate_targets": 103,
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 third supplement: six additional target-specific drafts added for held locations batch 15 row 28, batch 16 row 6, batch 16 row 20, batch 16 row 33, batch 17 row 10 and batch 17 row 20. Each was screened against all 1,600 r3 source rows and the 103 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review.",
+  "confirmed_duplicate_targets": 109,
   "drafts_missing": 0,
   "drafts_missing_target_ids": [],
   "last_updated": "2026-11-09"
