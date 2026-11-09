@@ -62,6 +62,7 @@ A separate ledger now covers the 28 new pair relationships and six cluster-exten
 - The cross-window candidate set contains 1,304 ranks.
 - Persisted tail-review records contain explicit pairwise dispositions for all 1,018 ranks from 287 through 1,304.
 - The separate high-similarity shortlist maps 49 ranks by exact source endpoints.
+- A new exact endpoint crosswalk maps all **184 existing cross-window duplicate-disposition pairs** to 184 unique candidate ranks: 75 are in ranks 1–286 and 109 are in the 287–1,304 tail. The 49-item high-similarity shortlist overlaps those 184 mappings at 16 ranks; together they identify 108 unique ranks in the 1–286 baseline band, leaving 178 ranks in that band unrepresented by these pair crosswalks. This is an exact endpoint mapping, not proof that all 286 reported baseline reviews were completed.
 - The reported 286 baseline reviews are not yet supported by a complete individual rank crosswalk. A prior audit commit assigned ranks 1–286 from score order alone; the subsequent correction explicitly withdrew that inference. Do not treat ranks 1–286 as proven reviewed records.
 - The reported 237 additional targeted reviews still lack exact rank IDs.
 - The historical cumulative counter 1,007 differs by four from the rank-derived checkpoint 1,003. Other stale register fields conflict (472 vs 237 additional targeted reviews; 685 vs 717 earlier tail rank IDs).
