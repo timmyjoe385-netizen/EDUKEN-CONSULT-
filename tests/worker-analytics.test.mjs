@@ -90,3 +90,21 @@ test("analytics event endpoint rejects oversized payloads and missing storage", 
   const missingDb = await worker.fetch(request({ eventName: "page_view", sessionId: "session_123" }), { ASSETS: env.ASSETS });
   assert.equal(missingDb.status, 503);
 });
+
+test("AI assistant route rejects invalid input without invoking external services", async () => {
+  const env = { ASSETS: { fetch: async () => new Response("asset") } };
+  const get = await worker.fetch(new Request("https://eduken.example/api/ai-assistant"), env);
+  assert.equal(get.status, 405);
+
+  const preflight = await worker.fetch(new Request("https://eduken.example/api/ai-assistant", { method: "OPTIONS" }), env);
+  assert.equal(preflight.status, 200);
+  assert.equal(preflight.headers.get("access-control-allow-methods"), "POST, OPTIONS");
+
+  const empty = await worker.fetch(new Request("https://eduken.example/api/ai-assistant", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ question: "   " }),
+  }), env);
+  assert.equal(empty.status, 400);
+  assert.deepEqual(await empty.json(), { error: "Please enter a question." });
+});
