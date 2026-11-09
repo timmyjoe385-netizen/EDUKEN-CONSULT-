@@ -6202,7 +6202,54 @@
       "production_publications": 0,
       "production_release_authorized": false
     },
-    "maintenance_rule": "Update this checkpoint in this master register only when new source evidence or actual review data changes. Preserve historical audit files as evidence, not as competing current totals."
+    "maintenance_rule": "Update this checkpoint in this master register only when new source evidence or actual review data changes. Preserve historical audit files as evidence, not as competing current totals.",
+    "technical_acceptance": {
+      "isolated_test_project": "wpktzogarfqrgkirzdpy",
+      "cbt_question_audit_columns_present": [
+        "created_by",
+        "created_at",
+        "reviewed_by",
+        "reviewed_at",
+        "approved_by",
+        "approved_at",
+        "published_by",
+        "published_at"
+      ],
+      "isolated_question_rows_by_status": {
+        "draft": 65,
+        "published": 8
+      },
+      "admin_questions_api_server_guard": "requireAdmin(req) is called before the /api/admin/cbt/questions handler",
+      "admin_ui_e2e": "mocked_auth_and_mocked_admin_api_only",
+      "live_authenticated_acceptance": "not_completed",
+      "checklist": "content/cbt/audits/2026-11-09-pr199-authenticated-acceptance-checklist.md",
+      "pr194": {
+        "state": "open",
+        "draft": true,
+        "merged": false,
+        "submitted_reviews": 0
+      },
+      "pr197": {
+        "state": "open",
+        "draft": true,
+        "merged": false,
+        "authenticated_live_walkthrough": "pending"
+      },
+      "release_boundary": "isolated project only; no production import, publication, merge or deployment authorized"
+    },
+    "next_work": {
+      "parallel_tracks": [
+        "Run the existing authenticated acceptance checklist on the isolated preview with a real authorized test-admin login; do not repeat mocked CI.",
+        "Reconcile the exact baseline review source records and the 4-count discrepancy; preserve null for unverified rank IDs.",
+        "Continue assistant-only screening and prepare replacement drafts only where existing source evidence supports them; do not approve.",
+        "Complete mobile/slow-network acceptance on the preview and record evidence in this master register."
+      ],
+      "blockers": [
+        "No qualified subject reviewers are currently recorded; academic approvals remain zero.",
+        "Real authenticated admin walkthrough is not yet evidenced.",
+        "Cross-window historical rank/counter reconciliation remains open."
+      ]
+    }
   },
   "legacy_counter_policy": "Historical candidate_review and explicit_rank_crosswalk counters are retained for audit traceability. They contain known conflicting/stale values (including 472 vs 237 and 685 vs 717); use authoritative_checkpoint_2026_11_09 for current reporting. Do not sum, subtract, or infer candidate ranks from these legacy counters."
 }
