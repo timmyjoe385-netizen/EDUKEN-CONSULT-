@@ -4,8 +4,8 @@
 
 - Pair records: **109**
 - Pair-target review rows: **110**
-- Target rows currently held: **27**
-- Target rows still retained: **83**
+- Target rows currently held in the 9 November revision: **72**
+- Target rows currently retained in the 9 November revision: **38**
 - Missing target rows: **0**
 - Source/staging verification: all 204 unique endpoints across the 109 pair records match original source rows exactly.
 
@@ -34,11 +34,11 @@
 
 ## Current delegated screening status — 9 November 2026
 
-The CSV records 110 pair-target rows across 109 pair IDs: 63 duplicate recommendations (D), 29 distinct/related-skill outcomes (S), and 18 pending/uncertain cases (Q). Fourteen previously unresolved rows were reconciled against exact addendum endpoint matches (13 D, one S); three overlapping D records were confirmed without double-counting. User-supplied decisions are preserved. These screening dispositions do not constitute independent subject, answer-key or syllabus approval. Do not change source question rows, staging exports, or publication state based on this ledger alone.
+The CSV records 110 pair-target rows across 109 pair IDs: 63 duplicate recommendations (D), 29 distinct/related-skill outcomes (S), and 18 pending/uncertain cases (Q). Fourteen previously unresolved rows were reconciled against exact addendum endpoint matches (13 D, one S); three overlapping D records were confirmed without double-counting. User-supplied decisions are preserved. These screening dispositions do not constitute independent subject, answer-key or syllabus approval. The 9 November provisional staging revision applies 45 retained-to-held moves and 13 held-to-retained moves. Do not change source question content or publication state based on this ledger alone.
 
 ## 3a. New addendum disposition ledger
 
-A separate ledger now covers the 28 new pair relationships and six cluster-extension rows in the 6 November addendum (34 target rows): **22 D** recommendations, **12 S** related-skill variants, and **0 Q**. The one high-overlap numerical near-duplicate is classified D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These are user-delegated assistant screening dispositions only; the ledger deliberately leaves reviewer name/date blank and records independent subject, answer-key and syllabus sign-off as pending. No staging row has been moved and no question has been deleted, imported or published.
+The 34 addendum target records include 17 exact endpoint overlaps with the main register and 17 unique additional endpoint pairs. The overlaps were merged into the main register; the separate ledger now contains 17 unique pairs (6 D, 11 S). In the 9 November revision, the six D targets remain held and the 11 S targets are retained. These are user-delegated assistant screening dispositions only; independent subject, answer-key and syllabus sign-off remains pending. No reviewer name/date is invented. No question content was edited, imported or published.
 
 ## Reviewer instructions
 
