@@ -46,16 +46,16 @@ The additional worksheet's existing review notes are explicitly AI-screening gui
 
 The review packet contains 110 pair rows representing 109 distinct pair IDs. The additional row is a second target endpoint under cluster DUP-187, not an accidental duplicate row.
 
-A delegated screening pass has now populated the disposition field for all 110 rows:
-- **50 D** — duplicate recommended; retain one and keep the other held for deduplication.
-- **28 S** — distinct or related-skill variant; preserve both.
-- **32 Q** — not conclusively classified from the available triage; leave pending and do not move or discard.
+A delegated screening pass has populated the disposition field for all 110 rows:
+- **63 D** — duplicate recommended; retain one and hold the other for deduplication.
+- **29 S** — distinct or related-skill variant; preserve both.
+- **18 Q** — still not conclusively classified; leave pending and do not move or discard.
 
-The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or confirmed by the user. The other 58 mapped outcomes follow the existing assistant triage classifications under the user's express delegation; 32 rows had no matching triage recommendation and remain Q. These are screening dispositions only, not independent subject-expert approval, answer-key verification, syllabus sign-off, or publication authorization. No reviewer name or review date has been invented. The two independent subject-review worksheets still require academic checks.
+The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or confirmed by the user. Further exact endpoint matches from the addendum crosswalk resolved 13 additional Q rows as D and one Q row as S; three other addendum matches confirmed existing D decisions. The remaining 18 Q rows have no clear matching recommendation. These are screening dispositions only, not independent subject-expert approval, answer-key verification, syllabus sign-off, or publication authorization. No reviewer name or review date has been invented. The two independent subject-review worksheets still require academic checks.
 
 ## 3a. New addendum disposition ledger
 
-A separate ledger now covers the 28 new pair relationships and six cluster-extension rows in the 6 November addendum (34 target rows): **22 D** recommendations, **12 S** related-skill variants, and **0 Q**. The one high-overlap numerical near-duplicate is classified D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These are user-delegated assistant screening dispositions only; the ledger deliberately leaves reviewer name/date blank and records independent subject, answer-key and syllabus sign-off as pending. No staging row has been moved and no question has been deleted, imported or published.
+The 6 November addendum contains 34 target records: 17 exact retained/held endpoint pairs already present in the 109-pair register, plus 17 unique additional endpoint pairs. The 17 overlaps were merged into their canonical existing register rows (16 D, one S) and are listed in `2026-11-09-addendum-overlap-crosswalk.csv` to prevent double-counting. The separate addendum ledger now contains only the 17 unique additional pairs: **6 D** and **11 S**. The high-overlap numerical near-duplicate is D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These remain user-delegated assistant screening dispositions only; independent subject, answer-key and syllabus sign-off is pending. No reviewer name/date is invented. No staging row has been moved and no question has been deleted, imported or published.
 
 ## 4. Cross-window rank reconciliation
 
