@@ -15,4 +15,4 @@
 "DUP-148","DUP-230","Government","batch 7 row 34","batch 39 row 34","D","Exact endpoint duplicate; decision merged into existing pair register row; do not count as a separate relationship."
 "DUP-151","DUP-235","Biology","batch 29 row 12","batch 31 row 16","D","Exact endpoint duplicate; merged into DUP-151. Canonical anchor direction reversed to honour explicit S for DUP-93; retain batch 31 row 16 and hold batch 29 row 12."
 "DUP-154","DUP-242","Economics","batch 8 row 31","batch 35 row 30","D","Exact endpoint duplicate; decision merged into existing pair register row; do not count as a separate relationship."
-"DUP-156","DUP-244","Physics","batch 16 row 25","batch 39 row 23","D","Exact endpoint duplicate; decision merged into existing pair register row; do not count as a separate relationship."
+"DUP-156","DUP-244","Physics","batch 16 row 25","batch 39 row 23","D","Exact endpoint pair merged into DUP-156; canonical direction reversed to preserve S for DUP-124."
