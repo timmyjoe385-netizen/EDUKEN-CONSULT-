@@ -5990,8 +5990,8 @@
     "next_actions_in_order": [
       "Complete PR #199 authenticated admin acceptance and confirm merge requirements; do not merge without explicit user approval.",
       "Obtain individual baseline review records for the 286 reported reviews and reconcile the 237 targeted-review claim and four-count discrepancy.",
-      "Obtain qualified contextual decisions for 34 new held locations and 109 later-range/cluster pair records.",
-      "Prepare and screen missing replacement drafts; obtain independent subject, answer-key and syllabus approval.",
+      "Send the 109 pair decisions and 34 newly held locations to qualified reviewers in parallel by subject, recording each decision in this register.",
+      "Prepare and screen replacement drafts only for targets confirmed as true duplicates after qualified review; obtain independent subject, answer-key and syllabus approval.",
       "Run isolated student/admin CBT acceptance, then prepare a release package for explicit approval."
     ],
     "safety": {
@@ -6042,6 +6042,46 @@
         }
       ],
       "count_effect": "No source row or held location was added or removed. These canonical merges are already recorded; do not repeat them."
+    },
+    "qualified_review_batches": {
+      "method": "Subject-wise batching for independent qualified reviewers. Counts below are queues, not approvals. The 34 newly held locations are a subset/overlap within the wider register review work; do not add the queues together.",
+      "later_register_pair_decisions_pending": {
+        "total_pair_records": 109,
+        "by_subject": {
+          "Biology": 19,
+          "Chemistry": 13,
+          "Economics": 13,
+          "Government": 25,
+          "Literature in English": 9,
+          "Mathematics": 15,
+          "Physics": 11,
+          "Use of English": 4
+        }
+      },
+      "november_6_newly_held_locations": {
+        "total_unique_locations": 34,
+        "by_subject": {
+          "Biology": 4,
+          "Chemistry": 5,
+          "Economics": 5,
+          "Government": 5,
+          "Literature in English": 5,
+          "Mathematics": 5,
+          "Physics": 3,
+          "Use of English": 2
+        },
+        "composition": "28 new duplicate pair records plus 6 unique cluster-extension rows; two additional links reuse already-held rows and are not counted as new locations."
+      },
+      "reviewer_decision_fields_required": [
+        "contextual_duplicate_or_related_skill",
+        "retain_or_hold_location",
+        "answer_key_and_explanation_correctness",
+        "official_syllabus_fit_and_depth",
+        "reviewer_name_or_credential",
+        "review_date",
+        "decision_and_rationale"
+      ],
+      "status": "prepared_for_parallel_qualified_review_not_approved"
     }
   }
 }
