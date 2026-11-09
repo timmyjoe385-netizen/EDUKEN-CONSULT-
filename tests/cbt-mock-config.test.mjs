@@ -11,6 +11,6 @@ test("full 180-question mock fallback timer is 120 minutes", () => {
 });
 
 test("shorter and local starter mocks retain the 30-minute fallback", () => {
-  assert.equal(getCbtMockFallbackDurationSeconds(10), 30 * 60);
+  assert.equal(getCbtMockFallbackDurationSeconds(4), 4 * 60);\n  assert.equal(getCbtMockFallbackDurationSeconds(10), 30 * 60);
   assert.equal(getCbtMockFallbackDurationSeconds(8), 30 * 60);
 });
