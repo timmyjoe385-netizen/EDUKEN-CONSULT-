@@ -1,0 +1,133 @@
+{
+  "revision": "2026-11-09-r3",
+  "parent_revision": "2026-11-09-r2",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Non-destructive staging correction aligning held/retained row direction with the existing master duplicate-disposition register and canonical cluster anchors.",
+  "source_bank": {
+    "total": 1600,
+    "retained": 1440,
+    "held": 160
+  },
+  "per_subject": {
+    "Biology": {
+      "retained": 169,
+      "held": 31,
+      "total": 200
+    },
+    "Chemistry": {
+      "retained": 179,
+      "held": 21,
+      "total": 200
+    },
+    "Economics": {
+      "retained": 173,
+      "held": 27,
+      "total": 200
+    },
+    "Government": {
+      "retained": 175,
+      "held": 25,
+      "total": 200
+    },
+    "Literature in English": {
+      "retained": 180,
+      "held": 20,
+      "total": 200
+    },
+    "Mathematics": {
+      "retained": 193,
+      "held": 7,
+      "total": 200
+    },
+    "Physics": {
+      "retained": 185,
+      "held": 15,
+      "total": 200
+    },
+    "Use of English": {
+      "retained": 186,
+      "held": 14,
+      "total": 200
+    }
+  },
+  "staging_actions": {
+    "moved_held_to_retained": 6,
+    "moved_retained_to_held": 3,
+    "held_anchor_references_canonicalized": 7,
+    "unresolved_anchor_references": 0,
+    "cycles": 0,
+    "duplicate_source_row_identities": 0,
+    "duplicate_normalized_same_subject_stems_in_retained": 0,
+    "structural_issues": 0
+  },
+  "canonical_anchor_rules": [
+    {
+      "cluster": "SPECIFIC-HEAT-01",
+      "retained_anchor": "batch 28 row 25",
+      "held_locations": [
+        "batch 3 row 24",
+        "batch 34 row 26"
+      ]
+    },
+    {
+      "cluster": "FEDERALISM-01",
+      "retained_anchor": "batch 32 row 34",
+      "held_locations": [
+        "batch 2 row 33",
+        "batch 18 row 32",
+        "batch 26 row 34",
+        "batch 33 row 35",
+        "batch 38 row 36"
+      ]
+    },
+    {
+      "cluster": "LAW-OF-SUPPLY-01",
+      "retained_anchor": "batch 37 row 27",
+      "held_locations": [
+        "batch 10 row 27",
+        "batch 12 row 27"
+      ]
+    },
+    {
+      "cluster": "PARALLEL-STRUCTURE-01",
+      "retained_anchor": "batch 5 row 5",
+      "held_locations": [
+        "batch 20 row 6",
+        "batch 28 row 4"
+      ]
+    },
+    {
+      "cluster": "WAVELENGTH-01",
+      "retained_anchor": "batch 16 row 25",
+      "held_locations": [
+        "batch 39 row 23"
+      ]
+    },
+    {
+      "cluster": "WEIGHT-5KG-01",
+      "retained_anchor": "batch 5 row 22",
+      "held_locations": [
+        "batch 31 row 25"
+      ]
+    }
+  ],
+  "validation": {
+    "total_source_row_identities": 1600,
+    "unique_source_row_identities": 1600,
+    "all_eight_subjects_have_200_rows": true,
+    "all_held_rows_reference_retained_anchor": true,
+    "retained_rows_have_four_options_and_valid_A_to_D_key": true,
+    "retained_rows_have_no_missing_stem_topic_or_explanation": true,
+    "exact_normalized_same_subject_duplicate_stems_in_retained": 0
+  },
+  "safety": {
+    "source_question_content_changed": 0,
+    "original_source_csvs_modified": false,
+    "r2_files_modified": false,
+    "qualified_academic_approvals_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "production_deployments": 0
+  },
+  "qualification": "This is a staging disposition correction only. It is not qualified academic approval, permission to import into production, or permission to publish questions."
+}
