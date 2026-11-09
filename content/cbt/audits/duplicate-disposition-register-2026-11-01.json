@@ -6308,15 +6308,16 @@
         "authenticated_live_acceptance": "not_completed"
       },
       "current_commit_workflows": {
-        "commit": "deec8ddeffc21a8c4c620ce12870bf7828f31764",
-        "status": "in_progress_at_checkpoint",
-        "groups": [
-          "build_check",
-          "wallet_migration_integration",
-          "build_and_isolated_preview",
-          "playwright_browser_checks"
-        ],
-        "note": "Do not mark passed until GitHub reports each workflow completed successfully."
+        "commit": "dc518065a5b05a88c3074db4463c6834ffd33886",
+        "build_check": "success",
+        "wallet_migration_sql_integration": "success",
+        "build_and_isolated_preview": "success",
+        "preview_worker_deployment": "success",
+        "production_deployment": "skipped",
+        "playwright_browser_checks": "success",
+        "real_cbt_api_integration": "success",
+        "admin_authenticated_live_acceptance": "not_completed",
+        "note": "The admin browser coverage remains mocked. A real authenticated admin walkthrough is still required."
       },
       "isolated_security_audit": {
         "project_id": "wpktzogarfqrgkirzdpy",
@@ -6360,9 +6361,11 @@
           "tests/question-bank-validation.test.mjs"
         ],
         "change": "JAMB question validation now accepts only the eight supported UTME subjects; non-JAMB exam types retain their separate subject catalogue.",
-        "automated_checks": "in_progress",
-        "production_touched": false
-      }
+        "automated_checks": "passed",
+        "production_touched": false,
+        "verified_on_commit": "dc518065a5b05a88c3074db4463c6834ffd33886"
+      },
+      "preview_url": "https://eduken-consult-preview.timmy385.workers.dev/"
     },
     "next_work": {
       "parallel_tracks": [
