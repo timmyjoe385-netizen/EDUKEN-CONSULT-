@@ -5905,19 +5905,20 @@
     "purpose": "Single current status layer for project completion. Existing pair-level records are preserved below; this checkpoint supersedes conflicting historical aggregate counters where stated.",
     "source_of_truth": {
       "pair_level_duplicate_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-      "latest_staging_manifest": "content/cbt/staging/2026-11-06/manifest.json",
+      "latest_staging_manifest": "content/cbt/staging/2026-11-09-r3/manifest.json",
       "latest_staging_reconciliation": "content/cbt/audits/cross-window-staging-reconciliation-gap-2026-11-06.json",
       "exact_register_rank_crosswalk": "content/cbt/audits/2026-11-09-cross-window-register-rank-crosswalk.json",
       "baseline_rank_crosswalk": "content/cbt/audits/2026-11-08-cross-window-baseline-rank-crosswalk-r2.json",
-      "subject_review_checkpoint": "content/cbt/audits/order-1-subject-review-progress-2026-11-02.md"
+      "subject_review_checkpoint": "content/cbt/audits/order-1-subject-review-progress-2026-11-02.md",
+      "latest_anchor_reconciliation": "content/cbt/staging/2026-11-09-r3/manifest.json"
     },
     "question_bank": {
       "source_rows_accounted_for": 1600,
-      "provisionally_retained_rows": 1476,
-      "held_duplicate_locations": 124,
-      "unique_held_pair_ids": 119,
+      "provisionally_retained_rows": 1440,
+      "held_duplicate_locations": 160,
+      "unique_held_pair_ids": 158,
       "new_held_locations_in_november_6_addendum": 34,
-      "later_register_target_locations_still_retained_pending_qualified_disposition": 68,
+      "later_register_target_locations_still_retained_pending_qualified_disposition": 32,
       "source_staging_join": {
         "pair_records": 199,
         "unique_endpoints": 204,
@@ -5931,7 +5932,10 @@
         "assistant_preliminary_replacement_reviews": "90/90"
       },
       "academic_approval": false,
-      "import_or_publication_authorized": false
+      "import_or_publication_authorized": false,
+      "later_register_unique_target_locations": 104,
+      "later_register_target_locations_already_held": 72,
+      "r3_anchor_invariant": "All 160 held locations point to a retained anchor; zero unresolved references or cycles."
     },
     "duplicate_review_reconciliation": {
       "within_window_reconstruction": {
@@ -5986,14 +5990,22 @@
       "authenticated_admin_acceptance": "not yet executed; existing Playwright test mocks auth and API",
       "branch_protection_requirements": "not verified; prior API access was denied",
       "merge_authorized": false,
-      "authenticated_acceptance_checklist": "content/cbt/audits/2026-11-09-pr199-authenticated-acceptance-checklist.md"
+      "authenticated_acceptance_checklist": "content/cbt/audits/2026-11-09-pr199-authenticated-acceptance-checklist.md",
+      "current_integration_pull_request": 194,
+      "current_integration_head": "afdc69606e52405676cf100f4fdf9fbbf80f4e1a",
+      "current_integration_status": "open_draft_mergeable_checks_in_progress",
+      "admin_ui_ported_from_prs": [
+        197,
+        199
+      ],
+      "production_deploy": "skipped"
     },
     "next_actions_in_order": [
-      "Run the PR #199 authenticated acceptance checklist in the isolated preview/test environment; confirm server-side admin authorization and route isolation.",
-      "Obtain individual baseline review records for the 286 reported reviews and reconcile the 237 targeted-review claim and separate counter conflicts.",
-      "Assign the 109 existing pair decisions and 34 newly held locations to qualified reviewers by subject using the handoff queue; record every decision in the master register.",
-      "Prepare and screen replacement drafts only for targets confirmed as true duplicates after qualified review; obtain independent subject, answer-key and syllabus approval.",
-      "Run isolated student/admin CBT acceptance, then prepare a release package for explicit approval."
+      "Collect the current PR194 build/deploy and Playwright workflow results; fix only actual failures.",
+      "Prepare replacement drafts for newly identified unique D targets after checking existing target-level draft coverage and screening against the full bank.",
+      "Continue the exact 286 baseline cross-window rank mapping and counter reconciliation; keep unverified totals null.",
+      "Identify and approach qualified subject reviewers using the prepared subject-specific packets; do not record approval until returned.",
+      "Complete authenticated isolated-preview admin acceptance and mobile/slow-network checks."
     ],
     "safety": {
       "source_question_content_changed": 0,
@@ -6133,18 +6145,85 @@
         }
       ],
       "note": "These correct pair/cluster references; they do not authorize new held rows, source edits or publication."
+    },
+    "new_addendum_2026_11_09": {
+      "source_file": "content/cbt/review-packets/2026-11-09-addendum-disposition-ledger.csv",
+      "rows": 17,
+      "unique_candidate_ids": 15,
+      "assistant_dispositions": {
+        "D": 6,
+        "S": 11
+      },
+      "reviewer_names_filled": 0,
+      "qualified_academic_approvals": 0,
+      "D_targets": [
+        {
+          "id": "DUP-47",
+          "subject": "Government",
+          "retained_anchor": "batch 32 row 34",
+          "held": "batch 2 row 33",
+          "already_in_r3_held": true,
+          "existing_cluster": "FEDERALISM-01"
+        },
+        {
+          "id": "DUP-19",
+          "subject": "Economics",
+          "retained_anchor": "batch 9 row 31",
+          "held": "batch 14 row 31",
+          "already_in_r3_held": true,
+          "existing_cluster": "TARIFF-01"
+        },
+        {
+          "id": "DUP-216",
+          "subject": "Chemistry",
+          "retained_anchor": "batch 1 row 19",
+          "held": "batch 39 row 17",
+          "already_in_r3_held": true,
+          "new_pair": true
+        },
+        {
+          "id": "DUP-217",
+          "subject": "Mathematics",
+          "retained_anchor": "batch 14 row 7",
+          "held": "batch 33 row 10",
+          "already_in_r3_held": true,
+          "new_pair": true
+        },
+        {
+          "id": "DUP-232",
+          "subject": "Literature in English",
+          "retained_anchor": "batch 28 row 41",
+          "held": "batch 34 row 37",
+          "already_in_r3_held": true,
+          "new_pair": true
+        },
+        {
+          "id": "DUP-240",
+          "subject": "Government",
+          "retained_anchor": "batch 12 row 33",
+          "stated_intermediate_anchor": "batch 22 row 33",
+          "held": "batch 33 row 32",
+          "already_in_r3_held": true,
+          "cluster_extension": true
+        }
+      ],
+      "S_targets": "All 11 related-skill targets are retained in r3; no new hold was created for S dispositions.",
+      "qualification": "Assistant screening only; reviewer fields and independent approvals remain empty."
     }
   },
   "authoritative_checkpoint_2026_11_09": {
     "purpose": "Single current reporting point. This checkpoint supersedes conflicting historical progress counters below; do not infer missing reviewed ranks by arithmetic.",
     "source_bank": {
       "total_source_rows": 1600,
-      "provisionally_retained": 1437,
-      "held_locations": 163,
+      "provisionally_retained": 1440,
+      "held_locations": 160,
       "rows_per_subject": 200,
       "retained_exact_same_subject_duplicate_stems": 0,
       "retained_rows_have_four_options_and_valid_A_to_D_keys": true,
-      "academic_status": "provisional_not_qualified_approved"
+      "academic_status": "provisional_not_qualified_approved",
+      "staging_revision": "2026-11-09-r3",
+      "staging_manifest": "content/cbt/staging/2026-11-09-r3/manifest.json",
+      "all_held_rows_reference_retained_anchor": true
     },
     "assistant_academic_screen": {
       "ledger_rows": 105,
@@ -6308,16 +6387,17 @@
         "authenticated_live_acceptance": "not_completed"
       },
       "current_commit_workflows": {
-        "commit": "dc518065a5b05a88c3074db4463c6834ffd33886",
-        "build_check": "success",
-        "wallet_migration_sql_integration": "success",
-        "build_and_isolated_preview": "success",
-        "preview_worker_deployment": "success",
-        "production_deployment": "skipped",
-        "playwright_browser_checks": "success",
-        "real_cbt_api_integration": "success",
-        "admin_authenticated_live_acceptance": "not_completed",
-        "note": "The admin browser coverage remains mocked. A real authenticated admin walkthrough is still required."
+        "commit": "afdc69606e52405676cf100f4fdf9fbbf80f4e1a",
+        "status": "in_progress_at_checkpoint",
+        "completed_success": [
+          "EDUKEN build check",
+          "EDUKEN wallet migration SQL integration"
+        ],
+        "in_progress": [
+          "EDUKEN build and Cloudflare deploy",
+          "EDUKEN Playwright browser checks"
+        ],
+        "note": "Do not claim all checks passed until the preview deployment and Playwright runs complete. Production deployment remains skipped."
       },
       "isolated_security_audit": {
         "project_id": "wpktzogarfqrgkirzdpy",
@@ -6365,20 +6445,194 @@
         "production_touched": false,
         "verified_on_commit": "dc518065a5b05a88c3074db4463c6834ffd33886"
       },
-      "preview_url": "https://eduken-consult-preview.timmy385.workers.dev/"
+      "preview_url": "https://eduken-consult-preview.timmy385.workers.dev/",
+      "r3_staging_audit": {
+        "manifest": "content/cbt/staging/2026-11-09-r3/manifest.json",
+        "parent_revision": "2026-11-09-r2",
+        "retained_rows": 1440,
+        "held_locations": 160,
+        "total_source_rows": 1600,
+        "per_subject": {
+          "Biology": {
+            "retained": 169,
+            "held": 31
+          },
+          "Chemistry": {
+            "retained": 179,
+            "held": 21
+          },
+          "Economics": {
+            "retained": 173,
+            "held": 27
+          },
+          "Government": {
+            "retained": 175,
+            "held": 25
+          },
+          "Literature in English": {
+            "retained": 180,
+            "held": 20
+          },
+          "Mathematics": {
+            "retained": 193,
+            "held": 7
+          },
+          "Physics": {
+            "retained": 185,
+            "held": 15
+          },
+          "Use of English": {
+            "retained": 186,
+            "held": 14
+          }
+        },
+        "held_to_retained": 6,
+        "retained_to_held": 3,
+        "anchor_references_canonicalized": 7,
+        "unresolved_anchor_references": 0,
+        "cycles": 0,
+        "duplicate_source_row_identities": 0,
+        "exact_normalized_same_subject_duplicates_in_retained": 0,
+        "structural_issues": 0,
+        "all_held_rows_reference_retained_anchor": true,
+        "moved_rows_verified_against_original_batch_csvs": 9,
+        "source_question_content_changed": 0,
+        "source_csvs_modified": false,
+        "r2_unchanged": true,
+        "qualified_approvals": 0,
+        "production_imports": 0,
+        "production_publications": 0
+      },
+      "canonical_anchor_reconciliation_r3": {
+        "status": "staging_anchors_reconciled_and_validated",
+        "corrections": [
+          {
+            "cluster": "SPECIFIC-HEAT-01",
+            "canonical_anchor": "batch 28 row 25",
+            "held": [
+              "batch 3 row 24",
+              "batch 34 row 26"
+            ]
+          },
+          {
+            "cluster": "FEDERALISM-01",
+            "canonical_anchor": "batch 32 row 34",
+            "held": [
+              "batch 2 row 33",
+              "batch 18 row 32",
+              "batch 26 row 34",
+              "batch 33 row 35",
+              "batch 38 row 36"
+            ]
+          },
+          {
+            "cluster": "LAW-OF-SUPPLY-01",
+            "canonical_anchor": "batch 37 row 27",
+            "held": [
+              "batch 10 row 27",
+              "batch 12 row 27"
+            ]
+          },
+          {
+            "cluster": "PARALLEL-STRUCTURE-01",
+            "canonical_anchor": "batch 5 row 5",
+            "held": [
+              "batch 20 row 6",
+              "batch 28 row 4"
+            ]
+          },
+          {
+            "cluster": "WAVELENGTH-01",
+            "canonical_anchor": "batch 16 row 25",
+            "held": [
+              "batch 39 row 23"
+            ]
+          },
+          {
+            "cluster": "WEIGHT-5KG-01",
+            "canonical_anchor": "batch 5 row 22",
+            "held": [
+              "batch 31 row 25"
+            ]
+          },
+          {
+            "cluster": "CIVIC-DUTY-01",
+            "canonical_anchor": "batch 12 row 33",
+            "held": [
+              "batch 22 row 33",
+              "batch 33 row 32"
+            ]
+          },
+          {
+            "cluster": "LEGISLATIVE-OVERSIGHT-01",
+            "canonical_anchor": "batch 22 row 34",
+            "held": [
+              "batch 29 row 34",
+              "batch 37 row 35"
+            ]
+          },
+          {
+            "cluster": "REPORTED-SPEECH-01",
+            "canonical_anchor": "batch 12 row 3",
+            "held": [
+              "batch 4 row 5"
+            ],
+            "related_skill_retained": [
+              "batch 32 row 2"
+            ]
+          },
+          {
+            "cluster": "PHENOLPHTHALEIN-01",
+            "canonical_anchor": "batch 22 row 18",
+            "held": [
+              "batch 20 row 18",
+              "batch 34 row 18"
+            ]
+          },
+          {
+            "cluster": "PLATELET-CLOTTING-01",
+            "canonical_anchor": "batch 1 row 15",
+            "held": [
+              "batch 27 row 12",
+              "batch 38 row 13"
+            ]
+          },
+          {
+            "cluster": "DENOUEMENT-01",
+            "canonical_anchor": "batch 20 row 39",
+            "held": [
+              "batch 25 row 37",
+              "batch 32 row 39"
+            ]
+          },
+          {
+            "cluster": "TARIFF-01",
+            "canonical_anchor": "batch 9 row 31",
+            "held": [
+              "batch 14 row 31",
+              "batch 38 row 31"
+            ]
+          }
+        ],
+        "decisions": {
+          "DUP-78": "Canonical anchor is batch 5 row 5 (DUP-200); batch 20 row 6 and batch 28 row 4 are held variants. This resolves the earlier two-row anchor cycle.",
+          "DUP-181": "Latest 109-pair review marks this as a distinct related-skill variant (S); batch 32 row 2 remains retained. Batch 4 row 5 remains held under DUP-79, whose canonical anchor is batch 12 row 3.",
+          "DUP-192": "Canonical anchor is batch 22 row 34 via DUP-36; batch 29 row 34 and batch 37 row 35 are held members."
+        }
+      }
     },
     "next_work": {
       "parallel_tracks": [
-        "Collect the four workflow results for the current PR194 branch commit; fix only actual failures.",
-        "Perform the authenticated admin acceptance checklist in isolated preview when an authorized test-admin session is available; mocked CI is not a substitute.",
-        "Continue exact baseline cross-window rank mapping and reconcile the four-count discrepancy; keep unverified totals null.",
-        "Continue assistant-only subject screening and prepare replacements only for evidence-supported true duplicates; do not approve or publish.",
-        "Complete mobile and slow-network preview checks without touching production."
+        "Collect the current PR194 build/deploy and Playwright workflow results; fix only actual failures.",
+        "Prepare replacement drafts for newly identified unique D targets after checking existing target-level draft coverage and screening against the full bank.",
+        "Continue the exact 286 baseline cross-window rank mapping and counter reconciliation; keep unverified totals null.",
+        "Identify and approach qualified subject reviewers using the prepared subject-specific packets; do not record approval until returned.",
+        "Complete authenticated isolated-preview admin acceptance and mobile/slow-network checks."
       ],
       "blockers": [
-        "No qualified subject reviewers are currently recorded; independent academic approvals remain zero.",
+        "No qualified subject reviewers are recorded; independent academic approvals remain zero.",
         "Real authenticated admin walkthrough remains outstanding.",
-        "Cross-window historical rank/counter reconciliation remains open."
+        "Baseline 286 cross-window review records and historical counter discrepancies remain unresolved."
       ]
     }
   },
