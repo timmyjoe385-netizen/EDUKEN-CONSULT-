@@ -44,7 +44,14 @@ The additional worksheet's existing review notes are explicitly AI-screening gui
 
 ## 3. Consolidated 109-pair qualified-review packet
 
-The review packet contains 110 pair rows representing 109 distinct pair IDs. The additional row is a second target endpoint under cluster DUP-187, not an accidental duplicate row. All 110 reviewer-disposition and reviewer-notes cells remain blank. Pairwise assistant recommendations remain provisional; qualified reviewers must decide duplicate versus distinct/related-skill, verify answers and explanations, and check syllabus fit.
+The review packet contains 110 pair rows representing 109 distinct pair IDs. The additional row is a second target endpoint under cluster DUP-187, not an accidental duplicate row.
+
+A delegated screening pass has now populated the disposition field for all 110 rows:
+- **50 D** — duplicate recommended; retain one and keep the other held for deduplication.
+- **28 S** — distinct or related-skill variant; preserve both.
+- **32 Q** — not conclusively classified from the available triage; leave pending and do not move or discard.
+
+The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or confirmed by the user. The other 58 mapped outcomes follow the existing assistant triage classifications under the user's express delegation; 32 rows had no matching triage recommendation and remain Q. These are screening dispositions only, not independent subject-expert approval, answer-key verification, syllabus sign-off, or publication authorization. No reviewer name or review date has been invented. The two independent subject-review worksheets still require academic checks.
 
 ## 4. Cross-window rank reconciliation
 
