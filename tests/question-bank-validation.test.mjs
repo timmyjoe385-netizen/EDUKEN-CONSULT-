@@ -16,6 +16,15 @@ test("validates complete original question and creates a stable fingerprint", ()
   assert.equal(fingerprintQuestion(result.question), result.question.question_fingerprint);
 });
 
+test("accepts all eight UTME subjects and rejects unsupported JAMB subjects", () => {
+  const subjects = ["Use of English", "Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
+  for (const subject of subjects) assert.equal(validateQuestionInput({ ...sample, subject }).valid, true, subject);
+  const unsupported = validateQuestionInput({ ...sample, subject: "Agricultural Science" });
+  assert.ok(unsupported.errors.some(x => /eight supported UTME subjects/i.test(x)));
+  // Other exam types retain their own subject catalogues.
+  assert.equal(validateQuestionInput({ ...sample, exam_type: "WAEC", subject: "Agricultural Science" }).valid, true);
+});
+
 test("rejects missing options and invalid answer keys", () => {
   assert.equal(validateQuestionInput({ ...sample, options: { A: "one" } }).valid, false);
   assert.ok(validateQuestionInput({ ...sample, correct_option: "E" }).errors.some(x => /Correct answer/.test(x)));
