@@ -1,9 +1,9 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 97,
+  "draft_count": 103,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 97 proposals remain separate, unpublished drafts. The original 90 proposals plus seven target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the 90 existing proposals. One new lexical flag (DUP-47-ADD-2026-11-09) was contextually assessed as a confederation question distinct from the federation revenue-allocation match; the flag remains a review prompt, not a duplicate verdict. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
+  "important": "All 103 proposals remain separate, unpublished drafts. The original 90 proposals plus 13 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The new six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
   "items": [
     {
       "target_id": "DUP-01",
@@ -1797,10 +1797,130 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-114",
+      "source_pair_id": "DUP-114",
+      "target_location": "batch 3 row 24",
+      "subject": "Physics",
+      "topic": "Waves",
+      "subtopic": "Mechanical waves",
+      "question": "A wave that cannot propagate through a vacuum and must travel through a material medium is classified as a:",
+      "options": [
+        "Mechanical wave",
+        "Electromagnetic wave",
+        "Radio wave",
+        "Light wave"
+      ],
+      "answer": "A",
+      "explanation": "Mechanical waves require a material medium to transfer energy. Electromagnetic waves, including radio waves and light, can travel through a vacuum.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-164",
+      "source_pair_id": "DUP-164",
+      "target_location": "batch 11 row 40",
+      "subject": "Literature in English",
+      "topic": "Literary terms",
+      "subtopic": "Metonymy",
+      "question": "The substitution of the name of an attribute or closely associated thing for the thing meant is called:",
+      "options": [
+        "Metonymy",
+        "Synecdoche",
+        "Euphemism",
+        "Hyperbole"
+      ],
+      "answer": "A",
+      "explanation": "Metonymy refers to something by naming an associated attribute or object, such as using “the crown” to mean the monarchy. Synecdoche uses a part to represent the whole or the whole to represent a part.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-174",
+      "source_pair_id": "DUP-174",
+      "target_location": "batch 12 row 21",
+      "subject": "Chemistry",
+      "topic": "Organic chemistry",
+      "subtopic": "Saponification",
+      "question": "The alkaline hydrolysis of fats or oils to produce soap and glycerol is known as:",
+      "options": [
+        "Saponification",
+        "Esterification",
+        "Polymerisation",
+        "Fermentation"
+      ],
+      "answer": "A",
+      "explanation": "Saponification is the alkaline hydrolysis of fats or oils (triglycerides), producing glycerol and the salts of fatty acids that make up soap.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-101",
+      "source_pair_id": "DUP-101",
+      "target_location": "batch 12 row 27",
+      "subject": "Economics",
+      "topic": "Public finance and welfare",
+      "subtopic": "Public goods",
+      "question": "A good that is non-rival in consumption and from which people cannot easily be excluded is called a:",
+      "options": [
+        "Public good",
+        "Merit good",
+        "Demerit good",
+        "Private good"
+      ],
+      "answer": "A",
+      "explanation": "A public good is non-rival, meaning one person's use does not substantially reduce its availability to others, and non-excludable, meaning people cannot easily be prevented from benefiting from it.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-210",
+      "source_pair_id": "DUP-210",
+      "target_location": "batch 13 row 16",
+      "subject": "Biology",
+      "topic": "Reproduction",
+      "subtopic": "Spermatogenesis",
+      "question": "The production of male gametes in the seminiferous tubules of the testes is known as:",
+      "options": [
+        "Spermatogenesis",
+        "Oogenesis",
+        "Ovulation",
+        "Fertilisation"
+      ],
+      "answer": "A",
+      "explanation": "Spermatogenesis is the process by which sperm cells are formed in the seminiferous tubules of the testes. Oogenesis is the formation of female gametes.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-107",
+      "source_pair_id": "DUP-107",
+      "target_location": "batch 14 row 35",
+      "subject": "Government",
+      "topic": "International relations",
+      "subtopic": "International Criminal Court",
+      "question": "The International Criminal Court is empowered to prosecute:",
+      "options": [
+        "Individuals accused of specified international crimes",
+        "States involved in territorial disputes",
+        "Political parties for electoral offences",
+        "Governments for violating national constitutions"
+      ],
+      "answer": "A",
+      "explanation": "The International Criminal Court prosecutes individuals accused of genocide, crimes against humanity, war crimes and aggression. Disputes between states are dealt with by the International Court of Justice.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
     }
   ],
-  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import.",
-  "confirmed_duplicate_targets": 97,
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review.",
+  "confirmed_duplicate_targets": 103,
   "drafts_missing": 0,
   "drafts_missing_target_ids": [],
   "last_updated": "2026-11-09"
