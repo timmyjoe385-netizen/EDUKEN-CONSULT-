@@ -5983,14 +5983,15 @@
       "checks_on_unchanged_head": "four previously verified workflows passed; do not rerun unless head changes",
       "submitted_reviews": 0,
       "review_threads": 0,
-      "authenticated_admin_acceptance": "not yet evidenced",
+      "authenticated_admin_acceptance": "not yet executed; existing Playwright test mocks auth and API",
       "branch_protection_requirements": "not verified; prior API access was denied",
-      "merge_authorized": false
+      "merge_authorized": false,
+      "authenticated_acceptance_checklist": "content/cbt/audits/2026-11-09-pr199-authenticated-acceptance-checklist.md"
     },
     "next_actions_in_order": [
-      "Complete PR #199 authenticated admin acceptance and confirm merge requirements; do not merge without explicit user approval.",
-      "Obtain individual baseline review records for the 286 reported reviews and reconcile the 237 targeted-review claim and four-count discrepancy.",
-      "Send the 109 pair decisions and 34 newly held locations to qualified reviewers in parallel by subject, recording each decision in this register.",
+      "Run the PR #199 authenticated acceptance checklist in the isolated preview/test environment; confirm server-side admin authorization and route isolation.",
+      "Obtain individual baseline review records for the 286 reported reviews and reconcile the 237 targeted-review claim and separate counter conflicts.",
+      "Assign the 109 existing pair decisions and 34 newly held locations to qualified reviewers by subject using the handoff queue; record every decision in the master register.",
       "Prepare and screen replacement drafts only for targets confirmed as true duplicates after qualified review; obtain independent subject, answer-key and syllabus approval.",
       "Run isolated student/admin CBT acceptance, then prepare a release package for explicit approval."
     ],
@@ -6082,6 +6083,56 @@
         "decision_and_rationale"
       ],
       "status": "prepared_for_parallel_qualified_review_not_approved"
+    },
+    "qualified_review_handoff": {
+      "path": "content/cbt/review/2026-11-09-qualified-review-handoff.json",
+      "status": "prepared_for_independent_review_not_approved",
+      "existing_pair_decisions_queued": 109,
+      "new_held_locations_queued": 34,
+      "new_held_location_composition": {
+        "new_pair_records": 28,
+        "unique_cluster_extensions": 6
+      },
+      "new_held_locations_by_subject": {
+        "Biology": 4,
+        "Chemistry": 5,
+        "Economics": 5,
+        "Government": 5,
+        "Literature in English": 5,
+        "Mathematics": 5,
+        "Physics": 3,
+        "Use of English": 2
+      },
+      "independent_qualified_approvals_recorded": 0,
+      "reviewer_fields_required": [
+        "contextual_duplicate_or_related_skill",
+        "answer_key_and_explanation_correctness",
+        "official_syllabus_fit_and_depth",
+        "reviewer_name_or_credential",
+        "review_date",
+        "decision_rationale"
+      ]
+    },
+    "cluster_reference_corrections": {
+      "status": "source_reference_corrections_verified",
+      "corrections": [
+        {
+          "rank": 684,
+          "location": "batch 4 row 10",
+          "canonical_cluster": "DUP-197",
+          "retained_anchor": "batch 20 row 11",
+          "superseded_candidate": "DUP-213"
+        },
+        {
+          "rank": 1304,
+          "location": "batch 38 row 36",
+          "canonical_cluster": "DUP-47",
+          "existing_pair_link": "DUP-177",
+          "retained_anchor": "batch 32 row 34",
+          "superseded_candidate": "DUP-223 at rank 738"
+        }
+      ],
+      "note": "These correct pair/cluster references; they do not authorize new held rows, source edits or publication."
     }
   }
 }
