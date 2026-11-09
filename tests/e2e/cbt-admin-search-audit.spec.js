@@ -29,7 +29,7 @@ test('CBT admin pagination changes server page and search resets to page one wit
     published_at: null,
   };
 
-  await page.route('**/auth/v1/user', route => route.fulfill({
+  await page.route('**/auth/v1/user**', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
     body: JSON.stringify({
