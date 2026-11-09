@@ -2585,7 +2585,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 11",
       "replace_candidate": "batch 17 row 10",
       "retain_replace_assignment_status": "provisional_pending_provenance",
@@ -2597,7 +2597,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-98",
+      "replacement_draft_location": "batch 17 row 10"
     },
     {
       "id": "DUP-99",
@@ -3156,7 +3158,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 4 row 21",
       "replace_candidate": "batch 17 row 20",
       "new_unique_targets_added": 1,
@@ -3169,7 +3171,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-121",
+      "replacement_draft_location": "batch 17 row 20"
     },
     {
       "id": "DUP-122",
@@ -3366,7 +3370,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 2 row 5",
       "replace_candidate": "batch 16 row 6",
       "new_unique_targets_added": 1,
@@ -3379,7 +3383,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-129",
+      "replacement_draft_location": "batch 16 row 6"
     },
     {
       "id": "DUP-130",
@@ -5053,7 +5059,7 @@
       "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
@@ -5063,7 +5069,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-193",
+      "replacement_draft_location": "batch 16 row 33"
     },
     {
       "id": "DUP-194",
@@ -5983,8 +5991,8 @@
       "later_register_unique_target_locations": 104,
       "later_register_target_locations_already_held": 72,
       "r3_anchor_invariant": "All 160 held locations point to a retained anchor; zero unresolved references or cycles.",
-      "replacement_draft_count": 103,
-      "replacement_drafts_assistant_screened": 103,
+      "replacement_draft_count": 109,
+      "replacement_drafts_assistant_screened": 109,
       "replacement_drafts_independently_approved": 0,
       "replacement_drafts_published": 0
     },
@@ -6025,20 +6033,31 @@
     "replacement_work": {
       "baseline_90_drafts_assistant_preliminary_reviewed": 90,
       "additional_r3_drafts_created": 7,
-      "current_draft_count": 103,
-      "current_assistant_bankwide_screened": 103,
+      "current_draft_count": 109,
+      "current_assistant_bankwide_screened": 109,
       "november_9_addendum_D_targets": 6,
       "november_9_addendum_D_target_drafts_created": 6,
       "additional_later_register_target_drafts_created": 1,
       "independent_qualified_approvals": 0,
       "deployment_ready_replacements": 0,
-      "note": "Target-level coverage was reconciled across all 160 held rows. 103 held locations have drafts; 55 D targets remain without target-specific drafts; 2 S rows remain held pending qualified review. Do not count a draft against a different row in the same duplicate cluster.",
+      "note": "Coverage uses one target-specific draft per held row. 109 of 160 held rows now have drafts; 49 D targets remain without drafts and 2 S rows remain pending qualified review.",
       "next_batch_drafts_created": 6,
-      "held_location_coverage": 103,
+      "held_location_coverage": 109,
       "held_locations_total": 160,
-      "held_locations_without_target_specific_draft": 57,
-      "uncovered_duplicate_targets_pending_draft": 55,
-      "related_skill_targets_pending_qualified_review": 2
+      "held_locations_without_target_specific_draft": 51,
+      "uncovered_duplicate_targets_pending_draft": 49,
+      "related_skill_targets_pending_qualified_review": 2,
+      "third_batch_drafts_created": 6,
+      "uncovered_held_targets_by_subject": {
+        "Economics": 8,
+        "Use of English": 2,
+        "Chemistry": 4,
+        "Government": 15,
+        "Mathematics": 0,
+        "Literature in English": 6,
+        "Biology": 13,
+        "Physics": 3
+      }
     },
     "engineering_track": {
       "pull_request": 199,
@@ -6386,6 +6405,50 @@
         "target_location": "batch 14 row 35",
         "subject": "Government",
         "similarity": 0.3385,
+        "flagged": false
+      }
+    ],
+    "replacement_draft_batch_2026_11_09_third": [
+      {
+        "target_id": "DUP-228",
+        "target_location": "batch 15 row 28",
+        "subject": "Economics",
+        "similarity": 0.2319,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-129",
+        "target_location": "batch 16 row 6",
+        "subject": "Use of English",
+        "similarity": 0.2991,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-219",
+        "target_location": "batch 16 row 20",
+        "subject": "Chemistry",
+        "similarity": 0.383,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-193",
+        "target_location": "batch 16 row 33",
+        "subject": "Government",
+        "similarity": 0.2679,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-98",
+        "target_location": "batch 17 row 10",
+        "subject": "Mathematics",
+        "similarity": 0.3022,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-121",
+        "target_location": "batch 17 row 20",
+        "subject": "Chemistry",
+        "similarity": 0.3788,
         "flagged": false
       }
     ]
@@ -6816,15 +6879,15 @@
     },
     "replacement_work": {
       "baseline_drafts": 90,
-      "r3_additional_drafts": 13,
-      "total_current_drafts": 103,
-      "bankwide_screened": 103,
+      "r3_additional_drafts": 19,
+      "total_current_drafts": 109,
+      "bankwide_screened": 109,
       "independent_qualified_approvals": 0,
       "production_imports": 0,
       "production_publications": 0,
-      "held_location_coverage": 103,
-      "held_locations_without_target_specific_draft": 57,
-      "uncovered_D_targets": 55,
+      "held_location_coverage": 109,
+      "held_locations_without_target_specific_draft": 51,
+      "uncovered_D_targets": 49,
       "S_targets_pending_qualified_review": 2
     }
   },
