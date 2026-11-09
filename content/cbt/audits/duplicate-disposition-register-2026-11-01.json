@@ -586,7 +586,14 @@
       "contextual_review": {
         "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required",
         "note": "All 200 Economics rows checked. No customs-union definition item found. Nearest items concern transfer payments, trade-union functions and contestable markets. Answer A is correct: a customs union adopts a common external tariff toward non-members and permits freer trade among members. Similarity 0.3519. Independent Economics reviewer should confirm the definition and syllabus fit."
-      }
+      },
+      "additional_replacement_draft_targets": [
+        {
+          "target_id": "DUP-19-ADD-2026-11-09",
+          "location": "batch 14 row 31",
+          "status": "assistant_screened_draft_pending_qualified_subject_review"
+        }
+      ]
     },
     {
       "id": "DUP-20",
@@ -1304,6 +1311,13 @@
       "cluster_existing_held_candidates": [
         "batch 26 row 34",
         "batch 33 row 35"
+      ],
+      "additional_replacement_draft_targets": [
+        {
+          "target_id": "DUP-47-ADD-2026-11-09",
+          "location": "batch 2 row 33",
+          "status": "assistant_screened_draft_pending_qualified_subject_review"
+        }
       ]
     },
     {
@@ -3266,7 +3280,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 12 row 33",
       "replace_candidate": "batch 22 row 33",
       "cluster_id": "CIVIC-DUTY-01",
@@ -3280,7 +3294,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-126",
+      "replacement_draft_location": "batch 22 row 33"
     },
     {
       "id": "DUP-127",
@@ -5956,7 +5972,11 @@
       "import_or_publication_authorized": false,
       "later_register_unique_target_locations": 104,
       "later_register_target_locations_already_held": 72,
-      "r3_anchor_invariant": "All 160 held locations point to a retained anchor; zero unresolved references or cycles."
+      "r3_anchor_invariant": "All 160 held locations point to a retained anchor; zero unresolved references or cycles.",
+      "replacement_draft_count": 97,
+      "replacement_drafts_assistant_screened": 97,
+      "replacement_drafts_independently_approved": 0,
+      "replacement_drafts_published": 0
     },
     "duplicate_review_reconciliation": {
       "within_window_reconstruction": {
@@ -5994,11 +6014,15 @@
     },
     "replacement_work": {
       "baseline_90_drafts_assistant_preliminary_reviewed": 90,
+      "additional_r3_drafts_created": 7,
+      "current_draft_count": 97,
+      "current_assistant_bankwide_screened": 97,
+      "november_9_addendum_D_targets": 6,
+      "november_9_addendum_D_target_drafts_created": 6,
+      "additional_later_register_target_drafts_created": 1,
       "independent_qualified_approvals": 0,
-      "november_6_addendum_new_replacement_drafts_created": 0,
-      "november_6_addendum_new_replacement_drafts_required": 34,
       "deployment_ready_replacements": 0,
-      "note": "Historical replacement-plan totals are retained for traceability. Do not combine draft counts from different checkpoints until target-level deduplication is reconciled."
+      "note": "All seven new drafts remain unpublished and require independent subject/syllabus review. The remaining later-register held targets still require target-level draft-coverage reconciliation; do not infer that all 160 held rows have replacements."
     },
     "engineering_track": {
       "pull_request": 199,
@@ -6229,8 +6253,82 @@
         }
       ],
       "S_targets": "All 11 related-skill targets are retained in r3; no new hold was created for S dispositions.",
-      "qualification": "Assistant screening only; reviewer fields and independent approvals remain empty."
-    }
+      "qualification": "Assistant screening only; reviewer fields and independent approvals remain empty.",
+      "draft_targets": [
+        {
+          "pair_id": "DUP-47",
+          "target_id": "DUP-47-ADD-2026-11-09",
+          "target_location": "batch 2 row 33",
+          "drafted": true,
+          "screened": true,
+          "similarity": 0.4348,
+          "lexical_flag": true,
+          "qualified_review_required": true
+        },
+        {
+          "pair_id": "DUP-19",
+          "target_id": "DUP-19-ADD-2026-11-09",
+          "target_location": "batch 14 row 31",
+          "drafted": true,
+          "screened": true,
+          "similarity": 0.3462,
+          "lexical_flag": false,
+          "qualified_review_required": true
+        },
+        {
+          "pair_id": "DUP-216",
+          "target_id": "DUP-216",
+          "target_location": "batch 39 row 17",
+          "drafted": true,
+          "screened": true,
+          "similarity": 0.2923,
+          "lexical_flag": false,
+          "qualified_review_required": true
+        },
+        {
+          "pair_id": "DUP-217",
+          "target_id": "DUP-217",
+          "target_location": "batch 33 row 10",
+          "drafted": true,
+          "screened": true,
+          "similarity": 0.3913,
+          "lexical_flag": false,
+          "qualified_review_required": true
+        },
+        {
+          "pair_id": "DUP-232",
+          "target_id": "DUP-232",
+          "target_location": "batch 34 row 37",
+          "drafted": true,
+          "screened": true,
+          "similarity": 0.3302,
+          "lexical_flag": false,
+          "qualified_review_required": true
+        },
+        {
+          "pair_id": "DUP-240",
+          "target_id": "DUP-240",
+          "target_location": "batch 33 row 32",
+          "drafted": true,
+          "screened": true,
+          "similarity": 0.3855,
+          "lexical_flag": false,
+          "qualified_review_required": true
+        }
+      ]
+    },
+    "later_register_additional_draft_targets": [
+      {
+        "pair_id": "DUP-126",
+        "target_id": "DUP-126",
+        "target_location": "batch 22 row 33",
+        "drafted": true,
+        "screened": true,
+        "similarity": 0.3415,
+        "lexical_flag": false,
+        "qualified_review_required": true
+      }
+    ]
   },
   "authoritative_checkpoint_2026_11_09": {
     "purpose": "Single current reporting point. This checkpoint supersedes conflicting historical progress counters below; do not infer missing reviewed ranks by arithmetic.",
@@ -6655,6 +6753,16 @@
         "Real authenticated admin walkthrough remains outstanding.",
         "Baseline 286 cross-window review records and historical counter discrepancies remain unresolved."
       ]
+    },
+    "replacement_work": {
+      "baseline_drafts": 90,
+      "r3_additional_drafts": 7,
+      "total_current_drafts": 97,
+      "bankwide_screened": 97,
+      "independent_qualified_approvals": 0,
+      "production_imports": 0,
+      "production_publications": 0,
+      "uncovered_later_register_held_targets": "still_pending_target_level_reconciliation"
     }
   },
   "legacy_counter_policy": "Historical candidate_review and explicit_rank_crosswalk counters are retained for audit traceability. They contain known conflicting/stale values (including 472 vs 237 and 685 vs 717); use authoritative_checkpoint_2026_11_09 for current reporting. Do not sum, subtract, or infer candidate ranks from these legacy counters."
