@@ -5899,5 +5899,110 @@
     "source_endpoints_verified": 178,
     "source_staging_content_mismatches": 0,
     "source_type_original": 178
+  },
+  "latest_project_checkpoint": {
+    "checkpoint_date": "2026-11-09",
+    "purpose": "Single current status layer for project completion. Existing pair-level records are preserved below; this checkpoint supersedes conflicting historical aggregate counters where stated.",
+    "source_of_truth": {
+      "pair_level_duplicate_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
+      "latest_staging_manifest": "content/cbt/staging/2026-11-06/manifest.json",
+      "latest_staging_reconciliation": "content/cbt/audits/cross-window-staging-reconciliation-gap-2026-11-06.json",
+      "exact_register_rank_crosswalk": "content/cbt/audits/2026-11-09-cross-window-register-rank-crosswalk.json",
+      "baseline_rank_crosswalk": "content/cbt/audits/2026-11-08-cross-window-baseline-rank-crosswalk-r2.json",
+      "subject_review_checkpoint": "content/cbt/audits/order-1-subject-review-progress-2026-11-02.md"
+    },
+    "question_bank": {
+      "source_rows_accounted_for": 1600,
+      "provisionally_retained_rows": 1476,
+      "held_duplicate_locations": 124,
+      "unique_held_pair_ids": 119,
+      "new_held_locations_in_november_6_addendum": 34,
+      "later_register_target_locations_still_retained_pending_qualified_disposition": 68,
+      "source_staging_join": {
+        "pair_records": 199,
+        "unique_endpoints": 204,
+        "exact_matches": 204,
+        "mismatches": 0,
+        "missing_rows": 0
+      },
+      "qualified_review": {
+        "later_range_and_cluster_pair_records_pending": 109,
+        "independent_replacement_approvals": "0/90",
+        "assistant_preliminary_replacement_reviews": "90/90"
+      },
+      "academic_approval": false,
+      "import_or_publication_authorized": false
+    },
+    "duplicate_review_reconciliation": {
+      "within_window_reconstruction": {
+        "candidate_count": 390,
+        "reviewed_statuses_recorded": 390,
+        "different_topic_or_subtopic": 350,
+        "same_topic_and_subtopic": 40,
+        "threshold": 0.42,
+        "original_reported_pending_count": 279,
+        "original_vs_reconstruction_count_difference": 38,
+        "category_boundary_difference": 1
+      },
+      "cross_window": {
+        "candidate_count": 1304,
+        "tail_rank_range_with_explicit_records": "287-1304",
+        "tail_rank_ids_covered": 1018,
+        "registered_cross_window_pairs_exactly_rank_mapped": 184,
+        "registered_pairs_mapped_to_ranks_1_to_286": 75,
+        "registered_pairs_mapped_to_ranks_287_to_1304": 109,
+        "high_similarity_shortlist_exact_rank_matches": 49,
+        "overlap_between_register_pair_ranks_and_high_similarity_shortlist": 16,
+        "combined_unique_rank_ids_from_these_crosswalks": 217,
+        "combined_unique_rank_ids_in_ranks_1_to_286": 108,
+        "ranks_1_to_286_not_represented_by_these_pair_crosswalks": 178,
+        "reported_additional_targeted_reviews_without_exact_rank_records": 237,
+        "baseline_286_review_records_individually_verified": false,
+        "final_reviewed_and_remaining_totals": null
+      },
+      "unresolved_counter_conflicts": [
+        "Part63 persisted cumulative counter 1007 versus rank-derived pre-addendum 1003; difference 4, exact records not identified.",
+        "Legacy register field reports 472 additional targeted reviews while progress notes report 237.",
+        "Legacy register field reports 685 unique tail rank IDs while the progress reconciliation reports 717.",
+        "Do not derive reviewed rank IDs by arithmetic complement or similarity-score order."
+      ]
+    },
+    "replacement_work": {
+      "baseline_90_drafts_assistant_preliminary_reviewed": 90,
+      "independent_qualified_approvals": 0,
+      "november_6_addendum_new_replacement_drafts_created": 0,
+      "november_6_addendum_new_replacement_drafts_required": 34,
+      "deployment_ready_replacements": 0,
+      "note": "Historical replacement-plan totals are retained for traceability. Do not combine draft counts from different checkpoints until target-level deduplication is reconciled."
+    },
+    "engineering_track": {
+      "pull_request": 199,
+      "url": "https://github.com/timmyjoe385-netizen/EDUKEN-CONSULT-/pull/199",
+      "head_sha": "aea774e0e90955e4425bca7a4edfe072a5a3ccf5",
+      "status": "open_draft_mergeable",
+      "checks_on_unchanged_head": "four previously verified workflows passed; do not rerun unless head changes",
+      "submitted_reviews": 0,
+      "review_threads": 0,
+      "authenticated_admin_acceptance": "not yet evidenced",
+      "branch_protection_requirements": "not verified; prior API access was denied",
+      "merge_authorized": false
+    },
+    "next_actions_in_order": [
+      "Complete PR #199 authenticated admin acceptance and confirm merge requirements; do not merge without explicit user approval.",
+      "Obtain individual baseline review records for the 286 reported reviews and reconcile the 237 targeted-review claim and four-count discrepancy.",
+      "Apply the two documented canonical register merges: DUP-22 + DUP-165 -> DUP-165; DUP-08 + DUP-166 -> DUP-08.",
+      "Obtain qualified contextual decisions for 34 new held locations and 109 later-range/cluster pair records.",
+      "Prepare and screen missing replacement drafts; obtain independent subject, answer-key and syllabus approval.",
+      "Run isolated student/admin CBT acceptance, then prepare a release package for explicit approval."
+    ],
+    "safety": {
+      "source_question_content_changed": 0,
+      "source_csvs_changed": false,
+      "staging_question_rows_changed": false,
+      "supabase_imports": 0,
+      "publications": 0,
+      "production_deployments": 0,
+      "release_authorized": false
+    }
   }
 }
