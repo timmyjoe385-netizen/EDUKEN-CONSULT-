@@ -58,4 +58,23 @@ assert.equal(repeated.response.status, 200, "A repeated submission should return
 assert.equal(repeated.data.alreadySubmitted, true, "A repeated submission should be marked as already submitted.");
 assert.equal(repeated.data.score, submitted.data.score, "Repeated submission must not change the stored score.");
 
-console.log("CBT API integration passed: published-only question payload, hidden answer key, server grading and idempotent repeat submission.");
+const miniMock = await request("/api/cbt/start", {
+  mode: "mock",
+  questionCount: 4,
+  subjectCombination: ["Biology", "Chemistry", "Physics"],
+});
+assert.equal(miniMock.response.status, 201, "A four-question mixed starter mock should work with one published question per selected subject.");
+assert.equal(miniMock.data.questions.length, 4, "The starter mock should contain exactly four questions.");
+assert.equal(miniMock.data.durationSeconds, 4 * 60, "The four-question starter mock should use a four-minute timer.");
+const miniMockSubjects = miniMock.data.questions.reduce((counts, question) => {
+  counts[question.subject] = (counts[question.subject] || 0) + 1;
+  return counts;
+}, {});
+assert.deepEqual(miniMockSubjects, {
+  "Use of English": 1,
+  Biology: 1,
+  Chemistry: 1,
+  Physics: 1,
+}, "The starter mock should select one question from each required subject.");
+
+console.log("CBT API integration passed: published-only practice, hidden answers, server grading, idempotent submission and four-subject starter mock.");
