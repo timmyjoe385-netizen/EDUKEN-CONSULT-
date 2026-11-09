@@ -6083,41 +6083,41 @@
       "merge_authorized": false,
       "authenticated_acceptance_checklist": "content/cbt/audits/2026-11-09-pr199-authenticated-acceptance-checklist.md",
       "current_integration_pull_request": 194,
-      "current_integration_head": "3a96fe82832cbb8cec7f3f38c5e8cf92899ac207",
-      "current_integration_status": "open_draft_mergeable_all_four_workflows_passed",
+      "current_integration_head": "b4f5c701414b034080c3227d59997457f67973f2",
+      "current_integration_status": "open_draft_mergeable_all_four_workflows_passed_on_recorded_head",
       "admin_ui_ported_from_prs": [
         197,
         199
       ],
       "production_deploy": "skipped",
       "current_integration_workflows": {
-        "commit": "3a96fe82832cbb8cec7f3f38c5e8cf92899ac207",
-        "checked_at": "2026-11-09T17:55:20Z",
+        "commit": "b4f5c701414b034080c3227d59997457f67973f2",
+        "checked_at": "2026-11-09",
         "status": "completed_success",
         "workflows": [
           {
-            "name": "EDUKEN build check",
-            "run_id": 42663964086,
-            "conclusion": "success"
-          },
-          {
-            "name": "EDUKEN Playwright browser checks",
-            "run_id": 42663963883,
-            "conclusion": "success"
-          },
-          {
             "name": "EDUKEN wallet migration SQL integration",
-            "run_id": 42663963988,
+            "run_id": 42710957221,
+            "conclusion": "success"
+          },
+          {
+            "name": "EDUKEN build check",
+            "run_id": 42710957333,
             "conclusion": "success"
           },
           {
             "name": "EDUKEN build and Cloudflare deploy",
-            "run_id": 42663963878,
+            "run_id": 42710957222,
+            "conclusion": "success"
+          },
+          {
+            "name": "EDUKEN Playwright browser checks",
+            "run_id": 42710957213,
             "conclusion": "success"
           }
         ],
         "production_deploy": "skipped",
-        "note": "These are CI/preview workflow results only; they do not satisfy live authenticated admin acceptance or authorize PR merge, production deployment, question import, or publication."
+        "note": "All four workflows passed on PR194 head b4f5c701414b034080c3227d59997457f67973f2. The register-only commit that records this evidence will create a new head and must be checked separately. These results do not establish live authenticated admin acceptance or authorize merge, production deployment, question import, or publication."
       }
     },
     "next_actions_in_order": [
@@ -6713,33 +6713,33 @@
         "authenticated_live_acceptance": "not_completed"
       },
       "current_commit_workflows": {
-        "commit": "3a96fe82832cbb8cec7f3f38c5e8cf92899ac207",
-        "checked_at": "2026-11-09T17:55:20Z",
+        "commit": "b4f5c701414b034080c3227d59997457f67973f2",
+        "checked_at": "2026-11-09",
         "status": "completed_success",
         "workflows": [
           {
-            "name": "EDUKEN build check",
-            "run_id": 42663964086,
-            "conclusion": "success"
-          },
-          {
-            "name": "EDUKEN Playwright browser checks",
-            "run_id": 42663963883,
-            "conclusion": "success"
-          },
-          {
             "name": "EDUKEN wallet migration SQL integration",
-            "run_id": 42663963988,
+            "run_id": 42710957221,
+            "conclusion": "success"
+          },
+          {
+            "name": "EDUKEN build check",
+            "run_id": 42710957333,
             "conclusion": "success"
           },
           {
             "name": "EDUKEN build and Cloudflare deploy",
-            "run_id": 42663963878,
+            "run_id": 42710957222,
+            "conclusion": "success"
+          },
+          {
+            "name": "EDUKEN Playwright browser checks",
+            "run_id": 42710957213,
             "conclusion": "success"
           }
         ],
         "production_deploy": "skipped",
-        "note": "These are CI/preview workflow results only; they do not satisfy live authenticated admin acceptance or authorize PR merge, production deployment, question import, or publication."
+        "note": "All four workflows passed on PR194 head b4f5c701414b034080c3227d59997457f67973f2. The register-only commit that records this evidence will create a new head and must be checked separately. These results do not establish live authenticated admin acceptance or authorize merge, production deployment, question import, or publication."
       },
       "isolated_security_audit": {
         "project_id": "wpktzogarfqrgkirzdpy",
