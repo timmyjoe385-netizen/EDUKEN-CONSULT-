@@ -2645,12 +2645,11 @@
         "Biology": 4,
         "Use of English": 2,
         "Literature in English": 5,
-        "Chemistry": 3,
+        "Chemistry": 5,
         "Government": 5,
         "Mathematics": 5,
         "Physics": 3,
-        "Economics": 5,
-        "Unknown": 2
+        "Economics": 5
       },
       "records": [
         {
@@ -3255,7 +3254,7 @@
           "record_type": "november_6_cluster_extension",
           "rank": 746,
           "cluster": "DUP-214",
-          "subject": null,
+          "subject": "Chemistry",
           "held_candidate": "batch 13 row 20",
           "reason": "Reviewed as another item in the atomic-number/electron-count equivalence cluster.",
           "source_provenance": "pending",
@@ -3274,7 +3273,7 @@
           "record_type": "november_6_cluster_extension",
           "rank": 794,
           "cluster": "DUP-214",
-          "subject": null,
+          "subject": "Chemistry",
           "held_candidate": "batch 3 row 18",
           "reason": "Reviewed as another item in the atomic-number/electron-count equivalence cluster.",
           "source_provenance": "pending",
