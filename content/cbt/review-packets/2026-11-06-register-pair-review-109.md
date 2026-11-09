@@ -32,6 +32,10 @@
 - assistant_full_content_pair_review_complete_independent_mathematics_and_syllabus_review_required: 2
 - assistant_pairwise_review_complete_human_subject_and_syllabus_review_required: 24
 
+## Current delegated screening status — 9 November 2026
+
+The CSV now records 110 dispositions across 109 pair IDs: 50 duplicate recommendations (D), 28 distinct/related-skill outcomes (S), and 32 pending/uncertain cases (Q). User-supplied decisions are preserved. Other clear outcomes follow the existing assistant triage under the user's express delegation. These dispositions do not constitute independent subject, answer-key or syllabus approval. Do not change source question rows, staging exports, or publication state based on this ledger alone.
+
 ## Reviewer instructions
 
 For each row, independently verify whether the two items test the same knowledge/skill, whether both answer keys and explanations are correct, and whether the retained item fits the JAMB syllabus and difficulty target. Use `reviewer_disposition` to record `approve_duplicate`, `retain_both_distinct`, `needs_revision`, or `escalate`; add a concise reason in `reviewer_notes`.
