@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 55,
+  "version": 61,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -14,14 +14,14 @@
     "staging_revision": "2026-11-09-r3"
   },
   "replacement_proposals": {
-    "count": 103,
-    "screened": 103,
+    "count": 109,
+    "screened": 109,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 12,
-    "below_threshold_count": 91,
+    "below_threshold_count": 97,
     "flagged_ids": [
       "DUP-10",
       "DUP-16",
@@ -2960,6 +2960,174 @@
         "decision": "conceptually_distinct_pending_independent_subject_review",
         "note": "Target batch 14 row 35. The nearest source items concern federal character, separation of powers and proportional representation; this draft tests the jurisdiction of the International Criminal Court. Similarity 0.3385, below threshold. Qualified Government review is still required."
       }
+    },
+    {
+      "target_id": "DUP-228",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2319,
+      "top_matches": [
+        {
+          "location": "batch 27 row 31",
+          "score": 0.2319,
+          "question": "The free-rider problem occurs when people:"
+        },
+        {
+          "location": "batch 20 row 30",
+          "score": 0.2275,
+          "question": "The process of increasing a country's stock of productive assets is called ___."
+        },
+        {
+          "location": "batch 36 row 31",
+          "score": 0.2044,
+          "question": "A balanced government budget occurs when"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 15 row 28. Nearest source items concern free-rider behaviour, capital formation and balanced budgets; this draft tests cross-border movement of financial assets. Similarity 0.2319, below threshold. Qualified Economics review must confirm the syllabus scope of capital flight."
+      }
+    },
+    {
+      "target_id": "DUP-129",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.2991,
+      "top_matches": [
+        {
+          "location": "batch 36 row 5",
+          "score": 0.2991,
+          "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
+        },
+        {
+          "location": "batch 37 row 3",
+          "score": 0.2889,
+          "question": "Choose the word nearest in meaning to 'abstain'."
+        },
+        {
+          "location": "batch 30 row 6",
+          "score": 0.2881,
+          "question": "In the sentence 'The committee met yesterday', the word 'yesterday' functions as an adverb of"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 16 row 6. Nearest source items concern adjective clauses, vocabulary and adverbial function; this draft tests the meaning of a phrasal verb. Similarity 0.2991, below threshold. Qualified English review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-219",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.383,
+      "top_matches": [
+        {
+          "location": "batch 29 row 19",
+          "score": 0.383,
+          "question": "Oxidation is best described as"
+        },
+        {
+          "location": "batch 25 row 20",
+          "score": 0.3235,
+          "question": "A reaction that releases heat to its surroundings has an enthalpy change that is"
+        },
+        {
+          "location": "batch 07 row 18",
+          "score": 0.3214,
+          "question": "Which of these oxides is classified as a basic oxide?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 16 row 20. Nearest source items concern oxidation, enthalpy and basic oxides; this draft tests the defining behaviour of amphoteric oxides. Similarity 0.3830, below threshold. Qualified Chemistry review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-193",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.2679,
+      "top_matches": [
+        {
+          "location": "batch 39 row 33",
+          "score": 0.2679,
+          "question": "Which activity is an example of lobbying by a pressure group?"
+        },
+        {
+          "location": "batch 18 row 33",
+          "score": 0.2667,
+          "question": "The supreme legal authority of a state over its territory is known as ___."
+        },
+        {
+          "location": "batch 39 row 32",
+          "score": 0.2446,
+          "question": "The official record of debates and proceedings in the Nigerian National Assembly is known as the:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 16 row 33. Nearest source items concern pressure groups, sovereignty and legislative proceedings; this draft tests oligarchy as rule by a small group. Similarity 0.2679, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-98",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3022,
+      "top_matches": [
+        {
+          "location": "batch 26 row 10",
+          "score": 0.3022,
+          "question": "A bag contains 4 red counters and 6 blue counters. If one counter is selected at random, what is the probability that it is red?"
+        },
+        {
+          "location": "batch 07 row 11",
+          "score": 0.3008,
+          "question": "A bag contains 3 red balls and 2 blue balls. One ball is selected at random. What is the probability that it is blue?"
+        },
+        {
+          "location": "batch 38 row 11",
+          "score": 0.2946,
+          "question": "A bag contains 4 red balls and 3 blue balls. What is the probability of selecting a blue ball at random?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 17 row 10. Nearest source items concern probability; this draft tests the definition of an empty set. Similarity 0.3022, below threshold. Qualified Mathematics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-121",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3788,
+      "top_matches": [
+        {
+          "location": "batch 01 row 21",
+          "score": 0.3788,
+          "question": "What is the relative molecular mass of H₂O? (H = 1, O = 16)"
+        },
+        {
+          "location": "batch 10 row 19",
+          "score": 0.3415,
+          "question": "The relatively strong intermolecular attraction between water molecules is mainly due to:"
+        },
+        {
+          "location": "batch 18 row 19",
+          "score": 0.3,
+          "question": "The total pressure of a mixture of non-reacting gases equals the sum of their partial pressures. This is:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 17 row 20. Nearest source items concern relative molecular mass, intermolecular forces and partial pressures; this draft tests Graham's law of diffusion. Similarity 0.3788, below threshold. Qualified Chemistry review is still required."
+      }
     }
   ],
   "limitations": [
@@ -2969,10 +3137,10 @@
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
   ],
   "proposals": {
-    "count": 103,
-    "screened": 103,
+    "count": 109,
+    "screened": 109,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending. Version 55 — 2026-11-09: six additional replacement drafts were screened against the full 1,600-row r3 bank and 97 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending.",
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending. Version 55 — 2026-11-09: six additional replacement drafts were screened against the full 1,600-row r3 bank and 97 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 61 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 103 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending.",
   "last_updated": "2026-11-09"
 }
