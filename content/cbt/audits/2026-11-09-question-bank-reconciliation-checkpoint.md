@@ -6,21 +6,21 @@ Non-destructive provisional reconciliation. A new 9 November staging revision wa
 
 ## 1. Staging inventory — reconciled by subject
 
-The 6 November snapshot contained 1,476 provisionally retained + 124 held. The new **9 November provisional revision** applies 45 retained-to-held moves and 13 held-to-retained moves, producing 1,444 retained + 156 held. The 18 Q cases remain in their previous staging positions.
+The 6 November snapshot contained 1,476 provisionally retained + 124 held. Two non-destructive 9 November revisions were created. Revision r1 applied the first clear duplicate/distinct decisions (1,444 retained + 156 held); revision **r2** resolved the remaining 18 previously uncertain pair rows and applied a further eight retained-to-held moves and one held-to-retained move, producing **1,437 retained + 163 held**.
 
-| Subject | Retained (9 Nov) | Held (9 Nov) | Source total |
+| Subject | Retained (r2) | Held (r2) | Source total |
 |---|---:|---:|---:|
 | Use of English | 185 | 15 | 200 |
 | Mathematics | 193 | 7 | 200 |
-| Biology | 171 | 29 | 200 |
+| Biology | 169 | 31 | 200 |
 | Chemistry | 179 | 21 | 200 |
-| Physics | 186 | 14 | 200 |
-| Economics | 173 | 27 | 200 |
-| Government | 176 | 24 | 200 |
-| Literature in English | 181 | 19 | 200 |
-| **Total** | **1,444** | **156** | **1,600** |
+| Physics | 185 | 15 | 200 |
+| Economics | 172 | 28 | 200 |
+| Government | 174 | 26 | 200 |
+| Literature in English | 180 | 20 | 200 |
+| **Total** | **1,437** | **163** | **1,600** |
 
-All 1,600 source locations were rechecked between the two revisions: zero missing locations, zero added locations, zero retained/held overlap, and zero changes to question text, options, correct answers or explanations. Every subject still totals exactly 200 source rows. The new revision is provisional; retained does not mean academically approved, and held does not automatically mean a question is invalid.
+All 1,600 source locations were rechecked between r1 and r2: zero missing locations, zero added locations, zero retained/held overlap, and zero changes to question text, options, correct answers or explanations. Every subject still totals exactly 200 source rows. The revisions are provisional; retained does not mean academically approved, and held does not automatically mean a question is invalid.
 
 ## 2. Independent academic-review queue
 
@@ -47,15 +47,15 @@ The additional worksheet's existing review notes are explicitly AI-screening gui
 The review packet contains 110 pair rows representing 109 distinct pair IDs. The additional row is a second target endpoint under cluster DUP-187, not an accidental duplicate row.
 
 A delegated screening pass has populated the disposition field for all 110 rows:
-- **63 D** — duplicate recommended; retain one and hold the other for deduplication.
-- **29 S** — distinct or related-skill variant; preserve both.
-- **18 Q** — still not conclusively classified; leave pending and do not move or discard.
+- **78 D** — duplicate; retain one and hold the other for deduplication.
+- **32 S** — distinct or related-skill variant; preserve both.
+- **0 Q** — all 18 previously uncertain pair rows have now been screened.
 
-The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or confirmed by the user. Further exact endpoint matches from the addendum crosswalk resolved 13 additional Q rows as D and one Q row as S; three other addendum matches confirmed existing D decisions. The remaining 18 Q rows have no clear matching recommendation. These are screening dispositions only, not independent subject-expert approval, answer-key verification, syllabus sign-off, or publication authorization. No reviewer name or review date has been invented. The two independent subject-review worksheets still require academic checks.
+The 20 decisions for DUP-91–99 and DUP-101–111 were explicitly supplied or confirmed by the user. Further exact endpoint matches from the addendum crosswalk resolved 13 Q rows as D and one as S. A full assistant comparison of the remaining 18 pairs resolved 15 as D and three as S. Three cluster anchor directions were reversed to preserve explicit S decisions while still holding the redundant alternatives. These are screening dispositions only, not independent subject-expert approval, answer-key verification, syllabus sign-off, or publication authorization. No reviewer name or review date has been invented. The two independent subject-review worksheets still require academic checks.
 
 ## 3a. New addendum disposition ledger
 
-The 6 November addendum contains 34 target records: 17 exact retained/held endpoint pairs already present in the 109-pair register, plus 17 unique additional endpoint pairs. The 17 overlaps were merged into their canonical existing register rows (16 D, one S) and are listed in `2026-11-09-addendum-overlap-crosswalk.csv` to prevent double-counting. The separate addendum ledger now contains only the 17 unique additional pairs: **6 D** and **11 S**. The high-overlap numerical near-duplicate is D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These remain user-delegated assistant screening dispositions only; independent subject, answer-key and syllabus sign-off is pending. No reviewer name/date is invented. The 9 November provisional staging revision applies the corresponding 45 D and 13 S moves; no question content was deleted or edited, and nothing was imported or published.
+The 6 November addendum contains 34 target records: 17 exact retained/held endpoint pairs already present in the 109-pair register, plus 17 unique additional endpoint pairs. The 17 overlaps were merged into their canonical existing register rows (16 D, one S) and are listed in `2026-11-09-addendum-overlap-crosswalk.csv` to prevent double-counting. The separate addendum ledger now contains only the 17 unique additional pairs: **6 D** and **11 S**. The high-overlap numerical near-duplicate is D because the contextual audit recommends keeping one and holding the other pending Mathematics review. These remain user-delegated assistant screening dispositions only; independent subject, answer-key and syllabus sign-off is pending. No reviewer name/date is invented. The 9 November r1 and r2 provisional staging revisions together apply 53 retained-to-held and 14 held-to-retained moves; no question content was deleted or edited, and nothing was imported or published.
 
 ## 4. Cross-window rank reconciliation
 
