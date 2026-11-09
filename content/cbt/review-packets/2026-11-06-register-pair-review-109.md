@@ -34,7 +34,7 @@
 
 ## Current delegated screening status — 9 November 2026
 
-The CSV now records 110 dispositions across 109 pair IDs: 50 duplicate recommendations (D), 28 distinct/related-skill outcomes (S), and 32 pending/uncertain cases (Q). User-supplied decisions are preserved. Other clear outcomes follow the existing assistant triage under the user's express delegation. These dispositions do not constitute independent subject, answer-key or syllabus approval. Do not change source question rows, staging exports, or publication state based on this ledger alone.
+The CSV records 110 pair-target rows across 109 pair IDs: 63 duplicate recommendations (D), 29 distinct/related-skill outcomes (S), and 18 pending/uncertain cases (Q). Fourteen previously unresolved rows were reconciled against exact addendum endpoint matches (13 D, one S); three overlapping D records were confirmed without double-counting. User-supplied decisions are preserved. These screening dispositions do not constitute independent subject, answer-key or syllabus approval. Do not change source question rows, staging exports, or publication state based on this ledger alone.
 
 ## 3a. New addendum disposition ledger
 
