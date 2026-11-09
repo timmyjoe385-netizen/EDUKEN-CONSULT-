@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 49,
+  "version": 55,
   "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
@@ -14,14 +14,14 @@
     "staging_revision": "2026-11-09-r3"
   },
   "replacement_proposals": {
-    "count": 97,
-    "screened": 97,
+    "count": 103,
+    "screened": 103,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 12,
-    "below_threshold_count": 85,
+    "below_threshold_count": 91,
     "flagged_ids": [
       "DUP-10",
       "DUP-16",
@@ -2792,6 +2792,174 @@
         "decision": "conceptually_distinct_pending_independent_subject_review",
         "note": "Target batch 33 row 32. The nearest source item concerns non-interference; this draft tests the parties in contentious ICJ proceedings. Similarity 0.3855. A qualified Government reviewer must confirm the legal distinction and syllabus fit."
       }
+    },
+    {
+      "target_id": "DUP-114",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3667,
+      "top_matches": [
+        {
+          "location": "batch 03 row 25",
+          "score": 0.3667,
+          "question": "Sound cannot travel through:"
+        },
+        {
+          "location": "batch 36 row 23",
+          "score": 0.2819,
+          "question": "In a sound wave travelling through air, air particles vibrate"
+        },
+        {
+          "location": "batch 20 row 24",
+          "score": 0.2469,
+          "question": "A wave travels at 340 m/s and has a frequency of 500 Hz. What is its wavelength?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 3 row 24. The nearest source items concern sound transmission and wavelength; this draft tests the requirement for a material medium. Similarity 0.3667, below the 0.42 threshold. Qualified Physics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-164",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3457,
+      "top_matches": [
+        {
+          "location": "batch 11 row 39",
+          "score": 0.3457,
+          "question": "The repetition of consonant sounds within or at the ends of nearby words is called:"
+        },
+        {
+          "location": "batch 19 row 40",
+          "score": 0.3256,
+          "question": "The deliberate omission of conjunctions between successive words or clauses is called:"
+        },
+        {
+          "location": "batch 18 row 37",
+          "score": 0.3128,
+          "question": "A recurring image, phrase or idea that contributes to the meaning of a literary work is called a:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 11 row 40. The nearest source items concern consonance, asyndeton and motif; this draft tests metonymy. Similarity 0.3457, below threshold. Qualified Literature review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-174",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3268,
+      "top_matches": [
+        {
+          "location": "batch 20 row 21",
+          "score": 0.3268,
+          "question": "The industrial manufacture of ammonia from nitrogen and hydrogen is known as the ___."
+        },
+        {
+          "location": "batch 29 row 21",
+          "score": 0.2754,
+          "question": "When an ester is heated with aqueous sodium hydroxide, the products include an alcohol and a"
+        },
+        {
+          "location": "batch 24 row 18",
+          "score": 0.2533,
+          "question": "What is the major product when hydrogen adds across the double bond in ethene?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 12 row 21. The nearest source items concern ammonia manufacture and ester reactions; this draft tests alkaline hydrolysis of fats to produce soap. Similarity 0.3268, below threshold. Qualified Chemistry review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-101",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3509,
+      "top_matches": [
+        {
+          "location": "batch 35 row 30",
+          "score": 0.3509,
+          "question": "The additional satisfaction from consuming one more unit of a good is called"
+        },
+        {
+          "location": "batch 39 row 29",
+          "score": 0.3297,
+          "question": "Which of the following is generally excluded from national income as current production?"
+        },
+        {
+          "location": "batch 30 row 29",
+          "score": 0.303,
+          "question": "A merit good is one that is often under-consumed in a free market because:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 12 row 27. The nearest source items concern marginal utility, national income and merit goods; this draft tests the defining characteristics of public goods. Similarity 0.3509, below threshold. Qualified Economics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-210",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3548,
+      "top_matches": [
+        {
+          "location": "batch 28 row 14",
+          "score": 0.3548,
+          "question": "The main function of the glomerulus in a nephron is to"
+        },
+        {
+          "location": "batch 31 row 12",
+          "score": 0.325,
+          "question": "Which structure in the human female reproductive system is the usual site of fertilisation?"
+        },
+        {
+          "location": "batch 38 row 16",
+          "score": 0.3077,
+          "question": "The transmission of inherited characteristics from parents to offspring is known as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 13 row 16. The nearest source items concern kidney filtration, fertilisation and inheritance; this draft tests sperm formation in the testes. Similarity 0.3548, below threshold. Qualified Biology review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-107",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3385,
+      "top_matches": [
+        {
+          "location": "batch 30 row 33",
+          "score": 0.3385,
+          "question": "The federal character principle in Nigeria is intended primarily to promote"
+        },
+        {
+          "location": "batch 25 row 35",
+          "score": 0.3304,
+          "question": "The principle of separation of powers is intended mainly to:"
+        },
+        {
+          "location": "batch 26 row 33",
+          "score": 0.3019,
+          "question": "The main aim of proportional representation is to"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 14 row 35. The nearest source items concern federal character, separation of powers and proportional representation; this draft tests the jurisdiction of the International Criminal Court. Similarity 0.3385, below threshold. Qualified Government review is still required."
+      }
     }
   ],
   "limitations": [
@@ -2801,10 +2969,10 @@
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
   ],
   "proposals": {
-    "count": 97,
-    "screened": 97,
+    "count": 103,
+    "screened": 103,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending.",
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending. Version 55 — 2026-11-09: six additional replacement drafts were screened against the full 1,600-row r3 bank and 97 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending.",
   "last_updated": "2026-11-09"
 }
