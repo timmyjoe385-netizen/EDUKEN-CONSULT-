@@ -67,9 +67,15 @@ test('CBT admin pagination changes server page and search resets to page one wit
         q: params.get('q') || '',
         page: Number(params.get('page') || 1),
         pageSize: Number(params.get('pageSize') || 50),
+        status: params.get('status') || 'all',
       };
       questionRequests.push(requestRecord);
 
+      if (requestRecord.status === 'reviewed') {
+        return route.fulfill({
+          json: { items: [auditQuestion], total: 1, page: requestRecord.page, pageSize: requestRecord.pageSize },
+        });
+      }
       if (requestRecord.q.toLowerCase().includes('cell')) {
         return route.fulfill({
           json: { items: [auditQuestion], total: 1, page: requestRecord.page, pageSize: requestRecord.pageSize },
@@ -94,6 +100,10 @@ test('CBT admin pagination changes server page and search resets to page one wit
   await page.getByRole('button', { name: 'Next' }).click();
   await expect(page.getByText(/Page 2 of 3/)).toBeVisible();
   await expect.poll(() => questionRequests.at(-1)?.page).toBe(2);
+
+  await page.getByLabel('Review state').selectOption('reviewed');
+  await expect(page.getByText(/Page 1 of 1/)).toBeVisible();
+  await expect.poll(() => questionRequests.at(-1)).toMatchObject({ status: 'reviewed', page: 1 });
 
   const search = page.getByPlaceholder('Question, subject or topic');
   await search.fill('cell');
