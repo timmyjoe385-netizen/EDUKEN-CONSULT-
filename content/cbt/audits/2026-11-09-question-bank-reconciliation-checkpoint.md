@@ -22,13 +22,15 @@ The 6 November snapshot contained 1,476 provisionally retained + 124 held. Two n
 
 All 1,600 source locations were rechecked between r1 and r2: zero missing locations, zero added locations, zero retained/held overlap, and zero changes to question text, options, correct answers or explanations. Every subject still totals exactly 200 source rows. The revisions are provisional; retained does not mean academically approved, and held does not automatically mean a question is invalid.
 
+A fresh integrity check of the r2 exports independently counted 1,437 retained and 163 held rows (1,600 total), with 200 per subject. The 163 held source locations are unique and do not overlap the retained set. An exact normalized-stem scan of the 1,437 retained questions found zero duplicate stems within a subject; all retained rows have non-empty question text, four populated options and a valid A–D answer key. This is an exact-duplicate/structure check only, not a semantic uniqueness guarantee or academic approval.
+
 ## 2. Independent academic-review queue
 
 The two 6 November subject-review worksheets contain 105 candidate rows in total:
 - Baseline independent worksheet: 34 rows.
 - Additional independent worksheet: 71 rows.
 
-All 105 rows still have blank review decisions, academic-accuracy checks, answer-key verification, syllabus-fit decisions, reviewer names, and review dates. No independent academic approval is recorded in either worksheet.
+The two source worksheets remain unchanged and their own reviewer/approval fields are blank. A separate assistant-only screening ledger now covers all 105 worksheet candidates: 105 answer-key checks and 105 explanation checks are marked Correct; all 105 syllabus entries are marked likely in scope pending final subject sign-off. Provenance notes distinguish EDUKEN-authored drafts from official past-paper claims. Reviewer names and dates remain blank, and no independent academic approval is recorded.
 
 Candidate counts by subject across both worksheets:
 - Mathematics: 17
@@ -74,7 +76,7 @@ The 38-candidate count difference is explained by comparing two similarity thres
 
 ## 6. Remaining work — no repeated completed checks
 
-1. Continue the sole-reviewer workflow with assistant support to complete the 105 independent worksheet rows and 18 Q cases; verify academic accuracy, answer keys and syllabus fit, and record a reviewer name/date only when an actual review is completed.
+1. The assistant-only technical screen is complete for all 105 worksheet candidates and the 18 previously uncertain duplicate pairs. The remaining academic gate is qualified subject/syllabus sign-off; do not label assistant screening as independent approval or invent reviewer names/dates.
 2. Resolve the cross-window baseline source-record-to-rank mapping and the four-count counter discrepancy; reconcile stale register fields without inferring rank IDs from score order.
 3. Complete the one-pair within-window category-boundary check; do not rerun the already reconciled 0.42/0.43 threshold comparison.
 4. After the remaining academic checks, reconcile the 9 November provisional staging revision and draft replacements only where required; preserve distinct related-skill variants.
