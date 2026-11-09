@@ -2661,7 +2661,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 32 row 34",
       "replace_candidate": null,
       "retain_replace_assignment_status": "provisional_cluster_hold_pending_provenance",
@@ -2679,7 +2679,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-102",
+      "replacement_draft_location": "batch 18 row 32"
     },
     {
       "id": "DUP-103",
@@ -2715,7 +2717,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 3 row 33",
       "replace_candidate": "batch 18 row 36",
       "retain_replace_assignment_status": "provisional_pending_provenance",
@@ -2727,7 +2729,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-104",
+      "replacement_draft_location": "batch 18 row 36"
     },
     {
       "id": "DUP-105",
@@ -2837,7 +2841,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 29",
       "replace_candidate": "batch 17 row 27",
       "retain_replace_assignment_status": "provisional_pending_provenance",
@@ -2849,7 +2853,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-109",
+      "replacement_draft_location": "batch 17 row 27"
     },
     {
       "id": "DUP-110",
@@ -3211,7 +3217,7 @@
       "reason": "Full question text, options, answer key and explanation were checked; both items assess the same fact or reasoning step.",
       "decision": "confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_candidate": "batch 8 row 33",
       "replace_candidate": "batch 20 row 33",
       "new_unique_targets_added": 1,
@@ -3228,7 +3234,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-123",
+      "replacement_draft_location": "batch 20 row 33"
     },
     {
       "id": "DUP-124",
@@ -5243,7 +5251,7 @@
       "provenance": "Original EDUKEN-authored source; verified against original batch CSV and exact staging row content.",
       "decision": "assistant_contextual_review_confirmed_semantic_duplicate_pending_qualified_subject_review",
       "csv_change_status": "not_changed",
-      "replacement_status": "pending_qualified_subject_review",
+      "replacement_status": "draft_created_pending_qualified_subject_review",
       "retain_replace_assignment_status": "provisional_pending_provenance",
       "new_unique_targets_added": 1,
       "contextual_review": {
@@ -5253,7 +5261,9 @@
       "source_provenance_status": "original_eduKen_authored_source_metadata_verified",
       "staging_join_status": "verified_exact_source_content_match",
       "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
-      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json"
+      "source_staging_audit": "content/cbt/audits/2026-11-06-later-register-source-staging-verification-r1.json",
+      "replacement_draft_target_id": "DUP-200",
+      "replacement_draft_location": "batch 20 row 6"
     }
   ],
   "draft_screening": {
@@ -5991,8 +6001,8 @@
       "later_register_unique_target_locations": 104,
       "later_register_target_locations_already_held": 72,
       "r3_anchor_invariant": "All 160 held locations point to a retained anchor; zero unresolved references or cycles.",
-      "replacement_draft_count": 109,
-      "replacement_drafts_assistant_screened": 109,
+      "replacement_draft_count": 115,
+      "replacement_drafts_assistant_screened": 115,
       "replacement_drafts_independently_approved": 0,
       "replacement_drafts_published": 0
     },
@@ -6033,31 +6043,32 @@
     "replacement_work": {
       "baseline_90_drafts_assistant_preliminary_reviewed": 90,
       "additional_r3_drafts_created": 7,
-      "current_draft_count": 109,
-      "current_assistant_bankwide_screened": 109,
+      "current_draft_count": 115,
+      "current_assistant_bankwide_screened": 115,
       "november_9_addendum_D_targets": 6,
       "november_9_addendum_D_target_drafts_created": 6,
       "additional_later_register_target_drafts_created": 1,
       "independent_qualified_approvals": 0,
       "deployment_ready_replacements": 0,
-      "note": "Coverage uses one target-specific draft per held row. 109 of 160 held rows now have drafts; 49 D targets remain without drafts and 2 S rows remain pending qualified review.",
+      "note": "Coverage uses one target-specific draft per held row. 115 of 160 held rows now have drafts; 43 D targets remain without drafts and 2 S rows remain pending qualified review.",
       "next_batch_drafts_created": 6,
-      "held_location_coverage": 109,
+      "held_location_coverage": 115,
       "held_locations_total": 160,
-      "held_locations_without_target_specific_draft": 51,
-      "uncovered_duplicate_targets_pending_draft": 49,
+      "held_locations_without_target_specific_draft": 45,
+      "uncovered_duplicate_targets_pending_draft": 43,
       "related_skill_targets_pending_qualified_review": 2,
       "third_batch_drafts_created": 6,
       "uncovered_held_targets_by_subject": {
-        "Economics": 8,
-        "Use of English": 2,
+        "Economics": 7,
+        "Use of English": 1,
         "Chemistry": 4,
-        "Government": 15,
+        "Government": 11,
         "Mathematics": 0,
         "Literature in English": 6,
         "Biology": 13,
         "Physics": 3
-      }
+      },
+      "fourth_batch_drafts_created": 6
     },
     "engineering_track": {
       "pull_request": 199,
@@ -6449,6 +6460,50 @@
         "target_location": "batch 17 row 20",
         "subject": "Chemistry",
         "similarity": 0.3788,
+        "flagged": false
+      }
+    ],
+    "replacement_draft_batch_2026_11_09_fourth": [
+      {
+        "target_id": "DUP-109",
+        "target_location": "batch 17 row 27",
+        "subject": "Economics",
+        "similarity": 0.2756,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-102",
+        "target_location": "batch 18 row 32",
+        "subject": "Government",
+        "similarity": 0.3889,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-221",
+        "target_location": "batch 18 row 35",
+        "subject": "Government",
+        "similarity": 0.3978,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-104",
+        "target_location": "batch 18 row 36",
+        "subject": "Government",
+        "similarity": 0.3415,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-200",
+        "target_location": "batch 20 row 6",
+        "subject": "Use of English",
+        "similarity": 0.2857,
+        "flagged": false
+      },
+      {
+        "target_id": "DUP-123",
+        "target_location": "batch 20 row 33",
+        "subject": "Government",
+        "similarity": 0.321,
         "flagged": false
       }
     ]
@@ -6879,15 +6934,15 @@
     },
     "replacement_work": {
       "baseline_drafts": 90,
-      "r3_additional_drafts": 19,
-      "total_current_drafts": 109,
-      "bankwide_screened": 109,
+      "r3_additional_drafts": 25,
+      "total_current_drafts": 115,
+      "bankwide_screened": 115,
       "independent_qualified_approvals": 0,
       "production_imports": 0,
       "production_publications": 0,
-      "held_location_coverage": 109,
-      "held_locations_without_target_specific_draft": 51,
-      "uncovered_D_targets": 49,
+      "held_location_coverage": 115,
+      "held_locations_without_target_specific_draft": 45,
+      "uncovered_D_targets": 43,
       "S_targets_pending_qualified_review": 2
     }
   },
