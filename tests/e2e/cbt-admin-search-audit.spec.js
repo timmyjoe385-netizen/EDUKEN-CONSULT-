@@ -105,6 +105,11 @@ test('CBT admin pagination changes server page and search resets to page one wit
   await expect(page.getByText(/Page 1 of 1/)).toBeVisible();
   await expect.poll(() => questionRequests.at(-1)).toMatchObject({ status: 'reviewed', page: 1 });
 
+  await page.getByLabel('Review state').selectOption('all');
+  await expect(page.getByText(/Page 1 of 3/)).toBeVisible();
+  await page.getByRole('button', { name: 'Next' }).click();
+  await expect(page.getByText(/Page 2 of 3/)).toBeVisible();
+
   const search = page.getByPlaceholder('Question, subject or topic');
   await search.fill('cell');
   await expect(page.getByText('Which organelle controls cell activities?')).toBeVisible();
