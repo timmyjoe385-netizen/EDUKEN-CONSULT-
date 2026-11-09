@@ -4,8 +4,8 @@
 
 - Pair records: **109**
 - Pair-target review rows: **110**
-- Target rows currently held in the 9 November revision: **72**
-- Target rows currently retained in the 9 November revision: **38**
+- Target rows currently held in the 9 November r2 revision: **78**
+- Target rows currently retained in the 9 November r2 revision: **32**
 - Missing target rows: **0**
 - Source/staging verification: all 204 unique endpoints across the 109 pair records match original source rows exactly.
 
@@ -34,7 +34,7 @@
 
 ## Current delegated screening status — 9 November 2026
 
-The CSV records 110 pair-target rows across 109 pair IDs: 63 duplicate recommendations (D), 29 distinct/related-skill outcomes (S), and 18 pending/uncertain cases (Q). Fourteen previously unresolved rows were reconciled against exact addendum endpoint matches (13 D, one S); three overlapping D records were confirmed without double-counting. User-supplied decisions are preserved. These screening dispositions do not constitute independent subject, answer-key or syllabus approval. The 9 November provisional staging revision applies 45 retained-to-held moves and 13 held-to-retained moves. Do not change source question content or publication state based on this ledger alone.
+The CSV records 110 pair-target rows across 109 pair IDs: 78 duplicate recommendations (D), 32 distinct/related-skill outcomes (S), and no pending pair classifications (Q). Fourteen previously unresolved rows were reconciled against exact addendum endpoint matches (13 D, one S); three overlapping D records were confirmed without double-counting. The remaining 18 uncertain pairs were then screened (15 D, three S), including cluster-anchor direction adjustments to honour earlier distinct decisions. User-supplied decisions are preserved. These screening dispositions do not constitute independent subject, answer-key or syllabus approval. The 9 November r1 and r2 provisional staging revisions together apply 53 retained-to-held moves and 14 held-to-retained moves; r2 contains 1,437 retained and 163 held rows. Do not change source question content or publication state based on this ledger alone.
 
 ## 3a. New addendum disposition ledger
 
