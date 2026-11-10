@@ -51,11 +51,11 @@ The detailed candidate queue is `content/cbt/audits/2026-11-10-assistant-subject
 
 | Workstream | Current status | Next required action |
 |---|---|---|
-| 1. Use of English | TECHNICALLY VERIFIED for r4 structure; AWAITING ACADEMIC REVIEW | Review the 185 retained items, 15 held items and 14 replacement proposals with a qualified reviewer |
-| 2. Science | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified Mathematics, Biology, Chemistry and Physics review |
-| 3. Arts and Social Sciences | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified Economics, Government and Literature review |
+| 1. Use of English | IN PROGRESS — r4 structure verified; 185 retained, 15 held, 14 replacement proposals; assistant screen complete | Qualified review, metadata/formatting corrections and final duplicate clearance |
+| 2. Science | IN PROGRESS — r4 structure verified; Math 200 rows screened, Biology 169 retained screened; held Biology and all Chemistry/Physics content still need review | Review 7 held Math rows, 31 held Biology rows, all Chemistry and Physics, then qualified sign-off |
+| 3. Arts and Social Sciences | IN PROGRESS — r4 structure verified; retained Economics, Government and Literature rows preliminarily screened | Review held Economics (27), Government (25) and Literature (20), reconcile repeated-concept candidates and obtain qualified sign-off |
 | 4. Integrity and reconciliation | IN PROGRESS | Maintain r4 as current staging, reconcile DUP-245 into the canonical pair history, and continue target/provenance reconciliation |
-| 5. CBT platform | IN PROGRESS | Complete authenticated admin acceptance, full 180-question lifecycle, mobile/network and security checks |
+| 5. CBT platform | IN PROGRESS — PR #194 checks passed; isolated Edge Function v45 matches PR #194 source; test bank has 73 questions, 8 published | Authenticated admin acceptance, post-deploy API invocation, full 180-question lifecycle after bank clearance, mobile/network and security checks |
 
 ## Assistant preliminary Use of English content-screen — 10 November 2026
 
