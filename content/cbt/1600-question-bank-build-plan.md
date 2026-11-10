@@ -6,13 +6,13 @@ This section supersedes older operational counts below wherever they conflict. H
 
 - Repository: existing EDUKEN-CONSULT project; continuation only. No rebuild.
 - Active question-bank reconciliation branch: `feat/cbt-subject-combination-reconciled`; PR #194 remains open, draft and unmerged.
-- Latest r3 staging inventory: **1,600 source rows = 1,440 provisionally retained + 160 held**. Each of the eight supported subjects has exactly 200 source rows.
-- Independent read-only validation of all eight r3 CSV exports is recorded in `content/cbt/audits/2026-11-10-r3-structural-membership-verification.json`: 1,440 unique retained locations, 160 unique held locations, zero retained/held overlap, zero duplicate held locations, zero missing retained anchors, and no structural defects in options, answer-key format, explanations, provenance fields or draft status.
-- Replacement inventory: **115 proposals**, 115 unique target IDs. Independent structural reconciliation is recorded in `content/cbt/audits/2026-11-10-replacement-draft-structure-reconciliation.json`. All have four distinct options, valid A–D keys, explanations and review-required status.
-- Current bank-wide lexical screen: **12 flags + 103 below-threshold proposals = 115 screened**. The 12 flags remain review prompts, not automatic duplicate findings. Target-level replacement coverage remains **103 of 160 held rows**; 55 D targets still need drafts and two S rows await qualified review.
+- Latest r4 staging inventory: **1,600 source rows = 1,439 provisionally retained + 161 held**. Each of the eight supported subjects has exactly 200 source rows. The non-destructive r4 revision moves the later duplicate endpoint (batch 39 row 3, Use of English) to held under DUP-245; r3 and all original source CSVs remain unchanged.
+- Independent read-only validation of all eight r4 CSV exports is recorded in `content/cbt/audits/2026-11-10-r4-structural-membership-verification.json`: 1,439 unique retained locations, 161 unique held locations, zero retained/held overlap, zero duplicate held locations, zero missing retained anchors, and all retained/held rows have four distinct options, valid A–D keys and explanations.
+- Replacement inventory: **116 proposals**, 116 unique target IDs, including the new DUP-245 replacement draft. Independent r4 structural reconciliation is recorded in `content/cbt/audits/2026-11-10-r4-replacement-draft-structure-reconciliation.json`. All have four distinct options, valid A–D keys, explanations and review-required status.
+- Current bank-wide lexical screen: **12 flags + 104 below-threshold proposals = 116 screened** against all 1,600 r4 source rows. The 12 flags remain review prompts, not automatic duplicate findings. Target-level replacement coverage is **104 of 161 held rows**; 55 D targets still need drafts and two S rows await qualified review.
 - Qualified independent academic approvals: **0**. No retained question or replacement proposal is academically approved by structural or lexical checks.
 - All questions and replacement proposals remain unpublished. Production question-bank imports: 0. Production publications: 0.
-- The PR #194 checkpoint was corrected to reconcile its replacement count with the underlying 115-item inventory and version-67 screen. Do not reuse the former 103-total / 91-below-threshold figures.
+- The PR #194 checkpoint now reconciles with the 116-item inventory and version-68 screen. Do not reuse older 103-total / 91-below-threshold figures.
 - PR #194 code-bearing baseline commit `eed32eb98a5e50fcb745ee48b7f77a1afb7da817` has successful build, wallet-SQL, preview deploy and public browser checks; production deploy was skipped. Subsequent commits add audit documentation only and trigger their own checks.
 - PR #199 remains open/draft/unmerged. Its recorded build, wallet-SQL, preview and public-browser checks passed on `aea774e0e90955e4425bca7a4edfe072a5a3ccf5`; real authenticated admin acceptance remains outstanding.
 - Integration reconciliation (10 Nov): PR #194 already contains the exact same blob versions of `src/CbtQuestionBankAdmin.tsx` and `tests/e2e/cbt-admin-search-audit.spec.js` as PR #199, and its `src/App.tsx` already imports/renders the admin component. Treat PR #199's pagination/search/audit changes as present in PR #194; keep PR #199 open/draft for now and do not merge it separately or close it without a final integration decision.
@@ -22,21 +22,21 @@ This section supersedes older operational counts below wherever they conflict. H
 
 | Workstream | Current status | Next required action |
 |---|---|---|
-| 1. Use of English | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified subject review of retained and replacement items |
+| 1. Use of English | TECHNICALLY VERIFIED for r4 structure; AWAITING ACADEMIC REVIEW | Review the 185 retained items, 15 held items and 14 replacement proposals with a qualified reviewer |
 | 2. Science | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified Mathematics, Biology, Chemistry and Physics review |
 | 3. Arts and Social Sciences | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified Economics, Government and Literature review |
-| 4. Integrity and reconciliation | IN PROGRESS | Continue Git-history/provenance and semantic-disposition reconciliation; preserve one master register |
+| 4. Integrity and reconciliation | IN PROGRESS | Maintain r4 as current staging, reconcile DUP-245 into the canonical pair history, and continue target/provenance reconciliation |
 | 5. CBT platform | IN PROGRESS | Complete authenticated admin acceptance, full 180-question lifecycle, mobile/network and security checks |
 
 ## Assistant preliminary Use of English content-screen — 10 November 2026
 
-- Screened all **186 provisionally retained Use of English rows** in r3. This is an assistant preliminary screen only; it is not independent academic approval.
-- Newly identified retained semantic duplicate candidate: **batch 07 row 3** and **batch 39 row 3** both test that *obsolete* means *outdated*. Both currently appear in the retained r3 export. The pair was not found in the existing duplicate-disposition register. No staging/source CSV change has been made; Workstream 4 must add the pair to the canonical disposition history and create a new non-destructive staging revision before any import.
+- Screened all **186 provisionally retained Use of English rows** in r3. This was an assistant preliminary screen only; it is not independent academic approval. The r4 retained set now contains 185 Use of English rows and the held set contains 15.
+- Confirmed assistant-identified semantic duplicate: **batch 7 row 3** and **batch 39 row 3** both test that *obsolete* means *outdated*. The later endpoint is now held in r4 as **DUP-245**; the earlier item remains the retained anchor. Pair details are in `content/cbt/audits/2026-11-10-use-of-english-DUP-245-addendum.json`.
 - Metadata follow-ups: batch 07 row 3 and batch 18 row 3 are synonym/meaning items labelled under the “Antonyms” subtopic; batch 27 row 4 classifies “comply with” as an idiom/fixed expression rather than a verb–preposition collocation.
 - Formatting follow-up: batch 31 row 3 contains literal backslashes where quotation marks should delimit the example sentence and target word.
 - No answer-key or explanation error was identified in this 186-row preliminary pass. This does not establish syllabus sign-off or qualified academic approval.
-- Safety: source CSVs changed 0; r3 staging rows changed 0; production changes 0; imports/publications 0; academic approvals created 0.
-- Next actions: reconcile the new duplicate pair in the master duplicate register, hold the later endpoint in a new staging revision, prepare a replacement draft only after same-subject bank-wide comparison, and correct the flagged metadata/formatting without altering the original source batch files.
+- Safety: original source CSVs changed 0; r3 staging rows changed 0; r4 moved one duplicate row to held and added one review-required replacement draft; production changes 0; imports/publications 0; academic approvals created 0.
+- Next actions: reconcile DUP-245 with the consolidated pair-level register; obtain qualified review for the 185 retained Use of English questions and 14 replacement proposals; correct the two metadata labels and malformed quotation in staging only after confirming the appropriate source-preserving correction; continue the remaining six subjects.
 
 ## Release blockers
 
