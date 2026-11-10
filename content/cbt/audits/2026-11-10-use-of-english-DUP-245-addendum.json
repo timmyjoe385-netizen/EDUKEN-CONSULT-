@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-10",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "scope": "One newly identified Use of English semantic duplicate in the retained r3 set; non-destructive r4 staging disposition.",
+  "new_duplicate_ids": [
+    "DUP-245"
+  ],
+  "new_duplicate_pair_records": [
+    {
+      "id": "DUP-245",
+      "scope": "cross_window",
+      "subject": "Use of English",
+      "a": "batch 7 row 3",
+      "b": "batch 39 row 3",
+      "concept": "Meaning of obsolete as outdated",
+      "reason": "Both questions ask for the nearest meaning of 'obsolete' and key 'outdated'. The distractors differ, but both assess the same vocabulary fact.",
+      "retain": "batch 7 row 3",
+      "replace": "batch 39 row 3",
+      "retention_basis": "Retain the earlier batch 7 row 3. Hold the later batch 39 row 3 as the repeated concept.",
+      "provenance": "Both original source rows are present in their original EDUKEN-authored batch CSVs; exact row content was matched to r3 staging before the r4 move.",
+      "decision": "assistant_confirmed_semantic_duplicate_pending_qualified_subject_review",
+      "csv_change_status": "r4_staging_holdout_created_original_source_csvs_unchanged",
+      "replacement_status": "draft_created_assistant_bankwide_screened_pending_qualified_subject_and_syllabus_review",
+      "replacement_draft_target_id": "DUP-245",
+      "replacement_draft_location": "batch 39 row 3",
+      "source_provenance_status": "original_eduken_authored_source_verified",
+      "staging_join_status": "verified_exact_source_content_match_in_r4",
+      "qualified_subject_review_status": "pending_independent_subject_answer_key_and_syllabus_review",
+      "contextual_review": {
+        "review_type": "assistant_preliminary_same_subject_bankwide_screen",
+        "decision": "conceptually_duplicate",
+        "note": "Both stems ask the meaning of obsolete and use outdated as the key. Both were retained in r3. The later endpoint is held in r4. The replacement candidate for DUP-245 was screened against all 200 Use of English source rows; maximum padded character-trigram Dice score 0.3778, below the 0.42 review threshold. This lexical score is not academic approval."
+      }
+    }
+  ],
+  "staging_revision": "2026-11-10-r4",
+  "counts": {
+    "source_rows": 1600,
+    "retained": 1439,
+    "held": 161,
+    "use_of_english_retained": 185,
+    "use_of_english_held": 15
+  },
+  "safety": {
+    "original_source_csvs_modified": false,
+    "r3_files_modified": false,
+    "r4_source_question_content_changed": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "production_deployments": 0,
+    "qualified_academic_approvals_created": 0
+  },
+  "status": "TECHNICALLY_VERIFIED_STAGING_DISPOSITION_AND_DRAFT_ONLY"
+}
