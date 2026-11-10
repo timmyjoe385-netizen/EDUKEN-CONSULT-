@@ -1,27 +1,27 @@
 {
-  "audit_date": "2026-11-01",
+  "audit_date": "2026-11-10",
   "branch": "feat/cbt-subject-combination-reconciled",
-  "version": 67,
-  "purpose": "Refreshed non-destructive lexical screen of all 90 current replacement proposals against all 1,600 staged source question rows, including retained and held rows.",
+  "version": 68,
+  "purpose": "Refreshed non-destructive lexical screen of all 116 current replacement proposals against all 1,600 staged source question rows, including retained and held rows, in staging revision r4.",
   "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
   "source_bank": {
     "batches": 40,
     "question_rows": 1600,
     "retained_and_held_included": true,
     "original_csvs_modified": false,
-    "retained_rows": 1440,
-    "held_rows": 160,
-    "staging_revision": "2026-11-09-r3"
+    "retained_rows": 1439,
+    "held_rows": 161,
+    "staging_revision": "2026-11-10-r4"
   },
   "replacement_proposals": {
-    "count": 115,
-    "screened": 115,
+    "count": 116,
+    "screened": 116,
     "all_proposals_screened": true
   },
   "screening_summary": {
     "threshold": 0.42,
     "flagged_count": 12,
-    "below_threshold_count": 103,
+    "below_threshold_count": 104,
     "flagged_ids": [
       "DUP-10",
       "DUP-16",
@@ -3296,6 +3296,34 @@
         "decision": "conceptually_distinct_pending_independent_subject_review",
         "note": "Target batch 20 row 33. Nearest source items concern legitimacy, civil administration and separation of powers; this draft tests political ideology as a coherent set of beliefs and principles. Similarity 0.3210, below threshold. Qualified Government review is still required."
       }
+    },
+    {
+      "target_id": "DUP-245",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3778,
+      "top_matches": [
+        {
+          "location": "batch 28 row 3",
+          "score": 0.3778,
+          "question": "A statement described as “ambiguous” is one that is"
+        },
+        {
+          "location": "batch 12 row 6",
+          "score": 0.2778,
+          "question": "Choose the correct completion: “The new student is interested ___ literature.”"
+        },
+        {
+          "location": "batch 11 row 5",
+          "score": 0.2679,
+          "question": "Choose the sentence that correctly expresses an unreal condition in the present."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_same_subject_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English source rows were screened. No existing item tests prudence or prudent decision-making. The highest padded character-trigram Dice score is 0.3778 against batch 28 row 3, below the 0.42 threshold. Lexical screening is not a semantic uniqueness guarantee or academic approval. Independent Use of English syllabus and answer review remains required."
+      }
     }
   ],
   "limitations": [
@@ -3305,10 +3333,10 @@
     "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
   ],
   "proposals": {
-    "count": 115,
-    "screened": 115,
+    "count": 116,
+    "screened": 116,
     "all_proposals_screened": true
   },
-  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending. Version 55 — 2026-11-09: six additional replacement drafts were screened against the full 1,600-row r3 bank and 97 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 61 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 103 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 67 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 109 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending.",
-  "last_updated": "2026-11-09"
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending. Version 55 — 2026-11-09: six additional replacement drafts were screened against the full 1,600-row r3 bank and 97 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 61 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 103 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 67 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 109 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. 2026-11-10 r4 supplement: DUP-245 screened against all 1,600 r4 source rows; max same-subject Dice 0.3778, below threshold. Candidate remains review-required.",
+  "last_updated": "2026-11-10"
 }
