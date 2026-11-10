@@ -2,19 +2,24 @@
 
 **Date:** 10 November 2026  
 **Branch:** `work/cbt-owner-approved-replacement-execution-20261110`  
-**Purpose:** Record the owner's approval and establish a safe, non-destructive execution baseline for the replacement bank and bonus bank.
+**Purpose:** Record the owner's explicit approval and establish a safe, non-destructive execution baseline for the replacement bank and bonus bank.
 
-## 1. Owner instruction recorded
+## 1. Explicit owner approval — authoritative instruction
 
-The owner has approved proceeding with the question-bank work and confirmed trust in the assistant's answer/key checks. This is recorded as **owner approval to proceed**, not as independent subject-expert certification or a claim that every question has already been checked.
+The owner explicitly confirmed: **all 1,600 existing questions in the question bank, including their answer keys, are approved by the owner for EDUKEN CBT.** This is a direct owner decision covering the complete existing 1,600-question source bank, not merely permission to continue auditing it.
+
+Record this as **OWNER-APPROVED: 1,600 QUESTIONS + ANSWER KEYS**.
+
+This is the owner's approval for use/progression. It must not be misrepresented as independent subject-expert certification, nor as proof that every answer has been technically or independently verified. If an actual error or ambiguity is discovered during validation, flag it transparently and prepare a correction rather than knowingly retaining an error. Do not erase or overwrite the owner's approval record.
 
 The approved handling is:
 
+- Preserve all 1,600 original questions, answer keys and source evidence.
 - Keep suitable, distinct questions in the scored main-bank candidate set.
 - Keep duplicate and closely related questions in a separate bonus/revision set; do not include them in scored mock selection.
-- Replace confirmed duplicate or unsuitable main-bank entries with suitable, distinct replacement candidates.
+- Replace confirmed duplicate or unsuitable main-bank entries with suitable, distinct replacement candidates so the scored bank can reach its required unique-question count.
 - Check each replacement's stem, four options, answer key, explanation, subject and syllabus fit; preserve uncertainty flags where evidence is insufficient.
-- Preserve all original source rows and historical audit evidence.
+- Maintain the distinction between owner-approved, assistant-screened, technically verified, syllabus-review-required and unresolved.
 
 This approval does **not** authorize production import/publication, production deployment, merging an existing CBT PR, or changing authentication/payment behaviour. Those remain separate release actions.
 
@@ -28,7 +33,7 @@ This approval does **not** authorize production import/publication, production d
 
 ## 3. Execution rules
 
-1. Treat the original 1,600 questions as immutable source evidence.
+1. Treat the owner's approval of all 1,600 original questions and answer keys as recorded and authoritative.
 2. Build new, versioned staging outputs; never overwrite the original source CSVs or earlier r1/r2/r3 snapshots.
 3. Maintain one authoritative target-to-source-to-replacement crosswalk. Every replacement must identify its target ID, held source row, retained anchor (where applicable), new question ID, subject, syllabus topic, answer and explanation.
 4. Keep duplicate/related items in a separate bonus bank with stable source references and a clear non-scored status.
@@ -48,7 +53,7 @@ This approval does **not** authorize production import/publication, production d
 
 | Work item | Status |
 |---|---|
-| Owner approval to proceed | RECORDED |
+| Owner approval of all 1,600 questions and answer keys | RECORDED — EXPLICIT |
 | Immutable source preservation | REQUIRED / IN FORCE |
 | r2 versus r3 count reconciliation | BLOCKED |
 | Unique master target ledger | IN PROGRESS |
@@ -58,8 +63,7 @@ This approval does **not** authorize production import/publication, production d
 | Bonus bank export | NOT STARTED |
 | Production import/publication/deployment | NOT AUTHORIZED |
 
-**Release statement:** This checkpoint records authorization to continue non-production replacement and bonus-bank preparation only. It does not certify the final 1,600-question bank as complete or authorize a production release.
-
+**Release statement:** This checkpoint records explicit owner approval of the complete existing 1,600-question bank and answer keys, and authorization to continue non-production replacement and bonus-bank preparation. It does not certify the final scored bank as complete or authorize a production release.
 
 ## 6. Fresh reconciliation against the current PR #194 checkpoint (10 November)
 
@@ -69,10 +73,10 @@ A fresh read of PR #194's current body provides a later r3 checkpoint and supers
 - r3 structural checks: zero unresolved anchor references, zero cycles, zero duplicate source-row identities, zero exact normalized same-subject duplicate stems in retained rows, and zero structural issues.
 - Replacement drafts: **103** in the current PR checkpoint; coverage is reported for **103 of 160 held rows**.
 - Remaining target work: **55 D targets still need drafts; 2 S rows await qualified review**.
-- Qualified academic approvals recorded in that checkpoint: **0**. The owner's approval in this execution branch is a separate owner decision and does not rewrite those historical review records.
+- Qualified academic approvals recorded in that checkpoint: **0**. The owner's explicit approval recorded in this document is a separate owner decision and does not rewrite historical independent-review records.
 - PR #194 remains **open, draft, unmerged**. Its latest checkpoint says no workflow runs were returned for the latest audit/data commit; older CI results must not be represented as current-head passes.
 - PR #199 also remains open and draft; its own description says its browser coverage uses mocked auth/API and is not authenticated acceptance.
 
 The older audit files on this branch still contain 90-target / 115-draft / 33-syllabus-review-required snapshots. Those are retained as historical evidence, not treated as current totals. Before creating or inserting new replacements, the 103-draft current PR checkpoint must be joined to the actual target ledger and current r3 exports. Do not add 55 drafts blindly: first prove their unique target IDs and source-row endpoints, and screen each candidate against all 1,600 questions and all existing drafts.
 
-**Current decision:** proceed with non-production question-bank work under the owner's approval, but do not change any original CSV or mark an unresolved target complete until the latest target-to-source mapping and r3 export join are verified.
+**Current decision:** proceed with non-production question-bank work under the owner's explicit approval of all 1,600 original questions and answer keys. Preserve all original content; move confirmed duplicate/related entries out of scored selection into the bonus/revision set and create distinct replacements where required. Do not change any original CSV or mark an unresolved target complete until the latest target-to-source mapping and r3 export join are verified.
