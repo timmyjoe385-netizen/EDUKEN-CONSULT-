@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-10",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "revision": "2026-11-10-r4",
+  "purpose": "Independent structural reconciliation of all 116 replacement proposals and the r4 bank-wide lexical-screen summary.",
+  "sources": [
+    "content/cbt/audits/duplicate-replacement-drafts-2026-11-01.json",
+    "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json"
+  ],
+  "proposal_inventory": {
+    "declared_count": 116,
+    "actual_item_count": 116,
+    "unique_target_ids": 116,
+    "duplicate_target_ids": [],
+    "subject_counts": {
+      "Mathematics": 7,
+      "Chemistry": 17,
+      "Physics": 12,
+      "Biology": 18,
+      "Literature in English": 14,
+      "Economics": 20,
+      "Government": 14,
+      "Use of English": 14
+    }
+  },
+  "structural_checks": {
+    "nonempty_question_topic_subject_source_explanation": 116,
+    "exactly_four_nonempty_options": 116,
+    "four_distinct_options": 116,
+    "valid_answer_keys": 116,
+    "review_required_status": 116
+  },
+  "bankwide_screen": {
+    "source_rows": 1600,
+    "staging_revision": "2026-11-10-r4",
+    "proposals_screened": 116,
+    "threshold": 0.42,
+    "lexical_flags": 12,
+    "below_threshold": 104,
+    "flag_ids": [
+      "DUP-10",
+      "DUP-16",
+      "DUP-18",
+      "DUP-22",
+      "DUP-33",
+      "DUP-34",
+      "DUP-35",
+      "DUP-36",
+      "DUP-45",
+      "DUP-48",
+      "DUP-53",
+      "DUP-47-ADD-2026-11-09"
+    ]
+  },
+  "reconciliation_note": "The r4 revision adds one new confirmed duplicate target DUP-245 (Use of English, batch 39 row 3) and one review-required replacement draft. The new proposal's highest same-subject lexical score is 0.3778, below the 0.42 threshold. Target-specific draft coverage is now 104 of 161 held locations; 55 confirmed-duplicate targets still need drafts and two related-skill targets await qualified review.",
+  "status": "TECHNICALLY_VERIFIED_STRUCTURE_AND_SCREEN_COUNT_ONLY",
+  "limitations": [
+    "Lexical similarity is a screening signal, not a semantic duplicate verdict.",
+    "No replacement answer key, explanation or syllabus mapping is independently academically approved by this structural audit.",
+    "Qualified academic approvals remain zero.",
+    "No replacement was imported or published."
+  ],
+  "safety": {
+    "replacement_question_content_changed": 1,
+    "source_question_content_changed": 0,
+    "production_imports": 0,
+    "publications": 0,
+    "production_changes": 0,
+    "academic_approvals_created": 0,
+    "release_authorized": false
+  }
+}
