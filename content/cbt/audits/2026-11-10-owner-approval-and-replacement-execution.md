@@ -59,3 +59,20 @@ This approval does **not** authorize production import/publication, production d
 | Production import/publication/deployment | NOT AUTHORIZED |
 
 **Release statement:** This checkpoint records authorization to continue non-production replacement and bonus-bank preparation only. It does not certify the final 1,600-question bank as complete or authorize a production release.
+
+
+## 6. Fresh reconciliation against the current PR #194 checkpoint (10 November)
+
+A fresh read of PR #194's current body provides a later r3 checkpoint and supersedes the older r2/90-target figures above where they conflict:
+
+- r3: **1,600 total; 1,440 provisionally retained; 160 held; 200 per subject**.
+- r3 structural checks: zero unresolved anchor references, zero cycles, zero duplicate source-row identities, zero exact normalized same-subject duplicate stems in retained rows, and zero structural issues.
+- Replacement drafts: **103** in the current PR checkpoint; coverage is reported for **103 of 160 held rows**.
+- Remaining target work: **55 D targets still need drafts; 2 S rows await qualified review**.
+- Qualified academic approvals recorded in that checkpoint: **0**. The owner's approval in this execution branch is a separate owner decision and does not rewrite those historical review records.
+- PR #194 remains **open, draft, unmerged**. Its latest checkpoint says no workflow runs were returned for the latest audit/data commit; older CI results must not be represented as current-head passes.
+- PR #199 also remains open and draft; its own description says its browser coverage uses mocked auth/API and is not authenticated acceptance.
+
+The older audit files on this branch still contain 90-target / 115-draft / 33-syllabus-review-required snapshots. Those are retained as historical evidence, not treated as current totals. Before creating or inserting new replacements, the 103-draft current PR checkpoint must be joined to the actual target ledger and current r3 exports. Do not add 55 drafts blindly: first prove their unique target IDs and source-row endpoints, and screen each candidate against all 1,600 questions and all existing drafts.
+
+**Current decision:** proceed with non-production question-bank work under the owner's approval, but do not change any original CSV or mark an unresolved target complete until the latest target-to-source mapping and r3 export join are verified.
