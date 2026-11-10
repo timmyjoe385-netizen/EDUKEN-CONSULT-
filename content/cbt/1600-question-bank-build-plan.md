@@ -15,6 +15,7 @@ This section supersedes older operational counts below wherever they conflict. H
 - The PR #194 checkpoint was corrected to reconcile its replacement count with the underlying 115-item inventory and version-67 screen. Do not reuse the former 103-total / 91-below-threshold figures.
 - PR #194 code-bearing baseline commit `eed32eb98a5e50fcb745ee48b7f77a1afb7da817` has successful build, wallet-SQL, preview deploy and public browser checks; production deploy was skipped. Subsequent commits add audit documentation only and trigger their own checks.
 - PR #199 remains open/draft/unmerged. Its recorded build, wallet-SQL, preview and public-browser checks passed on `aea774e0e90955e4425bca7a4edfe072a5a3ccf5`; real authenticated admin acceptance remains outstanding.
+- Integration reconciliation (10 Nov): PR #194 already contains the exact same blob versions of `src/CbtQuestionBankAdmin.tsx` and `tests/e2e/cbt-admin-search-audit.spec.js` as PR #199, and its `src/App.tsx` already imports/renders the admin component. Treat PR #199's pagination/search/audit changes as present in PR #194; keep PR #199 open/draft for now and do not merge it separately or close it without a final integration decision.
 - The isolated test bank remains 73 rows (65 draft, 8 published) and cannot support the 180-question mock. Production remains isolated and was not queried or changed during this cycle.
 
 ## Workstream register
