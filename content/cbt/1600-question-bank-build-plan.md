@@ -28,6 +28,25 @@ This section supersedes older operational counts below wherever they conflict. H
 - Isolated `eduken-api` is ACTIVE at version 44 with `verify_jwt=false`; the function source contains internal auth checks. Its deployed `index.ts` matches the main-branch file except for one four-question mock-duration branch, but does **not** match PR #194: PR #194 adds server-side subject-combination selection helpers. Preview Edge Function alignment is therefore an outstanding integration task; do not deploy to production.
 - Latest PR #194 head `e31da2a619debff2b3d33ad350c4ee02171b47c1`: Worker build, both build checks, wallet-SQL and preview deployment passed; public browser checks were still running at the last check. Production deploy was skipped.
 
+## Assistant preliminary subject-content screen — 10 November 2026
+
+The detailed candidate queue is `content/cbt/audits/2026-11-10-assistant-subject-screen-candidate-queue.json`. These are assistant preliminary checks, not qualified academic approvals.
+
+- **Use of English:** 186 r3 retained rows screened; one semantic duplicate (obsolete/outdated) was moved to held in r4 as DUP-245. Two subtopic labels and one formatting issue remain queued for correction.
+- **Mathematics:** all 200 original rows screened (193 retained, 7 held). No obvious answer-key/calculation error identified. Two topic/subtopic labels and one trailing-whitespace issue remain queued.
+- **Biology:** 169 retained rows screened; 31 held rows still need review. No obvious answer-key/explanation error identified. Multiple repeated-concept candidates were found, including xylem transport, chlorophyll, antibodies, glomerulus, mitosis, heterozygous genotype, photolysis and nitrogen fixation. Existing vaccination and ADH clusters include DUP-38/DUP-173 and DUP-160.
+- **Economics:** 173 retained rows screened; 27 held rows still need review. No obvious answer-key/explanation error identified. Repeated-definition candidates include public debt, inflation, exchange rate, HDI, direct tax, deflation, ad valorem tax, fiscal policy and price taker. Direct tax is cross-window rank 36 (0.87); exchange rate is rank 288 (0.647). Public expenditure is already represented by DUP-170. The perfect-competition wording at batch 2 row 27 should say homogeneous products rather than “very similar products”.
+- **Government:** 175 retained rows screened; 25 held rows still need review. No obvious answer-key/explanation error identified. Repeated-concept candidates include universal adult suffrage, unitary government, public corporations, treaties, legitimacy, separation of powers, the African Union and sovereignty.
+- **Literature in English:** 180 retained rows screened; 20 held rows still need review. No obvious answer-key/explanation error identified. Repeated-concept candidates include foreshadowing, first-person narration, epistolary novels, dialogue, alliteration, oxymoron, simile, metaphor, setting and stage directions.
+- All candidate repeats remain pending pair/cluster reconciliation. No questions were academically approved, imported or published by these preliminary screens.
+
+## Isolated preview Edge Function alignment — 10 November 2026
+
+- Deployed the PR #194 `eduken-api` source to the isolated test Supabase project only; the function is ACTIVE at version **45** and its deployed `index.ts` exactly matches the PR #194 branch source.
+- Included all 15 function source files and preserved the existing `verify_jwt=false` setting because the function enforces its own `currentUser` and `requireAdmin` checks.
+- No database rows, schema, auth settings, payment settings or production resources were changed. The isolated project still has 73 CBT question rows (65 draft, 8 published).
+- No direct API invocation was performed after deployment; the deployed source was verified by read-back. PR #194 CI/browser checks passed on its previous head; the new documentation/audit commits require their own current status check.
+
 ## Workstream register
 
 | Workstream | Current status | Next required action |
