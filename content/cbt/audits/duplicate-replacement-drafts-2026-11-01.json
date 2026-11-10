@@ -1,7 +1,7 @@
 {
   "audit_date": "2026-11-01",
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
-  "draft_count": 115,
+  "draft_count": 116,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
   "important": "All 115 proposals remain separate, unpublished drafts. The original 90 proposals plus 25 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The latest six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
   "items": [
@@ -2157,11 +2157,32 @@
       "difficulty": "medium",
       "source": "EDUKEN original replacement draft",
       "status": "assistant_pairwise_bankwide_review_complete_human_subject_and_syllabus_review_required"
+    },
+    {
+      "target_id": "DUP-245",
+      "source_pair_id": "DUP-245",
+      "target_location": "batch 39 row 3",
+      "subject": "Use of English",
+      "topic": "Vocabulary",
+      "subtopic": "Word meaning",
+      "question": "A prudent course of action is one that is:",
+      "options": [
+        "taken without considering consequences",
+        "based on careful judgement and foresight",
+        "chosen solely to please other people",
+        "adopted in haste without reflection"
+      ],
+      "answer": "B",
+      "explanation": "Prudent describes a decision made with care and sound judgement, taking likely consequences into account.",
+      "difficulty": "medium",
+      "source": "EDUKEN original replacement draft",
+      "status": "assistant_preliminary_screen_complete_human_subject_and_syllabus_review_required",
+      "review_note": "Drafted to replace the held duplicate at batch 39 row 3. Screened against all 200 Use of English source rows in r4; highest padded character-trigram Dice similarity is 0.3778, below the 0.42 review threshold. No existing question on prudence or prudent decision-making was found. Answer B is supported by the meaning of prudent. Independent qualified Use of English review and syllabus sign-off remain required; not approved for import or publication."
     }
   ],
-  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 third supplement: six additional target-specific drafts added for held locations batch 15 row 28, batch 16 row 6, batch 16 row 20, batch 16 row 33, batch 17 row 10 and batch 17 row 20. Each was screened against all 1,600 r3 source rows and the 103 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 fourth supplement: six additional target-specific drafts added for held locations batch 17 row 27, batch 18 row 32, batch 18 row 35, batch 18 row 36, batch 20 row 6 and batch 20 row 33. Each was screened against all 1,600 r3 source rows and the 109 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review.",
-  "confirmed_duplicate_targets": 115,
+  "revision_note": "The five earlier blocked proposals DUP-02, 05, 08, 30 and 32 have been replaced by distinct candidate questions. The rejected versions are documented in review notes; the current candidates are draft-only and require independent subject review. Reconciled 2026-11-02: nine missing pair contextual-review records synchronised; DUP-17 corrected to the specific phototropism candidate and key A; all assistant review statuses synchronised to the register. No candidate approved for import. 2026-11-02 reconciliation: all 90 target IDs have assistant pairwise bankwide-review-complete records after correcting DUP-04 and replacing rejected DUP-12 and DUP-69 candidates. Independent subject approval remains 0/90. Original source CSVs unchanged; no candidate authorised for import. 2026-11-09 r3 supplement: seven additional target-specific replacement drafts added for held locations batch 2 row 33, batch 14 row 31, batch 22 row 33, batch 39 row 17, batch 33 row 10, batch 34 row 37 and batch 33 row 32. All seven were screened against all 1,600 r3 source rows and the 90 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42). One lexical flag was contextually assessed as distinct; no draft is independently approved or cleared for import. 2026-11-09 r3 second supplement: six further target-specific drafts added for held locations batch 3 row 24, batch 11 row 40, batch 12 row 21, batch 12 row 27, batch 13 row 16 and batch 14 row 35. Each was screened against all 1,600 r3 source rows and the 97 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 third supplement: six additional target-specific drafts added for held locations batch 15 row 28, batch 16 row 6, batch 16 row 20, batch 16 row 33, batch 17 row 10 and batch 17 row 20. Each was screened against all 1,600 r3 source rows and the 103 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-09 r3 fourth supplement: six additional target-specific drafts added for held locations batch 17 row 27, batch 18 row 32, batch 18 row 35, batch 18 row 36, batch 20 row 6 and batch 20 row 33. Each was screened against all 1,600 r3 source rows and the 109 existing proposals using the v2 padded character-trigram Dice method (threshold 0.42); all six are below threshold. All remain draft-only and require independent subject/syllabus review. 2026-11-10 r4 supplement: added target-specific replacement draft DUP-245 for held batch 39 row 3. The candidate was screened against all 1,600 r4 source rows using the padded character-trigram Dice method (threshold 0.42); its maximum same-subject score was 0.3778. It remains draft-only and requires independent qualified subject/syllabus review.",
+  "confirmed_duplicate_targets": 116,
   "drafts_missing": 0,
   "drafts_missing_target_ids": [],
-  "last_updated": "2026-11-09"
+  "last_updated": "2026-11-10"
 }
