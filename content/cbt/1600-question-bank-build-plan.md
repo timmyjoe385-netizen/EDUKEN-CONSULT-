@@ -26,7 +26,7 @@ This section supersedes older operational counts below wherever they conflict. H
 - RLS is enabled on the four CBT tables, with zero table policies. The deployed Edge Function uses the secret-key client and has internal `currentUser` / `requireAdmin` checks; ordinary direct-client access is therefore denied by default. No RLS policy or auth changes were made.
 - Supabase security advisor: leaked-password protection is disabled (WARN); 16 tables have RLS enabled with no policies (INFO). Performance advisor: two unindexed foreign keys and four unused indexes (INFO); health advisor returned no findings. Auth settings were not changed because that requires separate approval.
 - Before alignment, isolated `eduken-api` was ACTIVE at version 44 and did not match PR #194. It has since been deployed to version **45** on the isolated test project only; the deployed `index.ts` exactly matches PR #194 source and includes the server-side subject-combination selection helpers. `verify_jwt=false` was preserved because the function performs internal authentication and admin checks. No production function was deployed.
-- Latest PR #194 head `f7623a20fef99cfa78de81a37dbf33afbb473a12` has no check runs attached. The immediately preceding code-bearing head `34b843769d05f87b86697178dcc1059a43537eca` passed Worker build, both build checks, wallet-SQL, preview deployment and public browser checks; production deploy was skipped.
+- Latest PR #194 head `d792c856d6c887da181a1e9eb4bfc371f731d5ed` has no check runs attached. The immediately preceding code-bearing head `34b843769d05f87b86697178dcc1059a43537eca` passed Worker build, both build checks, wallet-SQL, preview deployment and public browser checks; production deploy was skipped.
 
 ## Assistant preliminary subject-content screen — 10 November 2026
 
@@ -58,7 +58,7 @@ The detailed candidate queue is `content/cbt/audits/2026-11-10-assistant-subject
 | 2. Science | IN PROGRESS — r4 structure verified; Math 200 original rows screened; retained Biology (169), Chemistry (179) and Physics (185) preliminarily screened | Review held Biology (31), Chemistry (21), Physics (15), metadata corrections and qualified sign-off |
 | 3. Arts and Social Sciences | IN PROGRESS — r4 structure verified; retained Economics, Government and Literature rows preliminarily screened | Review held Economics (27), Government (25) and Literature (20), reconcile repeated-concept candidates and obtain qualified sign-off |
 | 4. Integrity and reconciliation | IN PROGRESS | Maintain r4 as current staging, reconcile DUP-245 into the canonical pair history, and continue target/provenance reconciliation |
-| 5. CBT platform | IN PROGRESS — PR #194 checks passed; isolated Edge Function v45 matches PR #194 source; test bank has 73 questions, 8 published | Authenticated admin acceptance, post-deploy API invocation, full 180-question lifecycle after bank clearance, mobile/network and security checks |
+| 5. CBT platform | IN PROGRESS — code-bearing PR #194 head passed; current draft head has no checks attached; isolated Edge Function v45 matches PR #194 source; preview smoke now checks safe HTTP 409 | Authenticated admin acceptance, post-deploy API invocation, full 180-question lifecycle after bank clearance, mobile/network and security checks |
 
 ## Assistant preliminary Use of English content-screen — 10 November 2026
 
