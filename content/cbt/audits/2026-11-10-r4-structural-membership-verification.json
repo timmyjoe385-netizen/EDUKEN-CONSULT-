@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-10",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "revision": "2026-11-10-r4",
+  "purpose": "Independent read-only structural and row-membership verification of the r4 retained and held CSV exports after one Use of English duplicate was moved to the held set.",
+  "sources": [
+    "content/cbt/staging/2026-11-10-r4/retained-batches-01-10.csv",
+    "content/cbt/staging/2026-11-10-r4/held-duplicates-01-10.csv",
+    "content/cbt/staging/2026-11-10-r4/retained-batches-11-20.csv",
+    "content/cbt/staging/2026-11-10-r4/held-duplicates-11-20.csv",
+    "content/cbt/staging/2026-11-10-r4/retained-batches-21-30.csv",
+    "content/cbt/staging/2026-11-10-r4/held-duplicates-21-30.csv",
+    "content/cbt/staging/2026-11-10-r4/retained-batches-31-40.csv",
+    "content/cbt/staging/2026-11-10-r4/held-duplicates-31-40.csv"
+  ],
+  "result": {
+    "source_rows": 1600,
+    "retained_rows": 1439,
+    "held_rows": 161,
+    "retained_unique_source_locations": 1439,
+    "held_unique_source_locations": 161,
+    "retained_held_overlap": 0,
+    "duplicate_held_source_locations": 0,
+    "held_rows_with_missing_retained_anchor": 0,
+    "subject_totals": {
+      "Use of English": {
+        "retained": 185,
+        "held": 15,
+        "total": 200
+      },
+      "Mathematics": {
+        "retained": 193,
+        "held": 7,
+        "total": 200
+      },
+      "Biology": {
+        "retained": 169,
+        "held": 31,
+        "total": 200
+      },
+      "Chemistry": {
+        "retained": 179,
+        "held": 21,
+        "total": 200
+      },
+      "Physics": {
+        "retained": 185,
+        "held": 15,
+        "total": 200
+      },
+      "Economics": {
+        "retained": 173,
+        "held": 27,
+        "total": 200
+      },
+      "Government": {
+        "retained": 175,
+        "held": 25,
+        "total": 200
+      },
+      "Literature in English": {
+        "retained": 180,
+        "held": 20,
+        "total": 200
+      }
+    },
+    "structural_checks": {
+      "retained_exactly_four_options": 1439,
+      "retained_distinct_options": 1439,
+      "retained_valid_keys": 1439,
+      "retained_explanations": 1439,
+      "held_exactly_four_options": 161,
+      "held_distinct_options": 161,
+      "held_valid_keys": 161,
+      "held_explanations": 161
+    },
+    "held_pair_id_reuse": {
+      "repeated_ids": [
+        "DUP-47",
+        "DUP-19"
+      ],
+      "interpretation": "Pair IDs may legitimately identify multiple members of a duplicate cluster; source-row locations remain unique."
+    }
+  },
+  "status": "TECHNICALLY_VERIFIED_STRUCTURAL_AND_MEMBERSHIP_ONLY",
+  "limitations": [
+    "This audit does not establish semantic uniqueness across all question wording.",
+    "This audit does not validate factual correctness of answers or explanations.",
+    "This audit is not qualified academic approval or publication authorization.",
+    "All retained questions remain drafts; no production import or publication was performed."
+  ],
+  "safety": {
+    "source_question_content_changed": 0,
+    "staging_question_content_changed": 1,
+    "database_changes": 0,
+    "production_changes": 0,
+    "academic_approvals_created": 0,
+    "production_release_authorized": false
+  }
+}
