@@ -47,6 +47,7 @@ The detailed candidate queue is `content/cbt/audits/2026-11-10-assistant-subject
 - Deployed the PR #194 `eduken-api` source to the isolated test Supabase project only; the function is ACTIVE at version **45** and its deployed `index.ts` exactly matches the PR #194 branch source.
 - Included all 15 function source files and preserved the existing `verify_jwt=false` setting because the function enforces its own `currentUser` and `requireAdmin` checks.
 - No database rows, schema, auth settings, payment settings or production resources were changed. The isolated project still has 73 CBT question rows (65 draft, 8 published).
+- The preview browser smoke test now expects HTTP 409 and verifies that no question screen or partial attempt is created when only one published English question is available and ten are requested. This preserves/strengthens the safety test; it no longer creates a test attempt merely to satisfy the smoke test.
 - PR #194 CI/browser checks passed on code-bearing head `34b843769d05f87b86697178dcc1059a43537eca`; the latest data/audit head has no check runs attached. No direct API invocation was performed after test-function deployment; the deployed source was verified by read-back.
 
 ## Workstream register
