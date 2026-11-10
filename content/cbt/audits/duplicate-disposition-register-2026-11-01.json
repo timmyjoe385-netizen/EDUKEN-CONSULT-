@@ -6985,10 +6985,30 @@
       "independent_qualified_approvals": 0,
       "production_imports": 0,
       "production_publications": 0,
-      "held_location_coverage": 115,
+      "held_location_coverage": 113,
       "held_locations_without_target_specific_draft": 45,
       "uncovered_D_targets": 43,
-      "S_targets_pending_qualified_review": 2
+      "S_targets_pending_qualified_review": 2,
+      "row_level_reconciliation_2026_11_10": {
+        "source_revision": "content/cbt/staging/2026-11-09-r3/",
+        "held_csv_rows": 160,
+        "unique_held_target_ids": 158,
+        "draft_records": 115,
+        "unique_draft_target_ids": 115,
+        "draft_target_ids_matching_held_ids": 113,
+        "held_target_ids_without_matching_draft": 45,
+        "draft_ids_not_present_in_held_target_ids": [
+          "DUP-47-ADD-2026-11-09",
+          "DUP-19-ADD-2026-11-09"
+        ],
+        "duplicate_draft_target_ids": 0,
+        "method": "Exact target_id/pair_id set comparison across the 115-item replacement draft JSON and all four r3 held CSVs; two repeated pair_id occurrences among 160 held rows are counted once at target-ID level.",
+        "interpretation": "115 is the draft-record total, not the number of unique held targets covered. 113 held target IDs have a matching draft; 45 held target IDs do not. The two addendum draft IDs are additional drafts but are not target IDs in the r3 held exports.",
+        "qualified_approvals": 0,
+        "imports": 0,
+        "publications": 0
+      },
+      "reconciliation_status": "ROW_LEVEL_COUNTS_RECONCILED_2026_11_10"
     }
   },
   "legacy_counter_policy": "Historical candidate_review and explicit_rank_crosswalk counters are retained for audit traceability. They contain known conflicting/stale values (including 472 vs 237 and 685 vs 717); use authoritative_checkpoint_2026_11_09 for current reporting. Do not sum, subtract, or infer candidate ranks from these legacy counters."
