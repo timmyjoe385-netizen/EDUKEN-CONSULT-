@@ -1,3 +1,43 @@
+# Authoritative execution checkpoint — 10 November 2026
+
+This section supersedes older operational counts below wherever they conflict. Historical audit notes remain for traceability. This is a documentation/register update only; it does not approve academic content or authorize release.
+
+## Current reconciled position
+
+- Repository: existing EDUKEN-CONSULT project; continuation only. No rebuild.
+- Active question-bank reconciliation branch: `feat/cbt-subject-combination-reconciled`; PR #194 remains open, draft and unmerged.
+- Latest r3 staging inventory: **1,600 source rows = 1,440 provisionally retained + 160 held**. Each of the eight supported subjects has exactly 200 source rows.
+- Independent read-only validation of all eight r3 CSV exports is recorded in `content/cbt/audits/2026-11-10-r3-structural-membership-verification.json`: 1,440 unique retained locations, 160 unique held locations, zero retained/held overlap, zero duplicate held locations, zero missing retained anchors, and no structural defects in options, answer-key format, explanations, provenance fields or draft status.
+- Replacement inventory: **115 proposals**, 115 unique target IDs. Independent structural reconciliation is recorded in `content/cbt/audits/2026-11-10-replacement-draft-structure-reconciliation.json`. All have four distinct options, valid A–D keys, explanations and review-required status.
+- Current bank-wide lexical screen: **12 flags + 103 below-threshold proposals = 115 screened**. The 12 flags remain review prompts, not automatic duplicate findings. Target-level replacement coverage remains **103 of 160 held rows**; 55 D targets still need drafts and two S rows await qualified review.
+- Qualified independent academic approvals: **0**. No retained question or replacement proposal is academically approved by structural or lexical checks.
+- All questions and replacement proposals remain unpublished. Production question-bank imports: 0. Production publications: 0.
+- The PR #194 checkpoint was corrected to reconcile its replacement count with the underlying 115-item inventory and version-67 screen. Do not reuse the former 103-total / 91-below-threshold figures.
+- PR #194 code-bearing baseline commit `eed32eb98a5e50fcb745ee48b7f77a1afb7da817` has successful build, wallet-SQL, preview deploy and public browser checks; production deploy was skipped. Subsequent commits add audit documentation only and trigger their own checks.
+- PR #199 remains open/draft/unmerged. Its recorded build, wallet-SQL, preview and public-browser checks passed on `aea774e0e90955e4425bca7a4edfe072a5a3ccf5`; real authenticated admin acceptance remains outstanding.
+- The isolated test bank remains 73 rows (65 draft, 8 published) and cannot support the 180-question mock. Production remains isolated and was not queried or changed during this cycle.
+
+## Workstream register
+
+| Workstream | Current status | Next required action |
+|---|---|---|
+| 1. Use of English | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified subject review of retained and replacement items |
+| 2. Science | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified Mathematics, Biology, Chemistry and Physics review |
+| 3. Arts and Social Sciences | TECHNICALLY VERIFIED for r3 structure; AWAITING ACADEMIC REVIEW | Qualified Economics, Government and Literature review |
+| 4. Integrity and reconciliation | IN PROGRESS | Continue Git-history/provenance and semantic-disposition reconciliation; preserve one master register |
+| 5. CBT platform | IN PROGRESS | Complete authenticated admin acceptance, full 180-question lifecycle, mobile/network and security checks |
+
+## Release blockers
+
+1. Qualified independent review of answer keys, explanations, syllabus scope and duplicate-versus-related-skill decisions.
+2. Resolve all held-row decisions and prepare only replacements for targets confirmed to require replacement.
+3. Complete authenticated isolated admin walkthrough; mocked Playwright coverage is not live acceptance.
+4. Populate a sufficiently large approved isolated bank and pass the complete 180-question, 120-minute mock lifecycle.
+5. Complete remaining security, mobile and slower-network acceptance.
+6. Obtain separate explicit production-release approval before any merge, production import, publication or deployment.
+
+---
+
 # EDUKEN CBT 1,600-Question Bank Build Plan
 
 ## Authoritative operational update — 6 November 2026
