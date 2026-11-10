@@ -1,0 +1,438 @@
+{
+  "date": "2026-11-10",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "staging_revision": "2026-11-10-r4",
+  "title": "Assistant preliminary subject-content screen and candidate-repeat queue",
+  "scope": "Preliminary answer-key, explanation, wording and repeated-concept screen. This is not independent qualified academic review and does not approve any item for publication.",
+  "subjects": {
+    "Use of English": {
+      "retained_screened_in_r3": 186,
+      "held_in_r4": 15,
+      "retained_in_r4": 185,
+      "answer_or_explanation_errors_identified": 0,
+      "findings": [
+        {
+          "type": "semantic_duplicate_resolved_in_staging",
+          "pair_id": "DUP-245",
+          "locations": [
+            "batch 7 row 3",
+            "batch 39 row 3"
+          ],
+          "concept": "obsolete means outdated",
+          "status": "later endpoint moved to r4 held set; replacement draft added and screened; independent subject review pending"
+        },
+        {
+          "type": "metadata_taxonomy",
+          "location": "batch 7 row 3",
+          "finding": "synonym/meaning item labelled Antonyms",
+          "status": "correction queued for consolidated staging revision"
+        },
+        {
+          "type": "metadata_taxonomy",
+          "location": "batch 18 row 3",
+          "finding": "synonym/meaning item labelled Antonyms",
+          "status": "correction queued for consolidated staging revision"
+        },
+        {
+          "type": "metadata_taxonomy",
+          "location": "batch 27 row 4",
+          "finding": "'comply with' is classified as an idiom/fixed expression; review classification as verb–preposition collocation",
+          "status": "review queued"
+        },
+        {
+          "type": "formatting",
+          "location": "batch 31 row 3",
+          "finding": "literal backslashes appear where quotation marks should delimit the example and target word",
+          "status": "correction queued"
+        }
+      ]
+    },
+    "Mathematics": {
+      "retained_screened": 193,
+      "held_screened": 7,
+      "total_original_rows_screened": 200,
+      "answer_or_calculation_errors_identified": 0,
+      "findings": [
+        {
+          "type": "metadata_taxonomy",
+          "location": "batch 7 row 11",
+          "finding": "probability item placed under Statistics topic",
+          "status": "topic correction queued"
+        },
+        {
+          "type": "metadata_taxonomy",
+          "location": "batch 26 row 10",
+          "finding": "single-event probability item sublabelled Independent events",
+          "status": "subtopic correction queued"
+        },
+        {
+          "type": "formatting",
+          "location": "batch 31 row 7",
+          "finding": "trailing whitespace in one option and explanation",
+          "status": "formatting cleanup queued"
+        }
+      ]
+    },
+    "Biology": {
+      "retained_screened": 169,
+      "held_not_screened": 31,
+      "answer_or_explanation_errors_identified": 0,
+      "potential_repeat_clusters": [
+        {
+          "locations": [
+            "batch 5 row 13",
+            "batch 14 row 12"
+          ],
+          "concept": "xylem transports water and mineral salts"
+        },
+        {
+          "locations": [
+            "batch 10 row 14",
+            "batch 13 row 13"
+          ],
+          "concept": "chlorophyll absorbs light for photosynthesis"
+        },
+        {
+          "locations": [
+            "batch 5 row 15",
+            "batch 15 row 15",
+            "batch 20 row 16",
+            "batch 33 row 16"
+          ],
+          "concept": "vaccination and specific immune protection",
+          "existing_register_ids": [
+            "DUP-38",
+            "DUP-173"
+          ]
+        },
+        {
+          "locations": [
+            "batch 8 row 14",
+            "batch 25 row 15"
+          ],
+          "concept": "B lymphocytes differentiate into plasma cells that produce antibodies"
+        },
+        {
+          "locations": [
+            "batch 18 row 16",
+            "batch 28 row 14"
+          ],
+          "concept": "glomerulus filters blood under pressure"
+        },
+        {
+          "locations": [
+            "batch 16 row 16",
+            "batch 31 row 15"
+          ],
+          "concept": "mutualism benefits both organisms"
+        },
+        {
+          "locations": [
+            "batch 7 row 14",
+            "batch 33 row 13"
+          ],
+          "concept": "mitosis produces two genetically similar daughter cells"
+        },
+        {
+          "locations": [
+            "batch 28 row 15",
+            "batch 36 row 13"
+          ],
+          "concept": "heterozygous means two different alleles"
+        },
+        {
+          "locations": [
+            "batch 18 row 13",
+            "batch 32 row 13"
+          ],
+          "concept": "photolysis splits water and releases oxygen"
+        },
+        {
+          "locations": [
+            "batch 9 row 14",
+            "batch 14 row 15"
+          ],
+          "concept": "nitrogen fixation converts atmospheric nitrogen to usable compounds"
+        },
+        {
+          "locations": [
+            "batch 17 row 12",
+            "batch 33 row 15"
+          ],
+          "concept": "primary consumer feeds directly on producers",
+          "cross_window_rank": 1123,
+          "cross_window_score": 0.448
+        },
+        {
+          "locations": [
+            "batch 25 row 13",
+            "batch 40 row 15"
+          ],
+          "concept": "ADH increases water reabsorption in kidney collecting ducts",
+          "existing_register_ids": [
+            "DUP-160"
+          ],
+          "cross_window_rank": 933,
+          "cross_window_score": 0.471
+        }
+      ]
+    },
+    "Economics": {
+      "retained_screened": 173,
+      "held_not_screened": 27,
+      "answer_or_explanation_errors_identified": 0,
+      "potential_repeat_candidates": [
+        {
+          "locations": [
+            "batch 15 row 30",
+            "batch 25 row 31"
+          ],
+          "concept": "definition of public debt"
+        },
+        {
+          "locations": [
+            "batch 2 row 29",
+            "batch 13 row 27"
+          ],
+          "concept": "definition of inflation"
+        },
+        {
+          "locations": [
+            "batch 6 row 30",
+            "batch 14 row 29"
+          ],
+          "concept": "definition of exchange rate",
+          "cross_window_rank": 288,
+          "cross_window_score": 0.647
+        },
+        {
+          "locations": [
+            "batch 19 row 30",
+            "batch 23 row 29"
+          ],
+          "concept": "Human Development Index dimensions"
+        },
+        {
+          "locations": [
+            "batch 10 row 29",
+            "batch 32 row 30"
+          ],
+          "concept": "personal income tax as an example of a direct tax",
+          "cross_window_rank": 36,
+          "cross_window_score": 0.87
+        },
+        {
+          "locations": [
+            "batch 15 row 31",
+            "batch 36 row 29"
+          ],
+          "concept": "definition of deflation"
+        },
+        {
+          "locations": [
+            "batch 1 row 31",
+            "batch 34 row 28"
+          ],
+          "concept": "definition of ad valorem tax"
+        },
+        {
+          "locations": [
+            "batch 9 row 28",
+            "batch 21 row 28"
+          ],
+          "concept": "definition of fiscal policy"
+        },
+        {
+          "locations": [
+            "batch 3 row 29",
+            "batch 14 row 30"
+          ],
+          "concept": "definition/example of public expenditure",
+          "existing_register_ids": [
+            "DUP-170"
+          ],
+          "cross_window_rank": 1182,
+          "cross_window_score": 0.442
+        },
+        {
+          "locations": [
+            "batch 23 row 30",
+            "batch 34 row 30"
+          ],
+          "concept": "definition of a price taker"
+        }
+      ],
+      "wording_ambiguity": [
+        {
+          "location": "batch 2 row 27",
+          "finding": "Perfect-competition question says 'very similar products'; homogeneous products would be more precise and reduce ambiguity with monopolistic competition."
+        }
+      ]
+    },
+    "Government": {
+      "retained_screened": 175,
+      "held_not_screened": 25,
+      "answer_or_explanation_errors_identified": 0,
+      "potential_repeat_candidates": [
+        {
+          "locations": [
+            "batch 4 row 34",
+            "batch 15 row 32"
+          ],
+          "concept": "definition of universal adult suffrage"
+        },
+        {
+          "locations": [
+            "batch 8 row 34",
+            "batch 15 row 35",
+            "batch 21 row 32"
+          ],
+          "concept": "central constitutional authority in a unitary state"
+        },
+        {
+          "locations": [
+            "batch 11 row 36",
+            "batch 14 row 32"
+          ],
+          "concept": "definition of a public corporation"
+        },
+        {
+          "locations": [
+            "batch 5 row 36",
+            "batch 19 row 35"
+          ],
+          "concept": "definition of a treaty"
+        },
+        {
+          "locations": [
+            "batch 5 row 35",
+            "batch 19 row 36",
+            "batch 23 row 32"
+          ],
+          "concept": "definition and source of political legitimacy"
+        },
+        {
+          "locations": [
+            "batch 8 row 32",
+            "batch 25 row 35"
+          ],
+          "concept": "purpose of separation of powers"
+        },
+        {
+          "locations": [
+            "batch 7 row 36",
+            "batch 26 row 36"
+          ],
+          "concept": "African Union purpose"
+        },
+        {
+          "locations": [
+            "batch 18 row 33",
+            "batch 27 row 33"
+          ],
+          "concept": "definition of sovereignty"
+        }
+      ]
+    },
+    "Literature in English": {
+      "retained_screened": 180,
+      "held_not_screened": 20,
+      "answer_or_explanation_errors_identified": 0,
+      "potential_repeat_candidates": [
+        {
+          "locations": [
+            "batch 4 row 41",
+            "batch 16 row 40",
+            "batch 26 row 38"
+          ],
+          "concept": "definition and function of foreshadowing"
+        },
+        {
+          "locations": [
+            "batch 5 row 39",
+            "batch 13 row 41"
+          ],
+          "concept": "first-person narration pronouns"
+        },
+        {
+          "locations": [
+            "batch 8 row 41",
+            "batch 24 row 39"
+          ],
+          "concept": "definition of an epistolary novel"
+        },
+        {
+          "locations": [
+            "batch 4 row 38",
+            "batch 25 row 39"
+          ],
+          "concept": "definition of dialogue"
+        },
+        {
+          "locations": [
+            "batch 3 row 37",
+            "batch 18 row 41"
+          ],
+          "concept": "definition of alliteration"
+        },
+        {
+          "locations": [
+            "batch 4 row 40",
+            "batch 19 row 37"
+          ],
+          "concept": "definition of oxymoron"
+        },
+        {
+          "locations": [
+            "batch 2 row 38",
+            "batch 38 row 40"
+          ],
+          "concept": "definition of simile"
+        },
+        {
+          "locations": [
+            "batch 1 row 37",
+            "batch 40 row 38"
+          ],
+          "concept": "definition of metaphor"
+        },
+        {
+          "locations": [
+            "batch 3 row 39",
+            "batch 39 row 41"
+          ],
+          "concept": "definition of setting"
+        },
+        {
+          "locations": [
+            "batch 2 row 37",
+            "batch 40 row 41"
+          ],
+          "concept": "purpose of stage directions"
+        }
+      ]
+    }
+  },
+  "cross_window_candidate_reference": {
+    "source": "content/cbt/audits/global-duplicate-review-cross-window-candidates-2026-11-01.json",
+    "total_candidates": 1304,
+    "ranks_are_array_positions_in_the_current_sorted_candidate_export": true,
+    "note": "Cross-window ranks and lexical scores are screening evidence only. Absence from the top-1304 list does not prove uniqueness; within-window and semantic review remains necessary."
+  },
+  "safety": {
+    "source_csvs_modified": 0,
+    "r4_staging_question_content_changes": 0,
+    "production_changes": 0,
+    "database_changes": 0,
+    "academic_approvals_created": 0,
+    "questions_published": 0,
+    "all_candidate_repeat_items_remain_unapproved": true
+  },
+  "next_actions": [
+    "Review all held rows in Biology, Economics, Government and Literature in English.",
+    "Reconcile every listed candidate against the full 1,304 cross-window list, within-window candidates, existing register and cluster addenda.",
+    "Only after exact pair and cluster mapping, create a new non-destructive staging revision for confirmed duplicates.",
+    "Prepare target-specific replacement drafts and screen each against all 200 same-subject source rows.",
+    "Obtain qualified subject review before any question is marked academically approved."
+  ]
+}
