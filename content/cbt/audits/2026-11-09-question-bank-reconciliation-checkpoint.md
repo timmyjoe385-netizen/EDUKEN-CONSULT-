@@ -86,3 +86,31 @@ The 38-candidate count difference is explained by comparing two similarity thres
 ## Release status
 
 Not academically approved; not ready for production import or publication. Production question bank remains empty per the last verified operational report. No production changes were made.
+
+
+## 6. Execution-cycle verification — 10 November 2026
+
+This section records a fresh read-only verification against the current repository and isolated/production Supabase projects. It does not change source questions, staging exports, database rows, application code, or release state.
+
+### 6.1 Question-bank source of truth
+- The 9 November r2 staging remains the current documented snapshot: **1,437 provisionally retained + 163 held = 1,600**, with 200 source rows per subject. These are not approved/published counts.
+- The 105-row independent academic-review queue remains unsigned: reviewer names, dates and approval decisions are blank. The 109-pair qualified-review packet remains assistant/user screening only; subject-expert review is still required.
+- Cross-window rank reconciliation remains incomplete: tail ranks 287–1,304 have explicit dispositions; the 286 baseline review set lacks a complete exact rank-ID crosswalk, and the four-count historical counter discrepancy remains unresolved. Do not derive missing ranks arithmetically or from score order.
+- The within-window 38-candidate total difference is explained by threshold provenance (390 at 0.42 versus 352 at 0.43). The one-pair 41/349 versus 40/350 category-boundary discrepancy remains open.
+
+### 6.2 Platform and release evidence
+- Open CBT-related PRs at this check: #194, #195, #197, #199, #192, #191 and #187. PRs #194/#195/#197/#199 remain drafts; no merge was performed.
+- PR #194 head `aca9d489b16c00e1cfd3d64f1e06e2d4820071f2`: build, wallet SQL integration, Playwright browser checks and Cloudflare build/preview workflow groups report success.
+- PR #199 head `aea774e0e90955e4425bca7a4edfe072a5a3ccf5`: build, wallet SQL integration, public browser checks and preview deployment report success; production deploy is skipped. The Playwright admin tests mock authentication/API and do not replace the real authenticated-admin acceptance checklist.
+- Production `cbt_questions` was queried again and remains **0 rows**. The isolated test bank remains **73 rows: 65 drafts + 8 published**.
+- The current API code confirms the 180-question mock blueprint requests 60 Use of English + 40 from each of three selected subjects, with a 120-minute duration. A full mock remains unavailable until each selected subject has sufficient approved/published questions.
+
+### 6.3 Database authorization interpretation
+- All four CBT tables have RLS enabled. A fresh privilege query confirms `anon` and `authenticated` have no SELECT privilege, while `service_role` has SELECT privilege. The CBT migrations also revoke browser-role table access and grant table access to `service_role`; the API uses server-side authentication and an explicit admin-email authorization check for admin routes.
+- Therefore, the Supabase advisor's `rls_enabled_no_policy` INFO finding on these CBT tables is consistent with the intended server-only access model; it is **not by itself evidence of an exposed table**. Preserve this model and do not add permissive browser policies.
+- The separate `auth_leaked_password_protection` WARN remains open for an authorized configuration review. No authentication setting was changed.
+
+### 6.4 Actions taken and not taken
+- Completed: repository/PR/CI verification; production and isolated bank count verification; CBT table privilege verification; reconciliation of the RLS advisor finding against migration grants and API authorization code.
+- Not changed: source questions, retained/held exports, reviewer worksheets, database rows, RLS policies/grants, authentication configuration, application code, PR state or production.
+- Academic approval remains **0 evidenced** in the independent review worksheets. Technical verification must not be counted as academic approval.
