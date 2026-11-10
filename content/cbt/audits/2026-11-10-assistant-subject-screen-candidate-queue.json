@@ -411,6 +411,47 @@
           "concept": "purpose of stage directions"
         }
       ]
+    },
+    "Chemistry": {
+      "retained_screened": 179,
+      "held_not_screened": 21,
+      "answer_or_explanation_errors_identified": 0,
+      "potential_repeat_candidates": [
+        {
+          "locations": [
+            "batch 29 row 18",
+            "batch 38 row 18"
+          ],
+          "concept": "molar volume of one mole of ideal gas at 0°C and 1 atm"
+        },
+        {
+          "locations": [
+            "batch 6 row 21",
+            "batch 20 row 20"
+          ],
+          "concept": "esterification produces an ester and water"
+        }
+      ]
+    },
+    "Physics": {
+      "retained_screened": 185,
+      "held_not_screened": 15,
+      "answer_or_explanation_errors_identified": 0,
+      "findings": [
+        {
+          "type": "metadata_taxonomy",
+          "location": "batch 38 row 24",
+          "finding": "normal to a plane mirror is classified under Waves; review classification as Optics/Reflection",
+          "status": "correction queued"
+        },
+        {
+          "type": "formatting",
+          "location": "batch 26 row 23",
+          "finding": "trailing whitespace at end of explanation",
+          "status": "formatting cleanup queued"
+        }
+      ],
+      "note": "Repeated numerical exercises on standard formulas were observed; no additional high-confidence same-fact duplicate pair was added in this preliminary pass."
     }
   },
   "cross_window_candidate_reference": {
@@ -429,6 +470,7 @@
     "all_candidate_repeat_items_remain_unapproved": true
   },
   "next_actions": [
+    "Complete held-row academic screening for Chemistry (21), Physics (15), Biology (31), Economics (27), Government (25), Literature in English (20) and Use of English (15).",
     "Review all held rows in Biology, Economics, Government and Literature in English.",
     "Reconcile every listed candidate against the full 1,304 cross-window list, within-window candidates, existing register and cluster addenda.",
     "Only after exact pair and cluster mapping, create a new non-destructive staging revision for confirmed duplicates.",
