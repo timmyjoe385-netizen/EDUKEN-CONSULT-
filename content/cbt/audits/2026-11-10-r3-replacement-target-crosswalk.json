@@ -1,0 +1,1353 @@
+{
+  "audit_date": "2026-11-10",
+  "branch": "work/cbt-owner-approved-replacement-execution-20261110",
+  "source_revision": "content/cbt/staging/2026-11-09-r3",
+  "purpose": "Non-destructive exact crosswalk of existing replacement drafts to the current r3 held rows. This file is a reconciliation artifact, not a content approval or import file.",
+  "source_counts": {
+    "r3_held_rows": 160,
+    "existing_replacement_drafts": 115,
+    "unique_existing_draft_target_ids": 115,
+    "exactly_mapped_draft_targets": 113,
+    "unmapped_draft_targets": 2,
+    "held_rows_covered": 113,
+    "held_rows_without_mapped_draft": 45
+  },
+  "subject_counts": {
+    "Mathematics": {
+      "held": 7,
+      "mapped": 7,
+      "unmapped": 0
+    },
+    "Government": {
+      "held": 25,
+      "mapped": 14,
+      "unmapped": 11
+    },
+    "Physics": {
+      "held": 15,
+      "mapped": 12,
+      "unmapped": 3
+    },
+    "Use of English": {
+      "held": 14,
+      "mapped": 13,
+      "unmapped": 1
+    },
+    "Biology": {
+      "held": 31,
+      "mapped": 18,
+      "unmapped": 13
+    },
+    "Economics": {
+      "held": 27,
+      "mapped": 20,
+      "unmapped": 7
+    },
+    "Chemistry": {
+      "held": 21,
+      "mapped": 17,
+      "unmapped": 4
+    },
+    "Literature in English": {
+      "held": 20,
+      "mapped": 14,
+      "unmapped": 6
+    }
+  },
+  "mapping_rules": [
+    "Match draft target_id to r3 held pair_id where exact.",
+    "Otherwise map the target through the disposition register's replace endpoint or the 2026-11-09 addendum held_location and require an exact held_location match.",
+    "Never infer a mapping from similar wording, subject or topic alone."
+  ],
+  "mappings": [
+    {
+      "target_id": "DUP-01",
+      "held_pair_id": "DUP-01",
+      "held_location": "batch 36 row 10",
+      "match_method": "pair_id",
+      "draft_question": "Which statement about the diagonals of a rectangle is correct?",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-02",
+      "held_pair_id": "DUP-02",
+      "held_location": "batch 28 row 19",
+      "match_method": "pair_id",
+      "draft_question": "In a simple galvanic cell, the main function of the salt bridge is to:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-03",
+      "held_pair_id": "DUP-03",
+      "held_location": "batch 36 row 24",
+      "match_method": "pair_id",
+      "draft_question": "An electric current that repeatedly changes direction at regular intervals is called:",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-04",
+      "held_pair_id": "DUP-04",
+      "held_location": "batch 34 row 12",
+      "match_method": "pair_id",
+      "draft_question": "In a complete-dominance relationship, an allele whose effect is expressed in the phenotype of a heterozygous organism is described as:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-05",
+      "held_pair_id": "DUP-05",
+      "held_location": "batch 37 row 41",
+      "match_method": "pair_id",
+      "draft_question": "A line of verse made up of five iambic feet is said to be written in:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-06",
+      "held_pair_id": "DUP-06",
+      "held_location": "batch 35 row 14",
+      "match_method": "pair_id",
+      "draft_question": "The presence of hooks or barbs on the surface of some fruits helps in:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-07",
+      "held_pair_id": "DUP-07",
+      "held_location": "batch 34 row 26",
+      "match_method": "pair_id",
+      "draft_question": "Which method of heat transfer can occur through a vacuum?",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-08",
+      "held_pair_id": "DUP-08",
+      "held_location": "batch 20 row 18",
+      "match_method": "pair_id",
+      "draft_question": "The principal constituent of most natural gas is:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-09",
+      "held_pair_id": "DUP-09",
+      "held_location": "batch 34 row 19",
+      "match_method": "pair_id",
+      "draft_question": "A small amount of dilute sulphuric acid is added to water before electrolysis mainly to: ",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-10",
+      "held_pair_id": "DUP-10",
+      "held_location": "batch 40 row 28",
+      "match_method": "pair_id",
+      "draft_question": "A continuous fall in the general price level of goods and services in an economy is known as:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-11",
+      "held_pair_id": "DUP-11",
+      "held_location": "batch 10 row 25",
+      "match_method": "pair_id",
+      "draft_question": "A ray of light directed through the optical centre of a thin lens emerges:",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-12",
+      "held_pair_id": "DUP-12",
+      "held_location": "batch 39 row 30",
+      "match_method": "pair_id",
+      "draft_question": "According to the theory of optimum population, a country has an optimum population when:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-13",
+      "held_pair_id": "DUP-13",
+      "held_location": "batch 38 row 20",
+      "match_method": "pair_id",
+      "draft_question": "The reaction between methane and chlorine in ultraviolet light is classified as: ",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-14",
+      "held_pair_id": "DUP-14",
+      "held_location": "batch 10 row 12",
+      "match_method": "pair_id",
+      "draft_question": "A cell that lacks a membrane-bound nucleus is classified as:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-15",
+      "held_pair_id": "DUP-15",
+      "held_location": "batch 33 row 29",
+      "match_method": "pair_id",
+      "draft_question": "Government payment of monthly salaries to public school teachers is generally classified as:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-16",
+      "held_pair_id": "DUP-16",
+      "held_location": "batch 35 row 19",
+      "match_method": "pair_id",
+      "draft_question": "Which apparatus is most suitable for separating two immiscible liquids such as kerosene and water?",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-17",
+      "held_pair_id": "DUP-17",
+      "held_location": "batch 34 row 14",
+      "match_method": "pair_id",
+      "draft_question": "During positive phototropism in a young shoot, which plant hormone accumulates more on the shaded side and promotes greater cell elongation there?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-18",
+      "held_pair_id": "DUP-18",
+      "held_location": "batch 32 row 24",
+      "match_method": "pair_id",
+      "draft_question": "A ray of light strikes a plane mirror at an angle of incidence of 35°. What is its angle of reflection? ",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-19",
+      "held_pair_id": "DUP-19",
+      "held_location": "batch 38 row 31",
+      "match_method": "pair_id",
+      "draft_question": "A customs union is a trade arrangement in which member countries: ",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-20",
+      "held_pair_id": "DUP-20",
+      "held_location": "batch 37 row 29",
+      "match_method": "pair_id",
+      "draft_question": "When a commercial bank grants a loan to a customer, it primarily creates:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-21",
+      "held_pair_id": "DUP-21",
+      "held_location": "batch 25 row 37",
+      "match_method": "pair_id",
+      "draft_question": "A narrative technique that interrupts the present action to show an event from an earlier time is called:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-22",
+      "held_pair_id": "DUP-22",
+      "held_location": "batch 38 row 13",
+      "match_method": "pair_id",
+      "draft_question": "Which component of blood transports many dissolved nutrients, hormones and waste products? ",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-23",
+      "held_pair_id": "DUP-23",
+      "held_location": "batch 28 row 30",
+      "match_method": "pair_id",
+      "draft_question": "A foreign company establishes and operates a manufacturing plant in Nigeria. This is an example of:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-24",
+      "held_pair_id": "DUP-24",
+      "held_location": "batch 27 row 14",
+      "match_method": "pair_id",
+      "draft_question": "The rigid cell wall of most bacteria is made mainly of:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-25",
+      "held_pair_id": "DUP-25",
+      "held_location": "batch 26 row 27",
+      "match_method": "pair_id",
+      "draft_question": "Knowingly concealing taxable income to avoid paying legally due tax is known as:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-26",
+      "held_pair_id": "DUP-26",
+      "held_location": "batch 29 row 23",
+      "match_method": "pair_id",
+      "draft_question": "A capacitor stores a charge of 24 μC when connected to a 6 V supply. What is its capacitance?",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-27",
+      "held_pair_id": "DUP-27",
+      "held_location": "batch 28 row 10",
+      "match_method": "pair_id",
+      "draft_question": "If z varies jointly as x and y, which equation represents the relationship?",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-28",
+      "held_pair_id": "DUP-28",
+      "held_location": "batch 33 row 35",
+      "match_method": "pair_id",
+      "draft_question": "In Nigeria, which government has exclusive legislative authority over matters on the Exclusive Legislative List?",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-29",
+      "held_pair_id": "DUP-29",
+      "held_location": "batch 36 row 4",
+      "match_method": "pair_id",
+      "draft_question": "The patient was deprived _____ sleep during the long journey. ",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-30",
+      "held_pair_id": "DUP-30",
+      "held_location": "batch 26 row 4",
+      "match_method": "pair_id",
+      "draft_question": "A person whose profession involves compiling dictionaries is called a:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-31",
+      "held_pair_id": "DUP-31",
+      "held_location": "batch 19 row 22",
+      "match_method": "pair_id",
+      "draft_question": "A 0.2 kg ball moving at 10 m/s is brought to rest in 0.5 s. What is the magnitude of the average force applied?",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-32",
+      "held_pair_id": "DUP-32",
+      "held_location": "batch 40 row 40",
+      "match_method": "pair_id",
+      "draft_question": "A comedy that satirises the manners, social conventions and behaviour of a particular social class is called a:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-33",
+      "held_pair_id": "DUP-33",
+      "held_location": "batch 31 row 2",
+      "match_method": "pair_id",
+      "draft_question": "In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-34",
+      "held_pair_id": "DUP-34",
+      "held_location": "batch 39 row 5",
+      "match_method": "pair_id",
+      "draft_question": "Choose the correct verb: “The cattle _____ grazing near the river.”",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-35",
+      "held_pair_id": "DUP-35",
+      "held_location": "batch 19 row 38",
+      "match_method": "pair_id",
+      "draft_question": "A short quotation placed at the beginning of a book or chapter to suggest its theme is called an:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-36",
+      "held_pair_id": "DUP-36",
+      "held_location": "batch 29 row 34",
+      "match_method": "pair_id",
+      "draft_question": "The document that formally sets out the rules and internal structure of a political party is its:",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-37",
+      "held_pair_id": "DUP-37",
+      "held_location": "batch 34 row 34",
+      "match_method": "pair_id",
+      "draft_question": "In a parliamentary system, a private member's bill is generally introduced by:",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-38",
+      "held_pair_id": "DUP-38",
+      "held_location": "batch 20 row 16",
+      "match_method": "pair_id",
+      "draft_question": "Which structure allows maternal IgG antibodies to pass from the mother to the fetus before birth, providing temporary passive immunity?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-39",
+      "held_pair_id": "DUP-39",
+      "held_location": "batch 32 row 21",
+      "match_method": "pair_id",
+      "draft_question": "During the electrolytic extraction of aluminium, cryolite is added to alumina mainly to:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-40",
+      "held_pair_id": "DUP-40",
+      "held_location": "batch 21 row 18",
+      "match_method": "pair_id",
+      "draft_question": "In the Contact process, which substance is commonly used as the catalyst for converting sulphur dioxide to sulphur trioxide?",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-41",
+      "held_pair_id": "DUP-41",
+      "held_location": "batch 40 row 13",
+      "match_method": "pair_id",
+      "draft_question": "Which hormone stimulates the production of milk in the mammary glands after childbirth?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-42",
+      "held_pair_id": "DUP-42",
+      "held_location": "batch 33 row 28",
+      "match_method": "pair_id",
+      "draft_question": "In the short run, the law of diminishing returns states that when additional units of a variable factor are combined with fixed factors, the marginal product of the variable factor will eventually:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-43",
+      "held_pair_id": "DUP-43",
+      "held_location": "batch 21 row 9",
+      "match_method": "pair_id",
+      "draft_question": "A function is one-to-one if:",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-44",
+      "held_pair_id": "DUP-44",
+      "held_location": "batch 35 row 25",
+      "match_method": "pair_id",
+      "draft_question": "The bending or spreading of waves as they pass through a narrow opening or around an obstacle is called:",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-45",
+      "held_pair_id": "DUP-45",
+      "held_location": "batch 39 row 31",
+      "match_method": "pair_id",
+      "draft_question": "Economic rent is the payment received by a factor of production in excess of its:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-46",
+      "held_pair_id": "DUP-46",
+      "held_location": "batch 36 row 18",
+      "match_method": "pair_id",
+      "draft_question": "Brass is an alloy made mainly from:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-47",
+      "held_pair_id": "DUP-47",
+      "held_location": "batch 26 row 34",
+      "match_method": "pair_id",
+      "draft_question": "The privilege of freedom of speech in legislative proceedings primarily allows a legislator to:",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-48",
+      "held_pair_id": "DUP-48",
+      "held_location": "batch 20 row 38",
+      "match_method": "pair_id",
+      "draft_question": "In literary analysis, the denotation of a word refers to its:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-49",
+      "held_pair_id": "DUP-49",
+      "held_location": "batch 12 row 29",
+      "match_method": "pair_id",
+      "draft_question": "After the effects of tax shifting have worked through a market, the tax incidence refers to:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-50",
+      "held_pair_id": "DUP-50",
+      "held_location": "batch 31 row 12",
+      "match_method": "pair_id",
+      "draft_question": "Which organelle modifies, sorts and packages proteins into vesicles for transport within or out of a cell?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-51",
+      "held_pair_id": "DUP-51",
+      "held_location": "batch 11 row 24",
+      "match_method": "pair_id",
+      "draft_question": "A system is said to be in resonance when the frequency of an applied periodic force is equal to its:",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-52",
+      "held_pair_id": "DUP-52",
+      "held_location": "batch 18 row 11",
+      "match_method": "pair_id",
+      "draft_question": "Evaluate the matrix product [[1, 2], [0, 3]] × [[2, 1], [4, 0]].",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-53",
+      "held_pair_id": "DUP-53",
+      "held_location": "batch 33 row 19",
+      "match_method": "pair_id",
+      "draft_question": "Which solid is formed when Cu²⁺(aq) reacts with OH⁻(aq)?",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-54",
+      "held_pair_id": "DUP-54",
+      "held_location": "batch 39 row 28",
+      "match_method": "pair_id",
+      "draft_question": "The cross elasticity of demand between two goods is +0.8. What does this value indicate about the relationship between the goods?",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-55",
+      "held_pair_id": "DUP-55",
+      "held_location": "batch 31 row 40",
+      "match_method": "pair_id",
+      "draft_question": "A poet deliberately uses harsh, discordant combinations of sounds to create an unpleasant or jarring effect. This sound device is called:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-56",
+      "held_pair_id": "DUP-56",
+      "held_location": "batch 31 row 37",
+      "match_method": "pair_id",
+      "draft_question": "A poet arranges words and sounds to produce a smooth, harmonious and pleasing auditory effect. This technique is known as:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-57",
+      "held_pair_id": "DUP-57",
+      "held_location": "batch 39 row 2",
+      "match_method": "pair_id",
+      "draft_question": "In the sentence “Ada chose the blue dress, while Tola the red one,” which cohesive device allows the verb phrase “chose” to be omitted from the second clause?",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-58",
+      "held_pair_id": "DUP-58",
+      "held_location": "batch 38 row 15",
+      "match_method": "pair_id",
+      "draft_question": "Which field method is most suitable for estimating the abundance of grasses in a study area?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-59",
+      "held_pair_id": "DUP-59",
+      "held_location": "batch 39 row 39",
+      "match_method": "pair_id",
+      "draft_question": "In the expression “swift-footed Achilles”, the words “swift-footed” function as a/an:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-60",
+      "held_pair_id": "DUP-60",
+      "held_location": "batch 16 row 15",
+      "match_method": "pair_id",
+      "draft_question": "The sensory hair cells that detect sound vibrations are located in the:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-61",
+      "held_pair_id": "DUP-61",
+      "held_location": "batch 28 row 16",
+      "match_method": "pair_id",
+      "draft_question": "A young plant shoot bends towards light because cells on its shaded side undergo greater:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-62",
+      "held_pair_id": "DUP-62",
+      "held_location": "batch 36 row 41",
+      "match_method": "pair_id",
+      "draft_question": "When a poet carries a sentence beyond the end of a line without a pause, the technique is called:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-63",
+      "held_pair_id": "DUP-63",
+      "held_location": "batch 1 row 9",
+      "match_method": "pair_id",
+      "draft_question": "A map has a scale of 1:50,000. What actual distance is represented by 4 cm on the map?",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-64",
+      "held_pair_id": "DUP-64",
+      "held_location": "batch 37 row 20",
+      "match_method": "pair_id",
+      "draft_question": "A radioactive isotope has a half-life of 6 hours. What fraction of the original sample remains after 18 hours?",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-65",
+      "held_pair_id": "DUP-65",
+      "held_location": "batch 34 row 15",
+      "match_method": "pair_id",
+      "draft_question": "The fine terminal branches of an insect's tracheal system that deliver oxygen directly to body cells are called:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-66",
+      "held_pair_id": "DUP-66",
+      "held_location": "batch 38 row 22",
+      "match_method": "pair_id",
+      "draft_question": "A transformer receives 240 V on its primary coil and supplies 12 V across its secondary coil. If the primary current is 0.5 A and the secondary current is 8 A, what is its efficiency?",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-67",
+      "held_pair_id": "DUP-67",
+      "held_location": "batch 36 row 19",
+      "match_method": "pair_id",
+      "draft_question": "In the formation of the ammonium ion, NH₄⁺, the bond formed when NH₃ combines with H⁺ is initially described as a:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-69",
+      "held_pair_id": "DUP-69",
+      "held_location": "batch 12 row 39",
+      "match_method": "pair_id",
+      "draft_question": "The classical dramatic principle that a play should centre on one principal plot is known as the unity of:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-71",
+      "held_pair_id": "DUP-71",
+      "held_location": "batch 40 row 25",
+      "match_method": "pair_id",
+      "draft_question": "Two point charges are separated by a distance r and exert an electrostatic force F on each other. If their separation is increased to 2r without changing the charges, what is the new force?",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-74",
+      "held_pair_id": "DUP-74",
+      "held_location": "batch 40 row 12",
+      "match_method": "pair_id",
+      "draft_question": "The high pressure that drives ultrafiltration in a mammalian kidney is produced mainly because the:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-75",
+      "held_pair_id": "DUP-75",
+      "held_location": "batch 31 row 31",
+      "match_method": "pair_id",
+      "draft_question": "Country A can produce either 10 units of rice or 5 units of cloth with the same resources. Country B can produce either 8 units of rice or 8 units of cloth. Which country has a comparative advantage in cloth?",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-77",
+      "held_pair_id": "DUP-77",
+      "held_location": "batch 34 row 35",
+      "match_method": "pair_id",
+      "draft_question": "Which principle of the rule of law requires that public officials and ordinary citizens are subject to the same law?",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-72",
+      "held_pair_id": "DUP-72",
+      "held_location": "batch 19 row 3",
+      "match_method": "pair_id",
+      "draft_question": "When someone says that a plan “fell through”, the expression means that the plan:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-73",
+      "held_pair_id": "DUP-73",
+      "held_location": "batch 33 row 16",
+      "match_method": "pair_id",
+      "draft_question": "Which part of the central nervous system coordinates a simple withdrawal reflex before conscious interpretation of pain?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-76",
+      "held_pair_id": "DUP-76",
+      "held_location": "batch 10 row 27",
+      "match_method": "pair_id",
+      "draft_question": "A factory releases untreated waste into a river, imposing costs on nearby residents that are not reflected in the market price of its product. This is an example of:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-78",
+      "held_pair_id": "DUP-78",
+      "held_location": "batch 28 row 4",
+      "match_method": "pair_id",
+      "draft_question": "Which punctuation mark should separate the two independent clauses in this sentence when no coordinating conjunction is used: “The rain stopped _____ the match resumed”?",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-80",
+      "held_pair_id": "DUP-80",
+      "held_location": "batch 35 row 31",
+      "match_method": "pair_id",
+      "draft_question": "An economy in which private businesses operate alongside state-owned enterprises and government regulation is generally described as:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-88",
+      "held_pair_id": "DUP-88",
+      "held_location": "batch 34 row 31",
+      "match_method": "pair_id",
+      "draft_question": "A sharp increase in the cost of imported fuel raises production expenses across an economy. This is most likely to cause:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-70",
+      "held_pair_id": "DUP-70",
+      "held_location": "batch 31 row 13",
+      "match_method": "pair_id",
+      "draft_question": "In a mature plant cell, the large central vacuole helps maintain the cell's shape mainly by:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-81",
+      "held_pair_id": "DUP-81",
+      "held_location": "batch 35 row 26",
+      "match_method": "pair_id",
+      "draft_question": "A metal rod of length 2.0 m increases in length by 0.002 m when heated through 50 °C. What is its coefficient of linear expansion?",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-89",
+      "held_pair_id": "DUP-89",
+      "held_location": "batch 30 row 5",
+      "match_method": "pair_id",
+      "draft_question": "Which pair consists of two nasal consonant sounds in English?",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-79",
+      "held_pair_id": "DUP-79",
+      "held_location": "batch 4 row 5",
+      "match_method": "pair_id",
+      "draft_question": "In the sentence “She visited the library to borrow a textbook”, the infinitive phrase “to borrow a textbook” expresses:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-84",
+      "held_pair_id": "DUP-84",
+      "held_location": "batch 39 row 16",
+      "match_method": "pair_id",
+      "draft_question": "During DNA replication, which enzyme joins adjacent Okazaki fragments on the lagging strand?",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-87",
+      "held_pair_id": "DUP-87",
+      "held_location": "batch 29 row 4",
+      "match_method": "pair_id",
+      "draft_question": "A person who deliberately gives up the use of alcoholic drinks is commonly called a:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-68",
+      "held_pair_id": "DUP-68",
+      "held_location": "batch 36 row 2",
+      "match_method": "pair_id",
+      "draft_question": "In “Strong winds damaged the roof”, the word “winds” refers to:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-82",
+      "held_pair_id": "DUP-82",
+      "held_location": "batch 19 row 27",
+      "match_method": "pair_id",
+      "draft_question": "As a consumer consumes additional units of a good within a given period, the marginal utility from each successive unit generally:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-83",
+      "held_pair_id": "DUP-83",
+      "held_location": "batch 32 row 39",
+      "match_method": "pair_id",
+      "draft_question": "A writer who publishes under an assumed name different from their own is using a:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-85",
+      "held_pair_id": "DUP-85",
+      "held_location": "batch 32 row 37",
+      "match_method": "pair_id",
+      "draft_question": "In theatre, the planned movement and positioning of actors on stage during a performance is known as:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-86",
+      "held_pair_id": "DUP-86",
+      "held_location": "batch 11 row 18",
+      "match_method": "pair_id",
+      "draft_question": "In the brown-ring test for nitrate ions, the characteristic brown ring forms at the:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-90",
+      "held_pair_id": "DUP-90",
+      "held_location": "batch 29 row 20",
+      "match_method": "pair_id",
+      "draft_question": "In hydrated copper(II) sulfate, CuSO₄·5H₂O, the number 5 indicates that each formula unit contains:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-126",
+      "held_pair_id": "DUP-126",
+      "held_location": "batch 22 row 33",
+      "match_method": "pair_id",
+      "draft_question": "The African Union replaced which earlier continental organisation in 2002?",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-216",
+      "held_pair_id": "DUP-216",
+      "held_location": "batch 39 row 17",
+      "match_method": "pair_id",
+      "draft_question": "Temporary hardness in water is mainly caused by dissolved:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-217",
+      "held_pair_id": "DUP-217",
+      "held_location": "batch 33 row 10",
+      "match_method": "pair_id",
+      "draft_question": "A square matrix is singular when its determinant is:",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-232",
+      "held_pair_id": "DUP-232",
+      "held_location": "batch 34 row 37",
+      "match_method": "pair_id",
+      "draft_question": "A descriptive word or phrase used to characterise a person or thing by highlighting a notable quality is called an:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-240",
+      "held_pair_id": "DUP-240",
+      "held_location": "batch 33 row 32",
+      "match_method": "pair_id",
+      "draft_question": "In contentious cases before the International Court of Justice, the parties are generally:",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-114",
+      "held_pair_id": "DUP-114",
+      "held_location": "batch 3 row 24",
+      "match_method": "pair_id",
+      "draft_question": "A wave that cannot propagate through a vacuum and must travel through a material medium is classified as a:",
+      "subject": "Physics"
+    },
+    {
+      "target_id": "DUP-164",
+      "held_pair_id": "DUP-164",
+      "held_location": "batch 11 row 40",
+      "match_method": "pair_id",
+      "draft_question": "The substitution of the name of an attribute or closely associated thing for the thing meant is called:",
+      "subject": "Literature in English"
+    },
+    {
+      "target_id": "DUP-174",
+      "held_pair_id": "DUP-174",
+      "held_location": "batch 12 row 21",
+      "match_method": "pair_id",
+      "draft_question": "The alkaline hydrolysis of fats or oils to produce soap and glycerol is known as:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-101",
+      "held_pair_id": "DUP-101",
+      "held_location": "batch 12 row 27",
+      "match_method": "pair_id",
+      "draft_question": "A good that is non-rival in consumption and from which people cannot easily be excluded is called a:",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-210",
+      "held_pair_id": "DUP-210",
+      "held_location": "batch 13 row 16",
+      "match_method": "pair_id",
+      "draft_question": "The production of male gametes in the seminiferous tubules of the testes is known as:",
+      "subject": "Biology"
+    },
+    {
+      "target_id": "DUP-107",
+      "held_pair_id": "DUP-107",
+      "held_location": "batch 14 row 35",
+      "match_method": "pair_id",
+      "draft_question": "The International Criminal Court is empowered to prosecute:",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-228",
+      "held_pair_id": "DUP-228",
+      "held_location": "batch 15 row 28",
+      "match_method": "pair_id",
+      "draft_question": "Capital flight occurs when investors move financial assets from their home country to other countries.",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-129",
+      "held_pair_id": "DUP-129",
+      "held_location": "batch 16 row 6",
+      "match_method": "pair_id",
+      "draft_question": "In the phrasal verb 'look after', the words mean:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-219",
+      "held_pair_id": "DUP-219",
+      "held_location": "batch 16 row 20",
+      "match_method": "pair_id",
+      "draft_question": "An oxide that reacts with both acids and bases is described as:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-193",
+      "held_pair_id": "DUP-193",
+      "held_location": "batch 16 row 33",
+      "match_method": "pair_id",
+      "draft_question": "Rule by a small and privileged group is known as:",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-98",
+      "held_pair_id": "DUP-98",
+      "held_location": "batch 17 row 10",
+      "match_method": "pair_id",
+      "draft_question": "A set that contains no elements is called a:",
+      "subject": "Mathematics"
+    },
+    {
+      "target_id": "DUP-121",
+      "held_pair_id": "DUP-121",
+      "held_location": "batch 17 row 20",
+      "match_method": "pair_id",
+      "draft_question": "The law used to compare the relative rates of diffusion of gases from their molar masses is:",
+      "subject": "Chemistry"
+    },
+    {
+      "target_id": "DUP-109",
+      "held_pair_id": "DUP-109",
+      "held_location": "batch 17 row 27",
+      "match_method": "pair_id",
+      "draft_question": "A recession is a period of significant decline in overall economic activity, often accompanied by falling output and rising unemployment.",
+      "subject": "Economics"
+    },
+    {
+      "target_id": "DUP-102",
+      "held_pair_id": "DUP-102",
+      "held_location": "batch 18 row 32",
+      "match_method": "pair_id",
+      "draft_question": "The Commonwealth of Nations is a voluntary association of sovereign states that promotes cooperation among its members.",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-221",
+      "held_pair_id": "DUP-221",
+      "held_location": "batch 18 row 35",
+      "match_method": "pair_id",
+      "draft_question": "A caretaker government is a temporary administration that handles routine affairs until a new government takes office.",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-104",
+      "held_pair_id": "DUP-104",
+      "held_location": "batch 18 row 36",
+      "match_method": "pair_id",
+      "draft_question": "An electoral college is a body of representatives selected to elect a head of state or another public office holder.",
+      "subject": "Government"
+    },
+    {
+      "target_id": "DUP-200",
+      "held_pair_id": "DUP-200",
+      "held_location": "batch 20 row 6",
+      "match_method": "pair_id",
+      "draft_question": "The shortening of a word by removing part of its original form while retaining its meaning is known as:",
+      "subject": "Use of English"
+    },
+    {
+      "target_id": "DUP-123",
+      "held_pair_id": "DUP-123",
+      "held_location": "batch 20 row 33",
+      "match_method": "pair_id",
+      "draft_question": "A political ideology is a set of beliefs and values about how society and government should be organised.",
+      "subject": "Government"
+    }
+  ],
+  "unmapped_draft_targets": [
+    {
+      "target_id": "DUP-47-ADD-2026-11-09",
+      "subject": "Government",
+      "question": "In a confederation, the member states generally:",
+      "register_held_location": null
+    },
+    {
+      "target_id": "DUP-19-ADD-2026-11-09",
+      "subject": "Economics",
+      "question": "The area between the market price and the supply curve, up to the quantity sold, represents:",
+      "register_held_location": null
+    }
+  ],
+  "held_rows_without_mapped_draft": [
+    {
+      "pair_id": "DUP-168",
+      "subject": "Biology",
+      "held_location": "batch 19 row 16",
+      "topic": "Evolution",
+      "subtopic": "Natural selection",
+      "question_text": "Natural selection favours individuals that ___."
+    },
+    {
+      "pair_id": "DUP-215",
+      "subject": "Government",
+      "held_location": "batch 21 row 35",
+      "topic": "Constitution",
+      "subtopic": "Amendment",
+      "question_text": "A formal change to the provisions of a constitution is called a constitutional ___."
+    },
+    {
+      "pair_id": "DUP-108",
+      "subject": "Government",
+      "held_location": "batch 22 row 35",
+      "topic": "Public administration",
+      "subtopic": "Accountability",
+      "question_text": "Public accountability requires public officials to ___."
+    },
+    {
+      "pair_id": "DUP-99",
+      "subject": "Literature in English",
+      "held_location": "batch 23 row 38",
+      "topic": "Literary criticism",
+      "subtopic": "Satire",
+      "question_text": "Satire is a literary mode that uses humour, irony or ridicule mainly to:"
+    },
+    {
+      "pair_id": "DUP-133",
+      "subject": "Economics",
+      "held_location": "batch 25 row 27",
+      "topic": "Market failure",
+      "subtopic": "Externalities",
+      "question_text": "A negative production externality exists when"
+    },
+    {
+      "pair_id": "DUP-128",
+      "subject": "Government",
+      "held_location": "batch 26 row 33",
+      "topic": "Electoral systems",
+      "subtopic": "Proportional representation",
+      "question_text": "The main aim of proportional representation is to"
+    },
+    {
+      "pair_id": "DUP-233",
+      "subject": "Literature in English",
+      "held_location": "batch 26 row 37",
+      "topic": "Drama",
+      "subtopic": "Aside",
+      "question_text": "In drama, an aside is a speech that is"
+    },
+    {
+      "pair_id": "DUP-176",
+      "subject": "Literature in English",
+      "held_location": "batch 26 row 41",
+      "topic": "Literary devices",
+      "subtopic": "Imagery",
+      "question_text": "Imagery in a literary work refers to language that:"
+    },
+    {
+      "pair_id": "DUP-165",
+      "subject": "Biology",
+      "held_location": "batch 27 row 12",
+      "topic": "Transport",
+      "subtopic": "Blood clotting",
+      "question_text": "Which blood component is especially important in forming a platelet plug during blood clotting?"
+    },
+    {
+      "pair_id": "DUP-96",
+      "subject": "Economics",
+      "held_location": "batch 28 row 27",
+      "topic": "Demand and supply",
+      "subtopic": "Price ceiling",
+      "question_text": "A maximum legal price set below the equilibrium price is likely to create"
+    },
+    {
+      "pair_id": "DUP-171",
+      "subject": "Government",
+      "held_location": "batch 28 row 32",
+      "topic": "Constitutional government",
+      "subtopic": "Checks and balances",
+      "question_text": "The principle of checks and balances allows each arm of government to:"
+    },
+    {
+      "pair_id": "DUP-151",
+      "subject": "Biology",
+      "held_location": "batch 29 row 12",
+      "topic": "Evolution",
+      "subtopic": "Natural selection",
+      "question_text": "In a population, individuals with a heritable trait that improves survival tend to"
+    },
+    {
+      "pair_id": "DUP-110",
+      "subject": "Biology",
+      "held_location": "batch 29 row 13",
+      "topic": "Nutrition",
+      "subtopic": "Enzymes",
+      "question_text": "An enzyme speeds up a biochemical reaction mainly by"
+    },
+    {
+      "pair_id": "DUP-125",
+      "subject": "Government",
+      "held_location": "batch 29 row 33",
+      "topic": "Elections",
+      "subtopic": "Secret ballot",
+      "question_text": "The secret ballot is designed mainly to:"
+    },
+    {
+      "pair_id": "DUP-116",
+      "subject": "Biology",
+      "held_location": "batch 30 row 15",
+      "topic": "Human physiology",
+      "subtopic": "Epiglottis",
+      "question_text": "During swallowing, which structure helps prevent food from entering the trachea?"
+    },
+    {
+      "pair_id": "DUP-224",
+      "subject": "Biology",
+      "held_location": "batch 30 row 16",
+      "topic": "Plant biology",
+      "subtopic": "Water transport",
+      "question_text": "In flowering plants, water is transported from the roots to the leaves mainly through the:"
+    },
+    {
+      "pair_id": "DUP-180",
+      "subject": "Economics",
+      "held_location": "batch 30 row 28",
+      "topic": "Production",
+      "subtopic": "Producer subsidies",
+      "question_text": "A government subsidy to producers is most likely to"
+    },
+    {
+      "pair_id": "DUP-169",
+      "subject": "Physics",
+      "held_location": "batch 31 row 25",
+      "topic": "Mechanics",
+      "subtopic": "Weight",
+      "question_text": "Calculate the weight of a 5 kg object on Earth. Take g = 10 m/s²."
+    },
+    {
+      "pair_id": "DUP-225",
+      "subject": "Economics",
+      "held_location": "batch 31 row 30",
+      "topic": "International trade",
+      "subtopic": "Import quotas",
+      "question_text": "An import quota is a government restriction that sets:"
+    },
+    {
+      "pair_id": "DUP-117",
+      "subject": "Government",
+      "held_location": "batch 31 row 32",
+      "topic": "Parliamentary system",
+      "subtopic": "Vote of no confidence",
+      "question_text": "What is the main purpose of a vote of no confidence in a parliamentary system?"
+    },
+    {
+      "pair_id": "DUP-118",
+      "subject": "Government",
+      "held_location": "batch 32 row 36",
+      "topic": "International organisations",
+      "subtopic": "African Union",
+      "question_text": "The African Union was established to promote"
+    },
+    {
+      "pair_id": "DUP-112",
+      "subject": "Biology",
+      "held_location": "batch 33 row 14",
+      "topic": "Plant biology",
+      "subtopic": "Transport in plants",
+      "question_text": "The tissue that transports water and mineral salts from roots to other parts of a plant is"
+    },
+    {
+      "pair_id": "DUP-132",
+      "subject": "Use of English",
+      "held_location": "batch 34 row 3",
+      "topic": "Vocabulary",
+      "subtopic": "Synonyms",
+      "question_text": "Choose the word nearest in meaning to 'ephemeral'."
+    },
+    {
+      "pair_id": "DUP-147",
+      "subject": "Chemistry",
+      "held_location": "batch 34 row 18",
+      "topic": "Acids and bases",
+      "subtopic": "Acid-base indicators",
+      "question_text": "Which indicator is colourless in acidic solution and turns pink in alkaline solution?"
+    },
+    {
+      "pair_id": "DUP-95",
+      "subject": "Chemistry",
+      "held_location": "batch 34 row 21",
+      "topic": "Rates of reaction",
+      "subtopic": "Rates and temperature",
+      "question_text": "Why does increasing temperature usually increase the rate of a chemical reaction?"
+    },
+    {
+      "pair_id": "DUP-212",
+      "subject": "Literature in English",
+      "held_location": "batch 34 row 38",
+      "topic": "Poetry",
+      "subtopic": "Stanza",
+      "question_text": "What is a group of lines forming a unit within a poem called?"
+    },
+    {
+      "pair_id": "DUP-134",
+      "subject": "Biology",
+      "held_location": "batch 35 row 13",
+      "topic": "Human physiology",
+      "subtopic": "Blood components",
+      "question_text": "Which blood component contains haemoglobin and transports most oxygen in humans?"
+    },
+    {
+      "pair_id": "DUP-242",
+      "subject": "Economics",
+      "held_location": "batch 35 row 30",
+      "topic": "Consumer behaviour",
+      "subtopic": "Utility",
+      "question_text": "The additional satisfaction from consuming one more unit of a good is called"
+    },
+    {
+      "pair_id": "DUP-220",
+      "subject": "Literature in English",
+      "held_location": "batch 35 row 41",
+      "topic": "Literary devices",
+      "subtopic": "Tragic structure",
+      "question_text": "A sudden reversal of a character's fortune in a tragedy is known as"
+    },
+    {
+      "pair_id": "DUP-194",
+      "subject": "Economics",
+      "held_location": "batch 36 row 27",
+      "topic": "Market structures",
+      "subtopic": "Monopolistic competition",
+      "question_text": "In monopolistic competition, firms generally sell products that are:"
+    },
+    {
+      "pair_id": "DUP-119",
+      "subject": "Government",
+      "held_location": "batch 36 row 35",
+      "topic": "Electoral law",
+      "subtopic": "Election petitions",
+      "question_text": "An election petition is a formal legal challenge to:"
+    },
+    {
+      "pair_id": "DUP-106",
+      "subject": "Biology",
+      "held_location": "batch 37 row 13",
+      "topic": "Human biology",
+      "subtopic": "Excretion",
+      "question_text": "Which part of a nephron is the site where blood is ultrafiltered?"
+    },
+    {
+      "pair_id": "DUP-226",
+      "subject": "Biology",
+      "held_location": "batch 37 row 14",
+      "topic": "Genetics",
+      "subtopic": "Meiosis",
+      "question_text": "Which process produces haploid sex cells in animals?"
+    },
+    {
+      "pair_id": "DUP-97",
+      "subject": "Chemistry",
+      "held_location": "batch 37 row 21",
+      "topic": "Chemical reactions",
+      "subtopic": "Acids and carbonates",
+      "question_text": "Which gas is produced when dilute hydrochloric acid reacts with calcium carbonate?"
+    },
+    {
+      "pair_id": "DUP-111",
+      "subject": "Physics",
+      "held_location": "batch 37 row 25",
+      "topic": "Electricity",
+      "subtopic": "Circuit protection",
+      "question_text": "The main purpose of a fuse in an electrical circuit is to:"
+    },
+    {
+      "pair_id": "DUP-192",
+      "subject": "Government",
+      "held_location": "batch 37 row 35",
+      "topic": "Political parties",
+      "subtopic": "Opposition",
+      "question_text": "In a democratic legislature, the opposition mainly"
+    },
+    {
+      "pair_id": "DUP-105",
+      "subject": "Biology",
+      "held_location": "batch 38 row 14",
+      "topic": "Reproduction",
+      "subtopic": "Fertilisation",
+      "question_text": "In humans, fertilisation normally occurs in the"
+    },
+    {
+      "pair_id": "DUP-159",
+      "subject": "Government",
+      "held_location": "batch 38 row 36",
+      "topic": "Federalism",
+      "subtopic": "Federal constitution",
+      "question_text": "A federal constitution typically provides for"
+    },
+    {
+      "pair_id": "DUP-167",
+      "subject": "Literature in English",
+      "held_location": "batch 38 row 38",
+      "topic": "Poetry",
+      "subtopic": "Couplet",
+      "question_text": "A couplet is a unit of poetry consisting of:"
+    },
+    {
+      "pair_id": "DUP-158",
+      "subject": "Biology",
+      "held_location": "batch 39 row 12",
+      "topic": "Genetics",
+      "subtopic": "Inheritance",
+      "question_text": "An organism with genotype Tt is described as"
+    },
+    {
+      "pair_id": "DUP-179",
+      "subject": "Chemistry",
+      "held_location": "batch 39 row 21",
+      "topic": "Separation techniques",
+      "subtopic": "Chromatography",
+      "question_text": "In paper chromatography, a component that travels furthest is generally more"
+    },
+    {
+      "pair_id": "DUP-156",
+      "subject": "Physics",
+      "held_location": "batch 39 row 23",
+      "topic": "Waves",
+      "subtopic": "Wavelength",
+      "question_text": "The wavelength of a wave is the distance between two successive points that are:"
+    },
+    {
+      "pair_id": "DUP-103",
+      "subject": "Economics",
+      "held_location": "batch 39 row 27",
+      "topic": "Market structures",
+      "subtopic": "Monopsony",
+      "question_text": "A market in which one main buyer purchases from many sellers is called:"
+    },
+    {
+      "pair_id": "DUP-230",
+      "subject": "Government",
+      "held_location": "batch 39 row 34",
+      "topic": "Civil service",
+      "subtopic": "Political neutrality",
+      "question_text": "The principle of political neutrality requires civil servants to:"
+    },
+    {
+      "pair_id": "DUP-175",
+      "subject": "Biology",
+      "held_location": "batch 40 row 16",
+      "topic": "Classification",
+      "subtopic": "Vertebrates",
+      "question_text": "Which feature is characteristic of mammals?"
+    }
+  ],
+  "conflict_note": "PR #194's current body reports 103 drafts covering 103 of 160 held rows, with 55 D targets needing drafts and 2 S rows awaiting qualified review. This exact source-location join independently maps 94 of 115 legacy draft targets to 94 current r3 held rows, leaving 66 held rows without a mapped draft and 21 legacy draft targets without a current r3 held-row mapping. The two counts are not interchangeable; reconcile the PR checkpoint's 103 target list before creating/inserting replacements. No held row is marked complete by this audit.",
+  "safety": {
+    "original_source_csvs_modified": false,
+    "staging_csvs_modified": false,
+    "question_content_changed": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "production_deployments": 0
+  }
+}
