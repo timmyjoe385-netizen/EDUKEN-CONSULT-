@@ -27,6 +27,16 @@ This section supersedes older operational counts below wherever they conflict. H
 | 4. Integrity and reconciliation | IN PROGRESS | Continue Git-history/provenance and semantic-disposition reconciliation; preserve one master register |
 | 5. CBT platform | IN PROGRESS | Complete authenticated admin acceptance, full 180-question lifecycle, mobile/network and security checks |
 
+## Assistant preliminary Use of English content-screen — 10 November 2026
+
+- Screened all **186 provisionally retained Use of English rows** in r3. This is an assistant preliminary screen only; it is not independent academic approval.
+- Newly identified retained semantic duplicate candidate: **batch 07 row 3** and **batch 39 row 3** both test that *obsolete* means *outdated*. Both currently appear in the retained r3 export. The pair was not found in the existing duplicate-disposition register. No staging/source CSV change has been made; Workstream 4 must add the pair to the canonical disposition history and create a new non-destructive staging revision before any import.
+- Metadata follow-ups: batch 07 row 3 and batch 18 row 3 are synonym/meaning items labelled under the “Antonyms” subtopic; batch 27 row 4 classifies “comply with” as an idiom/fixed expression rather than a verb–preposition collocation.
+- Formatting follow-up: batch 31 row 3 contains literal backslashes where quotation marks should delimit the example sentence and target word.
+- No answer-key or explanation error was identified in this 186-row preliminary pass. This does not establish syllabus sign-off or qualified academic approval.
+- Safety: source CSVs changed 0; r3 staging rows changed 0; production changes 0; imports/publications 0; academic approvals created 0.
+- Next actions: reconcile the new duplicate pair in the master duplicate register, hold the later endpoint in a new staging revision, prepare a replacement draft only after same-subject bank-wide comparison, and correct the flagged metadata/formatting without altering the original source batch files.
+
 ## Release blockers
 
 1. Qualified independent review of answer keys, explanations, syllabus scope and duplicate-versus-related-skill decisions.
