@@ -18,6 +18,16 @@ This section supersedes older operational counts below wherever they conflict. H
 - Integration reconciliation (10 Nov): PR #194 already contains the exact same blob versions of `src/CbtQuestionBankAdmin.tsx` and `tests/e2e/cbt-admin-search-audit.spec.js` as PR #199, and its `src/App.tsx` already imports/renders the admin component. Treat PR #199's pagination/search/audit changes as present in PR #194; keep PR #199 open/draft for now and do not merge it separately or close it without a final integration decision.
 - The isolated test bank remains 73 rows (65 draft, 8 published) and cannot support the 180-question mock. Production remains isolated and was not queried or changed during this cycle.
 
+## Isolated preview database and runtime checkpoint — 10 November 2026
+
+- Read-only inspection was limited to isolated Supabase project `wpktzogarfqrgkirzdpy`; production project was not queried or changed.
+- CBT question table: **73 rows** — 65 draft and 8 published (one published sample per subject). Import batches: 2. The 180-question mock remains unavailable until a sufficiently large approved bank is loaded into the isolated environment.
+- Attempt data: **1,730 sessions**, **1,723 submitted practice summaries**, and **7 sessions without a result summary** (3 mock, 4 practice). Two submitted summaries have a non-null user ID (one distinct account). No attempt records were deleted. New tests must use synthetic/guest sessions; do not reuse account-linked records or infer that they are synthetic.
+- RLS is enabled on the four CBT tables, with zero table policies. The deployed Edge Function uses the secret-key client and has internal `currentUser` / `requireAdmin` checks; ordinary direct-client access is therefore denied by default. No RLS policy or auth changes were made.
+- Supabase security advisor: leaked-password protection is disabled (WARN); 16 tables have RLS enabled with no policies (INFO). Performance advisor: two unindexed foreign keys and four unused indexes (INFO); health advisor returned no findings. Auth settings were not changed because that requires separate approval.
+- Isolated `eduken-api` is ACTIVE at version 44 with `verify_jwt=false`; the function source contains internal auth checks. Its deployed `index.ts` matches the main-branch file except for one four-question mock-duration branch, but does **not** match PR #194: PR #194 adds server-side subject-combination selection helpers. Preview Edge Function alignment is therefore an outstanding integration task; do not deploy to production.
+- Latest PR #194 head `e31da2a619debff2b3d33ad350c4ee02171b47c1`: Worker build, both build checks, wallet-SQL and preview deployment passed; public browser checks were still running at the last check. Production deploy was skipped.
+
 ## Workstream register
 
 | Workstream | Current status | Next required action |
