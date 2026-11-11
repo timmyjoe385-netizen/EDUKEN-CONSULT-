@@ -49,7 +49,7 @@ The remaining checked proposals were provisionally sound at assistant level for 
 - No original source CSV or R4 staging question row was changed by this review.
 - No replacement was imported, approved, published or written to the production database.
 - The seven high-priority question-construction/concept-variety issues above must be corrected in draft form and re-screened before an independent reviewer is asked to sign them off.
-- All 116 proposals remain draft-only pending qualified subject, answer-key, explanation and syllabus review.
+- All 116 proposals remain draft-only in the current inventory. The original 90 carry the project owner's previously reported reviewer approval, not documentary-verified in the repository. The 26 additional proposals must receive their own attributable subject-review disposition. This assistant QA does not independently approve or revoke any of the 90 historical decisions.
 
 
 ## Literature coverage clarification
