@@ -72,3 +72,36 @@ Relevant PRs remain open and draft; production deploy is skipped.
 ## Release boundary
 
 All retained questions are provisional. No independent academic approvals are recorded for this release queue. Production remains isolated. Do not merge, deploy, import or publish without the explicit project release authorization and completed review gates.
+
+
+---
+
+## 6. Execution addendum — 11 November 2026, 17:10 UTC
+
+This addendum supersedes the older PR #194 head/check status above where they conflict. It does not alter the release boundary.
+
+### Replacement drafting
+
+- The separate uncovered-target work queue identifies **45 held locations** without a target-specific proposal, after the 116 existing proposals were reconciled.
+- Five first-pass draft proposals have been prepared in `content/cbt/audits/2026-11-11-r4-first-five-uncovered-replacement-drafts.md`: Government DUP-108, Economics DUP-133, Literature DUP-176, Biology DUP-165 and Physics DUP-169.
+- Each was compared against all 1,600 R4 source questions and all 116 existing proposals using the character-trigram Dice screen (threshold 0.42). All five maximum source-bank and existing-proposal scores are below 0.42. Related-topic flags are still explicitly noted for the Economics circular-flow and Biology blood-group drafts.
+- These five are **separate draft candidates only**. The canonical 116-item inventory and 45-location work queue have not been modified. Do not count these as qualified replacements or approvals until they are formally reconciled and reviewed.
+- Qualified academic approvals remain **0**.
+
+### PR #194 platform status
+
+- Current PR #194 head: `e49b548821f5d94480aad04eb97711f793f5df33`.
+- Build and wallet SQL checks passed on the immediately preceding tested head `60351d70bfaf3c46d05100506b193fc66276d849`; the PR #194 build and wallet checks also passed on that head.
+- Isolated preview Worker deployment succeeded. The real Chromium smoke test failed twice on that tested head because it did not receive the expected `/functions/v1/eduken-api/api/cbt/questions` response within 25 seconds. The test currently does not establish whether the cause is page boot, network/DNS, frontend preview configuration or API reachability.
+- A diagnostics-only change was committed to `tests/cbt-preview-smoke.mjs` at `e49b548821f5d94480aad04eb97711f793f5df33`. It records navigation status, final URL, page title/body text, browser console/page errors, failed asset/API requests and API response statuses if the expected request times out. This diagnostics commit has not yet had a new workflow run attached; do not describe the instrumented test as passed.
+- The preview Worker is configured with the isolated Supabase URL/key, and Cloudflare reports its Workers subdomain enabled. An external live fetch resolved the preview homepage once but subsequent route fetches intermittently failed DNS resolution; this is inconclusive and is not treated as proof of the root cause.
+- The guest payment-recovery smoke test was skipped because the preceding CBT browser smoke test failed.
+- Production deployment remains skipped. No production Worker, production Supabase project, question import/publication, authentication or payment configuration was changed.
+
+### Immediate next actions
+
+1. Run the diagnostics-enabled browser smoke test on the current PR head and inspect the captured page/network evidence.
+2. Fix only the demonstrated root cause; keep the assertions for real published-question retrieval, hidden answer keys, subject selection and safe underfilled-bank rejection.
+3. Rerun preview deployment, Chromium smoke, guest recovery, build and wallet checks on the same current head.
+4. Continue the remaining 40 uncovered-target drafts in small subject-balanced batches, screening each against the full source bank and the existing proposal set before it is added to the canonical inventory.
+5. Preserve the authenticated admin acceptance and qualified academic review gates; no release action is authorized by these drafts or automated checks.
