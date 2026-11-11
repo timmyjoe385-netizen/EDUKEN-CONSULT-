@@ -1,0 +1,129 @@
+{
+  "date": "2026-11-11",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Non-destructive editorial revision proposals arising from the 11 November assistant content-QA pass. These are draft suggestions only and do not change the canonical replacement inventory or authorize import.",
+  "source_audits": [
+    "content/cbt/audits/2026-11-11-use-of-english-replacement-draft-content-qa.md",
+    "content/cbt/audits/2026-11-11-cross-subject-replacement-draft-content-qa.md"
+  ],
+  "proposed_revisions": [
+    {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "revision_type": "wording_clarity",
+      "question": "A person who habitually abstains from alcoholic drinks is called a:",
+      "options": ["Teetotaller", "Vegetarian", "Philanthropist", "Pessimist"],
+      "answer": "A",
+      "explanation": "A teetotaller is a person who habitually abstains from drinking alcoholic beverages.",
+      "reason": "More natural and precise wording than 'deliberately gives up the use of alcoholic drinks'."
+    },
+    {
+      "target_id": "DUP-78",
+      "subject": "Use of English",
+      "revision_type": "stem_precision",
+      "question": "Which punctuation mark can correctly join these two closely related independent clauses without a coordinating conjunction: “The rain stopped; the match resumed”?",
+      "options": ["Apostrophe", "Semicolon", "Hyphen", "Quotation mark"],
+      "answer": "B",
+      "explanation": "A semicolon can join two closely related independent clauses when no coordinating conjunction is used.",
+      "reason": "Avoids implying that a semicolon is the only punctuation choice in every possible sentence construction."
+    },
+    {
+      "target_id": "DUP-228",
+      "subject": "Economics",
+      "revision_type": "convert_definition_stem_to_question",
+      "question": "What term describes the movement of financial assets out of a country, often in response to uncertainty or the expectation of better returns elsewhere?",
+      "options": ["Capital flight", "Capital formation", "Capital deepening", "Capital consumption"],
+      "answer": "A",
+      "explanation": "Capital flight is the movement of financial assets out of a country, often in response to economic or political uncertainty or the expectation of better returns elsewhere.",
+      "reason": "The original declarative stem gave the definition and option A repeated it."
+    },
+    {
+      "target_id": "DUP-109",
+      "subject": "Economics",
+      "revision_type": "convert_definition_stem_to_question",
+      "question": "Which term describes a significant downturn in overall economic activity, commonly associated with falling output and employment?",
+      "options": ["Recession", "Inflation", "Currency appreciation", "Full employment"],
+      "answer": "A",
+      "explanation": "A recession is a significant downturn in economic activity and is commonly associated with reduced production, income and employment.",
+      "reason": "The original declarative stem defined recession and option A restated the definition."
+    },
+    {
+      "target_id": "DUP-102",
+      "subject": "Government",
+      "revision_type": "convert_definition_stem_to_question",
+      "question": "Which statement best describes the Commonwealth of Nations?",
+      "options": [
+        "A voluntary association of independent sovereign states that cooperate on shared interests",
+        "A supranational government with authority to legislate for all member states",
+        "A military alliance with a single common armed force",
+        "A customs union with a common external tariff"
+      ],
+      "answer": "A",
+      "explanation": "The Commonwealth is a voluntary association of independent and sovereign states. It promotes cooperation and shared values but is not a single government, military alliance or customs union.",
+      "reason": "The original declarative stem repeated the correct answer in option A."
+    },
+    {
+      "target_id": "DUP-221",
+      "subject": "Government",
+      "revision_type": "convert_definition_stem_to_question",
+      "question": "What is the principal role of a caretaker government during a transition between administrations?",
+      "options": [
+        "To maintain routine administration until a substantive government takes office",
+        "To permanently replace the constitution",
+        "To assume the independent law-making powers of the legislature",
+        "To serve as a permanent non-elected civil service"
+      ],
+      "answer": "A",
+      "explanation": "A caretaker government temporarily manages routine state affairs during a transition. It is generally expected to avoid major policy decisions that should be made by the incoming substantive government.",
+      "reason": "The original declarative stem gave away the answer by defining a caretaker government."
+    },
+    {
+      "target_id": "DUP-104",
+      "subject": "Government",
+      "revision_type": "convert_definition_stem_to_question",
+      "question": "What is an electoral college?",
+      "options": [
+        "A body of designated representatives who vote to choose a person for a public office",
+        "A court that hears election petitions",
+        "A commission responsible for registering voters and conducting elections",
+        "A legislature responsible for passing the national budget"
+      ],
+      "answer": "A",
+      "explanation": "An electoral college is a group of electors selected to choose a person for a public office. It is distinct from an electoral commission, which administers elections, and an election tribunal, which resolves election disputes.",
+      "reason": "The original declarative stem restated the correct answer in option A."
+    },
+    {
+      "target_id": "DUP-123",
+      "subject": "Government",
+      "revision_type": "convert_definition_stem_to_question",
+      "question": "Which term refers to a coherent set of political beliefs and principles about how society and government should be organised?",
+      "options": [
+        "Political ideology",
+        "Voter register",
+        "Judicial precedent",
+        "Government budget"
+      ],
+      "answer": "A",
+      "explanation": "A political ideology is a connected set of ideas and values about political authority, society and the role of government.",
+      "reason": "The original declarative stem defined political ideology and option A repeated the definition."
+    }
+  ],
+  "hold_for_review": [
+    {
+      "target_id": "DUP-232",
+      "subject": "Literature in English",
+      "reason": "Its general epithet-definition objective overlaps with DUP-59, which asks candidates to identify an epithet in an example. Do not retain both without qualified Literature reviewer confirmation or a distinct replacement concept."
+    }
+  ],
+  "safety": {
+    "canonical_replacement_inventory_modified": false,
+    "original_source_csvs_modified": false,
+    "r4_staging_modified": false,
+    "database_changed": false,
+    "production_changed": false,
+    "questions_imported": 0,
+    "questions_published": 0,
+    "qualified_academic_approvals_created": 0,
+    "status": "PROPOSED_DRAFT_REVISIONS_PENDING_QUALIFIED_REVIEW"
+  }
+}
