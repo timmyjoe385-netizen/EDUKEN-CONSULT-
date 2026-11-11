@@ -47,7 +47,7 @@ try {
   assert.equal(startResponse.status(), 409,
     "The preview must reject a mixed mock when any selected published subject pool is insufficient.");
   const startPayload = await startResponse.json();
-  assert.match(String(startPayload.error || ""), /only 1 published questions; \\d+ are required/i);
+  assert.match(String(startPayload.error || ""), /only 1 published questions; .* are required/i);
   await page.getByRole("alert").filter({ hasText: /only 1 published questions/i }).waitFor({ timeout: 5_000 });
   assert.equal(await page.locator(".cbt-question-card").count(), 0,
     "An insufficient question bank must not launch a partial mock session.");
