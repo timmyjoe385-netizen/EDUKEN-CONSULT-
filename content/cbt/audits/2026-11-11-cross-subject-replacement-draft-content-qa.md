@@ -47,7 +47,7 @@ The remaining checked proposals were provisionally sound at assistant level for 
 - This report is an assistant content-QA screen, not an independent qualified subject review.
 - No reviewer identity, qualification or approval is created by this report.
 - No original source CSV or R4 staging question row was changed by this review.
-- No replacement was imported, approved, published or written to the production database.
+- No replacement was imported, published or written to the production database by this QA pass. The original 90 proposals carry the project owner's earlier user-reported reviewer approval; documentary evidence remains absent.
 - The seven high-priority question-construction/concept-variety issues above must be corrected in draft form and re-screened before an independent reviewer is asked to sign them off.
 - All 116 proposals remain draft-only in the current inventory. The original 90 carry the project owner's previously reported reviewer approval, not documentary-verified in the repository. The 26 additional proposals must receive their own attributable subject-review disposition. This assistant QA does not independently approve or revoke any of the 90 historical decisions.
 
