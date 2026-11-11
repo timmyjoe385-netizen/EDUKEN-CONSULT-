@@ -5,13 +5,17 @@ const url = String(process.env.CBT_PREVIEW_URL || "https://eduken-consult-previe
 const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  // Bypass any stale shared-preview HTML/asset cache so this test exercises the bundle built from the current PR commit.
+  await page.setExtraHTTPHeaders({ "Cache-Control": "no-cache", Pragma: "no-cache" });
   const questionsResponsePromise = page.waitForResponse(
     response => response.request().method() === "GET" &&
       response.url().includes("/functions/v1/eduken-api/api/cbt/questions"),
     { timeout: 25_000 },
   );
 
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
+  const smokeUrl = new URL(url);
+  smokeUrl.searchParams.set("__cbt_smoke", String(Date.now()));
+  await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
   const questionsResponse = await questionsResponsePromise;
   assert.equal(questionsResponse.status(), 200, "The deployed preview must load published CBT questions from the isolated API.");
   const payload = await questionsResponse.json();
@@ -54,6 +58,9 @@ try {
   }, { timeout: 25_000 });
   await mixedMockButton.click();
   const startResponse = await startResponsePromise;
+  const actualStartRequest = startResponse.request().postDataJSON();
+  assert.equal(actualStartRequest?.mode, "mock", "The preview button must send a mixed-mock request, not a practice request.");
+  assert.deepEqual(actualStartRequest?.subjectCombination, ["Biology", "Chemistry", "Physics"], "The mock request must include the three selected subjects.");
   assert.equal(startResponse.status(), 409,
     "The preview must reject a mixed mock when any selected published subject pool is insufficient.");
   const startPayload = await startResponse.json();
