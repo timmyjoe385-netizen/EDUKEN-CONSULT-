@@ -30,6 +30,12 @@ jobs:
 
   deploy-preview:
     if: github.event_name == 'pull_request'
+    # All pull requests share one isolated preview Worker. Keep deployment and
+    # its browser smoke test in one exclusive job so another PR cannot replace
+    # the Worker between deploy and verification.
+    concurrency:
+      group: eduken-shared-preview-worker
+      cancel-in-progress: false
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
