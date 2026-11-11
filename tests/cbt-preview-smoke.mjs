@@ -31,21 +31,26 @@ try {
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
 
-  // Only one published English sample exists in this isolated database, while the
-  // student UI requests ten by default. The safe expected result is HTTP 409 and no
-  // question screen—not a fabricated or partial practice session.
+  // The isolated preview has one published sample per subject. The default
+  // ten-question mixed mock requires more than one question in each selected
+  // subject, so the API must reject it before creating an attempt.
+  assert.equal(await page.locator(".cbt-mock-subject-option input:checked").count(), 4,
+    "The mixed mock must include required English plus exactly three additional subjects.");
+  await page.locator("#cbt-mock-count").selectOption("10");
   const startResponsePromise = page.waitForResponse(
     response => response.request().method() === "POST" &&
       response.url().includes("/functions/v1/eduken-api/api/cbt/start"),
     { timeout: 25_000 },
   );
-  await page.locator(".cbt-subject-picker button:not([disabled])").click();
+  await page.locator(".cbt-mock-banner .cbt-primary-button").click();
   const startResponse = await startResponsePromise;
-  assert.equal(startResponse.status(), 409, "The preview must reject a practice launch when the published question count is insufficient.");
+  assert.equal(startResponse.status(), 409,
+    "The preview must reject a mixed mock when any selected published subject pool is insufficient.");
   const startPayload = await startResponse.json();
-  assert.match(String(startPayload.error || ""), /only 1 published questions; 10 are required/i);
+  assert.match(String(startPayload.error || ""), /only 1 published questions; \\d+ are required/i);
   await page.getByRole("alert").filter({ hasText: /only 1 published questions/i }).waitFor({ timeout: 5_000 });
-  assert.equal(await page.locator(".cbt-question-card").count(), 0, "An insufficient question bank must not launch a practice session.");
+  assert.equal(await page.locator(".cbt-question-card").count(), 0,
+    "An insufficient question bank must not launch a partial mock session.");
 
   console.log("Live CBT preview smoke passed: real question fetch, hidden answer key, required subject selection and safe insufficient-bank rejection.");
 } finally {
