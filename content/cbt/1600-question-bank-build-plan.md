@@ -50,6 +50,13 @@ The detailed candidate queue is `content/cbt/audits/2026-11-10-assistant-subject
 - The preview browser smoke test now expects HTTP 409 and verifies that no question screen or partial attempt is created when only one published English question is available and ten are requested. This preserves/strengthens the safety test; it no longer creates a test attempt merely to satisfy the smoke test.
 - PR #194 CI/browser checks passed on code-bearing head `34b843769d05f87b86697178dcc1059a43537eca`; the latest data/audit head has no check runs attached. No direct API invocation was performed after test-function deployment; the deployed source was verified by read-back.
 
+## Mathematics syllabus-alignment checkpoint — 11 November 2026
+
+- Preliminary review of all 200 Mathematics source rows (193 retained, 7 held in r4) identified one clear syllabus-alignment concern: **batch 33 row 9** asks for the modulus of a complex number. Complex numbers do not appear among the detailed topics in the current JAMB Mathematics syllabus inspected. The mathematics itself is correct, but the item should not be treated as syllabus-approved.
+- Proposed replacement: a simple defined binary-operation item, a topic expressly listed in Section II. Proposed question, options, answer and explanation are recorded in `content/cbt/audits/2026-11-11-mathematics-syllabus-alignment-review.json`.
+- This is an audit recommendation only. r4 and original source files are unchanged; the candidate has not been inserted, imported or published. Qualified Mathematics review remains required before a staging move or approval.
+- Syllabus reference: the JAMB Mathematics syllabus PDF mirrored from the IBASS syllabus, with detailed topic list in sections I–V. It explicitly lists Binary Operations (Section II) and Calculus (Section IV); complex numbers are not listed among the detailed topics.
+
 ## Workstream register
 
 | Workstream | Current status | Next required action |
