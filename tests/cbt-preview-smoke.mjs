@@ -5,6 +5,22 @@ const url = String(process.env.CBT_PREVIEW_URL || "https://eduken-consult-previe
 const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const browserDiagnostics = { consoleErrors: [], pageErrors: [], failedRequests: [], apiResponses: [] };
+  page.on("console", message => {
+    if (message.type() === "error") browserDiagnostics.consoleErrors.push(message.text().slice(0, 500));
+  });
+  page.on("pageerror", error => browserDiagnostics.pageErrors.push(String(error?.stack || error).slice(0, 1000)));
+  page.on("requestfailed", request => {
+    const requestUrl = request.url();
+    if (/workers\.dev|supabase\.co|\/assets\//i.test(requestUrl)) {
+      browserDiagnostics.failedRequests.push({ url: requestUrl, error: request.failure()?.errorText || "unknown" });
+    }
+  });
+  page.on("response", response => {
+    if (/\/functions\/v1\/eduken-api\/api\/cbt\/questions/i.test(response.url())) {
+      browserDiagnostics.apiResponses.push({ url: response.url(), status: response.status() });
+    }
+  });
   // Bypass any stale shared-preview HTML/asset cache so this test exercises the bundle built from the current PR commit.
   await page.setExtraHTTPHeaders({ "Cache-Control": "no-cache", Pragma: "no-cache" });
   const questionsResponsePromise = page.waitForResponse(
@@ -15,8 +31,21 @@ try {
 
   const smokeUrl = new URL(url);
   smokeUrl.searchParams.set("__cbt_smoke", String(Date.now()));
-  await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
-  const questionsResponse = await questionsResponsePromise;
+  const navigationResponse = await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
+  let questionsResponse;
+  try {
+    questionsResponse = await questionsResponsePromise;
+  } catch (error) {
+    const bodyText = await page.locator("body").innerText().catch(() => "");
+    console.error("CBT preview browser diagnostics:", JSON.stringify({
+      navigationStatus: navigationResponse?.status() ?? null,
+      finalUrl: page.url(),
+      title: await page.title().catch(() => ""),
+      bodyText: bodyText.slice(0, 1400),
+      ...browserDiagnostics,
+    }));
+    throw error;
+  }
   assert.equal(questionsResponse.status(), 200, "The deployed preview must load published CBT questions from the isolated API.");
   const payload = await questionsResponse.json();
   assert.ok(Array.isArray(payload.items) && payload.items.length > 0, "Published questions must be available in the preview.");
