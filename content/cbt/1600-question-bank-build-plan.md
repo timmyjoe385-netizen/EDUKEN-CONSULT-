@@ -57,6 +57,13 @@ The detailed candidate queue is `content/cbt/audits/2026-11-10-assistant-subject
 - This is an audit recommendation only. r4 and original source files are unchanged; the candidate has not been inserted, imported or published. Qualified Mathematics review remains required before a staging move or approval.
 - Syllabus reference: the JAMB Mathematics syllabus PDF mirrored from the IBASS syllabus, with detailed topic list in sections I–V. It explicitly lists Binary Operations (Section II) and Calculus (Section IV); complex numbers are not listed among the detailed topics.
 
+## Biology semantic-review checkpoint — 11 November 2026
+
+- Screened all **200 Biology rows** in r4: 169 retained and 31 held. A preliminary same-subject comparison found **three high-confidence retained/retained duplicate pairs** requiring qualified review: stomach pepsin (batch 8 row 15 vs batch 37 row 12), ADH and collecting-duct water reabsorption (batch 25 row 13 vs batch 40 row 15), and oxygen released from photolysis (batch 11 row 15 vs batch 32 row 13).
+- One additional retained pair on natural selection (batch 7 row 16 vs batch 31 row 16) is a related/near-duplicate candidate; reviewer must decide whether the changed scenario adds a distinct assessment skill.
+- Several other high-similarity items already have one endpoint in the held set, including ureter, fertilisation site, glomerular ultrafiltration, platelet clotting, pollen production, transpiration and commensalism. See `content/cbt/audits/2026-11-11-biology-semantic-review-candidates.json`.
+- No r4 rows were moved, no replacement questions were inserted, and no database or production changes were made. These are preliminary assistant findings, not academic approval.
+
 ## Workstream register
 
 | Workstream | Current status | Next required action |
