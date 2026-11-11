@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-11",
+  "subject": "Mathematics",
+  "scope": "Preliminary syllabus alignment review of the 200-row source set (193 retained and 7 held in r4).",
+  "source": "JAMB UTME Mathematics syllabus PDF served through IBASS; mirrored PDF inspected for detailed topic list. Sections I–V cover Number and Numeration, Algebra, Geometry/Trigonometry, Calculus, and Statistics. Binary Operations are explicitly listed in Section II; complex numbers are not listed among the detailed syllabus topics.",
+  "finding": {
+    "source_location": "batch 33 row 9",
+    "question": "Find the modulus of the complex number 3 + 4i.",
+    "status_in_r4": "retained draft",
+    "concern": "Complex numbers are not explicitly included in the current detailed UTME Mathematics syllabus inspected. This is a syllabus-alignment concern, not a claim that the mathematics is incorrect.",
+    "recommendation": "Move the item to a syllabus-review hold and replace only after qualified Mathematics review."
+  },
+  "proposed_replacement": {
+    "question": "A binary operation is defined on the real numbers by a ⊙ b = 2a − b. Find 3 ⊙ 4.",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct_option": "B",
+    "explanation": "Substitute a = 3 and b = 4: 3 ⊙ 4 = 2(3) − 4 = 2.",
+    "topic": "Binary Operations",
+    "subtopic": "Evaluation of a defined binary operation",
+    "syllabus_alignment": "Binary Operations is expressly named in Section II of the JAMB UTME Mathematics syllabus.",
+    "similarity_check": "No other retained or held Mathematics question uses a defined binary operation or the symbol ⊙. This is a preliminary content scan, not a full semantic uniqueness guarantee."
+  },
+  "actions_taken": {
+    "source_csv_changed": false,
+    "r4_staging_changed": false,
+    "question_bank_database_changed": false,
+    "production_changed": false,
+    "replacement_imported": false,
+    "academic_approval_created": false
+  },
+  "status": "AWAITING_QUALIFIED_MATHEMATICS_REVIEW",
+  "reviewer_required": "A qualified Mathematics reviewer should confirm syllabus mapping, the operation's domain/closure wording, answer B, explanation and suitability before staging replacement or approval."
+}
