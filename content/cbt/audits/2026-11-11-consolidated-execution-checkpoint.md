@@ -105,3 +105,14 @@ This addendum supersedes the older PR #194 head/check status above where they co
 3. Rerun preview deployment, Chromium smoke, guest recovery, build and wallet checks on the same current head.
 4. Continue the remaining 40 uncovered-target drafts in small subject-balanced batches, screening each against the full source bank and the existing proposal set before it is added to the canonical inventory.
 5. Preserve the authenticated admin acceptance and qualified academic review gates; no release action is authorized by these drafts or automated checks.
+
+
+## 7. Hostname correction — 11 November 2026, 17:11 UTC
+
+- Cloudflare account API confirms the exact Workers subdomain is `timmyjoe385`.
+- Canonical production hostname: `https://eduken-consult.timmyjoe385.workers.dev`.
+- Canonical preview hostname: `https://eduken-consult-preview.timmyjoe385.workers.dev`.
+- The preview URL in `.github/workflows/deploy-cloudflare.yml` and the default in `tests/cbt-preview-smoke.mjs` already used the correct full subdomain.
+- A stale shortened production-origin comparison was found in `src/lib/api.ts` and corrected in commit `0f38c016520d6f171d7d6a6af8e2e9f94c46eae5`.
+- Live fetch of the canonical preview `/cbt` route returned HTTP 200 and EDUKEN CBT page HTML.
+- New build, preview deploy, browser and wallet checks have been triggered against commit `0f38c016520d6f171d7d6a6af8e2e9f94c46eae5`; at checkpoint time, build/install was still running and browser checks were queued. No result is claimed yet.
