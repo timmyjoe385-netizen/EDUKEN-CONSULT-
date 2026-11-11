@@ -103,7 +103,7 @@ const request = async (
   const method = String(options.method || 'GET').toUpperCase();
   const isolatedCbtTestWrite =
     ALLOW_CBT_TEST_WRITES &&
-    window.location.origin !== 'https://eduken-consult.timmy385.workers.dev' &&
+    window.location.origin !== 'https://eduken-consult.timmyjoe385.workers.dev' &&
     SUPABASE_URL !== PRODUCTION_SUPABASE_URL &&
     /^\/api\/(?:admin\/)?cbt(?:\/|$)/.test(path);
   if (!isolatedCbtTestWrite && shouldBlockWrite(window.location.origin, method, {
