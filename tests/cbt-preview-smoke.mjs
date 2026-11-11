@@ -37,12 +37,22 @@ try {
   assert.equal(await page.locator(".cbt-mock-subject-option input:checked").count(), 4,
     "The mixed mock must include required English plus exactly three additional subjects.");
   await page.locator("#cbt-mock-count").selectOption("10");
-  const startResponsePromise = page.waitForResponse(
-    response => response.request().method() === "POST" &&
-      response.url().includes("/functions/v1/eduken-api/api/cbt/start"),
-    { timeout: 25_000 },
-  );
-  await page.locator(".cbt-mock-banner .cbt-primary-button").click();
+  const mixedMockButton = page.getByRole("button", { name: /start mixed mock/i });
+  await mixedMockButton.waitFor({ state: "visible", timeout: 5_000 });
+  assert.equal(await mixedMockButton.isDisabled(), false, "The mixed-mock launch button must be enabled for this test.");
+
+  // Match the intended mock request explicitly. A practice-start response must
+  // never satisfy this assertion (the preview auto-adjusts practice to one sample).
+  const startResponsePromise = page.waitForResponse(response => {
+    if (response.request().method() !== "POST" ||
+        !response.url().includes("/functions/v1/eduken-api/api/cbt/start")) return false;
+    try {
+      return response.request().postDataJSON()?.mode === "mock";
+    } catch {
+      return false;
+    }
+  }, { timeout: 25_000 });
+  await mixedMockButton.click();
   const startResponse = await startResponsePromise;
   assert.equal(startResponse.status(), 409,
     "The preview must reject a mixed mock when any selected published subject pool is insufficient.");
