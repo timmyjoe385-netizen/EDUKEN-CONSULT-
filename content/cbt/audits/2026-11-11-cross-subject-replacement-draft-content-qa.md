@@ -50,3 +50,8 @@ The remaining checked proposals were provisionally sound at assistant level for 
 - No replacement was imported, approved, published or written to the production database.
 - The seven high-priority question-construction/concept-variety issues above must be corrected in draft form and re-screened before an independent reviewer is asked to sign them off.
 - All 116 proposals remain draft-only pending qualified subject, answer-key, explanation and syllabus review.
+
+
+## Literature coverage clarification
+
+The other seven Literature in English proposals also checked were DUP-21 (flashback), DUP-32 (comedy of manners), DUP-35 (epigraph), DUP-69 (unity of action), DUP-83 (pseudonym), DUP-85 (blocking) and DUP-164 (metonymy). Their supplied definitions and keys are provisionally sound at assistant level, subject to qualified syllabus review.
