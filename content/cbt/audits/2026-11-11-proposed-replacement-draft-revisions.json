@@ -12,7 +12,12 @@
       "subject": "Use of English",
       "revision_type": "wording_clarity",
       "question": "A person who habitually abstains from alcoholic drinks is called a:",
-      "options": ["Teetotaller", "Vegetarian", "Philanthropist", "Pessimist"],
+      "options": [
+        "Teetotaller",
+        "Vegetarian",
+        "Philanthropist",
+        "Pessimist"
+      ],
       "answer": "A",
       "explanation": "A teetotaller is a person who habitually abstains from drinking alcoholic beverages.",
       "reason": "More natural and precise wording than 'deliberately gives up the use of alcoholic drinks'."
@@ -21,8 +26,13 @@
       "target_id": "DUP-78",
       "subject": "Use of English",
       "revision_type": "stem_precision",
-      "question": "Which punctuation mark can correctly join these two closely related independent clauses without a coordinating conjunction: “The rain stopped; the match resumed”?",
-      "options": ["Apostrophe", "Semicolon", "Hyphen", "Quotation mark"],
+      "question": "Which punctuation mark can correctly join these two closely related independent clauses without a coordinating conjunction: “The rain stopped _____ the match resumed”?",
+      "options": [
+        "Apostrophe",
+        "Semicolon",
+        "Hyphen",
+        "Quotation mark"
+      ],
       "answer": "B",
       "explanation": "A semicolon can join two closely related independent clauses when no coordinating conjunction is used.",
       "reason": "Avoids implying that a semicolon is the only punctuation choice in every possible sentence construction."
@@ -32,7 +42,12 @@
       "subject": "Economics",
       "revision_type": "convert_definition_stem_to_question",
       "question": "What term describes the movement of financial assets out of a country, often in response to uncertainty or the expectation of better returns elsewhere?",
-      "options": ["Capital flight", "Capital formation", "Capital deepening", "Capital consumption"],
+      "options": [
+        "Capital flight",
+        "Capital formation",
+        "Capital deepening",
+        "Capital consumption"
+      ],
       "answer": "A",
       "explanation": "Capital flight is the movement of financial assets out of a country, often in response to economic or political uncertainty or the expectation of better returns elsewhere.",
       "reason": "The original declarative stem gave the definition and option A repeated it."
@@ -42,7 +57,12 @@
       "subject": "Economics",
       "revision_type": "convert_definition_stem_to_question",
       "question": "Which term describes a significant downturn in overall economic activity, commonly associated with falling output and employment?",
-      "options": ["Recession", "Inflation", "Currency appreciation", "Full employment"],
+      "options": [
+        "Recession",
+        "Inflation",
+        "Currency appreciation",
+        "Full employment"
+      ],
       "answer": "A",
       "explanation": "A recession is a significant downturn in economic activity and is commonly associated with reduced production, income and employment.",
       "reason": "The original declarative stem defined recession and option A restated the definition."
