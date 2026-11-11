@@ -10,7 +10,7 @@
 - Clear answer-key or explanation errors identified: **0**.
 - Wording/quality improvements recommended: **2** (DUP-57 and DUP-87).
 - Items assessed as provisionally sound at assistant QA level: **12**.
-- Qualified English reviewer decisions recorded: **0**.
+- Historical disposition: 11 of these 14 IDs belong to the original 90-item set for which the project owner reported independent reviewer approval. The repository lacks signed item-level evidence, so that report is not documentary-verified. The three additional Use of English proposals (DUP-129, DUP-200, DUP-245) are outside the original 90 and need separate attributable disposition.
 - Import/publication authorization: **none**.
 
 ## Item-by-item review
