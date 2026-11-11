@@ -41,4 +41,4 @@
 
 ## Release gate
 
-All 14 items remain **draft / pending qualified independent Use of English review**. A qualified reviewer must record identity, relevant subject experience, date, answer/explanation validation, syllabus mapping and bank-comparison decision in the independent worksheet. This assistant QA does not satisfy that gate and does not authorize import, publication, merge or production deployment.
+All 14 items remain draft-only in the current inventory. Eleven IDs belong to the original 90-item set for which the project owner previously reported independent reviewer approval; the repository lacks signed item-level evidence, so that report is not documentary-verified. DUP-129, DUP-200 and DUP-245 are additional proposals outside the original 90 and need their own attributable subject-review decisions. This assistant QA neither verifies nor revokes the earlier reported disposition and does not authorize import or publication.
