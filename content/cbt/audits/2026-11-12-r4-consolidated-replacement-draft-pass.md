@@ -7,8 +7,8 @@ This is one consolidated pass over all 26 still-uncovered held locations in the 
 - Full R4 bank screened: 1,600 rows across eight subjects.
 - Existing proposal inventory screened: 116 proposals.
 - Outstanding targets assessed: 26.
-- New draft alternatives retained for owner review: 3.
-- Targets held after screening because a clear distinct alternative was not established: 23.
+- New draft alternatives retained for owner review: 2.
+- Targets held after screening because a clear distinct alternative was not established: 24.
 - No canonical inventory, original question CSV, R4 staging CSV or database changed.
 - No import, publication, merge or production deployment.
 
@@ -16,7 +16,7 @@ Character-trigram Dice similarity of 0.42 or higher is treated as a lexical clos
 
 ## New draft alternatives
 
-The three retained drafts are draft-only. Each has four options, one intended key and a concise rationale. Two initially explored candidates were removed after the existing proposal inventory check identified conceptual duplicates.
+The two retained drafts are draft-only. Each has four options, one intended key and a concise rationale. Three initially explored candidates were removed after full-bank or proposal-inventory checks identified conceptual duplicates.
 
 ### DUP-112 — Biology (held; not retained)
 **Held source:** batch 33, row 14  
@@ -94,7 +94,7 @@ D. Fertilisation
 
 **Full-bank screen:** Highest same-subject character-trigram Dice score: 0.333 across 200 Biology questions; no score at or above 0.42. No close lexical match identified. This remains a draft because the bank contains related meiosis material and the owner should check whether the detail is appropriate for the intended syllabus level.
 
-### DUP-103 — Economics
+### DUP-103 — Economics (held; not retained)
 **Held source:** batch 39, row 27  
 **Draft ID:** R4-ADD-2026-11-12-DUP-103  
 **Topic:** Market structures / Price discrimination
@@ -110,17 +110,16 @@ D. Retail price maintenance
 
 **Explanation:** Price discrimination occurs when a seller charges different prices to different buyers or market groups for the same good or service, where the difference is not explained by differences in the cost of supplying them.
 
-**Internal QA:** The scenario tests differentiated pricing, not the held question's definition of a monopsony. Price leadership is a pricing practice associated with oligopoly; dumping concerns selling in an export market at an unusually low price; retail price maintenance concerns restrictions on resale prices.
+**Screen result:** Not retained. The revised scenario stem scored 0.458 against an existing Economics bank question that already defines charging different prices to different consumers for the same product. This is a direct conceptual duplicate and is excluded.
 
-**Full-bank screen:** The original candidate wording produced one lexical flag against an oligopoly item because of shared generic wording about price. The revised scenario stem's highest same-subject bank score is 0.320 and its highest proposal-inventory score is 0.320; neither reaches the 0.42 lexical flag. The distinct concept was also checked against the nearest oligopoly item. This still requires owner review for syllabus fit; do not treat the mechanical score as proof of uniqueness.
-
-## Remaining 23 targets — held, not force-filled
+## Remaining 24 targets — held, not force-filled
 
 The following targets were assessed but no replacement was added in this pass. The existing subject bank already contains a close lexical or conceptual match, or the proposed alternative was not sufficiently distinct. Leaving a target held is safer than filling the slot with a disguised duplicate.
 
 | Target | Reason held |
 |---|---|
 | DUP-118 — Government | African Union peace/security alternative overlaps the bank's existing international-organisation peace and security question set. |
+| DUP-103 — Economics | Revised price-discrimination scenario scored 0.458 against an existing same-subject question testing the same practice; excluded. |
 | DUP-112 — Biology | Phototropism alternative duplicates existing proposal DUP-61; excluded after proposal-inventory check. |
 | DUP-212 — Literature in English | Enjambment alternative duplicates existing proposal DUP-62; excluded after proposal-inventory check. |
 | DUP-132 — Use of English | Conditional-sentence alternatives collide with existing conditional-grammar questions; punctuation alternatives also have close matches. |
@@ -146,7 +145,7 @@ The following targets were assessed but no replacement was added in this pass. T
 
 ## Proposal-inventory screen
 
-All three retained draft stems were compared against the 116 existing proposals in the canonical proposal inventory. No character-trigram score reached 0.42. The two rejected exploratory alternatives above were explicitly excluded because they matched existing proposal concepts despite their lower-than-threshold lexical scores.
+Both retained draft stems were compared against the 116 existing proposals in the canonical proposal inventory. No character-trigram score reached 0.42. The rejected exploratory alternatives DUP-112 and DUP-212 were explicitly excluded because they matched existing proposal concepts despite their lower-than-threshold lexical scores. DUP-103 was excluded after the full subject-bank screen found a direct match.
 
 ## Owner-led internal QA and release boundary
 
