@@ -7,8 +7,8 @@ This is one consolidated pass over all 26 still-uncovered held locations in the 
 - Full R4 bank screened: 1,600 rows across eight subjects.
 - Existing proposal inventory screened: 116 proposals.
 - Outstanding targets assessed: 26.
-- New draft alternatives retained for owner review: 5.
-- Targets held after screening because a clear distinct alternative was not established: 21.
+- New draft alternatives retained for owner review: 3.
+- Targets held after screening because a clear distinct alternative was not established: 23.
 - No canonical inventory, original question CSV, R4 staging CSV or database changed.
 - No import, publication, merge or production deployment.
 
@@ -16,9 +16,9 @@ Character-trigram Dice similarity of 0.42 or higher is treated as a lexical clos
 
 ## New draft alternatives
 
-All five are draft-only. Each has four options, one intended key and a concise rationale.
+The three retained drafts are draft-only. Each has four options, one intended key and a concise rationale. Two initially explored candidates were removed after the existing proposal inventory check identified conceptual duplicates.
 
-### DUP-112 — Biology
+### DUP-112 — Biology (held; not retained)
 **Held source:** batch 33, row 14  
 **Draft ID:** R4-ADD-2026-11-12-DUP-112  
 **Topic:** Plant physiology / Phototropism
@@ -34,9 +34,7 @@ D. Thigmotropism
 
 **Explanation:** Phototropism is directional growth in response to light. Young shoots commonly bend towards the light source.
 
-**Internal QA:** Tests a growth response to light rather than the held question's focus on water-conducting tissue. The four tropism terms are distinct responses to different stimuli.
-
-**Full-bank screen:** Highest same-subject character-trigram Dice score: 0.264 across 200 Biology questions; no score at or above 0.42. No close proposal-inventory match identified.
+**Screen result:** Not retained. Although the full-bank lexical score was below threshold, existing proposal DUP-61 already tests the same phototropic bending mechanism. This is a conceptual duplicate and is excluded.
 
 ### DUP-147 — Chemistry
 **Held source:** batch 34, row 18  
@@ -58,7 +56,7 @@ D. Filter funnel
 
 **Full-bank screen:** Highest same-subject character-trigram Dice score: 0.342 across 200 Chemistry questions; no score at or above 0.42. The closest items concern indicators and salt preparation, not the function of a burette.
 
-### DUP-212 — Literature in English
+### DUP-212 — Literature in English (held; not retained)
 **Held source:** batch 34, row 38  
 **Draft ID:** R4-ADD-2026-11-12-DUP-212  
 **Topic:** Poetry / Enjambment
@@ -74,9 +72,7 @@ D. Assonance
 
 **Explanation:** Enjambment occurs when the grammatical sense of a sentence runs beyond the end of one poetic line into the next.
 
-**Internal QA:** This tests the continuation of syntax across line endings. Caesura is a pause within a line; alliteration and assonance concern sound repetition.
-
-**Full-bank screen:** Highest same-subject character-trigram Dice score: 0.383 across 200 Literature in English questions; no score at or above 0.42. The closest item tests caesura, a different poetic technique. Keep the distinction explicit in the final question bank.
+**Screen result:** Not retained. Existing proposal DUP-62 already tests enjambment using the same defining feature. This is a conceptual and lexical duplicate and is excluded.
 
 ### DUP-226 — Biology
 **Held source:** batch 37, row 14  
@@ -116,15 +112,17 @@ D. Retail price maintenance
 
 **Internal QA:** The scenario tests differentiated pricing, not the held question's definition of a monopsony. Price leadership is a pricing practice associated with oligopoly; dumping concerns selling in an export market at an unusually low price; retail price maintenance concerns restrictions on resale prices.
 
-**Full-bank screen:** The original candidate wording produced one lexical flag against an oligopoly item because of shared generic wording about price. This revised scenario stem reduces that wording overlap; it still requires owner review for conceptual coverage and syllabus fit. Do not treat the mechanical score as proof of uniqueness.
+**Full-bank screen:** The original candidate wording produced one lexical flag against an oligopoly item because of shared generic wording about price. The revised scenario stem's highest same-subject bank score is 0.320 and its highest proposal-inventory score is 0.320; neither reaches the 0.42 lexical flag. The distinct concept was also checked against the nearest oligopoly item. This still requires owner review for syllabus fit; do not treat the mechanical score as proof of uniqueness.
 
-## Remaining 21 targets — held, not force-filled
+## Remaining 23 targets — held, not force-filled
 
 The following targets were assessed but no replacement was added in this pass. The existing subject bank already contains a close lexical or conceptual match, or the proposed alternative was not sufficiently distinct. Leaving a target held is safer than filling the slot with a disguised duplicate.
 
 | Target | Reason held |
 |---|---|
 | DUP-118 — Government | African Union peace/security alternative overlaps the bank's existing international-organisation peace and security question set. |
+| DUP-112 — Biology | Phototropism alternative duplicates existing proposal DUP-61; excluded after proposal-inventory check. |
+| DUP-212 — Literature in English | Enjambment alternative duplicates existing proposal DUP-62; excluded after proposal-inventory check. |
 | DUP-132 — Use of English | Conditional-sentence alternatives collide with existing conditional-grammar questions; punctuation alternatives also have close matches. |
 | DUP-95 — Chemistry | Le Chatelier pressure-shift item is already present in the bank. |
 | DUP-134 — Biology | Antibody-producing lymphocyte question closely matches an existing humoral-immunity item; blood-component alternatives overlap existing blood questions. |
@@ -145,6 +143,10 @@ The following targets were assessed but no replacement was added in this pass. T
 | DUP-230 — Government | Ministerial responsibility is already covered by a close parliamentary-system question. |
 | DUP-41 — Biology | Homologous structures are already tested directly in the evolution bank. |
 | DUP-175 — Biology | Mammalian characteristics are already tested directly in the classification bank. |
+
+## Proposal-inventory screen
+
+All three retained draft stems were compared against the 116 existing proposals in the canonical proposal inventory. No character-trigram score reached 0.42. The two rejected exploratory alternatives above were explicitly excluded because they matched existing proposal concepts despite their lower-than-threshold lexical scores.
 
 ## Owner-led internal QA and release boundary
 
