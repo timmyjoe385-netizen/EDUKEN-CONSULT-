@@ -38,7 +38,7 @@ D. Plasma
 
 **Internal checks:** The question tests a different biological function from the held platelet-plug question. The key is consistent with the definition of phagocytosis. The distractors are other blood components or blood constituents, rather than alternative names for phagocytes.
 
-**Initial bank-wide screen:** highest same-subject trigram Dice score 0.290; no score at or above 0.42 across the 200 Biology bank rows. No score at or above 0.42 against the 14 existing Biology proposals.
+**Initial bank-wide screen:** highest same-subject trigram Dice score 0.290; no score at or above 0.42 across the 200 Biology bank rows. No score at or above 0.42 against the existing Biology proposals screened.
 
 **Remaining caution:** The concept is standard human defence/transport content, but its exact placement in the current UTME Biology syllabus has not been independently confirmed. Keep as a draft.
 
@@ -61,7 +61,7 @@ D. consumption by one person preventing all others from using it
 
 **Internal checks:** The key captures the two standard characteristics of a pure public good. Option A describes characteristics associated with private goods; C and D are not defining characteristics of public goods.
 
-**Initial bank-wide screen:** highest same-subject trigram Dice score 0.349; no score at or above 0.42 across the 200 Economics bank rows. No score at or above 0.42 against the 14 existing Economics proposals.
+**Initial bank-wide screen:** highest same-subject trigram Dice score 0.349; no score at or above 0.42 across the 200 Economics bank rows. No score at or above 0.42 against the existing Economics proposals screened.
 
 **Remaining caution:** The wording describes a pure public good; some real-world goods are mixed or quasi-public. Keep as a draft.
 
