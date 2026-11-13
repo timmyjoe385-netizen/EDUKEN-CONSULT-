@@ -34,3 +34,16 @@
 2. Keep new proposals in a separate draft queue until exact target IDs, source provenance, option/key validity, full-bank similarity results and related-topic cautions are recorded.
 3. Do not label any draft academically approved. With no qualified reviewer available, the bank can remain in internal draft/preview status; release readiness cannot be claimed.
 4. Keep platform PRs open/unmerged and production deployment/import/publication disabled until the owner explicitly authorizes release and the remaining acceptance/review gates are genuinely satisfied.
+
+
+## Additional replacement-coverage execution — 13 November 2026
+
+The latest consolidated draft pass was re-read against the 45-location uncovered queue and the existing batch reports.
+
+- The consolidated pass assessed the remaining 26 targets identified after the prior draft batches.
+- Two alternatives were retained as draft-only candidates: DUP-147 (Chemistry, burette function) and DUP-226 (Biology, crossing-over mechanism).
+- Twenty-four alternatives were held rather than force-filled because the existing subject bank or proposal inventory already covered the concept, or a distinct syllabus-appropriate alternative was not established.
+- Earlier batch reports also retain draft-only alternatives for DUP-215, DUP-128, DUP-165, DUP-133, DUP-108, DUP-96, DUP-151, DUP-110 and DUP-169; rejected alternatives remain explicitly excluded.
+- This is progress on the uncovered-target queue, not completion of the entire replacement programme. The canonical 116-proposal inventory and R4 staging files remain unchanged; target coverage remains 104/161 until a separately reconciled inventory revision is made.
+- The consolidated report's two retained candidates and 24 held targets do not create academic approvals. Qualified academic approvals remain 0.
+- No source CSV, staging CSV, canonical inventory, database, Worker, payment/auth configuration or production setting was changed. No question was imported or published.
