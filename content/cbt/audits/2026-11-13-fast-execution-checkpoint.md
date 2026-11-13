@@ -187,3 +187,13 @@ All five review workstreams completed as non-destructive repository checks and c
 - PR #194 and #199 remain open/draft/unmerged. Their exact recorded heads retain four successful automated workflow groups each; PR #199's admin tests still use mocked authentication/API. Full mock-size tests, live AI-assistant POST and authenticated admin/non-admin walkthrough remain outstanding.
 - Rounds 12–13 changed only audit documentation. No source question, R4 staging row, database, Worker, auth/payment setting or production resource changed. No import, publication, merge or deployment.
 
+## Consolidated continuation rounds 14 and 15 — 13 November 2026
+- Round 14 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-14.md`.
+- Round 15 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-15.md`.
+- Added a separately screened draft for DUP-95 (Chemistry; held source batch 34 row 21). It tests average gas-production rate as change in gas volume divided by elapsed time. Screened all 200 Chemistry source rows and all 17 Chemistry canonical proposals: highest lexical scores 0.386 and 0.302 respectively. It remains outside the canonical inventory; the 116/161 coverage count and 45 uncovered targets are unchanged.
+- Added a defensive check in `supabase/functions/eduken-api/cbt-attempt-validation.mjs` rejecting duplicate question IDs in a stored attempt snapshot, plus a regression test in `tests/cbt-attempt-validation.test.mjs`. Both changes are on the work branch only.
+- **Important test limitation:** no workflow run exists for the new work-branch commit. Existing successful workflows on PR #194/#199 run on older, different heads and do not validate this change. The regression test is present but its execution is pending; do not describe it as passed.
+- Rank/provenance limits remain: 178 baseline ranks 1–286 unrepresented by exact pair crosswalks; 237 targeted reviews lack exact rank IDs; 1,007/1,003 and 472/237 and 685/717 discrepancies unresolved; final aggregate remains null.
+- PR #194 and #199 remain open/draft/unmerged. Full mock-size preview testing, live AI-assistant POST and authenticated admin/non-admin walkthrough remain outstanding.
+- No production Worker/database/auth/payment changes, student data access, import, publication, merge or deployment occurred.
+
