@@ -207,3 +207,14 @@ All five review workstreams completed as non-destructive repository checks and c
 - Reconfirmed rank gaps: 178 baseline ranks unrepresented by exact pair crosswalks; 237 targeted reviews lack exact rank IDs; counter conflicts remain unresolved and aggregate totals remain null.
 - PR #194 and #199 remain open/draft/unmerged, with four successful workflow groups on each exact older PR head. These runs do not validate the current work-branch head. Authenticated acceptance, full mock-size tests and live AI-assistant POST remain open.
 - No production Worker/database/auth/payment changes, student data access, import, publication, merge or deployment occurred. Qualified academic approvals remain 0.
+
+
+## Five-workstream continuation round 17 — 13 November 2026
+- Round 17 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-17.md`.
+- Re-parsed the canonical replacement inventory: 116 declared and actual items, 116 unique target IDs, zero duplicate IDs, and zero structural defects in question text/options/A–D keys. Subject counts: Mathematics 7, Chemistry 17, Physics 12, Biology 18, Literature 14, Economics 20, Government 14, Use of English 14.
+- R4 target-location coverage remains 116/161, with 45 held locations uncovered. Supplemental DUP-95 remains outside the canonical inventory. No speculative replacement was added.
+- Ran the fetched CBT grading and subject-selection helper/test contents in an isolated Node.js v22.16.0 harness: 10 tests passed, 0 failed. This is not a checkout-based full `npm run test:validation` or CI run.
+- Rank/provenance gaps remain: 178 baseline ranks 1–286 lack exact pair crosswalk representation; 237 reported targeted reviews lack exact rank IDs; 1,007/1,003 and stale 472/237 and 685/717 discrepancies remain unresolved. Aggregate totals remain null.
+- Freshly re-fetched PR #194/#195/#197/#199: all remain open/draft/unmerged. Four workflow groups passed on each exact inspected PR head; production deploy jobs were skipped. These runs do not validate separate work-branch changes.
+- Authenticated admin/non-admin preview acceptance, full mock-size validation and live AI-assistant POST remain outstanding. Latest recorded preview bank remains eight synthetic published samples; no fresh live preview status claimed.
+- Round 17 changed only the two audit documents. No source question, canonical proposal content, R4 staging row, database, Worker, auth/payment setting or production resource changed. No import, publication, merge or deployment. Qualified academic approvals remain 0.
