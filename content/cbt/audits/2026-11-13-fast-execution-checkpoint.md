@@ -177,3 +177,13 @@ All five review workstreams completed as non-destructive repository checks and c
 - Re-fetched exact PR #194 and #199 heads and workflows. Both remain open/draft/unmerged; all four workflow groups passed on each exact head. PR #199 browser tests use mocked auth/API; authenticated admin acceptance remains outstanding.
 - Last recorded preview bank remains eight synthetic published samples. Full mock modes, live AI-assistant POST and authenticated admin/non-admin walkthrough remain outstanding; no new live preview status claimed.
 - Rounds 10 and 11 changed only inventory descriptive metadata, the separate DUP-104 editorial proposal, two round reports and this checkpoint. No source question, R4 staging row, database, Worker, auth/payment setting or production resource changed. No import, publication, merge or deployment.
+
+## Consolidated continuation rounds 12 and 13 — 13 November 2026
+- Round 12 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-12.md`.
+- Round 13 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-13.md`.
+- Added a separate candidate-screen record for uncovered target DUP-132 (Use of English). A proposed “photographic” primary-stress question was rejected because the retained bank already contains closely related primary-stress questions; the highest lexical match was 0.772 and the assessed learning outcome was also conceptually repeated. DUP-132 remains uncovered.
+- No replacement was added to the canonical inventory. It remains 116 entries / 116 unique IDs, with all entries structurally complete. The 45-location uncovered queue and 116/161 coverage count are unchanged.
+- Rank/provenance limitations remain unchanged: 178 baseline ranks 1–286 are not represented by exact pair crosswalks; 237 reported targeted reviews have no exact rank IDs; the 1,007/1,003 discrepancy and stale 472/237 and 685/717 counters remain unresolved. Final reviewed/remaining totals remain null.
+- PR #194 and #199 remain open/draft/unmerged. Their exact recorded heads retain four successful automated workflow groups each; PR #199's admin tests still use mocked authentication/API. Full mock-size tests, live AI-assistant POST and authenticated admin/non-admin walkthrough remain outstanding.
+- Rounds 12–13 changed only audit documentation. No source question, R4 staging row, database, Worker, auth/payment setting or production resource changed. No import, publication, merge or deployment.
+
