@@ -16,7 +16,7 @@ The existing non-canonical revision proposal file `2026-11-11-proposed-replaceme
 All seven rewritten/held records have four options where a rewrite is supplied, and each rewritten record has a valid A–D key. These are proposals only; no canonical inventory or source bank row was replaced. The existing source targets were checked against R4 held CSVs: DUP-228 batch 15 row 28; DUP-109 batch 17 row 27; DUP-102 batch 18 row 32; DUP-221 batch 18 row 35; DUP-104 batch 18 row 36; DUP-123 batch 20 row 33; DUP-232 batch 34 row 37. The source target locations are distinct from the proposed replacement concepts and remain held pending review.
 
 ## Workstream 2 — rescreen revised stems against all 1,600 R4 rows
-The four retained and four held CSV exports were parsed: **1,600 valid question rows**, exactly **200 per subject**. The seven rewritten stems were compared only with same-subject source-bank stems using character-trigram Dice similarity. Highest matches:
+The four retained and four held CSV exports were parsed: **1,600 valid question rows**, exactly **200 per subject**. All eight rewritten stems in the existing revision file were compared only with same-subject source-bank stems using character-trigram Dice similarity. Highest matches:
 
 | Draft | Highest same-subject match | Score |
 |---|---|---:|
