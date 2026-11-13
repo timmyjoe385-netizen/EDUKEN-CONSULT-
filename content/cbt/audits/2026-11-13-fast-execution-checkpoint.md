@@ -24,7 +24,7 @@
 
 ## Question-bank / content boundary
 - R4 source bank remains 1,600 rows: 1,439 provisionally retained + 161 held, exactly 200 per subject.
-- The canonical replacement inventory remains 116 proposals, covering 104 of 161 held locations. The 45-location uncovered queue and the 5 first-pass draft alternatives are separate from the canonical inventory unless formally reconciled.
+- The canonical replacement inventory remains 116 proposals, covering 116 of 161 held source locations by explicit target-location crosswalk; 45 held locations remain without a proposal target. Non-canonical draft alternatives remain separate and do not increase this coverage count.
 - The 12 November owner-led cross-check records two additional retained-bank comparisons (DUP-147 Chemistry/burette and DUP-226 Biology/crossing-over) and related-topic cautions for earlier drafts. These are draft-only findings.
 - Qualified academic approvals recorded: 0. Do not promote, import or publish any question on the basis of assistant QA, lexical similarity scores or owner-led comparison alone.
 - Cross-window rank reconciliation remains unresolved; final reviewed/remaining totals must remain null/unverified rather than being inferred.
@@ -70,3 +70,13 @@ Rechecked PR #194 and #199: both remain open draft PRs; all four recorded workfl
 
 ### Round result
 All five review workstreams completed as non-destructive repository checks and checkpoint reconciliation. No unresolved issue was relabelled as complete. Next execution should continue across five workstreams, prioritising draft-only correction of the seven question-construction flags, exact target/proposal reconciliation for the uncovered queue, bank-wide uniqueness checks, provenance/rank reconciliation, and isolated-preview acceptance evidence. Production remains locked pending explicit owner approval.
+
+
+## Five-workstream continuation round 2 — 13 November 2026
+
+- The three Government lexical flags (DUP-102, DUP-221, DUP-104) were compared conceptually with their top same-subject lexical matches. The concepts differ (Commonwealth vs constitutionalism; caretaker government vs permanent administration; electoral college vs electoral ward). They remain draft-only and not academically approved.
+- The full Literature bank and 14 Literature proposals were inspected. DUP-232 remains held because its epithet proposal overlaps DUP-59; no safe distinct substitute was established.
+- Coverage reporting was reconciled to the explicit target-location crosswalk: **116/161**, 45 uncovered. Older 104/161 checkpoint text is stale and corrected above.
+- Rank reconciliation remains unresolved only for the exact baseline/targeted review crosswalk and four-count discrepancy; ranks 287–1,304 have explicit dispositions. Aggregate totals remain null.
+- PR #194 and #199 remain open/draft/unmerged; their previously verified four workflow groups each passed. Authenticated preview acceptance remains outstanding. Production remains untouched.
+- Detailed report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-2.md`.
