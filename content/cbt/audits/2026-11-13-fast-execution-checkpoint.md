@@ -197,3 +197,13 @@ All five review workstreams completed as non-destructive repository checks and c
 - PR #194 and #199 remain open/draft/unmerged. Full mock-size preview testing, live AI-assistant POST and authenticated admin/non-admin walkthrough remain outstanding.
 - No production Worker/database/auth/payment changes, student data access, import, publication, merge or deployment occurred.
 
+
+
+## Five-workstream continuation round 16 — 13 November 2026
+- Round 16 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-16.md`.
+- Reconfirmed canonical target-location coverage at 116/161, with 45 uncovered held locations; DUP-95 remains supplemental and outside the canonical 116.
+- Re-fetched the duplicate-ID guard and regression test. A focused isolated Node harness passed four assertions (valid attempt, duplicate IDs, unknown answer ID, malformed snapshot). This is not the repository test file or full validation suite; the branch test remains unverified.
+- Confirmed workflow triggers do not run the build workflow for direct pushes to this work branch; no workflow-dispatch action was available and no new branch CI run exists.
+- Reconfirmed rank gaps: 178 baseline ranks unrepresented by exact pair crosswalks; 237 targeted reviews lack exact rank IDs; counter conflicts remain unresolved and aggregate totals remain null.
+- PR #194 and #199 remain open/draft/unmerged, with four successful workflow groups on each exact older PR head. These runs do not validate the current work-branch head. Authenticated acceptance, full mock-size tests and live AI-assistant POST remain open.
+- No production Worker/database/auth/payment changes, student data access, import, publication, merge or deployment occurred. Qualified academic approvals remain 0.
