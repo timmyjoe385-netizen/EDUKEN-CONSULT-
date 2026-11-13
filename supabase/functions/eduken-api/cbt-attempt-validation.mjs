@@ -26,6 +26,9 @@ export function gradeCbtAttempt(questionSnapshot, rawAnswers) {
     if (!id || !OPTION_KEYS.includes(correct) || !isRecord(question?.options)) {
       return { valid: false, errors: ["Attempt question snapshot is invalid."] };
     }
+    if (questionsById.has(id)) {
+      return { valid: false, errors: ["Attempt question snapshot contains duplicate question IDs."] };
+    }
     questionsById.set(id, question);
   }
 
