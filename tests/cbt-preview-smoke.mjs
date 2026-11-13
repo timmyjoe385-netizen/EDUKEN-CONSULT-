@@ -109,7 +109,7 @@ try {
   assert.equal(await page.locator(".cbt-timer").innerText(), "04:00",
     "The student-facing timer must match the server's four-minute duration.");
 
-  console.log("Live CBT preview smoke passed: real question fetch, hidden answer key, required subject selection and safe insufficient-bank rejection.");
+  console.log("Live CBT preview smoke passed: real question fetch, hidden answer key, availability-gated four-subject starter, server-enforced four-minute timer and isolated API.");
 } finally {
   await browser.close();
 }
