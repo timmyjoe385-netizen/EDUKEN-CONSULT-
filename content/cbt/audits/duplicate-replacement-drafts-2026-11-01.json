@@ -3,7 +3,7 @@
   "purpose": "Original replacement-question drafts for the 90 confirmed duplicate rows in the controlled disposition register.",
   "draft_count": 116,
   "source_register": "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
-  "important": "All 115 proposals remain separate, unpublished drafts. The original 90 proposals plus 25 target-specific drafts added on 2026-11-09 have been screened against the 1,600-row r3 retained-plus-held bank and the prior proposal set. The latest six drafts are below the 0.42 lexical-similarity threshold. Earlier lexical flags remain review prompts, not duplicate verdicts. All proposals still require qualified independent subject and syllabus review. Qualified approvals: 0. Imports: 0. Publications: 0.",
+  "important": "All 116 proposals remain separate, unpublished drafts. The original 90 proposals plus 26 additional target-specific drafts have been screened against the 1,600-row R4 retained-plus-held bank and the prior proposal set. Lexical similarity flags are review prompts, not duplicate verdicts. All proposals remain provisional and require owner review; no qualified academic approvals are recorded. Imports: 0. Publications: 0.",
   "items": [
     {
       "target_id": "DUP-01",
