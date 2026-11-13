@@ -93,3 +93,14 @@ All five review workstreams completed as non-destructive repository checks and c
 - No manual action was needed for this audit round. A later authenticated preview acceptance test will require the owner to sign in through the isolated preview site; never send passwords or authentication codes in chat.
 - Production, source CSVs, canonical inventory, staging CSVs, databases and Worker configuration remain unchanged. No questions imported or published. Qualified academic approvals remain 0.
 - Detailed report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-3.md`.
+
+
+## Five-workstream continuation round 4 — 13 November 2026
+
+- Reconfirmed branch and PR evidence: #194 and #199 remain open, draft, unmerged and mergeable. Their four recorded workflow groups each passed on the exact inspected PR head; the newer audit-only branch head has no PR-triggered workflow runs.
+- Reconciled the 45-location queue without changing canonical target coverage: 116/161, 45 uncovered. Twelve uncovered targets have at least one recorded draft candidate; 33 have no retained candidate in reviewed reports. Two alternatives from the consolidated pass remain draft-only (DUP-147 Chemistry and DUP-226 Biology); 24 assessed targets were held.
+- Rechecked semantic exclusions: DUP-112 overlaps proposal DUP-61; DUP-212 overlaps proposal DUP-62. DUP-147 remains a draft-only burette-function alternative, not an academic approval.
+- Rank/provenance gaps remain open: baseline ranks 1–286 and 237 targeted reviews lack complete exact crosswalk evidence; 1,007 versus 1,003 cumulative discrepancy unresolved; no complement inferred. Qualified academic approvals remain 0.
+- Preview acceptance remains incomplete: eight sample questions only; authenticated admin/non-admin walkthrough and live AI-assistant POST outstanding. No owner action required for this audit round; future preview acceptance requires owner sign-in on isolated preview.
+- No source questions, canonical inventory, staging, database, Worker, auth/payment settings or production resources changed. No import, publication, merge or deployment.
+- Full report: [Round 4 five-workstream continuation](2026-11-13-five-workstream-continuation-round-4.md).
