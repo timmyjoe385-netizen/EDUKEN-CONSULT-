@@ -137,7 +137,7 @@ test('mixed mock defaults to the same 10-question count shown in the selector', 
         durationSeconds: 900,
         questions: Array.from({ length: 10 }, (_, index) => ({
           id: 'mock-default-' + index,
-          subject: index < 3 ? ['Biology', 'Chemistry', 'Physics'][index] : 'Use of English',
+          subject: index < 3 ? 'Use of English' : index < 6 ? 'Biology' : index < 8 ? 'Chemistry' : 'Physics',
           prompt: 'Mock question ' + (index + 1),
           options: ['A', 'B', 'C', 'D'],
         })),
@@ -150,6 +150,23 @@ test('mixed mock defaults to the same 10-question count shown in the selector', 
   await page.getByRole('button', { name: /Start mixed mock/i }).click();
   await expect(page.getByText('Question 1 of 10')).toBeVisible();
   expect(requestedCount).toBe(10);
+});
+
+test('mixed mock is unavailable when any selected subject lacks the required published questions', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: ['Use of English', 'Biology', 'Chemistry'].map((subject, index) => ({
+      id: 'incomplete-mock-' + index,
+      subject,
+      question_text: 'Choose the correct option.',
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    })) }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#cbt-mock-count')).toBeDisabled();
+  await expect(page.locator('#cbt-mock-count')).toContainText('Not enough published questions for a mock');
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
 });
 
 test('four-question starter mock is offered only with one published question per subject and uses four minutes', async ({ page }) => {
@@ -214,7 +231,7 @@ test('180-question full mock uses a 120-minute fallback when the API omits durat
         attemptToken: 'd'.repeat(64),
         questions: Array.from({ length: 180 }, (_, index) => ({
           id: 'full-mock-' + index,
-          subject: ['Use of English', 'Biology', 'Chemistry', 'Physics'][index % 4],
+          subject: index < 60 ? 'Use of English' : index < 100 ? 'Biology' : index < 140 ? 'Chemistry' : 'Physics',
           prompt: 'Full mock question ' + (index + 1),
           options: ['A', 'B', 'C', 'D'],
         })),
