@@ -37,6 +37,13 @@ test("rejects malformed answer values and malformed snapshots", () => {
   assert.equal(gradeCbtAttempt([{ id: "q", options: {}, correct_option: "Z" }], {}).valid, false);
 });
 
+test("rejects duplicate question IDs in an attempt snapshot", () => {
+  const duplicateSnapshot = [snapshot[0], { ...snapshot[1], id: snapshot[0].id }];
+  const result = gradeCbtAttempt(duplicateSnapshot, { "q-1": "B" });
+  assert.equal(result.valid, false);
+  assert.ok(result.errors.some(error => /duplicate question IDs/i.test(error)));
+});
+
 
 test("timed CBT expiry includes a short server grace window for automatic submission", () => {
   const started = new Date("2026-10-29T07:00:00.000Z");
