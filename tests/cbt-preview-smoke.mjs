@@ -64,18 +64,16 @@ try {
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
 
-  // The isolated preview has one published sample per subject. The default
-  // ten-question mixed mock requires more than one question in each selected
-  // subject, so the API must reject it before creating an attempt.
-  assert.equal(await page.locator(".cbt-mock-subject-option input:checked").count(), 4,
-    "The mixed mock must include required English plus exactly three additional subjects.");
-  await page.locator("#cbt-mock-count").selectOption("10");
+  // The isolated preview has one published sample per subject. The four-question
+  // starter is therefore available, while larger mock sizes must remain unavailable.
+  const mockCountSelect = page.locator("#cbt-mock-count");
+  assert.deepEqual(await mockCountSelect.locator("option").allTextContents(), ["4-question starter mock"],
+    "Only the four-question starter should be offered for one published question per selected subject.");
+  assert.equal(await mockCountSelect.inputValue(), "4");
   const mixedMockButton = page.getByRole("button", { name: /start mixed mock/i });
   await mixedMockButton.waitFor({ state: "visible", timeout: 5_000 });
-  assert.equal(await mixedMockButton.isDisabled(), false, "The mixed-mock launch button must be enabled for this test.");
+  assert.equal(await mixedMockButton.isDisabled(), false, "The four-question starter must be launchable when each selected subject has one published question.");
 
-  // Match the intended mock request explicitly. A practice-start response must
-  // never satisfy this assertion (the preview auto-adjusts practice to one sample).
   const startResponsePromise = page.waitForResponse(response => {
     if (response.request().method() !== "POST" ||
         !response.url().includes("/functions/v1/eduken-api/api/cbt/start")) return false;
@@ -88,15 +86,28 @@ try {
   await mixedMockButton.click();
   const startResponse = await startResponsePromise;
   const actualStartRequest = startResponse.request().postDataJSON();
-  assert.equal(actualStartRequest?.mode, "mock", "The preview button must send a mixed-mock request, not a practice request.");
-  assert.deepEqual(actualStartRequest?.subjectCombination, ["Biology", "Chemistry", "Physics"], "The mock request must include the three selected subjects.");
-  assert.equal(startResponse.status(), 409,
-    "The preview must reject a mixed mock when any selected published subject pool is insufficient.");
+  assert.equal(actualStartRequest?.mode, "mock", "The preview button must send a mixed-mock request.");
+  assert.deepEqual(actualStartRequest?.subjectCombination, ["Biology", "Chemistry", "Physics"],
+    "The mock request must include the three selected subjects.");
+  assert.equal(actualStartRequest?.questionCount, 4,
+    "The one-question-per-subject preview inventory must start only the four-question starter.");
+  assert.equal(startResponse.status(), 201, "The published-only four-question starter should start successfully.");
   const startPayload = await startResponse.json();
-  assert.match(String(startPayload.error || ""), /only 1 published questions; .* are required/i);
-  await page.getByRole("alert").filter({ hasText: /only 1 published questions/i }).waitFor({ timeout: 5_000 });
-  assert.equal(await page.locator(".cbt-question-card").count(), 0,
-    "An insufficient question bank must not launch a partial mock session.");
+  assert.equal(startPayload.durationSeconds, 4 * 60, "The server must enforce the four-minute starter timer.");
+  assert.equal(startPayload.questions?.length, 4, "The starter must contain exactly four published questions.");
+  const startedSubjectCounts = startPayload.questions.reduce((counts, question) => {
+    counts[question.subject] = (counts[question.subject] || 0) + 1;
+    return counts;
+  }, {});
+  assert.deepEqual(startedSubjectCounts, {
+    "Use of English": 1,
+    Biology: 1,
+    Chemistry: 1,
+    Physics: 1,
+  }, "The starter must include exactly one published question from each selected subject.");
+  await page.getByText("Question 1 of 4").waitFor({ timeout: 5_000 });
+  assert.equal(await page.locator(".cbt-timer").innerText(), "04:00",
+    "The student-facing timer must match the server's four-minute duration.");
 
   console.log("Live CBT preview smoke passed: real question fetch, hidden answer key, required subject selection and safe insufficient-bank rejection.");
 } finally {
