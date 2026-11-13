@@ -128,3 +128,15 @@ All five review workstreams completed as non-destructive repository checks and c
 - Re-fetched exact PR-head workflows: PR #194 head `6ab3e4f018e9d21f95b3d306ea5720b9be5564e6` and PR #199 head `aea774e0e90955e4425bca7a4edfe072a5a3ccf5` each have all four workflow groups completed successfully. Both PRs remain open/draft/unmerged. Authenticated preview walkthrough and live AI POST still outstanding; eight synthetic questions cannot validate full mock modes.
 - No source/canonical/staging/database/Worker/auth/payment/production changes; no import, publication, merge or deployment.
 - Full report: [Round 6 five-workstream continuation](2026-11-13-five-workstream-continuation-round-6.md).
+
+
+## Continuation round 7 — 13 November 2026
+- Verified branch before work at `71a5a908d0338aa22b00dabbcf8ba5c8af1c05ac`; round report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-7.md`.
+- Re-opened the four R4 retained CSV exports, four held CSV partitions, canonical 116-proposal JSON, proposed editorial revisions, owner-led cross-check, 45-target queue and rank crosswalks.
+- Current R4 remains 1,439 provisionally retained + 161 held = 1,600; 116 canonical target locations covered; 45 held locations without a canonical proposal target (Biology 13, Government 11, Economics 7, Literature 6, Chemistry 4, Physics 3, Use of English 1). Twelve uncovered locations have recorded candidate drafts; 33 have no retained candidate.
+- Six proposed stem repairs remain non-canonical: Economics DUP-228/DUP-109 and Government DUP-102/DUP-221/DUP-104/DUP-123. Literature DUP-59/DUP-232 overlap remains open. Related syllabus/jurisdiction flags remain open; no new proposal was force-added.
+- DUP-147 Chemistry and DUP-226 Biology remain draft alternatives only. Related-topic candidates remain subject to explicit learning-outcome review. Qualified academic approvals remain 0.
+- Rank crosswalk limitations remain: 178 baseline ranks in 1–286 unrepresented by the explicit pair crosswalks; 237 targeted reviews lack exact rank lists; 1,007 vs 1,003 and stale 472/237 and 685/717 conflicts unresolved. Final reviewed/remaining totals remain null.
+- Re-fetched exact PR #194 and #199 heads and workflows. Four workflow groups passed on each head; both PRs remain open/draft/unmerged. This does not replace authenticated preview acceptance.
+- Last recorded preview evidence is isolated to test Supabase and separate analytics D1, with eight synthetic questions only. Full mocks, live AI POST and authenticated admin/non-admin walkthrough remain unverified/outstanding. No fresh live preview check was claimed.
+- Round 7 changed only this audit report and checkpoint. No source/canonical question, staging row, database, Worker, auth/payment config or production resource changed. No import, publication, merge or deployment. No manual action was needed this round.
