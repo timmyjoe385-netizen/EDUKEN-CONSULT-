@@ -218,3 +218,15 @@ All five review workstreams completed as non-destructive repository checks and c
 - Freshly re-fetched PR #194/#195/#197/#199: all remain open/draft/unmerged. Four workflow groups passed on each exact inspected PR head; production deploy jobs were skipped. These runs do not validate separate work-branch changes.
 - Authenticated admin/non-admin preview acceptance, full mock-size validation and live AI-assistant POST remain outstanding. Latest recorded preview bank remains eight synthetic published samples; no fresh live preview status claimed.
 - Round 17 changed only the two audit documents. No source question, canonical proposal content, R4 staging row, database, Worker, auth/payment setting or production resource changed. No import, publication, merge or deployment. Qualified academic approvals remain 0.
+
+
+## Five-workstream continuation round 18 — 13 November 2026
+- Round 18 report: `content/cbt/audits/2026-11-13-five-workstream-continuation-round-18.md`.
+- Re-parsed the 45-target queue: 45 headings, 45 unique held pair IDs, zero duplicates. Subject counts: Government 11, Biology 13, Economics 7, Literature 6, Chemistry 4, Physics 3, Use of English 1.
+- Re-read corrected R4 coverage: 116/161 held locations have distinct proposal target locations matching held source locations with zero subject mismatches; 45 remain uncovered.
+- Reconciled the 116 proposal lineage: 90 IDs match the owner-reported historical Order 1 approval set, 26 are additional; no documentary reviewer sign-off or qualified academic approvals are recorded (0).
+- Recounted 199 disposition records: 90 confirmed semantic duplicates, 77 pending qualified review, 27 assistant-contextual pending, 4 cluster extensions pending and 1 related-skill variant pending. These are pair relationships, not unique held targets.
+- Re-parsed the exact rank crosswalk: 184 register mappings, 49 shortlist mappings with 16 overlaps, 217 combined unique ranks; 108 baseline ranks mapped and 178 baseline ranks still unrepresented. The 237 targeted-review count lacks exact IDs; 1,007/1,003 and 472/237 and 685/717 conflicts remain unresolved. Tail ranks 287–1,304 have 1,018 explicit pairwise dispositions, without resolving baseline lineage.
+- Subject-allocation property harness passed all 6,195 supported three-subject/count combinations (35 combinations × 177 counts, 4–180) and 2 invalid-input tests. Together with Round 17's isolated grading/selection harness, 12 test cases/groups passed. This is not repository-wide `npm run test:validation` or work-branch CI.
+- PR #194/#195/#197/#199 remain open/draft/unmerged; their previously freshly checked exact-head workflows passed. They do not validate work-branch changes. Authenticated preview acceptance, full live mock-size tests and live AI-assistant POST remain outstanding.
+- Round 18 changed only audit documentation. No source question, canonical proposal, staging row, database, Worker, auth/payment setting or production resource changed. No import, publication, merge or deployment.
