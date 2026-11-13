@@ -116,3 +116,15 @@ All five review workstreams completed as non-destructive repository checks and c
 - PR #194/#199 remain open/draft/unmerged; four workflow groups passed on each inspected PR head. Preview still lacks authenticated admin/non-admin walkthrough and live AI POST; eight sample questions cannot validate full mocks.
 - No question content, canonical inventory, staging CSV, database, Worker, auth/payment configuration or production resource changed. No import, publication, merge or deployment.
 - Full report: [Round 5 five-workstream continuation](2026-11-13-five-workstream-continuation-round-5.md).
+
+
+## Five-workstream continuation round 6 — 13 November 2026
+
+- Re-read the corrected R4 location-based coverage: 116/161 unique held locations have explicit proposal targets; 45 remain uncovered (Biology 13, Government 11, Economics 7, Literature 6, Chemistry 4, Physics 3, Use of English 1). ID equality alone is not a valid target-location match.
+- Re-read the consolidated 26-target pass: two draft alternatives retained for owner review (DUP-147 Chemistry; DUP-226 Biology); 24 targets held due bank/proposal conceptual overlap or insufficient distinction. DUP-112 vs DUP-61, DUP-212 vs DUP-62, and DUP-103 price-discrimination overlap remain exclusions.
+- Canonical inventory remains 116 structurally complete proposals; seven known construction/concept-variety flags and additional syllabus cautions remain open. Proposed editorial revisions remain separate and have not been applied to canonical inventory. Qualified academic approvals: 0.
+- Clarified staging snapshots: 6 Nov = 1,476 retained + 124 held; 10 Nov R4 = 1,439 retained + 161 held. Distinct revisions; do not combine their counts.
+- Cross-window rank reconciliation remains open: baseline ranks 1–286 incomplete exact crosswalk; 237 targeted reviews lack exact rank lists; 1,007 vs 1,003 and stale register conflicts unresolved. Final reviewed/remaining totals remain null.
+- Re-fetched exact PR-head workflows: PR #194 head `6ab3e4f018e9d21f95b3d306ea5720b9be5564e6` and PR #199 head `aea774e0e90955e4425bca7a4edfe072a5a3ccf5` each have all four workflow groups completed successfully. Both PRs remain open/draft/unmerged. Authenticated preview walkthrough and live AI POST still outstanding; eight synthetic questions cannot validate full mock modes.
+- No source/canonical/staging/database/Worker/auth/payment/production changes; no import, publication, merge or deployment.
+- Full report: [Round 6 five-workstream continuation](2026-11-13-five-workstream-continuation-round-6.md).
