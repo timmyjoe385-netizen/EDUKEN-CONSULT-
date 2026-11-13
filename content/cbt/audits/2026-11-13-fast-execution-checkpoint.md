@@ -47,3 +47,26 @@ The latest consolidated draft pass was re-read against the 45-location uncovered
 - This is progress on the uncovered-target queue, not completion of the entire replacement programme. The canonical 116-proposal inventory and R4 staging files remain unchanged; target coverage remains 104/161 until a separately reconciled inventory revision is made.
 - The consolidated report's two retained candidates and 24 held targets do not create academic approvals. Qualified academic approvals remain 0.
 - No source CSV, staging CSV, canonical inventory, database, Worker, payment/auth configuration or production setting was changed. No question was imported or published.
+
+
+## Five-workstream execution round — 13 November 2026
+
+This round was executed as five parallel review workstreams rather than one-item-at-a-time batches.
+
+### Workstream 1 — held-target coverage reconciliation
+Re-read the corrected location-based coverage report. It verifies 116 of 116 proposal target locations match distinct held source locations, with zero subject mismatches. The remaining gap is 45 held locations. The corrected count is 116/161, not the superseded 117/161 interpretation.
+
+### Workstream 2 — proposal content QA
+Re-read the cross-subject QA of all 116 proposals. Seven high-priority construction/concept-variety issues remain flagged: Economics DUP-228 and DUP-109; Government DUP-102, DUP-221, DUP-104 and DUP-123; Literature DUP-59/DUP-232 overlap. Additional syllabus/jurisdiction review flags remain. These issues are not silently treated as fixed.
+
+### Workstream 3 — provenance and approval lineage
+Re-read the lineage reconciliation: 90 proposals match the owner-reported historical approval set, but signed item-level evidence, reviewer identity and credentials are absent from the repository; 26 proposals are outside that historical set and cannot inherit its reported approval. Qualified academic approvals recorded in the repository remain 0.
+
+### Workstream 4 — uncovered replacement queue
+Re-read the consolidated pass for the 26 targets assessed after the earlier batches: two draft-only alternatives retained (DUP-147 and DUP-226), 24 held rather than force-filled. Earlier batches contain nine other retained draft alternatives. These 11 candidates remain outside the canonical 116-item inventory; canonical coverage remains 104/161. The 45-target queue is not complete.
+
+### Workstream 5 — platform and release safety
+Rechecked PR #194 and #199: both remain open draft PRs; all four recorded workflow groups on each inspected head completed successfully. Mocked admin Playwright tests do not prove real authenticated preview acceptance. No merge, production deployment, import, publication, database write or production configuration change was performed.
+
+### Round result
+All five review workstreams completed as non-destructive repository checks and checkpoint reconciliation. No unresolved issue was relabelled as complete. Next execution should continue across five workstreams, prioritising draft-only correction of the seven question-construction flags, exact target/proposal reconciliation for the uncovered queue, bank-wide uniqueness checks, provenance/rank reconciliation, and isolated-preview acceptance evidence. Production remains locked pending explicit owner approval.
