@@ -104,3 +104,15 @@ All five review workstreams completed as non-destructive repository checks and c
 - Preview acceptance remains incomplete: eight sample questions only; authenticated admin/non-admin walkthrough and live AI-assistant POST outstanding. No owner action required for this audit round; future preview acceptance requires owner sign-in on isolated preview.
 - No source questions, canonical inventory, staging, database, Worker, auth/payment settings or production resources changed. No import, publication, merge or deployment.
 - Full report: [Round 4 five-workstream continuation](2026-11-13-five-workstream-continuation-round-4.md).
+
+
+## Five-workstream continuation round 5 — 13 November 2026
+
+- Rechecked the 6 November cross-window tail review: five full-content semantic pairs at ranks 291, 293, 304, 308 and 319; that historical checkpoint records 291 manually reviewed and 1,013 remaining then.
+- Rechecked 6 November holdout index/delta: 28 new pair candidates + six unique cluster extensions; two reused held rows excluded; 34 new held locations. Rank span 565–909. Source/staging join audit records 56/56 pair locations and 8/8 extension locations checked, 34 held locations joined, 34 anchors present, and 1,476 retained + 124 held = 1,600 with no overlap.
+- These dated records are from the earlier branch and do not close the current rank crosswalk. Baseline ranks 1–286, 237 targeted reviews, and 1,007 vs 1,003 discrepancy remain unresolved.
+- Identified the 10 November structural report's 104/161 coverage statement as historical/older-branch evidence predating later additions. Current basis remains 116/161 and 45 uncovered; do not quote 104/161 as current.
+- Order 1's 90/90 is assistant preliminary review, not independent approval; 0/90 qualified approvals. It is a separate earlier set and cannot approve R4 proposals. R4 qualified academic approvals remain 0.
+- PR #194/#199 remain open/draft/unmerged; four workflow groups passed on each inspected PR head. Preview still lacks authenticated admin/non-admin walkthrough and live AI POST; eight sample questions cannot validate full mocks.
+- No question content, canonical inventory, staging CSV, database, Worker, auth/payment configuration or production resource changed. No import, publication, merge or deployment.
+- Full report: [Round 5 five-workstream continuation](2026-11-13-five-workstream-continuation-round-5.md).
