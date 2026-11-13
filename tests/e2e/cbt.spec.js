@@ -114,12 +114,16 @@ test('mixed mock defaults to the same 10-question count shown in the selector', 
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
-    body: JSON.stringify({ items: [{
-      id: 'mock-default-seed',
-      subject: 'Use of English',
+    body: JSON.stringify({ items: [
+      ...Array.from({ length: 3 }, (_, index) => ({ id: 'mock-default-eng-' + index, subject: 'Use of English' })),
+      ...Array.from({ length: 3 }, (_, index) => ({ id: 'mock-default-bio-' + index, subject: 'Biology' })),
+      ...Array.from({ length: 2 }, (_, index) => ({ id: 'mock-default-chem-' + index, subject: 'Chemistry' })),
+      ...Array.from({ length: 2 }, (_, index) => ({ id: 'mock-default-phy-' + index, subject: 'Physics' })),
+    ].map(question => ({
+      ...question,
       question_text: 'Choose the correct option.',
       options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
-    }] }),
+    })) }),
   }));
   let requestedCount = null;
   await page.route('**/api/cbt/start*', async route => {
@@ -148,16 +152,57 @@ test('mixed mock defaults to the same 10-question count shown in the selector', 
   expect(requestedCount).toBe(10);
 });
 
+test('four-question starter mock is offered only with one published question per subject and uses four minutes', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: ['Use of English', 'Biology', 'Chemistry', 'Physics'].map((subject, index) => ({
+      id: 'starter-mock-' + index,
+      subject,
+      question_text: 'Choose the correct option.',
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    })) }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.questionCount).toBe(4);
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'e'.repeat(64),
+        durationSeconds: 240,
+        questions: ['Use of English', 'Biology', 'Chemistry', 'Physics'].map((subject, index) => ({
+          id: 'starter-mock-session-' + index,
+          subject,
+          prompt: 'Starter mock question ' + (index + 1),
+          options: ['A', 'B', 'C', 'D'],
+        })),
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#cbt-mock-count')).toHaveValue('4');
+  await page.getByRole('button', { name: /Start mixed mock/i }).click();
+  await expect(page.getByText('Question 1 of 4')).toBeVisible();
+  await expect(page.locator('.cbt-timer')).toContainText('04:00');
+});
+
 test('180-question full mock uses a 120-minute fallback when the API omits duration', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
-    body: JSON.stringify({ items: [{
-      id: 'full-mock-seed',
-      subject: 'Use of English',
+    body: JSON.stringify({ items: [
+      ...Array.from({ length: 60 }, (_, index) => ({ id: 'full-mock-eng-' + index, subject: 'Use of English' })),
+      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-bio-' + index, subject: 'Biology' })),
+      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-chem-' + index, subject: 'Chemistry' })),
+      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-phy-' + index, subject: 'Physics' })),
+    ].map(question => ({
+      ...question,
       question_text: 'Choose the correct option.',
       options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
-    }] }),
+    })) }),
   }));
   await page.route('**/api/cbt/start*', async route => {
     const payload = route.request().postDataJSON();
