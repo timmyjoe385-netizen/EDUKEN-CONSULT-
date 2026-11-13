@@ -101,16 +101,16 @@
       "target_id": "DUP-104",
       "subject": "Government",
       "revision_type": "convert_definition_stem_to_question",
-      "question": "What is an electoral college?",
+      "question": "In an indirect election, an electoral college is primarily responsible for:",
       "options": [
-        "A body of designated representatives who vote to choose a person for a public office",
-        "A court that hears election petitions",
-        "A commission responsible for registering voters and conducting elections",
-        "A legislature responsible for passing the national budget"
+        "Choosing the office-holder through votes cast by a designated group of electors",
+        "Registering eligible voters for the election",
+        "Administering polling stations and counting every ballot cast by the public",
+        "Adjudicating legal challenges to an election result"
       ],
       "answer": "A",
-      "explanation": "An electoral college is a group of electors selected to choose a person for a public office. It is distinct from an electoral commission, which administers elections, and an election tribunal, which resolves election disputes.",
-      "reason": "The original declarative stem restated the correct answer in option A."
+      "explanation": "An electoral college is a designated body of electors that chooses a particular office-holder. Its membership and procedure depend on the constitution or electoral rules of the jurisdiction. Voter registration and polling administration are electoral-management functions, while election petitions are handled through the relevant legal process.",
+      "reason": "Replaces a broad definition with a jurisdiction-neutral question about the electoral college's function in an indirect election; distinguishes it from election administration and dispute resolution."
     },
     {
       "target_id": "DUP-123",
