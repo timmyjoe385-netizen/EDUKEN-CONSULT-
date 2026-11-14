@@ -1,0 +1,30 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Crosswalk the 96 unverified legacy register pair IDs against the current 6 November held staging export without assuming the earlier 77-target count.",
+  "results": {
+    "unverified_pair_ids": 96,
+    "matching_register_entries": 96,
+    "raw_unique_candidate_held_locations": 91,
+    "location_extraction": "replace or replace_candidate; b used only where both explicit held fields are absent",
+    "records_without_explicit_replace_fields": 5,
+    "current_6_november_staging_location_matches": 22,
+    "matched_to_baseline_pair_ids": 5,
+    "matched_to_6_november_addendum_pair_ids": 17,
+    "candidate_locations_not_found_in_current_6_november_staging": 69,
+    "earlier_build_plan_unique_target_estimate": 77,
+    "count_reconciliation": "not resolved; raw candidate locations, new unique targets and not-yet-staged targets are different measures"
+  },
+  "limitations": [
+    "The 5 b-field fallbacks need confirmation as held rather than retained endpoints.",
+    "Some pair IDs extend existing clusters or reuse held locations; raw location count is not a unique replacement-target count.",
+    "The 69 missing locations have not yet been verified against original source CSVs or historical staging exports.",
+    "The earlier 77 unique-target estimate must not be replaced by 69 until all cluster memberships and historical staging joins are reconciled."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

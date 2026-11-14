@@ -1,0 +1,98 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five lower-scoring cross-window candidate pairs checked against full source content.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      907,
+      908,
+      909,
+      910,
+      911
+    ],
+    "previous_total_manually_reviewed": 376,
+    "now_manually_reviewed": 381,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 923
+  },
+  "preserved": [
+    {
+      "rank": 907,
+      "score": 0.473,
+      "subject": "Physics",
+      "a": "batch 3 row 26",
+      "b": "batch 31 row 24",
+      "question_a": "Electromagnetic induction occurs when a changing magnetic flux through a circuit produces:",
+      "answer_a": "A",
+      "question_b": "The magnitude of an induced e.m.f. in a coil increases when the magnetic flux through it is changed",
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_induction_assessments",
+      "reason": "The first asks for the induced quantity (emf); the second tests Faraday's law relationship between induced emf and the rate of change of flux linkage."
+    },
+    {
+      "rank": 908,
+      "score": 0.473,
+      "subject": "Use of English",
+      "a": "batch 12 row 6",
+      "b": "batch 24 row 2",
+      "question_a": "Choose the correct completion: “The new student is interested ___ literature.”",
+      "answer_a": "D",
+      "question_b": "Choose the correct completion: “It was the registrar ___ announced the result.”",
+      "answer_b": "C",
+      "decision": "preserve_both_as_distinct_grammar_assessments",
+      "reason": "The first tests the adjective–preposition collocation “interested in”; the second tests the relative pronoun in a cleft sentence."
+    },
+    {
+      "rank": 910,
+      "score": 0.473,
+      "subject": "Physics",
+      "a": "batch 25 row 23",
+      "b": "batch 36 row 24",
+      "question_a": "Which instrument is connected in series in a circuit to measure electric current?",
+      "answer_a": "B",
+      "question_b": "In a series circuit, the current through each component is",
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_electricity_assessments",
+      "reason": "The first tests the use and connection of an ammeter; the second tests the property that current is the same through all components in a series circuit."
+    },
+    {
+      "rank": 911,
+      "score": 0.472,
+      "subject": "Chemistry",
+      "a": "batch 5 row 17",
+      "b": "batch 16 row 17",
+      "question_a": "The reaction between an acid and a base typically produces:",
+      "answer_a": "A",
+      "question_b": "What are the products of complete reaction between hydrochloric acid and sodium hydroxide?",
+      "answer_b": "A",
+      "decision": "preserve_both_as_general_and_specific_neutralisation_questions",
+      "reason": "The first tests the general product pattern of acid–base neutralisation (salt and water); the second asks students to identify the particular salt and water formed from HCl and NaOH. This is a related specific application rather than a repeated generic definition."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 909,
+      "score": 0.473,
+      "subject": "Physics",
+      "a": "batch 16 row 25",
+      "b": "batch 39 row 23",
+      "question_a": "In a transverse wave, the distance between two consecutive crests is called the",
+      "answer_a": "A — wavelength",
+      "question_b": "The wavelength of a wave is the distance between two successive points that are:",
+      "answer_b": "A — in the same phase",
+      "decision": "confirm_semantic_duplicate",
+      "new_unique_replacement_target": "batch 39 row 23",
+      "reason": "Both ask for the same definition of wavelength as the distance between successive points in the same phase; the crest-to-crest wording in one is an example of that exact definition."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "Four pairs were preserved as distinct and one duplicate was confirmed. No CSV edits or replacement drafts were made."
+  }
+}

@@ -1,0 +1,193 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of candidate ranks 595-609. Original stems, four options, keys and explanations were inspected for every pair. Three relationships were already represented in the disposition register and were not counted again.",
+  "scope": {
+    "candidate_ranks_checked": [
+      595,
+      596,
+      597,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      607,
+      608,
+      609
+    ],
+    "newly_reviewed_candidate_ranks": [
+      595,
+      596,
+      598,
+      599,
+      600,
+      601,
+      602,
+      603,
+      604,
+      605,
+      606,
+      609
+    ],
+    "previously_registered_or_clustered_ranks": [
+      597,
+      607,
+      608
+    ],
+    "previous_persisted_review_total": 966,
+    "now_persisted_review_total": 978,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_yet_persisted_as_reviewed": 326
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-207",
+      "rank": 609,
+      "subject": "Mathematics",
+      "a": "batch 2 row 10",
+      "b": "batch 14 row 7",
+      "concept": "Calculating the gradient of a straight line from two coordinate points",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the gradient of the straight line through two supplied coordinate points and require the identical change-in-y divided by change-in-x calculation. The coordinates differ, but both yield 2 and assess the same direct gradient procedure.",
+      "retain": "batch 2 row 10",
+      "hold": "batch 14 row 7",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "existing_cluster_relationships_confirmed": [
+    {
+      "rank": 597,
+      "subject": "Economics",
+      "a": "batch 14 row 28",
+      "b": "batch 25 row 27",
+      "decision": "already_recorded_in_duplicate_disposition_register",
+      "note": "Negative externality definition/negative production externality relationship already appears in the existing register; no new duplicate ID or held-row count added."
+    },
+    {
+      "rank": 607,
+      "subject": "Chemistry",
+      "a": "batch 6 row 21",
+      "b": "batch 20 row 20",
+      "decision": "already_recorded_in_duplicate_disposition_register",
+      "note": "Esterification relationship already reconciled under DUP-13/DUP-162; batch 20 row 20 remains the retained cluster anchor and batch 6 row 21 is already held."
+    },
+    {
+      "rank": 608,
+      "subject": "Government",
+      "a": "batch 18 row 32",
+      "b": "batch 32 row 34",
+      "decision": "already_recorded_in_duplicate_disposition_register",
+      "note": "Federalism definition relationship is already part of the existing FEDERALISM-01 cluster; no additional held row is created by this candidate."
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 595,
+      "subject": "Government",
+      "a": "batch 5 row 34",
+      "b": "batch 11 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "Local government is intended to bring administration closer to communities; public corporations are established to provide or manage specified services under public ownership."
+    },
+    {
+      "rank": 596,
+      "subject": "Chemistry",
+      "a": "batch 7 row 21",
+      "b": "batch 40 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Charles's law relates gas volume to absolute temperature at constant pressure; the pressure law relates pressure to absolute temperature at constant volume."
+    },
+    {
+      "rank": 598,
+      "subject": "Mathematics",
+      "a": "batch 20 row 7",
+      "b": "batch 26 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Fractional indices evaluate a power using roots and powers; binary conversion expresses a base-two numeral in base ten."
+    },
+    {
+      "rank": 599,
+      "subject": "Biology",
+      "a": "batch 20 row 12",
+      "b": "batch 22 row 15",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies the heart chamber receiving oxygenated blood from pulmonary veins; the second identifies the vessel carrying deoxygenated blood from the heart to the lungs."
+    },
+    {
+      "rank": 600,
+      "subject": "Chemistry",
+      "a": "batch 30 row 19",
+      "b": "batch 40 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "A Charles's law numerical volume calculation is distinct from the pressure law's constant-volume pressure-temperature relationship."
+    },
+    {
+      "rank": 601,
+      "subject": "Biology",
+      "a": "batch 4 row 13",
+      "b": "batch 34 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the definition of transpiration; the second tests the principal route of water-vapour loss from leaves. Definition and mechanism are complementary."
+    },
+    {
+      "rank": 602,
+      "subject": "Mathematics",
+      "a": "batch 5 row 9",
+      "b": "batch 33 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Midpoint uses the averages of the x- and y-coordinates; gradient uses change in y divided by change in x. Different coordinate-geometry skills."
+    },
+    {
+      "rank": 603,
+      "subject": "Chemistry",
+      "a": "batch 6 row 17",
+      "b": "batch 35 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "Calculating moles from mass and molar mass is different from counting total atoms in a molecular formula."
+    },
+    {
+      "rank": 604,
+      "subject": "Literature in English",
+      "a": "batch 15 row 41",
+      "b": "batch 23 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "Anagnorisis is a moment of recognition; hubris is excessive pride or overconfidence. Distinct classical tragedy concepts."
+    },
+    {
+      "rank": 605,
+      "subject": "Mathematics",
+      "a": "batch 18 row 9",
+      "b": "batch 33 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Evaluating a function at a specified input differs from finding the trace of a matrix."
+    },
+    {
+      "rank": 606,
+      "subject": "Use of English",
+      "a": "batch 19 row 2",
+      "b": "batch 35 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Reported speech with a past reporting verb commonly backshifts present perfect; a reported universal scientific truth may retain the simple present."
+    }
+  ],
+  "controls": {
+    "newly_confirmed_duplicate_pair_relationships": 1,
+    "newly_added_unique_held_rows": 1,
+    "preserved_as_distinct": 11,
+    "already_registered_relationships_not_double_counted": 3,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

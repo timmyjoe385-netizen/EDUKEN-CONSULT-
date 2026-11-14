@@ -1,0 +1,172 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of cross-window candidates ranked 580-594. Both original source records, complete stems, options, answer keys and explanations were checked; similarity scores were used only to select candidates.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      580,
+      581,
+      582,
+      583,
+      584,
+      585,
+      586,
+      587,
+      588,
+      589,
+      590,
+      591,
+      592,
+      593,
+      594
+    ],
+    "previous_persisted_review_total": 951,
+    "now_persisted_review_total": 966,
+    "total_cross_window_candidates": 1304,
+    "remaining_after_persisted_review": 338,
+    "review_note": "Ranks 565-579 were also inspected in the immediately preceding work but their audit-file write was rejected; they are not included in this persisted count."
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-206",
+      "rank": 585,
+      "subject": "Use of English",
+      "a": "batch 7 row 3",
+      "b": "batch 39 row 3",
+      "concept": "Meaning of obsolete as outdated or no longer in use",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the nearest meaning of obsolete and key outdated as the answer. Although the first file labels its subtopic Antonyms, its actual stem and answer test the same synonym as the second item; the differing metadata label does not make a distinct assessment.",
+      "retain": "batch 7 row 3",
+      "hold": "batch 39 row 3",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 580,
+      "subject": "Use of English",
+      "a": "batch 12 row 4",
+      "b": "batch 36 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Abundant means plentiful; candid means frank. The shared synonym format does not make these different vocabulary targets duplicates."
+    },
+    {
+      "rank": 581,
+      "subject": "Use of English",
+      "a": "batch 13 row 6",
+      "b": "batch 38 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Passive voice identification and compound-sentence identification test different grammar concepts."
+    },
+    {
+      "rank": 582,
+      "subject": "Literature in English",
+      "a": "batch 29 row 37",
+      "b": "batch 39 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "A tercet has three lines; an octave has eight. Different stanza forms."
+    },
+    {
+      "rank": 583,
+      "subject": "Mathematics",
+      "a": "batch 7 row 10",
+      "b": "batch 13 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Cylinder volume and circle area are different mensuration quantities and formulae."
+    },
+    {
+      "rank": 584,
+      "subject": "Mathematics",
+      "a": "batch 29 row 9",
+      "b": "batch 34 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "The first counts prime outcomes on a die; the second counts exactly-one-head outcomes when two coins are tossed. Different sample spaces and event definitions."
+    },
+    {
+      "rank": 586,
+      "subject": "Use of English",
+      "a": "batch 7 row 5",
+      "b": "batch 32 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the initial consonant /dʒ/; the second tests the diphthong /ɔɪ/. Different speech sounds and phonological categories."
+    },
+    {
+      "rank": 587,
+      "subject": "Economics",
+      "a": "batch 8 row 27",
+      "b": "batch 31 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "The first defines what price elasticity of demand measures; the second applies the definition to identify inelastic demand when the percentage quantity response is smaller than the percentage price change."
+    },
+    {
+      "rank": 588,
+      "subject": "Physics",
+      "a": "batch 15 row 24",
+      "b": "batch 35 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "The first applies W = Fs cos θ at 90 degrees to obtain zero work; the second calculates work at 60 degrees using the same general formula with non-zero displacement component. Conceptual special case and numerical application are complementary."
+    },
+    {
+      "rank": 589,
+      "subject": "Economics",
+      "a": "batch 8 row 27",
+      "b": "batch 27 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the definition of price elasticity of demand; the second calculates its numerical value from percentage changes. Definition and quantitative application are distinct."
+    },
+    {
+      "rank": 590,
+      "subject": "Biology",
+      "a": "batch 19 row 12",
+      "b": "batch 34 row 16",
+      "decision": "preserve_as_distinct",
+      "reason": "Mammary glands distinguish mammals; acellular structure and host-dependent replication distinguish viruses from cellular organisms. Different classification topics."
+    },
+    {
+      "rank": 591,
+      "subject": "Literature in English",
+      "a": "batch 15 row 41",
+      "b": "batch 26 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "Anagnorisis is a moment of recognition; hamartia is a tragic error or flaw. Distinct classical tragedy concepts."
+    },
+    {
+      "rank": 592,
+      "subject": "Biology",
+      "a": "batch 8 row 12",
+      "b": "batch 15 row 13",
+      "decision": "preserve_as_distinct",
+      "reason": "Ribosomes are the site of protein synthesis; chloroplasts contain chlorophyll and are the main site of photosynthesis. Different organelles and functions."
+    },
+    {
+      "rank": 593,
+      "subject": "Use of English",
+      "a": "batch 9 row 4",
+      "b": "batch 14 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Identifying a complete complex sentence is an application task; identifying a subordinating conjunction is a component-level grammar task. Related but not duplicate."
+    },
+    {
+      "rank": 594,
+      "subject": "Mathematics",
+      "a": "batch 13 row 11",
+      "b": "batch 28 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "The first finds the median of five ordered values using the middle value; the second finds the median of six values by averaging the two middle values. Odd- and even-sized data sets require distinct procedures."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

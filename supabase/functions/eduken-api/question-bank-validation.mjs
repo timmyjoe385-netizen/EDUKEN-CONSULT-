@@ -1,6 +1,7 @@
 const ALLOWED_STATUSES = new Set(["draft", "reviewed", "approved", "published", "unpublished"]);
 const ALLOWED_DIFFICULTIES = new Set(["easy", "medium", "hard"]);
 const ALLOWED_SOURCE_TYPES = new Set(["original", "past_question", "licensed", "other"]);
+const ALLOWED_JAMB_SUBJECTS = new Set(["Use of English", "Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"]);
 const OPTION_KEYS = ["A", "B", "C", "D"];
 
 export function normalizeQuestionInput(raw = {}) {
@@ -54,6 +55,9 @@ export function validateQuestionInput(raw, { allowStatus = false } = {}) {
   const errors = [];
   if (!question.exam_type) errors.push("Exam type is required.");
   if (!question.subject) errors.push("Subject is required.");
+  if (question.exam_type.toUpperCase() === "JAMB" && !ALLOWED_JAMB_SUBJECTS.has(question.subject)) {
+    errors.push("JAMB subject must be one of the eight supported UTME subjects.");
+  }
   if (!question.topic) errors.push("Topic is required.");
   if (question.question_text.length < 5) errors.push("Question text must contain at least 5 characters.");
   if (question.question_text.length > 10000) errors.push("Question text must not exceed 10,000 characters.");
@@ -61,7 +65,11 @@ export function validateQuestionInput(raw, { allowStatus = false } = {}) {
     if (!question.options[key]) errors.push("Option " + key + " is required.");
     if (question.options[key].length > 3000) errors.push("Option " + key + " must not exceed 3,000 characters.");
   }
+  const normalizedOptions = OPTION_KEYS.map((key) => question.options[key].normalize("NFKC").toLowerCase().replace(/\s+/g, " ").trim()).filter(Boolean);
+  if (new Set(normalizedOptions).size !== normalizedOptions.length) errors.push("All four answer options must be different.");
   if (!OPTION_KEYS.includes(question.correct_option)) errors.push("Correct answer must be A, B, C or D.");
+  if (question.explanation.length < 5) errors.push("An explanation of at least 5 characters is required.");
+  if (question.explanation.length > 5000) errors.push("Explanation must not exceed 5,000 characters.");
   if (!ALLOWED_DIFFICULTIES.has(question.difficulty)) errors.push("Difficulty must be easy, medium or hard.");
   if (!ALLOWED_SOURCE_TYPES.has(question.source_type)) errors.push("Source type is invalid.");
   if (question.source_year !== null && (!Number.isInteger(question.source_year) || question.source_year < 1960 || question.source_year > 2100)) errors.push("Source year must be a whole year from 1960 to 2100.");

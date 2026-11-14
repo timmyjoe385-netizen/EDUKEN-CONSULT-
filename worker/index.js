@@ -1,5 +1,21 @@
-const SUPABASE_PUBLIC_CONTENT = "https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p";
+const PRODUCTION_SUPABASE_URL = "https://pphxltbkwygqjtjgkhxu.supabase.co";
+const PRODUCTION_SUPABASE_PUBLISHABLE_KEY = "sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p";
+
+function getSupabaseConfig(env) {
+  const isPreview = env.EDUKEN_ENV === "preview";
+  const configuredUrl = String(env.SUPABASE_URL || "").trim().replace(/\/+$/, "");
+  const configuredKey = String(env.SUPABASE_PUBLISHABLE_KEY || "").trim();
+  // Preview must fail closed: never fall back to production if its isolated
+  // Supabase URL or publishable key is missing.
+  if (isPreview) {
+    if (!configuredUrl.startsWith("https://wpktzogarfqrgkirzdpy.supabase.co") || !configuredKey) return null;
+    return { url: configuredUrl, key: configuredKey };
+  }
+  return {
+    url: configuredUrl || PRODUCTION_SUPABASE_URL,
+    key: configuredKey || PRODUCTION_SUPABASE_PUBLISHABLE_KEY,
+  };
+}
 const MODEL = "@cf/google/gemma-4-26b-a4b-it";
 
 const json = (body, status = 200) =>
@@ -11,10 +27,12 @@ const json = (body, status = 200) =>
     },
   });
 
-async function getLiveContent() {
+async function getLiveContent(env) {
+  const config = getSupabaseConfig(env);
+  if (!config) return null;
   try {
-    const response = await fetch(SUPABASE_PUBLIC_CONTENT, {
-      headers: { apikey: SUPABASE_PUBLISHABLE_KEY },
+    const response = await fetch(config.url + "/functions/v1/eduken-api/public-content", {
+      headers: { apikey: config.key },
       cf: { cacheTtl: 30 },
     });
     if (!response.ok) return null;
@@ -201,13 +219,14 @@ const ANALYTICS_EVENTS = new Set([
 ]);
 const ANALYTICS_ADMIN_EMAILS = new Set(["timmyjoe385@gmail.com", "edukenconsult00@gmail.com"]);
 
-async function isAnalyticsAdmin(request) {
+async function isAnalyticsAdmin(request, env) {
   const token = request.headers.get("Authorization")?.replace(/^Bearer\s+/i, "");
-  if (!token) return false;
+  const config = getSupabaseConfig(env);
+  if (!token || !config) return false;
   try {
-    const response = await fetch("https://pphxltbkwygqjtjgkhxu.supabase.co/auth/v1/user", {
+    const response = await fetch(config.url + "/auth/v1/user", {
       headers: {
-        apikey: SUPABASE_PUBLISHABLE_KEY,
+        apikey: config.key,
         Authorization: "Bearer " + token,
       },
     });
@@ -289,7 +308,7 @@ async function recordAnalyticsEvent(request, env) {
 
 async function analyticsSummary(request, env) {
   if (request.method !== "GET") return json({ error: "Method not allowed." }, 405);
-  if (!(await isAnalyticsAdmin(request))) return json({ error: "Administrator access required." }, 403);
+  if (!(await isAnalyticsAdmin(request, env))) return json({ error: "Administrator access required." }, 403);
   if (!env.ANALYTICS_DB) return json({ error: "Analytics storage is not configured." }, 503);
   const url = new URL(request.url);
   const parsedDays = Number(url.searchParams.get("days") || 30);
@@ -355,7 +374,7 @@ export default {
         const question = String(body?.question || "").trim();
         if (!question) return json({ error: "Please enter a question." }, 400);
 
-        const content = await getLiveContent();
+        const content = await getLiveContent(env);
         const context = compactContent(content);
         // Avoid web-search calls and related costs for stable/general questions.
         const shouldResearch = needsLiveResearch(question);

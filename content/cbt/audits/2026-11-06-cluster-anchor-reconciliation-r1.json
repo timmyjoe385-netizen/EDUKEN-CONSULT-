@@ -1,0 +1,148 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "staging_revision": "content/cbt/staging/2026-11-06/review-holdout-index-r1.json",
+  "purpose": "Resolve retained-anchor references for six genuinely new existing-cluster extension candidates without changing the original question bank.",
+  "anchors": [
+    {
+      "rank": 684,
+      "cluster": "DUP-197",
+      "held": "batch 4 row 10",
+      "retained_anchor": "batch 20 row 11",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json plus exact source-row verification",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 738,
+      "cluster": "DUP-47",
+      "held": "batch 2 row 33",
+      "retained_anchor": "batch 32 row 34",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 746,
+      "cluster": "DUP-214",
+      "held": "batch 13 row 20",
+      "retained_anchor": "batch 10 row 17",
+      "anchor_source": "DUP-214 new-pair record provides canonical retained anchor; exact source rows checked",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 794,
+      "cluster": "DUP-214",
+      "held": "batch 3 row 18",
+      "retained_anchor": "batch 10 row 17",
+      "anchor_source": "DUP-214 new-pair record provides canonical retained anchor; exact source rows checked",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 885,
+      "cluster": "DUP-78",
+      "held": "batch 5 row 5",
+      "retained_anchor": "batch 20 row 6",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    },
+    {
+      "rank": 898,
+      "cluster": "DUP-19",
+      "held": "batch 14 row 31",
+      "retained_anchor": "batch 9 row 31",
+      "anchor_source": "duplicate-disposition-register-2026-11-01.json",
+      "status": "anchor_resolved"
+    }
+  ],
+  "totals": {
+    "extension_candidates": 6,
+    "anchor_resolved": 6,
+    "anchor_unresolved": 0
+  },
+  "exclusions": [
+    {
+      "rank": 768,
+      "cluster": "DUP-08",
+      "held": "batch 34 row 18",
+      "status": "already held; merge DUP-166 into DUP-08; not a new unique held row"
+    },
+    {
+      "rank": 1304,
+      "cluster": "DUP-47",
+      "held": "batch 38 row 36",
+      "status": "already held under DUP-177; canonical FEDERALISM-01/DUP-47; not a new unique held row"
+    }
+  ],
+  "pair_cluster_merges": [
+    {
+      "clusters": [
+        "DUP-22",
+        "DUP-165"
+      ],
+      "canonical": "DUP-165",
+      "status": "applied_and_source_memberships_verified"
+    },
+    {
+      "clusters": [
+        "DUP-08",
+        "DUP-166"
+      ],
+      "canonical": "DUP-08",
+      "status": "applied_and_source_memberships_verified"
+    }
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "existing_staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  },
+  "next_step": "Proceed with qualified academic review and consolidated register reconciliation; all six extension anchors are resolved in the 6 November r2 index. Do not import or publish.",
+  "conflict_resolution": {
+    "rank_1304": {
+      "canonical_cluster": "DUP-47",
+      "existing_pair_link": "DUP-177",
+      "retained_anchor": "batch 32 row 34",
+      "correction": "Part82's former DUP-223 label was erroneous; DUP-223 is superseded at rank 738."
+    },
+    "rank_684": {
+      "canonical_cluster": "DUP-197",
+      "retained_anchor": "batch 20 row 11",
+      "held_location": "batch 4 row 10",
+      "correction": "DUP-213 is the superseded candidate ID, not a separate cluster."
+    }
+  },
+  "status": "CANONICAL_CLUSTER_MERGES_APPLIED_SOURCE_MEMBERSHIPS_VERIFIED",
+  "applied_membership_verification": [
+    {
+      "cluster": "PLATELET-CLOTTING-01",
+      "canonical": "DUP-165",
+      "members": [
+        "DUP-22",
+        "DUP-165",
+        "DUP-150"
+      ],
+      "retained_anchor": "batch 1 row 15",
+      "held_locations": [
+        "batch 27 row 12",
+        "batch 38 row 13"
+      ],
+      "source_rows_checked": 3
+    },
+    {
+      "cluster": "PHENOLPHTHALEIN-01",
+      "canonical": "DUP-08",
+      "members": [
+        "DUP-08",
+        "DUP-147",
+        "DUP-166"
+      ],
+      "retained_anchor": "batch 22 row 18",
+      "held_locations": [
+        "batch 20 row 18",
+        "batch 34 row 18"
+      ],
+      "source_rows_checked": 3
+    }
+  ]
+}

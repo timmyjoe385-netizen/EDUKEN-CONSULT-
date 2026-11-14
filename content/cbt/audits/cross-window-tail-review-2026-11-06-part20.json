@@ -1,0 +1,102 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five more lower-scoring cross-window candidates checked against full question stems, options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      927,
+      928,
+      929,
+      930,
+      931
+    ],
+    "previous_total_manually_reviewed": 396,
+    "now_manually_reviewed": 401,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 903
+  },
+  "preserved": [
+    {
+      "rank": 927,
+      "score": 0.471,
+      "subject": "Economics",
+      "a": "batch 10 row 28",
+      "b": "batch 28 row 30",
+      "question_a": "Consumer surplus is the difference between the:",
+      "answer_a": "A",
+      "question_b": "A country's balance of trade in goods is the difference between the value of its",
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_economic_concepts",
+      "reason": "Consumer surplus measures the benefit buyers receive when market price is below willingness to pay; balance of trade compares exports and imports of goods. These are unrelated measures despite the shared word 'difference'."
+    },
+    {
+      "rank": 928,
+      "score": 0.471,
+      "subject": "Government",
+      "a": "batch 2 row 32",
+      "b": "batch 37 row 35",
+      "question_a": "In a representative democracy, members of the legislature primarily:",
+      "answer_a": "B — make laws and scrutinise government",
+      "question_b": "In a democratic legislature, the opposition mainly",
+      "answer_b": "A — scrutinises and challenges government policies",
+      "decision": "preserve_both_as_related_but_distinct_parliamentary_roles",
+      "reason": "The first assesses the legislature's broad institutional functions, including lawmaking and oversight; the second focuses on the opposition's accountability role within the legislature. The concepts overlap in oversight but are not identical."
+    },
+    {
+      "rank": 929,
+      "score": 0.471,
+      "subject": "Government",
+      "a": "batch 14 row 36",
+      "b": "batch 27 row 32",
+      "question_a": "Political apathy refers to:",
+      "answer_a": "A — lack of interest or involvement in political activities",
+      "question_b": "In political theory, anarchy refers to a condition in which:",
+      "answer_b": "A — there is no recognised central governing authority",
+      "decision": "preserve_both_as_distinct_political_concepts",
+      "reason": "Political apathy is an individual's lack of political interest or participation; anarchy concerns the absence of recognised central governing authority. Different levels of analysis and meanings."
+    },
+    {
+      "rank": 930,
+      "score": 0.471,
+      "subject": "Economics",
+      "a": "batch 14 row 30",
+      "b": "batch 33 row 29",
+      "question_a": "Public expenditure refers to government…",
+      "answer_a": "B — spending on goods, services and public programmes",
+      "question_b": "Public debt refers to the:",
+      "answer_b": "A — total outstanding borrowing owed by government",
+      "decision": "preserve_both_as_distinct_public_finance_concepts",
+      "reason": "Public expenditure is government spending; public debt is the accumulated outstanding borrowing liability. They are related fiscal concepts but measure different things."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 931,
+      "score": 0.471,
+      "subject": "Government",
+      "a": "batch 18 row 32",
+      "b": "batch 38 row 36",
+      "question_a": "A federal system of government constitutionally divides powers between ___.",
+      "answer_a": "A — one central authority and component governments",
+      "question_b": "A federal constitution typically provides for",
+      "answer_b": "D — a constitutional distribution of powers among levels of government",
+      "decision": "confirm_semantic_duplicate_extend_existing_cluster",
+      "cluster_id": "FEDERALISM-01",
+      "retain": "batch 32 row 34",
+      "existing_held_row": "batch 18 row 32",
+      "replace": "batch 38 row 36",
+      "new_unique_replacement_target": "batch 38 row 36",
+      "reason": "Both questions test the defining constitutional feature of federalism: powers are divided between central and constituent levels of government. Batch 18 row 32 is already an identified held row in the FEDERALISM-01 cluster; batch 38 row 36 is a new unique row to add to that cluster. Retain batch 32 row 34 as the existing cluster's designated retained question, subject to final provenance reconciliation."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "Four candidates were preserved as distinct; one federalism-definition relationship was confirmed as an additional member of the existing FEDERALISM-01 cluster, adding batch 38 row 36 as one new unique held row. The existing batch 18 row 32 holdout was not counted again."
+  }
+}

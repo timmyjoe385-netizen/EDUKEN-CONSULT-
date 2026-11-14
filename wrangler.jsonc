@@ -55,6 +55,11 @@
       ],
       "ai": {
         "binding": "AI"
+      },
+      "vars": {
+        "EDUKEN_ENV": "preview",
+        "SUPABASE_URL": "https://wpktzogarfqrgkirzdpy.supabase.co",
+        "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB"
       }
     }
   }

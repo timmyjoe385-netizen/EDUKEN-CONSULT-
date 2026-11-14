@@ -1,0 +1,125 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five lower-scoring cross-window candidate pairs checked against complete source questions, options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      897,
+      898,
+      899,
+      900,
+      901
+    ],
+    "previous_total_manually_reviewed": 366,
+    "now_manually_reviewed": 371,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 933
+  },
+  "preserved": [
+    {
+      "rank": 897,
+      "score": 0.475,
+      "subject": "Physics",
+      "a": "batch 19 row 24",
+      "b": "batch 27 row 24",
+      "question_a": "An object is placed at the centre of curvature of a concave mirror. Where is its image formed?",
+      "options_a": [
+        "At the principal focus",
+        "At the centre of curvature",
+        "Behind the mirror",
+        "At infinity"
+      ],
+      "answer_a": "B",
+      "question_b": "An object is placed beyond twice the focal length of a converging lens. The image formed is generally",
+      "options_b": [
+        "virtual, upright and enlarged.",
+        "real, inverted and diminished.",
+        "real, upright and enlarged.",
+        "virtual, inverted and diminished."
+      ],
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_optical_systems",
+      "reason": "The first tests image formation by a concave mirror at C; the second tests image formation by a converging lens for an object beyond 2F. The systems and image rules differ."
+    },
+    {
+      "rank": 900,
+      "score": 0.474,
+      "subject": "Chemistry",
+      "a": "batch 12 row 21",
+      "b": "batch 23 row 18",
+      "question_a": "Which statement best describes the effect of a catalyst on a chemical reaction?",
+      "options_a": [
+        "It increases the activation energy.",
+        "It lowers the activation energy and is not used up overall.",
+        "It changes the equilibrium constant.",
+        "It increases the mass of the products."
+      ],
+      "answer_a": "B",
+      "question_b": "What is the effect of adding a catalyst to a system already at chemical equilibrium?",
+      "options_b": [
+        "It shifts equilibrium towards products",
+        "It shifts equilibrium towards reactants",
+        "It does not change the equilibrium position",
+        "It permanently stops the reverse reaction"
+      ],
+      "answer_b": "C",
+      "decision": "preserve_both_as_distinct_catalysis_learning_outcomes",
+      "reason": "The first tests the general mechanism of catalysis through an alternative lower-activation-energy pathway; the second tests the specific consequence for a system already at equilibrium: no change in equilibrium position because forward and reverse rates are increased equally."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 898,
+      "score": 0.475,
+      "subject": "Economics",
+      "a": "batch 14 row 31",
+      "b": "batch 38 row 31",
+      "question_a": "A tariff is best described as a…",
+      "answer_a": "A — Tax on imported goods",
+      "question_b": "A tariff is a tax imposed on",
+      "answer_b": "C — imports or exports, commonly imports",
+      "decision": "confirm_semantic_duplicate_extend_existing_cluster",
+      "existing_cluster": "DUP-19: batch 9 row 31 retained; batch 38 row 31 already designated replace",
+      "new_unique_replacement_target": "batch 14 row 31",
+      "reason": "Both items test the same core definition of a tariff as a customs duty on imported goods. Batch 38 row 31 is already held under DUP-19; this new relationship adds batch 14 row 31 as an additional unique held row in the same concept cluster."
+    },
+    {
+      "rank": 899,
+      "score": 0.474,
+      "subject": "Economics",
+      "a": "batch 8 row 31",
+      "b": "batch 35 row 30",
+      "question_a": "Marginal utility is the additional satisfaction obtained from:",
+      "answer_a": "A — consuming one more unit of a good",
+      "question_b": "The additional satisfaction from consuming one more unit of a good is called",
+      "answer_b": "D — marginal utility",
+      "decision": "confirm_semantic_duplicate",
+      "new_unique_replacement_target": "batch 35 row 30",
+      "reason": "Both are direct definition questions for marginal utility: the additional satisfaction/utility from consuming one more unit. The wording and answer choices differ, but the tested definition is identical."
+    },
+    {
+      "rank": 901,
+      "score": 0.474,
+      "subject": "Mathematics",
+      "a": "batch 19 row 11",
+      "b": "batch 30 row 7",
+      "question_a": "A cuboid measures 5 cm by 4 cm by 3 cm. Find its volume.",
+      "answer_a": "C — 60 cm³",
+      "question_b": "A cuboid has length 8 cm, width 5 cm and height 3 cm. What is its volume?",
+      "answer_b": "C — 120 cm³",
+      "decision": "confirm_semantic_duplicate",
+      "new_unique_replacement_target": "batch 30 row 7",
+      "reason": "Both are the same direct substitution exercise for volume of a cuboid (length × width × height), differing only in dimensions. A changed numerical instance does not add a distinct learning outcome."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 3,
+    "new_unique_replacement_targets": 3,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "Three semantic duplicate relationships confirmed. The tariff relationship extends existing DUP-19; it adds one new held row (batch 14 row 31) while batch 38 row 31 was already held. No replacement draft or CSV edit was made."
+  }
+}

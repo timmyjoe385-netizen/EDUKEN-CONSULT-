@@ -1,0 +1,132 @@
+{
+  "date": "2026-11-11",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "staging_revision": "2026-11-10-r4",
+  "subject": "Biology",
+  "scope": "Preliminary same-subject semantic screening of all 200 Biology rows (169 retained, 31 held).",
+  "method": "Compared all Biology question stems using padded character-trigram Dice similarity and manually inspected high-scoring candidate pairs, answer options and explanations. Lexical similarity is a triage signal, not a semantic decision by itself.",
+  "candidate_pairs": [
+    {
+      "id": "BIO-SEM-001",
+      "locations": [
+        "batch 08 row 15",
+        "batch 37 row 12"
+      ],
+      "disposition": "retained_retained_high_confidence_duplicate",
+      "reason": "Both ask which stomach enzyme begins protein digestion; both answer Pepsin and explain the same fact.",
+      "recommendation": "Retain one and move the later duplicate to a review hold after qualified Biology review."
+    },
+    {
+      "id": "BIO-SEM-002",
+      "locations": [
+        "batch 25 row 13",
+        "batch 40 row 15"
+      ],
+      "disposition": "retained_retained_high_confidence_duplicate",
+      "reason": "Both ask how ADH increases water reabsorption in kidney collecting ducts; same target organ, mechanism and correct concept.",
+      "recommendation": "Retain one and move the later duplicate to a review hold after qualified Biology review."
+    },
+    {
+      "id": "BIO-SEM-003",
+      "locations": [
+        "batch 11 row 15",
+        "batch 32 row 13"
+      ],
+      "disposition": "retained_retained_high_confidence_duplicate",
+      "reason": "Both ask for the source of oxygen released during photosynthesis/light-dependent reactions; both key water and explain photolysis.",
+      "recommendation": "Retain one and move the later duplicate to a review hold after qualified Biology review."
+    },
+    {
+      "id": "BIO-SEM-004",
+      "locations": [
+        "batch 07 row 16",
+        "batch 31 row 16"
+      ],
+      "disposition": "retained_retained_related_or_near_duplicate_pending_review",
+      "reason": "Both assess the same natural-selection outcome: inherited advantageous traits are associated with greater reproductive success. The second frames it as an environmental-change scenario.",
+      "recommendation": "Qualified reviewer to decide whether the changed scenario provides sufficient assessment distinction."
+    },
+    {
+      "id": "BIO-SEM-005",
+      "locations": [
+        "batch 18 row 13",
+        "batch 11 row 15",
+        "batch 32 row 13"
+      ],
+      "disposition": "retained_related_skill_cluster_pending_review",
+      "reason": "All concern photolysis and oxygen production. One asks what is split (water); the other two ask what gas is released/source of oxygen. The first may test a related but distinct step.",
+      "recommendation": "Review as a concept cluster; do not automatically classify all three as duplicates."
+    }
+  ],
+  "already_held_examples": [
+    {
+      "locations": [
+        "batch 07 row 15",
+        "batch 16 row 15"
+      ],
+      "reason": "Ureter transports urine from kidney to bladder; later item already held."
+    },
+    {
+      "locations": [
+        "batch 09 row 12",
+        "batch 31 row 12",
+        "batch 38 row 14"
+      ],
+      "reason": "Fertilisation normally occurs in the oviduct; later two items already held."
+    },
+    {
+      "locations": [
+        "batch 18 row 16",
+        "batch 37 row 13"
+      ],
+      "reason": "Glomerulus is the site of blood ultrafiltration; later item already held."
+    },
+    {
+      "locations": [
+        "batch 01 row 15",
+        "batch 38 row 13"
+      ],
+      "reason": "Platelets are responsible for blood clotting; later item already held."
+    },
+    {
+      "locations": [
+        "batch 10 row 15",
+        "batch 35 row 14"
+      ],
+      "reason": "Anther produces pollen grains; later item already held."
+    },
+    {
+      "locations": [
+        "batch 26 row 13",
+        "batch 39 row 16"
+      ],
+      "reason": "Moving air increases transpiration; later item already held."
+    },
+    {
+      "locations": [
+        "batch 23 row 15",
+        "batch 34 row 15"
+      ],
+      "reason": "Commensalism benefits one organism without significantly affecting the other; later item already held."
+    }
+  ],
+  "findings": {
+    "total_source_rows": 200,
+    "retained_rows": 169,
+    "held_rows": 31,
+    "retained_retained_high_confidence_duplicate_clusters": 3,
+    "retained_retained_related_or_near_duplicate_clusters": 1,
+    "held_examples_verified": 7,
+    "source_rows_changed": 0,
+    "staging_changed": 0,
+    "database_changed": 0,
+    "production_changed": 0
+  },
+  "status": "PRELIMINARY_SEMANTIC_AUDIT_AWAITING_QUALIFIED_BIOLOGY_REVIEW",
+  "limitations": [
+    "This is not a complete academic review of all 169 retained Biology questions.",
+    "No answer key, scientific explanation or syllabus coverage has been independently approved.",
+    "No rows were moved and no replacement questions were inserted.",
+    "The 3 high-confidence pairs are assistant findings requiring qualified reviewer confirmation."
+  ]
+}

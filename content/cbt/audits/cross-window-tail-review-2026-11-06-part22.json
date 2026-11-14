@@ -1,0 +1,164 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Three-times-sized lower-tail review batch: fifteen candidate pairs checked against complete source stems, four options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      947,
+      948,
+      949,
+      950,
+      951,
+      952,
+      953,
+      954,
+      955,
+      956,
+      957,
+      958,
+      959,
+      960,
+      961
+    ],
+    "previous_total_manually_reviewed": 416,
+    "now_manually_reviewed": 431,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 873
+  },
+  "preserved": [
+    {
+      "rank": 947,
+      "subject": "Mathematics",
+      "a": "batch 10 row 9",
+      "b": "batch 36 row 10",
+      "decision": "preserve_both_as_distinct_polygon_angle_results",
+      "reason": "The first asks for a hexagon's interior-angle sum (720°); the second asks for the exterior-angle sum of any convex polygon (360°)."
+    },
+    {
+      "rank": 948,
+      "subject": "Physics",
+      "a": "batch 11 row 23",
+      "b": "batch 29 row 23",
+      "decision": "preserve_both_as_distinct_measuring_instruments",
+      "reason": "A voltmeter is connected in parallel to measure potential difference; an ammeter is connected in series to measure current."
+    },
+    {
+      "rank": 949,
+      "subject": "Government",
+      "a": "batch 13 row 33",
+      "b": "batch 22 row 32",
+      "decision": "preserve_both_as_distinct_constitutional_concepts",
+      "reason": "Constitutional supremacy establishes the constitution as the highest legal authority; rigidity concerns a special amendment procedure."
+    },
+    {
+      "rank": 950,
+      "subject": "Mathematics",
+      "a": "batch 20 row 7",
+      "b": "batch 25 row 11",
+      "decision": "preserve_both_as_distinct_mathematical_topics",
+      "reason": "Fractional indices and distance from the origin are different mathematical procedures."
+    },
+    {
+      "rank": 951,
+      "subject": "Mathematics",
+      "a": "batch 11 row 8",
+      "b": "batch 36 row 10",
+      "decision": "preserve_both_as_distinct_polygon_angle_results",
+      "reason": "A regular pentagon's interior angle is 108°; the exterior-angle sum of a convex polygon is 360°. Related geometry, different results and skills."
+    },
+    {
+      "rank": 952,
+      "subject": "Government",
+      "a": "batch 12 row 36",
+      "b": "batch 31 row 35",
+      "decision": "preserve_both_as_distinct_local_government_functions",
+      "reason": "Making lawful by-laws is a legislative function; the elected chairman is the political head of the executive arm."
+    },
+    {
+      "rank": 953,
+      "subject": "Chemistry",
+      "a": "batch 16 row 17",
+      "b": "batch 31 row 19",
+      "decision": "preserve_both_as_distinct_chemical_processes",
+      "reason": "The first asks for products of acid-base neutralisation; the second asks how concentration affects the rate of reaction between calcium carbonate and hydrochloric acid."
+    },
+    {
+      "rank": 955,
+      "subject": "Use of English",
+      "a": "batch 2 row 2",
+      "b": "batch 12 row 3",
+      "decision": "preserve_both_as_distinct_grammar_skills",
+      "reason": "Past perfect tense and backshift in reported speech are distinct grammatical objectives."
+    },
+    {
+      "rank": 956,
+      "subject": "Use of English",
+      "a": "batch 5 row 2",
+      "b": "batch 18 row 2",
+      "decision": "preserve_both_as_distinct_grammar_skills",
+      "reason": "Question-tag formation and active-to-passive transformation are distinct grammatical objectives."
+    },
+    {
+      "rank": 957,
+      "subject": "Use of English",
+      "a": "batch 5 row 3",
+      "b": "batch 13 row 4",
+      "decision": "preserve_both_as_distinct_grammar_skills",
+      "reason": "Article selection before a silent-h word and the irregular comparative of good test different grammar knowledge."
+    },
+    {
+      "rank": 958,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 12 row 7",
+      "decision": "preserve_both_as_distinct_mathematical_operations",
+      "reason": "Evaluating cos 60° and finding the reciprocal of a fraction are different skills."
+    },
+    {
+      "rank": 959,
+      "subject": "Mathematics",
+      "a": "batch 1 row 10",
+      "b": "batch 22 row 10",
+      "decision": "preserve_both_as_distinct_measures_of_central_tendency",
+      "reason": "Mean and mode are different measures and require different calculations."
+    },
+    {
+      "rank": 960,
+      "subject": "Physics",
+      "a": "batch 4 row 23",
+      "b": "batch 26 row 26",
+      "decision": "preserve_both_as_distinct_mechanics_quantities",
+      "reason": "Kinetic energy is calculated from mass and speed squared; momentum is mass multiplied by velocity."
+    },
+    {
+      "rank": 961,
+      "subject": "Literature in English",
+      "a": "batch 11 row 41",
+      "b": "batch 24 row 40",
+      "decision": "preserve_both_as_distinct_figures_of_speech",
+      "reason": "A pun relies on wordplay or multiple meanings; chiasmus reverses corresponding words or ideas in parallel structures."
+    }
+  ],
+  "deferred": [
+    {
+      "rank": 954,
+      "subject": "Chemistry",
+      "a": "batch 17 row 18",
+      "b": "batch 32 row 19",
+      "decision": "defer_for_independent_chemistry_subject_review",
+      "reason": "Both questions ask learners to identify the salt produced by complete acid-base neutralisation using different acid/base pairs (potassium nitrate from nitric acid and potassium hydroxide; sodium sulfate from sulfuric acid and sodium hydroxide). The reagents, products and stoichiometry differ, but the assessed task may be too close to count as distinct coverage. Do not count as a confirmed duplicate or add a held target until a qualified Chemistry reviewer decides whether these are meaningfully distinct applications."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 14,
+    "deferred_for_subject_review": 1,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "All fifteen candidate pairs were inspected in full. Fourteen were preserved as distinct; one neutralisation-salt pair was deferred for qualified Chemistry review. No source, staging or production question data was changed."
+  }
+}

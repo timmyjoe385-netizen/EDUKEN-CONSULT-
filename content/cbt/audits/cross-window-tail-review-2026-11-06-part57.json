@@ -1,0 +1,178 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 535-549. Both original source records, full stems, options, answer keys and explanations were checked; similarity scores were screening signals only.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      535,
+      536,
+      537,
+      538,
+      539,
+      540,
+      541,
+      542,
+      543,
+      544,
+      545,
+      546,
+      547,
+      548,
+      549
+    ],
+    "previous_total_manually_reviewed": 921,
+    "now_manually_reviewed": 936,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 368
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-201",
+      "rank": 546,
+      "subject": "Use of English",
+      "a": "batch 22 row 3",
+      "b": "batch 34 row 3",
+      "concept": "Meaning of the word ephemeral",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the meaning or nearest synonym of ephemeral and give short-lived as the correct answer. The stems and explanations are direct paraphrases of the same vocabulary item.",
+      "retain": "batch 22 row 3",
+      "hold": "batch 34 row 3",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "PENDING-CLUSTER-RECONCILIATION",
+      "rank": 549,
+      "subject": "Government",
+      "a": "batch 8 row 33",
+      "b": "batch 26 row 33",
+      "concept": "Proportional representation translates parties' vote shares into seat shares",
+      "decision": "confirmed_semantic_duplicate_cluster_extension",
+      "reason": "Both ask for the main aim of proportional representation and identify broadly matching parties' seat shares to vote shares. Batch 8 row 33 already appears in the previously reviewed proportional-representation duplicate cluster; this adds batch 26 row 33 as another held row. Existing cluster ID and staging join must be reconciled before assigning a new identifier.",
+      "retain": "batch 8 row 33",
+      "hold": "batch 26 row 33",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending_cluster_reconciliation",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 535,
+      "subject": "Chemistry",
+      "a": "batch 17 row 20",
+      "b": "batch 28 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "Alkanes have the general formula CnH2n+2; open-chain monoalkenes have CnH2n. Different homologous series."
+    },
+    {
+      "rank": 536,
+      "subject": "Mathematics",
+      "a": "batch 23 row 10",
+      "b": "batch 34 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "One multiplies independent coin-and-die probabilities; the other counts exactly-one-head outcomes in a two-coin sample space."
+    },
+    {
+      "rank": 537,
+      "subject": "Government",
+      "a": "batch 23 row 33",
+      "b": "batch 40 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "Appellate jurisdiction reviews lower-court decisions; original jurisdiction hears a case at first instance."
+    },
+    {
+      "rank": 538,
+      "subject": "Physics",
+      "a": "batch 8 row 26",
+      "b": "batch 15 row 25",
+      "decision": "preserve_as_distinct",
+      "reason": "Coulomb is the SI unit of electric charge; newton per coulomb is the SI unit of electric field strength."
+    },
+    {
+      "rank": 539,
+      "subject": "Mathematics",
+      "a": "batch 7 row 7",
+      "b": "batch 39 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Tangent is opposite/adjacent; cosine is adjacent/hypotenuse. Different trigonometric ratios."
+    },
+    {
+      "rank": 540,
+      "subject": "Mathematics",
+      "a": "batch 10 row 10",
+      "b": "batch 32 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "The first finds a term in a geometric progression; the second calculates a sum in an arithmetic progression."
+    },
+    {
+      "rank": 541,
+      "subject": "Use of English",
+      "a": "batch 12 row 3",
+      "b": "batch 35 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A personal statement commonly backshifts am to was; a universal scientific truth may retain the present tense in reported speech."
+    },
+    {
+      "rank": 542,
+      "subject": "Literature in English",
+      "a": "batch 8 row 40",
+      "b": "batch 11 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "Assonance repeats vowel sounds; consonance repeats consonant sounds. Different sound devices."
+    },
+    {
+      "rank": 543,
+      "subject": "Physics",
+      "a": "batch 6 row 25",
+      "b": "batch 20 row 24",
+      "decision": "preserve_as_distinct",
+      "reason": "Period from frequency uses T = 1/f; wavelength from speed and frequency uses λ = v/f. Different quantities and formulae."
+    },
+    {
+      "rank": 544,
+      "subject": "Biology",
+      "a": "batch 1 row 15",
+      "b": "batch 32 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Platelets initiate blood clotting; kidneys filter blood and form urine. Different components and organ functions."
+    },
+    {
+      "rank": 545,
+      "subject": "Use of English",
+      "a": "batch 8 row 6",
+      "b": "batch 37 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies a vowel sound; the second identifies the voiced /ʒ/ consonant sound."
+    },
+    {
+      "rank": 547,
+      "subject": "Biology",
+      "a": "batch 24 row 16",
+      "b": "batch 31 row 13",
+      "decision": "preserve_as_distinct",
+      "reason": "Phosphorus is present in ATP and nucleic acids; magnesium is central to chlorophyll. Different mineral functions."
+    },
+    {
+      "rank": 548,
+      "subject": "Mathematics",
+      "a": "batch 4 row 11",
+      "b": "batch 24 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Circumference uses 2πr; the radius of x² + y² = 49 is obtained from the circle equation. Different geometry tasks."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 2,
+    "new_unique_replacement_targets": 2,
+    "preserved_as_distinct": 13,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

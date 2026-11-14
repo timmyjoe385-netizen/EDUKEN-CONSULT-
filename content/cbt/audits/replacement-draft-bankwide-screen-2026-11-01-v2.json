@@ -1,0 +1,3342 @@
+{
+  "audit_date": "2026-11-10",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "version": 68,
+  "purpose": "Refreshed non-destructive lexical screen of all 116 current replacement proposals against all 1,600 staged source question rows, including retained and held rows, in staging revision r4.",
+  "method": "Normalize each stem to lowercase alphanumeric words, pad the string, create unique character trigrams, and calculate Dice similarity against same-subject source stems. Scores at or above 0.42 are review prompts only, not semantic duplicate verdicts.",
+  "source_bank": {
+    "batches": 40,
+    "question_rows": 1600,
+    "retained_and_held_included": true,
+    "original_csvs_modified": false,
+    "retained_rows": 1439,
+    "held_rows": 161,
+    "staging_revision": "2026-11-10-r4"
+  },
+  "replacement_proposals": {
+    "count": 116,
+    "screened": 116,
+    "all_proposals_screened": true
+  },
+  "screening_summary": {
+    "threshold": 0.42,
+    "flagged_count": 12,
+    "below_threshold_count": 104,
+    "flagged_ids": [
+      "DUP-10",
+      "DUP-16",
+      "DUP-18",
+      "DUP-22",
+      "DUP-33",
+      "DUP-34",
+      "DUP-35",
+      "DUP-36",
+      "DUP-45",
+      "DUP-48",
+      "DUP-53",
+      "DUP-47-ADD-2026-11-09"
+    ],
+    "manual_contextual_review_complete": true,
+    "manual_contextual_review_note": "All 11 lexical flags received explicit assistant contextual reassessment on 2026-11-02. Three items (DUP-35, DUP-45, DUP-48) retain specific syllabus-scope holds pending qualified human review. This does not count as independent approval. 2026-11-09 r3 supplement: the new confederation draft DUP-47-ADD-2026-11-09 was manually contextually reassessed. Its nearest match asks about revenue allocation in a federation; the new item asks about sovereignty and delegated powers in a confederation. The lexical flag remains visible and independent Government review is still required."
+  },
+  "results": [
+    {
+      "target_id": "DUP-01",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.35,
+      "top_matches": [
+        {
+          "location": "batch 40 row 8",
+          "score": 0.35,
+          "question": "What is the size of each exterior angle of a regular octagon?"
+        },
+        {
+          "location": "batch 11 row 8",
+          "score": 0.3471,
+          "question": "What is the size of each interior angle of a regular pentagon?"
+        },
+        {
+          "location": "batch 10 row 9",
+          "score": 0.3077,
+          "question": "The sum of the interior angles of a hexagon is:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics retained-plus-held rows checked. Nearest items concern polygon exterior/interior angles; none tests rectangle diagonal properties. Answer B is correct: rectangle diagonals are equal and bisect one another, but are not necessarily perpendicular. Similarity 0.3500. Independent Mathematics reviewer should confirm syllabus fit and ensure the 'not necessarily perpendicular' distractor is understood."
+      }
+    },
+    {
+      "target_id": "DUP-02",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.4144,
+      "top_matches": [
+        {
+          "location": "batch 23 row 17",
+          "score": 0.4144,
+          "question": "In a galvanic cell, oxidation takes place at the"
+        },
+        {
+          "location": "batch 40 row 17",
+          "score": 0.2655,
+          "question": "What is the oxidation number of manganese in KMnO₄?"
+        },
+        {
+          "location": "batch 33 row 20",
+          "score": 0.2632,
+          "question": "The functional group characteristic of alcohols is"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry retained-plus-held rows checked. Nearest item batch 23 row 17 asks where oxidation occurs in a galvanic cell; it does not test the salt bridge's ion-migration/electroneutrality function. Answer B is correct. Similarity 0.4144, below threshold but close. Independent Chemistry reviewer should confirm wording and syllabus fit; distinguish ionic conduction through the salt bridge from electron flow through the external circuit."
+      }
+    },
+    {
+      "target_id": "DUP-03",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.4138,
+      "top_matches": [
+        {
+          "location": "batch 18 row 22",
+          "score": 0.4138,
+          "question": "In a direct-current circuit, electrical power is calculated using:"
+        },
+        {
+          "location": "batch 23 row 22",
+          "score": 0.3311,
+          "question": "According to Lenz's law, the induced current flows in a direction that"
+        },
+        {
+          "location": "batch 25 row 23",
+          "score": 0.3291,
+          "question": "Which instrument is connected in series in a circuit to measure electric current?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. Nearest item batch 18 row 22 asks for the power formula in a DC circuit; another asks about Lenz's law. Neither defines alternating current. Answer B is correct: AC periodically reverses direction. Similarity 0.4138, below threshold but close. Independent Physics reviewer should confirm wording and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-04",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3837,
+      "top_matches": [
+        {
+          "location": "batch 39 row 12",
+          "score": 0.3837,
+          "question": "An organism with genotype Tt is described as"
+        },
+        {
+          "location": "batch 36 row 13",
+          "score": 0.3503,
+          "question": "If T is dominant to t, which genotype is heterozygous?"
+        },
+        {
+          "location": "batch 01 row 14",
+          "score": 0.3316,
+          "question": "An organism with two identical alleles for a gene is described as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_biology_review",
+        "note": "Corrected stem specifies complete dominance and distractors distinguish codominance and incomplete dominance. All 200 Biology retained-plus-held rows checked. Nearest items ask for genotype labels (Tt/heterozygous/homozygous), not the expressed phenotype under complete dominance. Answer B is correct. Highest trigram Dice similarity 0.3837, below 0.42. Independent Biology reviewer must confirm conceptual distinction and syllabus fit. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-05",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3673,
+      "top_matches": [
+        {
+          "location": "batch 13 row 39",
+          "score": 0.3673,
+          "question": "Blank verse is poetry written in…"
+        },
+        {
+          "location": "batch 08 row 39",
+          "score": 0.352,
+          "question": "A narrative that begins in the middle of the action is said to begin:"
+        },
+        {
+          "location": "batch 06 row 41",
+          "score": 0.25,
+          "question": "A biography is an account of a person's life written by:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "closely_related_to_existing_blank_verse_item_human_variety_decision",
+        "note": "All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 13 row 39 on blank verse (0.3673). Blank verse is traditionally unrhymed iambic pentameter, so this replacement tests a key component of a concept already present. It is not a verbatim duplicate, but the assessed knowledge is closely overlapping and may add little variety. Answer B is correct. Independent Literature reviewer should decide whether to retain as complementary or replace with a more distinct literary concept."
+      }
+    },
+    {
+      "target_id": "DUP-06",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3284,
+      "top_matches": [
+        {
+          "location": "batch 39 row 13",
+          "score": 0.3284,
+          "question": "A parasite that lives on the external surface of its host is called an"
+        },
+        {
+          "location": "batch 23 row 13",
+          "score": 0.271,
+          "question": "The similarity in basic bone arrangement in the forelimbs of humans, whales and bats is evidence of"
+        },
+        {
+          "location": "batch 09 row 16",
+          "score": 0.2353,
+          "question": "The part of the brain chiefly responsible for balance and coordination is the:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. Candidate asks how hooks/barbs on fruits aid seed dispersal by attaching to animals. Nearest seed-dispersal items test other mechanisms; highest same-subject similarity 0.3284. Answer C is correct. Broad syllabus fit to plant structural adaptations requires qualified Biology confirmation."
+      }
+    },
+    {
+      "target_id": "DUP-07",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.4094,
+      "top_matches": [
+        {
+          "location": "batch 11 row 25",
+          "score": 0.4094,
+          "question": "Heat transfer through the bulk movement of a liquid or gas is called:"
+        },
+        {
+          "location": "batch 03 row 25",
+          "score": 0.2759,
+          "question": "Sound cannot travel through:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.2424,
+          "question": "Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. The nearest item batch 11 row 25 defines convection as heat transfer by bulk movement of a fluid; this draft asks which mode can occur through a vacuum. Radiation is correct because it does not require a material medium. Similarity 0.4094, below threshold but close. These test distinct heat-transfer mechanisms, though the shared heat-transfer family merits reviewer confirmation."
+      }
+    },
+    {
+      "target_id": "DUP-08",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.381,
+      "top_matches": [
+        {
+          "location": "batch 16 row 20",
+          "score": 0.381,
+          "question": "At constant temperature, the pressure of a fixed mass of gas is…"
+        },
+        {
+          "location": "batch 36 row 21",
+          "score": 0.3689,
+          "question": "Which ore is the principal commercial source of aluminium?"
+        },
+        {
+          "location": "batch 40 row 21",
+          "score": 0.2923,
+          "question": "At constant volume, the pressure of a fixed mass of gas is directly proportional to its:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No natural-gas principal-constituent item found. Nearest matches concern gas laws and bauxite ore, not natural-gas composition. Answer B is correct: methane is the principal constituent of most natural gas, though composition varies. Similarity 0.3810. Independent Chemistry reviewer must confirm syllabus depth and whether this belongs in the JAMB question bank."
+      }
+    },
+    {
+      "target_id": "DUP-09",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3019,
+      "top_matches": [
+        {
+          "location": "batch 04 row 20",
+          "score": 0.3019,
+          "question": "In electrolysis, the electrode connected to the positive terminal of the power supply is the:"
+        },
+        {
+          "location": "batch 12 row 18",
+          "score": 0.2798,
+          "question": "According to Faraday's first law of electrolysis, the mass of a substance deposited is directly proportional to the:"
+        },
+        {
+          "location": "batch 32 row 19",
+          "score": 0.2727,
+          "question": "Complete neutralisation of dilute sulphuric acid with sodium hydroxide produces which salt?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No question asks why dilute sulfuric acid is added to water before electrolysis. Nearest items test electrode polarity, Faraday's law and neutralisation. Answer A is correct: the acid supplies mobile ions and increases conductivity; it is not intended to produce chlorine. Similarity 0.3019. Independent Chemistry reviewer should confirm wording and conditions."
+      }
+    },
+    {
+      "target_id": "DUP-10",
+      "subject": "Economics",
+      "flagged": true,
+      "highest_similarity": 0.4507,
+      "top_matches": [
+        {
+          "location": "batch 02 row 29",
+          "score": 0.4507,
+          "question": "A sustained rise in the general price level is called:"
+        },
+        {
+          "location": "batch 20 row 29",
+          "score": 0.4046,
+          "question": "A tax imposed on goods and services when they are purchased is generally classified as:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3727,
+          "question": "A fall in average cost as a firm expands its scale of production is known as"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_after_assistant_contextual_reassessment_human_economics_approval_required",
+        "note": "Rechecked the candidate against the flagged closest match and all 200 Economics rows. Batch 02 row 29 asks for inflation (a sustained rise); this candidate asks for deflation (a sustained fall). These are inverse but separately defined price-level movements, not duplicate stems. Answer B is correct. Official JAMB Economics syllabus Topic 12(f) expressly includes deflation and its measurement, effects and control. Contextual distinction is supported; independent Economics reviewer must still approve wording and syllabus application. Not import-cleared."
+      }
+    },
+    {
+      "target_id": "DUP-11",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3577,
+      "top_matches": [
+        {
+          "location": "batch 18 row 24",
+          "score": 0.3577,
+          "question": "Which type of lens is thicker at the centre than at the edges?"
+        },
+        {
+          "location": "batch 11 row 25",
+          "score": 0.2754,
+          "question": "Heat transfer through the bulk movement of a liquid or gas is called:"
+        },
+        {
+          "location": "batch 14 row 22",
+          "score": 0.2615,
+          "question": "In uniform circular motion, the centripetal force is directed…"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. No ray-through-optical-centre item found. Nearest item asks for the shape of a convex lens (batch 18 row 24); other matches are unrelated. Answer B is correct for a paraxial ray through the optical centre of a thin lens: it emerges without appreciable deviation. Similarity 0.3577. Independent Physics reviewer must confirm syllabus fit and the paraxial/thin-lens qualification."
+      }
+    },
+    {
+      "target_id": "DUP-12",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3731,
+      "top_matches": [
+        {
+          "location": "batch 12 row 31",
+          "score": 0.3731,
+          "question": "A country has an absolute advantage in producing a good when it can:"
+        },
+        {
+          "location": "batch 24 row 31",
+          "score": 0.3148,
+          "question": "A country's terms of trade improve when"
+        },
+        {
+          "location": "batch 08 row 30",
+          "score": 0.3036,
+          "question": "The balance of payments records a country's:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_economics_review",
+        "note": "The former per-capita-income calculation proposal was rejected because batch 28 row 28 already tests the same national-income/population formula. The new candidate tests optimum population. All 200 Economics retained-plus-held rows checked; no optimum-population question found. Answer C is correct: output per head is maximised at optimum population, given resources and technology. Highest trigram Dice similarity 0.3731, below 0.42. Independent Economics reviewer must confirm syllabus fit and wording. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-13",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3796,
+      "top_matches": [
+        {
+          "location": "batch 05 row 17",
+          "score": 0.3796,
+          "question": "The reaction between an acid and a base typically produces:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3576,
+          "question": "The reaction between an alcohol and a carboxylic acid can produce an ester and"
+        },
+        {
+          "location": "batch 16 row 17",
+          "score": 0.3473,
+          "question": "What are the products of complete reaction between hydrochloric acid and sodium hydroxide?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No methane-chlorination reaction-classification item found. Nearest items concern acid-base reactions and esterification, which are different reaction types. Answer B is correct: methane reacts with chlorine under UV light by free-radical substitution. Similarity 0.3796. Independent Chemistry reviewer must confirm the radical mechanism is within syllabus depth."
+      }
+    },
+    {
+      "target_id": "DUP-14",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.315,
+      "top_matches": [
+        {
+          "location": "batch 06 row 15",
+          "score": 0.315,
+          "question": "The cell membrane is described as selectively permeable because it:"
+        },
+        {
+          "location": "batch 01 row 13",
+          "score": 0.2783,
+          "question": "In a food chain, green plants are usually classified as:"
+        },
+        {
+          "location": "batch 16 row 14",
+          "score": 0.2247,
+          "question": "A gene is best described as…"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology rows checked. Candidate defines a prokaryotic cell by absence of a membrane-bound nucleus. No same-definition item found; closest cell questions concern organelles in eukaryotic cells. Answer B is correct. Broad fit to cell structure/organisation; independent Biology review required."
+      }
+    },
+    {
+      "target_id": "DUP-15",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3827,
+      "top_matches": [
+        {
+          "location": "batch 24 row 30",
+          "score": 0.3827,
+          "question": "When a central bank sells government securities to the public, it generally"
+        },
+        {
+          "location": "batch 11 row 30",
+          "score": 0.3457,
+          "question": "Which of the following is most likely to be classified as a public good?"
+        },
+        {
+          "location": "batch 20 row 29",
+          "score": 0.3448,
+          "question": "A tax imposed on goods and services when they are purchased is generally classified as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No recurrent-expenditure/salary-classification question found. Nearest items concern central-bank securities, public goods and indirect taxation. Answer B is correct: regular teacher salaries are recurrent expenditure. Similarity 0.3827. Independent Economics reviewer should confirm the recurrent/capital distinction and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-16",
+      "subject": "Chemistry",
+      "flagged": true,
+      "highest_similarity": 0.5181,
+      "top_matches": [
+        {
+          "location": "batch 17 row 21",
+          "score": 0.5181,
+          "question": "Which method is most suitable for separating an insoluble solid from a liquid?"
+        },
+        {
+          "location": "batch 38 row 21",
+          "score": 0.4615,
+          "question": "Simple distillation is most suitable for separating a liquid from"
+        },
+        {
+          "location": "batch 24 row 21",
+          "score": 0.3902,
+          "question": "Fractional distillation is especially suitable for separating liquids that"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_after_assistant_contextual_reassessment_human_chemistry_approval_required",
+        "note": "Rechecked the full 200 Chemistry rows. Closest lexical match, batch 17 row 21, tests filtration of an insoluble solid from a liquid; other high matches concern distillation. This candidate tests separating two immiscible liquids with a separating funnel. Different mixture properties and separation principle. Answer B is correct. JAMB Chemistry Topic 1 lists separation processes and expects candidates to identify the principle of each; separating funnel is an application of separating immiscible liquids. Similarity 0.5181 is lexical, not a duplicate verdict. Independent Chemistry reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-17",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.4172,
+      "top_matches": [
+        {
+          "location": "batch 22 row 16",
+          "score": 0.4172,
+          "question": "In humans, which sex chromosome combination is typically associated with a male?"
+        },
+        {
+          "location": "batch 17 row 13",
+          "score": 0.3158,
+          "question": "Which structure inside the nucleus is chiefly involved in producing ribosomal components?"
+        },
+        {
+          "location": "batch 40 row 15",
+          "score": 0.3125,
+          "question": "Which hormone increases water reabsorption in the collecting ducts of the kidney?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. Corrected candidate tests auxin redistribution during positive phototropism, not merely general shoot elongation. No same-mechanism overlap identified. Correct key is A (auxin); the earlier screening note incorrectly said B. Similarity screen's nearest listed score was 0.4172 but its match was unrelated. Independent Biology/syllabus approval remains required."
+      }
+    },
+    {
+      "target_id": "DUP-18",
+      "subject": "Physics",
+      "flagged": true,
+      "highest_similarity": 0.4271,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.4271,
+          "question": "Total internal reflection can occur when light travels from a denser medium to a less dense medium at an angle of incidence:"
+        },
+        {
+          "location": "batch 30 row 23",
+          "score": 0.3556,
+          "question": "The critical angle for a pair of media is the angle of incidence in the optically denser medium for which the angle of refraction is:"
+        },
+        {
+          "location": "batch 21 row 24",
+          "score": 0.3485,
+          "question": "A plane mirror normally forms an image that is ___."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_after_assistant_contextual_reassessment_human_physics_approval_required",
+        "note": "Rechecked the 200 Physics rows and the closest held item. The held item tests total internal reflection at a denser-to-rarer boundary; this candidate tests the law of reflection at a plane mirror. They are different optical laws. Stem gives the angle of incidence and answer B (35°) follows from angle of reflection equalling angle of incidence, both measured from the normal. Official JAMB Physics syllabus includes laws of reflection. Contextually distinct; independent Physics reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-19",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3519,
+      "top_matches": [
+        {
+          "location": "batch 37 row 31",
+          "score": 0.3519,
+          "question": "A transfer payment is a government payment for which:"
+        },
+        {
+          "location": "batch 32 row 31",
+          "score": 0.3107,
+          "question": "A major function of a trade union is to"
+        },
+        {
+          "location": "batch 32 row 29",
+          "score": 0.2913,
+          "question": "A contestable market is one in which:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No customs-union definition item found. Nearest items concern transfer payments, trade-union functions and contestable markets. Answer A is correct: a customs union adopts a common external tariff toward non-members and permits freer trade among members. Similarity 0.3519. Independent Economics reviewer should confirm the definition and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-20",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3273,
+      "top_matches": [
+        {
+          "location": "batch 06 row 29",
+          "score": 0.3273,
+          "question": "A common function of commercial banks is to:"
+        },
+        {
+          "location": "batch 09 row 29",
+          "score": 0.293,
+          "question": "An increase in the cash reserve requirement generally reduces commercial banks' ability to:"
+        },
+        {
+          "location": "batch 24 row 30",
+          "score": 0.2817,
+          "question": "When a central bank sells government securities to the public, it generally"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No commercial-bank loan/deposit-creation question found. Nearest items ask general bank functions, reserve requirements and central-bank open-market operations. Answer B is correct: when a commercial bank grants a loan, it normally credits a deposit account, creating a corresponding loan asset and deposit liability. Similarity 0.3273. Independent Economics reviewer should confirm syllabus depth and careful wording."
+      }
+    },
+    {
+      "target_id": "DUP-21",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.4103,
+      "top_matches": [
+        {
+          "location": "batch 12 row 41",
+          "score": 0.4103,
+          "question": "A narrative in which characters and events represent abstract ideas or moral principles is called:"
+        },
+        {
+          "location": "batch 12 row 40",
+          "score": 0.4039,
+          "question": "Which narrative technique attempts to present the continuous flow of a character's thoughts and impressions?"
+        },
+        {
+          "location": "batch 25 row 41",
+          "score": 0.3947,
+          "question": "Free indirect discourse is a narrative technique that"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No flashback definition item found. Nearest items concern allegory, stream of consciousness and free indirect discourse, distinct narrative techniques. Answer B is correct: a flashback interrupts present action to present an earlier event. Similarity 0.4103, below threshold but close. Independent Literature reviewer should confirm the distinction from other retrospective narrative devices and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-22",
+      "subject": "Biology",
+      "flagged": true,
+      "highest_similarity": 0.4785,
+      "top_matches": [
+        {
+          "location": "batch 35 row 13",
+          "score": 0.4785,
+          "question": "Which blood component contains haemoglobin and transports most oxygen in humans?"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3624,
+          "question": "Which component of blood is primarily responsible for clotting?"
+        },
+        {
+          "location": "batch 07 row 13",
+          "score": 0.3378,
+          "question": "Which tissue transports manufactured food in flowering plants?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_after_assistant_contextual_reassessment_human_biology_approval_required",
+        "note": "Rechecked all 200 Biology rows. Closest retained item tests red blood cells/haemoglobin transporting oxygen; the held item tests platelet clotting. This candidate asks about plasma carrying dissolved nutrients, hormones and waste products. These are distinct blood components and functions. Answer B is correct. The JAMB Biology syllabus includes transport in animals and blood composition/functions. Contextually distinct; independent Biology reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-23",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2963,
+      "top_matches": [
+        {
+          "location": "batch 01 row 31",
+          "score": 0.2963,
+          "question": "A tax charged as a fixed percentage of the price of a product is an example of:"
+        },
+        {
+          "location": "batch 22 row 30",
+          "score": 0.2949,
+          "question": "Which of the following is an example of economic infrastructure?"
+        },
+        {
+          "location": "batch 32 row 30",
+          "score": 0.2897,
+          "question": "Which of the following is an example of a direct tax?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No foreign-direct-investment definition/example found. Nearest items concern ad valorem tax, infrastructure and direct taxation. Answer A is correct: a foreign company establishing/operating a lasting manufacturing plant in Nigeria is foreign direct investment. Similarity 0.2963. Independent Economics reviewer should confirm definition and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-24",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3566,
+      "top_matches": [
+        {
+          "location": "batch 11 row 12",
+          "score": 0.3566,
+          "question": "Which substance is the main structural component of the cell wall in most plants?"
+        },
+        {
+          "location": "batch 32 row 16",
+          "score": 0.3206,
+          "question": "What is the main role of Rhizobium bacteria in the root nodules of leguminous plants?"
+        },
+        {
+          "location": "batch 13 row 12",
+          "score": 0.3077,
+          "question": "The main function of red blood cells in humans is to…"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology rows checked. No peptidoglycan cell-wall composition item found. Nearest items concern cellulose in plant cell walls, Rhizobium and red blood cells. Answer C is correct: peptidoglycan is the main structural material in most bacterial cell walls. Similarity 0.3566. Independent Biology reviewer should confirm wording and syllabus depth."
+      }
+    },
+    {
+      "target_id": "DUP-25",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2628,
+      "top_matches": [
+        {
+          "location": "batch 08 row 28",
+          "score": 0.2628,
+          "question": "A progressive income tax is one in which the average tax rate generally:"
+        },
+        {
+          "location": "batch 35 row 27",
+          "score": 0.2553,
+          "question": "The conventional reward paid to the factor of production known as land is:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.2361,
+          "question": "A fall in average cost as a firm expands its scale of production is known as"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No tax-evasion definition item found. Nearest items concern progressive taxation and factor rewards; no same legal concealment concept. Answer A is correct: knowingly concealing taxable income to evade legally due tax is tax evasion. Similarity 0.2628. Independent Economics reviewer should confirm wording and distinction from lawful tax avoidance."
+      }
+    },
+    {
+      "target_id": "DUP-26",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3833,
+      "top_matches": [
+        {
+          "location": "batch 12 row 25",
+          "score": 0.3833,
+          "question": "A capacitor is primarily used to store…"
+        },
+        {
+          "location": "batch 38 row 25",
+          "score": 0.3731,
+          "question": "The total resistance of resistors connected in series is"
+        },
+        {
+          "location": "batch 14 row 26",
+          "score": 0.3669,
+          "question": "A potential difference of 9 V causes a current of 3 A through a conductor. What is its resistance?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. Nearest item batch 12 row 25 asks the general purpose of a capacitor (charge storage); another asks resistance from V/I. This candidate tests numerical capacitance using C=Q/V, not merely the device's function. 24 μC/6 V=4 μF, answer B. Similarity 0.3833. Independent Physics reviewer should confirm units and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-27",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3967,
+      "top_matches": [
+        {
+          "location": "batch 36 row 11",
+          "score": 0.3967,
+          "question": "If y varies directly as x and y = 15 when x = 3, find y when x = 7."
+        },
+        {
+          "location": "batch 27 row 11",
+          "score": 0.3802,
+          "question": "If y varies inversely as x and y = 6 when x = 4, find y when x = 8."
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.368,
+          "question": "If y varies inversely as x and y = 6 when x = 4, what is y when x = 8?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics rows checked. Nearest items test direct variation and inverse variation; none tests joint variation as proportionality to the product xy. Answer B is correct: z=kxy. Similarity 0.3967, below threshold but close. Independent Mathematics reviewer should confirm distinction from direct/inverse variation and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-28",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3289,
+      "top_matches": [
+        {
+          "location": "batch 12 row 36",
+          "score": 0.3289,
+          "question": "One legislative function of a local government council is to make:"
+        },
+        {
+          "location": "batch 05 row 35",
+          "score": 0.2953,
+          "question": "Political legitimacy refers to the belief that a government has:"
+        },
+        {
+          "location": "batch 20 row 32",
+          "score": 0.2905,
+          "question": "Which institution commonly has the authority to determine whether a law violates constitutional rights?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review_after_stem_correction",
+        "decision": "conceptually_distinct_pending_independent_government_review",
+        "note": "Stem corrected to ask which government, with options at the same level (local, state, federal), avoiding the former mismatch between 'level of government' and 'federal legislature'. Compared against all 200 Government retained-plus-held rows. Highest trigram Dice similarity 0.3289 to batch 12 row 36 (local-government by-laws), below 0.42. Answer C is correct: federal legislative authority over Exclusive List matters is exercised by the National Assembly. Independent Government reviewer must confirm constitutional wording and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-29",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.1923,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.1923,
+          "question": "The students congratulated her _____ winning the scholarship."
+        },
+        {
+          "location": "batch 29 row 5",
+          "score": 0.1739,
+          "question": "If a passage states that a proposal was “received with reservations,” the readers most likely"
+        },
+        {
+          "location": "batch 26 row 5",
+          "score": 0.1702,
+          "question": "Which connector best completes the sentence? “The road was flooded; ___, the delivery arrived before noon.”"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No 'deprived of' collocation item found. The nearest held item tests the different collocation 'congratulated on'; this draft tests the verb/adjective pattern 'deprived of'. Answer B is correct. Similarity 0.1923. Independent English reviewer should confirm collocation and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-30",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.2637,
+      "top_matches": [
+        {
+          "location": "batch 08 row 3",
+          "score": 0.2637,
+          "question": "If a plan is “called off,” it is:"
+        },
+        {
+          "location": "batch 40 row 3",
+          "score": 0.2586,
+          "question": "A person who deliberately sets fire to property is an"
+        },
+        {
+          "location": "batch 27 row 6",
+          "score": 0.2576,
+          "question": "A rising intonation is commonly used at the end of which type of question?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No lexicographer definition item found. The register's closest related vocabulary concept is etymologist (study of word origins); a lexicographer compiles/edits dictionaries, so the roles are distinct. Answer A is correct. Similarity 0.2637. Independent English reviewer should confirm lexical precision and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-31",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3766,
+      "top_matches": [
+        {
+          "location": "batch 06 row 23",
+          "score": 0.3766,
+          "question": "What is the momentum of a 4 kg object moving at 5 m/s?"
+        },
+        {
+          "location": "batch 01 row 22",
+          "score": 0.3694,
+          "question": "A runner covers 150 m in 30 s. What is the average speed?"
+        },
+        {
+          "location": "batch 26 row 26",
+          "score": 0.3684,
+          "question": "A 0.5 kg ball moves at 8 m s⁻¹. What is its momentum?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. Nearest matches calculate momentum (batches 06 row 23 and 26 row 26); this candidate uses change in momentum over time to calculate average force (impulse), a different application. Δp=0.2×10=2 kg m/s; F=2/0.5=4 N, answer B. Similarity 0.3766. Independent Physics reviewer should confirm impulse syllabus fit and calculation."
+      }
+    },
+    {
+      "target_id": "DUP-32",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3483,
+      "top_matches": [
+        {
+          "location": "batch 33 row 37",
+          "score": 0.3483,
+          "question": "A poem that expresses the personal thoughts and emotions of an individual speaker is commonly classified as a:"
+        },
+        {
+          "location": "batch 20 row 41",
+          "score": 0.3412,
+          "question": "A short concluding section that follows the main action of a play is called an:"
+        },
+        {
+          "location": "batch 22 row 38",
+          "score": 0.3333,
+          "question": "The series of events that develops the main conflict and builds tension towards the climax is called:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No comedy-of-manners genre definition found. Nearest items classify lyric poetry, identify a denouement and describe plot development. Answer A is correct: comedy of manners satirises social conventions and behaviour, often through wit and irony. Similarity 0.3483. Independent Literature reviewer should confirm genre terminology and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-33",
+      "subject": "Use of English",
+      "flagged": true,
+      "highest_similarity": 0.4459,
+      "top_matches": [
+        {
+          "location": "batch 12 row 2",
+          "score": 0.4459,
+          "question": "In the sentence “The meeting was put off until Friday”, the expression “put off” means…"
+        },
+        {
+          "location": "batch 36 row 5",
+          "score": 0.4366,
+          "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
+        },
+        {
+          "location": "batch 30 row 3",
+          "score": 0.381,
+          "question": "In the sentence 'The manager spoke with remarkable candour', the word 'candour' means"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "revised_candidate_contextually_distinct_after_assistant_reassessment_human_english_approval_required",
+        "note": "The earlier 'whose' draft was a semantic duplicate of retained batch 20 row 2 and was rejected. The current 'whom' candidate was separately compared with all 200 Use of English stems; no item tests 'whom' as the object of a preposition. In the sentence, 'to whom' is governed by the preposition 'to', so answer B is correct. The older 0.4459 lexical flag belongs to the superseded 'whose' draft; the revised candidate's auxiliary Jaccard score 0.2756 uses a different metric and must not be compared to the original threshold. Human English review remains mandatory."
+      },
+      "manual_bankwide_review": {
+        "previous_draft_overlap": {
+          "location": "retained batch 20 row 2",
+          "question": "Choose the correct relative pronoun: “The scientist ___ discovery changed medicine received an award.”",
+          "finding": "Both items test whose as a possessive relative pronoun."
+        },
+        "revised_draft": {
+          "question": "In the sentence “The officer to whom I submitted the form acknowledged its receipt,” the word “whom” functions as:",
+          "answer": "B",
+          "status": "fresh_screen_required"
+        }
+      },
+      "revised_draft_manual_screen": {
+        "subject_stems_checked": 200,
+        "comparison_scope": "all Use of English stems in retained-plus-held staging bank",
+        "metric": "auxiliary character-trigram Jaccard similarity; not comparable to the original screen's threshold",
+        "highest_similarity": 0.2756,
+        "closest_match": "In the sentence 'The committee met yesterday', the word 'yesterday' functions as an adverb of",
+        "finding": "No same-function question testing 'whom' as the object of a preposition was found in the inspected subject bank.",
+        "status": "assistant_screen_complete_independent_human_review_required"
+      }
+    },
+    {
+      "target_id": "DUP-34",
+      "subject": "Use of English",
+      "flagged": true,
+      "highest_similarity": 0.5,
+      "top_matches": [
+        {
+          "location": "batch 01 row 3",
+          "score": 0.5,
+          "question": "Choose the correct verb: “Neither the teacher nor the students ___ ready.”"
+        },
+        {
+          "location": "batch 33 row 3",
+          "score": 0.5,
+          "question": "Choose the correct verb: “The list of items ___ on the desk.”"
+        },
+        {
+          "location": "batch 16 row 5",
+          "score": 0.487,
+          "question": "Choose the correct verb: “Neither the principal nor the teachers ___ available.”"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "revised_candidate_contextually_distinct_after_assistant_reassessment_human_english_approval_required",
+        "note": "Rechecked all 200 Use of English stems for the revised candidate. The nearest matches test proximity concord ('neither…nor') and agreement with the singular head 'list'; none tests the plural-only noun 'cattle'. In standard usage, 'cattle' takes a plural verb, so 'are' (C) is correct. The original 0.5000 similarity flag is not a semantic duplicate finding; the revised candidate's auxiliary score is 0.3333 on a different metric. Human English review remains mandatory."
+      },
+      "manual_bankwide_review": {
+        "revised_draft": {
+          "question": "Choose the correct verb: “The cattle _____ grazing near the river.”",
+          "answer": "C"
+        },
+        "comparison": "Nearest matches concern neither…nor proximity concord and singular head noun agreement; no same cattle-agreement item found in inspected retained/held staging files."
+      },
+      "revised_draft_manual_screen": {
+        "subject_stems_checked": 200,
+        "comparison_scope": "all Use of English stems in retained-plus-held staging bank",
+        "metric": "auxiliary character-trigram Jaccard similarity; not comparable to the original screen's threshold",
+        "highest_similarity": 0.3333,
+        "closest_match": "Choose the correct verb: “The list of items ___ on the desk.”",
+        "finding": "No same cattle-agreement question was found; closest matches test singular-head or nearest-subject concord.",
+        "status": "assistant_screen_complete_independent_human_review_required"
+      }
+    },
+    {
+      "target_id": "DUP-35",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.4311,
+      "top_matches": [
+        {
+          "location": "batch 20 row 41",
+          "score": 0.4311,
+          "question": "A short concluding section that follows the main action of a play is called an:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.382,
+          "question": "The list of characters in a play, usually provided near the beginning of the script, is called the"
+        },
+        {
+          "location": "batch 30 row 41",
+          "score": 0.314,
+          "question": "The list of characters in a play, often provided before the opening scene, is called:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_but_specific_term_syllabus_confirmation_required",
+        "note": "Rechecked all 200 Literature in English rows. No epigraph item found. Closest terms test epilogue (conclusion), prologue (opening section), aside (dramatic remark) and dramatis personae (cast list); none tests an epigraph, a quotation placed before a work or section. Answer A is correct. The official JAMB Literature syllabus includes a general literary-terms category with 'etc.' and expects identification/use of literary terms, but does not name 'epigraph' specifically. Keep on hold for an independent Literature reviewer to confirm the term is suitable at UTME level; if not, replace it with an explicitly listed term."
+      }
+    },
+    {
+      "target_id": "DUP-36",
+      "subject": "Government",
+      "flagged": true,
+      "highest_similarity": 0.4459,
+      "top_matches": [
+        {
+          "location": "batch 26 row 35",
+          "score": 0.4459,
+          "question": "A political party manifesto is primarily a document that"
+        },
+        {
+          "location": "batch 02 row 34",
+          "score": 0.3521,
+          "question": "One important function of a political party is to:"
+        },
+        {
+          "location": "batch 16 row 33",
+          "score": 0.3333,
+          "question": "Which is a key function of a political party in a democracy?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_within_party_organisation_scope_human_government_approval_required",
+        "note": "Rechecked all 200 Government rows. The closest items test a state constitution, a party manifesto and general party functions; none tests the internal governing document of a political party. A party constitution governs membership, offices, organisation and internal procedures, unlike a state constitution or policy manifesto. Answer A is correct. Official JAMB Government Topic 12 expressly includes political-party definition, organisation and functions, and Topic 8 in post-independence party politics covers party structure. This supports broad scope, but a Government reviewer must confirm the specific document detail. Not import-cleared."
+      }
+    },
+    {
+      "target_id": "DUP-37",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.4167,
+      "top_matches": [
+        {
+          "location": "batch 38 row 35",
+          "score": 0.4167,
+          "question": "A bureaucracy is generally characterised by"
+        },
+        {
+          "location": "batch 34 row 33",
+          "score": 0.3373,
+          "question": "An electoral ward is generally:"
+        },
+        {
+          "location": "batch 11 row 36",
+          "score": 0.3304,
+          "question": "A public corporation is generally established by government to…"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_review",
+        "note": "Scanned all 200 Government retained-plus-held rows. No private-member's-bill item was found. Closest related entries include retained batch 17 row 33 (committee-stage examination of a bill), retained batch 15 row 34 (legislative committee functions), retained batch 24 row 33 (legislative oversight) and retained batch 29 row 35 (standing committees). These concern legislative scrutiny/committee work, not who may introduce a private member's bill. The revised stem specifies a parliamentary system and distinguishes a legislator introducing a non-government bill from a minister presenting an executive bill. Official syllabus mapping is broad to Processes of Legislation — legislative enactments/bills; private members' bills are not expressly named. Human Government review remains required."
+      }
+    },
+    {
+      "target_id": "DUP-38",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.293,
+      "top_matches": [
+        {
+          "location": "batch 02 row 13",
+          "score": 0.293,
+          "question": "The transfer of pollen from an anther to a stigma is called:"
+        },
+        {
+          "location": "batch 30 row 16",
+          "score": 0.2762,
+          "question": "In flowering plants, water is transported from the roots to the leaves mainly through the:"
+        },
+        {
+          "location": "batch 08 row 14",
+          "score": 0.2667,
+          "question": "Antibodies are produced mainly by:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_and_syllabus_review",
+        "note": "Scanned all 200 Biology retained-plus-held rows. No item was found asking about maternal IgG transfer across the placenta or natural passive immunity before birth. Closest items concern placenta exchange of nutrients/gases (retained batch 15 row 14 and batch 28 row 12), antibody production by plasma cells (retained batch 08 row 14 and batch 25 row 15), and vaccination-induced active immune memory (retained batch 05 row 15 and batch 15 row 15; held vaccination duplicates also remain excluded). These are related to immunity/reproduction but test different mechanisms. Wording was narrowed to maternal IgG transfer to the fetus before birth to avoid ambiguity with antibodies in breast milk. Official Biology syllabus Part C, Topic 7 (Humans and Environment — Diseases) explicitly includes disease prevention/control and principles of inoculation and vaccination, but does not expressly list maternal passive immunity or placental IgG transfer. The item is therefore not treated as syllabus-confirmed; qualified Biology reviewer must decide whether to retain or replace it."
+      }
+    },
+    {
+      "target_id": "DUP-39",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3968,
+      "top_matches": [
+        {
+          "location": "batch 07 row 20",
+          "score": 0.3968,
+          "question": "During electrolysis, reduction occurs at the:"
+        },
+        {
+          "location": "batch 40 row 18",
+          "score": 0.3623,
+          "question": "During the electrorefining of copper, the impure copper is used as the:"
+        },
+        {
+          "location": "batch 20 row 17",
+          "score": 0.3452,
+          "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_and_syllabus_review",
+        "note": "Compared against all 200 Chemistry retained-plus-held rows; no cryolite-role item found. Aluminium electrolysis is in official Topic 16(d), but cryolite is not named. Independent Chemistry review required."
+      }
+    },
+    {
+      "target_id": "DUP-40",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3875,
+      "top_matches": [
+        {
+          "location": "batch 22 row 21",
+          "score": 0.3875,
+          "question": "The Contact process is used industrially to manufacture ___."
+        },
+        {
+          "location": "batch 18 row 21",
+          "score": 0.3619,
+          "question": "During electrolysis of aqueous copper(II) sulfate using inert electrodes, which substance is deposited at the cathode?"
+        },
+        {
+          "location": "batch 20 row 17",
+          "score": 0.356,
+          "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_human_subject_and_syllabus_review",
+        "note": "Compared against all 200 Chemistry retained-plus-held rows; no Contact-process catalyst item found. Official syllabus names Contact process and transition-metal catalysis generally, but not V2O5. Independent Chemistry review required."
+      }
+    },
+    {
+      "target_id": "DUP-41",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3951,
+      "top_matches": [
+        {
+          "location": "batch 40 row 15",
+          "score": 0.3951,
+          "question": "Which hormone increases water reabsorption in the collecting ducts of the kidney?"
+        },
+        {
+          "location": "batch 26 row 15",
+          "score": 0.381,
+          "question": "Which hormone primarily stimulates the growth and development of ovarian follicles during the menstrual cycle?"
+        },
+        {
+          "location": "batch 37 row 12",
+          "score": 0.3404,
+          "question": "Which enzyme in the stomach begins the digestion of proteins?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology rows checked. No prolactin/milk-production question found. Nearest hormone items test insulin, LH/ovulation, ADH/water balance and FSH/follicle development; they assess different hormones/functions. Prolactin stimulates milk production; oxytocin supports milk ejection. JAMB Biology syllabus lists pituitary hormones and their functions but does not expressly name prolactin/lactation. Independent Biology reviewer must confirm scope."
+      }
+    },
+    {
+      "target_id": "DUP-42",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3211,
+      "top_matches": [
+        {
+          "location": "batch 03 row 28",
+          "score": 0.3211,
+          "question": "Which is generally a fixed cost in the short run for a factory?"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3119,
+          "question": "Which of the following is usually a fixed cost in the short run?"
+        },
+        {
+          "location": "batch 35 row 30",
+          "score": 0.2672,
+          "question": "The additional satisfaction from consuming one more unit of a good is called"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics retained-plus-held rows checked. No law-of-diminishing-returns question found. Nearest items concern fixed costs/economies of scale, not marginal product with fixed factors. Correct key is C (decline); the earlier screening note incorrectly said B. JAMB Economics Topic 8(b) covers TP/AP/MP and the law of variable proportion; independent Economics review required."
+      }
+    },
+    {
+      "target_id": "DUP-43",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.2143,
+      "top_matches": [
+        {
+          "location": "batch 39 row 10",
+          "score": 0.2143,
+          "question": "In a right-angled triangle the cosine of an acute angle is the ratio of:"
+        },
+        {
+          "location": "batch 07 row 7",
+          "score": 0.209,
+          "question": "In a right-angled triangle, tan θ is equal to:"
+        },
+        {
+          "location": "batch 10 row 9",
+          "score": 0.2029,
+          "question": "The sum of the interior angles of a hexagon is:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics rows checked. No one-to-one/injective mapping question found. Nearest items evaluate functions by substitution or composition, not whether distinct inputs have distinct outputs. Answer B is correct. The Mathematics syllabus topic list checked does not expressly name relations/functions; independent Mathematics reviewer must decide scope before approval."
+      }
+    },
+    {
+      "target_id": "DUP-44",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.325,
+      "top_matches": [
+        {
+          "location": "batch 11 row 25",
+          "score": 0.325,
+          "question": "Heat transfer through the bulk movement of a liquid or gas is called:"
+        },
+        {
+          "location": "batch 35 row 22",
+          "score": 0.2914,
+          "question": "The number of complete waves passing a point per second is the"
+        },
+        {
+          "location": "batch 36 row 23",
+          "score": 0.2819,
+          "question": "In a sound wave travelling through air, air particles vibrate"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. No diffraction-definition or aperture/obstacle spreading question found. Nearest wave questions test speed, frequency, period, wavelength, interference and superposition. Answer B is correct. Official JAMB Physics Topic 20(c) explicitly includes diffraction. Independent Physics reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-45",
+      "subject": "Economics",
+      "flagged": true,
+      "highest_similarity": 0.4286,
+      "top_matches": [
+        {
+          "location": "batch 01 row 29",
+          "score": 0.4286,
+          "question": "Which factor of production receives wages as its typical reward?"
+        },
+        {
+          "location": "batch 10 row 30",
+          "score": 0.4085,
+          "question": "The typical reward paid to the factor of production called capital is:"
+        },
+        {
+          "location": "batch 35 row 27",
+          "score": 0.4082,
+          "question": "The conventional reward paid to the factor of production known as land is:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_but_syllabus_scope_uncertain_hold_for_economics_review",
+        "note": "Rechecked all 200 Economics rows. The nearest items ask for ordinary factor rewards (wages for labour, interest for capital and rent for land); this asks for economic rent as actual earnings above transfer earnings. Those are related but not identical concepts. Answer B is correct by the standard definition. However, the official JAMB Economics syllabus discusses factor markets and price determination but does not expressly name 'economic rent' or 'transfer earnings' in the current syllabus text inspected. Treat this as a syllabus-scope risk, not an approved replacement. Hold for a qualified Economics reviewer; replace if the reviewer cannot point to an appropriate syllabus basis."
+      }
+    },
+    {
+      "target_id": "DUP-46",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.2917,
+      "top_matches": [
+        {
+          "location": "batch 27 row 21",
+          "score": 0.2917,
+          "question": "Why are many alloys harder than the pure metals from which they are made?"
+        },
+        {
+          "location": "batch 16 row 18",
+          "score": 0.2703,
+          "question": "The mass number of an atom is the total number of:"
+        },
+        {
+          "location": "batch 01 row 20",
+          "score": 0.2667,
+          "question": "An ionic bond is formed mainly through:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No brass-composition question found. Nearest alloy question asks why alloys are harder than pure metals; it tests alloy structure, not composition of brass. Answer B is correct: brass is mainly copper and zinc; bronze is mainly copper and tin. Official JAMB Chemistry syllabus lists brass and bronze and their constituents/uses. Independent Chemistry reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-47",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3893,
+      "top_matches": [
+        {
+          "location": "batch 02 row 32",
+          "score": 0.3893,
+          "question": "In a representative democracy, members of the legislature primarily:"
+        },
+        {
+          "location": "batch 14 row 35",
+          "score": 0.3521,
+          "question": "Freedom of expression primarily protects a person's ability to…"
+        },
+        {
+          "location": "batch 28 row 33",
+          "score": 0.3143,
+          "question": "In a legislature, a party whip is primarily responsible for:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared the replacement with all 200 Government retained-plus-held rows. The bank's nearest matches concern general legislative functions, freedom of expression and party-whip duties; none asks about the distinct legal protection afforded to statements made in legislative proceedings. Preliminary answer A is plausible, but the precise scope of parliamentary privilege depends on the applicable constitutional/statutory framework. The wording should be checked by a qualified Government reviewer, and the syllabus fit of legislative privilege is not yet confirmed. Similarity 0.3893, below the 0.42 flag threshold. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-48",
+      "subject": "Literature in English",
+      "flagged": true,
+      "highest_similarity": 0.6667,
+      "top_matches": [
+        {
+          "location": "batch 36 row 38",
+          "score": 0.6667,
+          "question": "In literary analysis, diction refers to the writer's:"
+        },
+        {
+          "location": "batch 39 row 41",
+          "score": 0.5172,
+          "question": "The setting of a literary work refers primarily to its"
+        },
+        {
+          "location": "batch 28 row 40",
+          "score": 0.4902,
+          "question": "In literary criticism, mood refers to the:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_but_syllabus_scope_confirmation_required_human_literature_review",
+        "note": "Rechecked all 200 Literature in English rows. The highest lexical match (batch 36 row 38) asks about diction, the writer's choice/use of words; this candidate asks about denotation, a word's direct or literal meaning. Diction and denotation are related but distinct concepts. Answer B is correct. The official Literature syllabus names diction and requires literary-term identification/use, but does not name denotation explicitly. Keep on hold for independent Literature review of syllabus level; replace if not accepted. The 0.6667 lexical score alone does not establish duplication."
+      }
+    },
+    {
+      "target_id": "DUP-49",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2807,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.2807,
+          "question": "Other things being equal, a rise in the market price of a good generally leads producers to:"
+        },
+        {
+          "location": "batch 02 row 27",
+          "score": 0.2722,
+          "question": "A market with many sellers offering very similar products and easy entry is closest to:"
+        },
+        {
+          "location": "batch 23 row 30",
+          "score": 0.2444,
+          "question": "A firm that sells its output at the prevailing market price and cannot influence that price is described as a:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared with all 200 Economics retained-plus-held rows. No tax-incidence question was found. Nearby taxation questions test tax types, direct/indirect, progressive/regressive, specific and ad valorem taxes; they do not test statutory remittance versus the final economic burden after tax shifting. Preliminary answer C and explanation are conceptually sound. Confirm that tax incidence is within the intended JAMB syllabus depth. Similarity 0.2807, below the 0.42 flag threshold. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-50",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3135,
+      "top_matches": [
+        {
+          "location": "held duplicate row",
+          "score": 0.3135,
+          "question": "Which cell organelle contains most of the genetic material and helps control cell activities?"
+        },
+        {
+          "location": "batch 15 row 13",
+          "score": 0.3103,
+          "question": "Which organelle contains chlorophyll and is the main site of photosynthesis?"
+        },
+        {
+          "location": "batch 39 row 15",
+          "score": 0.306,
+          "question": "Which organelle contains digestive enzymes that break down worn-out cell components?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Compared with all 200 Biology retained-plus-held rows. No Golgi apparatus protein-modification/sorting/packaging question was found. Nearest organelle questions test nucleus, mitochondrion, chloroplast, ribosome and lysosome functions; these are related cell-biology material but distinct functions. Preliminary answer A and explanation are sound. Check that the precise Golgi functions are within the intended JAMB syllabus depth. Similarity 0.3135, below the 0.42 flag threshold. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-51",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3952,
+      "top_matches": [
+        {
+          "location": "batch 08 row 25",
+          "score": 0.3952,
+          "question": "When the resultant external force on a system is zero, its total momentum:"
+        },
+        {
+          "location": "batch 24 row 22",
+          "score": 0.381,
+          "question": "The work done by the resultant force on an object is equal to its change in:"
+        },
+        {
+          "location": "batch 30 row 26",
+          "score": 0.36,
+          "question": "The apparent change in the observed frequency of a sound due to relative motion between source and observer is called the:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. No resonance or natural-frequency question was found. The nearest lexical matches concern momentum, work-energy and Doppler effect, not resonance. Answer B is correct: resonance occurs when the driving frequency matches the system's natural frequency (with a sufficiently low damping context for a large response). Similarity 0.3952, below threshold. The official JAMB Physics syllabus explicitly includes forced vibration and resonance under simple harmonic motion and asks candidates to enumerate applications of resonance. Direct syllabus coverage confirmed. Independent Physics reviewer still required; not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-52",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.4,
+      "top_matches": [
+        {
+          "location": "batch 04 row 7",
+          "score": 0.4,
+          "question": "Evaluate 3/4 − 1/8."
+        },
+        {
+          "location": "batch 05 row 11",
+          "score": 0.3929,
+          "question": "Evaluate 2⁻³."
+        },
+        {
+          "location": "batch 27 row 10",
+          "score": 0.3896,
+          "question": "Find the trace of the matrix [[4, 2], [1, 7]]."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics retained-plus-held rows checked. Existing matrix questions test determinants and trace (batches 23 row 11, 27 row 10, 31 row 11 and 33 row 11); none tests 2×2 matrix multiplication. Recalculation confirms AB = [[10, 1], [12, 0]], answer A. Similarity 0.4000, below threshold. The result is mathematically correct, but the exact JAMB Mathematics syllabus coverage of matrix multiplication must be confirmed by a qualified Mathematics reviewer. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-53",
+      "subject": "Chemistry",
+      "flagged": true,
+      "highest_similarity": 0.458,
+      "top_matches": [
+        {
+          "location": "batch 17 row 18",
+          "score": 0.458,
+          "question": "When nitric acid reacts completely with potassium hydroxide, which salt is formed?"
+        },
+        {
+          "location": "batch 14 row 21",
+          "score": 0.4463,
+          "question": "When a carbonate reacts with a dilute acid, which gas is normally released?"
+        },
+        {
+          "location": "batch 13 row 19",
+          "score": 0.4202,
+          "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_full_bankwide_contextual_reassessment_2026_11_02",
+        "decision": "conceptually_distinct_after_assistant_contextual_reassessment_human_chemistry_approval_required",
+        "note": "Rechecked all 200 Chemistry rows. The nearest items concern neutralisation/salt formation, gas tests, copper electrolysis and displacement; none identifies the Cu²⁺ + OH⁻ precipitate. The reaction forms blue Cu(OH)₂, so answer A is correct. Official JAMB Chemistry practical/qualitative-analysis syllabus explicitly includes characteristic tests of Cu²⁺ with dilute NaOH and NH₃, supporting direct syllabus fit. The 0.4580 lexical flag is not evidence of semantic duplication. Independent Chemistry reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-54",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.4141,
+      "top_matches": [
+        {
+          "location": "batch 27 row 27",
+          "score": 0.4141,
+          "question": "If quantity demanded changes by 12% when price changes by 4%, what is the absolute value of price elasticity of demand?"
+        },
+        {
+          "location": "batch 34 row 27",
+          "score": 0.3684,
+          "question": "Price rises by 10% and quantity demanded falls by 20%. What is the absolute price elasticity of demand?"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.3333,
+          "question": "A country's balance of trade in goods is the difference between the value of its"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics retained-plus-held rows checked. Existing elasticity items test own-price elasticity of demand/supply; none tests cross elasticity or interpretation of its positive sign. A coefficient of +0.8 indicates substitute goods, answer A. Similarity 0.4141, just below the 0.42 flag threshold. Official JAMB Economics syllabus Topic 4(c) explicitly includes cross elasticity of demand and interpretation of elasticity coefficients. Direct syllabus coverage confirmed. Independent Economics reviewer still required; not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-55",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3396,
+      "top_matches": [
+        {
+          "location": "batch 19 row 40",
+          "score": 0.3396,
+          "question": "The deliberate omission of conjunctions between successive words or clauses is called:"
+        },
+        {
+          "location": "batch 11 row 39",
+          "score": 0.3069,
+          "question": "The repetition of consonant sounds within or at the ends of nearby words is called:"
+        },
+        {
+          "location": "batch 25 row 38",
+          "score": 0.2842,
+          "question": "A stanza or section of a poem consisting of six lines is called a:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English retained-plus-held rows checked. No cacophony definition/item was found. Nearest items test asyndeton and consonance, different sound/language devices. Answer B is correct: cacophony is the deliberate use of harsh or discordant sounds for a jarring effect. Similarity 0.3396, below threshold. Cacophony is closely related by contrast to euphony; an independent Literature reviewer should confirm the distinction and syllabus depth. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-56",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.2793,
+      "top_matches": [
+        {
+          "location": "batch 32 row 38",
+          "score": 0.2793,
+          "question": "The repetition of similar sounds at the ends of poetic lines is known as"
+        },
+        {
+          "location": "batch 02 row 39",
+          "score": 0.2619,
+          "question": "The sequence and arrangement of events in a story is its:"
+        },
+        {
+          "location": "batch 12 row 40",
+          "score": 0.2581,
+          "question": "Which narrative technique attempts to present the continuous flow of a character's thoughts and impressions?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English retained-plus-held rows checked. No euphony definition/item was found. Nearest items test rhyme, plot sequence and stream of consciousness, not harmonious sound effects. Answer B is correct: euphony is the use/arrangement of pleasing, harmonious sounds. Similarity 0.2793, below threshold. It is the conceptual counterpart to DUP-55's cacophony, not a duplicate; a Literature reviewer should confirm both are useful and not overly repetitive in a small bank. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-57",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3367,
+      "top_matches": [
+        {
+          "location": "batch 11 row 6",
+          "score": 0.3367,
+          "question": "In the sentence “The children played happily in the yard,” which word modifies the verb?"
+        },
+        {
+          "location": "batch 25 row 2",
+          "score": 0.3318,
+          "question": "In the sentence “Hardly had the referee blown the whistle ___ the crowd rushed onto the field,” choose the correct completion."
+        },
+        {
+          "location": "batch 14 row 6",
+          "score": 0.3152,
+          "question": "In the sentence “To win the prize was her aim”, the phrase “To win the prize” functions as the…"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English retained-plus-held rows checked. No ellipsis-as-cohesive-device question was found. Nearest matches test adverb function, conditional completion and infinitive phrase function. Answer B is correct: the verb phrase 'chose' is recoverable from the first clause and omitted in the second; this is ellipsis. Similarity 0.3367, below threshold. Broad fit to cohesion/discourse and grammatical structure is plausible, but exact syllabus mapping requires an English reviewer. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-58",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2895,
+      "top_matches": [
+        {
+          "location": "batch 15 row 16",
+          "score": 0.2895,
+          "question": "Which of the following is a biotic factor in an ecosystem?"
+        },
+        {
+          "location": "batch 36 row 14",
+          "score": 0.2841,
+          "question": "Which substances produced during the light-dependent stage are used in the Calvin cycle?"
+        },
+        {
+          "location": "batch 11 row 12",
+          "score": 0.2824,
+          "question": "Which substance is the main structural component of the cell wall in most plants?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No quadrat-sampling method question was found. Nearest matches concern biotic factors, photosynthesis and plant cell walls; no same ecological sampling method. Answer A is correct: quadrats estimate abundance/density/frequency of plants and other relatively stationary organisms. Similarity 0.2895, below threshold. Ecology is a relevant Biology domain, but exact JAMB syllabus fit for field sampling methods requires qualified Biology review. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-59",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.4113,
+      "top_matches": [
+        {
+          "location": "batch 23 row 40",
+          "score": 0.4113,
+          "question": "In the expression “All hands on deck,” the word “hands” refers to the sailors as a whole. This is:"
+        },
+        {
+          "location": "batch 20 row 41",
+          "score": 0.3043,
+          "question": "A short concluding section that follows the main action of a play is called an:"
+        },
+        {
+          "location": "held duplicate row",
+          "score": 0.2963,
+          "question": "In a play, the exposition usually serves to:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English retained-plus-held rows checked. No epithet definition/example was found. The nearest lexical match is synecdoche (batch 23 row 40, 0.4113), which uses a part for the whole; the proposed 'swift-footed Achilles' is a descriptive epithet. Other close items are an epilogue and exposition, different terms. Similarity 0.4113, just below threshold. Answer A is correct. A Literature reviewer should confirm that the classical epithet example is appropriate for JAMB level and distinguish it from other descriptive devices. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-60",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2783,
+      "top_matches": [
+        {
+          "location": "batch 17 row 16",
+          "score": 0.2783,
+          "question": "Water enters root hair cells from the soil mainly by:"
+        },
+        {
+          "location": "batch 13 row 12",
+          "score": 0.2456,
+          "question": "The main function of red blood cells in humans is to…"
+        },
+        {
+          "location": "batch 07 row 16",
+          "score": 0.24,
+          "question": "In natural selection, individuals with advantageous inherited variations are more likely to:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No Organ of Corti/hair-cell location question was found. Nearest matches concern root-hair osmosis and red blood cell function; they do not assess the cochlear sensory organ. Answer A is correct: the Organ of Corti in the cochlea contains sensory hair cells that transduce sound-related mechanical vibrations. Similarity 0.2783, below threshold. Independent Biology reviewer must confirm exact anatomical wording and syllabus depth. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-61",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2262,
+      "top_matches": [
+        {
+          "location": "batch 09 row 13",
+          "score": 0.2262,
+          "question": "Which plant tissue conducts water and dissolved mineral salts from the roots towards the leaves?"
+        },
+        {
+          "location": "batch 18 row 15",
+          "score": 0.2207,
+          "question": "In a flowering plant, the pollen tube grows through the style towards the:"
+        },
+        {
+          "location": "batch 38 row 12",
+          "score": 0.1949,
+          "question": "When a plant cell is placed in a strongly concentrated salt solution, its protoplast may shrink away from the cell wall. This is called:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No phototropism/auxin shaded-side cell-elongation question was found. Nearest matches concern xylem transport, pollen-tube growth and plasmolysis. Answer A is correct: greater cell elongation on the shaded side causes a shoot to bend towards light; auxin is involved in this differential growth. Similarity 0.2262, below threshold. Independent Biology reviewer must confirm syllabus depth and wording. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-62",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.4046,
+      "top_matches": [
+        {
+          "location": "batch 16 row 37",
+          "score": 0.4046,
+          "question": "A pause within a line of poetry, often created by punctuation or a break in the rhythm, is called a:"
+        },
+        {
+          "location": "batch 15 row 41",
+          "score": 0.4,
+          "question": "In classical tragedy, anagnorisis refers to the moment when a character:"
+        },
+        {
+          "location": "batch 36 row 37",
+          "score": 0.3576,
+          "question": "A struggle between a character and forces outside that character is known as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English retained-plus-held rows checked. The nearest item is batch 16 row 37 on caesura (0.4046), a pause within a poetic line; enjambment is continuation of syntax/sense across a line break without an end-stop. These are related lineation techniques but not duplicates. Answer A is correct. Similarity 0.4046, below threshold but close; an independent Literature reviewer should confirm distinction, syllabus scope and question-bank variety. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-63",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3648,
+      "top_matches": [
+        {
+          "location": "batch 28 row 8",
+          "score": 0.3648,
+          "question": "A sector has a central angle of 90°. What fraction of the full circle does it represent?"
+        },
+        {
+          "location": "batch 22 row 9",
+          "score": 0.3247,
+          "question": "An angle at the centre of a circle is 100°. What is the angle at the circumference standing on the same arc?"
+        },
+        {
+          "location": "batch 25 row 11",
+          "score": 0.3226,
+          "question": "What is the distance of the point (−3, 4) from the origin?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Mathematics retained-plus-held rows checked. No map-scale calculation was found. Nearest matches concern sector fractions, angles in a circle and coordinate distance, not scale conversion. Calculation: 4 cm × 50,000 = 200,000 cm = 2 km, answer C. Similarity 0.3648, below threshold. Confirm map scales/ratio-proportion coverage against the current JAMB Mathematics syllabus with an independent reviewer. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-64",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.2623,
+      "top_matches": [
+        {
+          "location": "batch 19 row 18",
+          "score": 0.2623,
+          "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
+        },
+        {
+          "location": "batch 05 row 18",
+          "score": 0.2353,
+          "question": "Isotopes of the same element have the same number of:"
+        },
+        {
+          "location": "batch 25 row 21",
+          "score": 0.2329,
+          "question": "A catalyst increases the rate of a reaction because it"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry retained-plus-held rows checked. No half-life fraction calculation was found. Nearest matches concern first-order rate-constant units, isotopes and catalysts. After 18 hours there are three half-lives, so the remaining fraction is (1/2)^3 = 1/8, answer C. Similarity 0.2623, below threshold. JAMB Chemistry syllabus Nuclear Chemistry explicitly includes half-life calculations. Direct syllabus coverage confirmed; independent Chemistry reviewer still required. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-65",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3462,
+      "top_matches": [
+        {
+          "location": "batch 07 row 15",
+          "score": 0.3462,
+          "question": "Which structure carries urine from each kidney to the urinary bladder?"
+        },
+        {
+          "location": "batch 09 row 13",
+          "score": 0.3352,
+          "question": "Which plant tissue conducts water and dissolved mineral salts from the roots towards the leaves?"
+        },
+        {
+          "location": "batch 30 row 12",
+          "score": 0.3102,
+          "question": "Which structure receives the filtrate immediately after it passes from the glomerulus during ultrafiltration?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No insect tracheole item was found. Nearest matches concern ureter, xylem and kidney filtration; no respiratory-system overlap. Answer A is correct: tracheoles are the fine terminal branches of the insect tracheal system where gas exchange with tissues occurs. Similarity 0.3462, below threshold. Independent Biology reviewer must confirm syllabus depth and that the wording distinguishes tracheoles from spiracles. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-66",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3285,
+      "top_matches": [
+        {
+          "location": "batch 17 row 23",
+          "score": 0.3285,
+          "question": "A lamp connected across a 9 V source draws a current of 0.5 A. What is the resistance of the lamp?"
+        },
+        {
+          "location": "batch 32 row 26",
+          "score": 0.3192,
+          "question": "A machine receives 500 J of energy and delivers 350 J of useful output energy. What is its efficiency?"
+        },
+        {
+          "location": "batch 01 row 23",
+          "score": 0.3184,
+          "question": "A 4 Ω resistor carries a current of 3 A. What is the potential difference across it?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. No transformer-efficiency calculation was found. Nearest matches test resistance/potential difference and general machine efficiency, not transformer input/output power from voltage and current. Input power = 240×0.5 = 120 W; output power = 12×8 = 96 W; efficiency = 80%, answer C. Similarity 0.3285, below threshold. Independent Physics reviewer must confirm syllabus fit and that the voltage/current values represent the relevant primary/secondary RMS quantities. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-67",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.4094,
+      "top_matches": [
+        {
+          "location": "batch 28 row 21",
+          "score": 0.4094,
+          "question": "What is the formula of the ammonium ion?"
+        },
+        {
+          "location": "batch 05 row 19",
+          "score": 0.3787,
+          "question": "Metallic bonding is commonly described as attraction between positive metal ions and:"
+        },
+        {
+          "location": "batch 15 row 21",
+          "score": 0.327,
+          "question": "Which gas is released when an ammonium salt is warmed with a strong alkali?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Chemistry rows. Seven nearby entries concern generic covalent bonding, the coordinate-bond definition, the ammonium-ion formula, or ammonia release from ammonium salts. None asks how NH₃ forms NH₄⁺ by donating its lone pair to H⁺. Answer C is correct; the nitrogen lone pair supplies both electrons in the coordinate N–H bond at formation. The wording correctly distinguishes the bond's formation from the equivalent N–H bonds in the resulting ion. Highest same-subject lexical score is 0.4094 (batch 28 row 21, ammonium-ion formula), below 0.42. JAMB Chemistry includes coordinate covalent bonding. Conceptually distinct; independent Chemistry subject review remains mandatory. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-68",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.268,
+      "top_matches": [
+        {
+          "location": "batch 01 row 4",
+          "score": 0.268,
+          "question": "Choose the word nearest in meaning to “concise.”"
+        },
+        {
+          "location": "batch 36 row 3",
+          "score": 0.268,
+          "question": "Choose the word nearest in meaning to 'candid'."
+        },
+        {
+          "location": "batch 37 row 3",
+          "score": 0.268,
+          "question": "Choose the word nearest in meaning to 'abstain'."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Use of English rows. No question asks for the meaning of wind/winds in this context; the nearest results concern wind personification and unrelated lexis. Answer A is correct: 'winds' means moving air. The original distractors were weak/non-parallel, so they have been improved to plausible alternate senses. The word 'wind' as moving air is pronounced /wɪnd/; the verb 'wind' meaning to turn or twist is pronounced /waɪnd/. Revised wording and options were re-screened against all 200 rows. The lexical score remains below 0.42. Independent English reviewer must confirm terminology and syllabus fit. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-69",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3523,
+      "top_matches": [
+        {
+          "location": "batch 17 row 40",
+          "score": 0.3523,
+          "question": "The feeling of anxious anticipation about what may happen next in a play is known as:"
+        },
+        {
+          "location": "batch 17 row 37",
+          "score": 0.3308,
+          "question": "A one-act play is a dramatic work that:"
+        },
+        {
+          "location": "batch 07 row 40",
+          "score": 0.3298,
+          "question": "In classical tragedy, the error or flaw that contributes to a protagonist’s downfall is known as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_literature_review",
+        "note": "The former dramatic-irony proposal was rejected because it duplicated retained batch 07 row 37. The new candidate tests unity of action. All 200 Literature in English retained-plus-held rows checked; no unity-of-action question found. Answer A is correct: the play centres on one principal action or coherent main plot. Highest trigram Dice similarity 0.3523, below 0.42. Independent Literature reviewer must confirm syllabus fit and framing. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-70",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3333,
+      "top_matches": [
+        {
+          "location": "batch 05 row 15",
+          "score": 0.3333,
+          "question": "Vaccination helps protect against certain infections mainly by:"
+        },
+        {
+          "location": "batch 21 row 13",
+          "score": 0.3175,
+          "question": "A thick waxy cuticle on a plant leaf mainly helps to ___."
+        },
+        {
+          "location": "batch 28 row 13",
+          "score": 0.3145,
+          "question": "Which cell structure contains most of the genetic material and helps control cell activities?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Full same-subject retained-plus-held comparison completed across all 200 Biology rows. No vacuole/turgor-pressure function question was found. Nearest entries concern the nucleus, chloroplast, lysosome, plasmolysis and cell-wall structure; none tests the central vacuole's role in maintaining turgor. Answer B is correct: water held in the large central vacuole contributes to turgor pressure, keeping a mature plant cell firm and helping maintain its shape. JAMB Biology explicitly includes turgidity as a transport mechanism; the exact cell-organelle phrasing remains subject to qualified Biology review. Similarity 0.3333, below 0.42. Conceptually distinct; independent Biology review remains mandatory. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-71",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3117,
+      "top_matches": [
+        {
+          "location": "batch 19 row 23",
+          "score": 0.3117,
+          "question": "Two resistors of 6 Ω and 3 Ω are connected in parallel. What is their equivalent resistance?"
+        },
+        {
+          "location": "batch 31 row 23",
+          "score": 0.3077,
+          "question": "A neutral metal sphere is charged without touching it by bringing a charged rod near it and using an earth connection. This process is"
+        },
+        {
+          "location": "batch 07 row 23",
+          "score": 0.2831,
+          "question": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics retained-plus-held rows checked. No Coulomb inverse-square numerical question was found. Nearest matches concern resistor combinations and charging by induction. Answer D is correct: doubling separation reduces electrostatic force to F/4. Similarity 0.3117, below threshold. Independent Physics reviewer must confirm syllabus fit and calculation framing. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-72",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3894,
+      "top_matches": [
+        {
+          "location": "batch 32 row 5",
+          "score": 0.3894,
+          "question": "If a person says that a plan 'is still up in the air', the plan is"
+        },
+        {
+          "location": "batch 15 row 2",
+          "score": 0.3768,
+          "question": "In the sentence “The manager kept the visitor at arm's length”, the expression means to…"
+        },
+        {
+          "location": "batch 14 row 2",
+          "score": 0.3651,
+          "question": "In the sentence “The host told a joke to break the ice”, the expression “break the ice” means to…"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English retained-plus-held rows checked. No 'fall through' idiom item was found. Nearest items test 'up in the air', 'at arm's length' and 'break the ice'; they are different idioms and meanings. Answer B is correct: a plan that falls through fails to happen/be completed. Similarity 0.3894, below threshold. Independent English reviewer should confirm idiomatic usage and syllabus fit. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-73",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3297,
+      "top_matches": [
+        {
+          "location": "batch 09 row 16",
+          "score": 0.3297,
+          "question": "The part of the brain chiefly responsible for balance and coordination is the:"
+        },
+        {
+          "location": "batch 23 row 14",
+          "score": 0.3006,
+          "question": "Which part of a neuron carries impulses away from the cell body?"
+        },
+        {
+          "location": "batch 18 row 14",
+          "score": 0.2938,
+          "question": "In the ABO blood group system, which allele combination produces blood group O?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No spinal-cord withdrawal-reflex coordination question was found. Nearest items test cerebellum balance, neuron structure and ABO blood group. Answer B is correct: a simple withdrawal reflex is integrated through a spinal reflex arc before conscious pain interpretation. Similarity 0.3297, below threshold. Independent Biology reviewer should confirm the phrase 'before conscious interpretation' is accurate and appropriate for syllabus depth. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-74",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.2971,
+      "top_matches": [
+        {
+          "location": "batch 26 row 14",
+          "score": 0.2971,
+          "question": "In a population exposed to an antibiotic, resistant bacteria become more common mainly because"
+        },
+        {
+          "location": "batch 08 row 14",
+          "score": 0.2951,
+          "question": "Antibodies are produced mainly by:"
+        },
+        {
+          "location": "batch 18 row 16",
+          "score": 0.2805,
+          "question": "Which structure in the nephron is the main site where blood is filtered under pressure?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology retained-plus-held rows checked. No afferent/efferent arteriole diameter explanation question was found. Nearest items concern the nephron filtration site, antibody production and antibiotic resistance. Answer A is correct: the afferent arteriole is wider than the efferent arteriole, helping maintain high glomerular hydrostatic pressure for ultrafiltration. Similarity 0.2971, below threshold. The existing bank already tests the site of filtration, but not this pressure mechanism. Independent Biology reviewer must confirm syllabus depth. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-75",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.4022,
+      "top_matches": [
+        {
+          "location": "batch 12 row 31",
+          "score": 0.4022,
+          "question": "A country has an absolute advantage in producing a good when it can:"
+        },
+        {
+          "location": "batch 02 row 30",
+          "score": 0.3146,
+          "question": "A country’s balance of trade in goods compares the value of its:"
+        },
+        {
+          "location": "batch 20 row 30",
+          "score": 0.3069,
+          "question": "The process of increasing a country's stock of productive assets is called ___."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. Nearest item batch 12 row 31 tests absolute advantage, not comparative advantage. Opportunity cost of cloth is 2 rice in A and 1 rice in B; B has comparative advantage. Answer B. Similarity 0.4022; JAMB Economics Topic 21(a) includes comparative costs. Independent reviewer required."
+      }
+    },
+    {
+      "target_id": "DUP-76",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3622,
+      "top_matches": [
+        {
+          "location": "batch 18 row 27",
+          "score": 0.3622,
+          "question": "When the price of an imported raw material rises, what is the most likely immediate effect on the supply of a product that uses it?"
+        },
+        {
+          "location": "batch 09 row 30",
+          "score": 0.3226,
+          "question": "A reduction in average cost as a firm increases its scale of production is called:"
+        },
+        {
+          "location": "batch 17 row 30",
+          "score": 0.3182,
+          "question": "The government imposes a tax on a product. This is most likely to:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No negative-externality item found. Nearest items concern input-price changes, economies of scale and taxation. Answer B is correct: third-party pollution costs omitted from the market price are a negative externality. Similarity 0.3622. Independent Economics reviewer must confirm syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-77",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3724,
+      "top_matches": [
+        {
+          "location": "batch 22 row 35",
+          "score": 0.3724,
+          "question": "Public accountability requires public officials to ___."
+        },
+        {
+          "location": "batch 39 row 34",
+          "score": 0.3415,
+          "question": "The principle of political neutrality requires civil servants to:"
+        },
+        {
+          "location": "batch 28 row 32",
+          "score": 0.2994,
+          "question": "The principle of checks and balances allows each arm of government to:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Government rows checked. No equality-before-law/rule-of-law item found. Nearest items concern public accountability, political neutrality and checks and balances. Answer A is correct. Similarity 0.3724. Independent Government reviewer must confirm syllabus mapping."
+      }
+    },
+    {
+      "target_id": "DUP-78",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.4105,
+      "top_matches": [
+        {
+          "location": "batch 20 row 4",
+          "score": 0.4105,
+          "question": "Which punctuation mark is most suitable for separating items in a list when the items themselves contain commas?"
+        },
+        {
+          "location": "batch 28 row 2",
+          "score": 0.3452,
+          "question": "In the sentence “We left when the bell rang,” what is the function of the clause “when the bell rang”?"
+        },
+        {
+          "location": "batch 14 row 5",
+          "score": 0.3422,
+          "question": "Which of the following words is a subordinating conjunction?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "distinct_function_pending_human_variety_decision",
+        "note": "All 200 Use of English rows checked. Nearest batch 20 row 4 also tests semicolon use but for complex list items; this candidate tests joining two independent clauses. Distinct semicolon functions but same punctuation family; question-bank variety remains a human decision. Answer B is correct. Similarity 0.4105. Independent English reviewer required."
+      }
+    },
+    {
+      "target_id": "DUP-79",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.381,
+      "top_matches": [
+        {
+          "location": "batch 14 row 2",
+          "score": 0.381,
+          "question": "In the sentence “The host told a joke to break the ice”, the expression “break the ice” means to…"
+        },
+        {
+          "location": "batch 11 row 5",
+          "score": 0.3791,
+          "question": "Choose the sentence that correctly expresses an unreal condition in the present."
+        },
+        {
+          "location": "batch 36 row 5",
+          "score": 0.3724,
+          "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No infinitive-of-purpose function question found. Nearest items test idiom meaning, unreal condition and relative clause. Answer A is correct: 'to borrow a textbook' states the purpose of the visit. Similarity 0.3810. Independent English reviewer should confirm classification and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-80",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3524,
+      "top_matches": [
+        {
+          "location": "batch 40 row 30",
+          "score": 0.3524,
+          "question": "An economic system in which the state makes most major production and allocation decisions is a"
+        },
+        {
+          "location": "batch 16 row 29",
+          "score": 0.3367,
+          "question": "A cooperative society is an organisation that is generally owned and controlled by:"
+        },
+        {
+          "location": "batch 08 row 28",
+          "score": 0.2919,
+          "question": "A progressive income tax is one in which the average tax rate generally:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No mixed-economy definition item found. Nearest item batch 40 row 30 defines a command economy; the candidate contrasts private business with state ownership/regulation and is not the same definition. Answer C is correct. Similarity 0.3524. Independent Economics reviewer should confirm scope and clarity."
+      }
+    },
+    {
+      "target_id": "DUP-81",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3587,
+      "top_matches": [
+        {
+          "location": "batch 33 row 25",
+          "score": 0.3587,
+          "question": "The increase in length per unit original length per unit rise in temperature is the coefficient of:"
+        },
+        {
+          "location": "batch 31 row 24",
+          "score": 0.3216,
+          "question": "The magnitude of an induced e.m.f. in a coil increases when the magnetic flux through it is changed"
+        },
+        {
+          "location": "batch 40 row 23",
+          "score": 0.2963,
+          "question": "A spring extends by 0.05 m when a force of 10 N is applied. What is its spring constant?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Physics rows checked. Nearest item batch 33 row 25 defines the coefficient of linear expansion; this draft calculates it from ΔL = αLΔT. Related same subtopic, but definition versus numerical application. Answer A is correct: 0.002/(2.0×50)=2.0×10^-5 °C^-1. Similarity 0.3587. Independent Physics reviewer should decide if the calculation adds enough variety and confirm units/syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-82",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.413,
+      "top_matches": [
+        {
+          "location": "batch 35 row 30",
+          "score": 0.413,
+          "question": "The additional satisfaction from consuming one more unit of a good is called"
+        },
+        {
+          "location": "batch 08 row 31",
+          "score": 0.3713,
+          "question": "Marginal utility is the additional satisfaction obtained from:"
+        },
+        {
+          "location": "batch 33 row 27",
+          "score": 0.3543,
+          "question": "A consumer maximises utility under the equi-marginal principle when:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "related_concept_requires_human_distinctness_decision",
+        "note": "All 200 Economics rows checked. The closest matches are direct definitions of marginal utility (batches 35 row 30 and 08 row 31); the draft asks for the law of diminishing marginal utility. These are related but distinct: marginal utility is additional satisfaction from one more unit, while the law states that successive marginal utility tends to fall as consumption rises. Answer B is correct. Similarity 0.4130, below threshold but close. Official Economics syllabus Topic 5(b) explicitly includes diminishing marginal utility. Given the close conceptual neighbourhood, independent reviewer must decide whether this is sufficiently distinct or should be replaced with a more applied question."
+      }
+    },
+    {
+      "target_id": "DUP-83",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3514,
+      "top_matches": [
+        {
+          "location": "batch 11 row 38",
+          "score": 0.3514,
+          "question": "The voice speaking in a poem, which may be different from the poet, is called the:"
+        },
+        {
+          "location": "batch 34 row 39",
+          "score": 0.2483,
+          "question": "A narrator who uses 'I' to tell events in which they participate is using"
+        },
+        {
+          "location": "batch 13 row 37",
+          "score": 0.2431,
+          "question": "A character who undergoes a significant change in attitude, behaviour or outlook during a story is described as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No pseudonym/pen-name definition item found. Nearest items concern poetic speaker, first-person narration and character development. Answer A is correct: a pseudonym is an assumed name used by an author. Similarity 0.3514. Independent Literature reviewer should confirm syllabus fit and usefulness."
+      }
+    },
+    {
+      "target_id": "DUP-84",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3286,
+      "top_matches": [
+        {
+          "location": "batch 37 row 12",
+          "score": 0.3286,
+          "question": "Which enzyme in the stomach begins the digestion of proteins?"
+        },
+        {
+          "location": "batch 19 row 13",
+          "score": 0.325,
+          "question": "Which enzyme breaks down fats into fatty acids and glycerol during digestion?"
+        },
+        {
+          "location": "batch 02 row 14",
+          "score": 0.3188,
+          "question": "Which enzyme in saliva begins the digestion of starch?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Biology rows checked. No DNA ligase/Okazaki-fragment item found. Nearest matches are digestive enzymes, not DNA replication. Answer A is correct: DNA ligase seals nicks between adjacent Okazaki fragments on the lagging strand. Similarity 0.3286. Independent Biology reviewer should confirm molecular detail and JAMB depth."
+      }
+    },
+    {
+      "target_id": "DUP-85",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3723,
+      "top_matches": [
+        {
+          "location": "batch 29 row 41",
+          "score": 0.3723,
+          "question": "The complete written text of a play, including dialogue and performance instructions, is called the:"
+        },
+        {
+          "location": "batch 17 row 38",
+          "score": 0.3455,
+          "question": "The expression “That performance was not bad” uses understatement by negating the opposite. This figure is:"
+        },
+        {
+          "location": "batch 17 row 40",
+          "score": 0.3429,
+          "question": "The feeling of anxious anticipation about what may happen next in a play is known as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Literature in English rows checked. No blocking/planned actor movement item found. Nearest items concern a play script, understatement and suspense. Answer A is correct: blocking is planned actor movement and positioning on stage. Similarity 0.3723. Independent Literature reviewer should confirm theatre terminology and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-86",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3158,
+      "top_matches": [
+        {
+          "location": "batch 33 row 20",
+          "score": 0.3158,
+          "question": "The functional group characteristic of alcohols is"
+        },
+        {
+          "location": "batch 31 row 17",
+          "score": 0.2958,
+          "question": "When a lighted splint is brought near hydrogen gas, the gas produces a characteristic:"
+        },
+        {
+          "location": "batch 19 row 18",
+          "score": 0.2876,
+          "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No brown-ring nitrate test location item found. Nearest matches concern alcohol functional group, hydrogen test and rate-constant units. Answer B is correct: the brown ring forms at the interface between the aqueous layer and concentrated acid layer. Similarity 0.3158. Official JAMB Chemistry syllabus lists specific tests for nitrate ions (NO3−) under non-metals/nitrogen compounds. Direct syllabus coverage supported; independent Chemistry reviewer still required."
+      }
+    },
+    {
+      "target_id": "DUP-87",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.406,
+      "top_matches": [
+        {
+          "location": "batch 40 row 3",
+          "score": 0.406,
+          "question": "A person who deliberately sets fire to property is an"
+        },
+        {
+          "location": "batch 27 row 6",
+          "score": 0.3221,
+          "question": "A rising intonation is commonly used at the end of which type of question?"
+        },
+        {
+          "location": "batch 17 row 3",
+          "score": 0.3217,
+          "question": "A person who studies the origin and development of words is a(n) ___."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No teetotaller definition was found. Nearest lexical match is an item defining an arsonist (batch 40 row 3, 0.4060); same person-definition format but unrelated meaning. Answer A is correct. Similarity 0.4060, below threshold but close. Independent English reviewer should confirm lexical suitability and question variety. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-88",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.4167,
+      "top_matches": [
+        {
+          "location": "batch 18 row 27",
+          "score": 0.4167,
+          "question": "When the price of an imported raw material rises, what is the most likely immediate effect on the supply of a product that uses it?"
+        },
+        {
+          "location": "batch 04 row 29",
+          "score": 0.4108,
+          "question": "Other things being equal, an increase in production costs usually causes supply to:"
+        },
+        {
+          "location": "batch 09 row 30",
+          "score": 0.3799,
+          "question": "A reduction in average cost as a firm increases its scale of production is called:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Economics rows checked. No cost-push inflation question was found. Nearest items concern the effect of higher input prices on supply and the effect of production-cost increases; these are related mechanisms but the draft asks for the macroeconomic inflation type resulting from rising production costs. Answer B is correct. Similarity 0.4167, below threshold but close. Independent Economics reviewer should confirm the distinction and syllabus coverage. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-89",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3964,
+      "top_matches": [
+        {
+          "location": "batch 33 row 6",
+          "score": 0.3964,
+          "question": "Which word ends with the same consonant sound as 'laugh'?"
+        },
+        {
+          "location": "batch 07 row 5",
+          "score": 0.3793,
+          "question": "Which word contains the same initial consonant sound as “judge”?"
+        },
+        {
+          "location": "batch 36 row 6",
+          "score": 0.3363,
+          "question": "Which word begins with the same consonant sound as 'judge'?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English rows checked. No question asking candidates to identify a pair of nasal consonants was found. Nearest items test individual consonant sounds in word-initial/final positions; those are oral-English phoneme tasks but not classification of a pair as nasal. Answer A is correct: /m/ and /n/ are nasal consonants. Similarity 0.3964, below threshold. Independent English reviewer should confirm phonetic notation and syllabus fit. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-90",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3021,
+      "top_matches": [
+        {
+          "location": "batch 18 row 21",
+          "score": 0.3021,
+          "question": "During electrolysis of aqueous copper(II) sulfate using inert electrodes, which substance is deposited at the cathode?"
+        },
+        {
+          "location": "batch 08 row 19",
+          "score": 0.2985,
+          "question": "What is the oxidation number of sulfur in H₂SO₄?"
+        },
+        {
+          "location": "batch 19 row 18",
+          "score": 0.2599,
+          "question": "What is the unit of the rate constant for a first-order reaction when time is measured in seconds?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Chemistry rows checked. No water-of-crystallisation formula interpretation item was found. Nearest items concern copper(II) sulfate electrolysis and sulfur oxidation state, not hydrate stoichiometry. Answer B is correct: CuSO4·5H2O contains five water molecules of crystallisation per formula unit. Similarity 0.3021, below threshold. Official JAMB Chemistry Topic 6(e) explicitly includes water of crystallisation. Direct syllabus coverage supported; independent Chemistry reviewer still required. Not approved for import."
+      }
+    },
+    {
+      "target_id": "DUP-47-ADD-2026-11-09",
+      "subject": "Government",
+      "flagged": true,
+      "highest_similarity": 0.4348,
+      "top_matches": [
+        {
+          "location": "batch 28 row 35",
+          "score": 0.4348,
+          "question": "In a federation, revenue allocation concerns the"
+        },
+        {
+          "location": "batch 32 row 35",
+          "score": 0.3838,
+          "question": "The Attorney-General of a state or country is generally the:"
+        },
+        {
+          "location": "batch 39 row 36",
+          "score": 0.3759,
+          "question": "In international relations, the principle of non-interference generally means that a state should:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 2 row 33. Nearest source match asks about revenue allocation in a federation; this draft tests sovereignty and delegated powers in a confederation. These are related but distinct constitutional arrangements. Similarity 0.4348 remains a lexical review flag, not a duplicate verdict. A qualified Government reviewer must confirm the definition and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-19-ADD-2026-11-09",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3462,
+      "top_matches": [
+        {
+          "location": "batch 16 row 27",
+          "score": 0.3462,
+          "question": "The responsiveness of quantity supplied to a change in price is measured by:"
+        },
+        {
+          "location": "batch 31 row 27",
+          "score": 0.3291,
+          "question": "Demand is said to be price inelastic when the percentage change in quantity demanded is"
+        },
+        {
+          "location": "batch 30 row 27",
+          "score": 0.2949,
+          "question": "The kinked demand curve model is commonly used to explain price rigidity in:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 14 row 31. Nearest source match concerns price elasticity of supply. This draft tests producer surplus, the supply-side benefit above the minimum acceptable price; it is distinct from the bank's consumer-surplus item. Similarity 0.3462. A qualified Economics reviewer must confirm the graph interpretation and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-126",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3415,
+      "top_matches": [
+        {
+          "location": "batch 26 row 36",
+          "score": 0.3415,
+          "question": "One central objective of the African Union is to"
+        },
+        {
+          "location": "batch 10 row 36",
+          "score": 0.3289,
+          "question": "Which organ of the United Nations includes representatives of all its member states?"
+        },
+        {
+          "location": "batch 07 row 36",
+          "score": 0.3273,
+          "question": "The African Union primarily promotes:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 22 row 33. The nearest source items ask about the African Union's objectives; this draft asks which organisation the AU succeeded in 2002. It tests a distinct historical fact. Similarity 0.3415. A qualified Government reviewer must confirm the date and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-216",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.2923,
+      "top_matches": [
+        {
+          "location": "batch 14 row 17",
+          "score": 0.2923,
+          "question": "An alkali is a substance that produces which ion when dissolved in water?"
+        },
+        {
+          "location": "batch 10 row 19",
+          "score": 0.2695,
+          "question": "The relatively strong intermolecular attraction between water molecules is mainly due to:"
+        },
+        {
+          "location": "batch 04 row 17",
+          "score": 0.2406,
+          "question": "Simple distillation can be used to obtain pure water from salt solution because water:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 39 row 17. Nearest items concern alkalis, water intermolecular attraction and distillation; none asks about temporary hardness caused by calcium and magnesium hydrogencarbonates. Similarity 0.2923. A qualified Chemistry reviewer must confirm the chemistry and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-217",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3913,
+      "top_matches": [
+        {
+          "location": "batch 23 row 11",
+          "score": 0.3913,
+          "question": "Find the determinant of the matrix [[3, 2], [5, 4]]."
+        },
+        {
+          "location": "batch 31 row 11",
+          "score": 0.3913,
+          "question": "Find the determinant of the matrix [[2, 3], [1, 4]]."
+        },
+        {
+          "location": "batch 40 row 11",
+          "score": 0.2295,
+          "question": "An item marked at ₦6,000 is sold at a discount of 15%. What is its selling price?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 33 row 10. Nearest items calculate determinants; this draft tests the defining property of a singular matrix. Similarity 0.3913. A qualified Mathematics reviewer must confirm the definition and notation."
+      }
+    },
+    {
+      "target_id": "DUP-232",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3302,
+      "top_matches": [
+        {
+          "location": "batch 21 row 39",
+          "score": 0.3302,
+          "question": "A character whose personality and outlook remain largely unchanged throughout a literary work is described as:"
+        },
+        {
+          "location": "batch 20 row 39",
+          "score": 0.3229,
+          "question": "The list of characters in a play, usually provided near the beginning of the script, is called the"
+        },
+        {
+          "location": "batch 13 row 38",
+          "score": 0.2951,
+          "question": "A poem that expresses praise or celebrates a person, event or idea is called a/an:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 34 row 37. Nearest items concern characterisation, cast lists and poetic forms; none tests the literary term epithet. Similarity 0.3302. A qualified Literature reviewer must confirm the term and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-240",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3855,
+      "top_matches": [
+        {
+          "location": "batch 39 row 36",
+          "score": 0.3855,
+          "question": "In international relations, the principle of non-interference generally means that a state should:"
+        },
+        {
+          "location": "batch 13 row 32",
+          "score": 0.2947,
+          "question": "After a bill has passed the required stages in Nigeria's National Assembly, it is generally presented to the President for:"
+        },
+        {
+          "location": "batch 22 row 36",
+          "score": 0.2821,
+          "question": "A court exercises original jurisdiction when it:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 33 row 32. The nearest source item concerns non-interference; this draft tests the parties in contentious ICJ proceedings. Similarity 0.3855. A qualified Government reviewer must confirm the legal distinction and syllabus fit."
+      }
+    },
+    {
+      "target_id": "DUP-114",
+      "subject": "Physics",
+      "flagged": false,
+      "highest_similarity": 0.3667,
+      "top_matches": [
+        {
+          "location": "batch 03 row 25",
+          "score": 0.3667,
+          "question": "Sound cannot travel through:"
+        },
+        {
+          "location": "batch 36 row 23",
+          "score": 0.2819,
+          "question": "In a sound wave travelling through air, air particles vibrate"
+        },
+        {
+          "location": "batch 20 row 24",
+          "score": 0.2469,
+          "question": "A wave travels at 340 m/s and has a frequency of 500 Hz. What is its wavelength?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 3 row 24. The nearest source items concern sound transmission and wavelength; this draft tests the requirement for a material medium. Similarity 0.3667, below the 0.42 threshold. Qualified Physics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-164",
+      "subject": "Literature in English",
+      "flagged": false,
+      "highest_similarity": 0.3457,
+      "top_matches": [
+        {
+          "location": "batch 11 row 39",
+          "score": 0.3457,
+          "question": "The repetition of consonant sounds within or at the ends of nearby words is called:"
+        },
+        {
+          "location": "batch 19 row 40",
+          "score": 0.3256,
+          "question": "The deliberate omission of conjunctions between successive words or clauses is called:"
+        },
+        {
+          "location": "batch 18 row 37",
+          "score": 0.3128,
+          "question": "A recurring image, phrase or idea that contributes to the meaning of a literary work is called a:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 11 row 40. The nearest source items concern consonance, asyndeton and motif; this draft tests metonymy. Similarity 0.3457, below threshold. Qualified Literature review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-174",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3268,
+      "top_matches": [
+        {
+          "location": "batch 20 row 21",
+          "score": 0.3268,
+          "question": "The industrial manufacture of ammonia from nitrogen and hydrogen is known as the ___."
+        },
+        {
+          "location": "batch 29 row 21",
+          "score": 0.2754,
+          "question": "When an ester is heated with aqueous sodium hydroxide, the products include an alcohol and a"
+        },
+        {
+          "location": "batch 24 row 18",
+          "score": 0.2533,
+          "question": "What is the major product when hydrogen adds across the double bond in ethene?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 12 row 21. The nearest source items concern ammonia manufacture and ester reactions; this draft tests alkaline hydrolysis of fats to produce soap. Similarity 0.3268, below threshold. Qualified Chemistry review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-101",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.3509,
+      "top_matches": [
+        {
+          "location": "batch 35 row 30",
+          "score": 0.3509,
+          "question": "The additional satisfaction from consuming one more unit of a good is called"
+        },
+        {
+          "location": "batch 39 row 29",
+          "score": 0.3297,
+          "question": "Which of the following is generally excluded from national income as current production?"
+        },
+        {
+          "location": "batch 30 row 29",
+          "score": 0.303,
+          "question": "A merit good is one that is often under-consumed in a free market because:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 12 row 27. The nearest source items concern marginal utility, national income and merit goods; this draft tests the defining characteristics of public goods. Similarity 0.3509, below threshold. Qualified Economics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-210",
+      "subject": "Biology",
+      "flagged": false,
+      "highest_similarity": 0.3548,
+      "top_matches": [
+        {
+          "location": "batch 28 row 14",
+          "score": 0.3548,
+          "question": "The main function of the glomerulus in a nephron is to"
+        },
+        {
+          "location": "batch 31 row 12",
+          "score": 0.325,
+          "question": "Which structure in the human female reproductive system is the usual site of fertilisation?"
+        },
+        {
+          "location": "batch 38 row 16",
+          "score": 0.3077,
+          "question": "The transmission of inherited characteristics from parents to offspring is known as:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 13 row 16. The nearest source items concern kidney filtration, fertilisation and inheritance; this draft tests sperm formation in the testes. Similarity 0.3548, below threshold. Qualified Biology review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-107",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3385,
+      "top_matches": [
+        {
+          "location": "batch 30 row 33",
+          "score": 0.3385,
+          "question": "The federal character principle in Nigeria is intended primarily to promote"
+        },
+        {
+          "location": "batch 25 row 35",
+          "score": 0.3304,
+          "question": "The principle of separation of powers is intended mainly to:"
+        },
+        {
+          "location": "batch 26 row 33",
+          "score": 0.3019,
+          "question": "The main aim of proportional representation is to"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 14 row 35. The nearest source items concern federal character, separation of powers and proportional representation; this draft tests the jurisdiction of the International Criminal Court. Similarity 0.3385, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-228",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2319,
+      "top_matches": [
+        {
+          "location": "batch 27 row 31",
+          "score": 0.2319,
+          "question": "The free-rider problem occurs when people:"
+        },
+        {
+          "location": "batch 20 row 30",
+          "score": 0.2275,
+          "question": "The process of increasing a country's stock of productive assets is called ___."
+        },
+        {
+          "location": "batch 36 row 31",
+          "score": 0.2044,
+          "question": "A balanced government budget occurs when"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 15 row 28. Nearest source items concern free-rider behaviour, capital formation and balanced budgets; this draft tests cross-border movement of financial assets. Similarity 0.2319, below threshold. Qualified Economics review must confirm the syllabus scope of capital flight."
+      }
+    },
+    {
+      "target_id": "DUP-129",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.2991,
+      "top_matches": [
+        {
+          "location": "batch 36 row 5",
+          "score": 0.2991,
+          "question": "In the sentence 'The book that I borrowed is missing', the words 'that I borrowed' form a"
+        },
+        {
+          "location": "batch 37 row 3",
+          "score": 0.2889,
+          "question": "Choose the word nearest in meaning to 'abstain'."
+        },
+        {
+          "location": "batch 30 row 6",
+          "score": 0.2881,
+          "question": "In the sentence 'The committee met yesterday', the word 'yesterday' functions as an adverb of"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 16 row 6. Nearest source items concern adjective clauses, vocabulary and adverbial function; this draft tests the meaning of a phrasal verb. Similarity 0.2991, below threshold. Qualified English review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-219",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.383,
+      "top_matches": [
+        {
+          "location": "batch 29 row 19",
+          "score": 0.383,
+          "question": "Oxidation is best described as"
+        },
+        {
+          "location": "batch 25 row 20",
+          "score": 0.3235,
+          "question": "A reaction that releases heat to its surroundings has an enthalpy change that is"
+        },
+        {
+          "location": "batch 07 row 18",
+          "score": 0.3214,
+          "question": "Which of these oxides is classified as a basic oxide?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 16 row 20. Nearest source items concern oxidation, enthalpy and basic oxides; this draft tests the defining behaviour of amphoteric oxides. Similarity 0.3830, below threshold. Qualified Chemistry review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-193",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.2679,
+      "top_matches": [
+        {
+          "location": "batch 39 row 33",
+          "score": 0.2679,
+          "question": "Which activity is an example of lobbying by a pressure group?"
+        },
+        {
+          "location": "batch 18 row 33",
+          "score": 0.2667,
+          "question": "The supreme legal authority of a state over its territory is known as ___."
+        },
+        {
+          "location": "batch 39 row 32",
+          "score": 0.2446,
+          "question": "The official record of debates and proceedings in the Nigerian National Assembly is known as the:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 16 row 33. Nearest source items concern pressure groups, sovereignty and legislative proceedings; this draft tests oligarchy as rule by a small group. Similarity 0.2679, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-98",
+      "subject": "Mathematics",
+      "flagged": false,
+      "highest_similarity": 0.3022,
+      "top_matches": [
+        {
+          "location": "batch 26 row 10",
+          "score": 0.3022,
+          "question": "A bag contains 4 red counters and 6 blue counters. If one counter is selected at random, what is the probability that it is red?"
+        },
+        {
+          "location": "batch 07 row 11",
+          "score": 0.3008,
+          "question": "A bag contains 3 red balls and 2 blue balls. One ball is selected at random. What is the probability that it is blue?"
+        },
+        {
+          "location": "batch 38 row 11",
+          "score": 0.2946,
+          "question": "A bag contains 4 red balls and 3 blue balls. What is the probability of selecting a blue ball at random?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 17 row 10. Nearest source items concern probability; this draft tests the definition of an empty set. Similarity 0.3022, below threshold. Qualified Mathematics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-121",
+      "subject": "Chemistry",
+      "flagged": false,
+      "highest_similarity": 0.3788,
+      "top_matches": [
+        {
+          "location": "batch 01 row 21",
+          "score": 0.3788,
+          "question": "What is the relative molecular mass of H₂O? (H = 1, O = 16)"
+        },
+        {
+          "location": "batch 10 row 19",
+          "score": 0.3415,
+          "question": "The relatively strong intermolecular attraction between water molecules is mainly due to:"
+        },
+        {
+          "location": "batch 18 row 19",
+          "score": 0.3,
+          "question": "The total pressure of a mixture of non-reacting gases equals the sum of their partial pressures. This is:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 17 row 20. Nearest source items concern relative molecular mass, intermolecular forces and partial pressures; this draft tests Graham's law of diffusion. Similarity 0.3788, below threshold. Qualified Chemistry review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-109",
+      "subject": "Economics",
+      "flagged": false,
+      "highest_similarity": 0.2756,
+      "top_matches": [
+        {
+          "location": "batch 29 row 27",
+          "score": 0.2756,
+          "question": "A table showing the quantities of a commodity consumers are willing and able to buy at different prices over a given period is called a"
+        },
+        {
+          "location": "batch 02 row 31",
+          "score": 0.2523,
+          "question": "A person without a job who is actively seeking and available for work is generally classified as:"
+        },
+        {
+          "location": "batch 19 row 28",
+          "score": 0.2464,
+          "question": "In a market economy, major decisions about production and prices are guided largely by:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 17 row 27. Nearest source items concern demand schedules, unemployment and market decisions; this draft tests the business-cycle concept of recession. Similarity 0.2756, below threshold. Qualified Economics review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-102",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3889,
+      "top_matches": [
+        {
+          "location": "batch 08 row 32",
+          "score": 0.3889,
+          "question": "The principle of separation of powers is associated with the idea that governmental functions should be divided among the:"
+        },
+        {
+          "location": "batch 10 row 36",
+          "score": 0.3459,
+          "question": "Which organ of the United Nations includes representatives of all its member states?"
+        },
+        {
+          "location": "batch 19 row 34",
+          "score": 0.2762,
+          "question": "Which service is commonly associated with local government administration?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 18 row 32. Nearest source items concern separation of powers and the UN General Assembly; this draft tests the Commonwealth as a voluntary association of sovereign states. Similarity 0.3889, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-221",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3978,
+      "top_matches": [
+        {
+          "location": "batch 20 row 34",
+          "score": 0.3978,
+          "question": "A permanent administrative organisation that implements government policies is the ___."
+        },
+        {
+          "location": "batch 19 row 34",
+          "score": 0.324,
+          "question": "Which service is commonly associated with local government administration?"
+        },
+        {
+          "location": "batch 05 row 34",
+          "score": 0.3086,
+          "question": "Local government is generally intended to bring public administration:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 18 row 35. Nearest source items concern the permanent civil service and local administration; this draft tests a temporary caretaker administration during transition. Similarity 0.3978, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-104",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.3415,
+      "top_matches": [
+        {
+          "location": "batch 07 row 32",
+          "score": 0.3415,
+          "question": "Under a proportional representation electoral system, legislative seats are allocated mainly according to:"
+        },
+        {
+          "location": "batch 36 row 34",
+          "score": 0.3237,
+          "question": "In Nigeria's House of Representatives, the presiding officer is known as the:"
+        },
+        {
+          "location": "batch 25 row 33",
+          "score": 0.3226,
+          "question": "A veto is the power of an authorised office-holder to:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 18 row 36. Nearest source items concern proportional representation, legislative presiding officers and veto; this draft tests the electoral-college selection mechanism. Similarity 0.3415, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-200",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.2857,
+      "top_matches": [
+        {
+          "location": "batch 27 row 5",
+          "score": 0.2857,
+          "question": "Which word is formed by adding a prefix that means “before”?"
+        },
+        {
+          "location": "batch 24 row 3",
+          "score": 0.2759,
+          "question": "Which word is formed by adding the suffix “-ness” to “kind”?"
+        },
+        {
+          "location": "batch 11 row 4",
+          "score": 0.259,
+          "question": "Which word is formed by adding a prefix to legal?"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 20 row 6. Nearest source items concern prefixes and suffixes; this draft tests clipping, a different word-formation process. Similarity 0.2857, below threshold. Qualified English review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-123",
+      "subject": "Government",
+      "flagged": false,
+      "highest_similarity": 0.321,
+      "top_matches": [
+        {
+          "location": "batch 05 row 35",
+          "score": 0.321,
+          "question": "Political legitimacy refers to the belief that a government has:"
+        },
+        {
+          "location": "batch 20 row 34",
+          "score": 0.3068,
+          "question": "A permanent administrative organisation that implements government policies is the ___."
+        },
+        {
+          "location": "batch 08 row 32",
+          "score": 0.3062,
+          "question": "The principle of separation of powers is associated with the idea that governmental functions should be divided among the:"
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_pairwise_bankwide_preliminary_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "Target batch 20 row 33. Nearest source items concern legitimacy, civil administration and separation of powers; this draft tests political ideology as a coherent set of beliefs and principles. Similarity 0.3210, below threshold. Qualified Government review is still required."
+      }
+    },
+    {
+      "target_id": "DUP-245",
+      "subject": "Use of English",
+      "flagged": false,
+      "highest_similarity": 0.3778,
+      "top_matches": [
+        {
+          "location": "batch 28 row 3",
+          "score": 0.3778,
+          "question": "A statement described as “ambiguous” is one that is"
+        },
+        {
+          "location": "batch 12 row 6",
+          "score": 0.2778,
+          "question": "Choose the correct completion: “The new student is interested ___ literature.”"
+        },
+        {
+          "location": "batch 11 row 5",
+          "score": 0.2679,
+          "question": "Choose the sentence that correctly expresses an unreal condition in the present."
+        }
+      ],
+      "contextual_assessment": {
+        "review_type": "assistant_preliminary_same_subject_bankwide_review",
+        "decision": "conceptually_distinct_pending_independent_subject_review",
+        "note": "All 200 Use of English source rows were screened. No existing item tests prudence or prudent decision-making. The highest padded character-trigram Dice score is 0.3778 against batch 28 row 3, below the 0.42 threshold. Lexical screening is not a semantic uniqueness guarantee or academic approval. Independent Use of English syllabus and answer review remains required."
+      }
+    }
+  ],
+  "limitations": [
+    "Lexical similarity can flag different concepts that share wording and can miss paraphrased duplicates.",
+    "All flagged items require contextual assessment; scores do not prove duplication or uniqueness.",
+    "This screen is not academic approval, answer-key approval, syllabus approval or permission to insert/publish any draft.",
+    "The 1,600 rows include the 90 held duplicates so replacement proposals are screened against the complete source bank, not only the provisional retained subset."
+  ],
+  "proposals": {
+    "count": 116,
+    "screened": 116,
+    "all_proposals_screened": true
+  },
+  "revision_note": "Version 24 — 2026-11-02: Pair 07 DUP-39 and DUP-40 compared against all 200 Chemistry retained-plus-held rows. No same-concept overlap found; precise syllabus scope requires independent Chemistry review. Pairwise assistant contextual reviews added for DUP-47–DUP-50 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-51–DUP-54 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-55–DUP-58 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-59–DUP-62 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-63–DUP-66 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-67–DUP-70 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-71–DUP-74 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-79–DUP-82 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-83–DUP-86 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-87–DUP-90 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-01, DUP-02, DUP-03, DUP-05 and DUP-07 on 2026-11-02; full 200-row subject comparisons recorded. Independent subject/syllabus review remains pending. Pairwise assistant contextual reviews added for DUP-08–DUP-13 on 2026-11-02. DUP-12 has a confirmed semantic overlap with batch 28 row 28 despite a low lexical score; its replacement draft is rejected and must be replaced. Independent subject review remains pending. Pairwise assistant contextual reviews added for DUP-15, DUP-16 and DUP-19–DUP-21 on 2026-11-02; full 200-row subject comparisons recorded. DUP-16 remains a high-similarity contextual-review case. Pairwise assistant contextual reviews added for DUP-23–DUP-32 on 2026-11-02; full 200-row subject comparisons recorded. All 90 targets now have assistant contextual review coverage, but independent subject/syllabus approval remains pending; DUP-12 replacement draft is rejected and needs a new proposal. Reconciliation pass on 2026-11-02: added missing contextual-assessment detail for DUP-06, DUP-14, DUP-17, DUP-41, DUP-42, DUP-43, DUP-44, DUP-46 and DUP-75–DUP-78. Assistant contextual review coverage is 90/90; this is not independent subject approval. Reconciled 2026-11-02: corrected answer-key commentary for DUP-17 (A, auxin) and DUP-42 (C, decline); contextual assessments retained for all 90 candidates. 2026-11-02: DUP-04 corrected and re-screened (0.3837); rejected DUP-12 per-capita-income candidate replaced by optimum-population candidate (0.3731); rejected DUP-69 dramatic-irony candidate replaced by unity-of-action candidate (0.3523). All checked against all 200 same-subject rows. Similarity flags now 11 and remain human-review prompts. 2026-11-02: Completed explicit contextual reassessment for all 11 flagged IDs, using the full 200-row same-subject bank and official JAMB syllabus where available. Similarity scores remain screening signals, not duplicate verdicts. DUP-35, DUP-45 and DUP-48 carry syllabus-scope holds. Independent subject approvals remain outstanding; no candidate is import-cleared. Version 49 — 2026-11-09: added seven target-specific drafts, each compared with all 1,600 r3 retained-plus-held questions and the 90 prior proposals using the existing v2 method. Six new drafts fall below 0.42; one confederation item remains flagged and contextually assessed as distinct from the federation revenue-allocation item. Independent subject/syllabus approval remains pending. Version 55 — 2026-11-09: six additional replacement drafts were screened against the full 1,600-row r3 bank and 97 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 61 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 103 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. Version 67 — 2026-11-09: six further target-specific drafts were screened against the full 1,600-row r3 bank and 109 prior proposals. All six are below the 0.42 threshold; no new lexical flags were added. Independent subject and syllabus approval remains pending. 2026-11-10 r4 supplement: DUP-245 screened against all 1,600 r4 source rows; max same-subject Dice 0.3778, below threshold. Candidate remains review-required.",
+  "last_updated": "2026-11-10"
+}

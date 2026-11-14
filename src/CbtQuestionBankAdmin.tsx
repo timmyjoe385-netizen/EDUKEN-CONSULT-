@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from './lib/api';
 import { CheckCircle2, FileSpreadsheet, Plus, RefreshCw, Save, Search, ShieldCheck, Upload, X } from 'lucide-react';
 
@@ -7,9 +7,15 @@ type Question = {
   question_text: string; options: Record<string,string>; correct_option: string;
   explanation: string; difficulty: string; source_type: string; source_name: string;
   source_year: number | string | null; provenance_notes: string; licensing_notes: string; status: string;
+  created_by?: string | null; created_at?: string | null;
+  reviewed_by?: string | null; reviewed_at?: string | null;
+  approved_by?: string | null; approved_at?: string | null;
+  published_by?: string | null; published_at?: string | null;
 };
 const blank = (): Question => ({ exam_type:'JAMB', subject:'', topic:'', subtopic:'', question_text:'', options:{A:'',B:'',C:'',D:''}, correct_option:'A', explanation:'', difficulty:'medium', source_type:'original', source_name:'', source_year:'', provenance_notes:'', licensing_notes:'', status:'draft' });
 const statuses = ['draft','reviewed','approved','published','unpublished'];
+const auditActor = (id?: string | null) => id || 'Not recorded';
+const auditTime = (value?: string | null) => value ? new Date(value).toLocaleString() : 'Not recorded';
 function parseCsv(text: string) {
   const rows: string[][] = [];
   let row: string[] = [], cell = '', quoted = false;
@@ -44,6 +50,9 @@ export default function CbtQuestionBankAdmin() {
   const [form,setForm] = useState<Question | null>(null);
   const [filter,setFilter] = useState('all');
   const [search,setSearch] = useState('');
+  const [page,setPage] = useState(1);
+  const [total,setTotal] = useState(0);
+  const pageSize = 50;
   const [loading,setLoading] = useState(false);
   const [saving,setSaving] = useState(false);
   const [message,setMessage] = useState('');
@@ -55,9 +64,18 @@ export default function CbtQuestionBankAdmin() {
   const [filename,setFilename] = useState('');
   const [showImport,setShowImport] = useState(false);
   const [batchRows,setBatchRows] = useState<Record<string,unknown>[] | null>(null);
-  const load = async () => {
+  const load = async (requestedPage = page) => {
     setLoading(true); setError('');
-    try { const result = await api.get('/api/admin/cbt/questions' + (filter !== 'all' ? '?status='+encodeURIComponent(filter) : '')); setItems(result.data?.items || []); }
+    try {
+      const params = new URLSearchParams({ page: String(requestedPage), pageSize: String(pageSize) });
+      if (filter !== 'all') params.set('status', filter);
+      if (search.trim()) params.set('q', search.trim());
+      const result = await api.get('/api/admin/cbt/questions?' + params.toString());
+      const nextItems = result.data?.items || [];
+      setItems(nextItems);
+      setTotal(Number(result.data?.total ?? nextItems.length));
+      setPage(Number(result.data?.page ?? requestedPage));
+    }
     catch(e) { setError(e instanceof Error ? e.message : 'Could not load question bank.'); }
     finally { setLoading(false); }
   };
@@ -72,8 +90,12 @@ export default function CbtQuestionBankAdmin() {
       setLoadingImports(false);
     }
   };
-  useEffect(()=>{ void load(); void loadImportHistory(); },[filter]);
-  const visible = useMemo(()=>items.filter(q => !search || [q.question_text,q.subject,q.topic,q.subtopic].join(' ').toLowerCase().includes(search.toLowerCase())),[items,search]);
+  useEffect(()=>{ void load(page); },[filter,search,page]);
+  useEffect(()=>{ void loadImportHistory(); },[]);
+  const visible = items;
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const firstRow = total === 0 ? 0 : (page - 1) * pageSize + 1;
+  const lastRow = Math.min(page * pageSize, total);
   const change = (key: keyof Question, value: any) => setForm(current => current ? ({...current,[key]:value}) : current);
   const save = async () => {
     if (!form) return;
@@ -119,7 +141,7 @@ export default function CbtQuestionBankAdmin() {
     <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button><button className="primary" onClick={()=>setShowImport(true)}><Upload size={16}/> Import CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
     {error ? <div className="analytics-error" role="alert"><b>Action needs attention</b><p>{error}</p></div> : null}
     {message ? <div className="system-setting-row" role="status"><CheckCircle2 size={18}/><span>{message}</span></div> : null}
-    <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Question, subject or topic"/></label></div><span>{visible.length} shown</span></div>
+    <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>{setFilter(e.target.value);setPage(1);}}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>{setSearch(e.target.value);setPage(1);}} placeholder="Question, subject or topic"/></label></div><div className="analytics-controls"><small>{firstRow}–{lastRow} of {total} questions · Page {page} of {totalPages}</small><button className="secondary" onClick={()=>setPage(current=>Math.max(1,current-1))} disabled={loading || page<=1}>Previous</button><button className="secondary" onClick={()=>setPage(current=>Math.min(totalPages,current+1))} disabled={loading || page>=totalPages}>Next</button></div></div>
     {form ? <div className="system-settings-panel" style={{marginBottom:18}}><div className="analytics-toolbar"><h3>{form.id?'Edit question':'Create question'}</h3><button className="secondary" onClick={()=>setForm(null)}><X size={16}/> Close</button></div>
       <div className="admin-form-grid">
         <label>Exam type<input value={form.exam_type} onChange={e=>change('exam_type',e.target.value)} required/></label>
@@ -138,7 +160,7 @@ export default function CbtQuestionBankAdmin() {
         <label className="admin-form-wide">Licensing / usage-rights notes<textarea rows={2} value={form.licensing_notes||''} onChange={e=>change('licensing_notes',e.target.value)}/></label>
       </div><div className="analytics-controls"><button className="primary" onClick={()=>void save()} disabled={saving}><Save size={16}/>{saving?'Saving…':'Save question'}</button><small>Edits to published content return it to draft for a fresh review.</small></div>
     </div> : null}
-    {loading ? <div className="admin-empty">Loading question bank…</div> : visible.length ? <div className="system-settings-list">{visible.map(q=><article className="system-setting-row" key={q.id}><span className="system-setting-copy"><b>{q.subject} · {q.topic}</b><small>{q.question_text}</small><small>Source: {q.source_type==='original'?'Original':q.source_name||q.source_type}{q.source_year?' · '+q.source_year:''} · {q.difficulty}</small><small>State: <b>{q.status}</b></small></span><div className="analytics-controls"><button className="secondary" onClick={()=>setForm({...q})}>Edit</button>{q.status==='draft'?<button className="secondary" onClick={()=>void transition(q,'reviewed')}>Mark reviewed</button>:null}{q.status==='reviewed'?<button className="secondary" onClick={()=>void transition(q,'approved')}>Approve</button>:null}{q.status==='approved'?<button className="primary" onClick={()=>void transition(q,'published')}>Publish</button>:null}{q.status==='published'?<button className="secondary" onClick={()=>void transition(q,'unpublished')}>Unpublish</button>:null}{['draft','unpublished'].includes(q.status)?<button className="secondary" onClick={()=>void remove(q)}>Delete</button>:null}</div></article>)}</div> : <div className="admin-empty">No questions match this filter yet. Create one or import a CSV template.</div>}
+    {loading ? <div className="admin-empty">Loading question bank…</div> : visible.length ? <div className="system-settings-list">{visible.map(q=><article className="system-setting-row" key={q.id}><span className="system-setting-copy"><b>{q.subject} · {q.topic}</b><small>{q.question_text}</small><small>Source: {q.source_type==='original'?'Original':q.source_name||q.source_type}{q.source_year?' · '+q.source_year:''} · {q.difficulty}</small><small>State: <b>{q.status}</b></small><small>Review audit · Created: {auditActor(q.created_by)} ({auditTime(q.created_at)})</small><small>Reviewed: {auditActor(q.reviewed_by)} ({auditTime(q.reviewed_at)})</small><small>Approved: {auditActor(q.approved_by)} ({auditTime(q.approved_at)})</small><small>Published: {auditActor(q.published_by)} ({auditTime(q.published_at)})</small></span><div className="analytics-controls"><button className="secondary" onClick={()=>setForm({...q})}>Edit</button>{q.status==='draft'?<button className="secondary" onClick={()=>void transition(q,'reviewed')}>Mark reviewed</button>:null}{q.status==='reviewed'?<button className="secondary" onClick={()=>void transition(q,'approved')}>Approve</button>:null}{q.status==='approved'?<button className="primary" onClick={()=>void transition(q,'published')}>Publish</button>:null}{q.status==='published'?<button className="secondary" onClick={()=>void transition(q,'unpublished')}>Unpublish</button>:null}{['draft','unpublished'].includes(q.status)?<button className="secondary" onClick={()=>void remove(q)}>Delete</button>:null}</div></article>)}</div> : <div className="admin-empty">No questions match this filter yet. Create one or import a CSV template.</div>}
     {showImport ? <div className="system-settings-panel" style={{marginTop:18}}><div className="analytics-toolbar"><h3>Bulk CSV import</h3><button className="secondary" onClick={()=>{setShowImport(false);setBatchRows(null);}}><X size={16}/> Close</button></div><p>Upload a UTF-8 CSV using the template. Maximum 500 rows per import. Invalid rows and duplicates are reported. Everything imported stays in draft; no question is auto-published.</p><input type="file" accept=".csv,text/csv" onChange={e=>void chooseFile(e.target.files?.[0])}/>{batchRows ? <div className="system-setting-row"><span>{filename}: {batchRows.length} rows ready for validation and import.</span><button className="primary" onClick={()=>void runImport()} disabled={importing}><Upload size={16}/>{importing?'Importing…':'Validate & import drafts'}</button></div>:null}{importResult ? <div className="analytics-error" role="status"><b>Import report</b><p>Inserted: {importResult.inserted} · Duplicates: {importResult.duplicates} · Invalid: {importResult.invalid}</p>{(importResult.errors||[]).slice(0,30).map((e:any,i:number)=><small key={i}>Row {e.row}: {e.errors?.join(' ')}</small>)}</div>:null}</div>:null}
     <div className="system-settings-panel" style={{marginTop:18}}>
       <div className="analytics-toolbar"><div><h3>CSV import history</h3><p>Recent batches and their validation outcomes.</p></div><button className="secondary" onClick={()=>void loadImportHistory()} disabled={loadingImports}><RefreshCw size={16}/>{loadingImports?'Refreshing…':'Refresh history'}</button></div>

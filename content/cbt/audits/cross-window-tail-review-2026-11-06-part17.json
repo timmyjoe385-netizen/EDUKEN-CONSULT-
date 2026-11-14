@@ -1,0 +1,100 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five more lower-scoring cross-window candidate pairs checked against full question stems, options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      912,
+      913,
+      914,
+      915,
+      916
+    ],
+    "previous_total_manually_reviewed": 381,
+    "now_manually_reviewed": 386,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 918
+  },
+  "preserved": [
+    {
+      "rank": 912,
+      "score": 0.472,
+      "subject": "Mathematics",
+      "a": "batch 10 row 9",
+      "b": "batch 20 row 9",
+      "question_a": "The sum of the interior angles of a hexagon is:",
+      "answer_a": "C — 720°",
+      "question_b": "What is the sum of the exterior angles of any convex polygon, taking one at each vertex?",
+      "answer_b": "C — 360°",
+      "decision": "preserve_both_as_distinct_polygon_angle_concepts",
+      "reason": "The first tests the interior-angle sum formula (n−2)×180°; the second tests the exterior-angle sum of 360°. The concepts and answers are different. Batch 20 row 9 is already retained in DUP-01; its appearance here does not make it a new held target."
+    },
+    {
+      "rank": 913,
+      "score": 0.472,
+      "subject": "Physics",
+      "a": "batch 2 row 22",
+      "b": "batch 30 row 26",
+      "question_a": "The tendency of a body to resist a change in its state of motion is called:",
+      "answer_a": "B — Inertia",
+      "question_b": "The apparent change in the observed frequency of a sound due to relative motion between source and observer is called the:",
+      "answer_b": "A — Doppler effect",
+      "decision": "preserve_both_as_distinct_physics_concepts",
+      "reason": "The first tests inertia, a property of matter described by Newton's first law; the second tests the Doppler effect in wave propagation. The shared idea of resistance/change is incidental wording."
+    },
+    {
+      "rank": 915,
+      "score": 0.472,
+      "subject": "Physics",
+      "a": "batch 13 row 22",
+      "b": "batch 24 row 23",
+      "question_a": "What is the SI unit of power?",
+      "answer_a": "C — Watt",
+      "question_b": "The SI unit of magnetic flux density is the:",
+      "answer_b": "A — tesla",
+      "decision": "preserve_both_as_distinct_physical_quantities",
+      "reason": "Power is measured in watts, while magnetic flux density is measured in teslas. Both are SI-unit recall questions but test different physical quantities and dimensions."
+    },
+    {
+      "rank": 916,
+      "score": 0.472,
+      "subject": "Use of English",
+      "a": "batch 20 row 6",
+      "b": "batch 21 row 5",
+      "question_a": "Which sentence maintains parallel structure?",
+      "answer_a": "A",
+      "question_b": "Which sentence contains a subordinate clause?",
+      "answer_b": "B",
+      "decision": "preserve_both_as_distinct_sentence_grammar_skills",
+      "reason": "The first tests parallel grammatical forms in a coordinated list; the second identifies a dependent subordinate clause. Batch 20 row 6 is already retained in DUP-78; no new target is created."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 914,
+      "score": 0.472,
+      "subject": "Mathematics",
+      "a": "batch 13 row 11",
+      "b": "batch 21 row 11",
+      "question_a": "What is the median of the ordered values 3, 7, 8, 10 and 12?",
+      "answer_a": "C — 8",
+      "question_b": "Find the median of 3, 8, 4, 10 and 6.",
+      "answer_b": "B — 6",
+      "decision": "confirm_semantic_duplicate",
+      "retain": "batch 13 row 11",
+      "replace": "batch 21 row 11",
+      "new_unique_replacement_target": "batch 21 row 11",
+      "reason": "Both are single-step median calculations on five values, with the same skill, same level and same response process. The changed numbers and ordering do not add a distinct learning outcome; retain the clearer stem that explicitly states the values are ordered."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "Four candidate pairs were preserved as distinct; one median calculation pair was confirmed as a semantic duplicate. Existing retained rows in DUP-01 and DUP-78 were not counted as new held targets."
+  }
+}

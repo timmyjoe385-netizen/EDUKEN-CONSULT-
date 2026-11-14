@@ -1,0 +1,152 @@
+{
+  "audit_date": "2026-11-02",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Non-destructive technical validation of the user-reported-approved 90-question replacement-only import candidate file.",
+  "source_files": {
+    "replacement_drafts": "content/cbt/audits/duplicate-replacement-drafts-2026-11-01.json",
+    "retained_staging": "content/cbt/staging/2026-11-01/retained-batches-*.csv",
+    "held_staging": "content/cbt/staging/2026-11-01/held-duplicates-*.csv",
+    "lexical_screen": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+    "import_candidate": "content/cbt/staging/2026-11-02/replacement-import-candidates-90.csv",
+    "reviewer_disposition": "content/cbt/audits/order-1-reviewer-disposition-2026-11-02.md"
+  },
+  "source_reconciliation": {
+    "retained_rows": 1510,
+    "held_duplicate_rows": 90,
+    "total_source_rows": 1600,
+    "reconciliation": "1510 + 90 = 1600"
+  },
+  "reviewer_status": {
+    "user_reported_approvals": 90,
+    "targets": 90,
+    "reported_revise": 0,
+    "reported_reject": 0,
+    "documentary_item_level_signoffs_in_repo": 0,
+    "qualification_or_reviewer_identity_uploaded": false,
+    "recording": "User-reported approval; see reviewer disposition. Not independently documentary-verified."
+  },
+  "candidate_validation": {
+    "candidate_rows": 90,
+    "unique_target_ids": 90,
+    "target_ids_missing_from_candidate": [],
+    "target_ids_without_matching_held_duplicate": [],
+    "subject_mismatches": [],
+    "full_bank_exact_fingerprint_collisions": 0,
+    "full_bank_exact_same_subject_stem_collisions": 0,
+    "duplicate_candidate_fingerprints": 0,
+    "malformed_question_rows": 0,
+    "all_rows_have_four_distinct_options": true,
+    "all_rows_have_valid_answer_keys": true,
+    "all_rows_have_explanations": true,
+    "all_rows_have_supported_subject_difficulty_and_source_type": true,
+    "csv_header_matches_admin_importer": true,
+    "importer_forces_inserted_records_to_draft": true
+  },
+  "lexical_screen": {
+    "proposals_screened": 90,
+    "flags": 11,
+    "flag_ids": [
+      "DUP-10",
+      "DUP-16",
+      "DUP-18",
+      "DUP-22",
+      "DUP-33",
+      "DUP-34",
+      "DUP-35",
+      "DUP-36",
+      "DUP-45",
+      "DUP-48",
+      "DUP-53"
+    ],
+    "assistant_contextual_reassessment_complete": true,
+    "interpretation": "Lexical flags are review prompts, not automatic duplicate verdicts. User reports reviewer approval for all 90."
+  },
+  "projected_subject_balance": {
+    "Biology": {
+      "retained": 183,
+      "replacement": 17,
+      "projected": 200
+    },
+    "Chemistry": {
+      "retained": 187,
+      "replacement": 13,
+      "projected": 200
+    },
+    "Economics": {
+      "retained": 184,
+      "replacement": 16,
+      "projected": 200
+    },
+    "Government": {
+      "retained": 195,
+      "replacement": 5,
+      "projected": 200
+    },
+    "Literature in English": {
+      "retained": 188,
+      "replacement": 12,
+      "projected": 200
+    },
+    "Mathematics": {
+      "retained": 195,
+      "replacement": 5,
+      "projected": 200
+    },
+    "Physics": {
+      "retained": 189,
+      "replacement": 11,
+      "projected": 200
+    },
+    "Use of English": {
+      "retained": 189,
+      "replacement": 11,
+      "projected": 200
+    }
+  },
+  "release_state": {
+    "candidate_file_created": true,
+    "isolated_admin_import_executed": false,
+    "production_imports": 0,
+    "production_publications": 0,
+    "source_csv_files_modified": 0,
+    "production_deployment_authorized": false
+  },
+  "limitations": [
+    "Exact-stem and fingerprint checks do not prove semantic uniqueness; they supplement the documented contextual screen and user-reported academic approval.",
+    "Projected subject totals assume all 90 candidates are accepted by the isolated admin importer; actual database counts must be confirmed there.",
+    "No question is approved or published by the candidate CSV itself; the API import path forces status=draft."
+  ],
+  "ci_validation": {
+    "build_workflow_run": 41427697855,
+    "build_and_npm_validation_suite": "passed",
+    "replacement_import_candidate_regression": "passed as part of npm run test:validation",
+    "playwright_workflow_run": 41427697931,
+    "playwright_browser_suite": "passed",
+    "deno_edge_function_typecheck": "passed",
+    "isolated_cbt_api_integration": "passed",
+    "isolated_admin_unauthenticated_access_checks": "passed",
+    "wallet_migration_sql_workflow_run": 41427697829,
+    "wallet_and_cbt_migration_sql_integration": "passed",
+    "cloudflare_preview_workflow_run": 41427698088,
+    "isolated_preview_worker_deployment": "passed",
+    "real_cbt_chromium_smoke": "passed",
+    "isolated_guest_payment_recovery_smoke": "passed",
+    "production_deploy_job": "skipped"
+  },
+  "isolated_test_project_baseline": {
+    "project_id": "wpktzogarfqrgkirzdpy",
+    "project_status": "ACTIVE_HEALTHY",
+    "cbt_questions": 73,
+    "cbt_question_imports": 0,
+    "cbt_question_status_counts": {
+      "draft": 65,
+      "published": 8
+    },
+    "inspection": "Read-only Supabase inspection; no test database writes performed."
+  },
+  "authenticated_admin_e2e": {
+    "status": "not completed",
+    "reason": "The saved EDUKEN Admin Test browser profile is available, but the browser automation run could not start because the TinyFish wallet balance was negative. No retry was made and no import action was attempted.",
+    "required": "An authenticated Google admin browser session is still needed to test the admin UI import/review/publish flow."
+  }
+}

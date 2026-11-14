@@ -1009,6 +1009,16 @@ test('public header exposes customer wallet access but not admin access', async 
   await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
+  // Preserve evidence that the admin-intent session marker was written before
+  // the cross-origin OAuth navigation changes the page's storage origin.
+  await page.addInitScript(() => {
+    const originalSetItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function (key, value) {
+      if (key === 'eduken_admin_oauth' && value === '1') window.name = 'eduken_admin_oauth=1';
+      return originalSetItem.call(this, key, value);
+    };
+  });
+
   // Intercept the OAuth hand-off so this test never signs into a real account.
   await page.route(authorizeEndpoint + '**', route =>
     route.fulfill({
@@ -1032,7 +1042,8 @@ test('public header exposes customer wallet access but not admin access', async 
   await page.getByRole('button', { name: /Continue with Google/i }).click();
   const authUrl = new URL((await authNavigation).url());
   expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
+  await expect.poll(() => page.evaluate(() => window.name)).toBe('eduken_admin_oauth=1');
 });
 
 
@@ -1873,7 +1884,7 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
   await page.getByRole('button', { name: /Continue with Google/i }).click();
   const authUrl = new URL((await authNavigation).url());
   expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/admin');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
 });
 
 test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
@@ -2122,7 +2133,7 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
             title: 'Current Opportunity Fixture',
             category: 'Scholarship',
             description: 'A test-only opportunity that remains open.',
-            deadline: '30 October 2026',
+            deadline: '30 November 2026',
             is_published: true,
           },
         ],

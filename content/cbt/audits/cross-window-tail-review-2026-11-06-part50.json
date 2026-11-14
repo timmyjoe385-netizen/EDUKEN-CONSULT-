@@ -1,0 +1,189 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 407-423. Previously reviewed ranks 416 and 421 are excluded. Both source CSV rows were checked for stems, options, keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      407,
+      408,
+      409,
+      410,
+      411,
+      412,
+      413,
+      414,
+      415,
+      417,
+      418,
+      419,
+      420,
+      422,
+      423
+    ],
+    "previous_total_manually_reviewed": 816,
+    "now_manually_reviewed": 831,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 473
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-188",
+      "rank": 407,
+      "subject": "Mathematics",
+      "a": "batch 7 row 10",
+      "b": "batch 22 row 11",
+      "concept": "Numerical application of cylinder volume formula",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both calculate the volume of a cylinder using V = πr²h with given radius and height. Only the numerical dimensions and presentation of π differ; the same formula and procedure are tested.",
+      "retain": "batch 7 row 10",
+      "hold": "batch 22 row 11",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-189",
+      "rank": 415,
+      "subject": "Physics",
+      "a": "batch 26 row 23",
+      "b": "batch 39 row 24",
+      "concept": "Calculating heat using Q = mcΔT",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for heat required to raise a 2 kg substance by a stated temperature rise when specific heat capacity is supplied. They use the same Q = mcΔT operation; only c and ΔT differ.",
+      "retain": "batch 26 row 23",
+      "hold": "batch 39 row 24",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-190",
+      "rank": 422,
+      "subject": "Government",
+      "a": "batch 18 row 32",
+      "b": "batch 26 row 34",
+      "concept": "Constitutional division of powers in a federal system",
+      "decision": "confirmed_semantic_duplicate_cluster_extension",
+      "reason": "Both ask the defining federalism principle that constitutional powers are divided between central and component/regional governments. Batch 26 row 34 already belongs to the existing federalism cluster; this adds one new row to that cluster.",
+      "retain": "existing cluster retained canonical batch 26 row 34 / batch 38 row 36 pending provenance review",
+      "hold": "batch 18 row 32",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 408,
+      "subject": "Use of English",
+      "a": "batch 5 row 4",
+      "b": "batch 38 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Meticulous/thorough synonym and hostile/friendly antonym test different target words and vocabulary relations."
+    },
+    {
+      "rank": 409,
+      "subject": "Use of English",
+      "a": "batch 6 row 4",
+      "b": "batch 22 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Impartial/fair and ephemeral/short-lived are different vocabulary meanings."
+    },
+    {
+      "rank": 410,
+      "subject": "Use of English",
+      "a": "batch 9 row 4",
+      "b": "batch 38 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "A complex sentence has a subordinate clause; a compound sentence joins independent clauses. Distinct sentence structures."
+    },
+    {
+      "rank": 411,
+      "subject": "Use of English",
+      "a": "batch 19 row 2",
+      "b": "batch 29 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Reported present perfect backshift (have completed→had completed) differs from modal can→could. Complementary grammar rules."
+    },
+    {
+      "rank": 412,
+      "subject": "Biology",
+      "a": "batch 29 row 16",
+      "b": "batch 33 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "Phloem transports sugars/organic nutrients; xylem transports water and mineral salts. Different plant tissues and functions."
+    },
+    {
+      "rank": 413,
+      "subject": "Use of English",
+      "a": "batch 8 row 6",
+      "b": "batch 32 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies the long /uː/ vowel in food; the second identifies the /ɔɪ/ diphthong. Different phonological targets."
+    },
+    {
+      "rank": 414,
+      "subject": "Mathematics",
+      "a": "batch 11 row 9",
+      "b": "batch 23 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "One is a single-die event; the other combines independent coin and die events. Different probability models."
+    },
+    {
+      "rank": 417,
+      "subject": "Mathematics",
+      "a": "batch 4 row 11",
+      "b": "batch 31 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Circumference uses 2πr; sector area uses a fraction of πr². Different mensuration quantities and procedures."
+    },
+    {
+      "rank": 418,
+      "subject": "Use of English",
+      "a": "batch 8 row 2",
+      "b": "batch 17 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "No sooner…than inversion and third conditional completion test different grammar structures."
+    },
+    {
+      "rank": 419,
+      "subject": "Mathematics",
+      "a": "batch 10 row 11",
+      "b": "batch 11 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Two-heads probability over two coin tosses differs from a single-die event; distinct sample spaces and calculations."
+    },
+    {
+      "rank": 420,
+      "subject": "Chemistry",
+      "a": "batch 5 row 17",
+      "b": "batch 38 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "Acid-base neutralisation yields salt and water; esterification forms an ester and water. Different reaction classes and reactants."
+    },
+    {
+      "rank": 423,
+      "subject": "Mathematics",
+      "a": "batch 26 row 11",
+      "b": "batch 39 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Cone volume and cylinder curved surface area are different quantities requiring different formulas."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 3,
+    "new_unique_replacement_targets": 3,
+    "preserved_as_distinct": 12,
+    "previously_reviewed_ranks_skipped": [
+      416,
+      421
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}
