@@ -55,6 +55,46 @@ test('CBT does not fall back to unpublished samples when the published API is un
   await expect(page.locator('.cbt-question-card')).toHaveCount(0);
 });
 
+test('subject practice remains available when its questions fall beyond the capped 100-row feed', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: Array.from({ length: 100 }, (_, index) => ({
+      id: 'english-feed-' + index,
+      subject: 'Use of English',
+      question_text: 'English feed question ' + index,
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    })) }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.mode).toBe('practice');
+    expect(payload.subject).toBe('Biology');
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'c'.repeat(64),
+        durationSeconds: 600,
+        questions: [{
+          id: 'biology-after-feed-cap',
+          subject: 'Biology',
+          prompt: 'Which organelle is responsible for aerobic respiration?',
+          options: ['Ribosome', 'Mitochondrion', 'Golgi body', 'Lysosome'],
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.locator('#cbt-subject-select').selectOption('Biology');
+  await expect(page.locator('.cbt-hero-actions .cbt-primary-button')).toBeEnabled();
+  const practiceButton = page.getByRole('button', { name: /Practise selected subject/i });
+  await expect(practiceButton).toBeEnabled();
+  await practiceButton.click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+});
+
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route =>
     route.fulfill({
