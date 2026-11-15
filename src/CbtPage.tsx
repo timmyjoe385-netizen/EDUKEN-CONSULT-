@@ -153,7 +153,7 @@ export default function CbtPage() {
           Number.isInteger(Number(count)) && Number(count) >= 0 ? Number(count) : 0,
         ]));
         setPublishedQuestionCounts(counts);
-        if (mapped.length === 0 && !Object.values(counts).some(count => count > 0)) {
+        if (mapped.length === 0) {
           // Do not fall back to local samples when the published bank is empty.
           setPublishedQuestions([]);
           setQuestionLoadError(true);
