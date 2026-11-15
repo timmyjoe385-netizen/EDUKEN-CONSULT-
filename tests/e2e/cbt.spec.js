@@ -230,11 +230,12 @@ test('180-question full mock uses a 120-minute fallback when the API omits durat
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
+    // The student feed is capped at 100 rows; the separate availability endpoint carries exact counts.
     body: JSON.stringify({ items: [
       ...Array.from({ length: 60 }, (_, index) => ({ id: 'full-mock-eng-' + index, subject: 'Use of English' })),
-      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-bio-' + index, subject: 'Biology' })),
-      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-chem-' + index, subject: 'Chemistry' })),
-      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-phy-' + index, subject: 'Physics' })),
+      ...Array.from({ length: 14 }, (_, index) => ({ id: 'full-mock-bio-' + index, subject: 'Biology' })),
+      ...Array.from({ length: 13 }, (_, index) => ({ id: 'full-mock-chem-' + index, subject: 'Chemistry' })),
+      ...Array.from({ length: 13 }, (_, index) => ({ id: 'full-mock-phy-' + index, subject: 'Physics' })),
     ].map(question => ({
       ...question,
       question_text: 'Choose the correct option.',
