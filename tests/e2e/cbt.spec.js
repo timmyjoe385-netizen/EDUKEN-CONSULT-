@@ -1,6 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ counts: {
+      'Use of English': 200, Mathematics: 200, Biology: 200, Chemistry: 200,
+      Physics: 200, Government: 200, Economics: 200, 'Literature in English': 200,
+    } }),
+  }));
+});
+
 test('CBT does not expose local samples when the published bank is empty', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ counts: Object.fromEntries(['Use of English','Mathematics','Biology','Chemistry','Physics','Government','Economics','Literature in English'].map(subject => [subject, 0])) }),
+  }));
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -30,6 +45,7 @@ test('CBT does not expose local samples when the published bank is empty', async
 });
 
 test('CBT does not fall back to unpublished samples when the published API is unavailable', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.abort());
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
@@ -153,6 +169,10 @@ test('mixed mock defaults to the same 10-question count shown in the selector', 
 });
 
 test('mixed mock is unavailable when any selected subject lacks the required published questions', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ counts: { 'Use of English': 1, Biology: 1, Chemistry: 1, Physics: 0 } }),
+  }));
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
