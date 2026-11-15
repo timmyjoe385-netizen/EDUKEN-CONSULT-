@@ -145,13 +145,21 @@ export default function CbtPage() {
           explanation: '',
         })).filter((question: Question) => question.subject && question.prompt && question.options.every(Boolean));
         const rawCounts = availabilityResult.data?.counts;
-        if (!rawCounts || typeof rawCounts !== 'object') {
+        const supportedSubjects = [
+          'Use of English', 'Mathematics', 'Biology', 'Chemistry',
+          'Physics', 'Government', 'Economics', 'Literature in English',
+        ];
+        if (!rawCounts || typeof rawCounts !== 'object' || Array.isArray(rawCounts)) {
           throw new Error('Published question availability could not be verified.');
         }
-        const counts = Object.fromEntries(Object.entries(rawCounts).map(([subject, count]) => [
-          subject,
-          Number.isInteger(Number(count)) && Number(count) >= 0 ? Number(count) : 0,
-        ]));
+        const counts: Record<string, number> = {};
+        for (const subject of supportedSubjects) {
+          const value = (rawCounts as Record<string, unknown>)[subject];
+          if (typeof value !== 'number' || !Number.isSafeInteger(value) || value < 0) {
+            throw new Error('Published question availability could not be verified.');
+          }
+          counts[subject] = value;
+        }
         setPublishedQuestionCounts(counts);
         if (mapped.length === 0) {
           // Do not fall back to local samples when the published bank is empty.
