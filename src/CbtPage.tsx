@@ -21,6 +21,7 @@ type Attempt = { date: string; mode: string; subject: string; score: number; tot
 
 export default function CbtPage() {
   const [publishedQuestions, setPublishedQuestions] = useState<Question[] | null>(null);
+  const [publishedQuestionCounts, setPublishedQuestionCounts] = useState<Record<string, number>>({});
   const [questionLoadError, setQuestionLoadError] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState('Use of English');
   const [mode, setMode] = useState<'practice' | 'mock'>('practice');
@@ -128,10 +129,13 @@ export default function CbtPage() {
 
   useEffect(() => {
     let active = true;
-    api.get('/api/cbt/questions')
-      .then((result) => {
+    Promise.all([
+      api.get('/api/cbt/questions'),
+      api.get('/api/cbt/availability'),
+    ])
+      .then(([questionResult, availabilityResult]) => {
         if (!active) return;
-        const rows = Array.isArray(result.data?.items) ? result.data.items : [];
+        const rows = Array.isArray(questionResult.data?.items) ? questionResult.data.items : [];
         const mapped: Question[] = rows.map((row: any, index: number) => ({
           id: String(row.id || index + 1),
           subject: String(row.subject || ''),
@@ -140,10 +144,17 @@ export default function CbtPage() {
           answer: -1,
           explanation: '',
         })).filter((question: Question) => question.subject && question.prompt && question.options.every(Boolean));
-        if (mapped.length === 0) {
-          // An empty published bank is not a usable server-backed student experience.
-          // Do not fall back to local sample questions; students can start only from
-          // the published, server-backed question bank.
+        const rawCounts = availabilityResult.data?.counts;
+        if (!rawCounts || typeof rawCounts !== 'object') {
+          throw new Error('Published question availability could not be verified.');
+        }
+        const counts = Object.fromEntries(Object.entries(rawCounts).map(([subject, count]) => [
+          subject,
+          Number.isInteger(Number(count)) && Number(count) >= 0 ? Number(count) : 0,
+        ]));
+        setPublishedQuestionCounts(counts);
+        if (mapped.length === 0 && !Object.values(counts).some(count => count > 0)) {
+          // Do not fall back to local samples when the published bank is empty.
           setPublishedQuestions([]);
           setQuestionLoadError(true);
           return;
@@ -152,8 +163,8 @@ export default function CbtPage() {
       })
       .catch(() => {
         if (!active) return;
-        // Do not expose local sample questions when the published API is unavailable.
         setPublishedQuestions([]);
+        setPublishedQuestionCounts({});
         setQuestionLoadError(true);
       });
     return () => { active = false; };
@@ -161,7 +172,7 @@ export default function CbtPage() {
 
   const questionPool = publishedQuestions ?? [];
   const availablePracticeCounts = [1, 2, 5, 10, 20, 40, 50].filter(
-    count => count <= questionPool.filter(question => question.subject === selectedSubject).length,
+    count => count <= (publishedQuestionCounts[selectedSubject] || 0),
   );
   useEffect(() => {
     if (questionLoadError || availablePracticeCounts.length === 0) return;
@@ -179,7 +190,7 @@ export default function CbtPage() {
     let remainder = otherTotal % 3;
     const requiredBySubject = [englishRequired, ...mockSubjects.map(() => eachOtherRequired + (remainder-- > 0 ? 1 : 0))];
     return ['Use of English', ...mockSubjects].every((name, index) =>
-      questionPool.filter(question => question.subject === name).length >= requiredBySubject[index]
+      (publishedQuestionCounts[name] || 0) >= requiredBySubject[index]
     );
   });
   const effectiveMockQuestionCount = mockQuestionCountOptions.includes(mockQuestionCount)
