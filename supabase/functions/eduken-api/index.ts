@@ -3370,6 +3370,23 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/cbt/availability" && req.method === "GET") {
+      const subjects = [
+        "Use of English", "Mathematics", "Biology", "Chemistry",
+        "Physics", "Government", "Economics", "Literature in English",
+      ];
+      const results = await Promise.all(subjects.map(async (subject) => {
+        const { count, error } = await db.from("cbt_questions")
+          .select("id", { count: "exact", head: true })
+          .eq("status", "published")
+          .eq("subject", subject);
+        if (error) throw error;
+        return [subject, Number(count || 0)] as const;
+      }));
+      return json({ counts: Object.fromEntries(results) });
+    }
+
+
     const adminContent = path.match(/^\/api\/admin\/content\/([^/]+)(?:\/([^/]+))?$/);
     if (adminContent) {
       await requireAdmin(req);
