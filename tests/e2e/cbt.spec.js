@@ -230,6 +230,10 @@ test('mixed mock is unavailable when any selected subject lacks the required pub
 });
 
 test('four-question starter mock is offered only with one published question per subject and uses four minutes', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ counts: Object.fromEntries(['Use of English', 'Mathematics', 'Biology', 'Chemistry', 'Physics', 'Government', 'Economics', 'Literature in English'].map(subject => [subject, 1])) }),
+  }));
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
