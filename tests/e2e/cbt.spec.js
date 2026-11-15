@@ -1,6 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ counts: {
+      'Use of English': 200, Mathematics: 200, Biology: 200, Chemistry: 200,
+      Physics: 200, Government: 200, Economics: 200, 'Literature in English': 200,
+    } }),
+  }));
+});
+
 test('CBT does not expose local samples when the published bank is empty', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ counts: Object.fromEntries(['Use of English','Mathematics','Biology','Chemistry','Physics','Government','Economics','Literature in English'].map(subject => [subject, 0])) }),
+  }));
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -30,6 +45,7 @@ test('CBT does not expose local samples when the published bank is empty', async
 });
 
 test('CBT does not fall back to unpublished samples when the published API is unavailable', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.abort());
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
@@ -37,6 +53,46 @@ test('CBT does not fall back to unpublished samples when the published API is un
   await expect(page.locator('.cbt-hero-actions .cbt-primary-button')).toBeDisabled();
   await expect(page.locator('.cbt-hero-actions .cbt-secondary-button')).toBeDisabled();
   await expect(page.locator('.cbt-question-card')).toHaveCount(0);
+});
+
+test('subject practice remains available when its questions fall beyond the capped 100-row feed', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: Array.from({ length: 100 }, (_, index) => ({
+      id: 'english-feed-' + index,
+      subject: 'Use of English',
+      question_text: 'English feed question ' + index,
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    })) }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    expect(payload.mode).toBe('practice');
+    expect(payload.subject).toBe('Biology');
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'c'.repeat(64),
+        durationSeconds: 600,
+        questions: [{
+          id: 'biology-after-feed-cap',
+          subject: 'Biology',
+          prompt: 'Which organelle is responsible for aerobic respiration?',
+          options: ['Ribosome', 'Mitochondrion', 'Golgi body', 'Lysosome'],
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.locator('#cbt-subject-select').selectOption('Biology');
+  await expect(page.locator('.cbt-hero-actions .cbt-primary-button')).toBeEnabled();
+  const practiceButton = page.getByRole('button', { name: /Practise selected subject/i });
+  await expect(practiceButton).toBeEnabled();
+  await practiceButton.click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
@@ -153,6 +209,10 @@ test('mixed mock defaults to the same 10-question count shown in the selector', 
 });
 
 test('mixed mock is unavailable when any selected subject lacks the required published questions', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ counts: { 'Use of English': 1, Biology: 1, Chemistry: 1, Physics: 0 } }),
+  }));
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -170,6 +230,10 @@ test('mixed mock is unavailable when any selected subject lacks the required pub
 });
 
 test('four-question starter mock is offered only with one published question per subject and uses four minutes', async ({ page }) => {
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ counts: Object.fromEntries(['Use of English', 'Mathematics', 'Biology', 'Chemistry', 'Physics', 'Government', 'Economics', 'Literature in English'].map(subject => [subject, 1])) }),
+  }));
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -210,11 +274,12 @@ test('180-question full mock uses a 120-minute fallback when the API omits durat
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
+    // The student feed is capped at 100 rows; the separate availability endpoint carries exact counts.
     body: JSON.stringify({ items: [
       ...Array.from({ length: 60 }, (_, index) => ({ id: 'full-mock-eng-' + index, subject: 'Use of English' })),
-      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-bio-' + index, subject: 'Biology' })),
-      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-chem-' + index, subject: 'Chemistry' })),
-      ...Array.from({ length: 40 }, (_, index) => ({ id: 'full-mock-phy-' + index, subject: 'Physics' })),
+      ...Array.from({ length: 14 }, (_, index) => ({ id: 'full-mock-bio-' + index, subject: 'Biology' })),
+      ...Array.from({ length: 13 }, (_, index) => ({ id: 'full-mock-chem-' + index, subject: 'Chemistry' })),
+      ...Array.from({ length: 13 }, (_, index) => ({ id: 'full-mock-phy-' + index, subject: 'Physics' })),
     ].map(question => ({
       ...question,
       question_text: 'Choose the correct option.',
@@ -318,4 +383,46 @@ test('timed-out CBT automatically retries a temporary submission failure', async
 
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   expect(submissionCount).toBe(2);
+});
+
+test('CBT fails closed for malformed published availability responses', async ({ page }) => {
+  const validCounts = Object.fromEntries([
+    'Use of English', 'Mathematics', 'Biology', 'Chemistry',
+    'Physics', 'Government', 'Economics', 'Literature in English',
+  ].map(subject => [subject, 20]));
+  const malformedPayloads = [
+    { counts: { ...validCounts, Biology: undefined } },
+    { counts: { ...validCounts, Biology: '20' } },
+    { counts: { ...validCounts, Biology: -1 } },
+    { counts: { ...validCounts, Biology: Number.MAX_SAFE_INTEGER + 1 } },
+    { counts: null },
+    [],
+  ];
+  let currentPayload = malformedPayloads[0];
+
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify(currentPayload),
+  }));
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'malformed-availability-question',
+      subject: 'Use of English',
+      question_text: 'Choose the correct option.',
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    }] }),
+  }));
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  for (const payload of malformedPayloads) {
+    currentPayload = payload;
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page.getByText(/Student attempts are disabled until reviewed questions are published/i)).toBeVisible();
+    await expect(page.locator('.cbt-hero-actions .cbt-primary-button')).toBeDisabled();
+    await expect(page.locator('.cbt-hero-actions .cbt-secondary-button')).toBeDisabled();
+    await expect(page.locator('.cbt-question-card')).toHaveCount(0);
+  }
 });
