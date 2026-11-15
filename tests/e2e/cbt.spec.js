@@ -384,3 +384,45 @@ test('timed-out CBT automatically retries a temporary submission failure', async
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   expect(submissionCount).toBe(2);
 });
+
+test('CBT fails closed for malformed published availability responses', async ({ page }) => {
+  const validCounts = Object.fromEntries([
+    'Use of English', 'Mathematics', 'Biology', 'Chemistry',
+    'Physics', 'Government', 'Economics', 'Literature in English',
+  ].map(subject => [subject, 20]));
+  const malformedPayloads = [
+    { counts: { ...validCounts, Biology: undefined } },
+    { counts: { ...validCounts, Biology: '20' } },
+    { counts: { ...validCounts, Biology: -1 } },
+    { counts: { ...validCounts, Biology: Number.MAX_SAFE_INTEGER + 1 } },
+    { counts: null },
+    [],
+  ];
+  let currentPayload = malformedPayloads[0];
+
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify(currentPayload),
+  }));
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'malformed-availability-question',
+      subject: 'Use of English',
+      question_text: 'Choose the correct option.',
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    }] }),
+  }));
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  for (const payload of malformedPayloads) {
+    currentPayload = payload;
+    await page.reload({ waitUntil: 'domcontentloaded' });
+    await expect(page.getByText(/Student attempts are disabled until reviewed questions are published/i)).toBeVisible();
+    await expect(page.locator('.cbt-hero-actions .cbt-primary-button')).toBeDisabled();
+    await expect(page.locator('.cbt-hero-actions .cbt-secondary-button')).toBeDisabled();
+    await expect(page.locator('.cbt-question-card')).toHaveCount(0);
+  }
+});
