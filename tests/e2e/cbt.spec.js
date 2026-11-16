@@ -426,3 +426,54 @@ test('CBT fails closed for malformed published availability responses', async ({
     await expect(page.locator('.cbt-question-card')).toHaveCount(0);
   }
 });
+
+test('practice offers the exact published subject count beyond standard sizes', async ({ page }) => {
+  const subjects = [
+    'Use of English', 'Mathematics', 'Biology', 'Chemistry',
+    'Physics', 'Government', 'Economics', 'Literature in English',
+  ];
+  await page.route('**/api/cbt/availability*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ counts: Object.fromEntries(subjects.map(subject => [subject, subject === 'Biology' ? 3 : 0])) }),
+  }));
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'english-feed-seed',
+      subject: 'Use of English',
+      question_text: 'Choose the correct option.',
+      options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+    }] }),
+  }));
+  let requestedCount = null;
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    requestedCount = payload.questionCount;
+    expect(payload.mode).toBe('practice');
+    expect(payload.subject).toBe('Biology');
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'f'.repeat(64),
+        durationSeconds: 180,
+        questions: [{
+          id: 'biology-exact-count',
+          subject: 'Biology',
+          prompt: 'Which organelle is responsible for aerobic respiration?',
+          options: ['Ribosome', 'Mitochondrion', 'Golgi body', 'Lysosome'],
+        }],
+      }),
+    });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.locator('#cbt-subject-select').selectOption('Biology');
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('3');
+  await expect(page.locator('#cbt-practice-count option')).toHaveText(['1 question', '2 questions', '3 questions']);
+  await page.getByRole('button', { name: /Practise selected subject/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(requestedCount).toBe(3);
+});
