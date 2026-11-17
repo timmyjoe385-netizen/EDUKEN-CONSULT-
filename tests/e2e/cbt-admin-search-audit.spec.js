@@ -68,9 +68,15 @@ test('CBT admin pagination changes server page and search resets to page one wit
         page: Number(params.get('page') || 1),
         pageSize: Number(params.get('pageSize') || 50),
         status: params.get('status') || 'all',
+        subject: params.get('subject') || 'all',
       };
       questionRequests.push(requestRecord);
 
+      if (requestRecord.subject === 'Biology') {
+        return route.fulfill({
+          json: { items: [auditQuestion], total: 1, page: requestRecord.page, pageSize: requestRecord.pageSize },
+        });
+      }
       if (requestRecord.status === 'reviewed') {
         return route.fulfill({
           json: { items: [auditQuestion], total: 1, page: requestRecord.page, pageSize: requestRecord.pageSize },
@@ -106,6 +112,14 @@ test('CBT admin pagination changes server page and search resets to page one wit
   await expect.poll(() => questionRequests.at(-1)).toMatchObject({ status: 'reviewed', page: 1 });
 
   await page.getByLabel('Review state').selectOption('all');
+  await expect(page.getByText(/Page 1 of 3/)).toBeVisible();
+
+  await page.getByLabel('Subject').selectOption('Biology');
+  await expect(page.getByText(/Page 1 of 1/)).toBeVisible();
+  await expect.poll(() => questionRequests.at(-1)).toMatchObject({ subject: 'Biology', page: 1 });
+  await expect(page.getByText('Which organelle controls cell activities?')).toBeVisible();
+
+  await page.getByLabel('Subject').selectOption('all');
   await expect(page.getByText(/Page 1 of 3/)).toBeVisible();
   await page.getByRole('button', { name: 'Next' }).click();
   await expect(page.getByText(/Page 2 of 3/)).toBeVisible();
