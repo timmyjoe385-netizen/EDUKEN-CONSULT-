@@ -1899,7 +1899,7 @@ test('public navigation hides Admin Login while direct /admin keeps the OAuth re
   await page.getByRole('button', { name: /Continue with Google/i }).click();
   const authUrl = new URL((await authNavigation).url());
   expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/?eduken_admin=1');
 });
 
 test('appearance preference persists and System mode follows operating-system changes', async ({ page }) => {
