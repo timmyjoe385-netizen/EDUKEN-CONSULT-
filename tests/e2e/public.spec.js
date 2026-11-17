@@ -1053,7 +1053,7 @@ test('OAuth intent is admin-only and shared customer sign-in clears the admin ma
   const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
   const platformHub = readFileSync(new URL('../../src/PlatformHub.tsx', import.meta.url), 'utf8');
 
-  expect(api).toContain("options?: { intent?: 'admin' | 'customer' }");
+  expect(api).toContain("options?: { intent?: 'admin' | 'customer'; scope?: string }");
   expect(api).toContain("if (options?.intent === 'admin')");
   expect(api).toContain("sessionStorage.removeItem('eduken_admin_oauth')");
   expect(app).toContain("auth.signIn({ intent: 'admin' })");
