@@ -33,3 +33,30 @@ test("CBT question bank admin exposes the stored review audit and paginates the 
     assert.ok(api.includes(marker), `Admin question API should include ${marker}.`);
   }
 });
+
+
+test("subject filter is sent to the paginated admin API and applied server-side", () => {
+  const source = readFileSync("src/CbtQuestionBankAdmin.tsx", "utf8");
+  const api = readFileSync("supabase/functions/eduken-api/index.ts", "utf8");
+  assert.ok(source.includes("const [subject,setSubject] = useState('all')"));
+  assert.ok(source.includes("params.set('subject', subject)"));
+  assert.ok(source.includes("[filter,subject,search,page]"));
+  assert.ok(source.includes("All subjects"));
+  for (const subject of ["Use of English", "Mathematics", "Biology", "Chemistry", "Physics", "Economics", "Government", "Literature in English"]) {
+    assert.ok(source.includes(subject), `Subject dropdown should include ${subject}.`);
+  }
+  assert.ok(api.includes('const subject = (params.get("subject") || "").trim()'));
+  assert.ok(api.includes('if (subject) query = query.eq("subject", subject)'));
+  assert.ok(api.includes("query.range(start, start + pageSize - 1)"));
+});
+
+test("review workflow remains an explicit draft-to-reviewed-to-approved-to-published sequence", () => {
+  const source = readFileSync("src/CbtQuestionBankAdmin.tsx", "utf8");
+  assert.ok(source.includes("q.status==='draft'?<button"));
+  assert.ok(source.includes("transition(q,'reviewed')"));
+  assert.ok(source.includes("q.status==='reviewed'?<button"));
+  assert.ok(source.includes("transition(q,'approved')"));
+  assert.ok(source.includes("q.status==='approved'?<button"));
+  assert.ok(source.includes("transition(q,'published')"));
+  assert.ok(source.includes("All imported questions remain drafts"));
+});
