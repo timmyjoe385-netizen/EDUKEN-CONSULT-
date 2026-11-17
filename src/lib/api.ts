@@ -212,7 +212,7 @@ export const auth = {
     writeSession(session);
     return { user: result.user, session };
   },
-  signIn: async (options?: { intent?: 'admin' | 'customer' }) => {
+  signIn: async (options?: { intent?: 'admin' | 'customer'; scope?: string }) => {
     assertBackendConfigured();
     // Only the private admin entry point may set the admin OAuth marker.
     // Customer sign-in shares this method and must return to the public experience.
