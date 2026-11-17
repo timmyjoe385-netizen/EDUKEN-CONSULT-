@@ -10,6 +10,8 @@ on:
 permissions:
   contents: read
 
+# CBT admin OAuth preview trigger enabled on the target branch.
+
 jobs:
   build:
     runs-on: ubuntu-latest
