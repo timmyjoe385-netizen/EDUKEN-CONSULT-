@@ -212,11 +212,12 @@ export const auth = {
     writeSession(session);
     return { user: result.user, session };
   },
-  signIn: async (_options?: any) => {
+  signIn: async (options?: { intent?: 'admin' | 'customer'; scope?: string }) => {
     assertBackendConfigured();
-    // Return to the exact preview origin root (commonly allow-listed by Supabase).
-    // Keep the private admin intent in this tab across the Google OAuth round-trip.
-    sessionStorage.setItem('eduken_admin_oauth', '1');
+    // Only the private admin entry point may set this tab-scoped routing marker.
+    // Customer OAuth must return to the public site, even for an admin-allowlisted email.
+    if (options?.intent === 'admin') sessionStorage.setItem('eduken_admin_oauth', '1');
+    else sessionStorage.removeItem('eduken_admin_oauth');
     const redirectTo = window.location.origin + '/';
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
