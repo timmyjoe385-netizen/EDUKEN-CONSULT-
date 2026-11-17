@@ -242,7 +242,7 @@ export const auth = {
       if (!accessToken) {
         const oauthError = hash.get('error_description') || hash.get('error');
         if (oauthError) {
-          const readableError = oauthError.replace(/\\+/g, ' ').replace(/_/g, ' ');
+          const readableError = oauthError.replace(/\+/g, ' ').replace(/_/g, ' ');
           throw new Error('Google sign-in could not finish: ' + readableError + '. Check the Supabase Auth redirect URL allowlist if this is a preview deployment.');
         }
         return null;
