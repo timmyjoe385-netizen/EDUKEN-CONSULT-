@@ -28,13 +28,19 @@ try {
       response.url().includes("/functions/v1/eduken-api/api/cbt/questions"),
     { timeout: 25_000 },
   );
+  const availabilityResponsePromise = page.waitForResponse(
+    response => response.request().method() === "GET" &&
+      response.url().includes("/functions/v1/eduken-api/api/cbt/availability"),
+    { timeout: 25_000 },
+  );
 
   const smokeUrl = new URL(url);
   smokeUrl.searchParams.set("__cbt_smoke", String(Date.now()));
   const navigationResponse = await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
   let questionsResponse;
+  let availabilityResponse;
   try {
-    questionsResponse = await questionsResponsePromise;
+    [questionsResponse, availabilityResponse] = await Promise.all([questionsResponsePromise, availabilityResponsePromise]);
   } catch (error) {
     const bodyText = await page.locator("body").innerText().catch(() => "");
     console.error("CBT preview browser diagnostics:", JSON.stringify({
@@ -47,6 +53,11 @@ try {
     throw error;
   }
   assert.equal(questionsResponse.status(), 200, "The deployed preview must load published CBT questions from the isolated API.");
+  assert.equal(availabilityResponse.status(), 200, "The deployed preview must load published subject availability from the isolated API.");
+  const availabilityPayload = await availabilityResponse.json();
+  for (const subject of ["Use of English", "Biology", "Chemistry", "Physics"]) {
+    assert.equal(availabilityPayload.counts?.[subject], 1, `The isolated preview fixture must expose exactly one published ${subject} question.`);
+  }
   const payload = await questionsResponse.json();
   assert.ok(Array.isArray(payload.items) && payload.items.length > 0, "Published questions must be available in the preview.");
 
@@ -67,6 +78,11 @@ try {
   // The isolated preview has one published sample per subject. The four-question
   // starter is therefore available, while larger mock sizes must remain unavailable.
   const mockCountSelect = page.locator("#cbt-mock-count");
+  await page.waitForFunction(() => {
+    const select = document.querySelector("#cbt-mock-count");
+    return select instanceof HTMLSelectElement && !select.disabled &&
+      Array.from(select.options).some(option => option.textContent?.trim() === "4-question starter mock");
+  }, { timeout: 10_000 });
   assert.deepEqual(await mockCountSelect.locator("option").allTextContents(), ["4-question starter mock"],
     "Only the four-question starter should be offered for one published question per selected subject.");
   assert.equal(await mockCountSelect.inputValue(), "4");
