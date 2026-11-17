@@ -415,11 +415,12 @@ function App() {
   useEffect(() => {
     let active = true;
     // Admin entry stays off the public homepage and navigation.
-    // Owners can always open /admin directly, including after signing out.
-    if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
+    // The query marker survives OAuth provider hand-offs when tab storage does not.
+    const params = new URLSearchParams(window.location.search);
+    const adminOAuthIntent = params.get('eduken_admin') === '1';
+    if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || adminOAuthIntent || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
       setLoginOpen(true);
     }
-    const params = new URLSearchParams(window.location.search);
     const verificationToken = params.get('email_alert_verify');
     const unsubscribeToken = params.get('email_alert_unsubscribe');
     if (verificationToken || unsubscribeToken) {
@@ -437,7 +438,7 @@ function App() {
       // OAuth can also be used by customers from the public wallet. Completing that
       // callback establishes their customer session, but must never switch the public
       // homepage into the admin dashboard merely because their email is admin-allowlisted.
-      if (!(window.location.pathname.replace(/\/+$/, '') === '/admin' || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
+      if (!(window.location.pathname.replace(/\/+$/, '') === '/admin' || adminOAuthIntent || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
         setUser(null);
         setAdminView(false);
         return;
