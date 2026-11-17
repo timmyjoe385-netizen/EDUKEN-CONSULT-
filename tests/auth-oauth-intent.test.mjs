@@ -8,6 +8,10 @@ test("Google OAuth routing intent is explicit and customer sign-in stays public"
   const hub = readFileSync("src/PlatformHub.tsx", "utf8");
 
   assert.ok(
+    api.includes(String.raw`oauthError.replace(/\+/g, ' ')`),
+    "OAuth provider error messages should decode plus separators into spaces."
+  );
+  assert.ok(
     api.includes("if (options?.intent === 'admin') sessionStorage.setItem('eduken_admin_oauth', '1')"),
     "Only an explicitly requested admin OAuth flow may set the admin routing marker."
   );
