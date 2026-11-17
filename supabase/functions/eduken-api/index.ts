@@ -3031,11 +3031,13 @@ Deno.serve(async (req) => {
       if (req.method === "GET") {
         const params = new URL(req.url).searchParams;
         const status = params.get("status");
+        const subject = (params.get("subject") || "").trim();
         const q = (params.get("q") || "").trim().replace(/[,%()]/g, " ");
         const page = Math.max(1, Math.floor(Number(params.get("page")) || 1));
         const pageSize = Math.min(100, Math.max(1, Math.floor(Number(params.get("pageSize")) || 50)));
         let query = db.from("cbt_questions").select("*", { count: "exact" }).order("updated_at", { ascending: false });
         if (status && ["draft","reviewed","approved","published","unpublished"].includes(status)) query = query.eq("status", status);
+        if (subject) query = query.eq("subject", subject);
         if (q) query = query.or("question_text.ilike.%"+q+"%,subject.ilike.%"+q+"%,topic.ilike.%"+q+"%");
         const start = (page - 1) * pageSize;
         const { data, error, count } = await query.range(start, start + pageSize - 1);
