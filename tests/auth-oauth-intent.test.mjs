@@ -16,6 +16,14 @@ test("Google OAuth routing intent is explicit and customer sign-in stays public"
     "Only an explicitly requested admin OAuth flow may set the admin routing marker."
   );
   assert.ok(
+    api.includes("options?.intent === 'admin' ? '/?eduken_admin=1' : '/'"),
+    "Only admin OAuth should carry the admin routing marker through the provider redirect."
+  );
+  assert.ok(
+    app.includes("params.get('eduken_admin') === '1'"),
+    "The OAuth callback must recognize the explicit admin return marker."
+  );
+  assert.ok(
     api.includes("else sessionStorage.removeItem('eduken_admin_oauth')"),
     "Customer/default OAuth must clear any stale admin routing marker."
   );
