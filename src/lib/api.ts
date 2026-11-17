@@ -221,7 +221,9 @@ export const auth = {
     } else {
       sessionStorage.removeItem('eduken_admin_oauth');
     }
-    const redirectTo = window.location.origin + '/';
+    // Carry admin intent in the OAuth return URL as well as sessionStorage.
+    // The URL survives browser/provider hand-offs where tab storage may not.
+    const redirectTo = window.location.origin + (options?.intent === 'admin' ? '/?eduken_admin=1' : '/');
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
     url.searchParams.set('redirect_to', redirectTo);
