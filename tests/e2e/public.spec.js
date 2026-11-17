@@ -1048,6 +1048,19 @@ test('public header exposes customer wallet access but not admin access', async 
 
 
 
+test('OAuth intent is admin-only and shared customer sign-in clears the admin marker', () => {
+  const api = readFileSync(new URL('../../src/lib/api.ts', import.meta.url), 'utf8');
+  const app = readFileSync(new URL('../../src/App.tsx', import.meta.url), 'utf8');
+  const platformHub = readFileSync(new URL('../../src/PlatformHub.tsx', import.meta.url), 'utf8');
+
+  expect(api).toContain("options?: { intent?: 'admin' | 'customer' }");
+  expect(api).toContain("if (options?.intent === 'admin')");
+  expect(api).toContain("sessionStorage.removeItem('eduken_admin_oauth')");
+  expect(app).toContain("auth.signIn({ intent: 'admin' })");
+  expect(platformHub).toContain("auth.signIn({ scope: 'openid email profile offline_access' })");
+  expect(platformHub).not.toContain("auth.signIn({ intent: 'admin'");
+});
+
 test('customer Google sign-in on the public homepage never opens the admin dashboard', async ({ page }) => {
   await page.route('**/auth/v1/user', route => route.fulfill({
     status: 200,
