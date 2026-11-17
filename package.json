@@ -34,5 +34,8 @@
     "esbuild@0.25.12": false,
     "esbuild@0.28.2": false,
     "workerd@1.20261012.1": false
+  },
+  "overrides": {
+    "csstype": "3.2.3"
   }
 }
