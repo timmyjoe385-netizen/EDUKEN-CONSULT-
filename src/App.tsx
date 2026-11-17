@@ -787,7 +787,7 @@ function App() {
 
   const signIn = async () => {
     try {
-      await auth.signIn();
+      await auth.signIn({ intent: 'admin' });
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Unable to start Google sign-in. Please try again.');
     }
