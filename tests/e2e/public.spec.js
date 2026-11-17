@@ -1042,7 +1042,7 @@ test('public header exposes customer wallet access but not admin access', async 
   await page.getByRole('button', { name: /Continue with Google/i }).click();
   const authUrl = new URL((await authNavigation).url());
   expect(authUrl.searchParams.get('provider')).toBe('google');
-  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/');
+  expect(authUrl.searchParams.get('redirect_to')).toBe(siteOrigin + '/?eduken_admin=1');
   await expect.poll(() => page.evaluate(() => window.name)).toBe('eduken_admin_oauth=1');
 });
 
@@ -1057,6 +1057,8 @@ test('OAuth intent is admin-only and shared customer sign-in clears the admin ma
   expect(api).toContain("if (options?.intent === 'admin')");
   expect(api).toContain("sessionStorage.removeItem('eduken_admin_oauth')");
   expect(app).toContain("auth.signIn({ intent: 'admin' })");
+  expect(app).toContain("params.get('eduken_admin') === '1'");
+  expect(api).toContain("'/?eduken_admin=1' : '/'");
   expect(platformHub).toContain("auth.signIn({ scope: 'openid email profile offline_access' })");
   expect(platformHub).not.toContain("auth.signIn({ intent: 'admin'");
 });
