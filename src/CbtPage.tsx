@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowLeft, ArrowRight, BookOpen, Calculator, CheckCircle2, Clock3, Flag, GraduationCap, RotateCcw, ShieldCheck, Target, X } from 'lucide-react';
 import './cbt.css';
 import { DEFAULT_CBT_MOCK_QUESTION_COUNT, getCbtMockFallbackDurationSeconds } from './lib/cbt-mock-config.mjs';
-import { api } from './lib/api';
+import { api, auth, usesIsolatedTestBackend } from './lib/api';
 
 type Question = { id: string | number; subject: string; prompt: string; options: string[]; answer: number; explanation: string };
 
@@ -129,10 +129,19 @@ export default function CbtPage() {
 
   useEffect(() => {
     let active = true;
-    Promise.all([
-      api.get('/api/cbt/questions'),
-      api.get('/api/cbt/availability'),
-    ])
+    const signedInEmail = String(auth.getUser()?.email || '').toLowerCase();
+    const adminDraftPreview = usesIsolatedTestBackend &&
+      ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'].includes(signedInEmail);
+    const loadQuestionData = adminDraftPreview
+      ? Promise.all([
+          Promise.resolve({ data: { items: [] } }),
+          api.get('/api/admin/cbt/preview/availability'),
+        ])
+      : Promise.all([
+          api.get('/api/cbt/questions'),
+          api.get('/api/cbt/availability'),
+        ]);
+    loadQuestionData
       .then(([questionResult, availabilityResult]) => {
         if (!active) return;
         const rows = Array.isArray(questionResult.data?.items) ? questionResult.data.items : [];
@@ -161,7 +170,7 @@ export default function CbtPage() {
           counts[subject] = value;
         }
         setPublishedQuestionCounts(counts);
-        if (mapped.length === 0) {
+        if (mapped.length === 0 && !adminDraftPreview) {
           // Do not fall back to local samples when the published bank is empty.
           setPublishedQuestions([]);
           setQuestionLoadError(true);
@@ -317,7 +326,7 @@ export default function CbtPage() {
       return;
     } else {
       try {
-        const response = await api.post('/api/cbt/start', { mode: nextMode, subject, questionCount: requestedCount, subjectCombination: nextMode === 'mock' ? mockSubjects : undefined });
+        const response = await api.post('/api/cbt/start', { mode: nextMode, subject, questionCount: requestedCount, subjectCombination: nextMode === 'mock' ? mockSubjects : undefined, previewDrafts: usesIsolatedTestBackend && ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'].includes(String(auth.getUser()?.email || '').toLowerCase()) });
         const data = response.data || {};
         if (!Array.isArray(data.questions) || !data.questions.length || typeof data.attemptToken !== 'string') {
           throw new Error('No published questions are available for this selection yet.');
@@ -496,6 +505,7 @@ export default function CbtPage() {
     <div className="cbt-page">
       <header className="cbt-topbar"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a><nav className="cbt-top-links"><a href="#subjects">Subjects</a><a href="#how-it-works">How it works</a><a href="/">Main website</a></nav><a className="cbt-mobile-home" href="/">Home</a></header>
       <main>
+        {usesIsolatedTestBackend && ['timmyjoe385@gmail.com', 'edukenconsult00@gmail.com'].includes(String(auth.getUser()?.email || '').toLowerCase()) && <div role="status" className="cbt-disclaimer" style={{ margin: '18px auto', maxWidth: 1100, padding: '12px 16px' }}>ADMIN PREVIEW ONLY — draft questions from the isolated test bank. These questions are not published or academically approved for students.</div>}
         <section className="cbt-hero">
           <div className="cbt-hero-copy"><span className="cbt-eyebrow"><span /> JAMB PREPARATION STARTS HERE</span><h1>Prepare with purpose.<br /><em>Practise with confidence.</em></h1><p>Build your confidence with focused subject practice, timed mock tests and clear explanations — designed for Nigerian students preparing for entrance examinations.</p><div className="cbt-hero-actions"><button className="cbt-primary-button" disabled={starting || publishedQuestions === null || questionLoadError || (publishedQuestionCounts[selectedSubject] || 0) < 1} onClick={() => void begin('practice', selectedSubject, effectivePracticeQuestionCount)}><BookOpen size={17} /> {starting ? 'Starting…' : publishedQuestions === null ? 'Checking questions…' : questionLoadError ? 'Practice unavailable' : (publishedQuestionCounts[selectedSubject] || 0) < 1 ? 'Coming soon' : 'Start free practice'}</button><button className="cbt-secondary-button" disabled={starting || !effectiveMockQuestionCount} onClick={() => void begin('mock', 'Use of English', effectiveMockQuestionCount)}><Clock3 size={17} /> {starting ? 'Starting…' : 'Try a timed mock'}</button></div>{startError && <p className="cbt-disclaimer" role="alert">{startError}</p>}<div className="cbt-starter-card" role="status"><span className="cbt-starter-icon"><BookOpen size={19} /></span><div><strong>Free starter practice</strong><p>{questionLoadError ? "Temporarily unavailable. Practice opens when the reviewed question service is restored." : publishedQuestions === null ? "Checking the published question bank…" : questionPool.length > 0 ? "Free subject practice is available. Choose a subject below to begin." : "Coming soon. Free practice opens as soon as reviewed questions are published."}</p></div><span className={`cbt-starter-state${questionPool.length > 0 && !questionLoadError ? " is-ready" : ""}`}>{questionLoadError ? "Unavailable" : publishedQuestions === null ? "Checking" : questionPool.length > 0 ? "Available" : "Coming soon"}</span></div><div className="cbt-trust-row"><span><ShieldCheck size={16} /> Reviewed questions only</span><span><CheckCircle2 size={16} /> Instant results</span></div></div>
           <div className="cbt-hero-visual"><div className="cbt-visual-orbit" /><div className="cbt-preview-panel"><div className="cbt-preview-top"><span>EDUKEN CBT</span><span className="cbt-live-pill">PRACTICE</span></div><div className="cbt-preview-title">Your next step<br /><b>starts here.</b></div><div className="cbt-preview-metrics"><div><BookOpen size={18} /><b>Subject practice</b><small>Learn topic by topic</small></div><div><Target size={18} /><b>Timed mock tests</b><small>Build exam confidence</small></div></div><div className="cbt-preview-footer"><span><CheckCircle2 size={15} /> Answer explanations</span><span>Built for mobile</span></div></div><div className="cbt-floating-note"><GraduationCap size={19} /><span><b>Stay consistent</b><small>One practice at a time</small></span></div></div>
