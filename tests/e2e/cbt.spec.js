@@ -510,12 +510,14 @@ test('CBT remains safely disabled while published-bank checks are slow, then ena
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByText('Checking the published question bank…')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Practise selected subject/i })).toBeDisabled();
+  const heroPracticeButton = page.locator('.cbt-hero-actions button.cbt-primary-button');
+  const selectedSubjectPracticeButton = page.locator('#subjects .cbt-subject-picker button.cbt-primary-button');
+  await expect(heroPracticeButton).toBeDisabled();
+  await expect(selectedSubjectPracticeButton).toBeDisabled();
 
   await expect(page.getByText('Free subject practice is available. Choose a subject below to begin.')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
-  await expect(page.getByRole('button', { name: /Practise selected subject/i })).toBeEnabled();
+  await expect(heroPracticeButton).toBeEnabled();
+  await expect(selectedSubjectPracticeButton).toBeEnabled();
 
   const dimensions = await page.evaluate(() => ({
     viewport: window.innerWidth,
