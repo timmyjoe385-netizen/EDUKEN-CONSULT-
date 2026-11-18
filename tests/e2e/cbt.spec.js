@@ -477,3 +477,53 @@ test('practice offers the exact published subject count beyond standard sizes', 
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   expect(requestedCount).toBe(3);
 });
+
+
+test('CBT remains safely disabled while published-bank checks are slow, then enables only after verified availability', async ({ page }) => {
+  const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+  await page.route('**/api/cbt/questions*', async route => {
+    await delay(1200);
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ items: [{
+        id: 'slow-network-question-1',
+        subject: 'Use of English',
+        question_text: 'Choose the correct option.',
+        options: { A: 'One', B: 'Two', C: 'Three', D: 'Four' },
+      }] }),
+    });
+  });
+  await page.route('**/api/cbt/availability*', async route => {
+    await delay(1200);
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ counts: {
+        'Use of English': 1, Mathematics: 0, Biology: 0, Chemistry: 0,
+        Physics: 0, Government: 0, Economics: 0, 'Literature in English': 0,
+      } }),
+    });
+  });
+
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.getByText('Checking the published question bank…')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Practise selected subject/i })).toBeDisabled();
+
+  await expect(page.getByText('Free subject practice is available. Choose a subject below to begin.')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await expect(page.getByRole('button', { name: /Practise selected subject/i })).toBeEnabled();
+
+  const dimensions = await page.evaluate(() => ({
+    viewport: window.innerWidth,
+    document: document.documentElement.scrollWidth,
+    body: document.body.scrollWidth,
+  }));
+  expect(
+    Math.max(dimensions.document, dimensions.body),
+    `Slow-network CBT page should not overflow horizontally: ${JSON.stringify(dimensions)}`
+  ).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
