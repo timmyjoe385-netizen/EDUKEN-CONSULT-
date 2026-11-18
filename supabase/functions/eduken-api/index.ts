@@ -3099,11 +3099,6 @@ Deno.serve(async (req) => {
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
-      const previewDrafts = body.previewDrafts === true;
-      if (previewDrafts) {
-        await requireAdmin(req);
-        if (!IS_ISOLATED_CBT_PREVIEW) return json({ error: "Draft-question testing is restricted to the isolated preview environment." }, 404);
-      }
       if (!Array.isArray(body.rows) || body.rows.length === 0) return json({ error: "Provide at least one question row." }, 400);
       if (body.rows.length > 500) return json({ error: "Import is limited to 500 rows per batch." }, 413);
       const prepared = parseQuestionImportRows(body.rows as Record<string, unknown>[]);
@@ -3188,6 +3183,11 @@ Deno.serve(async (req) => {
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
+      const previewDrafts = body.previewDrafts === true;
+      if (previewDrafts) {
+        await requireAdmin(req);
+        if (!IS_ISOLATED_CBT_PREVIEW) return json({ error: "Draft-question testing is restricted to the isolated preview environment." }, 404);
+      }
       const mode = String(body.mode || "practice");
       const subject = String(body.subject || "").trim().slice(0, 120);
       if (!["practice", "mock"].includes(mode)) return json({ error: "Practice mode is invalid." }, 400);
