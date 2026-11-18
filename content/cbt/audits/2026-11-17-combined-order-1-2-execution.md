@@ -83,3 +83,23 @@ No database rows or statuses were changed during this follow-up. The PR #194 hea
 | **Total** | **1,439** | **161** |
 
 The 161 shortfall is the count of held source rows, not a statement that every held row should be replaced with a new question. Any additional question intended to reach 200 unique items per subject must provide defensible syllabus coverage and pass the duplicate/collision screen and qualified academic review.
+
+
+## Approved isolated import — 18 November 2026
+
+The project owner explicitly approved importing the 19 R4 uncovered-queue replacement proposals into the isolated test Supabase project as drafts only.
+
+- Isolated project: `wpktzogarfqrgkirzdpy` (production project `pphxltbkwygqjtjgkhxu` was not accessed for this import).
+- Import batch: `9a6cc349-115c-40d7-8407-79a437e9332d`.
+- Batch filename: `r4-uncovered-reviewed-proposals-19-draft-import.csv`.
+- Rows submitted / inserted: **19 / 19**.
+- Duplicates / invalid rows: **0 / 0**.
+- Subject distribution: Biology 8; Government 4; Economics 3; Physics 2; Chemistry 1; Literature in English 1.
+- All 19 records have unique fingerprints, four distinct A–D options, valid answer keys and nonblank explanations.
+- All 19 records are `draft`; reviewed, approved and published actor/timestamp fields remain unset. No question was published or moved into review/approval.
+- Import batch status is `completed`, with 19 linked draft rows and recorded importing/admin actor attribution.
+- Isolated database totals after import: 1,531 questions — 1,523 drafts and 8 pre-existing published preview fixtures.
+
+The approval provenance is recorded as **owner-reported subject-review acceptance** of the 19-item queue. It is not described as a signed or independently documentary-verified worksheet because the repository still lacks reviewer identity, qualifications and item-level signed decisions. The separate 26-proposal worksheet remains outside this import and is not approved by this action.
+
+This import did not modify production, publish questions, merge PR #194, or deploy production code.
