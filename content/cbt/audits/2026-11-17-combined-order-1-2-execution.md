@@ -51,3 +51,18 @@ PR #194 remains **open and draft**. GitHub reports it mergeable, but its current
 5. Keep production deployment and production import/publication blocked until the owner explicitly authorizes release after all review gates.
 
 This checkpoint records completed checks and outstanding gates; it does not authorize a release.
+
+
+## Follow-up reconciliation — 18 November 2026
+
+A second read-only inspection of the isolated Supabase project reconciled the import history that was not itemized in the 17 November checkpoint above:
+
+- Three import batches named `r4-retained-draft-batch-1-of-3.csv`, `-2-of-3.csv`, and `-3-of-3.csv` contain 500, 500 and 439 rows respectively: **1,439 retained-bank questions imported as drafts**.
+- All 1,439 linked question rows remain `draft`; none was published by these batches. The three import records have zero duplicate and invalid rows.
+- These batches are the retained R4 source-bank import, not the 19 target-specific replacement proposals. The 19 proposals remain separately documented as reviewer-checked and owner-approved according to the project owner's report; they are not evidenced as imported in these batches.
+- The three import records have null `imported_by`; their 1,439 linked rows have null `created_by` and `updated_by`. The admin audit UI should therefore show “Not recorded” for those actors rather than inventing an identity. This is an import-provenance limitation, not evidence of a named reviewer or approver.
+- The database still contains 1,512 rows: 1,504 drafts and 8 published preview fixtures. The eight published fixtures remain labelled “EDUKEN original preview sample” and have no recorded approval/publisher IDs or timestamps. They are not part of the 1,439 retained-draft batches.
+- Across all 1,512 rows, fingerprints are unique; the read-only structural checks found zero blank stems, malformed A–D option sets, invalid answer keys or blank explanations.
+- Subject totals remain uneven and do not establish the final 200-per-subject target.
+
+No database rows or statuses were changed during this follow-up. The PR #194 head `358ada3c3c776b400fcd5000f30195d76cdb9165` has now completed build, isolated preview deployment, public browser checks, wallet/CBT SQL integration and security regression workflows successfully; its production deployment job was skipped. PR #194 remains open and draft. The authenticated admin pagination/search/audit walkthrough, mobile/slow-network acceptance, full-bank source reconciliation and review of the oversized branch comparison remain release gates. No production deployment, import or publication was performed.
