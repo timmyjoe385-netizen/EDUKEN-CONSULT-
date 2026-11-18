@@ -1,0 +1,4079 @@
+{
+  "date": "2026-11-18",
+  "purpose": "Conservative rank-by-rank reconstruction of the 286 baseline cross-window candidates from the original 1,304 candidate source list. This is an evidence inventory, not a claim that all 286 were manually reviewed.",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "source_files": [
+    "content/cbt/audits/global-duplicate-review-cross-window-candidates-2026-11-01.json",
+    "content/cbt/audits/2026-11-09-cross-window-register-rank-crosswalk.json",
+    "content/cbt/audits/duplicate-disposition-register-2026-11-01.json",
+    "content/cbt/audits/cross-window-high-similarity-review-2026-11-01.json",
+    "content/cbt/audits/2026-11-08-cross-window-baseline-rank-crosswalk-r2.json"
+  ],
+  "source_candidate_count": 1304,
+  "baseline_scope": {
+    "rank_first": 1,
+    "rank_last": 286,
+    "count": 286,
+    "cutoff": 0.65,
+    "rank_286_score": 0.65,
+    "rank_287_score": 0.648
+  },
+  "exact_existing_record_matches": {
+    "unique_baseline_ranks": 108,
+    "rank_ids": [
+      1,
+      2,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      14,
+      15,
+      17,
+      19,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      29,
+      31,
+      32,
+      34,
+      35,
+      37,
+      39,
+      40,
+      46,
+      47,
+      48,
+      50,
+      52,
+      56,
+      57,
+      60,
+      62,
+      64,
+      66,
+      67,
+      68,
+      70,
+      72,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80,
+      81,
+      84,
+      85,
+      86,
+      89,
+      90,
+      91,
+      92,
+      94,
+      96,
+      98,
+      100,
+      101,
+      105,
+      107,
+      112,
+      113,
+      114,
+      123,
+      124,
+      136,
+      137,
+      138,
+      140,
+      147,
+      178,
+      180,
+      182,
+      184,
+      186,
+      188,
+      189,
+      195,
+      197,
+      204,
+      207,
+      210,
+      215,
+      216,
+      218,
+      224,
+      232,
+      233,
+      240,
+      241,
+      242,
+      256,
+      258,
+      264,
+      265,
+      269,
+      274,
+      282,
+      284,
+      285,
+      286
+    ],
+    "method": "Exact unordered batch/row endpoint match against existing 184-pair disposition crosswalk and high-similarity source records. No score-order or arithmetic inference."
+  },
+  "no_exact_individual_review_record": {
+    "count": 178,
+    "rank_ids": [
+      4,
+      13,
+      16,
+      18,
+      20,
+      28,
+      30,
+      33,
+      36,
+      38,
+      41,
+      42,
+      43,
+      44,
+      45,
+      49,
+      51,
+      53,
+      54,
+      55,
+      58,
+      59,
+      61,
+      63,
+      65,
+      69,
+      71,
+      73,
+      82,
+      83,
+      87,
+      88,
+      93,
+      95,
+      97,
+      99,
+      102,
+      103,
+      104,
+      106,
+      108,
+      109,
+      110,
+      111,
+      115,
+      116,
+      117,
+      118,
+      119,
+      120,
+      121,
+      122,
+      125,
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132,
+      133,
+      134,
+      135,
+      139,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153,
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160,
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167,
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174,
+      175,
+      176,
+      177,
+      179,
+      181,
+      183,
+      185,
+      187,
+      190,
+      191,
+      192,
+      193,
+      194,
+      196,
+      198,
+      199,
+      200,
+      201,
+      202,
+      203,
+      205,
+      206,
+      208,
+      209,
+      211,
+      212,
+      213,
+      214,
+      217,
+      219,
+      220,
+      221,
+      222,
+      223,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251,
+      252,
+      253,
+      254,
+      255,
+      257,
+      259,
+      260,
+      261,
+      262,
+      263,
+      266,
+      267,
+      268,
+      270,
+      271,
+      272,
+      273,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280,
+      281,
+      283
+    ],
+    "status": "unresolved_not_assumed_reviewed"
+  },
+  "reported_targeted_review_count": {
+    "value": 237,
+    "source": "historical progress claim",
+    "rank_ids": null,
+    "verification": "not independently reconstructable from currently located records"
+  },
+  "counter_reconciliation": {
+    "part63_counter": 1007,
+    "rank_derived_counter": 1003,
+    "difference": 4,
+    "identified_records": null,
+    "status": "unresolved"
+  },
+  "legacy_conflicts": {
+    "additional_targeted_reviews": {
+      "register_value": 472,
+      "progress_value": 237
+    },
+    "tail_unique_rank_count": {
+      "register_value": 685,
+      "progress_value": 717
+    },
+    "policy": "Preserve historical values; do not aggregate or substitute without source lineage."
+  },
+  "rows": [
+    {
+      "rank": 1,
+      "similarity_score": 0.994,
+      "subject": "Mathematics",
+      "source_a": "batch 20 row 9",
+      "source_b": "batch 36 row 10",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-01",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same fact and same options; wording differs only slightly.",
+        "subject": "Mathematics",
+        "source_a": "batch 20 row 9",
+        "source_b": "batch 36 row 10",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 2,
+      "similarity_score": 0.958,
+      "subject": "Mathematics",
+      "source_a": "batch 13 row 7",
+      "source_b": "batch 33 row 7",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different numerical input (30° vs 40°) changes the required side count; same geometry rule but a valid alternate practice item.",
+        "subject": "Mathematics",
+        "source_a": "batch 13 row 7",
+        "source_b": "batch 33 row 7",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 3,
+      "similarity_score": 0.947,
+      "subject": "Economics",
+      "source_a": "batch 5 row 28",
+      "source_b": "batch 40 row 28",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-10",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same core fact and same answer.",
+        "subject": "Economics",
+        "source_a": "batch 5 row 28",
+        "source_b": "batch 40 row 28",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 4,
+      "similarity_score": 0.947,
+      "subject": "Mathematics",
+      "source_a": "batch 13 row 8",
+      "source_b": "batch 22 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 5,
+      "similarity_score": 0.941,
+      "subject": "Mathematics",
+      "source_a": "batch 8 row 7",
+      "source_b": "batch 31 row 7",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Same arithmetic-progression skill but asks for a different term; template repetition, not the same question or answer.",
+        "subject": "Mathematics",
+        "source_a": "batch 8 row 7",
+        "source_b": "batch 31 row 7",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 6,
+      "similarity_score": 0.94,
+      "subject": "Physics",
+      "source_a": "batch 4 row 24",
+      "source_b": "batch 36 row 24",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-03",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same fact, same four distractors and same explanation.",
+        "subject": "Physics",
+        "source_a": "batch 4 row 24",
+        "source_b": "batch 36 row 24",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 7,
+      "similarity_score": 0.939,
+      "subject": "Physics",
+      "source_a": "batch 20 row 22",
+      "source_b": "batch 34 row 22",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Momentum calculation uses a different velocity; valid alternate numerical application.",
+        "subject": "Physics",
+        "source_a": "batch 20 row 22",
+        "source_b": "batch 34 row 22",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 8,
+      "similarity_score": 0.933,
+      "subject": "Chemistry",
+      "source_a": "batch 8 row 17",
+      "source_b": "batch 29 row 20",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-90",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask how atomic radius changes from left to right across a period and answer that it decreases. This extends the existing three-row cluster with batch 37 row 20 already held under DUP-64.",
+        "subject": "Chemistry",
+        "source_a": "batch 8 row 17",
+        "source_b": "batch 29 row 20",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 9,
+      "similarity_score": 0.927,
+      "subject": "Physics",
+      "source_a": "batch 10 row 25",
+      "source_b": "batch 40 row 22",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-11",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same rule and same tested fact.",
+        "subject": "Physics",
+        "source_a": "batch 10 row 25",
+        "source_b": "batch 40 row 22",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 10,
+      "similarity_score": 0.927,
+      "subject": "Chemistry",
+      "source_a": "batch 19 row 17",
+      "source_b": "batch 37 row 17",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Molarity-volume calculation uses a different amount of solute; valid alternate numerical application.",
+        "subject": "Chemistry",
+        "source_a": "batch 19 row 17",
+        "source_b": "batch 37 row 17",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 11,
+      "similarity_score": 0.921,
+      "subject": "Physics",
+      "source_a": "batch 28 row 25",
+      "source_b": "batch 34 row 26",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-07",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same definition, near-identical stem and same answer set.",
+        "subject": "Physics",
+        "source_a": "batch 28 row 25",
+        "source_b": "batch 34 row 26",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 12,
+      "similarity_score": 0.92,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 17",
+      "source_b": "batch 34 row 19",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-09",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same reaction, same product and identical options.",
+        "subject": "Chemistry",
+        "source_a": "batch 20 row 17",
+        "source_b": "batch 34 row 19",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 13,
+      "similarity_score": 0.919,
+      "subject": "Government",
+      "source_a": "batch 8 row 34",
+      "source_b": "batch 21 row 32",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 14,
+      "similarity_score": 0.917,
+      "subject": "Mathematics",
+      "source_a": "batch 8 row 7",
+      "source_b": "batch 29 row 11",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different first term and target term in an arithmetic progression; valid alternate calculation.",
+        "subject": "Mathematics",
+        "source_a": "batch 8 row 7",
+        "source_b": "batch 29 row 11",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 15,
+      "similarity_score": 0.917,
+      "subject": "Biology",
+      "source_a": "batch 1 row 14",
+      "source_b": "batch 34 row 12",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-04",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same definition of two identical alleles.",
+        "subject": "Biology",
+        "source_a": "batch 1 row 14",
+        "source_b": "batch 34 row 12",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 16,
+      "similarity_score": 0.917,
+      "subject": "Mathematics",
+      "source_a": "batch 18 row 9",
+      "source_b": "batch 32 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 17,
+      "similarity_score": 0.916,
+      "subject": "Economics",
+      "source_a": "batch 21 row 27",
+      "source_b": "batch 39 row 30",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-12",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same economic relationship and same answer.",
+        "subject": "Economics",
+        "source_a": "batch 21 row 27",
+        "source_b": "batch 39 row 30",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 18,
+      "similarity_score": 0.914,
+      "subject": "Mathematics",
+      "source_a": "batch 22 row 11",
+      "source_b": "batch 36 row 8",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 19,
+      "similarity_score": 0.906,
+      "subject": "Mathematics",
+      "source_a": "batch 29 row 11",
+      "source_b": "batch 31 row 7",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different first term and target term in an arithmetic progression; valid alternate calculation.",
+        "subject": "Mathematics",
+        "source_a": "batch 29 row 11",
+        "source_b": "batch 31 row 7",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 20,
+      "similarity_score": 0.904,
+      "subject": "Government",
+      "source_a": "batch 29 row 36",
+      "source_b": "batch 33 row 33",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 21,
+      "similarity_score": 0.902,
+      "subject": "Biology",
+      "source_a": "batch 10 row 15",
+      "source_b": "batch 35 row 14",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-06",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same direct recall fact.",
+        "subject": "Biology",
+        "source_a": "batch 10 row 15",
+        "source_b": "batch 35 row 14",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 22,
+      "similarity_score": 0.902,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 18",
+      "source_b": "batch 22 row 18",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-08",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same indicator colour fact.",
+        "subject": "Chemistry",
+        "source_a": "batch 20 row 18",
+        "source_b": "batch 22 row 18",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 23,
+      "similarity_score": 0.893,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 20",
+      "source_b": "batch 38 row 20",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-13",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same reaction outcome and same tested fact.",
+        "subject": "Chemistry",
+        "source_a": "batch 20 row 20",
+        "source_b": "batch 38 row 20",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 24,
+      "similarity_score": 0.889,
+      "subject": "Biology",
+      "source_a": "batch 10 row 12",
+      "source_b": "batch 28 row 13",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-14",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same function and same core answer.",
+        "subject": "Biology",
+        "source_a": "batch 10 row 12",
+        "source_b": "batch 28 row 13",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 25,
+      "similarity_score": 0.887,
+      "subject": "Literature in English",
+      "source_a": "batch 2 row 40",
+      "source_b": "batch 37 row 41",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-05",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same definition and same answer.",
+        "subject": "Literature in English",
+        "source_a": "batch 2 row 40",
+        "source_b": "batch 37 row 41",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 26,
+      "similarity_score": 0.886,
+      "subject": "Chemistry",
+      "source_a": "batch 7 row 19",
+      "source_b": "batch 28 row 19",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-02",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same definition and identical answer options.",
+        "subject": "Chemistry",
+        "source_a": "batch 7 row 19",
+        "source_b": "batch 28 row 19",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 27,
+      "similarity_score": 0.886,
+      "subject": "Use of English",
+      "source_a": "batch 26 row 4",
+      "source_b": "batch 31 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target and meaning (candid vs coherent); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 26 row 4",
+        "source_b": "batch 31 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 28,
+      "similarity_score": 0.882,
+      "subject": "Use of English",
+      "source_a": "batch 9 row 4",
+      "source_b": "batch 15 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 29,
+      "similarity_score": 0.882,
+      "subject": "Mathematics",
+      "source_a": "batch 5 row 9",
+      "source_b": "batch 34 row 11",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Midpoint calculation uses different coordinates; valid alternate numerical application.",
+        "subject": "Mathematics",
+        "source_a": "batch 5 row 9",
+        "source_b": "batch 34 row 11",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 30,
+      "similarity_score": 0.881,
+      "subject": "Biology",
+      "source_a": "batch 8 row 15",
+      "source_b": "batch 37 row 12",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 31,
+      "similarity_score": 0.88,
+      "subject": "Mathematics",
+      "source_a": "batch 4 row 9",
+      "source_b": "batch 16 row 8",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Triangle angle-sum calculation uses different given angles; valid alternate numerical application.",
+        "subject": "Mathematics",
+        "source_a": "batch 4 row 9",
+        "source_b": "batch 16 row 8",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 32,
+      "similarity_score": 0.88,
+      "subject": "Economics",
+      "source_a": "batch 25 row 31",
+      "source_b": "batch 33 row 29",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-15",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Economics",
+        "source_a": "batch 25 row 31",
+        "source_b": "batch 33 row 29",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 33,
+      "similarity_score": 0.878,
+      "subject": "Chemistry",
+      "source_a": "batch 12 row 17",
+      "source_b": "batch 40 row 21",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 34,
+      "similarity_score": 0.878,
+      "subject": "Mathematics",
+      "source_a": "batch 23 row 11",
+      "source_b": "batch 31 row 11",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different matrix entries produce a different determinant; valid alternate calculation.",
+        "subject": "Mathematics",
+        "source_a": "batch 23 row 11",
+        "source_b": "batch 31 row 11",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 35,
+      "similarity_score": 0.87,
+      "subject": "Chemistry",
+      "source_a": "batch 10 row 21",
+      "source_b": "batch 35 row 19",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-16",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Chemistry",
+        "source_a": "batch 10 row 21",
+        "source_b": "batch 35 row 19",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 36,
+      "similarity_score": 0.87,
+      "subject": "Economics",
+      "source_a": "batch 10 row 29",
+      "source_b": "batch 32 row 30",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 37,
+      "similarity_score": 0.865,
+      "subject": "Physics",
+      "source_a": "batch 12 row 23",
+      "source_b": "batch 27 row 22",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Density calculation uses different mass and volume; valid alternate numerical application.",
+        "subject": "Physics",
+        "source_a": "batch 12 row 23",
+        "source_b": "batch 27 row 22",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 38,
+      "similarity_score": 0.864,
+      "subject": "Mathematics",
+      "source_a": "batch 5 row 8",
+      "source_b": "batch 32 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 39,
+      "similarity_score": 0.863,
+      "subject": "Biology",
+      "source_a": "batch 12 row 12",
+      "source_b": "batch 34 row 14",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-17",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Biology",
+        "source_a": "batch 12 row 12",
+        "source_b": "batch 34 row 14",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 40,
+      "similarity_score": 0.861,
+      "subject": "Mathematics",
+      "source_a": "batch 11 row 9",
+      "source_b": "batch 29 row 9",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different probability events (number greater than four vs prime number); these test different favourable-outcome sets.",
+        "subject": "Mathematics",
+        "source_a": "batch 11 row 9",
+        "source_b": "batch 29 row 9",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 41,
+      "similarity_score": 0.86,
+      "subject": "Economics",
+      "source_a": "batch 4 row 30",
+      "source_b": "batch 31 row 28",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 42,
+      "similarity_score": 0.857,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 11",
+      "source_b": "batch 14 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 43,
+      "similarity_score": 0.857,
+      "subject": "Mathematics",
+      "source_a": "batch 11 row 8",
+      "source_b": "batch 40 row 8",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 44,
+      "similarity_score": 0.855,
+      "subject": "Mathematics",
+      "source_a": "batch 5 row 8",
+      "source_b": "batch 21 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 45,
+      "similarity_score": 0.854,
+      "subject": "Use of English",
+      "source_a": "batch 8 row 6",
+      "source_b": "batch 29 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 46,
+      "similarity_score": 0.853,
+      "subject": "Physics",
+      "source_a": "batch 4 row 25",
+      "source_b": "batch 32 row 24",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-18",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Physics",
+        "source_a": "batch 4 row 25",
+        "source_b": "batch 32 row 24",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 47,
+      "similarity_score": 0.852,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 8",
+      "source_b": "batch 22 row 10",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Mode calculation uses a different data set; valid alternate application.",
+        "subject": "Mathematics",
+        "source_a": "batch 10 row 8",
+        "source_b": "batch 22 row 10",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 48,
+      "similarity_score": 0.852,
+      "subject": "Economics",
+      "source_a": "batch 9 row 31",
+      "source_b": "batch 38 row 31",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-19",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Economics",
+        "source_a": "batch 9 row 31",
+        "source_b": "batch 38 row 31",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 49,
+      "similarity_score": 0.851,
+      "subject": "Government",
+      "source_a": "batch 18 row 32",
+      "source_b": "batch 33 row 35",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 50,
+      "similarity_score": 0.848,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 4",
+      "source_b": "batch 36 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (concise vs candid); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 1 row 4",
+        "source_b": "batch 36 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 51,
+      "similarity_score": 0.848,
+      "subject": "Mathematics",
+      "source_a": "batch 7 row 11",
+      "source_b": "batch 31 row 8",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 52,
+      "similarity_score": 0.848,
+      "subject": "Mathematics",
+      "source_a": "batch 21 row 10",
+      "source_b": "batch 32 row 10",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Simple-interest calculation uses a different principal; valid alternate numerical application.",
+        "subject": "Mathematics",
+        "source_a": "batch 21 row 10",
+        "source_b": "batch 32 row 10",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 53,
+      "similarity_score": 0.845,
+      "subject": "Physics",
+      "source_a": "batch 27 row 24",
+      "source_b": "batch 34 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 54,
+      "similarity_score": 0.844,
+      "subject": "Chemistry",
+      "source_a": "batch 7 row 21",
+      "source_b": "batch 30 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 55,
+      "similarity_score": 0.843,
+      "subject": "Mathematics",
+      "source_a": "batch 18 row 9",
+      "source_b": "batch 37 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 56,
+      "similarity_score": 0.842,
+      "subject": "Use of English",
+      "source_a": "batch 2 row 3",
+      "source_b": "batch 38 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different antonym target (scarce vs hostile); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 2 row 3",
+        "source_b": "batch 38 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 57,
+      "similarity_score": 0.841,
+      "subject": "Physics",
+      "source_a": "batch 3 row 22",
+      "source_b": "batch 20 row 23",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Electrical-power calculation uses a different current; valid alternate numerical application.",
+        "subject": "Physics",
+        "source_a": "batch 3 row 22",
+        "source_b": "batch 20 row 23",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 58,
+      "similarity_score": 0.839,
+      "subject": "Mathematics",
+      "source_a": "batch 6 row 9",
+      "source_b": "batch 38 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 59,
+      "similarity_score": 0.833,
+      "subject": "Physics",
+      "source_a": "batch 7 row 25",
+      "source_b": "batch 26 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 60,
+      "similarity_score": 0.832,
+      "subject": "Biology",
+      "source_a": "batch 23 row 15",
+      "source_b": "batch 34 row 15",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-65",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define commensalism as a relationship in which one organism benefits while the other is neither helped nor harmed. The tested ecological relationship is the same.",
+        "subject": "Biology",
+        "source_a": "batch 23 row 15",
+        "source_b": "batch 34 row 15",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 61,
+      "similarity_score": 0.832,
+      "subject": "Mathematics",
+      "source_a": "batch 26 row 10",
+      "source_b": "batch 31 row 8",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 62,
+      "similarity_score": 0.83,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 4",
+      "source_b": "batch 39 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (concise vs obsolete); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 1 row 4",
+        "source_b": "batch 39 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 63,
+      "similarity_score": 0.829,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 19",
+      "source_b": "batch 37 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 64,
+      "similarity_score": 0.826,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 4",
+      "source_b": "batch 37 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (concise vs abstain); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 1 row 4",
+        "source_b": "batch 37 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 65,
+      "similarity_score": 0.825,
+      "subject": "Use of English",
+      "source_a": "batch 10 row 3",
+      "source_b": "batch 39 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 66,
+      "similarity_score": 0.823,
+      "subject": "Mathematics",
+      "source_a": "batch 1 row 9",
+      "source_b": "batch 32 row 8",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-63",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask for the largest angle in a triangle whose angles are in the ratio 2:3:4, producing the same result. This is the same question with the same ratio and answer.",
+        "subject": "Mathematics",
+        "source_a": "batch 32 row 8",
+        "source_b": "batch 1 row 9",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 67,
+      "similarity_score": 0.822,
+      "subject": "Biology",
+      "source_a": "batch 8 row 13",
+      "source_b": "batch 38 row 15",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-58",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask why a pyramid of energy is always upright and identify energy loss between trophic levels as the reason. The wording and answer options differ slightly, but the same ecological principle is assessed.",
+        "subject": "Biology",
+        "source_a": "batch 8 row 13",
+        "source_b": "batch 38 row 15",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 68,
+      "similarity_score": 0.821,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 6",
+      "source_b": "batch 38 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different antonym target (expand vs hostile); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 5 row 6",
+        "source_b": "batch 38 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 69,
+      "similarity_score": 0.821,
+      "subject": "Use of English",
+      "source_a": "batch 10 row 3",
+      "source_b": "batch 37 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 70,
+      "similarity_score": 0.819,
+      "subject": "Literature in English",
+      "source_a": "batch 7 row 39",
+      "source_b": "batch 39 row 39",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-59",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define an omniscient narrator as one who knows the thoughts and experiences of multiple characters. The stems and correct options are near-equivalent.",
+        "subject": "Literature in English",
+        "source_a": "batch 7 row 39",
+        "source_b": "batch 39 row 39",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 71,
+      "similarity_score": 0.819,
+      "subject": "Chemistry",
+      "source_a": "batch 13 row 19",
+      "source_b": "batch 37 row 21",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 72,
+      "similarity_score": 0.816,
+      "subject": "Physics",
+      "source_a": "batch 7 row 23",
+      "source_b": "batch 33 row 24",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Series-resistance calculation uses different resistor values; valid alternate numerical application.",
+        "subject": "Physics",
+        "source_a": "batch 7 row 23",
+        "source_b": "batch 33 row 24",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 73,
+      "similarity_score": 0.809,
+      "subject": "Literature in English",
+      "source_a": "batch 3 row 37",
+      "source_b": "batch 11 row 39",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 74,
+      "similarity_score": 0.809,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 4",
+      "source_b": "batch 21 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (concise vs diligent); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 1 row 4",
+        "source_b": "batch 21 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 75,
+      "similarity_score": 0.809,
+      "subject": "Use of English",
+      "source_a": "batch 21 row 3",
+      "source_b": "batch 36 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (diligent vs candid); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 21 row 3",
+        "source_b": "batch 36 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 76,
+      "similarity_score": 0.809,
+      "subject": "Use of English",
+      "source_a": "batch 21 row 3",
+      "source_b": "batch 37 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (diligent vs abstain); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 21 row 3",
+        "source_b": "batch 37 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 77,
+      "similarity_score": 0.808,
+      "subject": "Chemistry",
+      "source_a": "batch 8 row 17",
+      "source_b": "batch 37 row 20",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-64",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask how atomic radius changes from left to right across a period and identify that it decreases. The tested trend is the same.",
+        "subject": "Chemistry",
+        "source_a": "batch 8 row 17",
+        "source_b": "batch 37 row 20",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 78,
+      "similarity_score": 0.805,
+      "subject": "Economics",
+      "source_a": "batch 6 row 29",
+      "source_b": "batch 37 row 29",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-20",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Economics",
+        "source_a": "batch 6 row 29",
+        "source_b": "batch 37 row 29",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 79,
+      "similarity_score": 0.804,
+      "subject": "Literature in English",
+      "source_a": "batch 20 row 39",
+      "source_b": "batch 25 row 37",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-21",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Literature in English",
+        "source_a": "batch 20 row 39",
+        "source_b": "batch 25 row 37",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 80,
+      "similarity_score": 0.803,
+      "subject": "Biology",
+      "source_a": "batch 1 row 15",
+      "source_b": "batch 38 row 13",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-22",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "",
+        "subject": "Biology",
+        "source_a": "batch 1 row 15",
+        "source_b": "batch 38 row 13",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 81,
+      "similarity_score": 0.8,
+      "subject": "Biology",
+      "source_a": "batch 7 row 15",
+      "source_b": "batch 16 row 15",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-60",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask which structure transports urine from a kidney to the urinary bladder; both identify the ureter. The stems and answer explanations are effectively equivalent.",
+        "subject": "Biology",
+        "source_a": "batch 7 row 15",
+        "source_b": "batch 16 row 15",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 82,
+      "similarity_score": 0.8,
+      "subject": "Chemistry",
+      "source_a": "batch 9 row 17",
+      "source_b": "batch 19 row 21",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 83,
+      "similarity_score": 0.8,
+      "subject": "Physics",
+      "source_a": "batch 2 row 23",
+      "source_b": "batch 27 row 26",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 84,
+      "similarity_score": 0.8,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 4",
+      "source_b": "batch 34 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (concise vs ephemeral); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 1 row 4",
+        "source_b": "batch 34 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 85,
+      "similarity_score": 0.8,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 4",
+      "source_b": "batch 36 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (meticulous vs candid); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 5 row 4",
+        "source_b": "batch 36 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 86,
+      "similarity_score": 0.8,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 4",
+      "source_b": "batch 37 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (meticulous vs abstain); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 5 row 4",
+        "source_b": "batch 37 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 87,
+      "similarity_score": 0.8,
+      "subject": "Use of English",
+      "source_a": "batch 10 row 3",
+      "source_b": "batch 36 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 88,
+      "similarity_score": 0.8,
+      "subject": "Chemistry",
+      "source_a": "batch 18 row 17",
+      "source_b": "batch 35 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 89,
+      "similarity_score": 0.794,
+      "subject": "Biology",
+      "source_a": "batch 6 row 13",
+      "source_b": "batch 28 row 16",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-61",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask what controls the opening and closing of stomata and identify changes in guard-cell turgidity. The tested mechanism is the same.",
+        "subject": "Biology",
+        "source_a": "batch 6 row 13",
+        "source_b": "batch 28 row 16",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 90,
+      "similarity_score": 0.792,
+      "subject": "Physics",
+      "source_a": "batch 3 row 23",
+      "source_b": "batch 17 row 22",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Acceleration calculation uses different starting/ending velocities and time; valid alternate numerical application.",
+        "subject": "Physics",
+        "source_a": "batch 3 row 23",
+        "source_b": "batch 17 row 22",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 91,
+      "similarity_score": 0.792,
+      "subject": "Use of English",
+      "source_a": "batch 21 row 3",
+      "source_b": "batch 39 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (diligent vs obsolete); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 21 row 3",
+        "source_b": "batch 39 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 92,
+      "similarity_score": 0.785,
+      "subject": "Economics",
+      "source_a": "batch 2 row 30",
+      "source_b": "batch 28 row 30",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-23",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask what balance of trade in goods compares and identify exports versus imports of goods; the stem, options and explanation assess the same definition.",
+        "subject": "Economics",
+        "source_a": "batch 2 row 30",
+        "source_b": "batch 28 row 30",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 93,
+      "similarity_score": 0.785,
+      "subject": "Mathematics",
+      "source_a": "batch 7 row 11",
+      "source_b": "batch 26 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 94,
+      "similarity_score": 0.785,
+      "subject": "Literature in English",
+      "source_a": "batch 3 row 38",
+      "source_b": "batch 36 row 41",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-62",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both describe traditional tragedy as presenting serious conflict that leads to the suffering or downfall of a central character. The question wording and correct idea are equivalent.",
+        "subject": "Literature in English",
+        "source_a": "batch 3 row 38",
+        "source_b": "batch 36 row 41",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 95,
+      "similarity_score": 0.785,
+      "subject": "Biology",
+      "source_a": "batch 28 row 15",
+      "source_b": "batch 34 row 12",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 96,
+      "similarity_score": 0.784,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 4",
+      "source_b": "batch 21 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (meticulous vs diligent); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 5 row 4",
+        "source_b": "batch 21 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 97,
+      "similarity_score": 0.784,
+      "subject": "Use of English",
+      "source_a": "batch 10 row 3",
+      "source_b": "batch 21 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 98,
+      "similarity_score": 0.784,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 4",
+      "source_b": "batch 39 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (meticulous vs obsolete); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 5 row 4",
+        "source_b": "batch 39 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 99,
+      "similarity_score": 0.784,
+      "subject": "Mathematics",
+      "source_a": "batch 7 row 11",
+      "source_b": "batch 38 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 100,
+      "similarity_score": 0.784,
+      "subject": "Use of English",
+      "source_a": "batch 21 row 3",
+      "source_b": "batch 34 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different vocabulary target (diligent vs ephemeral); preserve both.",
+        "subject": "Use of English",
+        "source_a": "batch 21 row 3",
+        "source_b": "batch 34 row 3",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 101,
+      "similarity_score": 0.782,
+      "subject": "Mathematics",
+      "source_a": "batch 8 row 10",
+      "source_b": "batch 25 row 8",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": null,
+        "decision": "preserve_both_distinct_or_valid_practice_variant",
+        "reason": "Different polynomial expression; both test differentiation, but the mathematical expressions and resulting derivatives differ. Preserve both as practice variants.",
+        "subject": "Mathematics",
+        "source_a": "batch 8 row 10",
+        "source_b": "batch 25 row 8",
+        "origin": "exact_endpoint_match_high_similarity_review"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 102,
+      "similarity_score": 0.78,
+      "subject": "Economics",
+      "source_a": "batch 7 row 30",
+      "source_b": "batch 11 row 29",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 103,
+      "similarity_score": 0.779,
+      "subject": "Mathematics",
+      "source_a": "batch 26 row 11",
+      "source_b": "batch 36 row 8",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 104,
+      "similarity_score": 0.776,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 4",
+      "source_b": "batch 34 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 105,
+      "similarity_score": 0.776,
+      "subject": "Chemistry",
+      "source_a": "batch 9 row 18",
+      "source_b": "batch 32 row 21",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-39",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both questions give the same 40% carbon, 6.7% hydrogen and 53.3% oxygen composition and ask for the simplest empirical formula. They assess the same calculation and produce CH₂O.",
+        "subject": "Chemistry",
+        "source_a": "batch 9 row 18",
+        "source_b": "batch 32 row 21",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 106,
+      "similarity_score": 0.776,
+      "subject": "Use of English",
+      "source_a": "batch 10 row 3",
+      "source_b": "batch 34 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 107,
+      "similarity_score": 0.773,
+      "subject": "Use of English",
+      "source_a": "batch 7 row 5",
+      "source_b": "batch 30 row 5",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-89",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask which word begins with the same /dʒ/ consonant sound as 'judge'; both use 'giant' as the correct answer.",
+        "subject": "Use of English",
+        "source_a": "batch 7 row 5",
+        "source_b": "batch 30 row 5",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 108,
+      "similarity_score": 0.772,
+      "subject": "Mathematics",
+      "source_a": "batch 13 row 9",
+      "source_b": "batch 31 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 109,
+      "similarity_score": 0.772,
+      "subject": "Use of English",
+      "source_a": "batch 30 row 5",
+      "source_b": "batch 33 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 110,
+      "similarity_score": 0.771,
+      "subject": "Economics",
+      "source_a": "batch 7 row 30",
+      "source_b": "batch 36 row 31",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 111,
+      "similarity_score": 0.771,
+      "subject": "Economics",
+      "source_a": "batch 25 row 29",
+      "source_b": "batch 32 row 28",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 112,
+      "similarity_score": 0.769,
+      "subject": "Chemistry",
+      "source_a": "batch 4 row 17",
+      "source_b": "batch 21 row 18",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-40",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask why simple distillation can obtain pure water from salt solution; both rely on water vaporising and being condensed separately.",
+        "subject": "Chemistry",
+        "source_a": "batch 4 row 17",
+        "source_b": "batch 21 row 18",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 113,
+      "similarity_score": 0.769,
+      "subject": "Physics",
+      "source_a": "batch 2 row 26",
+      "source_b": "batch 38 row 22",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-66",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Same numerical power calculation: 600 J of work completed in 20 s, giving 30 W.",
+        "subject": "Physics",
+        "source_a": "batch 2 row 26",
+        "source_b": "batch 38 row 22",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 114,
+      "similarity_score": 0.768,
+      "subject": "Chemistry",
+      "source_a": "batch 2 row 19",
+      "source_b": "batch 36 row 19",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-67",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define oxidation in electron-transfer terms as loss of electrons.",
+        "subject": "Chemistry",
+        "source_a": "batch 2 row 19",
+        "source_b": "batch 36 row 19",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 115,
+      "similarity_score": 0.768,
+      "subject": "Physics",
+      "source_a": "batch 17 row 24",
+      "source_b": "batch 22 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 116,
+      "similarity_score": 0.762,
+      "subject": "Physics",
+      "source_a": "batch 4 row 23",
+      "source_b": "batch 34 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 117,
+      "similarity_score": 0.762,
+      "subject": "Mathematics",
+      "source_a": "batch 18 row 11",
+      "source_b": "batch 39 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 118,
+      "similarity_score": 0.761,
+      "subject": "Physics",
+      "source_a": "batch 6 row 25",
+      "source_b": "batch 22 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 119,
+      "similarity_score": 0.76,
+      "subject": "Chemistry",
+      "source_a": "batch 8 row 21",
+      "source_b": "batch 20 row 17",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 120,
+      "similarity_score": 0.759,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 9",
+      "source_b": "batch 29 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 121,
+      "similarity_score": 0.759,
+      "subject": "Chemistry",
+      "source_a": "batch 10 row 18",
+      "source_b": "batch 32 row 18",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 122,
+      "similarity_score": 0.759,
+      "subject": "Use of English",
+      "source_a": "batch 11 row 4",
+      "source_b": "batch 27 row 5",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 123,
+      "similarity_score": 0.759,
+      "subject": "Use of English",
+      "source_a": "batch 16 row 4",
+      "source_b": "batch 36 row 2",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-68",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both test the same present-perfect question-tag pattern, changing only the subject pronoun.",
+        "subject": "Use of English",
+        "source_a": "batch 16 row 4",
+        "source_b": "batch 36 row 2",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 124,
+      "similarity_score": 0.757,
+      "subject": "Literature in English",
+      "source_a": "batch 12 row 39",
+      "source_b": "batch 35 row 40",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-69",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask how many lines a traditional sonnet contains; answer is fourteen.",
+        "subject": "Literature in English",
+        "source_a": "batch 35 row 40",
+        "source_b": "batch 12 row 39",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 125,
+      "similarity_score": 0.753,
+      "subject": "Chemistry",
+      "source_a": "batch 29 row 20",
+      "source_b": "batch 37 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 126,
+      "similarity_score": 0.751,
+      "subject": "Mathematics",
+      "source_a": "batch 8 row 7",
+      "source_b": "batch 32 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 127,
+      "similarity_score": 0.75,
+      "subject": "Use of English",
+      "source_a": "batch 9 row 4",
+      "source_b": "batch 13 row 5",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 128,
+      "similarity_score": 0.75,
+      "subject": "Literature in English",
+      "source_a": "batch 15 row 37",
+      "source_b": "batch 24 row 40",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 129,
+      "similarity_score": 0.75,
+      "subject": "Mathematics",
+      "source_a": "batch 17 row 9",
+      "source_b": "batch 22 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 130,
+      "similarity_score": 0.747,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 17",
+      "source_b": "batch 27 row 18",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 131,
+      "similarity_score": 0.747,
+      "subject": "Economics",
+      "source_a": "batch 11 row 29",
+      "source_b": "batch 36 row 31",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 132,
+      "similarity_score": 0.746,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 8",
+      "source_b": "batch 17 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 133,
+      "similarity_score": 0.746,
+      "subject": "Physics",
+      "source_a": "batch 7 row 23",
+      "source_b": "batch 38 row 25",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 134,
+      "similarity_score": 0.745,
+      "subject": "Physics",
+      "source_a": "batch 3 row 23",
+      "source_b": "batch 29 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 135,
+      "similarity_score": 0.744,
+      "subject": "Use of English",
+      "source_a": "batch 15 row 6",
+      "source_b": "batch 38 row 5",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 136,
+      "similarity_score": 0.744,
+      "subject": "Biology",
+      "source_a": "batch 19 row 15",
+      "source_b": "batch 31 row 13",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-70",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both identify magnesium as the central mineral element in chlorophyll.",
+        "subject": "Biology",
+        "source_a": "batch 19 row 15",
+        "source_b": "batch 31 row 13",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 137,
+      "similarity_score": 0.744,
+      "subject": "Biology",
+      "source_a": "batch 19 row 16",
+      "source_b": "batch 40 row 13",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-41",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both questions ask which organisms natural selection favours and identify traits that improve survival or reproductive success in an environment. They test the same core concept.",
+        "subject": "Biology",
+        "source_a": "batch 19 row 16",
+        "source_b": "batch 40 row 13",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 138,
+      "similarity_score": 0.742,
+      "subject": "Physics",
+      "source_a": "batch 10 row 26",
+      "source_b": "batch 40 row 25",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-71",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both identify an alpha particle as a helium nucleus.",
+        "subject": "Physics",
+        "source_a": "batch 10 row 26",
+        "source_b": "batch 40 row 25",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 139,
+      "similarity_score": 0.741,
+      "subject": "Physics",
+      "source_a": "batch 6 row 24",
+      "source_b": "batch 34 row 24",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 140,
+      "similarity_score": 0.74,
+      "subject": "Economics",
+      "source_a": "batch 9 row 30",
+      "source_b": "batch 33 row 28",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-42",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define economies of scale as a reduction or fall in average cost as a firm expands production. They assess the same definition.",
+        "subject": "Economics",
+        "source_a": "batch 9 row 30",
+        "source_b": "batch 33 row 28",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 141,
+      "similarity_score": 0.74,
+      "subject": "Use of English",
+      "source_a": "batch 22 row 2",
+      "source_b": "batch 37 row 4",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 142,
+      "similarity_score": 0.74,
+      "subject": "Chemistry",
+      "source_a": "batch 25 row 19",
+      "source_b": "batch 34 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 143,
+      "similarity_score": 0.74,
+      "subject": "Mathematics",
+      "source_a": "batch 29 row 11",
+      "source_b": "batch 32 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 144,
+      "similarity_score": 0.739,
+      "subject": "Chemistry",
+      "source_a": "batch 27 row 18",
+      "source_b": "batch 34 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 145,
+      "similarity_score": 0.738,
+      "subject": "Chemistry",
+      "source_a": "batch 8 row 17",
+      "source_b": "batch 20 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 146,
+      "similarity_score": 0.738,
+      "subject": "Chemistry",
+      "source_a": "batch 5 row 21",
+      "source_b": "batch 23 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 147,
+      "similarity_score": 0.737,
+      "subject": "Use of English",
+      "source_a": "batch 9 row 2",
+      "source_b": "batch 39 row 2",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-57",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both use the identical sentence frame 'If the committee had met earlier' and test the same third-conditional verb form. Only the result clause changes; this does not create a meaningfully different grammar assessment.",
+        "subject": "Use of English",
+        "source_a": "batch 9 row 2",
+        "source_b": "batch 39 row 2",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 148,
+      "similarity_score": 0.736,
+      "subject": "Chemistry",
+      "source_a": "batch 9 row 18",
+      "source_b": "batch 24 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 149,
+      "similarity_score": 0.734,
+      "subject": "Chemistry",
+      "source_a": "batch 22 row 17",
+      "source_b": "batch 35 row 17",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 150,
+      "similarity_score": 0.733,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 7",
+      "source_b": "batch 19 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 151,
+      "similarity_score": 0.733,
+      "subject": "Physics",
+      "source_a": "batch 7 row 25",
+      "source_b": "batch 28 row 25",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 152,
+      "similarity_score": 0.732,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 6",
+      "source_b": "batch 30 row 5",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 153,
+      "similarity_score": 0.732,
+      "subject": "Use of English",
+      "source_a": "batch 18 row 4",
+      "source_b": "batch 25 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 154,
+      "similarity_score": 0.732,
+      "subject": "Use of English",
+      "source_a": "batch 12 row 3",
+      "source_b": "batch 32 row 2",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 155,
+      "similarity_score": 0.732,
+      "subject": "Literature in English",
+      "source_a": "batch 15 row 37",
+      "source_b": "batch 39 row 40",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 156,
+      "similarity_score": 0.732,
+      "subject": "Mathematics",
+      "source_a": "batch 22 row 11",
+      "source_b": "batch 39 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 157,
+      "similarity_score": 0.732,
+      "subject": "Literature in English",
+      "source_a": "batch 24 row 40",
+      "source_b": "batch 39 row 40",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 158,
+      "similarity_score": 0.73,
+      "subject": "Use of English",
+      "source_a": "batch 26 row 6",
+      "source_b": "batch 34 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 159,
+      "similarity_score": 0.727,
+      "subject": "Biology",
+      "source_a": "batch 2 row 14",
+      "source_b": "batch 37 row 12",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 160,
+      "similarity_score": 0.727,
+      "subject": "Chemistry",
+      "source_a": "batch 5 row 21",
+      "source_b": "batch 33 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 161,
+      "similarity_score": 0.726,
+      "subject": "Economics",
+      "source_a": "batch 8 row 27",
+      "source_b": "batch 16 row 27",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 162,
+      "similarity_score": 0.726,
+      "subject": "Mathematics",
+      "source_a": "batch 14 row 10",
+      "source_b": "batch 23 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 163,
+      "similarity_score": 0.725,
+      "subject": "Mathematics",
+      "source_a": "batch 9 row 7",
+      "source_b": "batch 18 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 164,
+      "similarity_score": 0.725,
+      "subject": "Mathematics",
+      "source_a": "batch 9 row 7",
+      "source_b": "batch 32 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 165,
+      "similarity_score": 0.724,
+      "subject": "Mathematics",
+      "source_a": "batch 9 row 10",
+      "source_b": "batch 20 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 166,
+      "similarity_score": 0.723,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 9",
+      "source_b": "batch 11 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 167,
+      "similarity_score": 0.723,
+      "subject": "Mathematics",
+      "source_a": "batch 11 row 10",
+      "source_b": "batch 27 row 8",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 168,
+      "similarity_score": 0.723,
+      "subject": "Use of English",
+      "source_a": "batch 18 row 4",
+      "source_b": "batch 28 row 5",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 169,
+      "similarity_score": 0.721,
+      "subject": "Chemistry",
+      "source_a": "batch 9 row 17",
+      "source_b": "batch 35 row 18",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 170,
+      "similarity_score": 0.721,
+      "subject": "Government",
+      "source_a": "batch 26 row 34",
+      "source_b": "batch 33 row 35",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 171,
+      "similarity_score": 0.72,
+      "subject": "Use of English",
+      "source_a": "batch 7 row 3",
+      "source_b": "batch 22 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 172,
+      "similarity_score": 0.719,
+      "subject": "Government",
+      "source_a": "batch 19 row 35",
+      "source_b": "batch 21 row 36",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 173,
+      "similarity_score": 0.718,
+      "subject": "Physics",
+      "source_a": "batch 17 row 22",
+      "source_b": "batch 29 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 174,
+      "similarity_score": 0.717,
+      "subject": "Mathematics",
+      "source_a": "batch 14 row 10",
+      "source_b": "batch 34 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 175,
+      "similarity_score": 0.713,
+      "subject": "Chemistry",
+      "source_a": "batch 8 row 19",
+      "source_b": "batch 40 row 17",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 176,
+      "similarity_score": 0.713,
+      "subject": "Mathematics",
+      "source_a": "batch 14 row 10",
+      "source_b": "batch 29 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 177,
+      "similarity_score": 0.713,
+      "subject": "Use of English",
+      "source_a": "batch 26 row 6",
+      "source_b": "batch 31 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 178,
+      "similarity_score": 0.712,
+      "subject": "Use of English",
+      "source_a": "batch 2 row 6",
+      "source_b": "batch 19 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-72",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both test the meaning of the idiom 'spill the beans' as revealing a secret.",
+        "subject": "Use of English",
+        "source_a": "batch 2 row 6",
+        "source_b": "batch 19 row 3",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 179,
+      "similarity_score": 0.712,
+      "subject": "Mathematics",
+      "source_a": "batch 9 row 10",
+      "source_b": "batch 18 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 180,
+      "similarity_score": 0.712,
+      "subject": "Biology",
+      "source_a": "batch 5 row 15",
+      "source_b": "batch 33 row 16",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-73",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask how vaccination protects against infection by stimulating a specific immune response and memory.",
+        "subject": "Biology",
+        "source_a": "batch 5 row 15",
+        "source_b": "batch 33 row 16",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 181,
+      "similarity_score": 0.711,
+      "subject": "Use of English",
+      "source_a": "batch 3 row 3",
+      "source_b": "batch 22 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 182,
+      "similarity_score": 0.711,
+      "subject": "Mathematics",
+      "source_a": "batch 5 row 7",
+      "source_b": "batch 21 row 9",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-43",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both stems ask the learner to factorise exactly 6x + 12 and have the same correct answer, 6(x + 2). The altered wording 'completely' does not create a different assessment.",
+        "subject": "Mathematics",
+        "source_a": "batch 5 row 7",
+        "source_b": "batch 21 row 9",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 183,
+      "similarity_score": 0.711,
+      "subject": "Physics",
+      "source_a": "batch 7 row 26",
+      "source_b": "batch 40 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 184,
+      "similarity_score": 0.711,
+      "subject": "Government",
+      "source_a": "batch 26 row 34",
+      "source_b": "batch 32 row 34",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-47",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask how constitutional powers are divided in a federal system. This is part of a three-row overlap: batch 32 row 34 is retained under DUP-28 against batch 33 row 35; batch 26 row 34 is an additional duplicate of the same retained item.",
+        "subject": "Government",
+        "source_a": "batch 26 row 34",
+        "source_b": "batch 32 row 34",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 185,
+      "similarity_score": 0.71,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 7",
+      "source_b": "batch 35 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 186,
+      "similarity_score": 0.71,
+      "subject": "Physics",
+      "source_a": "batch 4 row 26",
+      "source_b": "batch 35 row 25",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-44",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask what liquid pressure at rest increases with and identify depth below the surface. They test the same direct-recall relationship.",
+        "subject": "Physics",
+        "source_a": "batch 4 row 26",
+        "source_b": "batch 35 row 25",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 187,
+      "similarity_score": 0.71,
+      "subject": "Mathematics",
+      "source_a": "batch 19 row 10",
+      "source_b": "batch 40 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 188,
+      "similarity_score": 0.71,
+      "subject": "Biology",
+      "source_a": "batch 20 row 15",
+      "source_b": "batch 40 row 12",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-74",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask where the blastocyst/early embryo normally implants after fertilisation: the uterine lining.",
+        "subject": "Biology",
+        "source_a": "batch 20 row 15",
+        "source_b": "batch 40 row 12",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 189,
+      "similarity_score": 0.708,
+      "subject": "Economics",
+      "source_a": "batch 30 row 30",
+      "source_b": "batch 39 row 31",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-45",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask how naira depreciation affects the foreign-currency price of Nigerian exports and identify that they may become cheaper to foreign buyers, other things equal.",
+        "subject": "Economics",
+        "source_a": "batch 30 row 30",
+        "source_b": "batch 39 row 31",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 190,
+      "similarity_score": 0.707,
+      "subject": "Physics",
+      "source_a": "batch 1 row 24",
+      "source_b": "batch 35 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 191,
+      "similarity_score": 0.705,
+      "subject": "Physics",
+      "source_a": "batch 4 row 23",
+      "source_b": "batch 20 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 192,
+      "similarity_score": 0.705,
+      "subject": "Economics",
+      "source_a": "batch 27 row 27",
+      "source_b": "batch 34 row 27",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 193,
+      "similarity_score": 0.703,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 10",
+      "source_b": "batch 33 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 194,
+      "similarity_score": 0.703,
+      "subject": "Physics",
+      "source_a": "batch 7 row 25",
+      "source_b": "batch 34 row 26",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 195,
+      "similarity_score": 0.703,
+      "subject": "Economics",
+      "source_a": "batch 25 row 28",
+      "source_b": "batch 31 row 31",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-75",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both identify the Gini coefficient as a measure of income inequality.",
+        "subject": "Economics",
+        "source_a": "batch 25 row 28",
+        "source_b": "batch 31 row 31",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 196,
+      "similarity_score": 0.703,
+      "subject": "Mathematics",
+      "source_a": "batch 26 row 10",
+      "source_b": "batch 38 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 197,
+      "similarity_score": 0.702,
+      "subject": "Chemistry",
+      "source_a": "batch 23 row 19",
+      "source_b": "batch 36 row 18",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-46",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask learners to identify the −COOH group as characteristic of carboxylic acids; specifying ethanoic acid does not change the assessed functional-group fact.",
+        "subject": "Chemistry",
+        "source_a": "batch 23 row 19",
+        "source_b": "batch 36 row 18",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 198,
+      "similarity_score": 0.701,
+      "subject": "Physics",
+      "source_a": "batch 6 row 25",
+      "source_b": "batch 17 row 24",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 199,
+      "similarity_score": 0.701,
+      "subject": "Physics",
+      "source_a": "batch 9 row 25",
+      "source_b": "batch 20 row 24",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 200,
+      "similarity_score": 0.701,
+      "subject": "Physics",
+      "source_a": "batch 18 row 23",
+      "source_b": "batch 27 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 201,
+      "similarity_score": 0.7,
+      "subject": "Physics",
+      "source_a": "batch 20 row 22",
+      "source_b": "batch 26 row 26",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 202,
+      "similarity_score": 0.699,
+      "subject": "Mathematics",
+      "source_a": "batch 8 row 8",
+      "source_b": "batch 38 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 203,
+      "similarity_score": 0.699,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 11",
+      "source_b": "batch 34 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 204,
+      "similarity_score": 0.698,
+      "subject": "Economics",
+      "source_a": "batch 1 row 31",
+      "source_b": "batch 39 row 28",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-54",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask for the tax charged as a fixed percentage of a product's price or value and identify an ad valorem tax. This is the same definition.",
+        "subject": "Economics",
+        "source_a": "batch 1 row 31",
+        "source_b": "batch 39 row 28",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 205,
+      "similarity_score": 0.698,
+      "subject": "Physics",
+      "source_a": "batch 19 row 26",
+      "source_b": "batch 36 row 26",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 206,
+      "similarity_score": 0.696,
+      "subject": "Use of English",
+      "source_a": "batch 8 row 6",
+      "source_b": "batch 35 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 207,
+      "similarity_score": 0.696,
+      "subject": "Economics",
+      "source_a": "batch 10 row 27",
+      "source_b": "batch 37 row 27",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-76",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both test the law of supply: a higher price generally increases quantity supplied, other things equal.",
+        "subject": "Economics",
+        "source_a": "batch 37 row 27",
+        "source_b": "batch 10 row 27",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 208,
+      "similarity_score": 0.695,
+      "subject": "Literature in English",
+      "source_a": "batch 29 row 39",
+      "source_b": "batch 38 row 41",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 209,
+      "similarity_score": 0.692,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 6",
+      "source_b": "batch 29 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 210,
+      "similarity_score": 0.692,
+      "subject": "Chemistry",
+      "source_a": "batch 19 row 20",
+      "source_b": "batch 33 row 19",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-53",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask which metal is extracted by electrolysis rather than ordinary carbon reduction and identify aluminium. The tested fact and explanation are the same.",
+        "subject": "Chemistry",
+        "source_a": "batch 19 row 20",
+        "source_b": "batch 33 row 19",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 211,
+      "similarity_score": 0.692,
+      "subject": "Literature in English",
+      "source_a": "batch 19 row 38",
+      "source_b": "batch 31 row 37",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 212,
+      "similarity_score": 0.691,
+      "subject": "Physics",
+      "source_a": "batch 3 row 24",
+      "source_b": "batch 26 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 213,
+      "similarity_score": 0.691,
+      "subject": "Literature in English",
+      "source_a": "batch 8 row 38",
+      "source_b": "batch 31 row 41",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 214,
+      "similarity_score": 0.691,
+      "subject": "Chemistry",
+      "source_a": "batch 18 row 21",
+      "source_b": "batch 25 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 215,
+      "similarity_score": 0.691,
+      "subject": "Literature in English",
+      "source_a": "batch 11 row 37",
+      "source_b": "batch 31 row 37",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-56",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask what exposition does in a literary work and identify introducing background, setting, characters or the initial situation. This is a three-row overlap with batch 19 row 38 already held under DUP-35; retain batch 11 row 37 and hold batch 31 row 37 as the additional duplicate.",
+        "subject": "Literature in English",
+        "source_a": "batch 11 row 37",
+        "source_b": "batch 31 row 37",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 216,
+      "similarity_score": 0.69,
+      "subject": "Mathematics",
+      "source_a": "batch 3 row 9",
+      "source_b": "batch 18 row 11",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-52",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask for the ratio represented by sin θ and give opposite side divided by hypotenuse as the answer. The wording and options are equivalent.",
+        "subject": "Mathematics",
+        "source_a": "batch 3 row 9",
+        "source_b": "batch 18 row 11",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 217,
+      "similarity_score": 0.69,
+      "subject": "Mathematics",
+      "source_a": "batch 4 row 8",
+      "source_b": "batch 36 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 218,
+      "similarity_score": 0.69,
+      "subject": "Government",
+      "source_a": "batch 7 row 35",
+      "source_b": "batch 34 row 35",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-77",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask for a typical local-government revenue source and identify market fees/local charges.",
+        "subject": "Government",
+        "source_a": "batch 7 row 35",
+        "source_b": "batch 34 row 35",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 219,
+      "similarity_score": 0.69,
+      "subject": "Use of English",
+      "source_a": "batch 18 row 4",
+      "source_b": "batch 27 row 2",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 220,
+      "similarity_score": 0.69,
+      "subject": "Chemistry",
+      "source_a": "batch 16 row 20",
+      "source_b": "batch 40 row 21",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 221,
+      "similarity_score": 0.689,
+      "subject": "Biology",
+      "source_a": "batch 1 row 14",
+      "source_b": "batch 28 row 15",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 222,
+      "similarity_score": 0.688,
+      "subject": "Mathematics",
+      "source_a": "batch 8 row 8",
+      "source_b": "batch 28 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 223,
+      "similarity_score": 0.688,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 7",
+      "source_b": "batch 40 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 224,
+      "similarity_score": 0.688,
+      "subject": "Use of English",
+      "source_a": "batch 20 row 6",
+      "source_b": "batch 28 row 4",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-78",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both use the identical example list 'reading, swimming and cycling' to test parallel structure.",
+        "subject": "Use of English",
+        "source_a": "batch 20 row 6",
+        "source_b": "batch 28 row 4",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 225,
+      "similarity_score": 0.687,
+      "subject": "Physics",
+      "source_a": "batch 26 row 23",
+      "source_b": "batch 34 row 26",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 226,
+      "similarity_score": 0.685,
+      "subject": "Physics",
+      "source_a": "batch 14 row 25",
+      "source_b": "batch 30 row 25",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 227,
+      "similarity_score": 0.682,
+      "subject": "Chemistry",
+      "source_a": "batch 8 row 21",
+      "source_b": "batch 34 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 228,
+      "similarity_score": 0.682,
+      "subject": "Literature in English",
+      "source_a": "batch 8 row 40",
+      "source_b": "batch 32 row 38",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 229,
+      "similarity_score": 0.68,
+      "subject": "Physics",
+      "source_a": "batch 26 row 26",
+      "source_b": "batch 34 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 230,
+      "similarity_score": 0.679,
+      "subject": "Mathematics",
+      "source_a": "batch 12 row 8",
+      "source_b": "batch 29 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 231,
+      "similarity_score": 0.679,
+      "subject": "Use of English",
+      "source_a": "batch 29 row 6",
+      "source_b": "batch 35 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 232,
+      "similarity_score": 0.678,
+      "subject": "Use of English",
+      "source_a": "batch 4 row 5",
+      "source_b": "batch 12 row 3",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-79",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both test backshift of 'I am tired' in reported speech; the reporting speaker/name changes only.",
+        "subject": "Use of English",
+        "source_a": "batch 12 row 3",
+        "source_b": "batch 4 row 5",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 233,
+      "similarity_score": 0.677,
+      "subject": "Economics",
+      "source_a": "batch 3 row 28",
+      "source_b": "batch 35 row 31",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-80",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both identify factory building rent under a fixed lease as a short-run fixed cost.",
+        "subject": "Economics",
+        "source_a": "batch 3 row 28",
+        "source_b": "batch 35 row 31",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 234,
+      "similarity_score": 0.677,
+      "subject": "Mathematics",
+      "source_a": "batch 20 row 7",
+      "source_b": "batch 32 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 235,
+      "similarity_score": 0.676,
+      "subject": "Physics",
+      "source_a": "batch 18 row 26",
+      "source_b": "batch 27 row 26",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 236,
+      "similarity_score": 0.675,
+      "subject": "Biology",
+      "source_a": "batch 5 row 12",
+      "source_b": "batch 20 row 12",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 237,
+      "similarity_score": 0.675,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 19",
+      "source_b": "batch 29 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 238,
+      "similarity_score": 0.675,
+      "subject": "Chemistry",
+      "source_a": "batch 19 row 21",
+      "source_b": "batch 35 row 18",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 239,
+      "similarity_score": 0.674,
+      "subject": "Literature in English",
+      "source_a": "batch 9 row 41",
+      "source_b": "batch 26 row 39",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 240,
+      "similarity_score": 0.674,
+      "subject": "Physics",
+      "source_a": "batch 26 row 25",
+      "source_b": "batch 35 row 26",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-81",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask when an emf is induced in a coil: when magnetic flux linkage changes.",
+        "subject": "Physics",
+        "source_a": "batch 26 row 25",
+        "source_b": "batch 35 row 26",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 241,
+      "similarity_score": 0.673,
+      "subject": "Economics",
+      "source_a": "batch 8 row 28",
+      "source_b": "batch 19 row 27",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-82",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define progressive taxation as a system in which the tax rate rises with taxable income.",
+        "subject": "Economics",
+        "source_a": "batch 8 row 28",
+        "source_b": "batch 19 row 27",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 242,
+      "similarity_score": 0.673,
+      "subject": "Literature in English",
+      "source_a": "batch 20 row 39",
+      "source_b": "batch 32 row 39",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-83",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both test the concluding resolution/denouement of a narrative, where the main conflict is settled and the outcome becomes clear.",
+        "subject": "Literature in English",
+        "source_a": "batch 20 row 39",
+        "source_b": "batch 32 row 39",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 243,
+      "similarity_score": 0.672,
+      "subject": "Mathematics",
+      "source_a": "batch 9 row 9",
+      "source_b": "batch 14 row 9",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 244,
+      "similarity_score": 0.671,
+      "subject": "Physics",
+      "source_a": "batch 7 row 23",
+      "source_b": "batch 19 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 245,
+      "similarity_score": 0.671,
+      "subject": "Mathematics",
+      "source_a": "batch 2 row 9",
+      "source_b": "batch 23 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 246,
+      "similarity_score": 0.671,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 10",
+      "source_b": "batch 29 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 247,
+      "similarity_score": 0.67,
+      "subject": "Economics",
+      "source_a": "batch 2 row 31",
+      "source_b": "batch 27 row 29",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 248,
+      "similarity_score": 0.667,
+      "subject": "Mathematics",
+      "source_a": "batch 5 row 11",
+      "source_b": "batch 16 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 249,
+      "similarity_score": 0.667,
+      "subject": "Physics",
+      "source_a": "batch 6 row 23",
+      "source_b": "batch 20 row 22",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 250,
+      "similarity_score": 0.667,
+      "subject": "Use of English",
+      "source_a": "batch 7 row 5",
+      "source_b": "batch 29 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 251,
+      "similarity_score": 0.667,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 11",
+      "source_b": "batch 23 row 10",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 252,
+      "similarity_score": 0.667,
+      "subject": "Use of English",
+      "source_a": "batch 5 row 6",
+      "source_b": "batch 36 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 253,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": "batch 8 row 37",
+      "source_b": "batch 33 row 40",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 254,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": "batch 9 row 41",
+      "source_b": "batch 34 row 37",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 255,
+      "similarity_score": 0.667,
+      "subject": "Economics",
+      "source_a": "batch 10 row 30",
+      "source_b": "batch 35 row 27",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 256,
+      "similarity_score": 0.667,
+      "subject": "Physics",
+      "source_a": "batch 11 row 24",
+      "source_b": "batch 25 row 24",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-51",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask for the condition under which total internal reflection occurs: light must travel from a more optically dense medium to a less dense medium with incidence angle greater than the critical angle.",
+        "subject": "Physics",
+        "source_a": "batch 25 row 24",
+        "source_b": "batch 11 row 24",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 257,
+      "similarity_score": 0.667,
+      "subject": "Chemistry",
+      "source_a": "batch 20 row 17",
+      "source_b": "batch 25 row 19",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 258,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": "batch 15 row 38",
+      "source_b": "batch 31 row 40",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-55",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define verbal irony as a contrast between the speaker's intended meaning and the literal words spoken. The stems and answer options are near-equivalent.",
+        "subject": "Literature in English",
+        "source_a": "batch 15 row 38",
+        "source_b": "batch 31 row 40",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 259,
+      "similarity_score": 0.667,
+      "subject": "Physics",
+      "source_a": "batch 19 row 23",
+      "source_b": "batch 33 row 24",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 260,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": "batch 25 row 38",
+      "source_b": "batch 37 row 38",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 261,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": "batch 27 row 37",
+      "source_b": "batch 34 row 41",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 262,
+      "similarity_score": 0.667,
+      "subject": "Use of English",
+      "source_a": "batch 29 row 2",
+      "source_b": "batch 32 row 2",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 263,
+      "similarity_score": 0.663,
+      "subject": "Mathematics",
+      "source_a": "batch 10 row 10",
+      "source_b": "batch 31 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 264,
+      "similarity_score": 0.663,
+      "subject": "Biology",
+      "source_a": "batch 26 row 13",
+      "source_b": "batch 39 row 16",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-84",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both identify moving air around the leaf as a condition that generally increases transpiration.",
+        "subject": "Biology",
+        "source_a": "batch 26 row 13",
+        "source_b": "batch 39 row 16",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 265,
+      "similarity_score": 0.662,
+      "subject": "Literature in English",
+      "source_a": "batch 6 row 38",
+      "source_b": "batch 20 row 38",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-48",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask for the name of the central struggle or opposition that drives dramatic action. The wording and distractors differ, but the assessed concept is the same.",
+        "subject": "Literature in English",
+        "source_a": "batch 6 row 38",
+        "source_b": "batch 20 row 38",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 266,
+      "similarity_score": 0.662,
+      "subject": "Economics",
+      "source_a": "batch 1 row 28",
+      "source_b": "batch 37 row 27",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 267,
+      "similarity_score": 0.662,
+      "subject": "Physics",
+      "source_a": "batch 14 row 25",
+      "source_b": "batch 35 row 24",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 268,
+      "similarity_score": 0.661,
+      "subject": "Use of English",
+      "source_a": "batch 1 row 3",
+      "source_b": "batch 16 row 5",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 269,
+      "similarity_score": 0.661,
+      "subject": "Economics",
+      "source_a": "batch 8 row 30",
+      "source_b": "batch 12 row 29",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-49",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define the balance of payments as the record of economic transactions between a country's residents and the rest of the world. The wording and options are near-equivalent.",
+        "subject": "Economics",
+        "source_a": "batch 8 row 30",
+        "source_b": "batch 12 row 29",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 270,
+      "similarity_score": 0.661,
+      "subject": "Government",
+      "source_a": "batch 2 row 34",
+      "source_b": "batch 29 row 34",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 271,
+      "similarity_score": 0.661,
+      "subject": "Economics",
+      "source_a": "batch 22 row 30",
+      "source_b": "batch 32 row 30",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 272,
+      "similarity_score": 0.66,
+      "subject": "Use of English",
+      "source_a": "batch 11 row 4",
+      "source_b": "batch 24 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 273,
+      "similarity_score": 0.66,
+      "subject": "Physics",
+      "source_a": "batch 15 row 25",
+      "source_b": "batch 21 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 274,
+      "similarity_score": 0.659,
+      "subject": "Literature in English",
+      "source_a": "batch 30 row 41",
+      "source_b": "batch 32 row 37",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-85",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both define dramatis personae as the list of characters in a play.",
+        "subject": "Literature in English",
+        "source_a": "batch 30 row 41",
+        "source_b": "batch 32 row 37",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 275,
+      "similarity_score": 0.657,
+      "subject": "Chemistry",
+      "source_a": "batch 17 row 21",
+      "source_b": "batch 38 row 21",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 276,
+      "similarity_score": 0.656,
+      "subject": "Mathematics",
+      "source_a": "batch 20 row 8",
+      "source_b": "batch 35 row 7",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 277,
+      "similarity_score": 0.655,
+      "subject": "Physics",
+      "source_a": "batch 9 row 23",
+      "source_b": "batch 35 row 24",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 278,
+      "similarity_score": 0.655,
+      "subject": "Chemistry",
+      "source_a": "batch 25 row 21",
+      "source_b": "batch 40 row 20",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 279,
+      "similarity_score": 0.654,
+      "subject": "Use of English",
+      "source_a": "batch 3 row 4",
+      "source_b": "batch 17 row 6",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 280,
+      "similarity_score": 0.653,
+      "subject": "Use of English",
+      "source_a": "batch 2 row 3",
+      "source_b": "batch 39 row 3",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 281,
+      "similarity_score": 0.653,
+      "subject": "Physics",
+      "source_a": "batch 5 row 23",
+      "source_b": "batch 38 row 23",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 282,
+      "similarity_score": 0.653,
+      "subject": "Chemistry",
+      "source_a": "batch 11 row 18",
+      "source_b": "batch 38 row 18",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-86",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both state that one mole of an ideal gas occupies approximately 22.4 dm³ at 0°C and 1 atm.",
+        "subject": "Chemistry",
+        "source_a": "batch 38 row 18",
+        "source_b": "batch 11 row 18",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 283,
+      "similarity_score": 0.651,
+      "subject": "Mathematics",
+      "source_a": "batch 6 row 11",
+      "source_b": "batch 32 row 11",
+      "candidate_status": "no_exact_individual_review_record_found",
+      "existing_evidence": null,
+      "review_decision_created": false
+    },
+    {
+      "rank": 284,
+      "similarity_score": 0.651,
+      "subject": "Biology",
+      "source_a": "batch 9 row 12",
+      "source_b": "batch 31 row 12",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-50",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both ask which structure is the normal site of fertilisation and identify the oviduct. The stems, options and explanations assess the same fact.",
+        "subject": "Biology",
+        "source_a": "batch 9 row 12",
+        "source_b": "batch 31 row 12",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 285,
+      "similarity_score": 0.651,
+      "subject": "Use of English",
+      "source_a": "batch 16 row 5",
+      "source_b": "batch 29 row 4",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-87",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both test subject-verb agreement with the same 'Neither the principal nor the teachers' construction.",
+        "subject": "Use of English",
+        "source_a": "batch 16 row 5",
+        "source_b": "batch 29 row 4",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    },
+    {
+      "rank": 286,
+      "similarity_score": 0.65,
+      "subject": "Economics",
+      "source_a": "batch 3 row 30",
+      "source_b": "batch 34 row 31",
+      "candidate_status": "exact_existing_pair_record_found",
+      "existing_evidence": {
+        "pair_id": "DUP-88",
+        "decision": "confirmed_semantic_duplicate",
+        "reason": "Both state that investment in education and training builds human capital.",
+        "subject": "Economics",
+        "source_a": "batch 3 row 30",
+        "source_b": "batch 34 row 31",
+        "origin": "exact_endpoint_match_existing_disposition_register"
+      },
+      "review_decision_created": false
+    }
+  ],
+  "controls": {
+    "question_content_changed": 0,
+    "source_or_staging_rows_changed": 0,
+    "new_review_decisions_created": 0,
+    "academic_approvals_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "production_touched": false
+  },
+  "conclusion": "This reconstruction recovers the full 286-row candidate inventory and preserves exact evidence already found. It does not convert the 178 ranks without exact individual records into completed reviews. The 237 historical count and four-record counter difference remain unresolved."
+}
