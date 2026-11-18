@@ -52,3 +52,18 @@ The highest source similarity is below the 0.42 screening threshold, but it is r
 - Questions published: 0.
 - Production Worker/database changed: 0.
 - Merge or deployment performed: 0.
+
+
+## Completed supplemental-stem comparison — 19 November 2026
+
+The outstanding comparison was completed against **29 distinct supplemental draft stem strings** recovered from the previously documented draft reports dated 11–18 November. The comparison used the candidate question text (stem plus four options) against each recovered prior stem, with the same padded character-trigram Dice method.
+
+- Number of prior supplemental stems compared: **29**.
+- Highest similarity: **0.2350**.
+- Closest prior stem: the Literature draft defining an *epiphany* (“In prose fiction, a moment when a character suddenly gains a deep or illuminating understanding…”).
+- The picaresque-novel question tests the episodic adventures of a roguish protagonist; the closest stem tests a moment of sudden insight. These are different literary concepts.
+- All 29 stem-only comparisons were below the 0.42 lexical threshold.
+
+**Scope limitation:** The recovered comparison set comprised 29 stem strings, not the full options and explanations attached to every earlier proposal. This completes the requested stem comparison, but it is not a complete question-to-question semantic audit. The earlier epistolary-novel source-bank match at 0.3848 remains the closest same-subject retained-bank comparison and still requires qualified Literature review.
+
+**Updated disposition:** The supplemental-stem comparison is complete. Batch 11 remains **draft-only and not cleared for import or publication** pending qualified independent Literature review, syllabus confirmation, and a documented item-level decision.
