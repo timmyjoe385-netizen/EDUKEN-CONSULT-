@@ -1,0 +1,3062 @@
+{
+  "audit_date": "2026-11-18",
+  "purpose": "Exact normalized comparison of stem, options, answer label and explanation for 178 unmatched baseline cross-window candidates.",
+  "sources": [
+    "content/cbt/audits/2026-11-18-unmatched-178-exact-stem-triage.json",
+    "content/cbt/audits/global-duplicate-review-cross-window-candidates-2026-11-01.json"
+  ],
+  "method": "Lowercase, Unicode normalize, remove diacritics, punctuation and repeated whitespace; compare text fields exactly. Answer comparison is answer-label equality only; it does not compare the meaning of keyed options. All rows remain unresolved. This is not a semantic or academic review.",
+  "summary": {
+    "candidates": 178,
+    "exactStem": 0,
+    "allFourOptionsExact": 178,
+    "sameAnswerLabel": 178,
+    "sameExplanationExact": 178,
+    "stemAndAllOptionsExact": 0,
+    "stemAndOptionsAndAnswerExact": 0,
+    "answerSameAndOptionsExact": 178,
+    "bySubject": {
+      "Mathematics": 51,
+      "Government": 6,
+      "Use of English": 32,
+      "Biology": 5,
+      "Chemistry": 27,
+      "Economics": 12,
+      "Physics": 32,
+      "Literature in English": 13
+    }
+  },
+  "limitations": [
+    "Matching answer labels do not establish matching correct answers unless options also correspond in the same order.",
+    "Non-exact text may still express the same concept; exact checks cannot rule out semantic duplication.",
+    "No question was approved, rejected, imported, published, edited or moved between statuses."
+  ],
+  "records": [
+    {
+      "rank": 4,
+      "score": 0.947,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 13,
+      "score": 0.919,
+      "subject": "Government",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 16,
+      "score": 0.917,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 18,
+      "score": 0.914,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 20,
+      "score": 0.904,
+      "subject": "Government",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 28,
+      "score": 0.882,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 30,
+      "score": 0.881,
+      "subject": "Biology",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 33,
+      "score": 0.878,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 36,
+      "score": 0.87,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 38,
+      "score": 0.864,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 41,
+      "score": 0.86,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 42,
+      "score": 0.857,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 43,
+      "score": 0.857,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 44,
+      "score": 0.855,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 45,
+      "score": 0.854,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 49,
+      "score": 0.851,
+      "subject": "Government",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 51,
+      "score": 0.848,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 53,
+      "score": 0.845,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 54,
+      "score": 0.844,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 55,
+      "score": 0.843,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 58,
+      "score": 0.839,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 59,
+      "score": 0.833,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 61,
+      "score": 0.832,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 63,
+      "score": 0.829,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 65,
+      "score": 0.825,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 69,
+      "score": 0.821,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 71,
+      "score": 0.819,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 73,
+      "score": 0.809,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 82,
+      "score": 0.8,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 83,
+      "score": 0.8,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 87,
+      "score": 0.8,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 88,
+      "score": 0.8,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 93,
+      "score": 0.785,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 95,
+      "score": 0.785,
+      "subject": "Biology",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 97,
+      "score": 0.784,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 99,
+      "score": 0.784,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 102,
+      "score": 0.78,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 103,
+      "score": 0.779,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 104,
+      "score": 0.776,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 106,
+      "score": 0.776,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 108,
+      "score": 0.772,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 109,
+      "score": 0.772,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 110,
+      "score": 0.771,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 111,
+      "score": 0.771,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 115,
+      "score": 0.768,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 116,
+      "score": 0.762,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 117,
+      "score": 0.762,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 118,
+      "score": 0.761,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 119,
+      "score": 0.76,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 120,
+      "score": 0.759,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 121,
+      "score": 0.759,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 122,
+      "score": 0.759,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 125,
+      "score": 0.753,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 126,
+      "score": 0.751,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 127,
+      "score": 0.75,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 128,
+      "score": 0.75,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 129,
+      "score": 0.75,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 130,
+      "score": 0.747,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 131,
+      "score": 0.747,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 132,
+      "score": 0.746,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 133,
+      "score": 0.746,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 134,
+      "score": 0.745,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 135,
+      "score": 0.744,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 139,
+      "score": 0.741,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 141,
+      "score": 0.74,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 142,
+      "score": 0.74,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 143,
+      "score": 0.74,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 144,
+      "score": 0.739,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 145,
+      "score": 0.738,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 146,
+      "score": 0.738,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 148,
+      "score": 0.736,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 149,
+      "score": 0.734,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 150,
+      "score": 0.733,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 151,
+      "score": 0.733,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 152,
+      "score": 0.732,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 153,
+      "score": 0.732,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 154,
+      "score": 0.732,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 155,
+      "score": 0.732,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 156,
+      "score": 0.732,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 157,
+      "score": 0.732,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 158,
+      "score": 0.73,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 159,
+      "score": 0.727,
+      "subject": "Biology",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 160,
+      "score": 0.727,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 161,
+      "score": 0.726,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 162,
+      "score": 0.726,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 163,
+      "score": 0.725,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 164,
+      "score": 0.725,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 165,
+      "score": 0.724,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 166,
+      "score": 0.723,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 167,
+      "score": 0.723,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 168,
+      "score": 0.723,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 169,
+      "score": 0.721,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 170,
+      "score": 0.721,
+      "subject": "Government",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 171,
+      "score": 0.72,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 172,
+      "score": 0.719,
+      "subject": "Government",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 173,
+      "score": 0.718,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 174,
+      "score": 0.717,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 175,
+      "score": 0.713,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 176,
+      "score": 0.713,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 177,
+      "score": 0.713,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 179,
+      "score": 0.712,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 181,
+      "score": 0.711,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 183,
+      "score": 0.711,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 185,
+      "score": 0.71,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 187,
+      "score": 0.71,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 190,
+      "score": 0.707,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 191,
+      "score": 0.705,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 192,
+      "score": 0.705,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 193,
+      "score": 0.703,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 194,
+      "score": 0.703,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 196,
+      "score": 0.703,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 198,
+      "score": 0.701,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 199,
+      "score": 0.701,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 200,
+      "score": 0.701,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 201,
+      "score": 0.7,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 202,
+      "score": 0.699,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 203,
+      "score": 0.699,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 205,
+      "score": 0.698,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 206,
+      "score": 0.696,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 208,
+      "score": 0.695,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 209,
+      "score": 0.692,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 211,
+      "score": 0.692,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 212,
+      "score": 0.691,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 213,
+      "score": 0.691,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 214,
+      "score": 0.691,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 217,
+      "score": 0.69,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 219,
+      "score": 0.69,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 220,
+      "score": 0.69,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 221,
+      "score": 0.689,
+      "subject": "Biology",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 222,
+      "score": 0.688,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 223,
+      "score": 0.688,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 225,
+      "score": 0.687,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 226,
+      "score": 0.685,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 227,
+      "score": 0.682,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 228,
+      "score": 0.682,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 229,
+      "score": 0.68,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 230,
+      "score": 0.679,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 231,
+      "score": 0.679,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 234,
+      "score": 0.677,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 235,
+      "score": 0.676,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 236,
+      "score": 0.675,
+      "subject": "Biology",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 237,
+      "score": 0.675,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 238,
+      "score": 0.675,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 239,
+      "score": 0.674,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 243,
+      "score": 0.672,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 244,
+      "score": 0.671,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 245,
+      "score": 0.671,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 246,
+      "score": 0.671,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 247,
+      "score": 0.67,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 248,
+      "score": 0.667,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 249,
+      "score": 0.667,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 250,
+      "score": 0.667,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 251,
+      "score": 0.667,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 252,
+      "score": 0.667,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 253,
+      "score": 0.667,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 254,
+      "score": 0.667,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 255,
+      "score": 0.667,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 257,
+      "score": 0.667,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 259,
+      "score": 0.667,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 260,
+      "score": 0.667,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 261,
+      "score": 0.667,
+      "subject": "Literature in English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 262,
+      "score": 0.667,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 263,
+      "score": 0.663,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 266,
+      "score": 0.662,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 267,
+      "score": 0.662,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 268,
+      "score": 0.661,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 270,
+      "score": 0.661,
+      "subject": "Government",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 271,
+      "score": 0.661,
+      "subject": "Economics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 272,
+      "score": 0.66,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 273,
+      "score": 0.66,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 275,
+      "score": 0.657,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 276,
+      "score": 0.656,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 277,
+      "score": 0.655,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 278,
+      "score": 0.655,
+      "subject": "Chemistry",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 279,
+      "score": 0.654,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 280,
+      "score": 0.653,
+      "subject": "Use of English",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 281,
+      "score": 0.653,
+      "subject": "Physics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 283,
+      "score": 0.651,
+      "subject": "Mathematics",
+      "stemExact": false,
+      "options_equal": true,
+      "matching_options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answer_equal": true,
+      "explanation_equal": true,
+      "comparison": "exact normalized text only; not a semantic decision",
+      "disposition": "unresolved_similarity_candidate"
+    }
+  ]
+}
