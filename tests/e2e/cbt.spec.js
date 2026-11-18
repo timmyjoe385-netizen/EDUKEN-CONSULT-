@@ -512,8 +512,8 @@ test('CBT remains safely disabled while published-bank checks are slow, then ena
   await expect(page.getByText('Checking the published question bank…')).toBeVisible();
   const heroPracticeButton = page.locator('.cbt-hero-actions button.cbt-primary-button');
   const selectedSubjectPracticeButton = page.locator('#subjects .cbt-subject-picker button.cbt-primary-button');
-  await expect(heroPracticeButton).toBeDisabled();
-  await expect(selectedSubjectPracticeButton).toBeDisabled();
+  await expect(heroPracticeButton).toBeDisabled({ timeout: 500 });
+  await expect(selectedSubjectPracticeButton).toBeDisabled({ timeout: 500 });
 
   await expect(page.getByText('Free subject practice is available. Choose a subject below to begin.')).toBeVisible();
   await expect(heroPracticeButton).toBeEnabled();
