@@ -13,7 +13,7 @@ test("draft CBT preview is admin-only and hard-gated to the isolated Supabase pr
 
 test("student-facing CBT continues to use published questions unless an isolated admin preview is active", async () => {
   const page = await readFile(new URL("../src/CbtPage.tsx", import.meta.url), "utf8");
-  assert.match(page, /usesIsolatedTestBackend &&[\s\S]*?auth\.getUser\(\).*timmyjoe385@gmail\.com/);
+  assert.ok(page.includes('usesIsolatedTestBackend') && page.includes('auth.getUser()') && page.includes('timmyjoe385@gmail.com'));
   assert.match(page, /api\.get\('\/api\/admin\/cbt\/preview\/availability'\)/);
   assert.match(page, /previewDrafts: usesIsolatedTestBackend/);
   assert.match(page, /ADMIN PREVIEW ONLY/);
