@@ -509,7 +509,7 @@ test('CBT remains safely disabled while published-bank checks are slow, then ena
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByText('Checking the published question bank…')).toBeVisible();
+  await expect(page.getByText('Checking the question bank…')).toBeVisible();
   const heroPracticeButton = page.locator('.cbt-hero-actions button.cbt-primary-button');
   const selectedSubjectPracticeButton = page.locator('#subjects .cbt-subject-picker button.cbt-primary-button');
   await expect(heroPracticeButton).toBeDisabled({ timeout: 500 });
