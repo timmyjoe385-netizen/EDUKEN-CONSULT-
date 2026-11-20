@@ -13,7 +13,7 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 2. Nationwide leaderboard across eligible EDUKEN CBT students.
 3. Eight subject leaderboards: Use of English, Mathematics, Biology, Chemistry, Physics, Economics, Government, and Literature in English.
 4. Student dashboard with own rank, scores, accuracy, practice history, and improvement over time.
-5. Weekly champions: top performer, most improved, and most consistent.
+5. Weekly champions: top performer, most improved, and most consistent. The top performer is the best qualifying full mock; most improved compares a student's first and latest qualifying mock of the week (minimum two); most consistent recognises the lowest score variation across at least two qualifying mocks, with average score as the tie-break.
 6. Head-to-head challenges as a later phase after the core leaderboard is secure and stable.
 7. Show every eligible participant. Use pagination/scrolling for performance, but never impose a fixed top-100 ceiling.
 
@@ -52,7 +52,8 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 - `POST /api/cbt/student-profile`: validate and claim a free unique username for the authenticated user.
 - `GET /api/cbt/leaderboard?scope=national&period=week|all-time&page=...`: return a page of public ranked rows and total eligible participant count.
 - `GET /api/cbt/leaderboard?scope=subject&subject=...&period=...`: return subject-specific rows.
-- `GET /api/cbt/arena/summary`: return the signed-in student's own progress, current rank, best scores, and improvement.
+- `GET /api/cbt/arena/summary`: return the signed-in student's own progress, current national rank, best qualifying mock, question totals, accuracy, and improvement (latest five attempts versus the previous five).
+- `GET /api/cbt/arena/champions`: return public-safe weekly top performer, most improved, and most consistent names/scores only.
 - Subject-level score breakdown is persisted only after server-side grading succeeds.
 
 ## UI outline
