@@ -1,7 +1,7 @@
 # EDUKEN CBT Student Arena — implementation specification
 
 **Workstream:** `feat/cbt-student-arena-leaderboard-20261120`  
-**Status:** design scaffold only; no runtime code, database migration, deployment, or production change has been made.
+**Status:** implementation in progress on an isolated feature branch; runtime code and an additive test-project migration exist, but the feature is not approved for release.
 
 ## Goal
 
@@ -74,7 +74,7 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 1. Confirmed: guest practice remains open; sign-in plus a free username is required only for leaderboard participation.
 2. Added on this branch: private student identity and subject-score schema, username claim API, public-safe leaderboard API, and server-derived subject score persistence.
 3. In progress: automated tests for username uniqueness, auth ownership, privacy, score derivation, ranking/tie-breaks, week boundaries, pagination, and exclusion of guest/local/draft attempts.
-4. Pending: mobile-first Student Arena UI, profile/progress view, weekly champion recognition, and head-to-head challenges.
+4. Added: mobile-first Student Arena leaderboard UI. Pending: personal progress dashboard, most-improved recognition, weekly champions, and later head-to-head challenges.
 5. Applied the additive migration only to the isolated test Supabase project. Run API/browser/security checks there before considering this phase ready.
 6. Keep the PR in draft for review. No merge, production migration, Worker deployment, question-bank change, or publication without separate explicit approval.
 
