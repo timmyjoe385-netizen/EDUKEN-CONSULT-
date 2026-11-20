@@ -25,7 +25,7 @@ test('CBT mixed fallback clearly explains when local samples cannot meet the sel
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Start mixed mock/i }).click();
-  await expect(page.getByText(/Only 16 local sample questions are available.*180 are required/i)).toBeVisible();
+  await expect(page.getByText(/Only 8 local sample questions are available.*180 are required/i)).toBeVisible();
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
@@ -81,7 +81,7 @@ test('published CBT questions are graded by the server after submission', async 
   await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Every attempt is progress.' })).toBeVisible();
-  await expect(page.getByText('Correct answer:')).toBeVisible();
+  await expect(page.getByText('Correct answer: Right', { exact: true })).toBeVisible();
   await expect(page.getByText('The second option is correct.')).toBeVisible();
 });
 
@@ -194,11 +194,11 @@ test('manual CBT submission warns before submitting unanswered questions', async
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
-  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await page.getByRole('button', { name: /Finish and see results/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
   expect(submitCalls).toBe(0);
   page.once('dialog', dialog => dialog.accept());
-  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await page.getByRole('button', { name: /Finish and see results/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   expect(submitCalls).toBe(1);
 });
