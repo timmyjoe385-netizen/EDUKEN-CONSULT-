@@ -2,13 +2,15 @@
 
 ## Scope and safeguards
 
-These are the next two target-specific alternatives in the original 45-location uncovered queue. They remain draft proposals, separate from the canonical 116-item inventory. No source rows were edited.
+These are the next two **previously uncovered** targets in the original 45-location queue, after checking all earlier batch reports and avoiding repeat drafting of targets that already have alternatives. The earlier draft attempt for DUP-133 and DUP-128 in this file was superseded before final verification; this corrected version records the actual next uncovered targets, DUP-176 and DUP-171.
 
-- Full Economics source-bank screen: all **200 retained-plus-held questions**
-- Existing Economics proposal screen: all **20 proposals** in the canonical inventory
+Both proposals remain separate from the canonical 116-item inventory. No source rows were edited.
+
+- Full Literature in English source-bank screen: all **200 retained-plus-held questions**
+- Existing Literature in English proposal screen: all **14 proposals**
 - Full Government source-bank screen: all **200 retained-plus-held questions**
-- Existing Government proposal screen: all **14 proposals** in the canonical inventory
-- Targets: **DUP-133** and **DUP-128**
+- Existing Government proposal screen: all **14 proposals**
+- Targets: **DUP-176** and **DUP-171**
 - New canonical inventory entries: 0
 - Imports / publications / database writes: 0
 
@@ -16,65 +18,65 @@ The lexical screen uses character-trigram Dice similarity on the combined stem a
 
 ---
 
-## Batch 14 — DUP-133 (Economics)
+## Batch 14 — DUP-176 (Literature in English)
 
-- **Held source location:** batch 25, row 27
-- **Retained comparison location:** batch 14, row 28
-- **Held topic:** Market failure / Externalities
-- **Held source concept:** A negative production externality imposes some production costs on third parties outside the transaction.
-- **Draft ID:** R4-ADD-2026-11-20-DUP-133-B14
-- **Proposed topic:** Factors of production / Labour mobility
+- **Held source location:** batch 26, row 41
+- **Retained comparison location:** batch 6, row 37
+- **Held topic:** Literary devices / Imagery
+- **Held source concept:** Imagery uses language that creates sensory impressions or appeals to the senses.
+- **Draft ID:** R4-ADD-2026-11-20-DUP-176-B14
+- **Proposed topic:** Figures of speech / Euphemism
 - **Difficulty:** Medium
 
-**Question:** A worker who moves from farming to a job as a trained mechanic has experienced:
+**Question:** A speaker says that an elderly person has “passed away” instead of saying that the person has died. This expression is an example of:
 
-A. occupational mobility of labour  
-B. geographical mobility of labour  
-C. seasonal unemployment  
-D. capital formation
+A. euphemism  
+B. oxymoron  
+C. pun  
+D. apostrophe
 
 **Correct option:** A
 
-**Explanation:** Occupational mobility is the movement of a worker from one type of occupation to another, often after acquiring new skills or training. Geographical mobility refers to movement between locations.
+**Explanation:** A euphemism is a mild or indirect expression used in place of one that may be considered harsh, unpleasant or offensive. “Passed away” is a common indirect expression for “died”.
 
 **Internal content checks**
 
-- **Answer logic:** A is the only defensible answer. The scenario changes the worker's occupation; it does not describe a move to another geographical area.
-- **Concept distinction:** The held question tests negative production externalities and costs imposed on third parties. This alternative tests the occupational mobility of labour, a separate factor-of-production concept.
-- **Source-bank screen:** Highest combined stem-and-options character-trigram Dice score: **0.302**, against a cyclical-unemployment item (batch 36, row 29). No source-bank score reached 0.42.
-- **Existing-proposal screen:** Highest score: **0.251**, against proposal DUP-228 (capital movement). No proposal score reached 0.42.
-- **Remaining caution:** Confirm that occupational mobility is covered at the intended depth in the current UTME Economics syllabus. The distinction from geographical mobility should be retained during review.
+- **Answer logic:** A is the only defensible answer. The expression softens a direct reference to death; it does not combine contradictory terms, create a play on words or address an absent person or abstract idea.
+- **Concept distinction:** The held question tests sensory imagery. This alternative tests euphemism as a figure of speech, a different literary language concept.
+- **Source-bank screen:** Highest combined stem-and-options character-trigram Dice score: **0.354**, against an apostrophe item (batch 13, row 39). No source-bank score reached 0.42.
+- **Existing-proposal screen:** Highest score: **0.267**, against proposal DUP-59 (epithet). No proposal score reached 0.42.
+- **Remaining caution:** Confirm the expected treatment of euphemism within the current UTME Literature in English syllabus and ensure that the example is taught as a figure of speech rather than merely a vocabulary expression.
 
 ---
 
-## Batch 15 — DUP-128 (Government)
+## Batch 15 — DUP-171 (Government)
 
-- **Held source location:** batch 26, row 33
-- **Retained comparison location:** batch 8, row 33
-- **Held topic:** Electoral systems / Proportional representation
-- **Held source concept:** Proportional representation seeks to make parties' shares of seats broadly reflect their shares of votes.
-- **Draft ID:** R4-ADD-2026-11-20-DUP-128-B15
-- **Proposed topic:** Electoral process / Constituency delimitation
+- **Held source location:** batch 28, row 32
+- **Retained comparison location:** batch 3, row 32
+- **Held topic:** Constitutional government / Checks and balances
+- **Held source concept:** Checks and balances allow each arm of government to scrutinise or limit the actions of other arms.
+- **Draft ID:** R4-ADD-2026-11-20-DUP-171-B15
+- **Proposed topic:** Constitution / Protection of minority rights
 - **Difficulty:** Medium
 
-**Question:** The process of dividing a country into electoral constituencies for representation is called:
+**Question:** In a multi-ethnic state, constitutional safeguards against discrimination and exclusion of smaller communities are intended primarily to protect:
 
-A. constituency delimitation  
-B. political socialisation  
-C. judicial review  
-D. cabinet reshuffle
+A. minority rights  
+B. executive privilege  
+C. party supremacy  
+D. military command
 
 **Correct option:** A
 
-**Explanation:** Constituency delimitation is the drawing or adjustment of electoral constituency boundaries for representation. It is different from proportional representation, which concerns how votes are translated into legislative seats.
+**Explanation:** Minority-rights protections are intended to prevent smaller or less powerful communities from being unfairly excluded or discriminated against. They support inclusion and equal protection within the constitutional system.
 
 **Internal content checks**
 
-- **Answer logic:** A is the only defensible answer. The stem asks for the name of the process of creating or adjusting electoral constituencies; the other options describe unrelated political or governmental processes.
-- **Concept distinction:** The held question tests the allocation of seats in proportion to votes. This alternative tests the drawing of constituency boundaries, a distinct electoral-administration concept.
-- **Source-bank screen:** Highest combined stem-and-options character-trigram Dice score: **0.357**, against a party-primaries item (batch 35, row 33). The shared electoral context does not make the tested concepts identical. No source-bank score reached 0.42.
-- **Existing-proposal screen:** Highest score: **0.336**, against proposal DUP-107 (International Criminal Court). No proposal score reached 0.42.
-- **Remaining caution:** Confirm that constituency delimitation is included in the current UTME Government syllabus and that the expected terminology is appropriate. Keep the distinction from proportional representation explicit.
+- **Answer logic:** A is the only defensible answer. The scenario concerns safeguards for smaller communities; the other options do not describe rights protections.
+- **Concept distinction:** The held question tests institutional checks on the exercise of governmental power. This alternative tests constitutional protection against discrimination and exclusion of minority communities.
+- **Source-bank screen:** Highest combined stem-and-options character-trigram Dice score: **0.340**, against a collective-security item (batch 25, row 35). No source-bank score reached 0.42.
+- **Existing-proposal screen:** Highest score: **0.286**, against proposal DUP-47-ADD-2026-11-09 (confederation). No proposal score reached 0.42.
+- **Remaining caution:** Confirm that minority-rights protection is within the intended UTME Government syllabus and that the wording reflects the relevant constitutional context. A qualified reviewer should distinguish this topic from general fundamental-rights questions.
 
 ---
 
@@ -82,10 +84,10 @@ D. cabinet reshuffle
 
 | Batch | Target | Subject | Held source | Highest source-bank score | Highest proposal score |
 |---|---|---|---|---:|---:|
-| 14 | DUP-133 | Economics | Batch 25, row 27 | 0.302 | 0.251 |
-| 15 | DUP-128 | Government | Batch 26, row 33 | 0.357 | 0.336 |
+| 14 | DUP-176 | Literature in English | Batch 26, row 41 | 0.354 | 0.267 |
+| 15 | DUP-171 | Government | Batch 28, row 32 | 0.340 | 0.286 |
 
-Both candidates are below the 0.42 lexical review threshold. This does not certify semantic uniqueness. The nearest matches and syllabus cautions above require contextual review by qualified Economics and Government subject reviewers.
+Both candidates are below the 0.42 lexical review threshold. This does not certify semantic uniqueness. The nearest matches and syllabus cautions above require contextual review by qualified Literature in English and Government subject reviewers.
 
 ## Release boundary
 
