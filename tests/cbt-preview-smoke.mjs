@@ -24,6 +24,26 @@ try {
 
   const smokeUrl = new URL(url);
   smokeUrl.searchParams.set("__arena_smoke", String(Date.now()));
+  const apiUrl = "https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/api/cbt/questions";
+  const preflight = await fetch(apiUrl, {
+    method: "OPTIONS",
+    headers: {
+      Origin: smokeUrl.origin,
+      "Access-Control-Request-Method": "GET",
+      "Access-Control-Request-Headers": "apikey,content-type",
+    },
+  });
+  const corsHeaders = Object.fromEntries(preflight.headers.entries());
+  console.log("Isolated API CORS preflight:", preflight.status, JSON.stringify({
+    origin: corsHeaders["access-control-allow-origin"],
+    methods: corsHeaders["access-control-allow-methods"],
+    headers: corsHeaders["access-control-allow-headers"],
+  }));
+  assert.equal(preflight.status, 200, "The isolated API must answer browser CORS preflight.");
+  assert.equal(corsHeaders["access-control-allow-origin"], "*", "The isolated API must allow the preview origin.");
+  assert.match(corsHeaders["access-control-allow-methods"] || "", /GET/i, "The isolated API must allow GET requests.");
+  assert.match(corsHeaders["access-control-allow-headers"] || "", /apikey/i, "The isolated API must allow the Supabase API key header.");
+  assert.match(corsHeaders["access-control-allow-headers"] || "", /content-type/i, "The isolated API must allow JSON content type.");
   await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
   const arena = page.locator(".student-arena");
   await arena.waitFor({ state: "visible", timeout: 20_000 });
