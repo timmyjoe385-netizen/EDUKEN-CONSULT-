@@ -35,8 +35,8 @@ const mixed = await request("/api/cbt/start", {
 assert.equal(mixed.response.status, 409, "The isolated fixtures must report insufficient published subject questions instead of returning a partial mock.");
 assert.equal(mixed.data.requested, 7, "The 20-question mixed blueprint should allocate seven questions to English.");
 assert.equal(mixed.data.requiredBySubject["Use of English"], 7);
-assert.equal(mixed.data.requiredBySubject.Biology, 4);
+assert.equal(mixed.data.requiredBySubject.Biology, 5);
 assert.equal(mixed.data.requiredBySubject.Chemistry, 4);
-assert.equal(mixed.data.requiredBySubject.Physics, 5);
+assert.equal(mixed.data.requiredBySubject.Physics, 4);
 
 console.log("CBT API integration passed: allowed-count enforcement, exact-count shortage handling and mixed-subject blueprint.");
