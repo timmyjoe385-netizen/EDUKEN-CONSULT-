@@ -480,7 +480,7 @@ test('CBT navigation, flags, saved answers and exit confirmation work together',
   await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
 
   await page.getByRole('button', { name: 'Go to question 20' }).click();
-  await expect(page.getByRole('heading', { name: 'Navigation question? 20' })).toBeVisible();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: 'Go to question 2' }).click();
   await expect(page.getByText('Question 2 of 20')).toBeVisible();
   await expect(page.locator('.cbt-option.selected')).toContainText('B');
