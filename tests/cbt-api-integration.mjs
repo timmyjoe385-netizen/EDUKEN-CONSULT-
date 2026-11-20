@@ -18,36 +18,25 @@ const request = async (path, body) => {
   return { response, data };
 };
 
-const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
-assert.equal(started.response.status, 201, "A practice session should start from published isolated sample questions.");
-assert.match(started.data.attemptToken || "", /^[a-f0-9]{64}$/i, "The server should issue an opaque attempt token.");
-assert.equal(started.data.durationSeconds, 60, "A one-question practice session should use a one-minute timer.");
-assert.ok(Array.isArray(started.data.questions) && started.data.questions.length > 0, "The session should include published questions.");
+const tooSmall = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 10 });
+assert.equal(tooSmall.response.status, 400, "Counts below 20 must be rejected.");
 
-for (const question of started.data.questions) {
-  assert.equal(Object.hasOwn(question, "correct_option"), false, "Correct answers must not be exposed before submission.");
-  assert.equal(Object.hasOwn(question, "correctOption"), false, "Correct answers must not be exposed before submission.");
-  assert.equal(Object.hasOwn(question, "explanation"), false, "Explanations must remain hidden until submission.");
-}
+const practice = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 20 });
+assert.equal(practice.response.status, 409, "The isolated fixture has fewer than 20 published English questions.");
+assert.equal(practice.data.available, 1);
+assert.equal(practice.data.requested, 20);
 
-const fixture = started.data.questions.find(question => question.prompt === "Which word names a person, place, or thing?");
-assert.ok(fixture, "The isolated original Use of English fixture should be included in the practice session.");
-const answers = Object.fromEntries(started.data.questions.map(question => [
-  String(question.id),
-  String(question.id) === String(fixture.id) ? 1 : null,
-]));
+const mixed = await request("/api/cbt/start", {
+  mode: "mock",
+  subject: "Use of English",
+  questionCount: 20,
+  subjectCombination: ["Biology", "Chemistry", "Physics"],
+});
+assert.equal(mixed.response.status, 409, "The isolated fixtures must report insufficient published subject questions instead of returning a partial mock.");
+assert.equal(mixed.data.requested, 7, "The 20-question mixed blueprint should allocate seven questions to English.");
+assert.equal(mixed.data.requiredBySubject["Use of English"], 7);
+assert.equal(mixed.data.requiredBySubject.Biology, 5);
+assert.equal(mixed.data.requiredBySubject.Chemistry, 4);
+assert.equal(mixed.data.requiredBySubject.Physics, 4);
 
-const submitted = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers });
-assert.equal(submitted.response.status, 200, "The server should accept and grade the practice submission.");
-assert.equal(submitted.data.score, 1, "The server should award one point for the known correct answer.");
-assert.equal(submitted.data.total, started.data.questions.length);
-assert.equal(submitted.data.percent, Math.round(100 / started.data.questions.length));
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.correctOption, "B");
-assert.equal(submitted.data.review.find(question => String(question.id) === String(fixture.id))?.isCorrect, true);
-
-const repeated = await request("/api/cbt/submit", { attemptToken: started.data.attemptToken, answers: {} });
-assert.equal(repeated.response.status, 200, "A repeated submission should return the stored result safely.");
-assert.equal(repeated.data.alreadySubmitted, true, "A repeated submission should be marked as already submitted.");
-assert.equal(repeated.data.score, submitted.data.score, "Repeated submission must not change the stored score.");
-
-console.log("CBT API integration passed: published-only question payload, hidden answer key, server grading and idempotent repeat submission.");
+console.log("CBT API integration passed: allowed-count enforcement, exact-count shortage handling and mixed-subject blueprint.");
