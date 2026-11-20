@@ -50,6 +50,17 @@ for (const path of [
   }
 }
 
+// Reject incomplete subject queries and enforce safe public pagination bounds.
+{
+  const missingSubject = await fetch(endpoint + "/api/cbt/leaderboard?scope=subject&period=week", { headers: { apikey: key } });
+  assert.equal(missingSubject.status, 400, "Subject leaderboard requests must include a subject.");
+  const bounded = await fetch(endpoint + "/api/cbt/leaderboard?scope=national&period=all-time&page=-10&limit=999", { headers: { apikey: key } });
+  assert.equal(bounded.status, 200, "National leaderboard should tolerate out-of-range pagination inputs safely.");
+  const payload = await bounded.json();
+  assert.equal(payload.page, 0, "Negative page numbers must be clamped to the first page.");
+  assert.equal(payload.limit, 100, "Public page size must be capped at 100 rows.");
+}
+
 // The isolated project intentionally has one published English fixture; draft bank rows are not eligible.
 // Request exactly that one published item instead of relying on the production-sized default.
 const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
