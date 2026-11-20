@@ -28,8 +28,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('guest students can start a server-graded practice session without signing in', async ({ page }) => {
-  await page.addInitScript(() => localStorage.removeItem('eduken_auth_session'));
-  await page.route('**/api/cbt/start*', route => route.fulfill({
+    await page.route('**/api/cbt/start*', route => route.fulfill({
     status: 201,
     contentType: 'application/json',
     body: JSON.stringify({
@@ -42,6 +41,8 @@ test('guest students can start a server-graded practice session without signing 
     }),
   }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
+  await expect(page.getByText(/You can practise freely without signing in/i)).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
@@ -62,7 +63,7 @@ test('Student Arena identity is optional for guest practice and refreshes after 
     localStorage.removeItem('eduken_auth_session');
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
-  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Sign in to join the leaderboard/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
   await expect(page.getByText(/You can practise freely without signing in/i)).toBeVisible();
   await page.evaluate(() => {
