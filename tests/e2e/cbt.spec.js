@@ -35,7 +35,7 @@ test('students without a signed-in account cannot start any CBT activity', async
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
-  await expect(page.getByRole('heading', { name: /Create your free student identity/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
   await expect(page.locator('.cbt-subject-picker button.cbt-primary-button')).toBeDisabled();
@@ -133,6 +133,7 @@ test('CBT practice fallback does not start an undersized sample set', async ({ p
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
   await page.route('**/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -187,6 +188,7 @@ test('published CBT questions are graded by the server after submission', async 
 
 
 test('timed-out CBT automatically retries a temporary submission failure', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
   await page.clock.install();
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
