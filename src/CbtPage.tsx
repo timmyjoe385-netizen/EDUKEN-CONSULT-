@@ -365,7 +365,9 @@ export default function CbtPage() {
       ]));
       const response = await api.post('/api/cbt/submit', { attemptToken, answers: submittedAnswers });
       const data = response.data || {};
-      if (!Array.isArray(data.review)) throw new Error('The result could not be verified. Please retry submission.');
+      if (!Array.isArray(data.review) || data.review.length !== activeQuestions.length || Number(data.total) !== activeQuestions.length) {
+        throw new Error(`The result returned does not match the ${activeQuestions.length} questions in this session. Please retry submission.`);
+      }
       const reviewedQuestions: Question[] = data.review.map((item: any) => ({
         id: String(item.id),
         subject: String(item.subject || ''),
