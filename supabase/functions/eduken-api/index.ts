@@ -3179,11 +3179,9 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/start" && req.method === "POST") {
-      const user = await requireUser(req);
-      const { data: studentProfile, error: profileError } = await db.from("cbt_student_profiles")
-        .select("username").eq("user_id", user.id).maybeSingle();
-      if (profileError) throw profileError;
-      if (!studentProfile?.username) return json({ error: "Create your unique EDUKEN student username before starting a CBT session." }, 403);
+      // Guest practice is open. Attach an account when available; a claimed username
+      // is only required for leaderboard participation.
+      const user = await currentUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
@@ -3326,7 +3324,9 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/submit" && req.method === "POST") {
-      const user = await requireUser(req);
+      // The high-entropy attempt token authorizes guest submissions. Authenticated
+      // attempts remain bound to the account that started them.
+      const user = await currentUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
@@ -3338,13 +3338,15 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (readError) throw readError;
       if (!attempt) return json({ error: "Practice attempt was not found or has expired." }, 404);
-      if (!attempt.user_id || attempt.user_id !== user.id) return json({ error: "This practice attempt belongs to a different student account." }, 403);
+      if (attempt.user_id && attempt.user_id !== user?.id) return json({ error: "This practice attempt belongs to a different student account." }, 403);
       if (attempt.status === "submitted") {
         const previous = gradeCbtAttempt(attempt.question_snapshot, attempt.answers);
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
         const submittedAt = String(attempt.submitted_at || new Date().toISOString());
-        await persistCbtAttemptSummary(attempt, Number(attempt.score ?? previous.score), Number(attempt.total ?? previous.total), submittedAt);
-        await persistCbtSubjectScores(attempt, previous.review, submittedAt);
+        if (attempt.user_id) {
+          await persistCbtAttemptSummary(attempt, Number(attempt.score ?? previous.score), Number(attempt.total ?? previous.total), submittedAt);
+          await persistCbtSubjectScores(attempt, previous.review, submittedAt);
+        }
         return json({
           score: attempt.score ?? previous.score,
           total: attempt.total ?? previous.total,
@@ -3377,8 +3379,10 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (updateError) throw updateError;
       if (!updated) return json({ error: "This practice attempt has already been submitted." }, 409);
-      await persistCbtAttemptSummary(attempt, Number(graded.score), Number(graded.total), submittedAt);
-      await persistCbtSubjectScores(attempt, graded.review, submittedAt);
+      if (attempt.user_id) {
+        await persistCbtAttemptSummary(attempt, Number(graded.score), Number(graded.total), submittedAt);
+        await persistCbtSubjectScores(attempt, graded.review, submittedAt);
+      }
       return json({
         score: graded.score,
         total: graded.total,
