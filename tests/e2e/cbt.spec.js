@@ -73,7 +73,7 @@ test('CBT blocks local fallback when it cannot supply the 20-question minimum', 
   ).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
 
-test('CBT practice fallback supports navigation, flagging and answer review', async ({ page }) => {
+test('CBT practice fallback does not start an undersized sample set', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
