@@ -51,11 +51,9 @@ test('CBT falls back to original local practice when the published bank is empty
 
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
   await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
-  await page.locator('#cbt-practice-count').selectOption('2');
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 2')).toBeVisible();
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
 
   const dimensions = await page.evaluate(() => ({
     viewport: window.innerWidth,
@@ -73,17 +71,8 @@ test('CBT practice fallback supports navigation, flagging and answer review', as
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByText(/original starter samples are being used/i)).toBeVisible();
-  await page.locator('#cbt-practice-count').selectOption('2');
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 2')).toBeVisible();
-
-  await page.getByRole('button', { name: /Review later/i }).click();
-  await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
-  await page.getByRole('button', { name: /Next question/i }).click();
-  await expect(page.getByText('Question 2 of 2')).toBeVisible();
-  page.once('dialog', dialog => dialog.accept());
-  await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
@@ -144,7 +133,6 @@ test('published CBT questions are graded by the server after submission', async 
   });
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   await page.getByRole('button', { name: /Right/ }).click();
@@ -217,7 +205,6 @@ test('timed-out CBT automatically retries a temporary submission failure', async
   });
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   await page.getByRole('button', { name: /Right/ }).click();
@@ -254,8 +241,8 @@ test('hero timed-mock button sends the displayed default question count', async 
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
-  await expect(page.getByText('Question 1 of 10')).toBeVisible();
-  expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 10 });
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 20 });
 });
 
 
@@ -274,7 +261,6 @@ test('manual CBT submission warns before submitting unanswered questions', async
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'unanswered-1', subject: 'Use of English', prompt: 'Question one?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
@@ -303,20 +289,20 @@ test('Try again preserves the selected timed-mock question count', async ({ page
     }) });
   });
   await page.route('**/api/cbt/submit*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
-    score: 0, total: 10, percent: 0,
-    review: Array.from({ length: 10 }, (_, index) => ({ id: 'timed-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'A is correct.' })),
+    score: 0, total: 20, percent: 0,
+    review: Array.from({ length: 20 }, (_, index) => ({ id: 'timed-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'A is correct.' })),
   }) }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
-  await expect(page.getByText('Question 1 of 10')).toBeVisible();
-  for (let i = 0; i < 9; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
-  await expect(page.getByText('Question 10 of 10')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  for (let i = 0; i < 19; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   await page.getByRole('button', { name: /Try again/i }).click();
-  await expect(page.getByText('Question 1 of 10')).toBeVisible();
-  expect(requestedCounts).toEqual([10, 10]);
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  expect(requestedCounts).toEqual([20, 20]);
 });
 
 test('CBT Try again preserves the selected mixed-mock question count', async ({ page }) => {
@@ -438,7 +424,6 @@ test('CBT calculator performs basic arithmetic and closes', async ({ page }) => 
   }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.locator('#cbt-subject-select').selectOption('Mathematics');
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await page.getByRole('button', { name: /Calculator/i }).click();
   const dialog = page.getByRole('dialog', { name: 'Practice calculator' });
@@ -468,7 +453,6 @@ test('Finish and see results also warns about unanswered questions', async ({ pa
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'finish-unanswered-1', subject: 'Use of English', prompt: 'Question?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
@@ -498,7 +482,6 @@ test('subject practice remains available when the initial question list contains
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   const startButton = page.getByRole('button', { name: /Start free practice/i });
   await expect(startButton).toBeEnabled();
-  await page.locator('#cbt-practice-count').selectOption('1');
   await startButton.click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
