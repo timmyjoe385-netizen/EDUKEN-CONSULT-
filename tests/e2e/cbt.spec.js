@@ -167,7 +167,7 @@ test('hero timed-mock button sends the displayed default question count', async 
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
-  await expect(page.getByText('Question 1 of 2080')).toBeVisible();
+  await expect(page.getByText('Question 1 of 180')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 180 });
 });
 
