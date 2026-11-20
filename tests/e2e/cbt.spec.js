@@ -16,6 +16,27 @@ test.beforeEach(async ({ page }) => {
   }));
 });
 
+test('CBT identity gate refreshes the student profile when OAuth completes', async ({ page }) => {
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
+  await page.evaluate(() => {
+    localStorage.removeItem('eduken_auth_session');
+    window.dispatchEvent(new Event('eduken-auth-changed'));
+  });
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await page.evaluate(() => {
+    localStorage.setItem('eduken_auth_session', JSON.stringify({
+      access_token: 'oauth-completed-session',
+      expires_at: Math.floor(Date.now() / 1000) + 3600,
+      user: { id: 'oauth-student-id', email: 'student@example.test' },
+    }));
+    window.dispatchEvent(new Event('eduken-auth-changed'));
+  });
+  await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+});
+
 test('CBT falls back to original local practice when the published bank is empty', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
