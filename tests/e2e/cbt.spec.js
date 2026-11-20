@@ -500,3 +500,21 @@ test('signed-in students can see personal progress before claiming an Arena user
   await expect(page.locator('.student-progress-attempt').filter({ hasText: /^Biology/ })).toBeVisible();
   await expect(page.locator('.student-progress-attempt').filter({ hasText: /^Mathematics/ })).toBeVisible();
 });
+
+
+test('Student Arena displays the three public-safe weekly champion categories', async ({ page }) => {
+  await page.route('**/api/cbt/arena/champions', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ champions: [
+      { category: 'top-performer', username: 'top_student', score: 170, total: 180, percentage: 94.44, detail: 'Highest qualifying mock score this week', attempts_count: 1 },
+      { category: 'most-improved', username: 'rising_student', score: 150, total: 180, percentage: 83.33, detail: 'Improved 16.67 percentage points across this week', attempts_count: 2 },
+      { category: 'most-consistent', username: 'steady_student', score: 146, total: 180, percentage: 81.11, detail: 'Average 80.83% across 2 qualifying mocks', attempts_count: 2 },
+    ] }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: "This week's champions 🌟" })).toBeVisible();
+  await expect(page.getByText('@top_student')).toBeVisible();
+  await expect(page.getByText('@rising_student')).toBeVisible();
+  await expect(page.getByText('@steady_student')).toBeVisible();
+});
