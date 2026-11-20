@@ -33,6 +33,7 @@ try {
   assert.equal(await page.locator(".cbt-mock-subject-required input").isDisabled(), true, "Use of English must remain selected and locked.");
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
+  await page.locator("#cbt-practice-count").selectOption("1");
   const subjectButton = page.locator(".cbt-subject-picker button:not([disabled])");
   await subjectButton.click();
   await page.locator(".cbt-question-card").waitFor({ timeout: 15_000 });
