@@ -169,9 +169,9 @@ export const auth = {
     if (!response.ok || !result.access_token || !result.user?.email) {
       const reason = String(result.error_description || result.msg || result.message || result.error || '');
       if (response.status === 400 || response.status === 401) {
-        throw new Error('Email or password was not accepted. Check your test account details and try again.');
+        throw new Error('Email or password was not accepted. Check your details and try again.');
       }
-      throw new Error(reason || 'Customer sign-in is temporarily unavailable. Please try again.');
+      throw new Error(reason || 'Email sign-in is temporarily unavailable. Please try again.');
     }
     const session = {
       access_token: result.access_token,
