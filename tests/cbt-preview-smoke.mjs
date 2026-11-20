@@ -31,15 +31,31 @@ try {
   assert.equal(await mockSubjectOptions.count(), 8, "The mock selector must show Use of English plus seven additional subjects.");
   assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 4, "Exactly four unique subjects must be selected, including required Use of English.");
   assert.equal(await page.locator(".cbt-mock-subject-required input").isDisabled(), true, "Use of English must remain selected and locked.");
-  const additionalSubjects = mockSubjectOptions.nth(1);
-  assert.equal(await additionalSubjects.isChecked(), true, "The default mock combination must preselect three additional subjects.");
-  assert.equal(await mockSubjectOptions.nth(4).isDisabled(), true, "Unselected fourth subject must be disabled when three additional subjects are selected.");
-  await additionalSubjects.uncheck();
-  assert.equal(await mockSubjectOptions.nth(4).isDisabled(), false, "Another subject must become selectable after removing one.");
-  await mockSubjectOptions.nth(4).check();
+  const selectedAdditionalIndex = await mockSubjectOptions.evaluateAll(inputs => inputs.findIndex((input, index) => index > 0 && input.checked));
+  assert.ok(selectedAdditionalIndex > 0, "At least one additional mock subject must be selected by default.");
+  const disabledAdditionalIndex = await mockSubjectOptions.evaluateAll(inputs => inputs.findIndex((input, index) => index > 0 && input.disabled));
+  assert.ok(disabledAdditionalIndex > 0, "Unselected fourth subject must be disabled when three additional subjects are selected.");
+  await mockSubjectOptions.nth(selectedAdditionalIndex).uncheck();
+  assert.equal(await mockSubjectOptions.nth(disabledAdditionalIndex).isDisabled(), false, "Another subject must become selectable after removing one.");
+  await mockSubjectOptions.nth(disabledAdditionalIndex).check();
   assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 4, "Changing the combination must preserve exactly four selected subjects.");
   const mockCount = page.locator("#cbt-mock-count");
-  assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["10", "20", "40", "100", "180"], "Server-backed mock counts must match the supported choices.");
+  assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["8", "10", "20", "40", "100", "180"], "Server-backed mock counts must include the working eight-question option.");
+  await mockCount.selectOption("8");
+  await page.locator(".cbt-mock-banner button.cbt-primary-button:not([disabled])").click();
+  await page.locator(".cbt-question-card").waitFor({ timeout: 20_000 });
+  assert.match(await page.locator(".cbt-question-meta").innerText(), /Question 1 of 8/, "Selecting 8 must start a session containing exactly eight questions.");
+  for (let index = 0; index < 8; index++) {
+    assert.match(await page.locator(".cbt-question-meta").innerText(), new RegExp("Question " + (index + 1) + " of 8"), "The question navigator must advance through all eight questions.");
+    await page.locator(".cbt-options .cbt-option").first().click();
+    if (index < 7) await page.locator(".cbt-question-actions .cbt-primary-button").click();
+  }
+  await page.locator(".cbt-submit-wide").click();
+  await page.locator(".cbt-result-hero").waitFor({ timeout: 25_000 });
+  assert.match(await page.locator(".cbt-result-hero").innerText(), /8 questions/, "Submitting the eight-question mock must show an eight-question result.");
+  assert.equal(await page.locator(".cbt-review-item").count(), 8, "Answer review must contain all eight submitted questions.");
+  await page.locator(".cbt-result-hero button.cbt-secondary-button").click();
+  await page.locator("#cbt-subject-select").waitFor({ timeout: 10_000 });
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
   await subjectSelect.selectOption("Economics");
@@ -56,7 +72,7 @@ try {
   const resultText = await page.locator(".cbt-result-hero").innerText();
   assert.match(resultText, /PRACTICE COMPLETE/i, "A real preview attempt should submit and display results.");
   await page.locator(".cbt-review-card").waitFor({ timeout: 5_000 });
-  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, practice submission and result review.");
+  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, eight-question mock start/navigation/submission/review, and subject practice submission.");
 } finally {
   await browser.close();
 }
