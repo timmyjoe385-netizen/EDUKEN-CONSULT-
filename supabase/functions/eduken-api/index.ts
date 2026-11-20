@@ -3448,6 +3448,19 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/cbt/arena/summary" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.rpc("cbt_student_arena_summary", { p_user_id: user.id });
+      if (error) throw error;
+      return json({ summary: data?.[0] || null });
+    }
+
+    if (path === "/api/cbt/arena/champions" && req.method === "GET") {
+      const { data, error } = await db.rpc("cbt_student_weekly_champions");
+      if (error) throw error;
+      return json({ champions: data ?? [] });
+    }
+
     if (path === "/api/cbt/questions" && req.method === "GET") {
       const params = new URL(req.url).searchParams;
       let query = db.from("cbt_questions").select("id,exam_type,subject,topic,subtopic,question_text,options,difficulty,source_type,source_name,source_year").eq("status", "published").order("subject").order("topic").limit(100);
