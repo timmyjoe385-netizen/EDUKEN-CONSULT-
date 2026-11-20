@@ -215,3 +215,31 @@ test('hero timed-mock button sends the displayed default question count', async 
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 10 });
 });
+
+
+test('manual CBT submission warns before submitting unanswered questions', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'unanswered-1', subject: 'Use of English', question_text: 'Question one?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  let submitCalls = 0;
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201, contentType: 'application/json',
+    body: JSON.stringify({ attemptToken: 'd'.repeat(64), durationSeconds: 900, questions: [{ id: 'unanswered-1', subject: 'Use of English', prompt: 'Question one?', options: ['A', 'B', 'C', 'D'] }] }),
+  }));
+  await page.route('**/api/cbt/submit*', async route => {
+    submitCalls += 1;
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'unanswered-1', subject: 'Use of English', prompt: 'Question one?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(submitCalls).toBe(0);
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  expect(submitCalls).toBe(1);
+});
