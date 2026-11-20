@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main, feat/customer-wallet-system-20261016]
+    branches: [main, feat/customer-wallet-system-20261016, release/eduken-production-20261017]
     types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
