@@ -100,7 +100,7 @@ async function persistCbtAttemptSummary(attempt: any, score: number, total: numb
   if (error) throw error;
 }
 
-async function persistCbtSubjectScores(attempt: any, review: any[], submittedAt: string) {
+async function persistCbtSubjectScores(attempt: any, review: any[] | undefined, submittedAt: string) {
   if (!attempt.user_id || !Array.isArray(review) || !review.length) return;
   const started = new Date(attempt.started_at).getTime();
   const submitted = new Date(submittedAt).getTime();
