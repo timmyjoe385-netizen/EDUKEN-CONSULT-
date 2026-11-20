@@ -9,23 +9,40 @@ type Attempt = {
   submitted_at: string;
   duration_seconds: number | null;
 };
+type ArenaSummary = {
+  national_rank: number | null;
+  best_mock_score: number | null;
+  best_mock_total: number | null;
+  best_mock_percentage: number | null;
+  attempts_count: number;
+  questions_attempted: number;
+  overall_accuracy: number;
+  recent_accuracy: number | null;
+  previous_accuracy: number | null;
+  improvement_percentage_points: number | null;
+};
 
 export default function StudentProgress() {
   const [attempts, setAttempts] = useState<Attempt[]>([]);
+  const [summary, setSummary] = useState<ArenaSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
     let active = true;
-    api.get('/api/cbt/attempts')
-      .then(result => {
+    Promise.all([
+      api.get('/api/cbt/attempts'),
+      api.get('/api/cbt/arena/summary'),
+    ])
+      .then(([history, overview]) => {
         if (!active) return;
-        const items = Array.isArray(result.data?.items) ? result.data.items : [];
+        const items = Array.isArray(history.data?.items) ? history.data.items : [];
         setAttempts(items.filter((item: Attempt) =>
           Number.isFinite(Number(item.score)) &&
           Number.isFinite(Number(item.total)) &&
           Number(item.total) > 0
         ));
+        setSummary(overview.data?.summary || null);
       })
       .catch(reason => {
         if (active) setError(reason instanceof Error ? reason.message : 'Your progress is temporarily unavailable.');
@@ -36,7 +53,7 @@ export default function StudentProgress() {
     return () => { active = false; };
   }, []);
 
-  const summary = useMemo(() => {
+  const summaryFallback = useMemo(() => {
     const questions = attempts.reduce((sum, item) => sum + Number(item.total), 0);
     const correct = attempts.reduce((sum, item) => sum + Number(item.score), 0);
     const best = attempts.reduce((value, item) => Math.max(value, Number(item.score) / Number(item.total) * 100), 0);
@@ -50,13 +67,18 @@ export default function StudentProgress() {
     };
   }, [attempts]);
 
+  const accuracy = summary ? Number(summary.overall_accuracy || 0) : summaryFallback.accuracy;
+  const questions = summary ? Number(summary.questions_attempted || 0) : summaryFallback.questions;
+  const attemptsCount = summary ? Number(summary.attempts_count || 0) : summaryFallback.count;
+  const improvement = summary?.improvement_percentage_points;
+
   return (
     <section className="student-progress" aria-labelledby="student-progress-title">
       <div className="student-progress-heading">
         <div>
           <span className="cbt-eyebrow">YOUR LEARNING DASHBOARD</span>
           <h3 id="student-progress-title">Your progress so far</h3>
-          <p>Based on your 20 most recent saved, signed-in attempts.</p>
+          <p>Personal performance and ranking from your saved, server-graded attempts.</p>
         </div>
       </div>
       {loading ? (
@@ -68,15 +90,21 @@ export default function StudentProgress() {
       ) : (
         <>
           <div className="student-progress-metrics">
-            <article><span>Saved attempts</span><strong>{summary.count}</strong></article>
-            <article><span>Questions answered</span><strong>{summary.questions.toLocaleString()}</strong></article>
-            <article><span>Overall accuracy</span><strong>{summary.accuracy.toFixed(1)}%</strong></article>
-            <article><span>Best attempt</span><strong>{summary.best.toFixed(1)}%</strong></article>
+            <article><span>National rank</span><strong>{summary?.national_rank ? '#' + Number(summary.national_rank).toLocaleString() : '—'}</strong></article>
+            <article><span>Best 180-question mock</span><strong>{summary?.best_mock_percentage != null ? Number(summary.best_mock_percentage).toFixed(1) + '%' : '—'}</strong></article>
+            <article><span>Overall accuracy</span><strong>{accuracy.toFixed(1)}%</strong></article>
+            <article><span>Questions attempted</span><strong>{questions.toLocaleString()}</strong></article>
+          </div>
+          <div className="student-progress-trend">
+            <span><strong>Improvement</strong><small>Latest 5 attempts compared with the previous 5</small></span>
+            <strong className={improvement == null ? '' : Number(improvement) > 0 ? 'positive' : Number(improvement) < 0 ? 'negative' : ''}>
+              {improvement == null ? 'Not enough attempts yet' : (Number(improvement) > 0 ? '+' : '') + Number(improvement).toFixed(1) + ' percentage points'}
+            </strong>
           </div>
           <div className="student-progress-recent">
             <div className="student-progress-recent-heading">
               <strong>Recent practice</strong>
-              <span>{summary.subjects} {summary.subjects === 1 ? 'subject' : 'subjects'} covered</span>
+              <span>{summaryFallback.subjects} {summaryFallback.subjects === 1 ? 'subject' : 'subjects'} covered · {attemptsCount.toLocaleString()} saved attempts</span>
             </div>
             {attempts.slice(0, 5).map((item, index) => {
               const percentage = Number(item.score) / Number(item.total) * 100;
@@ -90,7 +118,7 @@ export default function StudentProgress() {
           </div>
         </>
       )}
-      <small className="student-progress-footnote">This summary uses saved attempts linked to your EDUKEN account. It does not include guest or local sample sessions.</small>
+      <small className="student-progress-footnote">Rank is based on your best qualifying 180-question mock. Progress includes saved attempts only, not guest or local sample sessions.</small>
     </section>
   );
 }
