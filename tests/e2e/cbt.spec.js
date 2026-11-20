@@ -27,26 +27,20 @@ test.beforeEach(async ({ page }) => {
   }));
 });
 
-test('guest students can start a server-graded practice session without signing in', async ({ page }) => {
-    await page.route('**/api/cbt/start*', route => route.fulfill({
-    status: 201,
-    contentType: 'application/json',
-    body: JSON.stringify({
-      attemptToken: 'a'.repeat(64),
-      expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
-      durationSeconds: 15 * 60,
-      mode: 'practice',
-      subject: 'Use of English',
-      questions: attemptRows('guest', 'Use of English'),
-    }),
-  }));
+test('students without a signed-in account cannot start any CBT activity', async ({ page }) => {
+  let startCalls = 0;
+  await page.route('**/api/cbt/start*', async route => {
+    startCalls += 1;
+    await route.fulfill({ status: 403, contentType: 'application/json', body: JSON.stringify({ error: 'Student username required.' }) });
+  });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
-  await expect(page.getByText(/You can practise freely without signing in/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 20')).toBeVisible();
-  await expect(page.getByText('GUEST PRACTICE').first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Create your free student identity/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
+  await expect(page.locator('.cbt-subject-picker button.cbt-primary-button')).toBeDisabled();
+  await expect(page.locator('.cbt-mock-banner button.cbt-primary-button')).toBeDisabled();
+  expect(startCalls).toBe(0);
 });
 
 test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
@@ -56,21 +50,21 @@ test('CBT question selectors never offer fewer than 20 questions', async ({ page
   await expect(page.locator('#cbt-mock-count option').evaluateAll(options => options.map(option => Number(option.value)))).resolves.toEqual([20, 40, 60, 100, 180]);
 });
 
-test('Student Arena identity is optional for guest practice and refreshes after OAuth', async ({ page }) => {
+test('student identity gate locks CBT when signed out and unlocks after username is verified', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
   await page.evaluate(() => {
     localStorage.removeItem('eduken_auth_session');
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
-  await expect(page.getByRole('button', { name: /Sign in to join the leaderboard/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
-  await expect(page.getByText(/You can practise freely without signing in/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await page.evaluate(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
-      access_token: 'oauth-completed-session',
+      access_token: 'verified-student-session',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'oauth-student-id', email: 'student@example.test' },
+      user: { id: 'verified-student-id', email: 'student@example.test' },
     }));
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
@@ -493,7 +487,7 @@ test('subject practice remains available when the initial question list contains
   expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
 });
 
-test('signed-in students must claim a username before starting while still seeing personal progress', async ({ page }) => {
+test('signed-in students without a username are blocked while still seeing personal progress', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'test-access-token',
@@ -522,10 +516,10 @@ test('signed-in students must claim a username before starting while still seein
   }));
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('heading', { name: 'Join Student Arena (optional)' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Create your free student identity' })).toBeVisible();
   await expect(page.locator('#cbt-student-username')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
-  await expect(page.getByText(/You can keep practising without a username/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByText(/Choose the free, unique username/i)).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Your progress so far' })).toBeVisible();
   await expect(page.locator('.student-progress-recent-heading')).toContainText('2 subjects covered · 2 saved attempts');
   await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Questions attempted' }).getByText('20', { exact: true })).toBeVisible();
