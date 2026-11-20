@@ -12,7 +12,7 @@ test('CBT fallback clearly explains when local samples cannot meet the 20-questi
   );
   await page.setViewportSize({ width: 375, height: 812 });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
+  await expect(page.getByText(/published question bank is unavailable.*demonstration only/i)).toBeVisible();
   await expect(page.locator('#cbt-practice-count').locator('option')).toHaveCount(5);
   await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
   await page.getByRole('button', { name: /Start free practice/i }).click();
