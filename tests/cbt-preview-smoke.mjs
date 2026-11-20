@@ -7,7 +7,13 @@ try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const apiNetworkEvents = [];
   page.on("request", request => {
-    if (request.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("request " + request.method() + " " + request.url());
+    if (request.url().includes("/functions/v1/eduken-api/")) {
+      const headers = request.headers();
+      apiNetworkEvents.push("request " + request.method() + " " + request.url() +
+        (request.method() === "OPTIONS" ? " :: origin=" + (headers.origin || "") +
+          " requested=" + (headers["access-control-request-headers"] || "") +
+          " method=" + (headers["access-control-request-method"] || "") : ""));
+    }
   });
   page.on("requestfailed", request => {
     if (request.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("requestfailed " + request.method() + " " + request.url() + " :: " + (request.failure()?.errorText || "unknown"));
@@ -16,8 +22,14 @@ try {
     if (message.type() === "error") apiNetworkEvents.push("console error " + message.text());
   });
   page.on("pageerror", error => apiNetworkEvents.push("pageerror " + error.message));
-  page.on("response", response => {
-    if (response.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("response " + response.status() + " " + response.url());
+  page.on("response", async response => {
+    if (response.url().includes("/functions/v1/eduken-api/")) {
+      const headers = response.headers();
+      apiNetworkEvents.push("response " + response.status() + " " + response.request().method() + " " + response.url() +
+        (response.request().method() === "OPTIONS" ? " :: allow-origin=" + (headers["access-control-allow-origin"] || "") +
+          " allow-headers=" + (headers["access-control-allow-headers"] || "") +
+          " allow-methods=" + (headers["access-control-allow-methods"] || "") : ""));
+    }
   });
   const questionsResponsePromise = page.waitForResponse(
     response => response.request().method() === "GET" &&
