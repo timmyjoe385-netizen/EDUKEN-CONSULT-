@@ -3179,6 +3179,11 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/start" && req.method === "POST") {
+      const user = await requireUser(req);
+      const { data: studentProfile, error: profileError } = await db.from("cbt_student_profiles")
+        .select("username").eq("user_id", user.id).maybeSingle();
+      if (profileError) throw profileError;
+      if (!studentProfile?.username) return json({ error: "Create your unique EDUKEN student username before starting a CBT session." }, 403);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
@@ -3291,7 +3296,6 @@ Deno.serve(async (req) => {
       // submit request reach the server after the countdown reaches zero.
       const expiresAt = getCbtAttemptExpiry(now, durationSeconds);
       if (!expiresAt) throw new Error("Could not calculate CBT attempt expiry.");
-      const user = await currentUser(req);
       const { error: insertError } = await db.from("cbt_attempt_sessions").insert({
         attempt_token_hash: await sha256Hex(token),
         user_id: user?.id ?? null,
@@ -3322,6 +3326,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/submit" && req.method === "POST") {
+      const user = await requireUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
@@ -3333,6 +3338,7 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (readError) throw readError;
       if (!attempt) return json({ error: "Practice attempt was not found or has expired." }, 404);
+      if (!attempt.user_id || attempt.user_id !== user.id) return json({ error: "This practice attempt belongs to a different student account." }, 403);
       if (attempt.status === "submitted") {
         const previous = gradeCbtAttempt(attempt.question_snapshot, attempt.answers);
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
