@@ -53,3 +53,57 @@ The failed preview deployment is an environment credential/authentication blocke
 PR #194 remains open, draft and unmerged. No merge, production Worker deployment, production database mutation, question import or publication was performed in this execution. Production remains untouched.
 
 **Disposition:** replacement-draft coverage reconciled at 31/45; 14 remaining targets are documented no-new-draft collision outcomes; original 19 have owner-reported reviewer acceptance but no signed evidence; 12 later drafts still need attributable review; preview deployment is blocked by Cloudflare token authentication; production release remains blocked.
+
+## 6. Authoritative 20 November reviewer and inventory reconciliation
+
+This section supersedes the older reviewer-status wording in Section 3 wherever it conflicts.
+
+### Reviewer approvals
+
+On 20 November 2026 the project owner supplied eight subject-review submissions and explicitly confirmed that each reviewer individually checked and approved every replacement question for their respective subject. The recorded outcome is **8/8 subjects: Approved all**:
+
+| Subject | Reviewer | Reported decision |
+|---|---|---|
+| Use of English | Alade Tobi | Approved all |
+| Mathematics | James Oreofeoluwa | Approved all |
+| Biology | Samuel Elijah | Approved all |
+| Physics | Precious | Approved all |
+| Chemistry | Adeleke Emmanuel | Approved all |
+| Economics | James Ademola | Approved all |
+| Government | John Damilola | Approved all |
+| Literature in English | James | Approved all |
+
+Preserve these as substantive owner-reported approvals. Do not request blanket re-review. The scope is the replacement questions in each subject, not an assertion that all original retained questions have separate reviewer sign-off.
+
+### Reconciled replacement inventory
+
+- Canonical replacement proposals: **116** (duplicate-replacement-drafts-2026-11-01.json).
+- Additional R4 target-specific proposals: **31** (the 19-item checkpoint plus the 12 proposals in execution batches 2, 3, 5–12).
+- Total replacement proposals covered by the eight subject approvals: **147**.
+- Remaining 14 of the 45 uncovered-target queue: documented retained-bank collision outcomes. They are deliberately not new proposals; do not create paraphrases just to fill the count.
+- R4 source bank: **1,439 provisionally retained + 161 held = 1,600 source rows**.
+- Candidate release inventory, if the 147 replacements are substituted for their held targets: **1,439 retained + 147 replacements = 1,586 questions**. The 14 collision outcomes remain excluded because their learning outcomes are already represented in the retained bank. Do not describe this as a 1,600-question approved bank or manufacture 14 additional items.
+
+The 20 November reviewer register records the complete 147-ID inventory scope and all eight subject decisions. The project owner explicitly confirmed that every replacement was individually reviewed. The exact content checkpoint is commit 3ef11a1efd69ea8624a3aef9bf9b2cd8c5ce02e9; comparison with the later audit-only commit 30426902ac264d46f7f7535d0afb6296e98fba24 shows that the only intervening file addition was the reviewer-version reconciliation note—no question-content file changed after the reported review checkpoint. This pins the reviewed proposal set to that repository snapshot without inventing reviewer signatures or credentials.
+
+### Isolated import versus production
+
+Read-only Supabase checks on 20 November show:
+- Production project pphxltbkwygqjtjgkhxu: all four original CBT tables exist, with 0 question rows, 0 import rows, 0 attempt sessions and 0 attempts. The four original CBT schema migrations are already recorded in production.
+- Isolated project wpktzogarfqrgkirzdpy: 1,563 question rows, 7 import records, 1,904 attempt sessions and 1,827 attempt-history rows. These are isolated test data, not production inventory. The test database includes legacy fixtures and synthetic preview samples; it is not the final 1,586-row import artifact.
+- No production question import or publication has been performed.
+
+### Production migration delta
+
+The original CBT question-bank, import, attempt-session and attempt-history migrations are already present in production. There is **no missing core CBT table migration** for the question-bank release.
+
+The separate Student Arena migration 20261120100000_add_cbt_student_arena.sql exists on PR #208. Its isolated schema has been verified:
+- cbt_student_profiles and cbt_attempt_subject_scores exist with RLS enabled.
+- Direct SELECT is denied to anon and authenticated; service_role retains SELECT.
+- cbt_student_leaderboard(text,text,text,integer,integer) exists; EXECUTE is denied to anon and authenticated, and granted to service_role.
+- Production does not yet have these two Arena tables or the leaderboard function.
+- Production eduken-api is version 42; isolated eduken-api is version 54. The Arena migration/API are a separate feature delta and must not be silently treated as part of the core question-bank release.
+
+The migration is therefore prepared and isolated-security-verified, but has **not** been applied to production. No production database, Edge Function, Worker, question import or publication was changed by this reconciliation.
+
+**Current disposition:** the 147 replacement proposals have owner-reported subject approval; the 14 no-new-draft collision outcomes remain excluded; the core CBT schema is already present in production; the separate Arena schema migration is ready in PR #208 and verified only in isolation. The remaining execution is to assemble and validate the exact 1,586-row production import artifact, decide whether the separate Arena feature is included in this live release, and then carry out the already-agreed production release sequence with live smoke tests.
