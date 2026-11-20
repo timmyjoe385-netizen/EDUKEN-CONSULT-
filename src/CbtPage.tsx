@@ -395,6 +395,16 @@ export default function CbtPage() {
       setSubmitting(false);
     }
   };
+  const requestFinish = () => {
+    if (submitting || submitted) return;
+    const unanswered = activeQuestions.length - answeredCount;
+    if (unanswered > 0 && !window.confirm(
+      unanswered === 1
+        ? 'You have 1 unanswered question. Submit this practice anyway?'
+        : `You have ${unanswered} unanswered questions. Submit this practice anyway?`
+    )) return;
+    void finish();
+  };
   finishRef.current = () => { void finish(); };
   const formatTime = (value: number) => String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0');
 
@@ -420,7 +430,7 @@ export default function CbtPage() {
               </div>
               <div className="cbt-question-actions">
                 <button className="cbt-secondary-button" disabled={current === 0} onClick={() => setCurrent(value => value - 1)}>Previous</button>
-                {current < activeQuestions.length - 1 ? <button className="cbt-primary-button" onClick={() => setCurrent(value => value + 1)}>Next question <ArrowRight size={16} /></button> : <button className="cbt-primary-button" onClick={() => void finish()} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit practice'} <CheckCircle2 size={16} /></button>}
+                {current < activeQuestions.length - 1 ? <button className="cbt-primary-button" onClick={() => setCurrent(value => value + 1)}>Next question <ArrowRight size={16} /></button> : <button className="cbt-primary-button" onClick={requestFinish} disabled={submitting}>{submitting ? 'Submitting…' : 'Submit practice'} <CheckCircle2 size={16} /></button>}
               </div>
             </section>
             <aside className="cbt-question-nav">
