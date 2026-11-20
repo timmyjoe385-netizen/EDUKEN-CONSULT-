@@ -156,7 +156,9 @@ jobs:
             20261029120000_add_cbt_question_bank.sql \
             20261029124500_add_cbt_import_batch_index.sql \
             20261029132900_add_cbt_attempt_sessions.sql \
-            20261029133000_add_cbt_attempt_history.sql; do
+            20261029133000_add_cbt_attempt_history.sql \
+            20261120100000_add_cbt_student_arena.sql \
+            20261120110000_complete_cbt_student_arena_insights.sql; do
             docker run --rm --network host \
               -v "$GITHUB_WORKSPACE:/workspace" \
               -e PGPASSWORD=postgres postgres:16 \
@@ -171,3 +173,11 @@ jobs:
           postgres:16
           psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
           -v ON_ERROR_STOP=1 -f /workspace/tests/sql/cbt-migration-smoke.sql
+      - name: Verify Student Arena summary, champions and function grants
+        run: >-
+          docker run --rm --network host
+          -v "$GITHUB_WORKSPACE:/workspace"
+          -e PGPASSWORD=postgres
+          postgres:16
+          psql -h 127.0.0.1 -U postgres -d eduken_wallet_test
+          -v ON_ERROR_STOP=1 -f /workspace/tests/sql/cbt-student-arena-smoke.sql
