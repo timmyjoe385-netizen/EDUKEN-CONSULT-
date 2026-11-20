@@ -12,7 +12,7 @@ import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
 import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
-import { parseCbtQuestionCount } from "./cbt-question-count-validation.mjs";
+import { aggregateCbtSubjectScores, validateStudentUsername } from "./student-arena-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -98,6 +98,30 @@ async function persistCbtAttemptSummary(attempt: any, score: number, total: numb
     duration_seconds: durationSeconds,
     submitted_at: submittedAt,
   }, { onConflict: "attempt_session_id" });
+  if (error) throw error;
+}
+
+async function persistCbtSubjectScores(attempt: any, review: any[] | undefined, submittedAt: string) {
+  if (!attempt.user_id || !Array.isArray(review) || !review.length) return;
+  const started = new Date(attempt.started_at).getTime();
+  const submitted = new Date(submittedAt).getTime();
+  const durationSeconds = Number.isFinite(started) && Number.isFinite(submitted)
+    ? Math.max(0, Math.floor((submitted - started) / 1000))
+    : null;
+  const grouped = aggregateCbtSubjectScores(review);
+  const rows = grouped.map(result => ({
+    attempt_session_id: attempt.id,
+    user_id: attempt.user_id,
+    mode: attempt.mode,
+    subject: result.subject,
+    score: result.score,
+    total: result.total,
+    duration_seconds: durationSeconds,
+    submitted_at: submittedAt,
+  }));
+  if (!rows.length) return;
+  const { error } = await db.from("cbt_attempt_subject_scores")
+    .upsert(rows, { onConflict: "attempt_session_id,subject" });
   if (error) throw error;
 }
 
@@ -3163,9 +3187,16 @@ Deno.serve(async (req) => {
       if (!["practice", "mock"].includes(mode)) return json({ error: "Practice mode is invalid." }, 400);
       if (mode === "practice" && !subject) return json({ error: "Choose a subject before starting practice." }, 400);
 
-      const questionCount = parseCbtQuestionCount(body.questionCount, mode);
-      if (!questionCount.valid) return json({ error: questionCount.error }, 400);
-      const requestedQuestionCount = questionCount.value;
+      // Question count is server-validated so callers cannot request unbounded sessions.
+      // Keep existing defaults until the student UI exposes the count selector.
+      const defaultQuestionCount = mode === "mock" ? 100 : 50;
+      const maxQuestionCount = mode === "mock" ? 180 : 50;
+      const requestedQuestionCount = body.questionCount === undefined
+        ? defaultQuestionCount
+        : Number(body.questionCount);
+      if (!Number.isInteger(requestedQuestionCount) || requestedQuestionCount < 1 || requestedQuestionCount > maxQuestionCount) {
+        return json({ error: `Question count must be a whole number from 1 to ${maxQuestionCount} for ${mode} mode.` }, 400);
+      }
 
       const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
       const rawCombination = Array.isArray(body.subjectCombination) ? body.subjectCombination.map(value => String(value).trim()) : [];
@@ -3253,7 +3284,9 @@ Deno.serve(async (req) => {
       }));
       const token = createCbtAttemptToken();
       const now = new Date();
-      const durationSeconds = Math.ceil(requestedQuestionCount * 40);
+      const durationSeconds = mode === "mock"
+        ? (requestedQuestionCount === 180 ? 120 * 60 : 30 * 60)
+        : (requestedQuestionCount === defaultQuestionCount ? 15 * 60 : requestedQuestionCount * 60);
       // The visible timer remains exact; this short grace window lets the automatic
       // submit request reach the server after the countdown reaches zero.
       const expiresAt = getCbtAttemptExpiry(now, durationSeconds);
@@ -3305,6 +3338,7 @@ Deno.serve(async (req) => {
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
         const submittedAt = String(attempt.submitted_at || new Date().toISOString());
         await persistCbtAttemptSummary(attempt, Number(attempt.score ?? previous.score), Number(attempt.total ?? previous.total), submittedAt);
+        await persistCbtSubjectScores(attempt, previous.review, submittedAt);
         return json({
           score: attempt.score ?? previous.score,
           total: attempt.total ?? previous.total,
@@ -3338,12 +3372,68 @@ Deno.serve(async (req) => {
       if (updateError) throw updateError;
       if (!updated) return json({ error: "This practice attempt has already been submitted." }, 409);
       await persistCbtAttemptSummary(attempt, Number(graded.score), Number(graded.total), submittedAt);
+      await persistCbtSubjectScores(attempt, graded.review, submittedAt);
       return json({
         score: graded.score,
         total: graded.total,
         percent: graded.percent,
         review: graded.review,
         submittedAt,
+      });
+    }
+
+    if (path === "/api/cbt/student-profile" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.from("cbt_student_profiles")
+        .select("username,created_at").eq("user_id", user.id).maybeSingle();
+      if (error) throw error;
+      return json({ profile: data || null });
+    }
+
+    if (path === "/api/cbt/student-profile" && req.method === "POST") {
+      const user = await requireUser(req);
+      const parsed = parseJsonObjectBody(await req.text());
+      if (!parsed.valid) return json({ error: parsed.error }, 400);
+      const usernameValidation = validateStudentUsername(parsed.value.username);
+      if (!usernameValidation.valid) return json({ error: usernameValidation.error }, 400);
+      const username = usernameValidation.username;
+      const { data: existing, error: existingError } = await db.from("cbt_student_profiles")
+        .select("username").eq("user_id", user.id).maybeSingle();
+      if (existingError) throw existingError;
+      if (existing) return json({ error: "Your EDUKEN competition username has already been claimed.", profile: existing }, 409);
+      const { data, error } = await db.from("cbt_student_profiles")
+        .insert({ user_id: user.id, username })
+        .select("username,created_at").single();
+      if (error?.code === "23505") return json({ error: "That username is already taken. Try another one." }, 409);
+      if (error) throw error;
+      return json({ profile: data }, 201);
+    }
+
+    if (path === "/api/cbt/leaderboard" && req.method === "GET") {
+      const params = new URL(req.url).searchParams;
+      const scope = params.get("scope") === "subject" ? "subject" : "national";
+      const subject = params.get("subject") || null;
+      const period = params.get("period") === "all-time" ? "all-time" : "week";
+      const page = Math.max(0, Math.min(10000, Number.parseInt(params.get("page") || "0", 10) || 0));
+      const limit = Math.max(1, Math.min(100, Number.parseInt(params.get("limit") || "50", 10) || 50));
+      if (scope === "subject" && !subject) return json({ error: "Choose a subject leaderboard." }, 400);
+      const { data, error } = await db.rpc("cbt_student_leaderboard", {
+        p_scope: scope,
+        p_subject: subject,
+        p_period: period,
+        p_limit: limit,
+        p_offset: page * limit,
+      });
+      if (error) throw error;
+      const items = data ?? [];
+      return json({
+        items,
+        page,
+        limit,
+        participantCount: Number(items[0]?.participant_count || 0),
+        scope,
+        subject,
+        period,
       });
     }
 
@@ -3356,6 +3446,19 @@ Deno.serve(async (req) => {
         .limit(20);
       if (error) throw error;
       return json({ items: data ?? [] });
+    }
+
+    if (path === "/api/cbt/arena/summary" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.rpc("cbt_student_arena_summary", { p_user_id: user.id });
+      if (error) throw error;
+      return json({ summary: data?.[0] || null });
+    }
+
+    if (path === "/api/cbt/arena/champions" && req.method === "GET") {
+      const { data, error } = await db.rpc("cbt_student_weekly_champions");
+      if (error) throw error;
+      return json({ champions: data ?? [] });
     }
 
     if (path === "/api/cbt/questions" && req.method === "GET") {
