@@ -299,6 +299,40 @@ test('CBT Try again preserves the selected mixed-mock question count', async ({ 
   expect(payloads.map(item => item.questionCount)).toEqual([20, 20]);
 });
 
+test('mixed mock selector starts the exact number of questions selected', async ({ page }) => {
+  const requestedCounts = [];
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ items: [] }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    requestedCounts.push(payload.questionCount);
+    const questions = Array.from({ length: payload.questionCount }, (_, index) => ({
+      id: 'selected-count-' + payload.questionCount + '-' + index,
+      subject: index === 0 ? 'Use of English' : payload.subjectCombination[(index - 1) % 3],
+      prompt: 'Question ' + (index + 1) + '?',
+      options: ['A', 'B', 'C', 'D'],
+    }));
+    await route.fulfill({
+      status: 201, contentType: 'application/json',
+      body: JSON.stringify({ attemptToken: 'a'.repeat(64), durationSeconds: 1800, questions }),
+    });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const selector = page.locator('#cbt-mock-count');
+  const start = page.getByRole('button', { name: /Start mixed mock/i });
+  for (const count of [8, 10, 20, 40, 100, 180]) {
+    await selector.selectOption(String(count));
+    await expect(selector).toHaveValue(String(count));
+    await start.click();
+    await expect(page.getByText('Question 1 of ' + count)).toBeVisible();
+    await page.once('dialog', dialog => dialog.accept());
+    await page.getByRole('button', { name: /Exit/i }).click();
+    await expect(selector).toBeVisible();
+  }
+  expect(requestedCounts).toEqual([8, 10, 20, 40, 100, 180]);
+});
+
 test('CBT calculator performs basic arithmetic and closes', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200, contentType: 'application/json',
