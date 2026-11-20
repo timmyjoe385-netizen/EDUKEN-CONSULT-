@@ -12,6 +12,7 @@ import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
 import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
+import { parseCbtQuestionCount } from "./cbt-question-count-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -3162,16 +3163,9 @@ Deno.serve(async (req) => {
       if (!["practice", "mock"].includes(mode)) return json({ error: "Practice mode is invalid." }, 400);
       if (mode === "practice" && !subject) return json({ error: "Choose a subject before starting practice." }, 400);
 
-      // Question count is server-validated so callers cannot request unbounded sessions.
-      // Keep existing defaults until the student UI exposes the count selector.
-      const defaultQuestionCount = mode === "mock" ? 100 : 50;
-      const maxQuestionCount = mode === "mock" ? 180 : 50;
-      const requestedQuestionCount = body.questionCount === undefined
-        ? defaultQuestionCount
-        : Number(body.questionCount);
-      if (!Number.isInteger(requestedQuestionCount) || requestedQuestionCount < 1 || requestedQuestionCount > maxQuestionCount) {
-        return json({ error: `Question count must be a whole number from 1 to ${maxQuestionCount} for ${mode} mode.` }, 400);
-      }
+      const questionCount = parseCbtQuestionCount(body.questionCount, mode);
+      if (!questionCount.valid) return json({ error: questionCount.error }, 400);
+      const requestedQuestionCount = questionCount.value;
 
       const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
       const rawCombination = Array.isArray(body.subjectCombination) ? body.subjectCombination.map(value => String(value).trim()) : [];
@@ -3259,9 +3253,7 @@ Deno.serve(async (req) => {
       }));
       const token = createCbtAttemptToken();
       const now = new Date();
-      const durationSeconds = mode === "mock"
-        ? (requestedQuestionCount === 180 ? 120 * 60 : 30 * 60)
-        : (requestedQuestionCount === defaultQuestionCount ? 15 * 60 : requestedQuestionCount * 60);
+      const durationSeconds = Math.ceil(requestedQuestionCount * 40);
       // The visible timer remains exact; this short grace window lets the automatic
       // submit request reach the server after the countdown reaches zero.
       const expiresAt = getCbtAttemptExpiry(now, durationSeconds);
