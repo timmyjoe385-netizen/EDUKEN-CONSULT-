@@ -496,7 +496,7 @@ test('signed-in students can see personal progress before claiming an Arena user
   await expect(page.getByText('2', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('20', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('70.0%')).toBeVisible();
-  await expect(page.getByText('80.0%')).toBeVisible();
+  await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Best attempt' }).getByText('80.0%', { exact: true })).toBeVisible();
   await expect(page.getByText('Biology', { exact: true })).toBeVisible();
   await expect(page.getByText('Mathematics', { exact: true })).toBeVisible();
 });
