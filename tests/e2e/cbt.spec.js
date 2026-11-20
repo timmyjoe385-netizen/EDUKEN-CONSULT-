@@ -522,9 +522,10 @@ test('signed-in students must claim a username before starting while still seein
   }));
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('heading', { name: 'Create your student identity first' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Join Student Arena (optional)' })).toBeVisible();
   await expect(page.locator('#cbt-student-username')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await expect(page.getByText(/You can keep practising without a username/i)).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Your progress so far' })).toBeVisible();
   await expect(page.locator('.student-progress-recent-heading')).toContainText('2 subjects covered · 2 saved attempts');
   await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Questions attempted' }).getByText('20', { exact: true })).toBeVisible();
