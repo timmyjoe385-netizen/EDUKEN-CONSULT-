@@ -1,5 +1,21 @@
 import { test, expect } from '@playwright/test';
 
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('eduken_auth_session', JSON.stringify({
+      access_token: 'playwright-student-session',
+      refresh_token: 'playwright-refresh-token',
+      expires_at: Math.floor(Date.now() / 1000) + 3600,
+      user: { id: 'playwright-student-id', email: 'student@example.test' },
+    }));
+  });
+  await page.route('**/api/cbt/student-profile', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ profile: { username: 'PlaywrightStudent', created_at: '2026-11-20T00:00:00.000Z' } }),
+  }));
+});
+
 test('CBT falls back to original local practice when the published bank is empty', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
