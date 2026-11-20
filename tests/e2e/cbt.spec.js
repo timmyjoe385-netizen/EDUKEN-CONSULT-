@@ -320,3 +320,31 @@ test('CBT calculator performs basic arithmetic and closes', async ({ page }) => 
   await dialog.getByRole('button', { name: 'Close calculator' }).click();
   await expect(dialog).toBeHidden();
 });
+
+
+test('Finish and see results also warns about unanswered questions', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'finish-unanswered-1', subject: 'Use of English', question_text: 'Question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  let submitCalls = 0;
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201, contentType: 'application/json',
+    body: JSON.stringify({ attemptToken: 'f'.repeat(64), durationSeconds: 900, questions: [{ id: 'finish-unanswered-1', subject: 'Use of English', prompt: 'Question?', options: ['A', 'B', 'C', 'D'] }] }),
+  }));
+  await page.route('**/api/cbt/submit*', async route => {
+    submitCalls += 1;
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'finish-unanswered-1', subject: 'Use of English', prompt: 'Question?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.getByRole('button', { name: /Finish and see results/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(submitCalls).toBe(0);
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: /Finish and see results/i }).click();
+  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  expect(submitCalls).toBe(1);
+});
