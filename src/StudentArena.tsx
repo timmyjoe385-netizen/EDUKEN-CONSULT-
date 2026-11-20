@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { api, auth } from './lib/api';
 import StudentProgress from './StudentProgress';
 
@@ -33,6 +33,7 @@ export default function StudentArena() {
   const [page, setPage] = useState(0);
   const [loadingRows, setLoadingRows] = useState(false);
   const [leaderboardError, setLeaderboardError] = useState('');
+  const leaderboardRequestId = useRef(0);
 
   useEffect(() => {
     if (!signedIn) {
@@ -54,6 +55,7 @@ export default function StudentArena() {
   }, [signedIn]);
 
   const loadLeaderboard = useCallback(async (nextPage: number, append: boolean) => {
+    const requestId = ++leaderboardRequestId.current;
     setLoadingRows(true);
     setLeaderboardError('');
     const params = new URLSearchParams({
@@ -65,14 +67,17 @@ export default function StudentArena() {
     if (scope === 'subject') params.set('subject', subject);
     try {
       const result = await api.get('/api/cbt/leaderboard?' + params.toString());
+      if (requestId !== leaderboardRequestId.current) return;
       const nextRows = Array.isArray(result.data?.items) ? result.data.items : [];
       setRows(previous => append ? [...previous, ...nextRows] : nextRows);
       setParticipantCount(Number(result.data?.participantCount || 0));
       setPage(nextPage);
     } catch (error) {
-      setLeaderboardError(error instanceof Error ? error.message : 'The leaderboard is temporarily unavailable.');
+      if (requestId === leaderboardRequestId.current) {
+        setLeaderboardError(error instanceof Error ? error.message : 'The leaderboard is temporarily unavailable.');
+      }
     } finally {
-      setLoadingRows(false);
+      if (requestId === leaderboardRequestId.current) setLoadingRows(false);
     }
   }, [scope, subject, period]);
 
@@ -174,7 +179,7 @@ export default function StudentArena() {
             <strong>{participantCount.toLocaleString()} eligible students</strong>
             <span>{scope === 'national' ? 'Nationwide' : subject} · {period === 'week' ? 'This week' : 'All time'}</span>
           </div>
-          {leaderboardError && <p className="student-arena-message" role="alert">{leaderboardError}</p>}
+          {leaderboardError && <div className="student-arena-retry"><p className="student-arena-message" role="alert">{leaderboardError}</p><button type="button" onClick={() => void loadLeaderboard(0, false)}>Try again</button></div>}
           {rows.length > 0 ? (
             <div className="student-arena-list">
               {rows.map(row => (
