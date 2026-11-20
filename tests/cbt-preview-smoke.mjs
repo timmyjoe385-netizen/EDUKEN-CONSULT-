@@ -108,7 +108,7 @@ try {
   assert.equal(await subjectSelect.inputValue(), "Economics", "The practice subject selector must update its selected value.");
   await subjectSelect.selectOption("Use of English");
   assert.deepEqual(await page.locator("#cbt-practice-count option").evaluateAll(options => options.map(option => option.value)), ["20", "40", "50"], "Practice counts must enforce the 20-question minimum.");
-  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, mandatory identity gate, guest start prevention, count selector options and subject switching.");
+  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, mandatory identity gate, anonymous start prevention, count selector options and subject switching.");
 } finally {
   await browser.close();
 }
