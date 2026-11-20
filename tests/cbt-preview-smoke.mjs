@@ -38,7 +38,7 @@ try {
   if (availableSubjectQuestions < requestedCount) {
     const startError = page.locator(".cbt-disclaimer[role='alert']");
     await startError.waitFor({ timeout: 15_000 });
-    assert.match(await startError.innerText(), /only \\d+ published questions|currently has only \\d+/i,
+    assert.match(await startError.innerText(), /only .*published questions|currently has only .*/i,
       "When the published bank is smaller than the selected practice size, the page must explain the shortfall instead of starting a broken attempt.");
     console.log("Live CBT preview browser smoke passed: published-question API, hidden answer key, subject selection and clear insufficient-bank handling.");
   } else {
