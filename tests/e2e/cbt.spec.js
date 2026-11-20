@@ -312,7 +312,10 @@ test('CBT Try again preserves the selected mixed-mock question count', async ({ 
 test('mixed mock selector starts the exact number of questions selected', async ({ page }) => {
   const requestedCounts = [];
   await page.route('**/api/cbt/questions*', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ items: [] }),
+    status: 200, contentType: 'application/json', body: JSON.stringify({ items: [{
+      id: 'available-question', subject: 'Use of English', question_text: 'Available question?',
+      options: { A: 'A', B: 'B', C: 'C', D: 'D' },
+    }] }),
   }));
   await page.route('**/api/cbt/start*', async route => {
     const payload = route.request().postDataJSON();
