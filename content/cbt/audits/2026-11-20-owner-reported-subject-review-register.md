@@ -37,12 +37,17 @@ The canonical replacement inventory previously reconciled on this branch contain
 | Use of English | 14 |
 | **Total** | **116** |
 
-Separate R4 uncovered-target execution batches subsequently added target-specific proposals beyond that 116-item canonical inventory. The 19 November branch reconciliation records 31/45 target-specific proposals in the uncovered queue, including 12 later additions. The reviewer submissions are subject-level reports of individual review, but the conversation records do not include a complete signed, question-ID-and-version crosswalk tying each reviewer decision to every canonical and supplemental draft version.
+Separate R4 uncovered-target execution batches subsequently added target-specific proposals beyond that 116-item canonical inventory. The 19 November branch reconciliation records **31/45** target-specific proposals in the uncovered queue, including 12 later additions. These 31 targets are distinct from the 116-item canonical inventory in the earlier location-based reconciliation; together, the current branch records **147 replacement proposals** across those two workstreams.
+
+The 31 target-specific queue proposal IDs recorded across the 19-proposal checkpoint and later batches are:
+DUP-108, DUP-133, DUP-176, DUP-165, DUP-169, DUP-128, DUP-96, DUP-151, DUP-110, DUP-116, DUP-125, DUP-225, DUP-134, DUP-226, DUP-97, DUP-111, DUP-41, DUP-175, DUP-118, DUP-99, DUP-171, DUP-132, DUP-194, DUP-147, DUP-215, DUP-224, DUP-179, DUP-180, DUP-117, DUP-233, and DUP-112.
+
+The project owner reports that the eight reviewers individually approved every replacement proposal in their respective subjects. This register therefore preserves the reported approval as applying to the replacement workstreams, including the 116 canonical proposals and 31 additional target-specific proposals. The 14 remaining uncovered targets are separately documented as no-new-draft collision outcomes; no replacement question was created for them merely to increase coverage.
 
 Accordingly:
 - The project owner's report of individual subject-level approvals is preserved as a substantive reviewer outcome, not downgraded to “no approval”.
-- The 116 canonical proposal counts above are a known inventory baseline, not a claim that the eight forms themselves listed those IDs.
-- The later supplemental proposals (including execution batches 8–12) must be matched to the exact versions the reviewers saw before the register can certify version-specific approval.
+- The 116 canonical proposal counts and 31 additional target-specific IDs above are known inventory baselines; the eight submissions did not include a complete machine-readable ID/version list.
+- The reviewer submissions are subject-level reports of individual review, but the conversation records do not include a complete signed, question-ID-and-version crosswalk tying each reviewer decision to every canonical and supplemental draft version.
 - The repository does not contain reviewer signatures, full qualification evidence, dated item-level worksheets, or a complete proposal-ID/version-to-reviewer crosswalk in this record.
 - Any item revised after its reviewer checked it must be re-presented for approval; an earlier approval must not silently transfer to a materially changed version.
 
