@@ -1,11 +1,11 @@
 import { test, expect } from '@playwright/test';
 
 const questionRows = (prefix, subject, count = 20, questionText = 'Practice question?', options = { A: 'A', B: 'B', C: 'C', D: 'D' }) =>
-  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, question_text: questionText, options }));
+  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, question_text: questionText, options: typeof options === 'function' ? options(index) : options }));
 const attemptRows = (prefix, subject, count = 20, prompt = 'Practice question?', options = ['A', 'B', 'C', 'D']) =>
-  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, prompt, options }));
+  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, prompt, options: typeof options === 'function' ? options(index) : options }));
 const reviewRows = (prefix, subject, count = 20, prompt = 'Practice question?', options = ['A', 'B', 'C', 'D'], correctOption = 'A', explanation = 'Explanation.') =>
-  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, prompt, options, correctOption, explanation }));
+  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, prompt, options: typeof options === 'function' ? options(index) : options, correctOption, explanation }));
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
@@ -99,7 +99,9 @@ test('published CBT questions are graded by the server after submission', async 
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
-        items: questionRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' }),
+        items: questionRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', index => index === 0
+      ? { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' }
+      : { A: 'Choice A', B: 'Choice B', C: 'Choice C', D: 'Choice D' }),
       }),
     })
   );
@@ -110,7 +112,9 @@ test('published CBT questions are graded by the server after submission', async 
       body: JSON.stringify({
         attemptToken: 'a'.repeat(64),
         durationSeconds: 900,
-        questions: attemptRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', ['Wrong', 'Right', 'Also wrong', 'Not this one']),
+        questions: attemptRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', index => index === 0
+      ? ['Wrong', 'Right', 'Also wrong', 'Not this one']
+      : ['Choice A', 'Choice B', 'Choice C', 'Choice D']),
       }),
     })
   );
@@ -123,7 +127,9 @@ test('published CBT questions are graded by the server after submission', async 
       contentType: 'application/json',
       body: JSON.stringify({
         score: 1, total: 20, percent: 5, submittedAt: '2026-10-29T06:00:00.000Z',
-        review: reviewRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', ['Wrong', 'Right', 'Also wrong', 'Not this one'], 'B', 'The second option is correct.'),
+        review: reviewRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', index => index === 0
+      ? ['Wrong', 'Right', 'Also wrong', 'Not this one']
+      : ['Choice A', 'Choice B', 'Choice C', 'Choice D'], 'B', 'The second option is correct.'),
       }),
     });
   });
