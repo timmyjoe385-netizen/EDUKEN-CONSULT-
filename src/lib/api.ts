@@ -8,7 +8,7 @@ const IS_PREVIEW_BUILD = import.meta.env.VITE_EDUKEN_ENV === 'preview';
 const SUPABASE_URL = (IS_PREVIEW_BUILD ? suppliedSupabaseUrl : (suppliedSupabaseUrl || PRODUCTION_SUPABASE_URL)).replace(/\/+$/, '');
 const SUPABASE_KEY = IS_PREVIEW_BUILD ? suppliedPublishableKey : (suppliedPublishableKey || PRODUCTION_SUPABASE_KEY);
 const PREVIEW_BACKEND_CONFIGURED =
-  SUPABASE_URL.startsWith('https://wpktzogarfqrgkirzdpy.supabase.co') &&
+  SUPABASE_URL === 'https://wpktzogarfqrgkirzdpy.supabase.co' &&
   Boolean(SUPABASE_KEY);
 const assertBackendConfigured = () => {
   if (IS_PREVIEW_BUILD && !PREVIEW_BACKEND_CONFIGURED) {
