@@ -16,6 +16,7 @@ test('CBT falls back to original local practice when the published bank is empty
   await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
   await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
+  await page.locator('#cbt-practice-count').selectOption('2');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 2')).toBeVisible();
 
@@ -35,6 +36,7 @@ test('CBT practice fallback supports navigation, flagging and answer review', as
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByText(/original starter samples are being used/i)).toBeVisible();
+  await page.locator('#cbt-practice-count').selectOption('2');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 2')).toBeVisible();
 
