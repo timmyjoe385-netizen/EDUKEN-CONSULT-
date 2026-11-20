@@ -29,6 +29,8 @@ const json = (body: unknown, status = 200) =>
 const url = Deno.env.get("SUPABASE_URL")!;
 const secretKeys = JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS")!);
 const db = createClient(url, secretKeys.default);
+// Draft-question CBT testing is deliberately restricted to the isolated preview project.
+const IS_ISOLATED_CBT_PREVIEW = url === "https://wpktzogarfqrgkirzdpy.supabase.co";
 const ADMIN_EMAILS = new Set(["timmyjoe385@gmail.com", "edukenconsult00@gmail.com"]);
 const CONTENT_TABLES = new Set(["opportunities", "admissions", "updates", "faqs", "services"]);
 const DEFAULT_SYSTEM_SETTINGS = {
@@ -3159,10 +3161,33 @@ Deno.serve(async (req) => {
       return json({ items: data ?? [] });
     }
 
+    if (path === "/api/admin/cbt/preview/availability" && req.method === "GET") {
+      await requireAdmin(req);
+      if (!IS_ISOLATED_CBT_PREVIEW) return json({ error: "Draft preview is available only in the isolated test environment." }, 404);
+      const subjects = [
+        "Use of English", "Mathematics", "Biology", "Chemistry",
+        "Physics", "Government", "Economics", "Literature in English",
+      ];
+      const results = await Promise.all(subjects.map(async (subject) => {
+        const { count, error } = await db.from("cbt_questions")
+          .select("id", { count: "exact", head: true })
+          .eq("status", "draft")
+          .eq("subject", subject);
+        if (error) throw error;
+        return [subject, Number(count || 0)] as const;
+      }));
+      return json({ counts: Object.fromEntries(results), previewOnly: true, status: "draft" });
+    }
+
     if (path === "/api/cbt/start" && req.method === "POST") {
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
+      const previewDrafts = body.previewDrafts === true;
+      if (previewDrafts) {
+        await requireAdmin(req);
+        if (!IS_ISOLATED_CBT_PREVIEW) return json({ error: "Draft-question testing is restricted to the isolated preview environment." }, 404);
+      }
       const mode = String(body.mode || "practice");
       const subject = String(body.subject || "").trim().slice(0, 120);
       if (!["practice", "mock"].includes(mode)) return json({ error: "Practice mode is invalid." }, 400);
@@ -3180,6 +3205,7 @@ Deno.serve(async (req) => {
       }
 
       const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
+      const questionStatus = previewDrafts ? "draft" : "published";
       const rawCombination = Array.isArray(body.subjectCombination) ? body.subjectCombination.map(value => String(value).trim()) : [];
       let chosenSubjects: string[] = [];
       if (mode === "mock") {
@@ -3203,7 +3229,7 @@ Deno.serve(async (req) => {
       if (mode === "practice") {
         const { data, error } = await db.from("cbt_questions")
           .select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty")
-          .eq("status", "published").eq("subject", subject).limit(500);
+          .eq("status", questionStatus).eq("subject", subject).limit(500);
         if (error) throw error;
         rows = shuffleRows(data ?? []).slice(0, requestedQuestionCount);
       } else {
@@ -3213,7 +3239,7 @@ Deno.serve(async (req) => {
           const required = counts.get(name) || 0;
           const { data, error } = await db.from("cbt_questions")
             .select("id,exam_type,subject,topic,subtopic,question_text,options,correct_option,explanation,difficulty")
-            .eq("status", "published").eq("subject", name).limit(1000);
+            .eq("status", questionStatus).eq("subject", name).limit(1000);
           if (error) throw error;
           const available = data ?? [];
           return { name, required, available: available.length, selected: shuffleRows(available).slice(0, required) };
