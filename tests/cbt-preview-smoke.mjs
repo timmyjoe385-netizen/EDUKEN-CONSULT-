@@ -47,15 +47,15 @@ try {
   const mockStartResponse = await mockStartResponsePromise;
   if (mockStartResponse.status() === 201) {
     await page.locator(".cbt-question-card").waitFor({ timeout: 20_000 });
-    assert.match(await page.locator(".cbt-question-meta").innerText(), /Question 1 of 20/, "Selecting 8 must start a session containing exactly eight questions.");
+    assert.match(await page.locator(".cbt-question-meta").innerText(), /Question 1 of 20/, "Selecting 20 must start a session containing exactly twenty questions.");
     for (let index = 0; index < 20; index++) {
-      assert.match(await page.locator(".cbt-question-meta").innerText(), new RegExp("Question " + (index + 1) + " of 20"), "The question navigator must advance through all eight questions.");
+      assert.match(await page.locator(".cbt-question-meta").innerText(), new RegExp("Question " + (index + 1) + " of 20"), "The question navigator must advance through all twenty questions.");
       await page.locator(".cbt-options .cbt-option").first().click();
       if (index < 19) await page.locator(".cbt-question-actions .cbt-primary-button").click();
     }
     await page.locator(".cbt-submit-wide").click();
     await page.locator(".cbt-result-hero").waitFor({ timeout: 25_000 });
-    assert.match(await page.locator(".cbt-result-hero").innerText(), /20 questions/, "Submitting the eight-question mock must show an eight-question result.");
+    assert.match(await page.locator(".cbt-result-hero").innerText(), /20 questions/, "Submitting the twenty-question mock must show a twenty-question result.");
     assert.equal(await page.locator(".cbt-review-item").count(), 20, "Answer review must contain all twenty submitted questions.");
     await page.locator(".cbt-result-hero button.cbt-secondary-button").click();
   } else {
