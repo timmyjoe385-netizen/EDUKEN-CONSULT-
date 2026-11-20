@@ -31,6 +31,26 @@ for (const [method, path, body] of [
   assert.equal(response.status, 401, `${method} ${path} must require an authenticated EDUKEN user.`);
 }
 
+// Personal progress summaries must also require the authenticated account owner.
+{
+  const response = await fetch(endpoint + "/api/cbt/arena/summary", { headers: { apikey: key } });
+  assert.equal(response.status, 401, "Personal arena summaries must require authentication.");
+}
+
+// Weekly champions are public-safe and never expose account identifiers.
+{
+  const response = await fetch(endpoint + "/api/cbt/arena/champions", { headers: { apikey: key } });
+  assert.equal(response.status, 200, "Weekly champions should be readable without a student session.");
+  const payload = await response.json();
+  assert.ok(Array.isArray(payload.champions), "Weekly champions response should include a list.");
+  for (const champion of payload.champions) {
+    assert.ok(["top-performer", "most-improved", "most-consistent"].includes(champion.category));
+    for (const privateField of ["user_id", "email", "phone", "auth_id", "id"]) {
+      assert.equal(Object.hasOwn(champion, privateField), false, `Weekly champions must not expose ${privateField}.`);
+    }
+  }
+}
+
 // Public leaderboard reads return only the safe ranking contract, never account identifiers.
 for (const path of [
   "/api/cbt/leaderboard?scope=national&period=all-time&page=0&limit=10",
