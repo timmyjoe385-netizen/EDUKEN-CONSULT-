@@ -42,6 +42,7 @@ test('CBT practice fallback supports navigation, flagging and answer review', as
   await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
   await page.getByRole('button', { name: /Next question/i }).click();
   await expect(page.getByText('Question 2 of 2')).toBeVisible();
+  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
 });
@@ -259,6 +260,7 @@ test('Try again preserves the selected timed-mock question count', async ({ page
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   await page.getByRole('button', { name: /Try again/i }).click();
@@ -289,6 +291,7 @@ test('CBT Try again preserves the selected mixed-mock question count', async ({ 
   await page.locator('#cbt-mock-count').selectOption('20');
   await page.getByRole('button', { name: /Start mixed mock/i }).click();
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   await page.getByRole('button', { name: /Try again/i }).click();
