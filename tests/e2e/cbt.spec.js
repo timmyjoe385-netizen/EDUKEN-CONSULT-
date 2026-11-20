@@ -303,6 +303,25 @@ test('mixed mock selector starts the exact number of questions selected', async 
   expect(requestedCounts).toEqual([20, 40, 60, 100, 180]);
 });
 
+test('Mixed Mock uses three subject dropdowns and keeps English included automatically', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'subject-picker-q', subject: 'Use of English', question_text: 'Question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const first = page.getByLabel('Additional subject 1');
+  const second = page.getByLabel('Additional subject 2');
+  const third = page.getByLabel('Additional subject 3');
+  await expect(first).toHaveValue('Biology');
+  await expect(second).toHaveValue('Chemistry');
+  await expect(third).toHaveValue('Physics');
+  await first.selectOption('Mathematics');
+  await expect(second.locator('option[value="Mathematics"]')).toHaveCount(0);
+  await expect(third.locator('option[value="Mathematics"]')).toHaveCount(0);
+  await expect(page.getByText('Your four subjects: Use of English · Mathematics · Chemistry · Physics')).toBeVisible();
+  await expect(page.locator('#cbt-mock-count')).toHaveValue('180');
+});
+
 test('subject practice selector starts the exact number of questions selected', async ({ page }) => {
   const requestedCounts = [];
   await page.route('**/api/cbt/questions*', route => route.fulfill({
