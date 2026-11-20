@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { api, auth } from './lib/api';
+import StudentProgress from './StudentProgress';
 
 type StudentProfile = { username: string; created_at: string };
 type LeaderboardRow = {
@@ -145,6 +146,7 @@ export default function StudentArena() {
         </div>
       ) : (
         <div className="student-arena-board">
+          <StudentProgress />
           <div className="student-arena-welcome">
             <div><span>YOUR COMPETITION ID</span><strong>@{profile.username}</strong></div>
             <span className="student-arena-free">FREE MEMBER</span>
