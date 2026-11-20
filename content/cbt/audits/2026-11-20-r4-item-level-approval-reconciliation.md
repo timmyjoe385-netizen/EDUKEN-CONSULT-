@@ -86,7 +86,7 @@ DUP-147 is an existing burette draft that was re-screened; it is counted once an
 Thirteen target locations have no retained replacement candidate and remain held:
 DUP-128, DUP-225, DUP-117, DUP-212, DUP-134, DUP-242, DUP-220, DUP-119, DUP-192, DUP-159, DUP-156, DUP-103 and DUP-230.
 
-The reviewer worksheets record item-level APPROVED decisions, but the immutable candidate-content hash was not separately captured. The `exact_version_hash_confirmed` field therefore remains pending, and all 32 rows retain `import_eligibility=NO`.
+The reviewer worksheets record item-level APPROVED decisions, and all 32 candidate-content SHA-256 digests are now recorded consistently in the seven subject worksheets, master packet, and authoritative inventory. All 32 rows still retain `import_eligibility=NO` pending final staging/import-schema validation and explicit project-owner authorization.
 
 Before any import:
 1. Capture and record a content hash for each exact approved stem/options/key/explanation version.
@@ -105,3 +105,10 @@ Before any import:
 - Questions published: 0.
 - Production merge/deployment: 0.
 - Production remains untouched.
+
+
+## 6. Version pinning update — 20 November 2026
+
+The approved content for all 32 candidate records has now been pinned with a SHA-256 digest. Each digest is calculated from the UTF-8 JSON representation of this ordered field set: held target, subject, exact held source location, candidate ID, question stem, options A–D, answer key, and answer explanation. The same digest is recorded in the master 32-candidate packet, all seven subject worksheets, and the authoritative 45-target inventory.
+
+The exact-version-hash gate is now closed for these 32 records. **Import eligibility remains NO** pending final staging/import-schema validation, preservation of the 13 held locations, and explicit project-owner authorization for the specific staging import. No database or production action has been taken.
