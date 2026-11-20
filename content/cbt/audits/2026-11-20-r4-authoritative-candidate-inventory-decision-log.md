@@ -99,3 +99,21 @@ The subject-level approvals already recorded for the eight subjects do not const
 - Merge, deployment or production changes: 0.
 
 This is documentation-only reconciliation and review routing. The R4 candidate inventory is now consolidated, but the question bank is not thereby approved, import-ready or publish-ready. Production remains untouched.
+
+
+## 8. Post-review update — 20 November 2026
+
+The project owner subsequently confirmed that each assigned subject reviewer approved every replacement individually for their respective subject. The seven subject-specific reviewer CSVs and the authoritative 45-target candidate inventory have now been updated to record **32 item-level APPROVED decisions**:
+- Biology: 12
+- Chemistry: 4
+- Economics: 4
+- Government: 5
+- Literature in English: 4
+- Physics: 2
+- Use of English: 1
+
+All 32 reviewer-sheet candidate IDs match the authoritative inventory's preferred candidate IDs and exact held locations. Their stems and four options were reconciled against the cited source audit reports. This corrects the earlier review-preparation status above; the prior statement of zero item-level approvals described the packet before the project owner's subsequent confirmation.
+
+The approval record is owner-reported; reviewers did not submit signed forms directly through this workflow. Immutable candidate-content hashes have not yet been separately captured. Therefore, the exact-version-hash field remains pending and **import eligibility remains NO for all 32**.
+
+The 13 targets with no retained candidate remain held. No source question bank, database, import, publication, merge, or production deployment was changed. See `2026-11-20-r4-item-level-approval-reconciliation.md` for the full register and remaining release gates.
