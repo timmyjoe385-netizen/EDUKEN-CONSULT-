@@ -3179,9 +3179,14 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/start" && req.method === "POST") {
-      // Guest practice is open. Attach an account when available; a claimed username
-      // is only required for leaderboard participation.
-      const user = await currentUser(req);
+      // Every CBT session requires a verified account with a claimed unique student username.
+      const user = await requireUser(req);
+      const { data: studentProfile, error: studentProfileError } = await db.from("cbt_student_profiles")
+        .select("username").eq("user_id", user.id).maybeSingle();
+      if (studentProfileError) throw studentProfileError;
+      if (!studentProfile?.username) {
+        return json({ error: "Create your free EDUKEN student username before starting any CBT session." }, 403);
+      }
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
