@@ -6,6 +6,16 @@ const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   await page.setExtraHTTPHeaders({ "Cache-Control": "no-cache", Pragma: "no-cache" });
+  const apiNetworkEvents = [];
+  page.on("request", request => {
+    if (request.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("request " + request.method() + " " + request.url());
+  });
+  page.on("requestfailed", request => {
+    if (request.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("requestfailed " + request.method() + " " + request.url() + " :: " + (request.failure()?.errorText || "unknown"));
+  });
+  page.on("response", response => {
+    if (response.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("response " + response.status() + " " + response.url());
+  });
   const questionsResponsePromise = page.waitForResponse(
     response => response.request().method() === "GET" &&
       response.url().includes("/functions/v1/eduken-api/api/cbt/questions"),
@@ -20,7 +30,12 @@ try {
   assert.match(await arena.innerText(), /EDUKEN STUDENT ARENA/i, "The deployed CBT page must visibly render Student Arena.");
   const arenaPosition = await arena.evaluate(element => element.compareDocumentPosition(document.querySelector(".cbt-how-section")) & Node.DOCUMENT_POSITION_FOLLOWING);
   assert.ok(arenaPosition, "Student Arena must appear after the mixed mock and before the practice routine section.");
-  const questionsResponse = await questionsResponsePromise;
+  let questionsResponse;
+  try {
+    questionsResponse = await questionsResponsePromise;
+  } catch (error) {
+    throw new Error(String(error) + "\nCBT API network events:\n" + apiNetworkEvents.join("\n"));
+  }
   assert.equal(questionsResponse.status(), 200, "The deployed preview must load published CBT questions from the isolated API.");
   const payload = await questionsResponse.json();
   assert.ok(Array.isArray(payload.items) && payload.items.length > 0, "Published questions must be available in the preview.");
