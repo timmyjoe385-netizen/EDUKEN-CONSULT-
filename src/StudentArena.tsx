@@ -136,7 +136,7 @@ export default function StudentArena() {
         <div>
           <span className="cbt-eyebrow">EDUKEN STUDENT ARENA</span>
           <h2 id="student-arena-title">Your effort. Your progress. Your place. 🏆</h2>
-          <p>Practise freely. Claim a free username when you are ready to compete.</p>
+          <p>Build your student identity once. Use it throughout your CBT journey.</p>
         </div>
         <span className="student-arena-trophy" aria-hidden="true">🏆</span>
       </div>
@@ -178,37 +178,15 @@ export default function StudentArena() {
 
       {!signedIn ? (
         <div className="student-arena-gate">
-          <h3>Join the competition for free</h3>
-          <p>You can continue practising as a guest. To appear on the national and subject leaderboards, sign in to your EDUKEN account and claim a unique username.</p>
-          <a className="student-arena-button" href="/">Go to EDUKEN to sign in</a>
-          <small>Your practice access remains free. Signing in is only needed for a saved competition identity.</small>
+          <h3>Your student identity comes first</h3>
+          <p>Sign in and create your unique EDUKEN username in the identity section above before starting any practice or mock examination. The same identity will appear here on your leaderboard.</p>
         </div>
       ) : loadingProfile ? (
         <div className="student-arena-gate" role="status">Loading your competition profile…</div>
       ) : !profile ? (
         <div className="student-arena-gate">
-          <h3>Create your free competition username</h3>
-          <p>Choose a name other students will recognise. Your real name, email and phone number will not appear on the leaderboard.</p>
-          <form className="student-arena-claim" onSubmit={claimUsername}>
-            <label htmlFor="student-arena-username">Your username</label>
-            <div className="student-arena-claim-row">
-              <span aria-hidden="true">@</span>
-              <input
-                id="student-arena-username"
-                value={username}
-                onChange={event => setUsername(event.target.value)}
-                minLength={3}
-                maxLength={20}
-                pattern="[A-Za-z0-9_]{3,20}"
-                placeholder="FutureDoctor27"
-                autoComplete="off"
-                required
-              />
-              <button type="submit" disabled={claiming || username.trim().length < 3}>{claiming ? 'Saving…' : 'Claim username'}</button>
-            </div>
-            <small>3–20 letters, numbers or underscores. Each username can be claimed once.</small>
-          </form>
-          {message && <p className="student-arena-message" role="alert">{message}</p>}
+          <h3>Finish setting up your student identity</h3>
+          <p>Use the identity section above to choose your unique username. Once it is saved, your Student Arena rankings and personal progress will appear here.</p>
         </div>
       ) : (
         <div className="student-arena-board">
