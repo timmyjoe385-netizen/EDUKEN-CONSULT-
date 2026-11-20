@@ -17,18 +17,22 @@ export default function CbtIdentityGate({ onReady }: Props) {
 
   useEffect(() => {
     let active = true;
-    const sync = () => setSignedIn(auth.isSignedIn());
-    window.addEventListener('eduken-auth-changed', sync);
-    if (!auth.isSignedIn()) {
-      setLoading(false);
-      onReady(null);
-    } else {
+    const loadProfile = () => {
+      if (!auth.isSignedIn()) {
+        setSignedIn(false);
+        setProfile(null);
+        setLoading(false);
+        onReady(null);
+        return;
+      }
+      setSignedIn(true);
+      setLoading(true);
       api.get('/api/cbt/student-profile')
         .then(result => {
           if (!active) return;
-          const next = result.data?.profile || null;
-          setProfile(next);
-          onReady(next);
+          const nextProfile = result.data?.profile || null;
+          setProfile(nextProfile);
+          onReady(nextProfile);
         })
         .catch(error => {
           if (!active) return;
@@ -36,10 +40,12 @@ export default function CbtIdentityGate({ onReady }: Props) {
           onReady(null);
         })
         .finally(() => { if (active) setLoading(false); });
-    }
+    };
+    window.addEventListener('eduken-auth-changed', loadProfile);
+    loadProfile();
     return () => {
       active = false;
-      window.removeEventListener('eduken-auth-changed', sync);
+      window.removeEventListener('eduken-auth-changed', loadProfile);
     };
   }, [onReady]);
 
