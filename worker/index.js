@@ -8,7 +8,7 @@ function getSupabaseConfig(env) {
   // Preview must fail closed: never fall back to production if its isolated
   // Supabase URL or publishable key is missing.
   if (isPreview) {
-    if (!configuredUrl.startsWith("https://wpktzogarfqrgkirzdpy.supabase.co") || !configuredKey) return null;
+    if (configuredUrl !== "https://wpktzogarfqrgkirzdpy.supabase.co" || !configuredKey) return null;
     return { url: configuredUrl, key: configuredKey };
   }
   return {
