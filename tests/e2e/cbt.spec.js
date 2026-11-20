@@ -187,3 +187,38 @@ test('timed-out CBT automatically retries a temporary submission failure', async
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   expect(submissionCount).toBe(2);
 });
+
+
+test('signed-in students can see personal progress before claiming an Arena username', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('eduken_auth_session', JSON.stringify({
+      access_token: 'test-access-token',
+      refresh_token: 'test-refresh-token',
+      expires_at: Math.floor(Date.now() / 1000) + 3600,
+      user: { id: 'student-progress-user', email: 'student@example.test' },
+    }));
+  });
+  await page.route('**/api/cbt/student-profile', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ profile: null }),
+  }));
+  await page.route('**/api/cbt/attempts', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [
+      { mode: 'practice', subject: 'Biology', score: 8, total: 10, submitted_at: '2026-11-20T08:00:00.000Z', duration_seconds: 300 },
+      { mode: 'practice', subject: 'Mathematics', score: 6, total: 10, submitted_at: '2026-11-19T08:00:00.000Z', duration_seconds: 360 },
+    ] }),
+  }));
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Create your free competition username' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your progress so far' })).toBeVisible();
+  await expect(page.getByText('2', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('20', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('70.0%')).toBeVisible();
+  await expect(page.getByText('80.0%')).toBeVisible();
+  await expect(page.getByText('Biology', { exact: true })).toBeVisible();
+  await expect(page.getByText('Mathematics', { exact: true })).toBeVisible();
+});
