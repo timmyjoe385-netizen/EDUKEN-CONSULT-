@@ -74,8 +74,11 @@ test('published CBT questions are graded by the server after submission', async 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
-  await page.getByRole('button', { name: /Right/ }).click();
-  page.once('dialog', dialog => dialog.accept());
+  for (let index = 0; index < 20; index += 1) {
+    await page.getByRole('button', { name: /Right/ }).click();
+    if (index < 19) await page.getByRole('button', { name: /Next question/i }).click();
+  }
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   await expect(page.getByText('Correct answer:')).toBeVisible();
