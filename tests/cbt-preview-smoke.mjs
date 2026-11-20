@@ -5,7 +5,6 @@ const url = String(process.env.CBT_PREVIEW_URL || "https://eduken-consult-previe
 const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  await page.setExtraHTTPHeaders({ "Cache-Control": "no-cache", Pragma: "no-cache" });
   const apiNetworkEvents = [];
   page.on("request", request => {
     if (request.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("request " + request.method() + " " + request.url());
