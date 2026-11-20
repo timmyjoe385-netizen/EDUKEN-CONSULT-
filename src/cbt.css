@@ -157,3 +157,7 @@
 .cbt-identity-error{margin-top:10px!important;color:#a12c2c!important}
 .cbt-identity-privacy{grid-column:2;display:flex;align-items:center;gap:6px;color:#627268;font-size:11px}
 @media(max-width:560px){.cbt-identity-gate{padding:14px;gap:10px}.cbt-identity-input-row{flex-wrap:wrap}.cbt-identity-input-row input{flex-basis:calc(100% - 28px)}.cbt-identity-input-row button{width:100%}.cbt-identity-privacy{grid-column:1 / -1}}
+
+
+.cbt-session-identity{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border:1px solid #cfe0d4;border-radius:999px;background:#edf6f0;color:#174d35;font-size:12px;font-weight:800;white-space:nowrap}
+.cbt-result-identity{margin:0 auto 12px}
