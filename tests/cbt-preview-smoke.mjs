@@ -95,8 +95,8 @@ try {
   await mockSubjectOptions.nth(disabledAdditionalIndex).check();
   assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 4, "Changing the combination must preserve exactly four selected subjects.");
   const mockCount = page.locator("#cbt-mock-count");
-  assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["8", "10", "20", "40", "100", "180"], "Server-backed mock counts must include the working eight-question option.");
-  await mockCount.selectOption("8");
+  assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["20", "40", "60", "100", "180"], "Mixed mock counts must enforce the 20-question minimum.");
+  await mockCount.selectOption("20");
   assert.match(await page.locator(".cbt-identity-gate").innerText(), /Create your student identity first|Continue with Google/i, "The preview must require a signed-in student identity.");
   assert.equal(await page.locator(".cbt-hero-actions button").evaluateAll(buttons => buttons.every(button => button.disabled)), true, "Guest students must not start practice or mocks.");
   assert.equal(await page.locator(".cbt-subject-picker button.cbt-primary-button").isDisabled(), true, "Subject practice must remain locked until a username is saved.");
@@ -107,7 +107,7 @@ try {
   await subjectSelect.selectOption("Economics");
   assert.equal(await subjectSelect.inputValue(), "Economics", "The practice subject selector must update its selected value.");
   await subjectSelect.selectOption("Use of English");
-  assert.deepEqual(await page.locator("#cbt-practice-count option").evaluateAll(options => options.map(option => option.value)), ["1", "5", "10", "20", "40", "50"], "Practice counts must expose all supported values.");
+  assert.deepEqual(await page.locator("#cbt-practice-count option").evaluateAll(options => options.map(option => option.value)), ["20", "40", "50"], "Practice counts must enforce the 20-question minimum.");
   console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, mandatory identity gate, guest start prevention, count selector options and subject switching.");
 } finally {
   await browser.close();
