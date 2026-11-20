@@ -489,14 +489,19 @@ test('signed-in students can see personal progress before claiming an Arena user
       { mode: 'practice', subject: 'Mathematics', score: 6, total: 10, submitted_at: '2026-11-19T08:00:00.000Z', duration_seconds: 360 },
     ] }),
   }));
+  await page.route('**/api/cbt/arena/summary', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ summary: null }),
+  }));
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: 'Create your free competition username' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Your progress so far' })).toBeVisible();
-  await expect(page.getByText('2', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('20', { exact: true }).first()).toBeVisible();
-  await expect(page.getByText('70.0%')).toBeVisible();
-  await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Best attempt' }).getByText('80.0%', { exact: true })).toBeVisible();
+  await expect(page.locator('.student-progress-recent-heading')).toContainText('2 subjects covered · 2 saved attempts');
+  await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Questions attempted' }).getByText('20', { exact: true })).toBeVisible();
+  await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Overall accuracy' }).getByText('70.0%', { exact: true })).toBeVisible();
+  await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Best 180-question mock' }).getByText('—', { exact: true })).toBeVisible();
   await expect(page.locator('.student-progress-attempt').filter({ hasText: /^Biology/ })).toBeVisible();
   await expect(page.locator('.student-progress-attempt').filter({ hasText: /^Mathematics/ })).toBeVisible();
 });
