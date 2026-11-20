@@ -308,7 +308,7 @@ export default function CbtPage() {
     if (questionLoadError) {
       nextQuestions = (nextMode === 'mock' ? QUESTIONS.filter(question => ['Use of English', ...mockSubjects].includes(question.subject)) : QUESTIONS.filter(question => question.subject === subject)).slice(0, requestedCount);
       if (nextQuestions.length < requestedCount) {
-        setStartError(`Only ${nextQuestions.length} local sample questions are available for this selection; ${requestedCount} were requested. Choose a smaller sample set.`);
+        setStartError(`Only ${nextQuestions.length} local sample questions are available for this selection; ${requestedCount} were requested. Please try again when enough reviewed questions are available.`);
         setStarting(false);
         return;
       }
