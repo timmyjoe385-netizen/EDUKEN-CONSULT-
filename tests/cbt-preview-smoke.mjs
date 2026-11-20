@@ -32,14 +32,24 @@ try {
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
   const subjectButton = page.locator(".cbt-subject-picker button:not([disabled])");
   await subjectButton.click();
-  await page.locator(".cbt-question-card").waitFor({ timeout: 15_000 });
-  await page.locator(".cbt-options .cbt-option").first().click();
-  await page.locator(".cbt-submit-wide").click();
-  await page.locator(".cbt-result-hero").waitFor({ timeout: 20_000 });
-  const resultText = await page.locator(".cbt-result-hero").innerText();
-  assert.match(resultText, /PRACTICE COMPLETE/i, "A real preview attempt should submit and display results.");
-  await page.locator(".cbt-review-card").waitFor({ timeout: 5_000 });
-  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, practice submission and result review.");
+  const requestedCount = Number(await page.locator("#cbt-practice-count").inputValue());
+  const availableSubjectQuestions = payload.items.filter(question => question.subject === await subjectSelect.inputValue()).length;
+  if (availableSubjectQuestions < requestedCount) {
+    const startError = page.locator(".cbt-disclaimer[role='alert']");
+    await startError.waitFor({ timeout: 15_000 });
+    assert.match(await startError.innerText(), /only \\d+ published questions|currently has only \\d+/i,
+      "When the published bank is smaller than the selected practice size, the page must explain the shortfall instead of starting a broken attempt.");
+    console.log("Live CBT preview browser smoke passed: published-question API, hidden answer key, subject selection and clear insufficient-bank handling.");
+  } else {
+    await page.locator(".cbt-question-card").waitFor({ timeout: 15_000 });
+    await page.locator(".cbt-options .cbt-option").first().click();
+    await page.locator(".cbt-submit-wide").click();
+    await page.locator(".cbt-result-hero").waitFor({ timeout: 20_000 });
+    const resultText = await page.locator(".cbt-result-hero").innerText();
+    assert.match(resultText, /PRACTICE COMPLETE/i, "A real preview attempt should submit and display results.");
+    await page.locator(".cbt-review-card").waitFor({ timeout: 5_000 });
+    console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, practice submission and result review.");
+  }
 } finally {
   await browser.close();
 }
