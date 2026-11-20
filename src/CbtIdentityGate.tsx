@@ -4,7 +4,7 @@ import { api, auth } from './lib/api';
 
 type Profile = { username: string; created_at: string };
 
-type Props = { onReady: (ready: boolean) => void };
+type Props = { onReady: (profile: Profile | null) => void };
 
 export default function CbtIdentityGate({ onReady }: Props) {
   const [signedIn, setSignedIn] = useState(() => auth.isSignedIn());
@@ -21,19 +21,19 @@ export default function CbtIdentityGate({ onReady }: Props) {
     window.addEventListener('eduken-auth-changed', sync);
     if (!auth.isSignedIn()) {
       setLoading(false);
-      onReady(false);
+      onReady(null);
     } else {
       api.get('/api/cbt/student-profile')
         .then(result => {
           if (!active) return;
           const next = result.data?.profile || null;
           setProfile(next);
-          onReady(Boolean(next?.username));
+          onReady(next);
         })
         .catch(error => {
           if (!active) return;
           setMessage(error instanceof Error ? error.message : 'We could not verify your student profile. Please try again.');
-          onReady(false);
+          onReady(null);
         })
         .finally(() => { if (active) setLoading(false); });
     }
@@ -63,7 +63,7 @@ export default function CbtIdentityGate({ onReady }: Props) {
       const next = result.data?.profile || null;
       setProfile(next);
       setUsername('');
-      onReady(Boolean(next?.username));
+      onReady(next);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'That username could not be saved. Please try another.');
     } finally {
