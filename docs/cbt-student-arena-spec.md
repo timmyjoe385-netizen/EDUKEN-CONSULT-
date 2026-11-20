@@ -23,7 +23,7 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 - Reuse the platform's existing Supabase authentication. Do not create a second password store or a separate login system.
 - Public leaderboard responses may contain only username, rank, eligible score/percentage, and permitted competition statistics. Never expose real name, email, phone number, auth user ID, or other private account fields.
 - Username creation is free. Username validation, availability checks, and claiming must be enforced server-side with a database uniqueness constraint.
-- Guest/local fallback practice remains available and never creates leaderboard entries. A free authenticated EDUKEN account plus a claimed username is required only to join the leaderboards; signing in is not required to practise.
+- Every CBT activity, including subject practice and mixed mocks, requires a verified EDUKEN account and a claimed free unique username before the session can start. No guest practice is permitted.
 
 ## Score integrity and fairness
 
@@ -68,11 +68,12 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 
 ## Confirmed product decision
 
-- **Option B:** students may practise as guests. To join the competition, they sign in to their existing EDUKEN account and claim a free unique username. No new password store or second account system.
+- Every student must sign in to a verified EDUKEN account and claim a free unique username before accessing any CBT activity. The username is the student's persistent identity across practice, mocks, dashboard, results and leaderboard.
+- Reuse existing Supabase authentication. Google may remain an option, but must not be the only sign-in route where existing email/password authentication is available. Do not create a second password store or separate login system.
 
 ## Delivery phases
 
-1. Confirmed: guest practice remains open; sign-in plus a free username is required only for leaderboard participation.
+1. Confirmed: a verified account and claimed free unique username are mandatory before any CBT activity.
 2. Added on this branch: private student identity and subject-score schema, username claim API, public-safe leaderboard API, and server-derived subject score persistence.
 3. In progress: automated tests for username uniqueness, auth ownership, privacy, score derivation, ranking/tie-breaks, week boundaries, pagination, and exclusion of guest/local/draft attempts.
 4. Added: mobile-first Student Arena leaderboard UI. Pending: personal progress dashboard, most-improved recognition, weekly champions, and later head-to-head challenges.
