@@ -189,7 +189,7 @@ export default function CbtPage() {
   const questionPool = publishedQuestions ?? [];
   // The list endpoint is paginated; the server start endpoint is authoritative for subject availability.
   const canStartSelectedSubject = questionLoadError
-    ? questionPool.some(question => question.subject === selectedSubject)
+    ? questionPool.filter(question => question.subject === selectedSubject).length >= practiceQuestionCount
     : questionPool.length > 0;
   const poolForSelection = useMemo(
     () => mode === 'mock' ? questionPool : questionPool.filter(question => question.subject === selectedSubject),
