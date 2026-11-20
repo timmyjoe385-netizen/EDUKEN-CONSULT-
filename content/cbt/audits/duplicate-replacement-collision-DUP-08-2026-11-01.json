@@ -1,0 +1,15 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "target_id": "DUP-08",
+  "draft_question": "A few drops of methyl orange turn red when added to an unknown solution. The solution is most likely: ",
+  "existing_question": {
+    "location": "batch 39, CSV row 17",
+    "question": "A solution that turns blue litmus paper red is likely to be",
+    "answer": "acidic"
+  },
+  "assessment": "The replacement uses methyl orange turning red to identify an acidic solution; the existing item uses blue litmus turning red to identify an acidic solution. Both test the same acid-indicator inference, with only the indicator changed.",
+  "decision": "BLOCKED — do not insert.",
+  "next_action": "Draft a different Chemistry syllabus learning objective and rerun full-bank contextual screening.",
+  "scope": "No source CSV, production data or deployment changed."
+}

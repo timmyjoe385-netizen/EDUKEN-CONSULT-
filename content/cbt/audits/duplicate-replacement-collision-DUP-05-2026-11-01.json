@@ -1,0 +1,19 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "finding_id": "DUP-05-REPLACEMENT-COLLISION",
+  "target_id": "DUP-05",
+  "draft_question": "A poem written to mourn the death of a person is known as an:",
+  "existing_question": {
+    "location": "batch 14, CSV row 38",
+    "subject": "Literature in English",
+    "topic": "Poetry",
+    "subtopic": "Poetic forms",
+    "question": "An elegy is a poem traditionally written to:",
+    "correct_answer": "Mourn or reflect on death and loss"
+  },
+  "assessment": "Confirmed semantic overlap. The replacement asks what a poem written to mourn a person's death is called; the existing item asks what an elegy is traditionally written to do. Both test the same definition/purpose, despite different wording and answer format.",
+  "decision": "BLOCKED — do not insert this replacement draft.",
+  "next_action": "Create a different Literature in English replacement from a distinct syllabus point, then rerun contextual full-bank screening before proposing insertion.",
+  "scope": "This finding does not alter any of the 1,600 source questions, CSV files, production data, or deployment state."
+}

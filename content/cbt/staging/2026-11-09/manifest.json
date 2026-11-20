@@ -1,0 +1,94 @@
+{
+  "audit_date": "2026-11-09",
+  "purpose": "Non-destructive provisional staging revision applying delegated duplicate/distinct decisions while preserving unresolved rows and the prior 6 November snapshot.",
+  "source_revision": "content/cbt/staging/2026-11-06/",
+  "source_register": "content/cbt/review-packets/2026-11-06-register-pair-review-109.csv",
+  "addendum_ledger": "content/cbt/review-packets/2026-11-09-addendum-disposition-ledger.csv",
+  "addendum_overlap_crosswalk": "content/cbt/review-packets/2026-11-09-addendum-overlap-crosswalk.csv",
+  "source_question_rows": 1600,
+  "retained_rows": 1444,
+  "held_rows": 156,
+  "per_subject": {
+    "Biology": {
+      "retained": 171,
+      "held": 29,
+      "total": 200
+    },
+    "Chemistry": {
+      "retained": 179,
+      "held": 21,
+      "total": 200
+    },
+    "Economics": {
+      "retained": 173,
+      "held": 27,
+      "total": 200
+    },
+    "Government": {
+      "retained": 176,
+      "held": 24,
+      "total": 200
+    },
+    "Literature in English": {
+      "retained": 181,
+      "held": 19,
+      "total": 200
+    },
+    "Mathematics": {
+      "retained": 193,
+      "held": 7,
+      "total": 200
+    },
+    "Physics": {
+      "retained": 186,
+      "held": 14,
+      "total": 200
+    },
+    "Use of English": {
+      "retained": 185,
+      "held": 15,
+      "total": 200
+    }
+  },
+  "decision_summary": {
+    "existing_register_rows": 110,
+    "existing_register_decisions": {
+      "D": 63,
+      "S": 29,
+      "Q": 18
+    },
+    "unique_addendum_endpoint_pairs": 17,
+    "unique_addendum_decisions": {
+      "D": 6,
+      "S": 11
+    },
+    "total_decision_rows": 127,
+    "duplicate_recommendations": 69,
+    "distinct_or_related_skill_recommendations": 40,
+    "unresolved_rows": 18
+  },
+  "staging_actions": {
+    "moved_from_retained_to_held": 45,
+    "moved_from_held_to_retained": 13,
+    "already_correct_by_decision": {
+      "D": 22,
+      "S": 24
+    },
+    "unique_target_locations": 104,
+    "unmatched_locations": 0
+  },
+  "academic_review": {
+    "independent_subject_review_worksheet_rows": 105,
+    "reviewer_name_and_date_fields": "blank; no reviewer identity/date invented",
+    "answer_key_and_syllabus_signoff": "pending",
+    "status": "NOT_ACADEMICALLY_APPROVED"
+  },
+  "safety": {
+    "original_question_csvs_modified": 0,
+    "previous_staging_revision_modified": 0,
+    "question_text_or_answer_key_changed": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  }
+}

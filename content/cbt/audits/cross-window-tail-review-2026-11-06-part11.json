@@ -1,0 +1,163 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record four additional lower-tail duplicates and one distinct practice pair.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      842,
+      843,
+      849,
+      880,
+      885
+    ],
+    "previous_total_manually_reviewed": 351,
+    "now_manually_reviewed": 356,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 948
+  },
+  "findings": [
+    {
+      "id": "DUP-149",
+      "rank": 842,
+      "score": 0.483,
+      "subject": "Literature in English",
+      "a": "batch 16 row 38",
+      "b": "batch 26 row 37",
+      "concept": "An aside is a brief remark directed to the audience and conventionally unheard by other characters",
+      "question_a": "In a play, an aside is a brief remark that is usually:",
+      "options_a": [
+        "Heard by the audience but presumed unheard by other characters on stage",
+        "Spoken by every character together",
+        "Printed only after the final scene",
+        "Used to describe the setting in a novel"
+      ],
+      "answer_a": "A",
+      "question_b": "In drama, an aside is a speech that is",
+      "options_b": [
+        "heard by the audience but conventionally not by the other characters on stage.",
+        "always delivered by every character together.",
+        "spoken only by the narrator outside the play.",
+        "a direction describing stage lighting."
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 16 row 38",
+      "replace_candidate": "batch 26 row 37",
+      "new_unique_targets_added": 1,
+      "reason": "Both define the same dramatic convention and use the same audience-versus-other-characters distinction."
+    },
+    {
+      "id": "DUP-150",
+      "rank": 843,
+      "score": 0.483,
+      "subject": "Biology",
+      "a": "batch 27 row 12",
+      "b": "batch 38 row 13",
+      "concept": "Platelets are the blood components responsible for initiating clotting and forming a plug",
+      "question_a": "Which blood component is especially important in forming a platelet plug during blood clotting?",
+      "options_a": [
+        "Platelets",
+        "Red blood cells",
+        "Lymphocytes",
+        "Plasma proteins only"
+      ],
+      "answer_a": "A",
+      "question_b": "Which component of blood is primarily responsible for clotting?",
+      "options_b": [
+        "red blood cells",
+        "plasma water",
+        "white blood cells",
+        "platelets"
+      ],
+      "answer_b": "D",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 27 row 12",
+      "replace_candidate": "batch 38 row 13",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask for the same blood component responsible for the initial clotting plug: platelets."
+    },
+    {
+      "id": "DUP-151",
+      "rank": 849,
+      "score": 0.481,
+      "subject": "Biology",
+      "a": "batch 29 row 12",
+      "b": "batch 31 row 16",
+      "concept": "Natural selection favours heritable traits that improve survival and reproductive success",
+      "question_a": "In a population, individuals with a heritable trait that improves survival tend to",
+      "options_a": [
+        "leave more offspring over generations",
+        "stop competing for resources",
+        "change their genes by choice",
+        "produce identical offspring in every case"
+      ],
+      "answer_a": "A",
+      "question_b": "In a population exposed to an environmental change, individuals with an inherited advantageous trait are more likely to",
+      "options_b": [
+        "leave more surviving offspring",
+        "stop reproducing entirely",
+        "change their genes by choice",
+        "avoid all competition"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "NATURAL-SELECTION-01",
+      "retain_candidate": "batch 7 row 16",
+      "existing_held_candidate": "batch 31 row 16",
+      "new_held_candidate": "batch 29 row 12",
+      "new_unique_targets_added": 1,
+      "reason": "Both test the same natural-selection outcome. Existing DUP-93 retains batch 7 row 16 and holds batch 31 row 16; batch 29 row 12 is an additional duplicate in that cluster."
+    },
+    {
+      "id": "DUP-152",
+      "rank": 880,
+      "score": 0.477,
+      "subject": "Government",
+      "a": "batch 15 row 34",
+      "b": "batch 34 row 34",
+      "concept": "Legislative committees examine bills and public issues in detail and report to the legislature",
+      "question_a": "A legislative committee is mainly established to:",
+      "options_a": [
+        "Appoint all judges",
+        "Examine specific matters in detail and report to the chamber",
+        "Replace the national constitution",
+        "Conduct every general election"
+      ],
+      "answer_a": "B",
+      "question_b": "What is one important function of a legislative committee?",
+      "options_b": [
+        "To interpret the constitution in court",
+        "To examine bills and issues in detail before the full house considers them",
+        "To appoint all judges",
+        "To conduct monetary policy"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 15 row 34",
+      "replace_candidate": "batch 34 row 34",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess the same committee function: detailed examination and scrutiny of bills or issues before reporting to the full chamber."
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 885,
+      "score": 0.476,
+      "subject": "Use of English",
+      "a": "batch 5 row 5",
+      "b": "batch 28 row 4",
+      "decision": "preserve_both_as_distinct_parallel_structure_practice_examples",
+      "reason": "Both test parallel grammatical structure, but use different sentence examples and distractors. Retain as complementary practice variants rather than duplicate stems."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 4,
+    "new_unique_replacement_targets": 4,
+    "provenance_checks_pending": 4,
+    "staging_joins_pending": 4,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

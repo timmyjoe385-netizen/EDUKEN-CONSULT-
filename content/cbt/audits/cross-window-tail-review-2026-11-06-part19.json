@@ -1,0 +1,96 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five more lower-scoring cross-window candidates checked against complete question text, options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      922,
+      923,
+      924,
+      925,
+      926
+    ],
+    "previous_total_manually_reviewed": 391,
+    "now_manually_reviewed": 396,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 908
+  },
+  "preserved": [
+    {
+      "rank": 922,
+      "score": 0.471,
+      "subject": "Physics",
+      "a": "batch 3 row 24",
+      "b": "batch 19 row 25",
+      "question_a": "Specific heat capacity is the energy required to raise the temperature of unit mass of a substance by:",
+      "answer_a": "A — one degree of temperature",
+      "question_b": "The heat required to change a substance from liquid to gas at constant temperature is its latent heat of ___.",
+      "answer_b": "B — vaporisation",
+      "decision": "preserve_both_as_distinct_thermal_physics_concepts",
+      "reason": "Specific heat capacity measures energy per unit mass per degree of temperature rise; latent heat of vaporisation concerns a phase change at constant temperature. They are different quantities and processes."
+    },
+    {
+      "rank": 923,
+      "score": 0.471,
+      "subject": "Use of English",
+      "a": "batch 9 row 4",
+      "b": "batch 13 row 6",
+      "question_a": "Which of the following is a complex sentence?",
+      "answer_a": "A",
+      "question_b": "Which sentence is in the passive voice?",
+      "answer_b": "C",
+      "decision": "preserve_both_as_distinct_sentence_grammar_skills",
+      "reason": "The first tests complex sentence structure (main plus subordinate clause); the second tests passive voice construction. A sentence may exhibit both properties, but the questions assess different grammatical features."
+    },
+    {
+      "rank": 924,
+      "score": 0.471,
+      "subject": "Biology",
+      "a": "batch 5 row 12",
+      "b": "batch 22 row 15",
+      "question_a": "Which chamber of the human heart pumps oxygenated blood into the aorta?",
+      "answer_a": "D — left ventricle",
+      "question_b": "Which blood vessel carries deoxygenated blood from the heart to the lungs?",
+      "answer_b": "C — pulmonary artery",
+      "decision": "preserve_both_as_distinct_circulatory_structures",
+      "reason": "The first identifies the chamber that pumps oxygenated blood into systemic circulation; the second identifies the vessel carrying deoxygenated blood to the lungs. Different structures and directions of flow."
+    },
+    {
+      "rank": 925,
+      "score": 0.471,
+      "subject": "Government",
+      "a": "batch 7 row 33",
+      "b": "batch 27 row 35",
+      "question_a": "A successful motion of no confidence in a parliamentary system usually indicates that:",
+      "answer_a": "A — the government has lost the confidence of the legislature",
+      "question_b": "In a parliamentary system, the cabinet is usually composed mainly of",
+      "answer_b": "A — senior ministers who direct major areas of government policy",
+      "decision": "preserve_both_as_distinct_parliamentary_government_concepts",
+      "reason": "A no-confidence motion concerns legislative support and government tenure; cabinet composition concerns the membership and role of the executive's senior ministers. Related parliamentary institutions, but different learning outcomes."
+    },
+    {
+      "rank": 926,
+      "score": 0.471,
+      "subject": "Economics",
+      "a": "batch 8 row 30",
+      "b": "batch 28 row 30",
+      "question_a": "The balance of payments records a country's:",
+      "answer_a": "A — transactions with the rest of the world",
+      "question_b": "A country's balance of trade in goods is the difference between the value of its",
+      "answer_b": "B — exports and imports of goods",
+      "decision": "preserve_both_as_distinct_international_trade_concepts",
+      "reason": "The balance of payments is the broader record of transactions between residents and the rest of the world; the balance of trade in goods is one component comparing goods exports and imports. The broader account and its narrower component are not duplicates."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "All five candidates were preserved as distinct after full-content comparison. Similarity alone did not justify any duplicate classification."
+  }
+}

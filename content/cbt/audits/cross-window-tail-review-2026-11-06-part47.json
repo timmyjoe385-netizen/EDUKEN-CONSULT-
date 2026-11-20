@@ -1,0 +1,159 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next previously unreviewed high-similarity cross-window candidate ranks. Each pair was checked against both source CSV records, including complete stems, options, keys and explanations. Previously reviewed ranks 360, 365, 370 and 373 are deliberately excluded.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      361,
+      362,
+      363,
+      364,
+      366,
+      367,
+      368,
+      369,
+      371,
+      372,
+      374
+    ],
+    "previous_total_manually_reviewed": 777,
+    "now_manually_reviewed": 788,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 516
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-179",
+      "rank": 367,
+      "subject": "Chemistry",
+      "similarity_score": 0.612,
+      "a": "batch 28 row 20",
+      "b": "batch 39 row 21",
+      "question_a": "In paper chromatography, a substance that travels farther under the same conditions generally has",
+      "options_a": [
+        "greater relative affinity for the mobile phase",
+        "less solubility in the mobile phase",
+        "a higher melting point",
+        "a greater attraction to the stationary phase"
+      ],
+      "answer_a": "A",
+      "explanation_a": "A substance that favours the mobile phase moves farther with the solvent.",
+      "question_b": "In paper chromatography, a component that travels furthest is generally more",
+      "options_b": [
+        "strongly retained by the paper",
+        "soluble in the mobile phase",
+        "dense than the solvent",
+        "chemically decomposed"
+      ],
+      "answer_b": "B",
+      "explanation_b": "A component that is more soluble in the mobile phase tends to travel further.",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask the same paper-chromatography principle: a component travels farther because it has greater affinity for, or solubility in, the mobile phase relative to the stationary paper. The stems, correct concept and explanations are equivalent; option wording differs but the tested knowledge is the same.",
+      "retain": "batch 28 row 20",
+      "hold": "batch 39 row 21",
+      "provenance": "pending_row_level_commit_reconciliation",
+      "staging_join": "pending",
+      "new_unique_replacement_targets": 1
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 361,
+      "subject": "Mathematics",
+      "a": "batch 3 row 11",
+      "b": "batch 36 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Both evaluate logarithms but use different bases and values: log₁₀(1000)=3 and log₃(81)=4. Distinct numerical practice."
+    },
+    {
+      "rank": 362,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 32 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Special-angle trigonometry and substitution into a linear function assess different mathematical skills."
+    },
+    {
+      "rank": 363,
+      "subject": "Mathematics",
+      "a": "batch 2 row 10",
+      "b": "batch 34 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Gradient and midpoint are different coordinate-geometry operations, despite both using two points."
+    },
+    {
+      "rank": 364,
+      "subject": "Physics",
+      "a": "batch 7 row 25",
+      "b": "batch 39 row 24",
+      "decision": "preserve_as_distinct",
+      "reason": "One calculates specific heat capacity from heat, mass and temperature change; the other calculates heat using specific heat capacity. They are inverse applications of Q=mcΔT and useful complementary practice."
+    },
+    {
+      "rank": 366,
+      "subject": "Chemistry",
+      "a": "batch 24 row 20",
+      "b": "batch 32 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Both test empirical formula, but one derives the ratio from given masses of two elements while the other derives it from percentage composition of three elements. Different data representations and calculation steps."
+    },
+    {
+      "rank": 368,
+      "subject": "Use of English",
+      "a": "batch 2 row 3",
+      "b": "batch 21 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the antonym of scarce; the second tests the synonym of diligent. Shared vocabulary-question format only."
+    },
+    {
+      "rank": 369,
+      "subject": "Use of English",
+      "a": "batch 5 row 6",
+      "b": "batch 21 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the antonym of expand; the second tests the synonym of diligent. Different target words and meanings."
+    },
+    {
+      "rank": 371,
+      "subject": "Mathematics",
+      "a": "batch 28 row 11",
+      "b": "batch 39 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "One asks for the general curved-surface-area formula of a cylinder; the other applies the formula to given radius and height. Conceptual recall and numerical application are complementary."
+    },
+    {
+      "rank": 372,
+      "subject": "Use of English",
+      "a": "batch 3 row 4",
+      "b": "batch 15 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first is a third conditional with a past result; the second is a mixed conditional linking a past condition to a present result."
+    },
+    {
+      "rank": 374,
+      "subject": "Use of English",
+      "a": "batch 29 row 2",
+      "b": "batch 35 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "The first reports a personal statement with can→could backshift; the second reports a universal scientific truth, where the present tense is retained. Different reported-speech rules."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 10,
+    "previously_reviewed_ranks_skipped": [
+      360,
+      365,
+      370,
+      373
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

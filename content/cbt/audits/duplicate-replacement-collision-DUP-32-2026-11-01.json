@@ -1,0 +1,17 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "finding_id": "DUP-32-REPLACEMENT-COLLISION",
+  "target_id": "DUP-32",
+  "draft_question": "The expression “passed away” is commonly used instead of “died”. This is an example of:",
+  "existing_question": {
+    "location": "batch 6, CSV row 40",
+    "subject": "Literature in English",
+    "topic": "Literary devices",
+    "question": "A mild expression used in place of a harsh or direct one is a:"
+  },
+  "assessment": "Confirmed semantic duplicate. Both items test euphemism: a mild expression substituted for a harsh/direct expression. The example “passed away” is simply an instance of the same concept.",
+  "decision": "BLOCKED — do not insert this replacement draft.",
+  "next_action": "Replace with a different Literature in English syllabus point and rerun contextual full-bank screening.",
+  "scope": "No source questions, production data or deployment state changed."
+}

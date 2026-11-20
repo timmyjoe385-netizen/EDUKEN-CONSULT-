@@ -1,0 +1,184 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 464-481. Previously reviewed ranks 463, 466, 473 and 477 are excluded. Full stems, options, answer keys and explanations were compared.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      464,
+      465,
+      467,
+      468,
+      469,
+      470,
+      471,
+      472,
+      474,
+      475,
+      476,
+      478,
+      479,
+      480,
+      481
+    ],
+    "previous_total_manually_reviewed": 861,
+    "now_manually_reviewed": 876,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 428
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-195",
+      "rank": 467,
+      "subject": "Mathematics",
+      "a": "batch 20 row 10",
+      "b": "batch 39 row 7",
+      "concept": "Solving quadratic equations by finding roots",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both are medium-level quadratic equations solved by factorisation to identify two roots. The coefficients and roots differ, but the same assessed task—solving a factorisable quadratic—is repeated.",
+      "retain": "batch 20 row 10",
+      "hold": "batch 39 row 7",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-196",
+      "rank": 475,
+      "subject": "Mathematics",
+      "a": "batch 1 row 10",
+      "b": "batch 16 row 9",
+      "concept": "Calculating the arithmetic mean of four values",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the arithmetic mean of four supplied values and require summing then dividing by four. Only one dataset value differs; no distinct skill is assessed.",
+      "retain": "batch 1 row 10",
+      "hold": "batch 16 row 9",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 464,
+      "subject": "Use of English",
+      "a": "batch 29 row 6",
+      "b": "batch 32 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the long /iː/ vowel in seat; the second tests the /ɔɪ/ diphthong in boy. Different speech sounds."
+    },
+    {
+      "rank": 465,
+      "subject": "Physics",
+      "a": "batch 9 row 25",
+      "b": "batch 17 row 24",
+      "decision": "preserve_as_distinct",
+      "reason": "Wave speed uses v=fλ; frequency from period uses f=1/T. Different physical quantities and formulae."
+    },
+    {
+      "rank": 468,
+      "subject": "Use of English",
+      "a": "batch 9 row 5",
+      "b": "batch 18 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first expresses approval; the second expresses criticism. Different tone interpretations."
+    },
+    {
+      "rank": 469,
+      "subject": "Chemistry",
+      "a": "batch 7 row 17",
+      "b": "batch 19 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "One calculates concentration from amount and volume; the other calculates volume from amount and concentration. Inverse applications of c=n/V, useful complementary practice."
+    },
+    {
+      "rank": 470,
+      "subject": "Chemistry",
+      "a": "batch 7 row 17",
+      "b": "batch 37 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "The second is another inverse application of c=n/V with a different solute amount; retain as numerical practice distinct from calculating concentration."
+    },
+    {
+      "rank": 471,
+      "subject": "Use of English",
+      "a": "batch 12 row 4",
+      "b": "batch 21 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Abundant and diligent have unrelated meanings despite both being synonym questions."
+    },
+    {
+      "rank": 472,
+      "subject": "Economics",
+      "a": "batch 13 row 28",
+      "b": "batch 22 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "Land is a factor of production/natural resource; infrastructure is a stock of facilities supporting economic activity."
+    },
+    {
+      "rank": 474,
+      "subject": "Mathematics",
+      "a": "batch 1 row 9",
+      "b": "batch 12 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "One applies ratio to triangle angles; the other shares money in a ratio. Different contexts and quantities."
+    },
+    {
+      "rank": 476,
+      "subject": "Economics",
+      "a": "batch 1 row 27",
+      "b": "batch 14 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "Opportunity cost is the best alternative forgone; a tariff is a tax on imports. Similar stem wording only."
+    },
+    {
+      "rank": 478,
+      "subject": "Biology",
+      "a": "batch 10 row 13",
+      "b": "batch 30 row 13",
+      "decision": "preserve_as_distinct",
+      "reason": "Tt×Tt gives a 1/4 tt proportion; Tt×tt gives a 1/2 short-offspring proportion. Different crosses and genotype ratios."
+    },
+    {
+      "rank": 479,
+      "subject": "Chemistry",
+      "a": "batch 12 row 20",
+      "b": "batch 28 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Ethene is a neutral hydrocarbon molecule; ammonium is a polyatomic cation. Unrelated formula-identification tasks."
+    },
+    {
+      "rank": 480,
+      "subject": "Use of English",
+      "a": "batch 17 row 6",
+      "b": "batch 22 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Third conditional completion and present progressive for a temporary current action test different tense structures."
+    },
+    {
+      "rank": 481,
+      "subject": "Biology",
+      "a": "batch 21 row 12",
+      "b": "batch 33 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Pulmonary veins return blood from lungs to the heart; the aorta carries blood from the left ventricle to systemic circulation."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 2,
+    "new_unique_replacement_targets": 2,
+    "preserved_as_distinct": 13,
+    "previously_reviewed_ranks_skipped": [
+      463,
+      466,
+      473,
+      477
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

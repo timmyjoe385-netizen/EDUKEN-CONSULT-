@@ -1,0 +1,231 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record external preview and production route reachability and confirm the preview Worker uses isolated data bindings.",
+  "cloudflare": {
+    "account_workers_subdomain": "timmyjoe385",
+    "worker_scripts": {
+      "production": "eduken-consult",
+      "preview": "eduken-consult-preview"
+    },
+    "preview_bindings": {
+      "EDUKEN_ENV": "preview",
+      "SUPABASE_URL": "https://wpktzogarfqrgkirzdpy.supabase.co",
+      "ANALYTICS_DB_ID": "ec1f170c-c00d-4975-a6ca-bb35958772f6"
+    },
+    "production_analytics_d1_id": "fb684d86-f289-4cee-aa34-5767f8c08094",
+    "preview_analytics_d1_id": "ec1f170c-c00d-4975-a6ca-bb35958772f6",
+    "preview_and_production_analytics_databases_are_distinct": true,
+    "preview_subdomain_enabled": true,
+    "preview_versions_enabled": true
+  },
+  "external_fetch": {
+    "preview_homepage": {
+      "url": "https://eduken-consult-preview.timmyjoe385.workers.dev/",
+      "status_code": 200,
+      "visible_test_banner": true,
+      "external_service_and_wallet_checkouts_disabled": true
+    },
+    "preview_cbt": {
+      "url": "https://eduken-consult-preview.timmyjoe385.workers.dev/cbt",
+      "status_code": 200,
+      "subject_practice_and_mixed_mock_ui_rendered": true,
+      "question_service_state": "Checking questions…",
+      "attempt_creation_and_submission_not_tested": true,
+      "rendered_state_after_wait": "Free starter practice available",
+      "practice_selector": "1 question",
+      "actual_published_questions_api": {
+        "status_code": 200,
+        "endpoint": "/functions/v1/eduken-api/api/cbt/questions",
+        "returned_items": 8,
+        "distribution": "one published preview sample per each of the eight subjects",
+        "source_label": "EDUKEN original preview sample",
+        "api_read_verified": true
+      },
+      "rendering_note": "The initial 'Checking questions…' text is the pre-hydration snapshot; after the question feed loads the page shows 'Free starter practice available' with a one-question selector."
+    },
+    "production_homepage": {
+      "url": "https://eduken-consult.timmyjoe385.workers.dev/",
+      "status_code": 200
+    },
+    "production_cbt": {
+      "url": "https://eduken-consult.timmyjoe385.workers.dev/cbt",
+      "status_code": 200
+    },
+    "preview_analytics_unauthenticated": {
+      "url": "https://eduken-consult-preview.timmyjoe385.workers.dev/api/analytics/summary",
+      "status_code": 403,
+      "response": "Administrator access required."
+    },
+    "preview_public_content": {
+      "url": "https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/public-content",
+      "status_code": 200,
+      "observed_content": {
+        "opportunities": 0,
+        "admissions": 0,
+        "updates": 0,
+        "faqs": 0,
+        "services": 1
+      },
+      "only_service_record": "EDUKEN TEST CHECKOUT SERVICE — TEST ONLY",
+      "note": "The record explicitly identifies itself as synthetic test data and not for fulfilment. It is present only in the isolated preview Supabase project."
+    }
+  },
+  "correction": "The previously used workers.dev hostname suffix timmy385 was incorrect; Cloudflare account subdomain is timmyjoe385.",
+  "limitations": [
+    "The isolated API attempt lifecycle is verified by Supabase function logs (question feed 200, start 201, submit 200, insufficient-bank guard 409).",
+    "The deployed-preview Chromium smoke test passed a complete one-question practice journey through result review.",
+    "The full 180-question JAMB mock is blocked by the eight-sample preview bank and must not be treated as tested.",
+    "The live AI assistant POST and authenticated analytics/admin flows remain outstanding.",
+    "Five historical test sessions remain marked active although expired; no session rows were changed."
+  ],
+  "safety": {
+    "cloudflare_configuration_changes": 0,
+    "production_database_changes": 0,
+    "production_question_imports": 0,
+    "production_publications": 0,
+    "release_authorized": false
+  },
+  "status": "PREVIEW_ONE_QUESTION_PRACTICE_API_AND_CI_BROWSER_SMOKE_VERIFIED_FULL_MOCK_AND_ACADEMIC_BANK_PENDING",
+  "student_api_acceptance": {
+    "log_window": "2026-11-06 15:27–15:31 UTC",
+    "published_question_feed": {
+      "http_statuses": [
+        200
+      ],
+      "observed": true,
+      "source": "Supabase function_edge_logs"
+    },
+    "attempt_creation": {
+      "http_statuses": [
+        201
+      ],
+      "observed": true,
+      "source": "Supabase function_edge_logs"
+    },
+    "attempt_submission": {
+      "http_statuses": [
+        200
+      ],
+      "observed": true,
+      "source": "Supabase function_edge_logs"
+    },
+    "insufficient_bank_guard": {
+      "http_statuses": [
+        409
+      ],
+      "observed": true,
+      "meaning": "Mock selection requesting more questions than the one published per subject was rejected safely."
+    },
+    "admin_api": {
+      "http_statuses": [
+        401
+      ],
+      "observed": true,
+      "meaning": "Unauthenticated admin API calls were denied; authenticated allowlisted admin walkthrough remains outstanding."
+    },
+    "note": "These are isolated preview project requests. The test bank currently has one published question per subject and cannot support a 10/20/40/100/180-question student practice or mock. Logs show successful question retrieval, attempt creation and submission against the isolated service."
+  },
+  "worker_code_inspection": {
+    "preview_supabase_guard": "When EDUKEN_ENV=preview, getSupabaseConfig returns a config only if SUPABASE_URL starts with https://wpktzogarfqrgkirzdpy.supabase.co and SUPABASE_PUBLISHABLE_KEY is present; it does not fall back to production Supabase.",
+    "live_content_path": "getLiveContent uses the resolved config to request /functions/v1/eduken-api/public-content.",
+    "analytics_admin_check": "isAnalyticsAdmin requires a Bearer token, validates it against the resolved Supabase /auth/v1/user endpoint, and checks the returned email against the analytics admin allowlist.",
+    "limitation": "The live AI assistant POST and authenticated analytics flow have not yet been exercised end-to-end.",
+    "live_content_runtime_test": "The isolated public-content endpoint returned HTTP 200. The Worker code path fetches this endpoint using the preview-guarded Supabase config; the full /api/ai-assistant POST interaction remains untested."
+  },
+  "student_question_feed": {
+    "endpoint": "https://wpktzogarfqrgkirzdpy.supabase.co/functions/v1/eduken-api/api/cbt/questions",
+    "status_code": 200,
+    "total_published_questions": 8,
+    "per_subject": "one published preview sample per each of the eight supported subjects",
+    "biology_filter_status_code": 200,
+    "biology_filtered_questions": 1,
+    "note": "The endpoint returned only published question fields and did not expose correct answers or explanations in the student feed."
+  },
+  "student_attempt_acceptance": {
+    "status": "ISOLATED_API_LIFECYCLE_AND_CI_BROWSER_PRACTICE_SMOKE_VERIFIED",
+    "api_evidence": {
+      "log_window": "2026-11-06 15:27–15:31 UTC",
+      "published_question_feed": {
+        "http_statuses": [
+          200
+        ],
+        "observed": true,
+        "source": "Supabase function_edge_logs"
+      },
+      "attempt_creation": {
+        "http_statuses": [
+          201
+        ],
+        "observed": true,
+        "source": "Supabase function_edge_logs"
+      },
+      "attempt_submission": {
+        "http_statuses": [
+          200
+        ],
+        "observed": true,
+        "source": "Supabase function_edge_logs"
+      },
+      "insufficient_bank_guard": {
+        "http_statuses": [
+          409
+        ],
+        "observed": true,
+        "meaning": "Mock selection requesting more questions than the one published per subject was rejected safely."
+      },
+      "admin_api": {
+        "http_statuses": [
+          401
+        ],
+        "observed": true,
+        "meaning": "Unauthenticated admin API calls were denied; authenticated allowlisted admin walkthrough remains outstanding."
+      },
+      "note": "These are isolated preview project requests. The test bank currently has one published question per subject and cannot support a 10/20/40/100/180-question student practice or mock. Logs show successful question retrieval, attempt creation and submission against the isolated service."
+    },
+    "ci_browser_smoke": {
+      "commit": "a121ee7c19887bca26f7ed03cefa83fc417437d8",
+      "workflow_groups": "4/4 passed",
+      "test_file": "tests/cbt-preview-smoke.mjs",
+      "current_core_code_files_match_tested_commit": true,
+      "covered": [
+        "question feed 200",
+        "answer keys and explanations hidden",
+        "four unique mock subjects including locked Use of English",
+        "practice subject dropdown",
+        "one-question attempt start",
+        "answer selection",
+        "submit",
+        "results and review"
+      ]
+    },
+    "manual_tinyfish_run": {
+      "status": "not_started",
+      "reason": "TinyFish wallet balance is -$0.136 USD; no top-up was made and this separate manual run created no attempt."
+    },
+    "full_mock": {
+      "status": "blocked_by_bank_size",
+      "published_samples": 8,
+      "per_subject": 1,
+      "insufficient_bank_response": 409
+    }
+  },
+  "edge_function": {
+    "status": "ACTIVE",
+    "version": 43,
+    "verify_jwt": false,
+    "deployed_source_exactly_matches_repository_source": true,
+    "repository_file": "supabase/functions/eduken-api/index.ts"
+  },
+  "student_attempt_database_observation": {
+    "project_id": "wpktzogarfqrgkirzdpy",
+    "observed_total_sessions": 1501,
+    "submitted_sessions": 1496,
+    "active_sessions": 5,
+    "active_but_expired_sessions": 5,
+    "first_started_at": "2026-10-29T07:33:53.223Z",
+    "last_started_at": "2026-11-06T15:37:57.176Z",
+    "interpretation": "These are pre-existing rows in the isolated test project; the TinyFish browser run did not start, so it created none of them. Five sessions are still marked active although their expires_at values are in the past.",
+    "safety": "No attempt rows were updated or deleted. Cleanup of existing test sessions is not performed without explicit authorization."
+  }
+}

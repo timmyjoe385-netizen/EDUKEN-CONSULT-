@@ -1,0 +1,176 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 424-441. Previously reviewed ranks 430, 436 and 440 are excluded. Both source rows, including options, keys and explanations, were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      424,
+      425,
+      426,
+      427,
+      428,
+      429,
+      431,
+      432,
+      433,
+      434,
+      435,
+      437,
+      438,
+      439,
+      441
+    ],
+    "previous_total_manually_reviewed": 831,
+    "now_manually_reviewed": 846,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 458
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-191",
+      "rank": 437,
+      "subject": "Mathematics",
+      "a": "batch 6 row 10",
+      "b": "batch 21 row 11",
+      "concept": "Finding the median of five numerical values",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the median of five supplied values, requiring the same ordering-and-middle-value procedure. Only the five-number dataset differs; the same assessment skill is repeated.",
+      "retain": "batch 6 row 10",
+      "hold": "batch 21 row 11",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 424,
+      "subject": "Biology",
+      "a": "batch 19 row 15",
+      "b": "batch 24 row 16",
+      "decision": "preserve_as_distinct",
+      "reason": "Magnesium is central to chlorophyll; phosphorus is present in phosphate groups of ATP and nucleic acids. Different mineral functions."
+    },
+    {
+      "rank": 425,
+      "subject": "Mathematics",
+      "a": "batch 11 row 10",
+      "b": "batch 39 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Sine is opposite/hypotenuse; cosine is adjacent/hypotenuse. Different trigonometric ratios."
+    },
+    {
+      "rank": 426,
+      "subject": "Use of English",
+      "a": "batch 13 row 2",
+      "b": "batch 21 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Identifying a transitive verb differs from identifying a subordinate clause."
+    },
+    {
+      "rank": 427,
+      "subject": "Economics",
+      "a": "batch 1 row 28",
+      "b": "batch 12 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "Law of demand and law of supply describe opposite price-quantity relationships for different sides of the market."
+    },
+    {
+      "rank": 428,
+      "subject": "Mathematics",
+      "a": "batch 1 row 10",
+      "b": "batch 21 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Mean and median are different measures of central tendency with different procedures."
+    },
+    {
+      "rank": 429,
+      "subject": "Government",
+      "a": "batch 14 row 34",
+      "b": "batch 27 row 33",
+      "decision": "preserve_as_distinct",
+      "reason": "Political culture concerns shared political values and orientations; sovereignty concerns supreme state authority."
+    },
+    {
+      "rank": 431,
+      "subject": "Chemistry",
+      "a": "batch 3 row 21",
+      "b": "batch 12 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "Boyle's law relates pressure and volume at constant temperature; Charles' law relates volume and absolute temperature at constant pressure."
+    },
+    {
+      "rank": 432,
+      "subject": "Chemistry",
+      "a": "batch 17 row 20",
+      "b": "batch 32 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "One asks for the general alkane formula CnH2n+2; the other applies it to a four-carbon alkane. General rule and specific application are complementary."
+    },
+    {
+      "rank": 433,
+      "subject": "Literature in English",
+      "a": "batch 8 row 38",
+      "b": "batch 36 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "The protagonist is the central character; the antagonist opposes the protagonist. Different character roles."
+    },
+    {
+      "rank": 434,
+      "subject": "Use of English",
+      "a": "batch 12 row 4",
+      "b": "batch 37 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Abundant and abstain have unrelated meanings despite identical synonym-question framing."
+    },
+    {
+      "rank": 435,
+      "subject": "Use of English",
+      "a": "batch 2 row 4",
+      "b": "batch 14 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Objective pronoun selection and verb-preposition collocation test different grammar knowledge."
+    },
+    {
+      "rank": 438,
+      "subject": "Chemistry",
+      "a": "batch 18 row 21",
+      "b": "batch 34 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "Aqueous copper(II) sulfate with inert electrodes deposits copper at the cathode; molten sodium chloride deposits sodium. Different electrolyte and discharge products."
+    },
+    {
+      "rank": 439,
+      "subject": "Chemistry",
+      "a": "batch 24 row 17",
+      "b": "batch 40 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "Higher temperature increases kinetic energy and the fraction of collisions exceeding activation energy; higher gas pressure increases collision frequency per unit volume. Different rate mechanisms."
+    },
+    {
+      "rank": 441,
+      "subject": "Biology",
+      "a": "batch 16 row 16",
+      "b": "batch 23 row 15",
+      "decision": "preserve_as_distinct",
+      "reason": "Mutualism benefits both organisms; commensalism benefits one without materially affecting the other. Distinct ecological relationships."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "previously_reviewed_ranks_skipped": [
+      430,
+      436,
+      440
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

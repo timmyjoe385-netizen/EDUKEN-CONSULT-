@@ -1,0 +1,161 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidates. All source rows, options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1289,
+      1290,
+      1291,
+      1292,
+      1293,
+      1294,
+      1295,
+      1296,
+      1297,
+      1298,
+      1299,
+      1300,
+      1301,
+      1302,
+      1303
+    ],
+    "previous_total_manually_reviewed": 746,
+    "now_manually_reviewed": 761,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 543
+  },
+  "preserved": [
+    {
+      "rank": 1289,
+      "subject": "Use of English",
+      "a": "batch 1 row 3",
+      "b": "batch 23 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Neither…nor proximity agreement differs from the mandative subjunctive base form after recommend."
+    },
+    {
+      "rank": 1290,
+      "subject": "Economics",
+      "a": "batch 2 row 30",
+      "b": "batch 24 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "Balance of trade compares merchandise exports and imports; terms of trade compares export prices relative to import prices."
+    },
+    {
+      "rank": 1291,
+      "subject": "Mathematics",
+      "a": "batch 4 row 10",
+      "b": "batch 21 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Range is maximum minus minimum; median is the middle value after ordering."
+    },
+    {
+      "rank": 1292,
+      "subject": "Mathematics",
+      "a": "batch 3 row 8",
+      "b": "batch 34 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Solving simultaneous linear equations differs from applying a trigonometric ratio to find secant."
+    },
+    {
+      "rank": 1293,
+      "subject": "Mathematics",
+      "a": "batch 10 row 10",
+      "b": "batch 34 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding a specified term of a geometric progression differs from summing its first four terms."
+    },
+    {
+      "rank": 1294,
+      "subject": "Mathematics",
+      "a": "batch 13 row 11",
+      "b": "batch 37 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding a median in ordered data differs from evaluating a composite function."
+    },
+    {
+      "rank": 1295,
+      "subject": "Government",
+      "a": "batch 14 row 32",
+      "b": "batch 38 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "A public corporation is a government-owned/controlled organisation for a public purpose; an injunction is a court order directing or restraining conduct."
+    },
+    {
+      "rank": 1296,
+      "subject": "Physics",
+      "a": "batch 26 row 22",
+      "b": "batch 39 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Potential difference is work/energy per unit charge; wavelength is the distance between successive points in the same phase."
+    },
+    {
+      "rank": 1297,
+      "subject": "Mathematics",
+      "a": "batch 2 row 9",
+      "b": "batch 18 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "Both apply probability to equally likely outcomes, but use different events and sample spaces (even outcomes on a die versus blue sectors on a spinner); preserve as distinct contextual applications, not exact repeats."
+    },
+    {
+      "rank": 1298,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 16 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests singular agreement with each; the second tests proximity agreement with neither…nor. Different concord rules."
+    },
+    {
+      "rank": 1299,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 24 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Concord with each differs from the relative pronoun who in a cleft sentence identifying the subject."
+    },
+    {
+      "rank": 1300,
+      "subject": "Economics",
+      "a": "batch 7 row 30",
+      "b": "batch 33 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "A budget deficit is expenditure exceeding revenue; underemployment is incomplete utilisation of a person's labour time or skills."
+    },
+    {
+      "rank": 1301,
+      "subject": "Mathematics",
+      "a": "batch 10 row 11",
+      "b": "batch 38 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Two independent coin tosses require multiplication of independent-event probabilities; selecting a blue ball is a single-draw favourable-outcomes/total-outcomes calculation."
+    },
+    {
+      "rank": 1302,
+      "subject": "Use of English",
+      "a": "batch 17 row 6",
+      "b": "batch 25 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "A third-conditional result clause differs from the inversion pattern hardly…when."
+    },
+    {
+      "rank": 1303,
+      "subject": "Biology",
+      "a": "batch 21 row 16",
+      "b": "batch 37 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "The pancreas produces insulin; meiosis is the cell-division process that produces haploid gametes."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

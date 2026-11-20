@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-10",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "revision": "2026-11-09-r3",
+  "purpose": "Independent read-only structural and row-membership verification of the latest r3 retained and held CSV exports.",
+  "sources": [
+    "content/cbt/staging/2026-11-09-r3/retained-batches-01-10.csv",
+    "content/cbt/staging/2026-11-09-r3/retained-batches-11-20.csv",
+    "content/cbt/staging/2026-11-09-r3/retained-batches-21-30.csv",
+    "content/cbt/staging/2026-11-09-r3/retained-batches-31-40.csv",
+    "content/cbt/staging/2026-11-09-r3/held-duplicates-01-10.csv",
+    "content/cbt/staging/2026-11-09-r3/held-duplicates-11-20.csv",
+    "content/cbt/staging/2026-11-09-r3/held-duplicates-21-30.csv",
+    "content/cbt/staging/2026-11-09-r3/held-duplicates-31-40.csv"
+  ],
+  "result": {
+    "source_rows": 1600,
+    "retained_rows": 1440,
+    "held_rows": 160,
+    "retained_unique_source_locations": 1440,
+    "held_unique_source_locations": 160,
+    "retained_held_overlap": 0,
+    "duplicate_held_source_locations": 0,
+    "invalid_held_location_references": 0,
+    "held_rows_with_missing_retained_anchor": 0,
+    "subject_totals": {
+      "Use of English": 200,
+      "Mathematics": 200,
+      "Biology": 200,
+      "Chemistry": 200,
+      "Physics": 200,
+      "Economics": 200,
+      "Government": 200,
+      "Literature in English": 200
+    },
+    "structural_checks": {
+      "retained_rows_with_exactly_four_nonempty_options": 1440,
+      "retained_rows_with_four_distinct_options": 1440,
+      "retained_rows_with_valid_A_to_D_key": 1440,
+      "retained_rows_with_nonempty_explanation": 1440,
+      "retained_rows_with_original_source_provenance_and_licensing_notes": 1440,
+      "retained_rows_in_draft_status": 1440,
+      "held_rows_with_exactly_four_nonempty_options": 160,
+      "held_rows_with_four_distinct_options": 160,
+      "held_rows_with_valid_A_to_D_key": 160,
+      "held_rows_with_nonempty_explanation": 160,
+      "held_rows_with_original_source_provenance_and_licensing_notes": 160
+    },
+    "held_pair_id_reuse": {
+      "repeated_ids": [
+        "DUP-47",
+        "DUP-19"
+      ],
+      "interpretation": "Pair IDs may legitimately identify multiple members of one duplicate cluster. Source-row locations remain unique; repeated pair IDs are not treated as duplicate source rows."
+    }
+  },
+  "status": "TECHNICALLY_VERIFIED_STRUCTURAL_AND_MEMBERSHIP_ONLY",
+  "limitations": [
+    "This audit does not establish semantic uniqueness across all question wording.",
+    "This audit does not validate factual correctness of answers or explanations.",
+    "This audit is not qualified academic approval or publication authorization.",
+    "All retained questions remain drafts; no production import or publication was performed."
+  ],
+  "safety": {
+    "source_question_content_changed": 0,
+    "staging_question_content_changed": 0,
+    "database_changes": 0,
+    "production_changes": 0,
+    "academic_approvals_created": 0,
+    "production_release_authorized": false
+  }
+}

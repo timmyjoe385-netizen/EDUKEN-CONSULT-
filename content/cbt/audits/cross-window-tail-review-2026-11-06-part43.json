@@ -1,0 +1,161 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidates. All source rows, options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1274,
+      1275,
+      1276,
+      1277,
+      1278,
+      1279,
+      1280,
+      1281,
+      1282,
+      1283,
+      1284,
+      1285,
+      1286,
+      1287,
+      1288
+    ],
+    "previous_total_manually_reviewed": 731,
+    "now_manually_reviewed": 746,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 558
+  },
+  "preserved": [
+    {
+      "rank": 1274,
+      "subject": "Use of English",
+      "a": "batch 18 row 4",
+      "b": "batch 28 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Apostrophe placement in a plural possessive differs from parallel grammatical construction in a list."
+    },
+    {
+      "rank": 1275,
+      "subject": "Literature in English",
+      "a": "batch 20 row 41",
+      "b": "batch 37 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "An epilogue follows the main action of a play; a prologue introduces the play and may establish background."
+    },
+    {
+      "rank": 1276,
+      "subject": "Literature in English",
+      "a": "batch 29 row 38",
+      "b": "batch 33 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "The proscenium arch is a theatre-stage structure; a myth is a traditional narrative explaining origins, events or beliefs."
+    },
+    {
+      "rank": 1277,
+      "subject": "Literature in English",
+      "a": "batch 5 row 37",
+      "b": "batch 28 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "A stanza is a grouped set of poetic lines; a metrical foot is a recurring pattern of stressed and unstressed syllables."
+    },
+    {
+      "rank": 1278,
+      "subject": "Mathematics",
+      "a": "batch 17 row 9",
+      "b": "batch 27 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "The mode is the most frequent data value; matrix trace is the sum of main diagonal entries."
+    },
+    {
+      "rank": 1279,
+      "subject": "Chemistry",
+      "a": "batch 17 row 21",
+      "b": "batch 24 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Filtration separates an insoluble solid from a liquid; fractional distillation separates liquids by differences in boiling points."
+    },
+    {
+      "rank": 1280,
+      "subject": "Physics",
+      "a": "batch 18 row 22",
+      "b": "batch 25 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Electrical power is calculated from voltage and current; an ammeter is the instrument used to measure current."
+    },
+    {
+      "rank": 1281,
+      "subject": "Physics",
+      "a": "batch 19 row 24",
+      "b": "batch 34 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "The first concerns image location for an object at a concave mirror's centre of curvature; the second concerns image characteristics for an object between F and 2F in a converging lens. Related optics but distinct device configurations and results."
+    },
+    {
+      "rank": 1282,
+      "subject": "Mathematics",
+      "a": "batch 21 row 11",
+      "b": "batch 34 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "The median is the middle ordered data value; the midpoint is the coordinate halfway point between two endpoints."
+    },
+    {
+      "rank": 1283,
+      "subject": "Mathematics",
+      "a": "batch 22 row 10",
+      "b": "batch 31 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding the most frequent data value differs from calculating a matrix determinant."
+    },
+    {
+      "rank": 1284,
+      "subject": "Economics",
+      "a": "batch 22 row 30",
+      "b": "batch 35 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "A road network is an example of economic infrastructure; factory rent under a fixed lease is a short-run fixed cost."
+    },
+    {
+      "rank": 1285,
+      "subject": "Literature in English",
+      "a": "batch 27 row 37",
+      "b": "batch 38 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "Parody imitates a recognisable work or style for comic/critical effect; a flat character has limited traits and little development."
+    },
+    {
+      "rank": 1286,
+      "subject": "Use of English",
+      "a": "batch 6 row 5",
+      "b": "batch 14 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The plural form of criterion differs from the verb–preposition collocation insist on."
+    },
+    {
+      "rank": 1287,
+      "subject": "Use of English",
+      "a": "batch 6 row 5",
+      "b": "batch 18 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "The plural form of criterion differs from formation of the simple-past passive voice."
+    },
+    {
+      "rank": 1288,
+      "subject": "Use of English",
+      "a": "batch 6 row 5",
+      "b": "batch 18 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The plural form of criterion differs from the fixed prepositional collocation consists of."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record focused contextual checks of high-ranking same-subject candidates surfaced by the 1,600-question replacement-draft screen. This is not final clearance of the replacement drafts.",
+  "reviewed_candidates": [
+    {
+      "target_id": "DUP-04",
+      "checked": [
+        {
+          "location": "batch 39 row 12",
+          "finding": "Existing item tests identifying genotype Tt as heterozygous."
+        },
+        {
+          "location": "batch 28 row 15",
+          "finding": "Existing item tests the definition of a heterozygous genotype."
+        }
+      ],
+      "assessment": "Different learning objective: draft asks for the term describing an allele expressed in a heterozygote (dominant), not the genotype term heterozygous."
+    },
+    {
+      "target_id": "DUP-10",
+      "checked": [
+        {
+          "location": "batch 2 row 29",
+          "finding": "Existing item defines inflation as a sustained rise in the general price level."
+        }
+      ],
+      "assessment": "Not a duplicate: draft defines deflation, the opposite movement in the general price level."
+    },
+    {
+      "target_id": "DUP-16",
+      "checked": [
+        {
+          "location": "batch 17 row 21",
+          "finding": "Existing item tests filtration of an insoluble solid from a liquid."
+        },
+        {
+          "location": "batch 38 row 21",
+          "finding": "Existing item tests simple distillation of a liquid from a dissolved non-volatile solid."
+        },
+        {
+          "location": "batch 24 row 21",
+          "finding": "Existing item tests fractional distillation of miscible liquids with different boiling points."
+        }
+      ],
+      "assessment": "No same learning objective found among these candidates: draft asks for the apparatus used to separate immiscible liquids."
+    },
+    {
+      "target_id": "DUP-20",
+      "checked": [
+        {
+          "location": "batch 6 row 29",
+          "finding": "Existing item asks for a common function of commercial banks: accepting deposits and providing loans."
+        },
+        {
+          "location": "batch 37 row 29",
+          "finding": "Existing item asks for a major function of commercial banks: accepting deposits and granting loans."
+        }
+      ],
+      "assessment": "Related but distinct: draft asks about the deposit-money creation mechanism when a bank grants a loan. Retain pending broader subject-expert review because the existing items already test bank lending."
+    },
+    {
+      "target_id": "DUP-21",
+      "checked": [
+        {
+          "location": "batch 12 row 40",
+          "finding": "Existing item tests stream of consciousness."
+        },
+        {
+          "location": "batch 25 row 41",
+          "finding": "Existing item tests free indirect discourse."
+        }
+      ],
+      "assessment": "Different narrative techniques from flashback; no same learning objective found in these candidates."
+    },
+    {
+      "target_id": "DUP-22",
+      "checked": [
+        {
+          "location": "batch 35 row 13",
+          "finding": "Existing item tests red blood cells and oxygen transport."
+        },
+        {
+          "location": "batch 38 row 13",
+          "finding": "Existing item tests platelets and clotting."
+        }
+      ],
+      "assessment": "Different blood components/functions from the draft's plasma transport of dissolved substances."
+    },
+    {
+      "target_id": "DUP-27",
+      "checked": [
+        {
+          "location": "batch 36 row 11",
+          "finding": "Existing item tests direct variation."
+        },
+        {
+          "location": "batch 27 row 11",
+          "finding": "Existing item tests inverse variation."
+        }
+      ],
+      "assessment": "Different variation forms from the draft's joint variation relationship."
+    },
+    {
+      "target_id": "DUP-28",
+      "checked": [
+        {
+          "location": "batch 2 row 32",
+          "finding": "Existing item asks for the legislature's general role."
+        },
+        {
+          "location": "batch 18 row 33",
+          "finding": "Existing item defines sovereignty."
+        },
+        {
+          "location": "batch 24 row 33",
+          "finding": "Existing item tests legislative oversight."
+        }
+      ],
+      "assessment": "Different learning objective from the draft's constitutional allocation of exclusive legislative powers."
+    },
+    {
+      "target_id": "DUP-31",
+      "checked": [
+        {
+          "location": "batch 26 row 26",
+          "finding": "Existing item calculates momentum from mass and velocity."
+        },
+        {
+          "location": "batch 6 row 23",
+          "finding": "Existing item calculates momentum from mass and velocity."
+        }
+      ],
+      "assessment": "Related mechanics topic but distinct calculation: draft calculates average force from change in momentum over time."
+    },
+    {
+      "target_id": "DUP-34",
+      "checked": [
+        {
+          "location": "batch 33 row 3",
+          "finding": "Existing item tests subject-verb agreement with a singular head noun ('list')."
+        },
+        {
+          "location": "batch 1 row 3",
+          "finding": "Existing item tests agreement with a neither/nor compound subject."
+        },
+        {
+          "location": "batch 3 row 2",
+          "finding": "Existing item tests agreement involving 'each'."
+        },
+        {
+          "location": "batch 22 row 6",
+          "finding": "Existing item tests agreement with a singular head noun ('quality')."
+        },
+        {
+          "location": "batch 16 row 5",
+          "finding": "Existing item tests agreement with a neither/nor construction."
+        }
+      ],
+      "assessment": "Same broad grammar area (concord), but the draft tests the plural-only noun 'cattle'. This is a different agreement rule/example, not an exact same-concept duplicate. Keep pending broader review because concord is already represented repeatedly."
+    },
+    {
+      "target_id": "DUP-35",
+      "checked": [
+        {
+          "location": "batch 20 row 41",
+          "finding": "Existing item defines an epilogue."
+        },
+        {
+          "location": "batch 32 row 37",
+          "finding": "Existing item defines dramatis personae."
+        }
+      ],
+      "assessment": "Different literary terms from epigraph; no same learning objective found in these candidates."
+    },
+    {
+      "target_id": "DUP-36",
+      "checked": [
+        {
+          "location": "batch 26 row 35",
+          "finding": "Existing item tests the purpose of a party manifesto."
+        }
+      ],
+      "assessment": "Different document and function: a manifesto sets out party policies for voters; a party constitution sets internal rules and structure."
+    }
+  ],
+  "status": "candidate_level_review_only",
+  "limitation": "The reviewed records are selected top same-subject candidates from the 1,600-question screen, not a substitute for full contextual review of every question and every possible synonym/variant across all 40 batches. Do not change any draft to approved based solely on this report.",
+  "release_gate": "All 33 unblocked drafts remain uncleared. No replacement insertion, source CSV modification, PR merge, or production deployment is authorized by this report."
+}

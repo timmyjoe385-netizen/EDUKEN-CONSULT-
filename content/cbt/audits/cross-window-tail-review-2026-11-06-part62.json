@@ -1,0 +1,171 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of cross-window candidate ranks 610-624. Complete source stems, four options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      610,
+      611,
+      612,
+      613,
+      614,
+      615,
+      616,
+      617,
+      618,
+      619,
+      620,
+      621,
+      622,
+      623,
+      624
+    ],
+    "previous_persisted_review_total": 978,
+    "now_persisted_review_total": 993,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_yet_persisted_as_reviewed": 311
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-208",
+      "rank": 612,
+      "subject": "Biology",
+      "a": "batch 30 row 14",
+      "b": "batch 35 row 13",
+      "concept": "Most oxygen in human blood is transported bound to haemoglobin in red blood cells",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask how most oxygen is transported in human blood. One keys the mechanism (oxygen bound to haemoglobin), while the other keys the carrier (red blood cells containing haemoglobin); the records assess the same basic fact and identify the same blood component/mechanism.",
+      "retain": "batch 35 row 13",
+      "hold": "batch 30 row 14",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 610,
+      "subject": "Chemistry",
+      "a": "batch 7 row 17",
+      "b": "batch 25 row 18",
+      "decision": "preserve_as_distinct",
+      "reason": "Molar concentration is amount of solute per solution volume; hydrogen-ion concentration from pH is an acid-base logarithm calculation. Different chemical quantities and procedures."
+    },
+    {
+      "rank": 611,
+      "subject": "Mathematics",
+      "a": "batch 7 row 10",
+      "b": "batch 39 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Cylinder volume uses πr²h; curved surface area uses 2πrh. Different mensuration measures."
+    },
+    {
+      "rank": 613,
+      "subject": "Use of English",
+      "a": "batch 2 row 2",
+      "b": "batch 13 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Past perfect tense selection and irregular comparative formation are unrelated grammar skills."
+    },
+    {
+      "rank": 614,
+      "subject": "Economics",
+      "a": "batch 4 row 31",
+      "b": "batch 13 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "A statutory minimum wage sets a legal wage floor; inflation is a sustained general rise in the price level."
+    },
+    {
+      "rank": 615,
+      "subject": "Literature in English",
+      "a": "batch 5 row 37",
+      "b": "batch 39 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "The first defines a stanza generally as a grouped set of poetic lines; the second tests the specific name for an eight-line stanza. General category and specific form are complementary knowledge."
+    },
+    {
+      "rank": 616,
+      "subject": "Use of English",
+      "a": "batch 8 row 6",
+      "b": "batch 33 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the /uː/ vowel sound; the second tests the final /f/ consonant sound. Different phonological categories."
+    },
+    {
+      "rank": 617,
+      "subject": "Use of English",
+      "a": "batch 12 row 4",
+      "b": "batch 39 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Abundant and obsolete are unrelated vocabulary targets, despite both appearing in synonym questions."
+    },
+    {
+      "rank": 618,
+      "subject": "Literature in English",
+      "a": "batch 20 row 37",
+      "b": "batch 38 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "A ballad is a narrative poetic form; a prop is an object used by performers in a stage production. Different literary and stagecraft concepts."
+    },
+    {
+      "rank": 619,
+      "subject": "Use of English",
+      "a": "batch 3 row 4",
+      "b": "batch 24 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests third conditional construction; the second tests the relative pronoun in a cleft sentence."
+    },
+    {
+      "rank": 620,
+      "subject": "Literature in English",
+      "a": "batch 7 row 37",
+      "b": "batch 31 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "Dramatic irony depends on the audience knowing what a character does not; verbal irony contrasts a speaker's intended meaning with literal words. Distinct irony types."
+    },
+    {
+      "rank": 621,
+      "subject": "Physics",
+      "a": "batch 13 row 22",
+      "b": "batch 28 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Watt is the SI unit of power; weber is the SI unit of magnetic flux. Different physical quantities."
+    },
+    {
+      "rank": 622,
+      "subject": "Mathematics",
+      "a": "batch 4 row 7",
+      "b": "batch 16 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Subtracting fractions with unlike denominators and multiplying powers with the same base test unrelated mathematical procedures."
+    },
+    {
+      "rank": 623,
+      "subject": "Economics",
+      "a": "batch 10 row 29",
+      "b": "batch 35 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "A direct tax is imposed directly on a taxpayer; factory rent under a fixed lease is a short-run fixed cost. Different economic topics."
+    },
+    {
+      "rank": 624,
+      "subject": "Use of English",
+      "a": "batch 11 row 5",
+      "b": "batch 27 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the second conditional for an unreal present situation; the second tests the first conditional for a real future possibility."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

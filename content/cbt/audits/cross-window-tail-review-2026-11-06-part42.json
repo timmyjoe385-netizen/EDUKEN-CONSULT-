@@ -1,0 +1,167 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidates. All source CSV rows, four options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1259,
+      1260,
+      1261,
+      1262,
+      1263,
+      1264,
+      1265,
+      1266,
+      1267,
+      1268,
+      1269,
+      1270,
+      1271,
+      1272,
+      1273
+    ],
+    "previous_total_manually_reviewed": 716,
+    "now_manually_reviewed": 731,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 573
+  },
+  "preserved": [
+    {
+      "rank": 1259,
+      "subject": "Chemistry",
+      "a": "batch 18 row 17",
+      "b": "batch 40 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "Identifying the most electronegative Period 3 element differs from identifying an element from its electron-shell configuration."
+    },
+    {
+      "rank": 1260,
+      "subject": "Economics",
+      "a": "batch 6 row 27",
+      "b": "batch 11 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "A rise in the price of a substitute increases demand for the good in question; a rise in income generally reduces demand for an inferior good."
+    },
+    {
+      "rank": 1261,
+      "subject": "Use of English",
+      "a": "batch 5 row 2",
+      "b": "batch 21 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A question tag after a positive present-perfect statement differs from selecting an objective pronoun after the preposition between."
+    },
+    {
+      "rank": 1263,
+      "subject": "Mathematics",
+      "a": "batch 8 row 8",
+      "b": "batch 22 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Area of a triangle differs from volume of a cylinder; they use different dimensions and formulae."
+    },
+    {
+      "rank": 1264,
+      "subject": "Physics",
+      "a": "batch 1 row 22",
+      "b": "batch 36 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Average speed is distance divided by time; average power is energy transferred divided by time."
+    },
+    {
+      "rank": 1265,
+      "subject": "Use of English",
+      "a": "batch 15 row 4",
+      "b": "batch 28 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Singular-subject agreement differs from colon punctuation introducing an explanation."
+    },
+    {
+      "rank": 1266,
+      "subject": "Government",
+      "a": "batch 11 row 34",
+      "b": "batch 31 row 35",
+      "decision": "preserve_as_distinct",
+      "reason": "Devolution describes transfer of powers to lower levels of government; a local-government chairman is the elected executive head."
+    },
+    {
+      "rank": 1267,
+      "subject": "Use of English",
+      "a": "batch 6 row 5",
+      "b": "batch 12 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The plural of criterion differs from tense/pronoun backshift in reported speech."
+    },
+    {
+      "rank": 1268,
+      "subject": "Biology",
+      "a": "batch 3 row 16",
+      "b": "batch 28 row 15",
+      "decision": "preserve_as_distinct",
+      "reason": "A pathogen is an agent capable of causing disease; a heterozygous genotype has two different alleles."
+    },
+    {
+      "rank": 1269,
+      "subject": "Use of English",
+      "a": "batch 9 row 6",
+      "b": "batch 26 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The noun record has primary stress on its first syllable; photography has primary stress on its second syllable. They are different lexical stress patterns, not duplicate questions."
+    },
+    {
+      "rank": 1270,
+      "subject": "Literature in English",
+      "a": "batch 2 row 38",
+      "b": "batch 33 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "A simile makes an explicit comparison using like/as; a metaphor makes a direct identification."
+    },
+    {
+      "rank": 1271,
+      "subject": "Use of English",
+      "a": "batch 7 row 2",
+      "b": "batch 35 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Pronoun agreement with the collective noun committee differs from tense retention in reported universal truths."
+    },
+    {
+      "rank": 1272,
+      "subject": "Use of English",
+      "a": "batch 11 row 2",
+      "b": "batch 21 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first specifically identifies an adverbial clause of reason; the second recognises a subordinate clause in a complex sentence. Related clause grammar but different tested focus."
+    },
+    {
+      "rank": 1273,
+      "subject": "Use of English",
+      "a": "batch 12 row 5",
+      "b": "batch 28 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "A noun clause functioning as the subject differs from an adverbial clause of time modifying the verb."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1262,
+      "subject": "Literature in English",
+      "a": "batch 6 row 37",
+      "b": "batch 26 row 41",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both questions define imagery as language that appeals to or evokes the senses. The options and explanations are equivalent: sensory experience/impressions across sight, sound, smell, taste and touch. This tests the same core literary-device definition.",
+      "retain": "batch 6 row 37",
+      "hold": "batch 26 row 41",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

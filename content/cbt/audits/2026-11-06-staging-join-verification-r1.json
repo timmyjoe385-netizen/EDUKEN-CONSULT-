@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "method": "Matched each addendum pair's pair_id, retained_location and held_location against the four 6 November held-duplicate staging CSVs; matched cluster extensions by cluster ID and held_location.",
+  "totals": {
+    "new_duplicate_pair_records": 28,
+    "cluster_extension_records": 8,
+    "unique_new_held_locations": 34,
+    "new_pair_staging_rows_verified": 28,
+    "new_cluster_extension_staging_rows_verified": 6,
+    "additional_extension_references_not_new_rows": 2,
+    "unmatched_new_held_locations": 0
+  },
+  "unmatched_additional_references": [
+    {
+      "cluster": "DUP-08",
+      "additional_hold": "batch 34 row 18",
+      "classification": "not_an_additional_new_held_row"
+    },
+    {
+      "cluster": "DUP-47",
+      "additional_hold": "batch 38 row 36",
+      "classification": "not_an_additional_new_held_row"
+    }
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "qualified_subject_approval": false
+  }
+}

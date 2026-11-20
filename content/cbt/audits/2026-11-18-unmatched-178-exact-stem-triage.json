@@ -1,0 +1,3955 @@
+{
+  "audit_date": "2026-11-18",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Candidate-level follow-up triage for the 178 baseline ranks without exact historical review evidence.",
+  "source_files": [
+    "content/cbt/audits/global-duplicate-review-cross-window-candidates-2026-11-01.json",
+    "content/cbt/audits/2026-11-18-baseline-286-rank-reconstruction.json"
+  ],
+  "summary": {
+    "unmatched_candidates": 178,
+    "exact_normalized_stem_matches": 0,
+    "non_exact_normalized_stem_pairs": 178,
+    "by_subject": {
+      "Mathematics": 51,
+      "Government": 6,
+      "Use of English": 32,
+      "Biology": 5,
+      "Chemistry": 27,
+      "Economics": 12,
+      "Physics": 32,
+      "Literature in English": 13
+    },
+    "similarity_score_bands": {
+      "0.90+": 5,
+      "0.80-0.899": 27,
+      "0.70-0.799": 83,
+      "0.65-0.699": 63
+    }
+  },
+  "method": "Compared each pair's question stem after lowercase conversion, punctuation removal, whitespace normalization. This is an exact-text check only; it does not determine semantic duplication or academic correctness.",
+  "limitations": [
+    "No option-level, answer-key, or explanation comparison was performed in this pass.",
+    "No historical manual-review record was found for these 178 ranks in the reconstructed evidence set.",
+    "Similarity scores are prioritization signals, not duplicate verdicts.",
+    "No review decision, approval, question status, staging row, import, or publication was changed."
+  ],
+  "records": [
+    {
+      "rank": 4,
+      "similarity_score": 0.947,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 13,
+        "row": 8,
+        "topic": "Fractions",
+        "subtopic": "Equivalent fractions",
+        "question": "Express 0.75 as a fraction in its lowest terms."
+      },
+      "source_b": {
+        "batch": 22,
+        "row": 7,
+        "topic": "Number",
+        "subtopic": "Fractions",
+        "question": "Express 0.375 as a fraction in its lowest terms."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 13,
+      "similarity_score": 0.919,
+      "subject": "Government",
+      "source_a": {
+        "batch": 8,
+        "row": 34,
+        "topic": "Systems of government",
+        "subtopic": "Unitary state",
+        "question": "In a unitary system, ultimate constitutional authority is concentrated in:"
+      },
+      "source_b": {
+        "batch": 21,
+        "row": 32,
+        "topic": "Political systems",
+        "subtopic": "Unitary state",
+        "question": "In a unitary state, ultimate constitutional authority is concentrated in ___."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 16,
+      "similarity_score": 0.917,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 18,
+        "row": 9,
+        "topic": "Functions",
+        "subtopic": "Evaluation of functions",
+        "question": "If f(x) = 2x + 3, what is the value of f(4)?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 7,
+        "topic": "Functions",
+        "subtopic": "Evaluating a function",
+        "question": "If f(x) = 2x − 5, what is the value of f(4)?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 18,
+      "similarity_score": 0.914,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 22,
+        "row": 11,
+        "topic": "Mensuration",
+        "subtopic": "Cylinder",
+        "question": "A cylinder has radius 2 cm and height 7 cm. Find its volume in terms of π."
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 8,
+        "topic": "Mensuration",
+        "subtopic": "Volume of a cylinder",
+        "question": "A cylinder has radius 3 cm and height 4 cm. Find its volume in terms of π."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 20,
+      "similarity_score": 0.904,
+      "subject": "Government",
+      "source_a": {
+        "batch": 29,
+        "row": 36,
+        "topic": "Political parties",
+        "subtopic": "Two-party system",
+        "question": "A political system in which two major parties dominate electoral competition is called a:"
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 33,
+        "topic": "Political parties",
+        "subtopic": "Party systems",
+        "question": "A political system in which two major parties dominate electoral competition is described as"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 28,
+      "similarity_score": 0.882,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 9,
+        "row": 4,
+        "topic": "Sentence structure",
+        "subtopic": "Complex sentences",
+        "question": "Which of the following is a complex sentence?"
+      },
+      "source_b": {
+        "batch": 15,
+        "row": 6,
+        "topic": "Sentence structure",
+        "subtopic": "Compound sentences",
+        "question": "Which of the following is a compound sentence?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 30,
+      "similarity_score": 0.881,
+      "subject": "Biology",
+      "source_a": {
+        "batch": 8,
+        "row": 15,
+        "topic": "Nutrition",
+        "subtopic": "Digestive enzymes",
+        "question": "Which enzyme begins the digestion of proteins in the human stomach?"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 12,
+        "topic": "Human physiology",
+        "subtopic": "Digestive enzymes",
+        "question": "Which enzyme in the stomach begins the digestion of proteins?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 33,
+      "similarity_score": 0.878,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 12,
+        "row": 17,
+        "topic": "Gas laws",
+        "subtopic": "Charles' law",
+        "question": "At constant pressure, the volume of a fixed mass of gas is directly proportional to its absolute temperature. This is…"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 21,
+        "topic": "Gas laws",
+        "subtopic": "Pressure law",
+        "question": "At constant volume, the pressure of a fixed mass of gas is directly proportional to its:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 36,
+      "similarity_score": 0.87,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 10,
+        "row": 29,
+        "topic": "Public finance",
+        "subtopic": "Direct taxes",
+        "question": "Which of the following is a direct tax?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 30,
+        "topic": "Public finance",
+        "subtopic": "Direct taxation",
+        "question": "Which of the following is an example of a direct tax?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 38,
+      "similarity_score": 0.864,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 5,
+        "row": 8,
+        "topic": "Arithmetic",
+        "subtopic": "Simple interest",
+        "question": "Find the simple interest on ₦5,000 at 4% per annum for 3 years."
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 10,
+        "topic": "Commercial arithmetic",
+        "subtopic": "Simple interest",
+        "question": "Find the simple interest on ₦20,000 for 3 years at 5% per annum."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 41,
+      "similarity_score": 0.86,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 4,
+        "row": 30,
+        "topic": "Market structures",
+        "subtopic": "Oligopoly",
+        "question": "An oligopoly is a market structure in which:"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 28,
+        "topic": "Market structures",
+        "subtopic": "Duopoly",
+        "question": "A duopoly is a market structure in which:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 42,
+      "similarity_score": 0.857,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 10,
+        "row": 11,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A fair coin is tossed twice. What is the probability of obtaining two heads?"
+      },
+      "source_b": {
+        "batch": 14,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Coin toss",
+        "question": "A fair coin is tossed once. What is the probability of obtaining a head?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 43,
+      "similarity_score": 0.857,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 11,
+        "row": 8,
+        "topic": "Geometry",
+        "subtopic": "Regular polygons",
+        "question": "What is the size of each interior angle of a regular pentagon?"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 8,
+        "topic": "Geometry",
+        "subtopic": "Exterior angles of regular polygons",
+        "question": "What is the size of each exterior angle of a regular octagon?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 44,
+      "similarity_score": 0.855,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 5,
+        "row": 8,
+        "topic": "Arithmetic",
+        "subtopic": "Simple interest",
+        "question": "Find the simple interest on ₦5,000 at 4% per annum for 3 years."
+      },
+      "source_b": {
+        "batch": 21,
+        "row": 10,
+        "topic": "Commercial arithmetic",
+        "subtopic": "Simple interest",
+        "question": "Find the simple interest on ₦8,000 invested at 5% per annum for 3 years."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 45,
+      "similarity_score": 0.854,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 8,
+        "row": 6,
+        "topic": "Oral English",
+        "subtopic": "Vowel sounds",
+        "question": "Which word contains the same vowel sound as the vowel in “food”?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Vowel sounds",
+        "question": "Which word contains the same vowel sound as “seat”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 49,
+      "similarity_score": 0.851,
+      "subject": "Government",
+      "source_a": {
+        "batch": 18,
+        "row": 32,
+        "topic": "Political systems",
+        "subtopic": "Federalism",
+        "question": "A federal system of government constitutionally divides powers between ___."
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 35,
+        "topic": "Federalism",
+        "subtopic": "Division of powers",
+        "question": "In a federal system of government, constitutional powers are divided between:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 51,
+      "similarity_score": 0.848,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 7,
+        "row": 11,
+        "topic": "Statistics",
+        "subtopic": "Probability",
+        "question": "A bag contains 3 red balls and 2 blue balls. One ball is selected at random. What is the probability that it is blue?"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 8,
+        "topic": "Probability",
+        "subtopic": "Single-event probability",
+        "question": "A bag contains 3 red, 2 blue and 5 green counters. One counter is selected at random. What is the probability that it is blue?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 53,
+      "similarity_score": 0.845,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 27,
+        "row": 24,
+        "topic": "Optics",
+        "subtopic": "Thin lenses",
+        "question": "An object is placed beyond twice the focal length of a converging lens. The image formed is generally"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 23,
+        "topic": "Optics",
+        "subtopic": "Image formation by a converging lens",
+        "question": "When an object is placed between the principal focus and twice the focal length of a converging lens the image formed is generally:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 54,
+      "similarity_score": 0.844,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 7,
+        "row": 21,
+        "topic": "Gas laws",
+        "subtopic": "Charles's law",
+        "question": "At constant pressure, a fixed mass of gas occupies 2 dm³ at 300 K. What volume will it occupy at 450 K?"
+      },
+      "source_b": {
+        "batch": 30,
+        "row": 19,
+        "topic": "Gas laws",
+        "subtopic": "Charles' law",
+        "question": "At constant pressure, a fixed mass of gas occupies 300 cm³ at 27°C. What volume will it occupy at 127°C?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 55,
+      "similarity_score": 0.843,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 18,
+        "row": 9,
+        "topic": "Functions",
+        "subtopic": "Evaluation of functions",
+        "question": "If f(x) = 2x + 3, what is the value of f(4)?"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 11,
+        "topic": "Functions",
+        "subtopic": "Composite functions",
+        "question": "If f(x) = 2x + 1 and g(x) = x − 3, what is the value of f(g(4))?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 58,
+      "similarity_score": 0.839,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 6,
+        "row": 9,
+        "topic": "Geometry",
+        "subtopic": "Pythagoras theorem",
+        "question": "A right triangle has perpendicular sides 6 cm and 8 cm. Find its hypotenuse."
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 9,
+        "topic": "Geometry",
+        "subtopic": "Area of a right triangle",
+        "question": "A right-angled triangle has perpendicular sides 6 cm and 8 cm. Find its area."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 59,
+      "similarity_score": 0.833,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 7,
+        "row": 25,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "The heat required to raise the temperature of 2 kg of a substance by 1 K is 800 J. Its specific heat capacity is:"
+      },
+      "source_b": {
+        "batch": 26,
+        "row": 23,
+        "topic": "Thermal physics",
+        "subtopic": "Specific heat capacity",
+        "question": "What quantity of heat is required to raise the temperature of 2 kg of a substance by 3 K if its specific heat capacity is 500 J kg⁻¹ K⁻¹?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 61,
+      "similarity_score": 0.832,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 26,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A bag contains 4 red counters and 6 blue counters. If one counter is selected at random, what is the probability that it is red?"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 8,
+        "topic": "Probability",
+        "subtopic": "Single-event probability",
+        "question": "A bag contains 3 red, 2 blue and 5 green counters. One counter is selected at random. What is the probability that it is blue?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 63,
+      "similarity_score": 0.829,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 20,
+        "row": 19,
+        "topic": "Periodic table",
+        "subtopic": "Periodic trends",
+        "question": "Across a period from left to right, the atomic number generally ___."
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 20,
+        "topic": "Periodic table",
+        "subtopic": "Atomic radius",
+        "question": "Across a period from left to right, atomic radius generally"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 65,
+      "similarity_score": 0.825,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 10,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word meaning",
+        "question": "Choose the word nearest in meaning to “ alleviate”."
+      },
+      "source_b": {
+        "batch": 39,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'obsolete'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 69,
+      "similarity_score": 0.821,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 10,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word meaning",
+        "question": "Choose the word nearest in meaning to “ alleviate”."
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'abstain'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 71,
+      "similarity_score": 0.819,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 13,
+        "row": 19,
+        "topic": "Chemical reactions",
+        "subtopic": "Metal-acid reactions",
+        "question": "Which gas is produced when zinc reacts with dilute hydrochloric acid?"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 21,
+        "topic": "Chemical reactions",
+        "subtopic": "Acids and carbonates",
+        "question": "Which gas is produced when dilute hydrochloric acid reacts with calcium carbonate?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 73,
+      "similarity_score": 0.809,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 3,
+        "row": 37,
+        "topic": "Poetry",
+        "subtopic": "Alliteration",
+        "question": "The repetition of initial consonant sounds in nearby words is called:"
+      },
+      "source_b": {
+        "batch": 11,
+        "row": 39,
+        "topic": "Figures of speech",
+        "subtopic": "Consonance",
+        "question": "The repetition of consonant sounds within or at the ends of nearby words is called:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 82,
+      "similarity_score": 0.8,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 9,
+        "row": 17,
+        "topic": "Organic chemistry",
+        "subtopic": "Aldehydes",
+        "question": "Which of the following compounds is an aldehyde?"
+      },
+      "source_b": {
+        "batch": 19,
+        "row": 21,
+        "topic": "Organic chemistry",
+        "subtopic": "Ketones",
+        "question": "Which of the following compounds is a ketone?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 83,
+      "similarity_score": 0.8,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 2,
+        "row": 23,
+        "topic": "Pressure",
+        "subtopic": "Pressure formula",
+        "question": "A force of 60 N acts uniformly on an area of 3 m². What pressure is exerted?"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 26,
+        "topic": "Fluids",
+        "subtopic": "Pressure",
+        "question": "A force of 120 N acts normally on an area of 0.4 m². What pressure is exerted?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 87,
+      "similarity_score": 0.8,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 10,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word meaning",
+        "question": "Choose the word nearest in meaning to “ alleviate”."
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'candid'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 88,
+      "similarity_score": 0.8,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 18,
+        "row": 17,
+        "topic": "Periodic table",
+        "subtopic": "Period 3 elements",
+        "question": "Which of these Period 3 elements has the highest electronegativity?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 20,
+        "topic": "Periodic table",
+        "subtopic": "Periodic trends",
+        "question": "Which element has the highest electronegativity?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 93,
+      "similarity_score": 0.785,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 7,
+        "row": 11,
+        "topic": "Statistics",
+        "subtopic": "Probability",
+        "question": "A bag contains 3 red balls and 2 blue balls. One ball is selected at random. What is the probability that it is blue?"
+      },
+      "source_b": {
+        "batch": 26,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A bag contains 4 red counters and 6 blue counters. If one counter is selected at random, what is the probability that it is red?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 95,
+      "similarity_score": 0.785,
+      "subject": "Biology",
+      "source_a": {
+        "batch": 28,
+        "row": 15,
+        "topic": "Genetics",
+        "subtopic": "Heterozygous genotype",
+        "question": "An organism that has two different alleles for a particular gene is described as:"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 12,
+        "topic": "Genetics",
+        "subtopic": "Inheritance",
+        "question": "An organism with two identical alleles for a particular gene is described as"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 97,
+      "similarity_score": 0.784,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 10,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word meaning",
+        "question": "Choose the word nearest in meaning to “ alleviate”."
+      },
+      "source_b": {
+        "batch": 21,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to “diligent.”"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 99,
+      "similarity_score": 0.784,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 7,
+        "row": 11,
+        "topic": "Statistics",
+        "subtopic": "Probability",
+        "question": "A bag contains 3 red balls and 2 blue balls. One ball is selected at random. What is the probability that it is blue?"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 11,
+        "topic": "Probability",
+        "subtopic": "Probability",
+        "question": "A bag contains 4 red balls and 3 blue balls. What is the probability of selecting a blue ball at random?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 102,
+      "similarity_score": 0.78,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 7,
+        "row": 30,
+        "topic": "Public finance",
+        "subtopic": "Budget deficit",
+        "question": "A government budget deficit occurs when:"
+      },
+      "source_b": {
+        "batch": 11,
+        "row": 29,
+        "topic": "Public finance",
+        "subtopic": "Budget surplus",
+        "question": "A government budget surplus occurs when:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 103,
+      "similarity_score": 0.779,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 26,
+        "row": 11,
+        "topic": "Mensuration",
+        "subtopic": "Volume of a cone",
+        "question": "A cone has a radius of 3 cm and a vertical height of 4 cm. Find its volume in terms of π."
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 8,
+        "topic": "Mensuration",
+        "subtopic": "Volume of a cylinder",
+        "question": "A cylinder has radius 3 cm and height 4 cm. Find its volume in terms of π."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 104,
+      "similarity_score": 0.776,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 5,
+        "row": 4,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to “meticulous.”"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'ephemeral'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 106,
+      "similarity_score": 0.776,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 10,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word meaning",
+        "question": "Choose the word nearest in meaning to “ alleviate”."
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'ephemeral'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 108,
+      "similarity_score": 0.772,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 13,
+        "row": 9,
+        "topic": "Mensuration",
+        "subtopic": "Area of a circle",
+        "question": "Find the area of a circle of radius 7 cm. Take π = 22/7."
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 9,
+        "topic": "Mensuration",
+        "subtopic": "Area of a sector",
+        "question": "Find the area of a 90° sector of a circle of radius 14 cm. Use π = 22/7."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 109,
+      "similarity_score": 0.772,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 30,
+        "row": 5,
+        "topic": "Phonology",
+        "subtopic": "Consonant sounds",
+        "question": "Which word begins with the same consonant sound as 'judge'?"
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Consonant sounds",
+        "question": "Which word ends with the same consonant sound as 'laugh'?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 110,
+      "similarity_score": 0.771,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 7,
+        "row": 30,
+        "topic": "Public finance",
+        "subtopic": "Budget deficit",
+        "question": "A government budget deficit occurs when:"
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 31,
+        "topic": "Public finance",
+        "subtopic": "Government budgeting",
+        "question": "A balanced government budget occurs when"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 111,
+      "similarity_score": 0.771,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 25,
+        "row": 29,
+        "topic": "Macroeconomics",
+        "subtopic": "Multiplier",
+        "question": "If the marginal propensity to consume is 0.8 in a simple model, the expenditure multiplier is"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 28,
+        "topic": "National income",
+        "subtopic": "Propensity to save",
+        "question": "If the marginal propensity to consume is 0.8 in a simple two-sector model the marginal propensity to save is:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 115,
+      "similarity_score": 0.768,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 17,
+        "row": 24,
+        "topic": "Waves",
+        "subtopic": "Frequency",
+        "question": "A wave has a period of 0.02 s. What is its frequency?"
+      },
+      "source_b": {
+        "batch": 22,
+        "row": 23,
+        "topic": "Waves",
+        "subtopic": "Period",
+        "question": "A wave has frequency 25 Hz. What is its period?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 116,
+      "similarity_score": 0.762,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 4,
+        "row": 23,
+        "topic": "Energy",
+        "subtopic": "Kinetic energy",
+        "question": "A 2 kg object moves at 3 m/s. What is its kinetic energy?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 22,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 2 kg object moves at 3 m/s. What is its momentum?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 117,
+      "similarity_score": 0.762,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 18,
+        "row": 11,
+        "topic": "Trigonometry",
+        "subtopic": "Right-angled triangles",
+        "question": "In a right-angled triangle, sin θ is the ratio of the ___."
+      },
+      "source_b": {
+        "batch": 39,
+        "row": 10,
+        "topic": "Trigonometry",
+        "subtopic": "Cosine ratio",
+        "question": "In a right-angled triangle the cosine of an acute angle is the ratio of:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 118,
+      "similarity_score": 0.761,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 6,
+        "row": 25,
+        "topic": "Waves",
+        "subtopic": "Period",
+        "question": "A wave has a frequency of 5 Hz. Its period is:"
+      },
+      "source_b": {
+        "batch": 22,
+        "row": 23,
+        "topic": "Waves",
+        "subtopic": "Period",
+        "question": "A wave has frequency 25 Hz. What is its period?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 119,
+      "similarity_score": 0.76,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 8,
+        "row": 21,
+        "topic": "Electrochemistry",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During electrolysis of molten lead(II) bromide, which substance is formed at the anode?"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 17,
+        "topic": "Electrolysis",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 120,
+      "similarity_score": 0.759,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Simple probability",
+        "question": "A fair six-sided die is rolled once. What is the probability of getting an even number?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Simple probability",
+        "question": "A fair die is rolled once. What is the probability of obtaining a prime number?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 121,
+      "similarity_score": 0.759,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 10,
+        "row": 18,
+        "topic": "Acids and bases",
+        "subtopic": "pH",
+        "question": "A solution with pH 2 is:"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 18,
+        "topic": "Acids and bases",
+        "subtopic": "pH scale",
+        "question": "At 25°C, a solution with pH 3 is"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 122,
+      "similarity_score": 0.759,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 11,
+        "row": 4,
+        "topic": "Vocabulary",
+        "subtopic": "Word formation",
+        "question": "Which word is formed by adding a prefix to legal?"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 5,
+        "topic": "Word formation",
+        "subtopic": "Prefixes",
+        "question": "Which word is formed by adding a prefix that means “before”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 125,
+      "similarity_score": 0.753,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 29,
+        "row": 20,
+        "topic": "Periodic trends",
+        "subtopic": "Atomic radius",
+        "question": "Moving from left to right across a period, the atomic radius of main-group elements generally"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 20,
+        "topic": "Periodic table",
+        "subtopic": "Atomic radius",
+        "question": "Across a period from left to right, atomic radius generally"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 126,
+      "similarity_score": 0.751,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 8,
+        "row": 7,
+        "topic": "Sequences",
+        "subtopic": "Arithmetic progression",
+        "question": "An arithmetic progression has first term 5 and common difference 3. What is its 10th term?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 9,
+        "topic": "Sequences",
+        "subtopic": "Sum of an arithmetic progression",
+        "question": "An arithmetic progression has first term 3 and common difference 2. Find the sum of its first 5 terms."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 127,
+      "similarity_score": 0.75,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 9,
+        "row": 4,
+        "topic": "Sentence structure",
+        "subtopic": "Complex sentences",
+        "question": "Which of the following is a complex sentence?"
+      },
+      "source_b": {
+        "batch": 13,
+        "row": 5,
+        "topic": "Sentence types",
+        "subtopic": "Imperative sentences",
+        "question": "Which of the following is an imperative sentence?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 128,
+      "similarity_score": 0.75,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 15,
+        "row": 37,
+        "topic": "Figures of speech",
+        "subtopic": "Metonymy",
+        "question": "Metonymy is a figure of speech in which:"
+      },
+      "source_b": {
+        "batch": 24,
+        "row": 40,
+        "topic": "Figures of speech",
+        "subtopic": "Chiasmus",
+        "question": "Chiasmus is a figure of speech in which:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 129,
+      "similarity_score": 0.75,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 17,
+        "row": 9,
+        "topic": "Statistics",
+        "subtopic": "Mode",
+        "question": "Find the mode of the data set 2, 3, 3, 4, 5, 6."
+      },
+      "source_b": {
+        "batch": 22,
+        "row": 10,
+        "topic": "Statistics",
+        "subtopic": "Mode",
+        "question": "Find the mode of 2, 3, 3, 4, 5, 3 and 6."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 130,
+      "similarity_score": 0.747,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 20,
+        "row": 17,
+        "topic": "Electrolysis",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 18,
+        "topic": "Electrolysis",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which species is discharged at the anode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 131,
+      "similarity_score": 0.747,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 11,
+        "row": 29,
+        "topic": "Public finance",
+        "subtopic": "Budget surplus",
+        "question": "A government budget surplus occurs when:"
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 31,
+        "topic": "Public finance",
+        "subtopic": "Government budgeting",
+        "question": "A balanced government budget occurs when"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 132,
+      "similarity_score": 0.746,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 10,
+        "row": 8,
+        "topic": "Statistics",
+        "subtopic": "Mode",
+        "question": "Find the mode of 2, 3, 3, 4, 5, 5, 5."
+      },
+      "source_b": {
+        "batch": 17,
+        "row": 9,
+        "topic": "Statistics",
+        "subtopic": "Mode",
+        "question": "Find the mode of the data set 2, 3, 3, 4, 5, 6."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 133,
+      "similarity_score": 0.746,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 7,
+        "row": 23,
+        "topic": "Electricity",
+        "subtopic": "Series circuits",
+        "question": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 25,
+        "topic": "Electricity",
+        "subtopic": "Series circuits",
+        "question": "The total resistance of resistors connected in series is"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 134,
+      "similarity_score": 0.745,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 3,
+        "row": 23,
+        "topic": "Motion",
+        "subtopic": "Acceleration",
+        "question": "A car’s velocity changes from 5 m/s to 17 m/s in 4 s. Its average acceleration is:"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 22,
+        "topic": "Motion",
+        "subtopic": "Acceleration",
+        "question": "A car increases its velocity from 5 m/s to 25 m/s in 4 seconds. What is its average acceleration?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 135,
+      "similarity_score": 0.744,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 15,
+        "row": 6,
+        "topic": "Sentence structure",
+        "subtopic": "Compound sentences",
+        "question": "Which of the following is a compound sentence?"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 5,
+        "topic": "Sentence structure",
+        "subtopic": "Compound sentences",
+        "question": "Which sentence is a compound sentence?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 139,
+      "similarity_score": 0.741,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 6,
+        "row": 24,
+        "topic": "Electricity",
+        "subtopic": "Electrical energy",
+        "question": "A 100 W lamp operates for 10 seconds. How much energy does it use?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 24,
+        "topic": "Electricity",
+        "subtopic": "Electrical energy consumption",
+        "question": "A 60 W lamp operates for 2 hours. How much electrical energy does it use?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 141,
+      "similarity_score": 0.74,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 22,
+        "row": 2,
+        "topic": "Grammar",
+        "subtopic": "Determiners",
+        "question": "Choose the correct determiner: “There is ___ water left in the bottle, so we can share it.”"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 4,
+        "topic": "Grammar",
+        "subtopic": "Determiners",
+        "question": "There is _____ water left in the bottle, so we cannot share it."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 142,
+      "similarity_score": 0.74,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 25,
+        "row": 19,
+        "topic": "Electrolysis",
+        "subtopic": "Aqueous sodium chloride",
+        "question": "During the electrolysis of concentrated aqueous sodium chloride using inert electrodes, which substance is produced at the anode?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 19,
+        "topic": "Electrochemistry",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which substance is produced at the cathode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 143,
+      "similarity_score": 0.74,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 29,
+        "row": 11,
+        "topic": "Sequences",
+        "subtopic": "Arithmetic progression",
+        "question": "An arithmetic progression has first term 4 and common difference 3. What is its tenth term?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 9,
+        "topic": "Sequences",
+        "subtopic": "Sum of an arithmetic progression",
+        "question": "An arithmetic progression has first term 3 and common difference 2. Find the sum of its first 5 terms."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 144,
+      "similarity_score": 0.739,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 27,
+        "row": 18,
+        "topic": "Electrolysis",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which species is discharged at the anode?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 19,
+        "topic": "Electrochemistry",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which substance is produced at the cathode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 145,
+      "similarity_score": 0.738,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 8,
+        "row": 17,
+        "topic": "Periodic table",
+        "subtopic": "Periodic trends",
+        "question": "Across a period from left to right, the atomic radius of main-group elements generally:"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 19,
+        "topic": "Periodic table",
+        "subtopic": "Periodic trends",
+        "question": "Across a period from left to right, the atomic number generally ___."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 146,
+      "similarity_score": 0.738,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 5,
+        "row": 21,
+        "topic": "Organic chemistry",
+        "subtopic": "Functional groups",
+        "question": "Which functional group characterises alcohols?"
+      },
+      "source_b": {
+        "batch": 23,
+        "row": 19,
+        "topic": "Organic chemistry",
+        "subtopic": "Carboxylic acids",
+        "question": "Which functional group characterises a carboxylic acid?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 148,
+      "similarity_score": 0.736,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 9,
+        "row": 18,
+        "topic": "Chemical calculations",
+        "subtopic": "Empirical formula",
+        "question": "A compound contains 40% carbon, 6.7% hydrogen and 53.3% oxygen by mass. What is its simplest empirical formula?"
+      },
+      "source_b": {
+        "batch": 24,
+        "row": 20,
+        "topic": "Chemical calculations",
+        "subtopic": "Empirical formula",
+        "question": "A compound contains 24 g carbon and 4 g hydrogen only. What is its simplest empirical formula? (C = 12, H = 1)"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 149,
+      "similarity_score": 0.734,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 22,
+        "row": 17,
+        "topic": "Chemical calculations",
+        "subtopic": "Mole concept",
+        "question": "How many molecules are present in one mole of a substance?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 17,
+        "topic": "Mole concept",
+        "subtopic": "Chemical formulae",
+        "question": "How many atoms are present in one molecule of H₂SO₄?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 150,
+      "similarity_score": 0.733,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 7,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3} and B = {3, 4}, what is A ∩ B?"
+      },
+      "source_b": {
+        "batch": 19,
+        "row": 10,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3} and B = {3, 4, 5}, find A ∪ B."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 151,
+      "similarity_score": 0.733,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 7,
+        "row": 25,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "The heat required to raise the temperature of 2 kg of a substance by 1 K is 800 J. Its specific heat capacity is:"
+      },
+      "source_b": {
+        "batch": 28,
+        "row": 25,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "The heat needed to raise the temperature of 1 kg of a substance by 1 K is its"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 152,
+      "similarity_score": 0.732,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 1,
+        "row": 6,
+        "topic": "Oral English",
+        "subtopic": "Vowel sounds",
+        "question": "Which word begins with the same vowel sound as “apple”?"
+      },
+      "source_b": {
+        "batch": 30,
+        "row": 5,
+        "topic": "Phonology",
+        "subtopic": "Consonant sounds",
+        "question": "Which word begins with the same consonant sound as 'judge'?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 153,
+      "similarity_score": 0.732,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 18,
+        "row": 4,
+        "topic": "Punctuation",
+        "subtopic": "Apostrophes",
+        "question": "Which sentence uses the apostrophe correctly?"
+      },
+      "source_b": {
+        "batch": 25,
+        "row": 3,
+        "topic": "Usage",
+        "subtopic": "Countable nouns",
+        "question": "Which sentence uses “fewer” correctly?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 154,
+      "similarity_score": 0.732,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 12,
+        "row": 3,
+        "topic": "Reported speech",
+        "subtopic": "Backshift of tense",
+        "question": "Choose the correct reported form of: Musa said, “I am tired.”"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 2,
+        "topic": "Grammar",
+        "subtopic": "Reported speech",
+        "question": "He said, “I am busy now.” Choose the correct reported form."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 155,
+      "similarity_score": 0.732,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 15,
+        "row": 37,
+        "topic": "Figures of speech",
+        "subtopic": "Metonymy",
+        "question": "Metonymy is a figure of speech in which:"
+      },
+      "source_b": {
+        "batch": 39,
+        "row": 40,
+        "topic": "Figures of speech",
+        "subtopic": "Synecdoche",
+        "question": "Synecdoche is a figure of speech in which:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 156,
+      "similarity_score": 0.732,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 22,
+        "row": 11,
+        "topic": "Mensuration",
+        "subtopic": "Cylinder",
+        "question": "A cylinder has radius 2 cm and height 7 cm. Find its volume in terms of π."
+      },
+      "source_b": {
+        "batch": 39,
+        "row": 11,
+        "topic": "Mensuration",
+        "subtopic": "Curved surface area of a cylinder",
+        "question": "A cylinder has radius 3 cm and height 5 cm. Find its curved surface area in terms of π."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 157,
+      "similarity_score": 0.732,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 24,
+        "row": 40,
+        "topic": "Figures of speech",
+        "subtopic": "Chiasmus",
+        "question": "Chiasmus is a figure of speech in which:"
+      },
+      "source_b": {
+        "batch": 39,
+        "row": 40,
+        "topic": "Figures of speech",
+        "subtopic": "Synecdoche",
+        "question": "Synecdoche is a figure of speech in which:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 158,
+      "similarity_score": 0.73,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 26,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Stress",
+        "question": "Which syllable carries the primary stress in the noun “photography”?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Word stress",
+        "question": "Which syllable carries the primary stress in the word 'economics'?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 159,
+      "similarity_score": 0.727,
+      "subject": "Biology",
+      "source_a": {
+        "batch": 2,
+        "row": 14,
+        "topic": "Nutrition",
+        "subtopic": "Enzymes",
+        "question": "Which enzyme in saliva begins the digestion of starch?"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 12,
+        "topic": "Human physiology",
+        "subtopic": "Digestive enzymes",
+        "question": "Which enzyme in the stomach begins the digestion of proteins?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 160,
+      "similarity_score": 0.727,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 5,
+        "row": 21,
+        "topic": "Organic chemistry",
+        "subtopic": "Functional groups",
+        "question": "Which functional group characterises alcohols?"
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 20,
+        "topic": "Organic chemistry",
+        "subtopic": "Alcohols",
+        "question": "The functional group characteristic of alcohols is"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 161,
+      "similarity_score": 0.726,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 8,
+        "row": 27,
+        "topic": "Demand and supply",
+        "subtopic": "Price elasticity",
+        "question": "Price elasticity of demand measures the responsiveness of quantity demanded to a change in:"
+      },
+      "source_b": {
+        "batch": 16,
+        "row": 27,
+        "topic": "Supply",
+        "subtopic": "Price elasticity of supply",
+        "question": "The responsiveness of quantity supplied to a change in price is measured by:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 162,
+      "similarity_score": 0.726,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 14,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Coin toss",
+        "question": "A fair coin is tossed once. What is the probability of obtaining a head?"
+      },
+      "source_b": {
+        "batch": 23,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A fair coin is tossed and a fair die is rolled. What is the probability of getting a head and a 6?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 163,
+      "similarity_score": 0.725,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 9,
+        "row": 7,
+        "topic": "Indices",
+        "subtopic": "Exponential equations",
+        "question": "If 3ˣ = 81, what is the value of x?"
+      },
+      "source_b": {
+        "batch": 18,
+        "row": 9,
+        "topic": "Functions",
+        "subtopic": "Evaluation of functions",
+        "question": "If f(x) = 2x + 3, what is the value of f(4)?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 164,
+      "similarity_score": 0.725,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 9,
+        "row": 7,
+        "topic": "Indices",
+        "subtopic": "Exponential equations",
+        "question": "If 3ˣ = 81, what is the value of x?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 7,
+        "topic": "Functions",
+        "subtopic": "Evaluating a function",
+        "question": "If f(x) = 2x − 5, what is the value of f(4)?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 165,
+      "similarity_score": 0.724,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 9,
+        "row": 10,
+        "topic": "Trigonometry",
+        "subtopic": "Special angles",
+        "question": "What is the value of cos 60°?"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 7,
+        "topic": "Indices",
+        "subtopic": "Fractional indices",
+        "question": "What is the value of 16^(3/4)?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 166,
+      "similarity_score": 0.723,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Simple probability",
+        "question": "A fair six-sided die is rolled once. What is the probability of getting an even number?"
+      },
+      "source_b": {
+        "batch": 11,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Simple probability",
+        "question": "A fair die is rolled once. What is the probability of obtaining a number greater than 4?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 167,
+      "similarity_score": 0.723,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 11,
+        "row": 10,
+        "topic": "Trigonometry",
+        "subtopic": "Right-angled triangles",
+        "question": "In a right-angled triangle, the side opposite an angle is 6 cm and the hypotenuse is 10 cm. What is the sine of the angle?"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 8,
+        "topic": "Trigonometry",
+        "subtopic": "Cosine ratio",
+        "question": "In a right-angled triangle, the side adjacent to an acute angle is 4 cm and the hypotenuse is 5 cm. Find the cosine of the angle."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 168,
+      "similarity_score": 0.723,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 18,
+        "row": 4,
+        "topic": "Punctuation",
+        "subtopic": "Apostrophes",
+        "question": "Which sentence uses the apostrophe correctly?"
+      },
+      "source_b": {
+        "batch": 28,
+        "row": 5,
+        "topic": "Punctuation",
+        "subtopic": "Colon",
+        "question": "Which sentence uses a colon correctly?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 169,
+      "similarity_score": 0.721,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 9,
+        "row": 17,
+        "topic": "Organic chemistry",
+        "subtopic": "Aldehydes",
+        "question": "Which of the following compounds is an aldehyde?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 18,
+        "topic": "Organic chemistry",
+        "subtopic": "Unsaturated hydrocarbons",
+        "question": "Which of the following is an alkene?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 170,
+      "similarity_score": 0.721,
+      "subject": "Government",
+      "source_a": {
+        "batch": 26,
+        "row": 34,
+        "topic": "Federalism",
+        "subtopic": "Division of powers",
+        "question": "In a federal system, constitutional powers are"
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 35,
+        "topic": "Federalism",
+        "subtopic": "Division of powers",
+        "question": "In a federal system of government, constitutional powers are divided between:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 171,
+      "similarity_score": 0.72,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 7,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Antonyms",
+        "question": "The word “obsolete” most nearly means:"
+      },
+      "source_b": {
+        "batch": 22,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "The word “ephemeral” most nearly means:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 172,
+      "similarity_score": 0.719,
+      "subject": "Government",
+      "source_a": {
+        "batch": 19,
+        "row": 35,
+        "topic": "International relations",
+        "subtopic": "Treaties",
+        "question": "A treaty is best described as:"
+      },
+      "source_b": {
+        "batch": 21,
+        "row": 36,
+        "topic": "International relations",
+        "subtopic": "Embassies",
+        "question": "An embassy is best described as:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 173,
+      "similarity_score": 0.718,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 17,
+        "row": 22,
+        "topic": "Motion",
+        "subtopic": "Acceleration",
+        "question": "A car's velocity changes from 4 m/s to 16 m/s in 3 seconds. Find its average acceleration."
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 22,
+        "topic": "Motion",
+        "subtopic": "Acceleration",
+        "question": "A car increases its velocity from 5 m/s to 25 m/s in 4 seconds. What is its average acceleration?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 174,
+      "similarity_score": 0.717,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 14,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Coin toss",
+        "question": "A fair coin is tossed once. What is the probability of obtaining a head?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "Two fair coins are tossed at the same time. What is the probability of obtaining exactly one head?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 175,
+      "similarity_score": 0.713,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 8,
+        "row": 19,
+        "topic": "Redox reactions",
+        "subtopic": "Oxidation number",
+        "question": "What is the oxidation number of sulfur in H₂SO₄?"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 17,
+        "topic": "Redox",
+        "subtopic": "Oxidation numbers",
+        "question": "What is the oxidation number of manganese in KMnO₄?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 176,
+      "similarity_score": 0.713,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 14,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Coin toss",
+        "question": "A fair coin is tossed once. What is the probability of obtaining a head?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Simple probability",
+        "question": "A fair die is rolled once. What is the probability of obtaining a prime number?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 177,
+      "similarity_score": 0.713,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 26,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Stress",
+        "question": "Which syllable carries the primary stress in the noun “photography”?"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Word stress",
+        "question": "Which syllable is stressed in the noun 'photograph'?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 179,
+      "similarity_score": 0.712,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 9,
+        "row": 10,
+        "topic": "Trigonometry",
+        "subtopic": "Special angles",
+        "question": "What is the value of cos 60°?"
+      },
+      "source_b": {
+        "batch": 18,
+        "row": 7,
+        "topic": "Fractions",
+        "subtopic": "Operations",
+        "question": "What is the value of 5/6 − 1/3?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 181,
+      "similarity_score": 0.711,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 3,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word meaning",
+        "question": "The word “reluctant” most nearly means:"
+      },
+      "source_b": {
+        "batch": 22,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "The word “ephemeral” most nearly means:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 183,
+      "similarity_score": 0.711,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 7,
+        "row": 26,
+        "topic": "Magnetism",
+        "subtopic": "Magnetic field",
+        "question": "The magnetic field around a long straight current-carrying wire consists of:"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 22,
+        "topic": "Electromagnetism",
+        "subtopic": "Magnetic fields",
+        "question": "The direction of the magnetic field around a straight current-carrying wire can be determined using the"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 185,
+      "similarity_score": 0.71,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 7,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3} and B = {3, 4}, what is A ∩ B?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 11,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {2, 4, 6} and B = {4, 6, 8}, what is A ∪ B?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 187,
+      "similarity_score": 0.71,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 19,
+        "row": 10,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3} and B = {3, 4, 5}, find A ∪ B."
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 7,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3, 4} and B = {3, 4, 5}, then A ∩ B is"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 190,
+      "similarity_score": 0.707,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 1,
+        "row": 24,
+        "topic": "Energy",
+        "subtopic": "Work",
+        "question": "A force of 10 N moves an object 4 m in the force’s direction. How much work is done?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 23,
+        "topic": "Work and energy",
+        "subtopic": "Work done at an angle",
+        "question": "A 20 N force acts at 60° to the direction of displacement and moves an object 4 m. How much work is done by the force?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 191,
+      "similarity_score": 0.705,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 4,
+        "row": 23,
+        "topic": "Energy",
+        "subtopic": "Kinetic energy",
+        "question": "A 2 kg object moves at 3 m/s. What is its kinetic energy?"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 22,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 2 kg object moves at 5 m/s. What is its momentum?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 192,
+      "similarity_score": 0.705,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 27,
+        "row": 27,
+        "topic": "Elasticity",
+        "subtopic": "Price elasticity of demand",
+        "question": "If quantity demanded changes by 12% when price changes by 4%, what is the absolute value of price elasticity of demand?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 27,
+        "topic": "Demand and supply",
+        "subtopic": "Price elasticity calculations",
+        "question": "Price rises by 10% and quantity demanded falls by 20%. What is the absolute price elasticity of demand?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 193,
+      "similarity_score": 0.703,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 10,
+        "topic": "Coordinate geometry",
+        "subtopic": "Gradient",
+        "question": "Find the gradient of the line joining (1, 2) and (3, 6)."
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 10,
+        "topic": "Coordinate geometry",
+        "subtopic": "Gradient of a straight line",
+        "question": "Find the gradient of the straight line joining the points (2, 3) and (6, 11)."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 194,
+      "similarity_score": 0.703,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 7,
+        "row": 25,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "The heat required to raise the temperature of 2 kg of a substance by 1 K is 800 J. Its specific heat capacity is:"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 26,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "The quantity of heat needed to raise the temperature of 1 kg of a substance by 1 K is its"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 196,
+      "similarity_score": 0.703,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 26,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A bag contains 4 red counters and 6 blue counters. If one counter is selected at random, what is the probability that it is red?"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 11,
+        "topic": "Probability",
+        "subtopic": "Probability",
+        "question": "A bag contains 4 red balls and 3 blue balls. What is the probability of selecting a blue ball at random?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 198,
+      "similarity_score": 0.701,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 6,
+        "row": 25,
+        "topic": "Waves",
+        "subtopic": "Period",
+        "question": "A wave has a frequency of 5 Hz. Its period is:"
+      },
+      "source_b": {
+        "batch": 17,
+        "row": 24,
+        "topic": "Waves",
+        "subtopic": "Frequency",
+        "question": "A wave has a period of 0.02 s. What is its frequency?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 199,
+      "similarity_score": 0.701,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 9,
+        "row": 25,
+        "topic": "Waves",
+        "subtopic": "Wave speed",
+        "question": "A wave has a frequency of 4 Hz and a wavelength of 3 m. What is its speed?"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 24,
+        "topic": "Waves",
+        "subtopic": "Wavelength",
+        "question": "A wave travels at 340 m/s and has a frequency of 500 Hz. What is its wavelength?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 200,
+      "similarity_score": 0.701,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 18,
+        "row": 23,
+        "topic": "Properties of matter",
+        "subtopic": "Density",
+        "question": "A substance has mass 120 g and volume 40 cm³. What is its density?"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 22,
+        "topic": "Properties of matter",
+        "subtopic": "Density",
+        "question": "A block has a mass of 240 g and a volume of 80 cm³. What is its density?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 201,
+      "similarity_score": 0.7,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 20,
+        "row": 22,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 2 kg object moves at 5 m/s. What is its momentum?"
+      },
+      "source_b": {
+        "batch": 26,
+        "row": 26,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 0.5 kg ball moves at 8 m s⁻¹. What is its momentum?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 202,
+      "similarity_score": 0.699,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 8,
+        "row": 8,
+        "topic": "Mensuration",
+        "subtopic": "Area of a triangle",
+        "question": "A triangle has a base of 12 cm and a perpendicular height of 7 cm. Find its area."
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 9,
+        "topic": "Geometry",
+        "subtopic": "Area of a right triangle",
+        "question": "A right-angled triangle has perpendicular sides 6 cm and 8 cm. Find its area."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 203,
+      "similarity_score": 0.699,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 10,
+        "row": 11,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A fair coin is tossed twice. What is the probability of obtaining two heads?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "Two fair coins are tossed at the same time. What is the probability of obtaining exactly one head?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 205,
+      "similarity_score": 0.698,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 19,
+        "row": 26,
+        "topic": "Electromagnetic waves",
+        "subtopic": "Spectrum",
+        "question": "Which electromagnetic wave has the shortest wavelength among the options?"
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 26,
+        "topic": "Electromagnetic spectrum",
+        "subtopic": "Radio waves",
+        "question": "Which electromagnetic radiation has the longest wavelength?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 206,
+      "similarity_score": 0.696,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 8,
+        "row": 6,
+        "topic": "Oral English",
+        "subtopic": "Vowel sounds",
+        "question": "Which word contains the same vowel sound as the vowel in “food”?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Diphthongs",
+        "question": "Which word contains the diphthong /eɪ/ as in the vowel sound in “day”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 208,
+      "similarity_score": 0.695,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 29,
+        "row": 39,
+        "topic": "Characterisation",
+        "subtopic": "Round characters",
+        "question": "A round character is generally one who:"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 41,
+        "topic": "Characterisation",
+        "subtopic": "Flat characters",
+        "question": "A flat character in a literary work is generally one who:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 209,
+      "similarity_score": 0.692,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 1,
+        "row": 6,
+        "topic": "Oral English",
+        "subtopic": "Vowel sounds",
+        "question": "Which word begins with the same vowel sound as “apple”?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Vowel sounds",
+        "question": "Which word contains the same vowel sound as “seat”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 211,
+      "similarity_score": 0.692,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 19,
+        "row": 38,
+        "topic": "Drama",
+        "subtopic": "Exposition",
+        "question": "In a play, the exposition usually serves to:"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 37,
+        "topic": "Drama",
+        "subtopic": "Exposition",
+        "question": "The exposition of a play usually:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 212,
+      "similarity_score": 0.691,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 3,
+        "row": 24,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "Specific heat capacity is the energy required to raise the temperature of unit mass of a substance by:"
+      },
+      "source_b": {
+        "batch": 26,
+        "row": 23,
+        "topic": "Thermal physics",
+        "subtopic": "Specific heat capacity",
+        "question": "What quantity of heat is required to raise the temperature of 2 kg of a substance by 3 K if its specific heat capacity is 500 J kg⁻¹ K⁻¹?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 213,
+      "similarity_score": 0.691,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 8,
+        "row": 38,
+        "topic": "Drama and prose",
+        "subtopic": "Protagonist",
+        "question": "The protagonist of a literary work is usually the:"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 41,
+        "topic": "Narrative structure",
+        "subtopic": "Plot",
+        "question": "The plot of a literary work is the:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 214,
+      "similarity_score": 0.691,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 18,
+        "row": 21,
+        "topic": "Electrochemistry",
+        "subtopic": "Electrolysis of aqueous copper(II) sulfate",
+        "question": "During electrolysis of aqueous copper(II) sulfate using inert electrodes, which substance is deposited at the cathode?"
+      },
+      "source_b": {
+        "batch": 25,
+        "row": 19,
+        "topic": "Electrolysis",
+        "subtopic": "Aqueous sodium chloride",
+        "question": "During the electrolysis of concentrated aqueous sodium chloride using inert electrodes, which substance is produced at the anode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 217,
+      "similarity_score": 0.69,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 4,
+        "row": 8,
+        "topic": "Algebra",
+        "subtopic": "Expansion",
+        "question": "Expand 3(x + 4)."
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 7,
+        "topic": "Algebra",
+        "subtopic": "Expansion",
+        "question": "Expand (x + 4)(x − 2)."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 219,
+      "similarity_score": 0.69,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 18,
+        "row": 4,
+        "topic": "Punctuation",
+        "subtopic": "Apostrophes",
+        "question": "Which sentence uses the apostrophe correctly?"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 2,
+        "topic": "Punctuation",
+        "subtopic": "Semicolon",
+        "question": "Which sentence uses a semicolon correctly?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 220,
+      "similarity_score": 0.69,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 16,
+        "row": 20,
+        "topic": "Gas laws",
+        "subtopic": "Boyle's law",
+        "question": "At constant temperature, the pressure of a fixed mass of gas is…"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 21,
+        "topic": "Gas laws",
+        "subtopic": "Pressure law",
+        "question": "At constant volume, the pressure of a fixed mass of gas is directly proportional to its:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 221,
+      "similarity_score": 0.689,
+      "subject": "Biology",
+      "source_a": {
+        "batch": 1,
+        "row": 14,
+        "topic": "Genetics",
+        "subtopic": "Inheritance",
+        "question": "An organism with two identical alleles for a gene is described as:"
+      },
+      "source_b": {
+        "batch": 28,
+        "row": 15,
+        "topic": "Genetics",
+        "subtopic": "Heterozygous genotype",
+        "question": "An organism that has two different alleles for a particular gene is described as:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 222,
+      "similarity_score": 0.688,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 8,
+        "row": 8,
+        "topic": "Mensuration",
+        "subtopic": "Area of a triangle",
+        "question": "A triangle has a base of 12 cm and a perpendicular height of 7 cm. Find its area."
+      },
+      "source_b": {
+        "batch": 28,
+        "row": 7,
+        "topic": "Mensuration",
+        "subtopic": "Area of a trapezium",
+        "question": "A trapezium has parallel sides of 8 cm and 12 cm and a perpendicular height of 5 cm. Find its area."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 223,
+      "similarity_score": 0.688,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 7,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3} and B = {3, 4}, what is A ∩ B?"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 7,
+        "topic": "Sets",
+        "subtopic": "Set operations",
+        "question": "If A = {1, 2, 3, 4} and B = {3, 4, 5}, then A ∩ B is"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 225,
+      "similarity_score": 0.687,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 26,
+        "row": 23,
+        "topic": "Thermal physics",
+        "subtopic": "Specific heat capacity",
+        "question": "What quantity of heat is required to raise the temperature of 2 kg of a substance by 3 K if its specific heat capacity is 500 J kg⁻¹ K⁻¹?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 26,
+        "topic": "Heat",
+        "subtopic": "Specific heat capacity",
+        "question": "The quantity of heat needed to raise the temperature of 1 kg of a substance by 1 K is its"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 226,
+      "similarity_score": 0.685,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 14,
+        "row": 25,
+        "topic": "Electricity",
+        "subtopic": "Electric charge",
+        "question": "A current of 2 A flows through a conductor for 5 s. How much charge passes through it?"
+      },
+      "source_b": {
+        "batch": 30,
+        "row": 25,
+        "topic": "Electricity",
+        "subtopic": "Electric current",
+        "question": "A charge of 24 C passes through a conductor in 6 s. What current flows?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 227,
+      "similarity_score": 0.682,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 8,
+        "row": 21,
+        "topic": "Electrochemistry",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During electrolysis of molten lead(II) bromide, which substance is formed at the anode?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 19,
+        "topic": "Electrochemistry",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which substance is produced at the cathode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 228,
+      "similarity_score": 0.682,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 8,
+        "row": 40,
+        "topic": "Sound devices",
+        "subtopic": "Assonance",
+        "question": "The repetition of similar vowel sounds in nearby words is known as:"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 38,
+        "topic": "Poetry",
+        "subtopic": "Rhyme",
+        "question": "The repetition of similar sounds at the ends of poetic lines is known as"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 229,
+      "similarity_score": 0.68,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 26,
+        "row": 26,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 0.5 kg ball moves at 8 m s⁻¹. What is its momentum?"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 22,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 2 kg object moves at 3 m/s. What is its momentum?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 230,
+      "similarity_score": 0.679,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 12,
+        "row": 8,
+        "topic": "Ratio",
+        "subtopic": "Sharing in a ratio",
+        "question": "₦360 is shared in the ratio 2:3:4. What is the smallest share?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 10,
+        "topic": "Ratio",
+        "subtopic": "Sharing in a given ratio",
+        "question": "A sum of ₦8,000 is shared in the ratio 3:5. What is the smaller share?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 231,
+      "similarity_score": 0.679,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 29,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Vowel sounds",
+        "question": "Which word contains the same vowel sound as “seat”?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Diphthongs",
+        "question": "Which word contains the diphthong /eɪ/ as in the vowel sound in “day”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 234,
+      "similarity_score": 0.677,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 20,
+        "row": 7,
+        "topic": "Indices",
+        "subtopic": "Fractional indices",
+        "question": "What is the value of 16^(3/4)?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 7,
+        "topic": "Functions",
+        "subtopic": "Evaluating a function",
+        "question": "If f(x) = 2x − 5, what is the value of f(4)?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 235,
+      "similarity_score": 0.676,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 18,
+        "row": 26,
+        "topic": "Fluid mechanics",
+        "subtopic": "Pressure",
+        "question": "A force of 50 N acts normally on an area of 0.5 m². Calculate the pressure."
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 26,
+        "topic": "Fluids",
+        "subtopic": "Pressure",
+        "question": "A force of 120 N acts normally on an area of 0.4 m². What pressure is exerted?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 236,
+      "similarity_score": 0.675,
+      "subject": "Biology",
+      "source_a": {
+        "batch": 5,
+        "row": 12,
+        "topic": "Human physiology",
+        "subtopic": "Circulation",
+        "question": "Which chamber of the human heart pumps oxygenated blood into the aorta?"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 12,
+        "topic": "Human physiology",
+        "subtopic": "Cardiac anatomy",
+        "question": "Which chamber of the human heart receives oxygenated blood from the pulmonary veins?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 237,
+      "similarity_score": 0.675,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 20,
+        "row": 19,
+        "topic": "Periodic table",
+        "subtopic": "Periodic trends",
+        "question": "Across a period from left to right, the atomic number generally ___."
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 20,
+        "topic": "Periodic trends",
+        "subtopic": "Atomic radius",
+        "question": "Moving from left to right across a period, the atomic radius of main-group elements generally"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 238,
+      "similarity_score": 0.675,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 19,
+        "row": 21,
+        "topic": "Organic chemistry",
+        "subtopic": "Ketones",
+        "question": "Which of the following compounds is a ketone?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 18,
+        "topic": "Organic chemistry",
+        "subtopic": "Unsaturated hydrocarbons",
+        "question": "Which of the following is an alkene?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 239,
+      "similarity_score": 0.674,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 9,
+        "row": 41,
+        "topic": "Drama",
+        "subtopic": "Catharsis",
+        "question": "In classical tragedy, catharsis refers to the:"
+      },
+      "source_b": {
+        "batch": 26,
+        "row": 39,
+        "topic": "Tragedy",
+        "subtopic": "Hamartia",
+        "question": "In classical tragedy, hamartia refers to a:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 243,
+      "similarity_score": 0.672,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 9,
+        "row": 9,
+        "topic": "Sets",
+        "subtopic": "Complement of a set",
+        "question": "If U = {1, 2, 3, 4, 5, 6} and A = {2, 4, 6}, find the complement of A in U."
+      },
+      "source_b": {
+        "batch": 14,
+        "row": 9,
+        "topic": "Set theory",
+        "subtopic": "Complement of a set",
+        "question": "If the universal set is U = {1, 2, 3, 4, 5} and A = {1, 3, 5}, what is the complement of A in U?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 244,
+      "similarity_score": 0.671,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 7,
+        "row": 23,
+        "topic": "Electricity",
+        "subtopic": "Series circuits",
+        "question": "Two resistors of 3 Ω and 5 Ω are connected in series. Their total resistance is:"
+      },
+      "source_b": {
+        "batch": 19,
+        "row": 23,
+        "topic": "Electricity",
+        "subtopic": "Parallel circuits",
+        "question": "Two resistors of 6 Ω and 3 Ω are connected in parallel. What is their equivalent resistance?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 245,
+      "similarity_score": 0.671,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 2,
+        "row": 9,
+        "topic": "Probability",
+        "subtopic": "Simple probability",
+        "question": "A fair six-sided die is rolled once. What is the probability of getting an even number?"
+      },
+      "source_b": {
+        "batch": 23,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A fair coin is tossed and a fair die is rolled. What is the probability of getting a head and a 6?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 246,
+      "similarity_score": 0.671,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 10,
+        "row": 10,
+        "topic": "Sequences",
+        "subtopic": "Geometric progression",
+        "question": "A geometric progression has first term 3 and common ratio 2. What is its fifth term?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 11,
+        "topic": "Sequences",
+        "subtopic": "Arithmetic progression",
+        "question": "An arithmetic progression has first term 4 and common difference 3. What is its tenth term?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 247,
+      "similarity_score": 0.67,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 2,
+        "row": 31,
+        "topic": "Labour market",
+        "subtopic": "Unemployment",
+        "question": "A person without a job who is actively seeking and available for work is generally classified as:"
+      },
+      "source_b": {
+        "batch": 27,
+        "row": 29,
+        "topic": "Labour market",
+        "subtopic": "Unemployment",
+        "question": "A person who has stopped actively seeking work is generally classified in labour statistics as"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 248,
+      "similarity_score": 0.667,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 5,
+        "row": 11,
+        "topic": "Indices",
+        "subtopic": "Negative powers",
+        "question": "Evaluate 2⁻³."
+      },
+      "source_b": {
+        "batch": 16,
+        "row": 11,
+        "topic": "Indices",
+        "subtopic": "Laws of indices",
+        "question": "Evaluate 2³ × 2²."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 249,
+      "similarity_score": 0.667,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 6,
+        "row": 23,
+        "topic": "Forces",
+        "subtopic": "Momentum",
+        "question": "What is the momentum of a 4 kg object moving at 5 m/s?"
+      },
+      "source_b": {
+        "batch": 20,
+        "row": 22,
+        "topic": "Mechanics",
+        "subtopic": "Momentum",
+        "question": "A 2 kg object moves at 5 m/s. What is its momentum?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 250,
+      "similarity_score": 0.667,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 7,
+        "row": 5,
+        "topic": "Oral English",
+        "subtopic": "Consonant sounds",
+        "question": "Which word contains the same initial consonant sound as “judge”?"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 6,
+        "topic": "Phonology",
+        "subtopic": "Vowel sounds",
+        "question": "Which word contains the same vowel sound as “seat”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 251,
+      "similarity_score": 0.667,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 10,
+        "row": 11,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A fair coin is tossed twice. What is the probability of obtaining two heads?"
+      },
+      "source_b": {
+        "batch": 23,
+        "row": 10,
+        "topic": "Probability",
+        "subtopic": "Independent events",
+        "question": "A fair coin is tossed and a fair die is rolled. What is the probability of getting a head and a 6?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 252,
+      "similarity_score": 0.667,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 5,
+        "row": 6,
+        "topic": "Vocabulary",
+        "subtopic": "Antonyms",
+        "question": "Choose the word opposite in meaning to “expand.”"
+      },
+      "source_b": {
+        "batch": 36,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'candid'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 253,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 8,
+        "row": 37,
+        "topic": "Figures of speech",
+        "subtopic": "Metaphor",
+        "question": "“The classroom was a beehive of activity” is an example of:"
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 40,
+        "topic": "Literary devices",
+        "subtopic": "Metaphor",
+        "question": "The sentence 'The classroom was a furnace' is an example of"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 254,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 9,
+        "row": 41,
+        "topic": "Drama",
+        "subtopic": "Catharsis",
+        "question": "In classical tragedy, catharsis refers to the:"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 37,
+        "topic": "Tragedy",
+        "subtopic": "Catastrophe",
+        "question": "In classical tragedy, the catastrophe is the:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 255,
+      "similarity_score": 0.667,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 10,
+        "row": 30,
+        "topic": "Factors of production",
+        "subtopic": "Factor rewards",
+        "question": "The typical reward paid to the factor of production called capital is:"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 27,
+        "topic": "Factors of production",
+        "subtopic": "Land",
+        "question": "The conventional reward paid to the factor of production known as land is:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 257,
+      "similarity_score": 0.667,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 20,
+        "row": 17,
+        "topic": "Electrolysis",
+        "subtopic": "Electrolysis of molten salts",
+        "question": "During the electrolysis of molten sodium chloride, which substance is formed at the cathode?"
+      },
+      "source_b": {
+        "batch": 25,
+        "row": 19,
+        "topic": "Electrolysis",
+        "subtopic": "Aqueous sodium chloride",
+        "question": "During the electrolysis of concentrated aqueous sodium chloride using inert electrodes, which substance is produced at the anode?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 259,
+      "similarity_score": 0.667,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 19,
+        "row": 23,
+        "topic": "Electricity",
+        "subtopic": "Parallel circuits",
+        "question": "Two resistors of 6 Ω and 3 Ω are connected in parallel. What is their equivalent resistance?"
+      },
+      "source_b": {
+        "batch": 33,
+        "row": 24,
+        "topic": "Electricity",
+        "subtopic": "Series circuits",
+        "question": "Two resistors of 4 Ω and 6 Ω are connected in series. Their combined resistance is"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 260,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 25,
+        "row": 38,
+        "topic": "Poetry",
+        "subtopic": "Sestet",
+        "question": "A stanza or section of a poem consisting of six lines is called a:"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 38,
+        "topic": "Poetry",
+        "subtopic": "Stanza forms",
+        "question": "A stanza consisting of four lines is commonly called a:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 261,
+      "similarity_score": 0.667,
+      "subject": "Literature in English",
+      "source_a": {
+        "batch": 27,
+        "row": 37,
+        "topic": "Literary forms",
+        "subtopic": "Parody",
+        "question": "A parody is a literary work that:"
+      },
+      "source_b": {
+        "batch": 34,
+        "row": 41,
+        "topic": "Literary forms",
+        "subtopic": "Pastiche",
+        "question": "A pastiche is a literary or artistic work that:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 262,
+      "similarity_score": 0.667,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 29,
+        "row": 2,
+        "topic": "Grammar",
+        "subtopic": "Reported speech",
+        "question": "Tunde said, “I can solve the problem.” Choose the correct reported form."
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 2,
+        "topic": "Grammar",
+        "subtopic": "Reported speech",
+        "question": "He said, “I am busy now.” Choose the correct reported form."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 263,
+      "similarity_score": 0.663,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 10,
+        "row": 10,
+        "topic": "Sequences",
+        "subtopic": "Geometric progression",
+        "question": "A geometric progression has first term 3 and common ratio 2. What is its fifth term?"
+      },
+      "source_b": {
+        "batch": 31,
+        "row": 7,
+        "topic": "Sequences",
+        "subtopic": "Arithmetic progression",
+        "question": "An arithmetic progression has first term 5 and common difference 3. What is its eighth term?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 266,
+      "similarity_score": 0.662,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 1,
+        "row": 28,
+        "topic": "Demand and supply",
+        "subtopic": "Law of demand",
+        "question": "Other things being equal, a rise in the price of a normal good usually leads to:"
+      },
+      "source_b": {
+        "batch": 37,
+        "row": 27,
+        "topic": "Demand and supply",
+        "subtopic": "Supply",
+        "question": "Other things being equal, an increase in the price of a good generally causes"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 267,
+      "similarity_score": 0.662,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 14,
+        "row": 25,
+        "topic": "Electricity",
+        "subtopic": "Electric charge",
+        "question": "A current of 2 A flows through a conductor for 5 s. How much charge passes through it?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 24,
+        "topic": "Electricity",
+        "subtopic": "Electric charge",
+        "question": "A current of 2 A flows for 3 minutes. How much charge passes a point in the circuit?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 268,
+      "similarity_score": 0.661,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 1,
+        "row": 3,
+        "topic": "Grammar",
+        "subtopic": "Subject-verb agreement",
+        "question": "Choose the correct verb: “Neither the teacher nor the students ___ ready.”"
+      },
+      "source_b": {
+        "batch": 16,
+        "row": 5,
+        "topic": "Concord",
+        "subtopic": "Neither/nor",
+        "question": "Choose the correct verb: “Neither the principal nor the teachers ___ available.”"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 270,
+      "similarity_score": 0.661,
+      "subject": "Government",
+      "source_a": {
+        "batch": 2,
+        "row": 34,
+        "topic": "Political parties",
+        "subtopic": "Functions",
+        "question": "One important function of a political party is to:"
+      },
+      "source_b": {
+        "batch": 29,
+        "row": 34,
+        "topic": "Political parties",
+        "subtopic": "Role of opposition parties",
+        "question": "One important function of an opposition party in a democratic legislature is to:"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 271,
+      "similarity_score": 0.661,
+      "subject": "Economics",
+      "source_a": {
+        "batch": 22,
+        "row": 30,
+        "topic": "Development economics",
+        "subtopic": "Infrastructure",
+        "question": "Which of the following is an example of economic infrastructure?"
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 30,
+        "topic": "Public finance",
+        "subtopic": "Direct taxation",
+        "question": "Which of the following is an example of a direct tax?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 272,
+      "similarity_score": 0.66,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 11,
+        "row": 4,
+        "topic": "Vocabulary",
+        "subtopic": "Word formation",
+        "question": "Which word is formed by adding a prefix to legal?"
+      },
+      "source_b": {
+        "batch": 24,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Word formation",
+        "question": "Which word is formed by adding the suffix “-ness” to “kind”?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 273,
+      "similarity_score": 0.66,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 15,
+        "row": 25,
+        "topic": "Electric fields",
+        "subtopic": "SI units",
+        "question": "What is the SI unit of electric field strength?"
+      },
+      "source_b": {
+        "batch": 21,
+        "row": 23,
+        "topic": "Electricity",
+        "subtopic": "Resistance",
+        "question": "What is the SI unit of electrical resistance?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 275,
+      "similarity_score": 0.657,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 17,
+        "row": 21,
+        "topic": "Separation techniques",
+        "subtopic": "Filtration",
+        "question": "Which method is most suitable for separating an insoluble solid from a liquid?"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 21,
+        "topic": "Separation techniques",
+        "subtopic": "Distillation",
+        "question": "Simple distillation is most suitable for separating a liquid from"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 276,
+      "similarity_score": 0.656,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 20,
+        "row": 8,
+        "topic": "Ratio",
+        "subtopic": "Direct proportion",
+        "question": "If 5 notebooks cost ₦2,000, how much will 8 notebooks cost at the same rate?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 7,
+        "topic": "Commercial arithmetic",
+        "subtopic": "Direct proportion",
+        "question": "If 4 identical pens cost ₦600, how much will 7 pens cost at the same rate?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 277,
+      "similarity_score": 0.655,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 9,
+        "row": 23,
+        "topic": "Electricity",
+        "subtopic": "Electric charge",
+        "question": "A current of 3 A flows through a wire for 20 seconds. How much electric charge passes a point in the wire?"
+      },
+      "source_b": {
+        "batch": 35,
+        "row": 24,
+        "topic": "Electricity",
+        "subtopic": "Electric charge",
+        "question": "A current of 2 A flows for 3 minutes. How much charge passes a point in the circuit?"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 278,
+      "similarity_score": 0.655,
+      "subject": "Chemistry",
+      "source_a": {
+        "batch": 25,
+        "row": 21,
+        "topic": "Reaction rates",
+        "subtopic": "Catalysis",
+        "question": "A catalyst increases the rate of a reaction because it"
+      },
+      "source_b": {
+        "batch": 40,
+        "row": 20,
+        "topic": "Rates of reaction",
+        "subtopic": "Pressure and reaction rate",
+        "question": "Increasing the pressure of reacting gases can increase reaction rate because it"
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 279,
+      "similarity_score": 0.654,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 3,
+        "row": 4,
+        "topic": "Grammar",
+        "subtopic": "Conditional clauses",
+        "question": "Choose the correct completion: “If I had known, I ___ you.”"
+      },
+      "source_b": {
+        "batch": 17,
+        "row": 6,
+        "topic": "Grammar",
+        "subtopic": "Conditional clauses",
+        "question": "Choose the correct completion: If she had left earlier, she ___ the bus."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 280,
+      "similarity_score": 0.653,
+      "subject": "Use of English",
+      "source_a": {
+        "batch": 2,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Antonyms",
+        "question": "Choose the word opposite in meaning to “scarce.”"
+      },
+      "source_b": {
+        "batch": 39,
+        "row": 3,
+        "topic": "Vocabulary",
+        "subtopic": "Synonyms",
+        "question": "Choose the word nearest in meaning to 'obsolete'."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 281,
+      "similarity_score": 0.653,
+      "subject": "Physics",
+      "source_a": {
+        "batch": 5,
+        "row": 23,
+        "topic": "Energy",
+        "subtopic": "Potential energy",
+        "question": "A 2 kg object is raised 4 m. Taking g = 10 N/kg, its gain in gravitational potential energy is:"
+      },
+      "source_b": {
+        "batch": 38,
+        "row": 23,
+        "topic": "Mechanics",
+        "subtopic": "Gravitational potential energy",
+        "question": "A 2 kg object is lifted vertically through 5 m. Calculate its gain in gravitational potential energy (g = 10 m/s²)."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    },
+    {
+      "rank": 283,
+      "similarity_score": 0.651,
+      "subject": "Mathematics",
+      "source_a": {
+        "batch": 6,
+        "row": 11,
+        "topic": "Functions",
+        "subtopic": "Function evaluation",
+        "question": "If f(x) = 2x − 1, find f(5)."
+      },
+      "source_b": {
+        "batch": 32,
+        "row": 11,
+        "topic": "Functions",
+        "subtopic": "Function evaluation",
+        "question": "If f(x) = 2x² − 3, find f(−2)."
+      },
+      "exact_normalized_stem_match": false,
+      "historical_review_evidence": "not_found_in_reconstructed_sources",
+      "disposition": "unresolved_similarity_candidate"
+    }
+  ]
+}

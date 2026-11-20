@@ -1,0 +1,98 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "cluster": "DUP-214",
+  "status": "RETAINED_ANCHOR_RESOLVED",
+  "canonical_retained_anchor": "batch 10 row 17",
+  "source_pair_record": {
+    "pair_id": "DUP-214",
+    "rank": 695,
+    "retain": "batch 10 row 17",
+    "hold": "batch 34 row 17"
+  },
+  "additional_held_members": [
+    {
+      "rank": 746,
+      "location": "batch 13 row 20"
+    },
+    {
+      "rank": 794,
+      "location": "batch 3 row 18"
+    }
+  ],
+  "retained_anchor_evidence": {
+    "subject": "Chemistry",
+    "topic": "Atomic structure",
+    "subtopic": "Electronic configuration",
+    "stem": "How many electrons are present in a neutral atom of chlorine with atomic number 17?",
+    "answer": "17",
+    "source_provenance": "Original EDUKEN-authored draft; not copied from a past paper.",
+    "staging_presence": "Present in 2026-11-01 retained-batches-11-20.csv as source_batch 10, source_csv_row 17."
+  },
+  "cluster_member_comparison": [
+    {
+      "location": "batch 10 row 17",
+      "tested_skill": "Apply neutrality and atomic number to determine electron count for chlorine",
+      "answer": "17 electrons"
+    },
+    {
+      "location": "batch 34 row 17",
+      "tested_skill": "Apply neutrality to infer atomic number from a stated electron count",
+      "answer": "Atomic number 10"
+    },
+    {
+      "location": "batch 13 row 20",
+      "tested_skill": "Recall that a neutral atom has equal numbers of electrons and protons",
+      "answer": "Protons"
+    },
+    {
+      "location": "batch 3 row 18",
+      "tested_skill": "Recall that atomic number equals proton number",
+      "answer": "Protons"
+    }
+  ],
+  "disposition_note": "The canonical retained anchor is unambiguous and all four source rows have now been directly verified. Independent comparison finds the numerical pair (batch 10 row 17 and batch 34 row 17) tests the same electron/proton equality in opposite directions; the two definition items (batch 13 row 20 and batch 3 row 18) are closely overlapping statements of that same atomic-structure relationship. Keep the three held members excluded from student publication pending qualified Chemistry review of whether the reverse numerical application and both definitions provide meaningful practice variety. Do not draft replacements or alter the held count until that review is recorded.",
+  "counts": {
+    "new_pair_anchor_resolved": true,
+    "extension_anchors_resolved": 2,
+    "previously_unresolved_extension_anchors_remaining": 0
+  },
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_snapshot_overwrites": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "academic_approval": false
+  },
+  "source_row_verification": {
+    "method": "Fetched original batch CSVs from the PR branch and parsed CSV records with quoted-field handling. Physical row numbering includes the header row.",
+    "verified_locations": [
+      {
+        "location": "batch 10 row 17",
+        "question": "How many electrons are present in a neutral atom of chlorine with atomic number 17?",
+        "answer": "17",
+        "finding": "Numerical application of neutrality and atomic number."
+      },
+      {
+        "location": "batch 34 row 17",
+        "question": "A neutral atom has 10 electrons. What is its atomic number?",
+        "answer": "10",
+        "finding": "Reverse numerical application of the same neutrality relationship."
+      },
+      {
+        "location": "batch 13 row 20",
+        "question": "In an electrically neutral atom, the number of electrons is equal to the number of…",
+        "answer": "Protons",
+        "finding": "Definition/relationship recall."
+      },
+      {
+        "location": "batch 3 row 18",
+        "question": "The atomic number of an element equals the number of:",
+        "answer": "Protons in its nucleus",
+        "finding": "Definition recall; overlaps the same underlying proton/electron neutrality concept."
+      }
+    ],
+    "independent_triage": "The anchor and three held members are all in the same atomic-structure knowledge family. The two numerical items test the same equality in opposite directions; the two definition items are very close conceptually. This supports retaining the established anchor and keeping the three members on hold pending qualified Chemistry review, but does not constitute academic approval or prove that all three require replacement.",
+    "csv_edits": 0
+  }
+}

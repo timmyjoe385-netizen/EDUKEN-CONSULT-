@@ -1,0 +1,89 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "method": "Parsed original CSVs with quoted-field and embedded-newline support. Spreadsheet row locations count the header row. Compared source_type/source_name/provenance_notes and matched staging rows by pair_id/held_location.",
+  "counts": {
+    "new_pair_records": 28,
+    "cluster_extension_references": 8,
+    "source_location_references_checked": 36,
+    "source_rows_marked_original": 36,
+    "unique_new_held_locations": 34,
+    "exact_source_to_staging_subject_matches": 34,
+    "exact_source_to_staging_question_text_matches": 34,
+    "existing_cluster_references_not_new_rows": 2,
+    "mismatches": 0
+  },
+  "provenance": "All 36 referenced source records declare source_type=original and contain EDUKEN-authored/original-draft provenance notes. The baseline 90 relationships are separately reconciled as 62 commit-backed replacement histories plus 28 original-draft overlaps.",
+  "outstanding": {
+    "contextual_disposition": "qualified subject review pending",
+    "replacement_drafts": 0,
+    "baseline_replacement_commit_sha_normalization": 0,
+    "note": "The consolidated register contains row-level parent/current-row Git evidence and exact introducing commits for all 13 later-replacement baseline rows. This supersedes the earlier pending label in this audit."
+  },
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "academic_approval": false,
+    "release_authorized": false
+  },
+  "baseline_commit_verification": {
+    "status": "verified_in_consolidated_register",
+    "pairs": [
+      [
+        "DUP-69",
+        "def07265cd7f1cc5b1a0ac897006fb46841e49a3"
+      ],
+      [
+        "DUP-70",
+        "7cd07e64694191998d25971911f2763938068046"
+      ],
+      [
+        "DUP-71",
+        "35b440ef35ac543f431e34f5f6737c91851dda8b"
+      ],
+      [
+        "DUP-74",
+        "2a0f113b2326c495454e9ff01e2b24b7c27d06e1"
+      ],
+      [
+        "DUP-75",
+        "407dd924e78bd70fb204f8f145dfd05301d9d442"
+      ],
+      [
+        "DUP-77",
+        "786252f9642c71816b275db45eff729bf3cfb7b4"
+      ],
+      [
+        "DUP-79",
+        "d91b6b1f1799e54b3a502c79692dc1e851a3786d"
+      ],
+      [
+        "DUP-82",
+        "fb1a7e73db035f91c92f4ace384d97cb873239f4"
+      ],
+      [
+        "DUP-83",
+        "c7f4e49537c86ee6ad0feabafecda11109aa95d9"
+      ],
+      [
+        "DUP-84",
+        "d91278d5c327b24a1f711eb8636d2a9cea1a07cf"
+      ],
+      [
+        "DUP-85",
+        "439e78a7c43dce18283d89291aca5133f8cdd2e0"
+      ],
+      [
+        "DUP-86",
+        "291e05a14d3f406a2d7758bf6372a5cc633b8c8a"
+      ],
+      [
+        "DUP-90",
+        "40167e2f0607e0df4c8d0f2971e5403a9488e10c"
+      ]
+    ],
+    "evidence": "Each corresponding pair entry records the exact row-level Git diff and parent-row comparison."
+  }
+}

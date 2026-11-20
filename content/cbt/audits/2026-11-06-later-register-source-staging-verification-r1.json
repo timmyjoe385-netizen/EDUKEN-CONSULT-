@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Verify every source endpoint for the 96 later-range pair IDs against the original 40-batch source CSVs and the current 6 November staging exports.",
+  "scope": {
+    "pair_ids": 96,
+    "pair_target_references": 97,
+    "unique_target_locations": 90,
+    "all_pair_endpoints_including_retained_anchors": 193,
+    "unique_endpoint_locations": 178
+  },
+  "batch_group_results": [
+    {
+      "batches": "01–10",
+      "unique_endpoints": 46,
+      "endpoint_references": 52,
+      "source_rows_found": 46,
+      "staging_rows_found": 46,
+      "exact_full_row_matches": 46,
+      "source_type_original": 46
+    },
+    {
+      "batches": "11–20",
+      "unique_endpoints": 46,
+      "endpoint_references": 49,
+      "source_rows_found": 46,
+      "staging_rows_found": 46,
+      "exact_full_row_matches": 46,
+      "source_type_original": 46
+    },
+    {
+      "batches": "21–30",
+      "unique_endpoints": 38,
+      "endpoint_references": 39,
+      "source_rows_found": 38,
+      "staging_rows_found": 38,
+      "exact_full_row_matches": 38,
+      "source_type_original": 38
+    },
+    {
+      "batches": "31–40",
+      "unique_endpoints": 48,
+      "endpoint_references": 53,
+      "source_rows_found": 48,
+      "staging_rows_found": 48,
+      "exact_full_row_matches": 48,
+      "source_type_original": 48
+    }
+  ],
+  "results": {
+    "unique_source_endpoints": 178,
+    "source_rows_found": 178,
+    "staging_rows_found": 178,
+    "exact_full_row_content_matches": 178,
+    "missing_source_rows": 0,
+    "missing_staging_rows": 0,
+    "content_mismatches": 0,
+    "source_type_original": 178,
+    "source_provenance_notes": "All 178 rows identify original EDUKEN-authored content and state they were not copied from past question papers.",
+    "licensing_notes": "All 178 rows state original content/no third-party question text reproduced; academic review remains required.",
+    "source_name_variants": [
+      "EDUKEN CONSULT original draft",
+      "EDUKEN CONSULT",
+      "blank on a subset; provenance_notes still explicitly state original EDUKEN-authored content"
+    ]
+  },
+  "target_crosswalk": {
+    "unique_target_locations": 90,
+    "already_held_in_current_staging": 22,
+    "still_retained_in_current_staging": 68,
+    "missing_from_staging": 0,
+    "note": "The 68 retained targets are not automatically moved to held; semantic disposition and qualified review decide which are true duplicates."
+  },
+  "methodology": "For each unique endpoint, fetched the original batch CSV row using physical CSV line numbering, found its matching row in the 6 November retained or held export, and compared all 18 source columns exactly (subject, topic, subtopic, stem, four options, answer, explanation, difficulty, exam type, source type/name/year, provenance/licensing notes and status). Batch numbers were normalized from zero-padded source_batch fields.",
+  "limitations": [
+    "This verifies source-row existence, exact source/staging content equality and the source CSV's original-authorship metadata.",
+    "It does not independently prove authorship beyond the repository's source metadata, nor determine the introducing Git commit for every row.",
+    "The 96 pair relationships still require semantic duplicate-versus-related-skill disposition and qualified subject/syllabus approval.",
+    "The 68 retained target locations remain in retained exports until confirmed duplicates are approved for holdout."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "supabase_imports": 0,
+    "publications": 0,
+    "production_changes": 0,
+    "release_authorized": false
+  },
+  "status": "ALL_178_SOURCE_AND_STAGING_ENDPOINTS_EXACTLY_VERIFIED_ORIGINAL_SOURCE_METADATA_CONFIRMED_SEMANTIC_REVIEW_PENDING"
+}

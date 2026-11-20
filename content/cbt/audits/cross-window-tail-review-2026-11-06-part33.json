@@ -1,0 +1,162 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Fifteen additional lower-tail cross-window candidate pairs reviewed against the complete source-bank question records.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1124,
+      1125,
+      1126,
+      1127,
+      1128,
+      1129,
+      1130,
+      1131,
+      1132,
+      1133,
+      1134,
+      1135,
+      1136,
+      1137,
+      1138
+    ],
+    "previous_total_manually_reviewed": 581,
+    "now_manually_reviewed": 596,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 708
+  },
+  "preserved": [
+    {
+      "rank": 1124,
+      "subject": "Economics",
+      "a": "batch 26 row 30",
+      "b": "batch 35 row 31",
+      "decision": "preserve_as_distinct",
+      "reason": "A leakage from circular income is a withdrawal such as saving, taxation or imports; a fixed cost is a production-cost classification. Different economics topics."
+    },
+    {
+      "rank": 1125,
+      "subject": "Use of English",
+      "a": "batch 5 row 2",
+      "b": "batch 17 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "A question tag after a present-perfect statement differs from a third-conditional sentence completion."
+    },
+    {
+      "rank": 1126,
+      "subject": "Mathematics",
+      "a": "batch 1 row 10",
+      "b": "batch 28 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "The arithmetic mean and median are different measures of central tendency and require different calculations."
+    },
+    {
+      "rank": 1127,
+      "subject": "Chemistry",
+      "a": "batch 17 row 18",
+      "b": "batch 37 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Acid-base neutralisation forms a salt and water; an acid reacting with a carbonate releases carbon dioxide. Different reaction types and products."
+    },
+    {
+      "rank": 1128,
+      "subject": "Chemistry",
+      "a": "batch 27 row 17",
+      "b": "batch 36 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "The ideal gas equation relates P, V, n and T; Avogadro's law describes equal gas volumes containing equal molecule counts under the same conditions."
+    },
+    {
+      "rank": 1129,
+      "subject": "Use of English",
+      "a": "batch 1 row 3",
+      "b": "batch 19 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Neither…nor concord depends on the nearer subject; each of the candidates takes a singular verb. Distinct concord rules."
+    },
+    {
+      "rank": 1130,
+      "subject": "Government",
+      "a": "batch 1 row 35",
+      "b": "batch 16 row 33",
+      "decision": "preserve_as_distinct",
+      "reason": "A citizen's civic responsibility differs from the organisational and political functions performed by a political party."
+    },
+    {
+      "rank": 1131,
+      "subject": "Mathematics",
+      "a": "batch 3 row 9",
+      "b": "batch 11 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "The sine ratio definition is tested in the first item; the second applies the ratio to given opposite-side and hypotenuse lengths."
+    },
+    {
+      "rank": 1132,
+      "subject": "Economics",
+      "a": "batch 4 row 29",
+      "b": "batch 21 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "Higher production costs tend to reduce supply; improved technology tends to increase supply. Opposite shifts caused by different determinants."
+    },
+    {
+      "rank": 1133,
+      "subject": "Use of English",
+      "a": "batch 4 row 6",
+      "b": "batch 32 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The first requires a verb meaning to confirm or affirm a statement; the second requires an adjective describing an explanation that is easy to understand. Different vocabulary targets."
+    },
+    {
+      "rank": 1134,
+      "subject": "Physics",
+      "a": "batch 12 row 22",
+      "b": "batch 29 row 26",
+      "decision": "preserve_as_distinct",
+      "reason": "The first asks about pressure difference between two points (ΔP = ρgΔh); the second asks what determines pressure at a point below a liquid surface (p = ρgh). Related hydrostatic principles but different quantities and applications; do not collapse them solely because the formulae are related."
+    },
+    {
+      "rank": 1135,
+      "subject": "Physics",
+      "a": "batch 12 row 24",
+      "b": "batch 29 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "A fuse protects a circuit by breaking it when current is excessive; an ammeter is a measuring instrument connected in series. Different device functions."
+    },
+    {
+      "rank": 1136,
+      "subject": "Chemistry",
+      "a": "batch 26 row 20",
+      "b": "batch 35 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "First ionisation energy and electronegativity are different periodic properties; the element ranking depends on different definitions."
+    },
+    {
+      "rank": 1137,
+      "subject": "Physics",
+      "a": "batch 30 row 25",
+      "b": "batch 39 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "The first calculates current from charge and time (I = Q/t); the second calculates potential difference using Ohm's law (V = IR). Different quantities and formulae."
+    },
+    {
+      "rank": 1138,
+      "subject": "Mathematics",
+      "a": "batch 1 row 9",
+      "b": "batch 16 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "The first uses a ratio of three angles to find the largest angle; the second finds a missing angle from two given angles. Both use the triangle angle sum but are distinct problem forms."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

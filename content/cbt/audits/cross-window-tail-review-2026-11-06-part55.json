@@ -1,0 +1,185 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 500-519. Previously reviewed ranks 504, 506, 510, 513 and 517 are excluded. Full stems, options, keys and explanations were compared.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      500,
+      501,
+      502,
+      503,
+      505,
+      507,
+      508,
+      509,
+      511,
+      512,
+      514,
+      515,
+      516,
+      518,
+      519
+    ],
+    "previous_total_manually_reviewed": 891,
+    "now_manually_reviewed": 906,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 398
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-198",
+      "rank": 505,
+      "subject": "Physics",
+      "a": "batch 2 row 23",
+      "b": "batch 18 row 26",
+      "concept": "Calculating pressure from force and area",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for pressure from a supplied perpendicular force and area using P = F/A. Only the numerical values differ; the same direct substitution is tested.",
+      "retain": "batch 2 row 23",
+      "hold": "batch 18 row 26",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "id": "DUP-199",
+      "rank": 507,
+      "subject": "Mathematics",
+      "a": "batch 1 row 11",
+      "b": "batch 35 row 10",
+      "concept": "Multiplying powers with the same base by adding exponents",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask to simplify a product of powers with identical bases using a^m × a^n = a^(m+n). Only the base and exponents differ; the same index law is tested.",
+      "retain": "batch 1 row 11",
+      "hold": "batch 35 row 10",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 500,
+      "subject": "Chemistry",
+      "a": "batch 8 row 21",
+      "b": "batch 25 row 19",
+      "decision": "preserve_as_distinct",
+      "reason": "Molten lead(II) bromide produces bromine at the anode; concentrated aqueous sodium chloride produces chlorine. Different electrolytes and anode products."
+    },
+    {
+      "rank": 501,
+      "subject": "Mathematics",
+      "a": "batch 1 row 11",
+      "b": "batch 31 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Multiplying powers with the same base and simplifying a bracketed algebraic expression are different skills."
+    },
+    {
+      "rank": 502,
+      "subject": "Biology",
+      "a": "batch 20 row 14",
+      "b": "batch 28 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "Root hairs absorb water and mineral ions from soil; the glomerulus filters blood in the nephron. Different organs and functions."
+    },
+    {
+      "rank": 503,
+      "subject": "Literature in English",
+      "a": "batch 28 row 39",
+      "b": "batch 36 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "Characterisation is the broader creation and presentation of characters; diction is a writer's choice of words."
+    },
+    {
+      "rank": 508,
+      "subject": "Mathematics",
+      "a": "batch 1 row 11",
+      "b": "batch 40 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Multiplication of powers adds exponents; division of powers subtracts exponents. Related but distinct index laws."
+    },
+    {
+      "rank": 509,
+      "subject": "Mathematics",
+      "a": "batch 5 row 11",
+      "b": "batch 36 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Evaluating a negative index and evaluating a logarithm test different concepts."
+    },
+    {
+      "rank": 511,
+      "subject": "Biology",
+      "a": "batch 13 row 12",
+      "b": "batch 28 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "Red blood cells transport oxygen; the glomerulus filters blood. Different systems and physiological functions."
+    },
+    {
+      "rank": 512,
+      "subject": "Chemistry",
+      "a": "batch 11 row 17",
+      "b": "batch 34 row 17",
+      "decision": "preserve_as_distinct",
+      "reason": "Mass number is protons plus neutrons; atomic number is the number of protons. Different atomic quantities."
+    },
+    {
+      "rank": 514,
+      "subject": "Literature in English",
+      "a": "batch 29 row 37",
+      "b": "batch 37 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "A tercet has three lines; a quatrain has four. Different stanza forms."
+    },
+    {
+      "rank": 515,
+      "subject": "Literature in English",
+      "a": "batch 7 row 39",
+      "b": "batch 35 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "An omniscient narrator has broad access to characters' thoughts; an intrusive narrator openly comments or intervenes. Related but distinct narrative techniques."
+    },
+    {
+      "rank": 516,
+      "subject": "Use of English",
+      "a": "batch 8 row 6",
+      "b": "batch 30 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first identifies a vowel sound; the second identifies an initial consonant sound."
+    },
+    {
+      "rank": 518,
+      "subject": "Physics",
+      "a": "batch 20 row 24",
+      "b": "batch 22 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Wavelength from speed and frequency uses λ=v/f; period from frequency uses T=1/f. Different quantities and calculations."
+    },
+    {
+      "rank": 519,
+      "subject": "Chemistry",
+      "a": "batch 15 row 18",
+      "b": "batch 37 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "Electronegativity generally increases across a period; atomic radius generally decreases. Related periodic trends but distinct properties."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 2,
+    "new_unique_replacement_targets": 2,
+    "preserved_as_distinct": 13,
+    "previously_reviewed_ranks_skipped": [
+      504,
+      506,
+      510,
+      513,
+      517
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

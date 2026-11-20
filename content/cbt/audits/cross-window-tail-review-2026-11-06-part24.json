@@ -1,0 +1,174 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Three-times-sized lower-tail review batch: fifteen candidate pairs checked against complete source stems, four options, answer keys and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      977,
+      978,
+      979,
+      980,
+      981,
+      982,
+      983,
+      984,
+      985,
+      986,
+      987,
+      988,
+      989,
+      990,
+      991
+    ],
+    "previous_total_manually_reviewed": 446,
+    "now_manually_reviewed": 461,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 843
+  },
+  "preserved": [
+    {
+      "rank": 977,
+      "subject": "Government",
+      "a": "batch 1 row 32",
+      "b": "batch 22 row 32",
+      "decision": "preserve_as_related_but_distinct_constitutional_concepts",
+      "reason": "The first asks what a constitution generally sets out; the second asks what makes a constitution rigid (a special amendment procedure)."
+    },
+    {
+      "rank": 978,
+      "subject": "Use of English",
+      "a": "batch 3 row 4",
+      "b": "batch 27 row 4",
+      "decision": "preserve_as_distinct_language_skills",
+      "reason": "Third conditional formation and the collocation comply with test different grammar/vocabulary objectives."
+    },
+    {
+      "rank": 979,
+      "subject": "Mathematics",
+      "a": "batch 10 row 8",
+      "b": "batch 23 row 11",
+      "decision": "preserve_as_distinct_mathematical_topics",
+      "reason": "Finding the mode and evaluating a 2×2 determinant are unrelated procedures."
+    },
+    {
+      "rank": 981,
+      "subject": "Biology",
+      "a": "batch 9 row 15",
+      "b": "batch 33 row 13",
+      "decision": "preserve_as_distinct_cell_division_processes",
+      "reason": "Meiosis produces haploid cells for sexual reproduction; mitosis produces genetically similar daughter cells for growth and repair."
+    },
+    {
+      "rank": 982,
+      "subject": "Mathematics",
+      "a": "batch 10 row 8",
+      "b": "batch 31 row 11",
+      "decision": "preserve_as_distinct_mathematical_topics",
+      "reason": "Mode and determinant are different concepts and procedures."
+    },
+    {
+      "rank": 983,
+      "subject": "Mathematics",
+      "a": "batch 11 row 10",
+      "b": "batch 24 row 10",
+      "decision": "preserve_as_distinct_trigonometric_methods",
+      "reason": "The first uses the sine ratio in a right-angled triangle; the second applies the sine rule in a non-right-angled triangle."
+    },
+    {
+      "rank": 984,
+      "subject": "Use of English",
+      "a": "batch 14 row 3",
+      "b": "batch 27 row 4",
+      "decision": "preserve_as_distinct_verb_preposition_collocations",
+      "reason": "Insist on punctuality and comply with rules are separate verb-preposition collocations."
+    },
+    {
+      "rank": 985,
+      "subject": "Chemistry",
+      "a": "batch 12 row 17",
+      "b": "batch 36 row 17",
+      "decision": "preserve_as_distinct_gas_laws",
+      "reason": "Charles' law relates gas volume to absolute temperature at constant pressure; Avogadro's law relates gas volume to amount of substance at fixed temperature and pressure."
+    },
+    {
+      "rank": 986,
+      "subject": "Government",
+      "a": "batch 21 row 35",
+      "b": "batch 36 row 35",
+      "decision": "preserve_as_distinct_legal_procedures",
+      "reason": "A constitutional amendment formally changes constitutional provisions; an election petition challenges an election's conduct or result."
+    },
+    {
+      "rank": 987,
+      "subject": "Economics",
+      "a": "batch 2 row 30",
+      "b": "batch 12 row 29",
+      "decision": "preserve_as_related_but_distinct_external_sector_accounts",
+      "reason": "Balance of trade compares goods exports and imports; balance of payments records a broader range of transactions between residents and non-residents."
+    },
+    {
+      "rank": 988,
+      "subject": "Government",
+      "a": "batch 5 row 35",
+      "b": "batch 27 row 33",
+      "decision": "preserve_as_distinct_political_concepts",
+      "reason": "Legitimacy concerns accepted/rightful authority; sovereignty concerns supreme and independent state authority."
+    },
+    {
+      "rank": 989,
+      "subject": "Use of English",
+      "a": "batch 7 row 4",
+      "b": "batch 24 row 2",
+      "decision": "preserve_as_distinct_grammar_objectives",
+      "reason": "First conditional formation and cleft-sentence relative pronoun selection are distinct."
+    },
+    {
+      "rank": 990,
+      "subject": "Use of English",
+      "a": "batch 8 row 2",
+      "b": "batch 24 row 2",
+      "decision": "preserve_as_distinct_grammar_objectives",
+      "reason": "No sooner…than inversion and cleft-sentence structure test different grammar objectives."
+    },
+    {
+      "rank": 991,
+      "subject": "Biology",
+      "a": "batch 9 row 13",
+      "b": "batch 29 row 16",
+      "decision": "preserve_as_distinct_plant_transport_tissues",
+      "reason": "Xylem transports water and mineral salts; phloem transports sugars and other organic nutrients. The items test complementary, contrasting tissue functions."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 980,
+      "subject": "Chemistry",
+      "a": "batch 6 row 21",
+      "b": "batch 38 row 20",
+      "question_a": "An ester can commonly be formed by reacting a carboxylic acid with an:",
+      "answer_a": "A — Alcohol.",
+      "question_b": "The reaction between an alcohol and a carboxylic acid can produce an ester and",
+      "answer_b": "C — Water.",
+      "decision": "confirm_semantic_duplicate_extend_existing_cluster",
+      "cluster_id": "ESTERIFICATION-01",
+      "existing_register_record": "DUP-13",
+      "retain": "batch 20 row 20",
+      "existing_held_row": "batch 38 row 20",
+      "replace": "batch 6 row 21",
+      "new_unique_replacement_target": "batch 6 row 21",
+      "reason": "Both assess the same esterification reaction: a carboxylic acid reacts with an alcohol to produce an ester and water. Batch 38 row 20 is already held under DUP-13; batch 6 row 21 is a new unique repeat. Retain the existing batch 20 row 20 item and extend the existing cluster rather than counting batch 38 row 20 again."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "existing_cluster_extended": 1,
+    "preserved_as_distinct": 14,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "All fifteen pairs were inspected in full. Fourteen were preserved as distinct; rank 980 extended existing esterification duplicate DUP-13, adding batch 6 row 21 as one new unique held target. No source, staging or production question data was changed."
+  }
+}

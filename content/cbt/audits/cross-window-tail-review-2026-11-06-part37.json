@@ -1,0 +1,167 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of lower-tail candidate ranks 1184–1198; source question stems, options, answer keys and explanations checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1184,
+      1185,
+      1186,
+      1187,
+      1188,
+      1189,
+      1190,
+      1191,
+      1192,
+      1193,
+      1194,
+      1195,
+      1196,
+      1197,
+      1198
+    ],
+    "previous_total_manually_reviewed": 641,
+    "now_manually_reviewed": 656,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 648
+  },
+  "preserved": [
+    {
+      "rank": 1184,
+      "subject": "Use of English",
+      "a": "batch 6 row 5",
+      "b": "batch 19 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the irregular plural of criterion (criteria); the second tests subject–verb agreement with each. Different grammar objectives."
+    },
+    {
+      "rank": 1185,
+      "subject": "Literature in English",
+      "a": "batch 8 row 39",
+      "b": "batch 20 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "In medias res describes a narrative opening in the middle of the action; denouement is the concluding resolution of complications. Different narrative stages."
+    },
+    {
+      "rank": 1187,
+      "subject": "Use of English",
+      "a": "batch 6 row 5",
+      "b": "batch 22 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "Plural formation and concord are separate grammar skills."
+    },
+    {
+      "rank": 1188,
+      "subject": "Chemistry",
+      "a": "batch 8 row 20",
+      "b": "batch 21 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Selecting an indicator for a strong acid–strong base titration differs from the practical method of preparing a soluble salt from an acid and insoluble base."
+    },
+    {
+      "rank": 1189,
+      "subject": "Use of English",
+      "a": "batch 13 row 6",
+      "b": "batch 26 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Recognising passive voice differs from identifying the present perfect continuous aspect."
+    },
+    {
+      "rank": 1190,
+      "subject": "Literature in English",
+      "a": "batch 16 row 41",
+      "b": "batch 30 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "A scene is a subdivision of a play's act; dramatis personae is the list of characters. Different dramatic terminology."
+    },
+    {
+      "rank": 1191,
+      "subject": "Literature in English",
+      "a": "batch 19 row 37",
+      "b": "batch 26 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "An oxymoron is a figure of speech combining apparently contradictory terms; an aside is a dramatic speech conventionally unheard by other characters. Different literary concepts."
+    },
+    {
+      "rank": 1192,
+      "subject": "Mathematics",
+      "a": "batch 1 row 9",
+      "b": "batch 11 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "The first finds the largest angle from a triangle angle ratio; the second calculates each interior angle of a regular pentagon. Different geometry applications."
+    },
+    {
+      "rank": 1193,
+      "subject": "Economics",
+      "a": "batch 4 row 31",
+      "b": "batch 17 row 29",
+      "decision": "preserve_as_distinct",
+      "reason": "Minimum wage is a legal wage floor; oligopoly is a market structure dominated by a few firms. Different economics concepts."
+    },
+    {
+      "rank": 1194,
+      "subject": "Use of English",
+      "a": "batch 7 row 2",
+      "b": "batch 12 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Pronoun reference with a collective noun and reported-speech backshift test different grammar objectives."
+    },
+    {
+      "rank": 1195,
+      "subject": "Mathematics",
+      "a": "batch 7 row 7",
+      "b": "batch 11 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "The first defines tangent as opposite/adjacent; the second calculates sine from opposite/hypotenuse values. Different trigonometric ratios."
+    },
+    {
+      "rank": 1196,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 13 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Evaluating cos 60° and converting 5/8 to a decimal are unrelated calculations."
+    },
+    {
+      "rank": 1197,
+      "subject": "Economics",
+      "a": "batch 9 row 30",
+      "b": "batch 20 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "Economies of scale concerns falling average production cost as output expands; capital formation concerns increasing the stock of productive assets. Related to growth but distinct concepts."
+    },
+    {
+      "rank": 1198,
+      "subject": "Chemistry",
+      "a": "batch 10 row 17",
+      "b": "batch 13 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "The first applies neutrality to a chlorine atom with atomic number 17; the second tests the general equality of electron and proton counts. The application and underlying rule are complementary rather than duplicate stems."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1186,
+      "subject": "Government",
+      "a": "batch 3 row 32",
+      "b": "batch 28 row 32",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both ask what checks and balances are designed to achieve and both key mutual institutional restraint/scrutiny to prevent abuse of power. The wording and options are materially equivalent.",
+      "retain": "batch 3 row 32",
+      "hold": "batch 28 row 32",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

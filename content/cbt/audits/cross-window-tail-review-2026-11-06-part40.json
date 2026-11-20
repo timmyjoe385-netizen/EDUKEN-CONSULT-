@@ -1,0 +1,169 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidates. All referenced source CSV rows, four options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1229,
+      1230,
+      1231,
+      1232,
+      1233,
+      1234,
+      1235,
+      1236,
+      1237,
+      1238,
+      1239,
+      1240,
+      1241,
+      1242,
+      1243
+    ],
+    "previous_total_manually_reviewed": 686,
+    "now_manually_reviewed": 701,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 603
+  },
+  "preserved": [
+    {
+      "rank": 1229,
+      "subject": "Use of English",
+      "a": "batch 6 row 2",
+      "b": "batch 14 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests correct modifier attachment to the subject; the second identifies the present perfect construction."
+    },
+    {
+      "rank": 1230,
+      "subject": "Mathematics",
+      "a": "batch 7 row 9",
+      "b": "batch 16 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "A quadratic equation solved by factorisation differs from a one-variable linear equation."
+    },
+    {
+      "rank": 1231,
+      "subject": "Government",
+      "a": "batch 9 row 33",
+      "b": "batch 27 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "An ombudsman investigates maladministration; an election petition challenges an election through a legal process."
+    },
+    {
+      "rank": 1232,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 33 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "The exact cosine of a special angle differs from finding the trace of a 2×2 matrix."
+    },
+    {
+      "rank": 1234,
+      "subject": "Use of English",
+      "a": "batch 15 row 5",
+      "b": "batch 25 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "A mixed conditional with a present result differs from the inversion construction hardly…when."
+    },
+    {
+      "rank": 1235,
+      "subject": "Government",
+      "a": "batch 16 row 36",
+      "b": "batch 27 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Diplomatic representation by an ambassador differs from the legal process of an election petition."
+    },
+    {
+      "rank": 1236,
+      "subject": "Mathematics",
+      "a": "batch 17 row 9",
+      "b": "batch 21 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Mode is the most frequent value; median is the middle value after ordering the data."
+    },
+    {
+      "rank": 1237,
+      "subject": "Literature in English",
+      "a": "batch 28 row 39",
+      "b": "batch 36 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "Characterisation is the writer's development/presentation of characters; an antagonist is a character or force opposing the protagonist."
+    },
+    {
+      "rank": 1238,
+      "subject": "Physics",
+      "a": "batch 29 row 22",
+      "b": "batch 32 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Average acceleration from a velocity change differs from final velocity under uniform acceleration."
+    },
+    {
+      "rank": 1239,
+      "subject": "Mathematics",
+      "a": "batch 1 row 9",
+      "b": "batch 11 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "An angle-ratio problem in a triangle differs from applying sine as opposite over hypotenuse."
+    },
+    {
+      "rank": 1240,
+      "subject": "Use of English",
+      "a": "batch 2 row 2",
+      "b": "batch 19 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Past perfect tense in a time sequence differs from backshift and pronoun change in reported speech."
+    },
+    {
+      "rank": 1241,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 17 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "Subject–verb concord with each differs from the third conditional result clause."
+    },
+    {
+      "rank": 1242,
+      "subject": "Physics",
+      "a": "batch 8 row 26",
+      "b": "batch 28 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Electric charge is measured in coulombs; magnetic flux is measured in webers."
+    },
+    {
+      "rank": 1243,
+      "subject": "Economics",
+      "a": "batch 6 row 31",
+      "b": "batch 38 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "One asks how roads/electricity can support development; the other classifies electricity and transport as economic infrastructure. Related topic, distinct assessment objective."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1233,
+      "subject": "Chemistry",
+      "a": "batch 12 row 21",
+      "b": "batch 25 row 21",
+      "decision": "confirmed_semantic_duplicate_connects_existing_cluster",
+      "reason": "Both items test the same catalyst mechanism: providing an alternative pathway with lower activation energy. Batch 12 row 21 explicitly states that a catalyst lowers activation energy and is not used up overall; batch 25 row 21 asks why a catalyst increases reaction rate and keys the lower-activation-energy pathway. This is a repeated assessment objective, not merely shared topic wording.",
+      "retain": "batch 3 row 20",
+      "hold": "batch 12 row 21",
+      "already_held": "batch 25 row 21",
+      "new_unique_replacement_targets": 1,
+      "cluster_note": "Connects existing DUP-91 (batch 3 row 20 vs batch 25 row 21). Keep batch 3 row 20 as earliest retained anchor; hold batch 12 row 21 as one additional unique target. Batch 25 row 21 is already held under DUP-91.",
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

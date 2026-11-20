@@ -1,0 +1,176 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of 15 previously unreviewed cross-window candidates ranked 482-499. Previously reviewed ranks 490, 491 and 496 are excluded. Full stems, options, answer keys and explanations were compared.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      482,
+      483,
+      484,
+      485,
+      486,
+      487,
+      488,
+      489,
+      492,
+      493,
+      494,
+      495,
+      497,
+      498,
+      499
+    ],
+    "previous_total_manually_reviewed": 876,
+    "now_manually_reviewed": 891,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 413
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-197",
+      "rank": 489,
+      "subject": "Mathematics",
+      "a": "batch 20 row 11",
+      "b": "batch 35 row 9",
+      "concept": "Calculating the range of a numerical data set",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both ask for the range of a supplied list of values, using maximum minus minimum. Only the dataset and number of values differ; the same statistical skill is assessed.",
+      "retain": "batch 20 row 11",
+      "hold": "batch 35 row 9",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 482,
+      "subject": "Use of English",
+      "a": "batch 13 row 4",
+      "b": "batch 38 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Irregular comparative adjective selection and active-voice transformation are unrelated grammar skills."
+    },
+    {
+      "rank": 483,
+      "subject": "Mathematics",
+      "a": "batch 18 row 7",
+      "b": "batch 37 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Fraction subtraction and composite-function evaluation use different operations and mathematical concepts."
+    },
+    {
+      "rank": 484,
+      "subject": "Literature in English",
+      "a": "batch 22 row 38",
+      "b": "batch 39 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "Rising action develops conflict before the climax; falling action follows the climax. Opposite stages of plot structure."
+    },
+    {
+      "rank": 485,
+      "subject": "Mathematics",
+      "a": "batch 2 row 9",
+      "b": "batch 14 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Both yield probability 1/2 but use different sample spaces: even outcomes on a die versus heads on a coin."
+    },
+    {
+      "rank": 486,
+      "subject": "Biology",
+      "a": "batch 18 row 13",
+      "b": "batch 36 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "Photolysis splits water; ATP and NADPH are products of light-dependent reactions used in the Calvin cycle. Distinct steps and concepts."
+    },
+    {
+      "rank": 487,
+      "subject": "Use of English",
+      "a": "batch 2 row 5",
+      "b": "batch 18 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Singular possessive girl's and plural possessive teachers' illustrate related but distinct apostrophe rules."
+    },
+    {
+      "rank": 488,
+      "subject": "Mathematics",
+      "a": "batch 7 row 10",
+      "b": "batch 31 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Cylinder volume and sector area are different mensuration quantities with different formulas."
+    },
+    {
+      "rank": 492,
+      "subject": "Literature in English",
+      "a": "batch 9 row 39",
+      "b": "batch 31 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "Situational irony concerns an outcome contrary to expectation; verbal irony concerns a contrast between literal words and intended meaning."
+    },
+    {
+      "rank": 493,
+      "subject": "Government",
+      "a": "batch 9 row 32",
+      "b": "batch 16 row 35",
+      "decision": "preserve_as_distinct",
+      "reason": "Collective responsibility requires cabinet solidarity; individual ministerial responsibility concerns accountability for a department."
+    },
+    {
+      "rank": 494,
+      "subject": "Physics",
+      "a": "batch 8 row 26",
+      "b": "batch 21 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "Coulomb is the SI unit of electric charge; ohm is the SI unit of resistance."
+    },
+    {
+      "rank": 495,
+      "subject": "Literature in English",
+      "a": "batch 5 row 37",
+      "b": "batch 37 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "Stanza is the general grouped unit of poetic lines; quatrain specifically names a four-line stanza."
+    },
+    {
+      "rank": 497,
+      "subject": "Chemistry",
+      "a": "batch 7 row 19",
+      "b": "batch 17 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "Acyclic monoalkenes have formula CnH2n; alkanes have formula CnH2n+2. Different homologous series."
+    },
+    {
+      "rank": 498,
+      "subject": "Government",
+      "a": "batch 10 row 35",
+      "b": "batch 33 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "Naturalisation is acquisition of citizenship; extradition is surrender of a person between states under legal process."
+    },
+    {
+      "rank": 499,
+      "subject": "Literature in English",
+      "a": "batch 7 row 40",
+      "b": "batch 23 row 37",
+      "decision": "preserve_as_distinct",
+      "reason": "Hamartia is a tragic error/flaw; hubris is excessive pride. Related but distinct tragic concepts."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "previously_reviewed_ranks_skipped": [
+      490,
+      491,
+      496
+    ],
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

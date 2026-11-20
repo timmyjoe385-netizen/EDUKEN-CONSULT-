@@ -1,0 +1,149 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record four additional full-content cross-window duplicate decisions.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      705,
+      711,
+      715,
+      726
+    ],
+    "previous_total_manually_reviewed": 337,
+    "now_manually_reviewed": 341,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 963
+  },
+  "findings": [
+    {
+      "id": "DUP-138",
+      "rank": 705,
+      "score": 0.508,
+      "subject": "Government",
+      "a": "batch 4 row 32",
+      "b": "batch 21 row 35",
+      "concept": "A constitutional amendment is a formal change made through prescribed legal procedure",
+      "question_a": "A constitutional amendment is a change made to a constitution through:",
+      "options_a": [
+        "The prescribed legal procedure",
+        "Any private conversation",
+        "A newspaper editorial alone",
+        "An informal rumour"
+      ],
+      "answer_a": "A",
+      "question_b": "A formal change to the provisions of a constitution is called a constitutional ___.",
+      "options_b": [
+        "convention",
+        "amendment",
+        "manifesto",
+        "referendum only"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 4 row 32",
+      "replace_candidate": "batch 21 row 35",
+      "new_unique_targets_added": 1,
+      "reason": "Both define a constitutional amendment as a formal change made through the prescribed legal procedure."
+    },
+    {
+      "id": "DUP-139",
+      "rank": 711,
+      "score": 0.507,
+      "subject": "Chemistry",
+      "a": "batch 3 row 21",
+      "b": "batch 16 row 20",
+      "concept": "Boyle's law: pressure is inversely proportional to volume at constant temperature",
+      "question_a": "At constant temperature, Boyle’s law states that gas pressure is inversely proportional to its:",
+      "options_a": [
+        "Mass",
+        "Volume",
+        "Colour",
+        "Molar mass in every case"
+      ],
+      "answer_a": "B",
+      "question_b": "At constant temperature, the pressure of a fixed mass of gas is…",
+      "options_b": [
+        "Directly proportional to volume",
+        "Inversely proportional to volume",
+        "Independent of volume",
+        "Always equal to volume"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 3 row 21",
+      "replace_candidate": "batch 16 row 20",
+      "new_unique_targets_added": 1,
+      "reason": "Both directly assess the same Boyle's law relationship for a fixed mass of gas at constant temperature."
+    },
+    {
+      "id": "DUP-140",
+      "rank": 715,
+      "score": 0.507,
+      "subject": "Literature in English",
+      "a": "batch 10 row 39",
+      "b": "batch 35 row 41",
+      "concept": "Peripeteia is a sudden reversal or turning point in a tragedy",
+      "question_a": "In classical tragedy, a sudden reversal in the protagonist’s fortunes is called:",
+      "options_a": [
+        "catharsis",
+        "peripeteia",
+        "hamartia",
+        "anagnorisis"
+      ],
+      "answer_a": "B",
+      "question_b": "A sudden reversal of a character's fortune in a tragedy is known as",
+      "options_b": [
+        "peripeteia",
+        "exposition",
+        "denouement",
+        "comic relief"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 10 row 39",
+      "replace_candidate": "batch 35 row 41",
+      "new_unique_targets_added": 1,
+      "reason": "Both define the same tragic plot term, peripeteia, with identical meaning."
+    },
+    {
+      "id": "DUP-141",
+      "rank": 726,
+      "score": 0.504,
+      "subject": "Government",
+      "a": "batch 6 row 32",
+      "b": "batch 18 row 35",
+      "concept": "Judicial independence allows judges to decide cases without improper interference",
+      "question_a": "Judicial independence means judges should be able to decide cases:",
+      "options_a": [
+        "According to law and evidence without improper interference",
+        "According to orders from private parties",
+        "Only in favour of the executive",
+        "Without considering legal rules"
+      ],
+      "answer_a": "A",
+      "question_b": "Judicial independence is important because it enables judges to ___.",
+      "options_b": [
+        "decide cases without improper influence",
+        "make party manifestoes",
+        "control the national budget",
+        "conduct party primaries"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 6 row 32",
+      "replace_candidate": "batch 18 row 35",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess the same purpose of judicial independence: judges must decide cases free from improper influence."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 4,
+    "new_unique_replacement_targets": 4,
+    "provenance_checks_pending": 4,
+    "staging_joins_pending": 4,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record two further duplicate findings and three related-but-distinct lower-tail pairs.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      740,
+      753,
+      768,
+      791,
+      809
+    ],
+    "previous_total_manually_reviewed": 346,
+    "now_manually_reviewed": 351,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 953
+  },
+  "findings": [
+    {
+      "id": "DUP-147",
+      "rank": 768,
+      "score": 0.496,
+      "subject": "Chemistry",
+      "a": "batch 20 row 18",
+      "b": "batch 34 row 18",
+      "concept": "Phenolphthalein is colourless in acidic solution and pink in alkaline solution",
+      "question_a": "What colour does phenolphthalein turn in an alkaline solution?",
+      "options_a": [
+        "Pink",
+        "Blue",
+        "Green",
+        "Yellow"
+      ],
+      "answer_a": "A",
+      "question_b": "Which indicator is colourless in acidic solution and turns pink in alkaline solution?",
+      "options_b": [
+        "methyl orange",
+        "litmus",
+        "phenolphthalein",
+        "universal indicator"
+      ],
+      "answer_b": "C",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "PHENOLPHTHALEIN-01",
+      "retain_candidate": "batch 20 row 18",
+      "existing_held_candidate": "batch 22 row 18",
+      "new_held_candidate": "batch 34 row 18",
+      "new_unique_targets_added": 1,
+      "reason": "Both test the same phenolphthalein colour change. Existing DUP-08 retains batch 20 row 18 and holds batch 22 row 18; batch 34 row 18 is another duplicate in the same cluster."
+    },
+    {
+      "id": "DUP-148",
+      "rank": 791,
+      "score": 0.492,
+      "subject": "Government",
+      "a": "batch 7 row 34",
+      "b": "batch 39 row 34",
+      "concept": "Political neutrality requires civil servants to serve impartially regardless of party",
+      "question_a": "Political neutrality in the civil service means officials should:",
+      "options_a": [
+        "Serve the government of the day impartially",
+        "Campaign for the ruling party while on duty",
+        "Refuse lawful instructions",
+        "Make party membership compulsory"
+      ],
+      "answer_a": "A",
+      "question_b": "The principle of political neutrality requires civil servants to:",
+      "options_b": [
+        "serve the government of the day impartially regardless of party affiliation",
+        "campaign for the ruling party while on duty",
+        "refuse to implement lawful government policies",
+        "contest every election as party candidates"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 7 row 34",
+      "replace_candidate": "batch 39 row 34",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask for the same civil-service neutrality principle and have the same correct answer."
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 740,
+      "score": 0.5,
+      "subject": "Economics",
+      "a": "batch 9 row 31",
+      "b": "batch 22 row 31",
+      "decision": "preserve_both_definition_and_policy_purpose",
+      "reason": "One asks what a tariff is (a tax on imports); the other asks why a government may impose an import tariff (raise import costs/protect domestic producers). These are related but distinct learning outcomes."
+    },
+    {
+      "rank": 753,
+      "score": 0.5,
+      "subject": "Physics",
+      "a": "batch 29 row 26",
+      "b": "batch 35 row 25",
+      "decision": "preserve_both_as_complementary_hydrostatic_pressure_questions",
+      "reason": "One asks which variables determine hydrostatic pressure (including density and depth); the other tests the increase in pressure with depth. Both are useful but not identical questions."
+    },
+    {
+      "rank": 809,
+      "score": 0.488,
+      "subject": "Government",
+      "a": "batch 8 row 32",
+      "b": "batch 25 row 35",
+      "decision": "preserve_both_definition_and_purpose_of_separation_of_powers",
+      "reason": "One asks which branches share governmental functions; the other asks the purpose of separation of powers (preventing excessive concentration of power). These are related but distinct objectives."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 2,
+    "new_unique_replacement_targets": 2,
+    "provenance_checks_pending": 2,
+    "staging_joins_pending": 2,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "DUP-147 extends an existing phenolphthalein cluster; the new held row is batch 34 row 18. Tariff definition versus purpose, hydrostatic-pressure variables versus depth trend, and separation-of-powers branches versus purpose are preserved as distinct."
+  }
+}

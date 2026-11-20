@@ -1,0 +1,177 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of lower-tail cross-window candidate ranks 1169–1183; all candidate question records, options, keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1169,
+      1170,
+      1171,
+      1172,
+      1173,
+      1174,
+      1175,
+      1176,
+      1177,
+      1178,
+      1179,
+      1180,
+      1181,
+      1182,
+      1183
+    ],
+    "previous_total_manually_reviewed": 626,
+    "now_manually_reviewed": 641,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 663
+  },
+  "preserved": [
+    {
+      "rank": 1169,
+      "subject": "Literature in English",
+      "a": "batch 22 row 40",
+      "b": "batch 37 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "A frame narrative is a structural device that encloses an inner story; a parable is a short illustrative narrative intended to communicate a lesson. Different literary concepts."
+    },
+    {
+      "rank": 1171,
+      "subject": "Economics",
+      "a": "batch 7 row 29",
+      "b": "batch 16 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "The consumer price index measures average price changes in a representative basket; price elasticity of supply measures responsiveness of quantity supplied to price changes."
+    },
+    {
+      "rank": 1172,
+      "subject": "Use of English",
+      "a": "batch 3 row 4",
+      "b": "batch 25 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Third-conditional completion and the hardly…when inversion construction test different grammar structures."
+    },
+    {
+      "rank": 1173,
+      "subject": "Literature in English",
+      "a": "batch 9 row 41",
+      "b": "batch 28 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "Catharsis is the emotional purging or release associated with tragedy; catastrophe is the final disastrous outcome. Distinct dramatic concepts."
+    },
+    {
+      "rank": 1175,
+      "subject": "Economics",
+      "a": "batch 13 row 28",
+      "b": "batch 26 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "Land as a factor of production refers to natural resources; savings is a leakage from the circular flow of income. Different economic concepts."
+    },
+    {
+      "rank": 1176,
+      "subject": "Biology",
+      "a": "batch 20 row 14",
+      "b": "batch 30 row 16",
+      "decision": "preserve_as_distinct",
+      "reason": "Root hairs absorb water and mineral ions; xylem conducts water and dissolved minerals from roots to aerial parts. Different structures and functions."
+    },
+    {
+      "rank": 1177,
+      "subject": "Mathematics",
+      "a": "batch 13 row 7",
+      "b": "batch 40 row 8",
+      "decision": "preserve_as_distinct",
+      "reason": "The first calculates the number of sides from a given exterior angle; the second calculates the exterior angle from a given number of sides. Inverse applications of the same rule, not duplicate questions."
+    },
+    {
+      "rank": 1178,
+      "subject": "Biology",
+      "a": "batch 16 row 16",
+      "b": "batch 34 row 15",
+      "decision": "preserve_as_distinct",
+      "reason": "Mutualism benefits both organisms; commensalism benefits one while the other is unaffected. The questions test contrasting ecological relationships."
+    },
+    {
+      "rank": 1179,
+      "subject": "Chemistry",
+      "a": "batch 16 row 17",
+      "b": "batch 38 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "Acid-base neutralisation produces salt and water; esterification produces an ester and water. Different reaction classes, reactants and principal products."
+    },
+    {
+      "rank": 1180,
+      "subject": "Government",
+      "a": "batch 25 row 34",
+      "b": "batch 31 row 35",
+      "decision": "preserve_as_distinct",
+      "reason": "Prerogative of mercy is an executive pardon power; a local-government chairman is the elected head of the council executive. Different concepts."
+    },
+    {
+      "rank": 1181,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 12 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests subject–verb concord with each; the second tests tense and pronoun backshift in reported speech."
+    },
+    {
+      "rank": 1183,
+      "subject": "Government",
+      "a": "batch 3 row 33",
+      "b": "batch 16 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "An electoral commission administers elections; an ambassador represents a state diplomatically in another state. Different public roles."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1170,
+      "subject": "Biology",
+      "a": "batch 7 row 16",
+      "b": "batch 19 row 16",
+      "decision": "confirmed_semantic_duplicate_connects_existing_cluster",
+      "cluster_ids": [
+        "NATURAL-SELECTION-01",
+        "DUP-41"
+      ],
+      "reason": "Both ask which individuals natural selection favours and both key heritable traits associated with improved survival/reproduction or reproductive success. This connects two previously recorded duplicate groups. Retain batch 7 row 16 as the cluster anchor; batch 19 row 16 becomes an additional unique held row, pending provenance and staging reconciliation.",
+      "new_unique_replacement_targets": 1
+    },
+    {
+      "rank": 1174,
+      "subject": "Physics",
+      "a": "batch 5 row 22",
+      "b": "batch 31 row 25",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both ask for the weight of the same 5 kg object using g = 10, and both key 50 N. The changed wording and units do not change the calculation or learning objective.",
+      "retain": "batch 5 row 22",
+      "hold": "batch 31 row 25",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    },
+    {
+      "rank": 1182,
+      "subject": "Economics",
+      "a": "batch 3 row 29",
+      "b": "batch 14 row 30",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both ask what government/public expenditure means and key government spending on goods, services or public works. They test the same basic definition.",
+      "retain": "batch 3 row 29",
+      "hold": "batch 14 row 30",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 3,
+    "new_unique_replacement_targets": 3,
+    "preserved_as_distinct": 12,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

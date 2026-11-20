@@ -1,0 +1,26 @@
+{
+  "audit_date":"2026-11-06",
+  "branch":"feat/cbt-subject-combination-reconciled",
+  "purpose":"Three-times-sized lower-tail review batch: fifteen candidates checked against complete source stems, four options, answer keys and explanations.",
+  "scope":{"candidate_ranks_with_full_question_content_checked":[1022,1023,1024,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036],"previous_total_manually_reviewed":491,"now_manually_reviewed":506,"total_cross_window_candidates":1304,"remaining_not_manually_reviewed":798},
+  "preserved":[
+    {"rank":1022,"subject":"Mathematics","a":"batch 30 row 7","b":"batch 36 row 8","decision":"preserve_as_distinct_solid_volume_calculations","reason":"Cuboid volume and cylinder volume use different formulae and geometric properties."},
+    {"rank":1023,"subject":"Use of English","a":"batch 3 row 2","b":"batch 12 row 6","decision":"preserve_as_distinct_grammar_and_collocation_skills","reason":"Singular concord with each and the adjective-preposition collocation interested in test different skills."},
+    {"rank":1024,"subject":"Use of English","a":"batch 3 row 4","b":"batch 19 row 2","decision":"preserve_as_distinct_grammar_structures","reason":"Third conditional formation and backshift/pronoun changes in reported speech are different grammatical objectives."},
+    {"rank":1025,"subject":"Physics","a":"batch 8 row 26","b":"batch 13 row 22","decision":"preserve_as_distinct_physical_quantities","reason":"Electric charge is measured in coulombs; power is measured in watts."},
+    {"rank":1026,"subject":"Biology","a":"batch 9 row 12","b":"batch 20 row 15","decision":"preserve_as_distinct_reproductive_processes","reason":"Fertilisation normally occurs in the oviduct; the blastocyst later implants in the uterine lining."},
+    {"rank":1027,"subject":"Government","a":"batch 2 row 34","b":"batch 40 row 34","decision":"preserve_as_distinct_arms_and_political_institutions","reason":"Political parties present candidates and organise competition; the legislature makes laws."},
+    {"rank":1028,"subject":"Physics","a":"batch 19 row 25","b":"batch 26 row 23","decision":"preserve_as_distinct_thermal_physics_concepts","reason":"Latent heat of vaporisation concerns a phase change at constant temperature; specific heat capacity concerns temperature change without a phase change."},
+    {"rank":1029,"subject":"Chemistry","a":"batch 12 row 18","b":"batch 40 row 21","decision":"preserve_as_distinct_scientific_laws","reason":"Faraday's first law relates deposited mass to electric charge; the pressure law relates gas pressure to absolute temperature at constant volume."},
+    {"rank":1030,"subject":"Mathematics","a":"batch 10 row 8","b":"batch 33 row 9","decision":"preserve_as_distinct_mathematical_topics","reason":"Finding the mode and calculating the modulus of a complex number are unrelated procedures."},
+    {"rank":1031,"subject":"Literature in English","a":"batch 11 row 41","b":"batch 39 row 40","decision":"preserve_as_distinct_figures_of_speech","reason":"A pun uses wordplay or multiple meanings; synecdoche uses a part to represent the whole or vice versa."},
+    {"rank":1032,"subject":"Physics","a":"batch 15 row 26","b":"batch 38 row 23","decision":"preserve_as_distinct_mechanics_calculations","reason":"Weight is calculated using mg; gravitational potential energy is calculated using mgh."},
+    {"rank":1033,"subject":"Mathematics","a":"batch 16 row 10","b":"batch 32 row 8","decision":"preserve_as_distinct_ratio_applications","reason":"Sharing money in a ratio and finding an angle from a triangle's angle ratio are different applications with different constraints."},
+    {"rank":1034,"subject":"Economics","a":"batch 28 row 29","b":"batch 39 row 28","decision":"preserve_as_distinct_tax_types","reason":"A specific tax is a fixed amount per unit; an ad valorem tax is a percentage of value."},
+    {"rank":1035,"subject":"Government","a":"batch 1 row 33","b":"batch 18 row 36","decision":"preserve_as_distinct_public_institutions","reason":"The judiciary interprets laws; an electoral commission organises and supervises elections."},
+    {"rank":1036,"subject":"Use of English","a":"batch 4 row 4","b":"batch 14 row 3","decision":"preserve_as_distinct_preposition_usage","reason":"At noon is a time preposition; insist on is a verb-preposition collocation."}
+  ],
+  "confirmed_duplicates":[],
+  "deferred":[],
+  "controls":{"new_confirmed_duplicate_pair_relationships":0,"new_unique_replacement_targets":0,"preserved_as_distinct":15,"original_source_csvs_modified":0,"staging_csvs_modified":0,"replacement_drafts_created":0,"production_imports":0,"production_publications":0,"note":"All fifteen pairs were checked in full. All were preserved as distinct learning objectives or valid complementary applications. No source, staging or production question data was changed."}
+}

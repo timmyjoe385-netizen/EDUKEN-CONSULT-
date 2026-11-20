@@ -325,7 +325,7 @@ function App() {
 
   const loadContent = async () => {
     try {
-      const res = await fetch('https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-api/public-content', { cache: 'no-store', headers: { apikey: 'sb_publishable__qH331oDMJzmjqlOig3C0Q_EIHRa24p' } }).then(async response => { if (!response.ok) throw new Error('Live content request failed'); return { data: await response.json() }; });
+      const res = await api.get('/public-content');
       const live = res.data || {};
       // Preview checkout must use only the isolated test catalogue. Keep a known test-only
       // service visible if public catalogue loading fails; the checkout API still validates
@@ -416,10 +416,11 @@ function App() {
     let active = true;
     // Admin entry stays off the public homepage and navigation.
     // Owners can always open /admin directly, including after signing out.
-    if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
+    const params = new URLSearchParams(window.location.search);
+    const adminOAuthIntent = params.get('eduken_admin') === '1';
+    if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || adminOAuthIntent || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
       setLoginOpen(true);
     }
-    const params = new URLSearchParams(window.location.search);
     const verificationToken = params.get('email_alert_verify');
     const unsubscribeToken = params.get('email_alert_unsubscribe');
     if (verificationToken || unsubscribeToken) {
@@ -437,7 +438,7 @@ function App() {
       // OAuth can also be used by customers from the public wallet. Completing that
       // callback establishes their customer session, but must never switch the public
       // homepage into the admin dashboard merely because their email is admin-allowlisted.
-      if (window.location.pathname.replace(/\/+$/, '') !== '/admin') {
+      if (!(window.location.pathname.replace(/\/+$/, '') === '/admin' || adminOAuthIntent || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
         setUser(null);
         setAdminView(false);
         return;
@@ -450,12 +451,14 @@ function App() {
         if (!active) return;
         setUser(result.user);
         setAdminView(true);
+        sessionStorage.removeItem('eduken_admin_oauth');
         void loadAdmin('opportunities');
         void loadSystemSettings();
       } catch (error) {
         if (!active) return;
         setUser(null);
         setAdminView(false);
+        sessionStorage.removeItem('eduken_admin_oauth');
         const message = error instanceof Error ? error.message : '';
         setToast(
           /403|admin access required/i.test(message)
@@ -785,7 +788,7 @@ function App() {
 
   const signIn = async () => {
     try {
-      await auth.signIn();
+      await auth.signIn({ intent: 'admin' });
     } catch (error) {
       showToast(error instanceof Error ? error.message : 'Unable to start Google sign-in. Please try again.');
     }
@@ -2484,7 +2487,7 @@ function App() {
 
   // Keep the admin route visually separate from the public customer website.
   // Surface OAuth and authorization failures here so the owner can act on them.
-  if (window.location.pathname.replace(/\/+$/, '') === '/admin') {
+  if ((window.location.pathname.replace(/\/+$/, '') === '/admin' || sessionStorage.getItem('eduken_admin_oauth') === '1')) {
     return (
       <main className="admin-login-page">
         {toast && (

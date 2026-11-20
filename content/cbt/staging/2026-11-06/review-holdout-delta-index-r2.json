@@ -1,0 +1,413 @@
+{
+  "date": "2026-11-06",
+  "revision": "review-holdout-delta-index-r2",
+  "purpose": "Non-destructive source-location index for the 6 November duplicate addendum; not a student import file.",
+  "baseline_revision": "content/cbt/staging/2026-11-01/",
+  "counts": {
+    "new_pair_records": 28,
+    "new_unique_cluster_extension_rows": 6,
+    "unique_new_held_locations": 34,
+    "already_held_extension_rows_excluded": 2
+  },
+  "records": [
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-210",
+      "rank": 565,
+      "subject": "Biology",
+      "retained_location": "batch 4 row 15",
+      "held_location": "batch 13 row 16",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-211",
+      "rank": 666,
+      "subject": "Use of English",
+      "retained_location": "batch 22 row 6",
+      "held_location": "batch 33 row 3",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-212",
+      "rank": 672,
+      "subject": "Literature in English",
+      "retained_location": "batch 5 row 37",
+      "held_location": "batch 34 row 38",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-214",
+      "rank": 695,
+      "subject": "Chemistry",
+      "retained_location": "batch 10 row 17",
+      "held_location": "batch 34 row 17",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-215",
+      "rank": 705,
+      "subject": "Government",
+      "retained_location": "batch 4 row 32",
+      "held_location": "batch 21 row 35",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-216",
+      "rank": 706,
+      "subject": "Chemistry",
+      "retained_location": "batch 1 row 19",
+      "held_location": "batch 39 row 17",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-217",
+      "rank": 709,
+      "subject": "Mathematics",
+      "retained_location": "batch 14 row 7",
+      "held_location": "batch 33 row 10",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-218",
+      "rank": 710,
+      "subject": "Physics",
+      "retained_location": "batch 1 row 23",
+      "held_location": "batch 16 row 23",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-219",
+      "rank": 711,
+      "subject": "Chemistry",
+      "retained_location": "batch 3 row 21",
+      "held_location": "batch 16 row 20",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-220",
+      "rank": 715,
+      "subject": "Literature in English",
+      "retained_location": "batch 10 row 39",
+      "held_location": "batch 35 row 41",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-221",
+      "rank": 726,
+      "subject": "Government",
+      "retained_location": "batch 6 row 32",
+      "held_location": "batch 18 row 35",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-222",
+      "rank": 732,
+      "subject": "Mathematics",
+      "retained_location": "batch 1 row 7",
+      "held_location": "batch 17 row 7",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-224",
+      "rank": 743,
+      "subject": "Biology",
+      "retained_location": "batch 14 row 12",
+      "held_location": "batch 30 row 16",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-225",
+      "rank": 748,
+      "subject": "Economics",
+      "retained_location": "batch 15 row 29",
+      "held_location": "batch 31 row 30",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-226",
+      "rank": 764,
+      "subject": "Biology",
+      "retained_location": "batch 9 row 15",
+      "held_location": "batch 37 row 14",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-228",
+      "rank": 772,
+      "subject": "Economics",
+      "retained_location": "batch 9 row 28",
+      "held_location": "batch 15 row 28",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-229",
+      "rank": 781,
+      "subject": "Literature in English",
+      "retained_location": "batch 1 row 37",
+      "held_location": "batch 33 row 40",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-230",
+      "rank": 791,
+      "subject": "Government",
+      "retained_location": "batch 7 row 34",
+      "held_location": "batch 39 row 34",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-231",
+      "rank": 802,
+      "subject": "Mathematics",
+      "retained_location": "batch 8 row 7",
+      "held_location": "batch 26 row 9",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-232",
+      "rank": 806,
+      "subject": "Literature in English",
+      "retained_location": "batch 28 row 41",
+      "held_location": "batch 34 row 37",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-233",
+      "rank": 842,
+      "subject": "Literature in English",
+      "retained_location": "batch 16 row 38",
+      "held_location": "batch 26 row 37",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-235",
+      "rank": 849,
+      "subject": "Biology",
+      "retained_location": "batch 29 row 12",
+      "held_location": "batch 31 row 16",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-236",
+      "rank": 861,
+      "subject": "Economics",
+      "retained_location": "batch 6 row 27",
+      "held_location": "batch 26 row 29",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-237",
+      "rank": 873,
+      "subject": "Physics",
+      "retained_location": "batch 6 row 23",
+      "held_location": "batch 39 row 25",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-240",
+      "rank": 889,
+      "subject": "Government",
+      "retained_location": "batch 22 row 33",
+      "held_location": "batch 33 row 32",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-242",
+      "rank": 899,
+      "subject": "Economics",
+      "retained_location": "batch 8 row 31",
+      "held_location": "batch 35 row 30",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-243",
+      "rank": 901,
+      "subject": "Mathematics",
+      "retained_location": "batch 19 row 11",
+      "held_location": "batch 30 row 7",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_pair_candidate",
+      "id": "DUP-244",
+      "rank": 909,
+      "subject": "Physics",
+      "retained_location": "batch 16 row 25",
+      "held_location": "batch 39 row 23",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_cluster_extension_candidate",
+      "id": "DUP-197",
+      "rank": 684,
+      "subject": null,
+      "retained_location": "batch 20 row 11",
+      "held_location": "batch 4 row 10",
+      "reason": "Same simple numerical range calculation template; preserve the earlier retained item batch 20 row 11.",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_cluster_extension_candidate",
+      "id": "DUP-47",
+      "rank": 738,
+      "subject": null,
+      "retained_location": "batch 32 row 34",
+      "held_location": "batch 2 row 33",
+      "reason": "Same federalism division-of-powers concept; batch 26 row 34 is already held in this cluster.",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_cluster_extension_candidate",
+      "id": "DUP-214",
+      "rank": 746,
+      "subject": null,
+      "retained_location": "batch 10 row 17",
+      "held_location": "batch 13 row 20",
+      "reason": "Reviewed as another item in the atomic-number/electron-count equivalence cluster.",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_cluster_extension_candidate",
+      "id": "DUP-214",
+      "rank": 794,
+      "subject": null,
+      "retained_location": "batch 10 row 17",
+      "held_location": "batch 3 row 18",
+      "reason": "Reviewed as another item in the atomic-number/electron-count equivalence cluster.",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_cluster_extension_candidate",
+      "id": "DUP-78",
+      "rank": 885,
+      "subject": null,
+      "retained_location": "batch 20 row 6",
+      "held_location": "batch 5 row 5",
+      "reason": "Same parallel-structure gerund-list assessment; batch 28 row 4 is already held in this cluster.",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    },
+    {
+      "record_type": "new_cluster_extension_candidate",
+      "id": "DUP-19",
+      "rank": 898,
+      "subject": null,
+      "retained_location": "batch 9 row 31",
+      "held_location": "batch 14 row 31",
+      "reason": "Same tariff-definition concept; batch 38 row 31 is already held in this cluster.",
+      "source_row_status": "source_location_verified_in_source_join_audit",
+      "academic_status": "independent_subject_review_pending"
+    }
+  ],
+  "cluster_reconciliation": {
+    "rank_1304": {
+      "canonical_cluster": "DUP-47",
+      "existing_pair_link": "DUP-177",
+      "retained_anchor": "batch 32 row 34",
+      "incorrect_part82_label": "DUP-223",
+      "corrective_note": "DUP-223 is superseded at rank 738; rank 1304 is already-held federalism row batch 38 row 36 and is excluded from this new delta."
+    },
+    "rank_684": {
+      "canonical_cluster": "DUP-197",
+      "retained_anchor": "batch 20 row 11",
+      "held_location": "batch 4 row 10",
+      "superseded_candidate_id": "DUP-213"
+    }
+  },
+  "source_evidence": {
+    "source_join_audit": "content/cbt/audits/source-row-and-staging-join-reconciliation-2026-11-06.json",
+    "verified_pair_source_locations": 56,
+    "verified_extension_source_locations": 8,
+    "missing_source_rows": 0,
+    "note": "Source existence/content checks are recorded in the referenced audit. This index does not claim the rows have been joined to the 1 November staging CSVs."
+  },
+  "release_gates": {
+    "baseline_staging_modified": false,
+    "source_csvs_modified": false,
+    "supabase_import": false,
+    "publication": false,
+    "independent_subject_approval": false,
+    "production_release_authorized": false,
+    "importable": false
+  },
+  "next_steps": [
+    "Apply canonical pair/cluster merge accounting in the consolidated register (DUP-22/DUP-165 and DUP-08/DUP-166).",
+    "Complete source provenance review and independent academic/syllabus approval.",
+    "Keep all staged questions out of Supabase publication until every approval and release gate is closed."
+  ],
+  "staging_join": {
+    "baseline_revision": "2026-11-01",
+    "new_hold_locations_joined": 34,
+    "expected": 34,
+    "retained_anchor_locations_found": 34,
+    "expected_anchors": 34,
+    "already_held": 0,
+    "missing_locations": 0,
+    "validation": "All 34 held locations existed in baseline retained CSVs; all 34 retained anchors existed in baseline retained CSVs; 34 held rows moved to the new dated revision; all per-window row counts reconcile to 1,600.",
+    "new_revision": "content/cbt/staging/2026-11-06/",
+    "counts": {
+      "retained": 1476,
+      "held": 124,
+      "total": 1600
+    },
+    "files_created": 9
+  }
+}

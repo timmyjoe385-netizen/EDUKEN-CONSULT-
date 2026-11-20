@@ -1,0 +1,17 @@
+{
+  "audit_date": "2026-11-01",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "finding_id": "DUP-30-REPLACEMENT-COLLISION",
+  "target_id": "DUP-30",
+  "draft_question": "In the sentence “The engineer was meticulous in checking every measurement,” meticulous means:",
+  "existing_question": {
+    "location": "batch 5, CSV row 4",
+    "subject": "Use of English",
+    "topic": "Vocabulary",
+    "question": "Choose the word nearest in meaning to “meticulous.”"
+  },
+  "assessment": "Confirmed semantic duplicate. Both items test the meaning of the same vocabulary word, meticulous; adding a sentence context does not make it a distinct question-bank concept.",
+  "decision": "BLOCKED — do not insert this replacement draft.",
+  "next_action": "Replace with a different Use of English syllabus point and rerun contextual full-bank screening.",
+  "scope": "No source questions, production data or deployment state changed."
+}

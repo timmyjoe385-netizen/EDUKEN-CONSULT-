@@ -1,0 +1,79 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record one further confirmed duplicate and two lower-tail pairs preserved as distinct practice objectives.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      666,
+      672,
+      679
+    ],
+    "previous_total_manually_reviewed": 334,
+    "now_manually_reviewed": 337,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 967
+  },
+  "findings": [
+    {
+      "id": "DUP-137",
+      "rank": 672,
+      "score": 0.518,
+      "subject": "Literature in English",
+      "a": "batch 5 row 37",
+      "b": "batch 34 row 38",
+      "concept": "A stanza is a grouped unit of lines in a poem",
+      "question_a": "A grouped set of lines in a poem is commonly called a:",
+      "options_a": [
+        "Stanza",
+        "Scene",
+        "Chapter in every case",
+        "Footnote"
+      ],
+      "answer_a": "A",
+      "question_b": "What is a group of lines forming a unit within a poem called?",
+      "options_b": [
+        "A stanza",
+        "A foot",
+        "A refrain",
+        "A metre"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 5 row 37",
+      "replace_candidate": "batch 34 row 38",
+      "new_unique_targets_added": 1,
+      "reason": "Both define the same basic literary term, stanza, with the same correct answer and explanation."
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 666,
+      "score": 0.519,
+      "subject": "Use of English",
+      "a": "batch 22 row 6",
+      "b": "batch 33 row 3",
+      "decision": "preserve_both_as_distinct_subject_verb_agreement_practice_examples",
+      "reason": "Both test concord, but use different subject structures ('quality of the answers' and 'list of items'). They are complementary practice examples, not duplicate wording or identical stems."
+    },
+    {
+      "rank": 679,
+      "score": 0.517,
+      "subject": "Physics",
+      "a": "batch 6 row 26",
+      "b": "batch 38 row 26",
+      "decision": "preserve_both_distinct_electromagnet_strength_factors",
+      "reason": "Batch 6 tests increasing the number of coil turns; batch 38 tests increasing current. These are different factors that strengthen an electromagnet. Preserve both as complementary applications."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "provenance_checks_pending": 1,
+    "staging_joins_pending": 1,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "The two preserved pairs are not counted as duplicates. The electromagnet pair tests coil turns versus current; the concord pair tests two distinct sentence structures."
+  }
+}

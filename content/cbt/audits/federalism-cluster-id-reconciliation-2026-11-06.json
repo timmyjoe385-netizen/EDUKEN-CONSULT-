@@ -1,0 +1,53 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Resolve the contradictory cluster identifier for cross-window candidate rank 1304 using the source rows and the authoritative 6 November addendum.",
+  "evidence": {
+    "source_files": [
+      "content/cbt/original-batch-02-40-questions.csv",
+      "content/cbt/original-batch-38-40-questions.csv"
+    ],
+    "addendum": "content/cbt/audits/duplicate-disposition-addendum-2026-11-06.json",
+    "stale_tail_record": "content/cbt/audits/cross-window-tail-review-2026-11-06-part82.json",
+    "source_blob_shas": {
+      "original-batch-02-40-questions.csv": "646beb0be954b07df4c3fba9abccf467be53fa55",
+      "original-batch-38-40-questions.csv": "92ad54cfb40a40c9c64b994f909e522f7a498f85"
+    }
+  },
+  "row_comparison": {
+    "retained_location": "batch 2 row 33",
+    "retained_subject": "Government",
+    "retained_topic": "Federalism",
+    "retained_subtopic": "Division of powers",
+    "retained_stem": "Federalism involves constitutional division of powers between:",
+    "retained_correct_option": "B",
+    "held_location": "batch 38 row 36",
+    "held_subject": "Government",
+    "held_topic": "Federalism",
+    "held_subtopic": "Federal constitution",
+    "held_stem": "A federal constitution typically provides for",
+    "held_correct_option": "D",
+    "finding": "Both items assess constitutional distribution of authority between national and subnational/constituent levels. The held row is an existing member of the federalism duplicate cluster."
+  },
+  "disposition": {
+    "canonical_cluster": "DUP-47",
+    "superseded_reference": "DUP-223",
+    "reason": "The addendum explicitly supersedes DUP-223 at rank 738 and separately records rank 1304 as an additional held row in DUP-47; the addendum also links rank 1304 to already-recorded DUP-177. The source-row comparison supports the same federalism cluster.",
+    "action": "Use DUP-47 as canonical for batch 38 row 36. Treat DUP-223 as superseded, not a separate duplicate cluster or new unique held target.",
+    "tail_review_part82_status": "STALE_CLUSTER_LABEL_CORRECTED_BY_ADDENDUM_AND_SOURCE_ROW_CHECK"
+  },
+  "scope_limits": {
+    "this_resolves_only_rank_1304_cluster_id": true,
+    "all_28_new_pair_provenance_verified": false,
+    "staging_join_completed": false,
+    "source_csvs_modified": false,
+    "staging_csvs_modified": false,
+    "production_imports": 0,
+    "production_publications": 0
+  },
+  "next_actions": [
+    "Verify source provenance for the 28 new duplicate-pair retain/hold locations against original batch CSVs.",
+    "Verify the six additional held-row extensions and map all held rows to staging exports.",
+    "Only then produce a new staging revision and reconcile the consolidated register totals."
+  ]
+}

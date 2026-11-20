@@ -1,0 +1,162 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Fifteen lower-tail cross-window candidate pairs reviewed against complete source question records.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1064,
+      1065,
+      1066,
+      1067,
+      1068,
+      1069,
+      1070,
+      1071,
+      1072,
+      1073,
+      1074,
+      1075,
+      1076,
+      1077,
+      1078
+    ],
+    "previous_total_manually_reviewed": 521,
+    "now_manually_reviewed": 536,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 768
+  },
+  "preserved": [
+    {
+      "rank": 1064,
+      "subject": "Use of English",
+      "a": "batch 19 row 4",
+      "b": "batch 22 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "Both assess subject–verb concord, but the governing subjects and concord rules differ: distributive each versus singular head noun quality."
+    },
+    {
+      "rank": 1065,
+      "subject": "Use of English",
+      "a": "batch 30 row 4",
+      "b": "batch 34 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests identifying an author's purpose in a balanced policy argument; the second tests the inference from sourced factual presentation."
+    },
+    {
+      "rank": 1066,
+      "subject": "Use of English",
+      "a": "batch 1 row 3",
+      "b": "batch 33 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Both are concord items, but neither…nor agreement with the nearer plural subject differs from agreement with the singular head noun list."
+    },
+    {
+      "rank": 1067,
+      "subject": "Use of English",
+      "a": "batch 4 row 5",
+      "b": "batch 35 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Backshift after a past reporting verb differs from retaining present tense for a universal scientific truth."
+    },
+    {
+      "rank": 1068,
+      "subject": "Government",
+      "a": "batch 5 row 32",
+      "b": "batch 31 row 35",
+      "decision": "preserve_as_distinct",
+      "reason": "General constitutional responsibility of the executive differs from the title of the elected local-government executive head."
+    },
+    {
+      "rank": 1069,
+      "subject": "Economics",
+      "a": "batch 6 row 29",
+      "b": "batch 33 row 30",
+      "decision": "preserve_as_distinct",
+      "reason": "General commercial-bank functions differ from the regulatory cash-reserve-ratio requirement."
+    },
+    {
+      "rank": 1070,
+      "subject": "Chemistry",
+      "a": "batch 10 row 20",
+      "b": "batch 33 row 18",
+      "decision": "preserve_as_distinct",
+      "reason": "Le Chatelier pressure response for a specified gaseous equilibrium differs from the temperature dependence of Kc."
+    },
+    {
+      "rank": 1071,
+      "subject": "Economics",
+      "a": "batch 13 row 30",
+      "b": "batch 28 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "A binding minimum price above equilibrium and a maximum price below equilibrium are opposite price-control mechanisms with different outcomes."
+    },
+    {
+      "rank": 1072,
+      "subject": "Physics",
+      "a": "batch 16 row 25",
+      "b": "batch 28 row 22",
+      "decision": "preserve_as_distinct",
+      "reason": "Distance between consecutive crests is one wavelength; crest to adjacent trough is half a wavelength."
+    },
+    {
+      "rank": 1073,
+      "subject": "Use of English",
+      "a": "batch 19 row 4",
+      "b": "batch 24 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Subject–verb concord with each differs from the cleft construction identifying the registrar."
+    },
+    {
+      "rank": 1074,
+      "subject": "Biology",
+      "a": "batch 11 row 15",
+      "b": "batch 36 row 14",
+      "decision": "preserve_as_distinct",
+      "reason": "Oxygen release as a by-product of light-dependent photosynthesis differs from ATP and NADPH production/use in the Calvin cycle."
+    },
+    {
+      "rank": 1075,
+      "subject": "Use of English",
+      "a": "batch 23 row 5",
+      "b": "batch 39 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Inversion after a negative adverb differs from the fixed prepositional phrase come into effect."
+    },
+    {
+      "rank": 1076,
+      "subject": "Mathematics",
+      "a": "batch 1 row 10",
+      "b": "batch 20 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Arithmetic mean and range are different statistical measures and require different calculations."
+    },
+    {
+      "rank": 1077,
+      "subject": "Mathematics",
+      "a": "batch 3 row 8",
+      "b": "batch 18 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Solving simultaneous linear equations differs from evaluating a defined function."
+    },
+    {
+      "rank": 1078,
+      "subject": "Government",
+      "a": "batch 8 row 35",
+      "b": "batch 14 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "The electoral right to vote differs from the broader shared political values, attitudes and orientations described as political culture."
+    }
+  ],
+  "confirmed_duplicates": [],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 0,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 15,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

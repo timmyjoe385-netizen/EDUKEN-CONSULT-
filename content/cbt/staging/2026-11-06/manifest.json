@@ -1,0 +1,768 @@
+{
+  "audit_date": "2026-11-06",
+  "purpose": "Separate non-destructive staging revision applying the 6 November duplicate addendum to the 1 November baseline.",
+  "source_repository": "timmyjoe385-netizen/EDUKEN-CONSULT-",
+  "source_branch": "feat/cbt-subject-combination-reconciled",
+  "source_batch_files": 40,
+  "source_question_rows": 1600,
+  "unique_held_duplicate_rows": 124,
+  "provisionally_retained_rows": 1476,
+  "reconciliation": "1,476 provisionally retained + 124 held = 1,600 source rows; the 124 held locations map to 119 pair IDs because some rows extend existing clusters.",
+  "duplicate_provenance": {
+    "prior_replacement_commit_verified": 62,
+    "replacement_after_initial_snapshot_commit_sha_pending": 0,
+    "original_draft_overlap_relationships": 28,
+    "provenance_unverified_relationships": 0,
+    "unverified_pair_ids": [],
+    "note": "Baseline 90 held relationships are fully reconciled: 62 commit-backed replacement histories and 28 original-draft overlaps. Exact introducing commits are verified for all 13 later-replacement rows; DUP-34 edit history is also documented. The separate 6 November addendum's 28 new pair records plus six unique cluster-extension rows have now had source provenance verified as original EDUKEN-authored content (36 referenced records, including two already-held cluster references); 34 unique new held locations match staging exactly. Qualified contextual/academic disposition remains pending.",
+    "resolved_pair_evidence": {
+      "DUP-34": {
+        "historical_edit": "The current batch 39 row 5 wording was introduced by commit d91278d5c327b24a1f711eb8636d2a9cea1a07cf; its parent contained a different concord item. Batch 38 row 2 already contained the matching singular-agreement assessment.",
+        "source_provenance": "Both are EDUKEN-authored questions; DUP-34 is classified within the baseline original-draft-overlap group, with the later row's edit history also verified."
+      }
+    },
+    "addendum_provenance": {
+      "new_pair_records": 28,
+      "unique_cluster_extension_rows": 6,
+      "newly_held_locations": 34,
+      "source_locations_verified": 64,
+      "staging_held_locations_joined": 34,
+      "retained_anchors_found": 34,
+      "provenance_and_contextual_disposition": "source_provenance_verified_contextual_academic_decision_pending",
+      "replacement_drafts": 0,
+      "pair_ids": [
+        "DUP-210",
+        "DUP-211",
+        "DUP-212",
+        "DUP-214",
+        "DUP-215",
+        "DUP-216",
+        "DUP-217",
+        "DUP-218",
+        "DUP-219",
+        "DUP-220",
+        "DUP-221",
+        "DUP-222",
+        "DUP-224",
+        "DUP-225",
+        "DUP-226",
+        "DUP-228",
+        "DUP-229",
+        "DUP-230",
+        "DUP-231",
+        "DUP-232",
+        "DUP-233",
+        "DUP-235",
+        "DUP-236",
+        "DUP-237",
+        "DUP-240",
+        "DUP-242",
+        "DUP-243",
+        "DUP-244"
+      ],
+      "preliminary_contextual_assessment": "completed",
+      "same_fact_duplicate_recommendations": 18,
+      "high_overlap_near_duplicate_recommendations": 1,
+      "related_skill_variant_recommendations": 9,
+      "cluster_extension_same_fact_recommendations": 3,
+      "cluster_extension_related_skill_recommendations": 3,
+      "qualified_subject_review": "pending",
+      "provenance_classification": "verified_original_eduKen_authored_content",
+      "staging_join_status": "verified_exact_question_and_subject_match",
+      "cluster_extension_unique_new_rows_verified": 6,
+      "existing_cluster_references_not_new_rows": 2,
+      "pair_records": [
+        {
+          "id": "DUP-210",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-211",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-212",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-214",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-215",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-216",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-217",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-218",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-219",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-220",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-221",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-222",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-224",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-225",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-226",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-228",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-229",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-230",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-231",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-232",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-233",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-235",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-236",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-237",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-240",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-242",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-243",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        },
+        {
+          "id": "DUP-244",
+          "retain_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "hold_provenance": "original_EDUKEN_draft_verified_against_source_CSV",
+          "staging_join": "exact_source_question_and_subject_match_in_2026_11_06_held_csv"
+        }
+      ],
+      "source_location_breakdown": {
+        "pair_rows_and_anchors_checked": 56,
+        "extension_references_checked": 8
+      },
+      "source_provenance_status": "verified_original_EDUKEN_draft_for_all_64_source_locations",
+      "source_rows_checked": 64,
+      "source_type_original": 64,
+      "retained_anchor_rows_checked": 28,
+      "held_pair_rows_checked": 28,
+      "cluster_extension_rows_checked": 8,
+      "provenance_records_checked": 36,
+      "provenance_records_marked_original": 36,
+      "unique_new_held_locations": 34,
+      "staging_rows_exactly_matched": 34,
+      "contextual_disposition": "qualified_subject_review_pending",
+      "item_level_contextual_classification_mapping": "pending",
+      "baseline_90_provenance_status": "complete_62_commit_backed_28_original_draft_zero_unresolved"
+    }
+  },
+  "per_batch": [
+    {
+      "batch": 1,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 2,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 3,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 4,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 5,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 6,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 7,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 8,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 9,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 10,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 11,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 12,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 13,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 14,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 15,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 16,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 17,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 18,
+      "retained": 38,
+      "held": 2
+    },
+    {
+      "batch": 19,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 20,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 21,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 22,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 23,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 24,
+      "retained": 40,
+      "held": 0
+    },
+    {
+      "batch": 25,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 26,
+      "retained": 34,
+      "held": 6
+    },
+    {
+      "batch": 27,
+      "retained": 39,
+      "held": 1
+    },
+    {
+      "batch": 28,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 29,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 30,
+      "retained": 37,
+      "held": 3
+    },
+    {
+      "batch": 31,
+      "retained": 32,
+      "held": 8
+    },
+    {
+      "batch": 32,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 33,
+      "retained": 31,
+      "held": 9
+    },
+    {
+      "batch": 34,
+      "retained": 29,
+      "held": 11
+    },
+    {
+      "batch": 35,
+      "retained": 33,
+      "held": 7
+    },
+    {
+      "batch": 36,
+      "retained": 33,
+      "held": 7
+    },
+    {
+      "batch": 37,
+      "retained": 36,
+      "held": 4
+    },
+    {
+      "batch": 38,
+      "retained": 35,
+      "held": 5
+    },
+    {
+      "batch": 39,
+      "retained": 29,
+      "held": 11
+    },
+    {
+      "batch": 40,
+      "retained": 35,
+      "held": 5
+    }
+  ],
+  "staging_files": [
+    "retained-batches-01-10.csv",
+    "retained-batches-11-20.csv",
+    "retained-batches-21-30.csv",
+    "retained-batches-31-40.csv",
+    "held-duplicates-01-10.csv",
+    "held-duplicates-11-20.csv",
+    "held-duplicates-21-30.csv",
+    "held-duplicates-31-40.csv"
+  ],
+  "replacement_status": {
+    "confirmed_targets": 90,
+    "existing_draft_proposals": 65,
+    "additional_drafts_required": 25,
+    "blocked_existing_bank_overlap": 5,
+    "provisional_syllabus_mapping": 26,
+    "subject_review_required": 65,
+    "drafts_inserted": 0,
+    "new_drafts_added_in_current_revision": 18,
+    "new_drafts_require_subject_and_bankwide_review": 18,
+    "proposal_status_counts": {
+      "revised_draft_needs_bank_wide_check": 33,
+      "blocked_duplicate_existing_bank": 5,
+      "new_draft_pending_subject_review_and_bankwide_screen": 9,
+      "draft_needs_subject_and_bankwide_review": 18
+    },
+    "addendum_new_unique_held_locations": 34,
+    "addendum_replacement_drafts_created": 0,
+    "addendum_replacement_drafts_required": 34,
+    "academic_review_complete": false
+  },
+  "source_files_modified": false,
+  "staging_csv_schema": "Retained chunks add source_batch and source_csv_row before the original 18 columns. Held chunks add pair_id, subject, retained_location and held_location before the original 18 columns.",
+  "status": "SOURCE_PROVENANCE_AND_STAGING_JOINS_VERIFIED_QUALIFIED_SUBJECT_REVIEW_PENDING_NOT_DEPLOYMENT_READY",
+  "restrictions": [
+    "Original 40 source batch CSVs were not edited or deleted.",
+    "The 6 November staging revision is a non-destructive audit export: 1,476 provisionally retained rows + 124 held rows = 1,600; no Supabase import or publication has occurred.",
+    "The 124 held locations map to 119 pair IDs because some entries extend existing clusters; all 34 new held locations have source and staging joins, but contextual duplicate-vs-related-skill decisions and provenance remain pending.",
+    "The 1,476 provisionally retained rows are not academically approved or deployment-ready; each still requires syllabus, clarity, options, answer-key and explanation review.",
+    "Baseline 90 provenance classification is complete: 62 commit-backed replacement histories and 28 original-draft overlaps; exact introducing commits are verified for all 13 later-replacement rows, and DUP-34 edit history is documented.",
+    "The separate 28 new addendum pair records and six unique cluster-extension rows now have verified original EDUKEN-authored provenance; 34 unique held locations match staging. Qualified subject review and contextual duplicate-versus-related-skill disposition remain pending.",
+    "The latest persisted cross-window review segments contain 297 rank entries (565–579, 640–909, 1293–1304), but overlap with prior review logs has not been reconciled; do not state a current aggregate reviewed/remaining total yet.",
+    "The reconstructed within-window set contains 390 reviewed candidates at threshold 0.42; the original reported queue still lists 279 pending and the 38-count discrepancy remains unresolved.",
+    "The 90 baseline replacement proposals remain outside the source bank; independent qualified subject/answer approval and documentary reviewer evidence remain outstanding.",
+    "No production deployment, PR merge, question publication, production database change or student release is authorized by this staging export.",
+    "The consolidated register separately contains 96 explicitly listed unverified pair IDs from its later historical range; its summary counters and unique-held-row totals do not reconcile with the current 6 November staging revision. Do not conflate that register-wide queue with the 124-row staging export."
+  ],
+  "semantic_review_status": {
+    "cross_window_candidates": 1304,
+    "high_similarity_shortlist_reviewed": 49,
+    "additional_targeted_candidates_reviewed": 237,
+    "original_reported_within_window_candidates_pending": 279,
+    "reconstructed_within_window_candidates_reviewed": 390,
+    "unresolved_within_window_count_discrepancy": 38,
+    "note": "Cross-window screen has 1,304 candidates: 286 manually reviewed (including the 49-pair same-subject/topic/subtopic shortlist; 1,018 lower-scoring candidates remain unreviewed). The within-window reconstruction at threshold 0.42 has 390 reviewed candidates, while the original report still has 279 pending candidates and a 38-pair discrepancy against the reconstruction.",
+    "previous_aggregate_checkpoint": {
+      "manually_reviewed": 286,
+      "remaining": 1018,
+      "status": "historical_not_current"
+    },
+    "latest_persisted_rank_entries": 297,
+    "aggregate_progress_reconciliation": "pending",
+    "aggregate_reviewed_candidates": null,
+    "aggregate_remaining_candidates": null,
+    "aggregate_currently_verified": false
+  },
+  "semantic_review": {
+    "within_window": {
+      "reconstructed_candidates": 390,
+      "candidates_at_reconstructed_threshold_0_42_reviewed": 390,
+      "different_topic_or_subtopic_reviewed": 350,
+      "same_topic_and_subtopic_carried_forward_as_reviewed": 40,
+      "remaining_in_reconstructed_candidate_set": 0,
+      "original_reported_same_topic_subtopic_count": 41,
+      "reconstructed_same_topic_subtopic_count": 40,
+      "unresolved_category_boundary_difference": 1,
+      "independent_recomputation_at_threshold_0_43": 352,
+      "interpretation": "The original reported total of 390 is reproduced at threshold 0.42, not the stated 0.43. The 0.42 reconstruction contains 390 candidates (40 same-topic/subtopic and 350 other); all 390 have review statuses. The original report's split was 41/349, leaving a one-pair category boundary mismatch, documented rather than concealed."
+    },
+    "cross_window": {
+      "previous_checkpoint": {
+        "manually_reviewed_at_or_above_similarity_threshold_0_65": 286,
+        "below_threshold_not_manually_reviewed": 1018,
+        "as_of": "older checkpoint",
+        "status": "superseded_not_current"
+      },
+      "explicit_rank_crosswalk": {
+        "unique_rank_ids": 973,
+        "cumulative_counter": 921,
+        "discrepancy": 52,
+        "rank_ids_without_explicit_record": 331,
+        "status": "not_reconciled"
+      }
+    }
+  },
+  "audit_reports": [
+    {
+      "path": "content/cbt/audits/bank-wide-uniqueness-screen-2026-11-01.json",
+      "status": "preliminary_automated_screen_only_newer_proposals_pending",
+      "retained_rows_screened": 1510,
+      "replacement_proposals_screened": 49,
+      "note": "The existing bank-wide automated screen covers the 1,510 retained rows and the first 49 replacement proposals. DUP-50 and DUP-51 were added after that screen and still require inclusion in a refreshed full-bank contextual uniqueness screen."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 53,
+      "flagged_at_or_above_0_42": 17,
+      "note": "Refreshed report screens all 53 current proposals, including revised DUP-50 and new DUP-52/53, against all 1,600 original source rows. Lexical flags are not duplicate verdicts or academic approval."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 6,
+      "note": "Preliminary answer-key, concept and syllabus-fit review for DUP-48 to DUP-53; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v3.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 55,
+      "flagged_at_or_above_0_42": 17,
+      "note": "Refreshed screen includes all 55 replacement proposals. Lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 8,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-55; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 57,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Refreshed screen includes all 57 replacement proposals; lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 10,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-57; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 59,
+      "flagged_at_or_above_0_42": 18,
+      "note": "Refreshed screen includes all 59 proposals; lexical flags are review prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 12,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-59; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "version_9_refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 61,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Version 9 covers all 61 proposals. DUP-60 and DUP-61 have maximum same-subject Dice scores of 0.2783 and 0.2262 respectively. Lexical flags remain prompts, not duplicate verdicts."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 14,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-61; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "version_10_refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 63,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Version 10 covers all 63 proposals. DUP-62 and DUP-63 have highest same-subject Dice scores 0.4046 and 0.3648 respectively."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 16,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-63; independent subject review remains required."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-bankwide-screen-2026-11-01-v2.json",
+      "status": "version_11_refreshed_lexical_screen_complete_contextual_review_pending",
+      "retained_and_held_rows_screened": 1600,
+      "replacement_proposals_screened": 65,
+      "flagged_at_or_above_0_42": 16,
+      "note": "Version 11 covers all 65 proposals. DUP-64 and DUP-65 have highest same-subject Dice scores 0.2623 and 0.3462 respectively."
+    },
+    {
+      "path": "content/cbt/audits/replacement-draft-subject-review-2026-11-01.json",
+      "status": "preliminary_ai_review_complete_independent_subject_review_pending",
+      "replacement_proposals_reviewed": 18,
+      "note": "Preliminary answer-key, concept and syllabus-fit checks for DUP-48 to DUP-65; independent subject review remains required."
+    }
+  ],
+  "source_row_reconciliation_status": "Baseline 90 provenance and staging joins are complete. For the 6 November addendum, 36 source records were verified as original EDUKEN-authored content, 34 unique held locations match staging exactly, and the separate join audit verifies all 56 pair endpoints plus 8 extension references and all 34 retained anchors.",
+  "revision": "2026-11-06-r2",
+  "source_revision": "content/cbt/staging/2026-11-01/",
+  "delta": {
+    "new_pair_records": 28,
+    "new_unique_cluster_extension_rows": 6,
+    "new_unique_held_rows": 34,
+    "already_held_extension_rows_excluded": 2,
+    "source_row_join": "34/34 held rows and 34/34 retained anchors matched the 1 November baseline exports",
+    "cluster_conflicts_resolved": 2,
+    "canonical_merges_pending": [
+      "DUP-22 + DUP-165 -> DUP-165",
+      "DUP-08 + DUP-166 -> DUP-08"
+    ]
+  },
+  "safety": {
+    "source_csvs_modified": false,
+    "baseline_staging_modified": false,
+    "supabase_imports": 0,
+    "publications": 0,
+    "production_release_authorized": false,
+    "independent_subject_approval": false
+  },
+  "remaining_gates": [
+    "Reconcile canonical pair/cluster IDs and apply the two documented cluster merges in the consolidated register.",
+    "Complete provenance reconciliation for new relationships and unresolved historic register entries.",
+    "Obtain independent qualified subject, answer-key and syllabus approval for all 34 new held rows and replacement questions.",
+    "Run full isolated student/admin CBT validation before any release."
+  ],
+  "recorded_duplicate_pair_ids": 119,
+  "review_progress_reconciliation": {
+    "earlier_tail_review_unique_rank_ids": 717,
+    "addendum_rank_entries": 297,
+    "overlap_between_earlier_and_addendum": 58,
+    "genuinely_new_rank_ids_from_addendum": 239,
+    "union_of_all_tail_review_rank_ids": 956,
+    "high_similarity_mapped_rank_ids": 49,
+    "explicit_unique_rank_ids_across_tail_and_high_similarity_sources": 1005,
+    "previous_baseline_reported": 286,
+    "part63_persisted_total": 1007,
+    "rank_set_derived_total_before_addendum": 1003,
+    "pre_addendum_counter_discrepancy": 4,
+    "rank_set_based_total_after_addendum": 1242,
+    "counter_based_total_after_addendum": 1246,
+    "total_candidates": 1304,
+    "remaining_if_rank_set_based": 62,
+    "remaining_if_counter_based": 58,
+    "ranks_without_explicit_tail_record_within_287_to_1304": 62,
+    "status": "TAIL_RANK_GAPS_CLOSED_BASELINE_RANK_CROSSWALK_PENDING",
+    "tail_review_union_before_part83": 956,
+    "part83_new_rank_ids": 62,
+    "tail_review_union_after_part83": 1018,
+    "candidate_rank_range_covered": "287–1304",
+    "missing_tail_rank_ids_after_part83": 0,
+    "baseline_review_count": 286,
+    "high_similarity_rank_ids_mapped": 49,
+    "additional_targeted_review_count_reported": 237,
+    "targeted_review_rank_ids": "not yet mapped",
+    "cumulative_counter_part63": 1007,
+    "rank_set_derived_before_addendum": 1003,
+    "cumulative_counter_discrepancy": 4,
+    "aggregate_unique_reviewed_total": null,
+    "aggregate_remaining_total": null
+  },
+  "later_register_queue_target_crosswalk": {
+    "pair_ids": 96,
+    "target_location_references": 97,
+    "unique_target_locations": 90,
+    "already_held_in_current_staging": 22,
+    "still_retained_in_current_staging": 68,
+    "not_found": 0,
+    "current_held_locations": 124,
+    "projected_held_locations_if_all_68_approved_and_staged": 192,
+    "projected_retained_locations_if_all_68_approved_and_staged": 1408,
+    "status": "SOURCE_STAGING_CONTENT_AND_SOURCE_ORIGIN_METADATA_VERIFIED_SEMANTIC_DISPOSITION_PENDING",
+    "source_endpoints_verified": 178,
+    "source_staging_exact_matches": 178,
+    "source_staging_content_mismatches": 0,
+    "source_type_original": 178,
+    "source_provenance_metadata": "all source rows declare original EDUKEN-authored content and no past-paper copying"
+  },
+  "later_register_queue_semantic_review": {
+    "pair_ids": 109,
+    "status": "qualified_subject_answer_key_and_syllabus_review_pending",
+    "note": "All source provenance metadata and staging joins are complete for all 199 register pair records. The 109 later-range/cluster decisions still need independent qualified review."
+  },
+  "register_wide_source_staging_verification": {
+    "pair_records": 199,
+    "baseline_pair_records": 90,
+    "later_range_pair_records": 96,
+    "additional_cluster_extension_pair_records": 13,
+    "unique_later_and_cluster_endpoints": 204,
+    "source_rows_found": 204,
+    "staging_rows_found": 204,
+    "exact_full_row_matches": 204,
+    "source_type_original": 204,
+    "content_mismatches": 0,
+    "missing_source_or_staging_rows": 0,
+    "qualified_subject_review_pending_pair_records": 109,
+    "status": "ALL_REGISTER_PAIR_SOURCE_AND_STAGING_JOINS_VERIFIED_QUALIFIED_REVIEW_PENDING"
+  }
+}

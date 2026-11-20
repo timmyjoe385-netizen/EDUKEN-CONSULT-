@@ -1,0 +1,168 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Fifteen additional lower-tail cross-window candidates reviewed against source-bank question text, answer options and explanations.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1094,
+      1095,
+      1096,
+      1097,
+      1098,
+      1099,
+      1100,
+      1101,
+      1102,
+      1103,
+      1104,
+      1105,
+      1106,
+      1107,
+      1108
+    ],
+    "previous_total_manually_reviewed": 551,
+    "now_manually_reviewed": 566,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 738
+  },
+  "preserved": [
+    {
+      "rank": 1094,
+      "subject": "Biology",
+      "a": "batch 15 row 13",
+      "b": "batch 26 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Chloroplasts contain chlorophyll and support photosynthesis; smooth endoplasmic reticulum is involved in lipid synthesis. Different organelles and functions."
+    },
+    {
+      "rank": 1095,
+      "subject": "Use of English",
+      "a": "batch 22 row 4",
+      "b": "batch 39 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Selecting the appropriate tense in a present-versus-today contrast differs from the fixed prepositional phrase come into effect."
+    },
+    {
+      "rank": 1097,
+      "subject": "Literature in English",
+      "a": "batch 22 row 40",
+      "b": "batch 33 row 41",
+      "decision": "preserve_as_distinct",
+      "reason": "A frame narrative is a structural story-within-a-story device; a myth is a traditional explanatory or cultural narrative form."
+    },
+    {
+      "rank": 1098,
+      "subject": "Mathematics",
+      "a": "batch 23 row 10",
+      "b": "batch 38 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "The probability of two independent events occurring together differs from the single-event probability of selecting a blue ball."
+    },
+    {
+      "rank": 1099,
+      "subject": "Government",
+      "a": "batch 9 row 36",
+      "b": "batch 28 row 36",
+      "decision": "preserve_as_distinct",
+      "reason": "The purpose of registering voters differs from the name and function of the official electoral register; related but not duplicate learning objectives."
+    },
+    {
+      "rank": 1100,
+      "subject": "Chemistry",
+      "a": "batch 11 row 21",
+      "b": "batch 23 row 20",
+      "decision": "preserve_as_distinct",
+      "reason": "The iodine test for starch is a different qualitative test from the observation used to identify hydrogen gas."
+    },
+    {
+      "rank": 1101,
+      "subject": "Mathematics",
+      "a": "batch 17 row 9",
+      "b": "batch 23 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding the mode of a data set and calculating a 2×2 matrix determinant are unrelated tasks."
+    },
+    {
+      "rank": 1102,
+      "subject": "Mathematics",
+      "a": "batch 17 row 9",
+      "b": "batch 31 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding the mode and calculating a matrix determinant test different mathematical topics; the two determinant questions also use different matrices and are valid variants."
+    },
+    {
+      "rank": 1103,
+      "subject": "Literature in English",
+      "a": "batch 17 row 39",
+      "b": "batch 32 row 39",
+      "decision": "preserve_as_distinct",
+      "reason": "Third-person limited narration concerns the narrator's access to a character's perspective; resolution concerns the concluding stage of plot structure."
+    },
+    {
+      "rank": 1104,
+      "subject": "Use of English",
+      "a": "batch 24 row 2",
+      "b": "batch 39 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A cleft sentence identifying the person who performed an action differs from the fixed prepositional phrase come into effect."
+    },
+    {
+      "rank": 1105,
+      "subject": "Biology",
+      "a": "batch 4 row 15",
+      "b": "batch 27 row 12",
+      "decision": "preserve_as_distinct",
+      "reason": "Decomposers break down dead organic matter; platelets form the initial plug in blood clotting. Different biological processes."
+    },
+    {
+      "rank": 1106,
+      "subject": "Physics",
+      "a": "batch 4 row 24",
+      "b": "batch 25 row 23",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests the current property of a series circuit; the second tests the instrument and connection used to measure current."
+    },
+    {
+      "rank": 1107,
+      "subject": "Use of English",
+      "a": "batch 7 row 4",
+      "b": "batch 22 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "A first-conditional completion and a tense-consistency completion test different grammatical choices."
+    },
+    {
+      "rank": 1108,
+      "subject": "Government",
+      "a": "batch 7 row 32",
+      "b": "batch 27 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "A by-election fills a vacancy in an elected office; an election petition is a legal challenge to an election result or process."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1096,
+      "subject": "Chemistry",
+      "a": "batch 22 row 18",
+      "b": "batch 34 row 18",
+      "decision": "confirmed_semantic_duplicate_extends_existing_cluster",
+      "cluster_ids": [
+        "DUP-08",
+        "DUP-147"
+      ],
+      "reason": "Both ask about phenolphthalein's colour behaviour in acidic/alkaline solution and key the same indicator property. Both are already connected to batch 20 row 18, which asks the same phenolphthalein-in-alkali fact. This is a three-row duplicate cluster, not a new unique held row.",
+      "cluster_disposition": "Retain batch 22 row 18; hold batch 20 row 18 and batch 34 row 18. Align DUP-147's provisional retain candidate to batch 22 row 18; provenance and staging remain pending."
+    }
+  ],
+  "deferred": [],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 0,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Verify source and staging joins for the 13 register pair records outside the 96-ID later-range queue, including cluster-extension relationships.",
+  "pair_ids": [
+    "DUP-122",
+    "DUP-131",
+    "DUP-136",
+    "DUP-142",
+    "DUP-165",
+    "DUP-166",
+    "DUP-167",
+    "DUP-168",
+    "DUP-169",
+    "DUP-170",
+    "DUP-171",
+    "DUP-172",
+    "DUP-173"
+  ],
+  "unique_endpoints": 26,
+  "source_rows_found": 26,
+  "staging_rows_found": 26,
+  "exact_full_row_matches": 26,
+  "missing_source_rows": 0,
+  "missing_staging_rows": 0,
+  "content_mismatches": 0,
+  "source_type_original": 26,
+  "source_provenance_notes": "All 26 rows declare source_type=original and EDUKEN-authored provenance; no past-paper copying is claimed.",
+  "batch_group_results": [
+    {
+      "batches": "01–20",
+      "unique_endpoints": 13,
+      "source_rows_found": 13,
+      "staging_rows_found": 13,
+      "exact_matches": 13
+    },
+    {
+      "batches": "21–40",
+      "unique_endpoints": 13,
+      "source_rows_found": 13,
+      "staging_rows_found": 13,
+      "exact_matches": 13
+    }
+  ],
+  "methodology": "Fetched each referenced original batch CSV and the corresponding retained/held staging export; compared all 18 source columns exactly. DUP-122 batch 25 row 37 was verified against the held export, not the retained export.",
+  "limitations": [
+    "This verifies source row existence, source-origin metadata and exact source/staging content equality; it is not independent academic approval.",
+    "Qualified subject/syllabus review remains required for these pair decisions."
+  ],
+  "safety": {
+    "source_csv_edits": 0,
+    "staging_csv_edits": 0,
+    "supabase_imports": 0,
+    "publications": 0,
+    "production_changes": 0,
+    "release_authorized": false
+  },
+  "status": "13_REMAINING_REGISTER_PAIR_RECORDS_SOURCE_AND_STAGING_VERIFIED"
+}

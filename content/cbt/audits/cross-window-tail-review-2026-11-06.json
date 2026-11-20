@@ -1,0 +1,176 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record the first five fully content-checked semantic duplicates found in the previously unreviewed lower-scoring cross-window tail.",
+  "scope": {
+    "cross_window_candidate_ranks_checked_for_stems": "287–336",
+    "full_question_content_pairs_verified": 5,
+    "full_question_content_pairs": [
+      291,
+      293,
+      304,
+      308,
+      319
+    ],
+    "total_cross_window_candidates": 1304,
+    "previously_manually_reviewed": 286,
+    "now_manually_reviewed": 291,
+    "remaining_not_manually_reviewed": 1013
+  },
+  "findings": [
+    {
+      "id": "DUP-91",
+      "rank": 291,
+      "similarity_score": 0.646,
+      "subject": "Chemistry",
+      "a": "batch 3 row 20",
+      "b": "batch 25 row 21",
+      "concept": "Catalysts increase reaction rate by providing an alternative pathway with lower activation energy",
+      "retain_candidate": "batch 3 row 20",
+      "replace_candidate": "batch 25 row 21",
+      "question_a": "A catalyst increases reaction rate mainly by:",
+      "options_a": [
+        "Increasing the mass of products",
+        "Providing an alternative pathway with lower activation energy",
+        "Being permanently consumed",
+        "Changing the balanced equation"
+      ],
+      "answer_a": "B",
+      "question_b": "A catalyst increases the rate of a reaction because it",
+      "options_b": [
+        "raises the temperature permanently.",
+        "increases the amount of product at equilibrium.",
+        "provides an alternative pathway with lower activation energy.",
+        "increases the mass of the reactants."
+      ],
+      "answer_b": "C",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both items test the same defining catalyst effect and have the same correct concept and essentially identical explanation. This is a semantic duplicate, not merely a numerical or wording variant."
+    },
+    {
+      "id": "DUP-92",
+      "rank": 293,
+      "similarity_score": 0.645,
+      "subject": "Chemistry",
+      "a": "batch 4 row 19",
+      "b": "batch 21 row 20",
+      "concept": "Balancing H2 + O2 -> H2O and identifying the oxygen coefficient",
+      "retain_candidate": "batch 4 row 19",
+      "replace_candidate": "batch 21 row 20",
+      "question_a": "What coefficient balances H₂ + O₂ → H₂O when using the smallest whole numbers?",
+      "options_a": [
+        "1, 1, 1",
+        "2, 1, 2",
+        "1, 2, 1",
+        "2, 2, 1"
+      ],
+      "answer_a": "B",
+      "question_b": "What coefficient is required before O₂ when balancing H₂ + O₂ → H₂O using whole-number coefficients?",
+      "options_b": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both questions use the identical unbalanced equation and require the same balancing step; the second simply asks for the oxygen coefficient already included in the first answer."
+    },
+    {
+      "id": "DUP-93",
+      "rank": 304,
+      "similarity_score": 0.64,
+      "subject": "Biology",
+      "a": "batch 7 row 16",
+      "b": "batch 31 row 16",
+      "concept": "Natural selection favours individuals with advantageous inherited traits through reproductive success",
+      "retain_candidate": "batch 7 row 16",
+      "replace_candidate": "batch 31 row 16",
+      "question_a": "In natural selection, individuals with advantageous inherited variations are more likely to:",
+      "options_a": [
+        "leave more offspring",
+        "stop reproducing",
+        "change their genes by choice",
+        "avoid all competition"
+      ],
+      "answer_a": "A",
+      "question_b": "In a population exposed to an environmental change, individuals with an inherited advantageous trait are more likely to",
+      "options_b": [
+        "leave more surviving offspring",
+        "stop reproducing entirely",
+        "change their genes by choice",
+        "avoid all competition"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both items ask for the same defining outcome of natural selection and use the same answer idea; the environmental-change wording does not create a different assessment objective."
+    },
+    {
+      "id": "DUP-94",
+      "rank": 308,
+      "similarity_score": 0.638,
+      "subject": "Physics",
+      "a": "batch 8 row 23",
+      "b": "batch 40 row 24",
+      "concept": "Pascal's principle: applied pressure is transmitted undiminished through an enclosed fluid",
+      "retain_candidate": "batch 8 row 23",
+      "replace_candidate": "batch 40 row 24",
+      "question_a": "Pascal's principle states that pressure applied to an enclosed fluid is:",
+      "options_a": [
+        "Lost immediately",
+        "Transmitted equally throughout the fluid",
+        "Converted entirely into heat",
+        "Transmitted only downwards"
+      ],
+      "answer_a": "B",
+      "question_b": "A hydraulic press operates mainly on the principle that pressure applied to an enclosed liquid is",
+      "options_b": [
+        "transmitted equally throughout the liquid",
+        "destroyed at the piston",
+        "converted entirely into heat",
+        "greater only at the surface"
+      ],
+      "answer_b": "A",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "The hydraulic-press item restates Pascal's principle and uses the same correct statement as the direct-definition question. The application context does not materially change the tested fact."
+    },
+    {
+      "id": "DUP-95",
+      "rank": 319,
+      "similarity_score": 0.633,
+      "subject": "Chemistry",
+      "a": "batch 24 row 17",
+      "b": "batch 34 row 21",
+      "concept": "Higher temperature increases reaction rate by increasing the fraction of particles with sufficient activation energy",
+      "retain_candidate": "batch 24 row 17",
+      "replace_candidate": "batch 34 row 21",
+      "question_a": "Increasing temperature usually increases reaction rate because particles",
+      "options_a": [
+        "become larger",
+        "collide more frequently and with greater energy",
+        "lose all kinetic energy",
+        "stop moving randomly"
+      ],
+      "answer_a": "B",
+      "question_b": "Why does increasing temperature usually increase the rate of a chemical reaction?",
+      "options_b": [
+        "The reactants become heavier",
+        "A greater fraction of particles has energy at least equal to the activation energy",
+        "The catalyst is permanently consumed",
+        "The equilibrium constant always becomes zero"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "reason": "Both items assess the same collision-theory explanation: increased kinetic energy raises the fraction of particles with energy at least equal to activation energy."
+    }
+  ],
+  "controls": {
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "retain_replace_assignments_finalized": 0,
+    "replacement_drafts_created": 0,
+    "note": "The earlier batch location is only a provisional retention candidate. Exact row-level history/provenance and the retained/held staging joins must be checked before finalizing retain/replace assignments. The five new rows are not yet part of the 90 approved replacement candidates."
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of the next 15 lower-tail cross-window candidates. All source CSV rows, options, answer keys and explanations were checked.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      1244,
+      1245,
+      1246,
+      1247,
+      1248,
+      1249,
+      1250,
+      1251,
+      1252,
+      1253,
+      1254,
+      1255,
+      1256,
+      1257,
+      1258
+    ],
+    "previous_total_manually_reviewed": 701,
+    "now_manually_reviewed": 716,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 588
+  },
+  "preserved": [
+    {
+      "rank": 1244,
+      "subject": "Mathematics",
+      "a": "batch 9 row 9",
+      "b": "batch 40 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Complement of a set selects elements in the universal set but not in the subset; intersection selects elements common to two sets."
+    },
+    {
+      "rank": 1245,
+      "subject": "Government",
+      "a": "batch 12 row 36",
+      "b": "batch 29 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "A local council's legislative power to make lawful by-laws differs from the opposition's scrutiny of government and presentation of alternatives."
+    },
+    {
+      "rank": 1246,
+      "subject": "Use of English",
+      "a": "batch 16 row 5",
+      "b": "batch 22 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "Neither…nor proximity agreement differs from agreement with the head noun quality in a subject phrase."
+    },
+    {
+      "rank": 1247,
+      "subject": "Mathematics",
+      "a": "batch 14 row 8",
+      "b": "batch 32 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Finding an arithmetic progression's common difference differs from calculating the sum of its first five terms."
+    },
+    {
+      "rank": 1248,
+      "subject": "Use of English",
+      "a": "batch 30 row 5",
+      "b": "batch 32 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "Initial consonant phoneme /dʒ/ differs from identifying the diphthong /ɔɪ/ within a word."
+    },
+    {
+      "rank": 1249,
+      "subject": "Mathematics",
+      "a": "batch 3 row 8",
+      "b": "batch 23 row 7",
+      "decision": "preserve_as_distinct",
+      "reason": "Solving simultaneous linear equations differs from differentiating a polynomial function."
+    },
+    {
+      "rank": 1250,
+      "subject": "Use of English",
+      "a": "batch 15 row 4",
+      "b": "batch 27 row 2",
+      "decision": "preserve_as_distinct",
+      "reason": "Subject–verb agreement with a singular head differs from correct semicolon punctuation between independent clauses."
+    },
+    {
+      "rank": 1252,
+      "subject": "Use of English",
+      "a": "batch 3 row 2",
+      "b": "batch 23 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Concord with the singular determiner each differs from inversion after the restrictive adverb rarely."
+    },
+    {
+      "rank": 1253,
+      "subject": "Use of English",
+      "a": "batch 4 row 4",
+      "b": "batch 23 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Selecting the preposition at for a time point differs from subject–auxiliary inversion after rarely."
+    },
+    {
+      "rank": 1254,
+      "subject": "Government",
+      "a": "batch 8 row 34",
+      "b": "batch 26 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "A unitary system concentrates ultimate constitutional authority; a federal system divides constitutional powers between levels of government."
+    },
+    {
+      "rank": 1255,
+      "subject": "Literature in English",
+      "a": "batch 3 row 40",
+      "b": "batch 32 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "Hyperbole is deliberate exaggeration; simile is an explicit comparison, commonly using like or as."
+    },
+    {
+      "rank": 1256,
+      "subject": "Chemistry",
+      "a": "batch 9 row 19",
+      "b": "batch 34 row 21",
+      "decision": "preserve_as_distinct",
+      "reason": "Temperature shifting an exothermic equilibrium toward the reverse direction is distinct from the kinetic explanation for faster reaction rates at higher temperature."
+    },
+    {
+      "rank": 1257,
+      "subject": "Chemistry",
+      "a": "batch 18 row 21",
+      "b": "batch 27 row 18",
+      "decision": "preserve_as_distinct",
+      "reason": "Aqueous copper(II) sulfate with inert electrodes deposits copper at the cathode; molten sodium chloride produces chlorine at the anode. Different electrolytes, phases and electrode reactions."
+    },
+    {
+      "rank": 1258,
+      "subject": "Government",
+      "a": "batch 17 row 34",
+      "b": "batch 35 row 33",
+      "decision": "preserve_as_distinct",
+      "reason": "Dual citizenship means recognised nationality in two states; citizenship by registration is one statutory route to acquiring citizenship."
+    }
+  ],
+  "confirmed_duplicates": [
+    {
+      "rank": 1251,
+      "subject": "Biology",
+      "a": "batch 19 row 12",
+      "b": "batch 40 row 16",
+      "decision": "confirmed_semantic_duplicate_new_cluster",
+      "reason": "Both questions ask for the defining/characteristic feature that distinguishes mammals from other vertebrate groups and key mammary glands. The stem variation does not change the single assessed fact.",
+      "retain": "batch 19 row 12",
+      "hold": "batch 40 row 16",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 14,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0
+  }
+}

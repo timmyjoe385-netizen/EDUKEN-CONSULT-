@@ -1,0 +1,193 @@
+{
+  "audit_date": "2026-11-06",
+  "repository_branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Full-content review of candidate ranks 625-639. Complete original stems, options, answer keys and explanations were checked. One crystallisation relationship was already registered and was not double-counted.",
+  "scope": {
+    "candidate_ranks_checked": [
+      625,
+      626,
+      627,
+      628,
+      629,
+      630,
+      631,
+      632,
+      633,
+      634,
+      635,
+      636,
+      637,
+      638,
+      639
+    ],
+    "newly_reviewed_ranks": [
+      625,
+      626,
+      627,
+      628,
+      629,
+      631,
+      632,
+      633,
+      634,
+      635,
+      636,
+      637,
+      638,
+      639
+    ],
+    "previously_registered_rank": [
+      630
+    ],
+    "previous_persisted_review_total": 993,
+    "now_persisted_review_total": 1007,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_yet_persisted_as_reviewed": 297
+  },
+  "confirmed_duplicates": [
+    {
+      "id": "DUP-209",
+      "rank": 634,
+      "subject": "Use of English",
+      "a": "batch 3 row 5",
+      "b": "batch 18 row 2",
+      "concept": "Converting a simple-past active sentence into the simple-past passive",
+      "decision": "confirmed_semantic_duplicate",
+      "reason": "Both items ask learners to convert a simple-past active sentence into passive voice. Each requires moving the object to subject position and using was/were plus the past participle; the sentence nouns differ but the exact assessed operation and tense construction are the same.",
+      "retain": "batch 3 row 5",
+      "hold": "batch 18 row 2",
+      "new_unique_replacement_targets": 1,
+      "provenance": "pending",
+      "staging_join": "pending"
+    }
+  ],
+  "existing_cluster_relationships_confirmed": [
+    {
+      "rank": 630,
+      "subject": "Chemistry",
+      "a": "batch 2 row 17",
+      "b": "batch 30 row 21",
+      "decision": "already_recorded_as_DUP-135",
+      "note": "Crystallisation of a named soluble salt and crystallisation of a soluble solid from solution are already registered as one duplicate relationship. No new pair ID or held-row count added."
+    }
+  ],
+  "preserved": [
+    {
+      "rank": 625,
+      "subject": "Mathematics",
+      "a": "batch 16 row 11",
+      "b": "batch 36 row 9",
+      "decision": "preserve_as_distinct",
+      "reason": "Multiplying powers with the same base uses index addition; evaluating log₃ 81 requires identifying the exponent that produces 81."
+    },
+    {
+      "rank": 626,
+      "subject": "Economics",
+      "a": "batch 4 row 29",
+      "b": "batch 17 row 27",
+      "decision": "preserve_as_distinct",
+      "reason": "Higher production costs shift supply left; higher consumer income for a normal good shifts demand right. Different curve determinants and effects."
+    },
+    {
+      "rank": 627,
+      "subject": "Government",
+      "a": "batch 12 row 36",
+      "b": "batch 34 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Local government councils make by-laws within their legal authority; legislative committees examine bills and issues in detail for the full house."
+    },
+    {
+      "rank": 628,
+      "subject": "Government",
+      "a": "batch 2 row 34",
+      "b": "batch 34 row 34",
+      "decision": "preserve_as_distinct",
+      "reason": "Political parties present candidates and organise electoral competition; legislative committees scrutinise bills and issues. Different institutions and functions."
+    },
+    {
+      "rank": 629,
+      "subject": "Use of English",
+      "a": "batch 5 row 4",
+      "b": "batch 12 row 4",
+      "decision": "preserve_as_distinct",
+      "reason": "Meticulous and abundant are unrelated vocabulary targets, despite identical synonym-question framing."
+    },
+    {
+      "rank": 631,
+      "subject": "Mathematics",
+      "a": "batch 3 row 9",
+      "b": "batch 39 row 10",
+      "decision": "preserve_as_distinct",
+      "reason": "Sine is opposite over hypotenuse; cosine is adjacent over hypotenuse. Different trigonometric ratios."
+    },
+    {
+      "rank": 632,
+      "subject": "Mathematics",
+      "a": "batch 9 row 10",
+      "b": "batch 37 row 11",
+      "decision": "preserve_as_distinct",
+      "reason": "Evaluating cos 60° is a special-angle recall task; evaluating f(g(4)) requires composition of functions."
+    },
+    {
+      "rank": 633,
+      "subject": "Use of English",
+      "a": "batch 12 row 4",
+      "b": "batch 34 row 3",
+      "decision": "preserve_as_distinct",
+      "reason": "Abundant means plentiful; ephemeral means short-lived. Different vocabulary targets."
+    },
+    {
+      "rank": 635,
+      "subject": "Literature in English",
+      "a": "batch 9 row 39",
+      "b": "batch 15 row 38",
+      "decision": "preserve_as_distinct",
+      "reason": "Situational irony concerns an unexpected outcome; verbal irony concerns a contrast between literal words and intended meaning."
+    },
+    {
+      "rank": 636,
+      "subject": "Economics",
+      "a": "batch 10 row 29",
+      "b": "batch 13 row 28",
+      "decision": "preserve_as_distinct",
+      "reason": "Personal income tax is a direct tax; crude-oil deposits are classified as land/natural resources in the factors of production."
+    },
+    {
+      "rank": 637,
+      "subject": "Use of English",
+      "a": "batch 1 row 6",
+      "b": "batch 36 row 6",
+      "decision": "preserve_as_distinct",
+      "reason": "The first tests an initial vowel sound /æ/; the second tests a final consonant affricate /tʃ/. Different phonological categories."
+    },
+    {
+      "rank": 638,
+      "subject": "Literature in English",
+      "a": "batch 19 row 37",
+      "b": "batch 24 row 40",
+      "decision": "preserve_as_distinct",
+      "reason": "An oxymoron combines apparently contradictory terms; chiasmus reverses corresponding words or ideas in parallel phrases."
+    },
+    {
+      "rank": 639,
+      "subject": "Use of English",
+      "a": "batch 26 row 4",
+      "b": "batch 35 row 5",
+      "decision": "preserve_as_distinct",
+      "reason": "Candid means frank or honest; comprehensive means complete and covering relevant details. Related contextual use of account, but different lexical meanings."
+    }
+  ],
+  "controls": {
+    "new_confirmed_duplicate_pair_relationships": 1,
+    "new_unique_replacement_targets": 1,
+    "preserved_as_distinct": 13,
+    "already_registered_relationships_not_double_counted": 1,
+    "source_csv_modified": 0,
+    "staging_csv_modified": 0,
+    "replacement_drafts_created": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "provenance_complete": false,
+    "staging_joins_complete": false
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "audit_date": "2026-11-06",
+  "branch": "feat/cbt-subject-combination-reconciled",
+  "purpose": "Record five further lower-tail duplicate checks, including one relationship within the existing federalism cluster.",
+  "scope": {
+    "candidate_ranks_with_full_question_content_checked": [
+      546,
+      597,
+      608,
+      612,
+      630
+    ],
+    "previous_total_manually_reviewed": 329,
+    "now_manually_reviewed": 334,
+    "total_cross_window_candidates": 1304,
+    "remaining_not_manually_reviewed": 970
+  },
+  "findings": [
+    {
+      "id": "DUP-132",
+      "rank": 546,
+      "score": 0.552,
+      "subject": "Use of English",
+      "a": "batch 22 row 3",
+      "b": "batch 34 row 3",
+      "concept": "Ephemeral means short-lived",
+      "question_a": "The word “ephemeral” most nearly means:",
+      "options_a": [
+        "permanent",
+        "short-lived",
+        "enormous",
+        "ordinary"
+      ],
+      "answer_a": "B",
+      "question_b": "Choose the word nearest in meaning to 'ephemeral'.",
+      "options_b": [
+        "permanent",
+        "short-lived",
+        "ordinary",
+        "valuable"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 22 row 3",
+      "replace_candidate": "batch 34 row 3",
+      "new_unique_targets_added": 1,
+      "reason": "Both ask for the synonym of the same word and have the same correct answer. Distractor changes do not create a new assessment objective."
+    },
+    {
+      "id": "DUP-133",
+      "rank": 597,
+      "score": 0.537,
+      "subject": "Economics",
+      "a": "batch 14 row 28",
+      "b": "batch 25 row 27",
+      "concept": "Negative externality imposes external costs on third parties outside the transaction",
+      "question_a": "A negative externality occurs when an economic activity imposes…",
+      "options_a": [
+        "A cost on a third party not fully reflected in the market price",
+        "A benefit only on the producer",
+        "No effect outside the buyer and seller",
+        "A tax refund on the consumer"
+      ],
+      "answer_a": "A",
+      "question_b": "A negative production externality exists when",
+      "options_b": [
+        "the private cost of production exceeds every social benefit.",
+        "some production costs are imposed on third parties who are not part of the transaction.",
+        "consumers pay exactly the full social cost.",
+        "the government sets the market price at equilibrium."
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 14 row 28",
+      "replace_candidate": "batch 25 row 27",
+      "new_unique_targets_added": 1,
+      "reason": "Both define the same negative externality concept: third parties bear costs not fully reflected in the market transaction."
+    },
+    {
+      "id": "DUP-134",
+      "rank": 612,
+      "score": 0.533,
+      "subject": "Biology",
+      "a": "batch 30 row 14",
+      "b": "batch 35 row 13",
+      "concept": "Most oxygen in human blood is transported by haemoglobin in red blood cells",
+      "question_a": "Most oxygen in human blood is transported",
+      "options_a": [
+        "dissolved in plasma",
+        "as bicarbonate ions",
+        "bound to haemoglobin",
+        "inside platelets"
+      ],
+      "answer_a": "C",
+      "question_b": "Which blood component contains haemoglobin and transports most oxygen in humans?",
+      "options_b": [
+        "Platelets",
+        "Red blood cells",
+        "Lymphocytes",
+        "Plasma proteins"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 30 row 14",
+      "replace_candidate": "batch 35 row 13",
+      "new_unique_targets_added": 1,
+      "reason": "Both assess the same fact: most oxygen is carried by haemoglobin inside red blood cells."
+    },
+    {
+      "id": "DUP-135",
+      "rank": 630,
+      "score": 0.526,
+      "subject": "Chemistry",
+      "a": "batch 2 row 17",
+      "b": "batch 30 row 21",
+      "concept": "Crystallisation is used to obtain purified crystals of a soluble solid from solution",
+      "question_a": "Which method is most suitable for obtaining pure crystals of copper(II) sulfate from its aqueous solution?",
+      "options_a": [
+        "Filtration",
+        "Crystallisation",
+        "Sublimation",
+        "Decantation"
+      ],
+      "answer_a": "B",
+      "question_b": "Which technique is commonly used to obtain pure crystals of a soluble solid from its solution?",
+      "options_b": [
+        "Filtration",
+        "Crystallisation",
+        "Decantation",
+        "Magnetic separation"
+      ],
+      "answer_b": "B",
+      "decision": "confirmed_semantic_duplicate_pending_provenance_and_staging",
+      "retain_candidate": "batch 2 row 17",
+      "replace_candidate": "batch 30 row 21",
+      "new_unique_targets_added": 1,
+      "reason": "Both test the same separation method and objective: obtaining pure crystals of a soluble solid from its solution."
+    },
+    {
+      "id": "DUP-136",
+      "rank": 608,
+      "score": 0.534,
+      "subject": "Government",
+      "a": "batch 18 row 32",
+      "b": "batch 32 row 34",
+      "concept": "Federalism constitutionally divides powers between central and constituent governments",
+      "decision": "confirmed_semantic_duplicate_in_existing_cluster",
+      "cluster_id": "FEDERALISM-01",
+      "retain_candidate": "batch 32 row 34",
+      "existing_held_candidates": [
+        "batch 2 row 33",
+        "batch 18 row 32",
+        "batch 33 row 35"
+      ],
+      "new_unique_targets_added": 0,
+      "reason": "Both are already part of the four-row federalism cluster documented in DUP-28, DUP-102 and DUP-113. This adds a further pairwise relationship but no new unique held row."
+    }
+  ],
+  "controls": {
+    "new_pair_relationships": 5,
+    "new_unique_replacement_targets": 4,
+    "provenance_checks_pending": 4,
+    "staging_joins_pending": 4,
+    "original_source_csvs_modified": 0,
+    "staging_csvs_modified": 0,
+    "production_imports": 0,
+    "production_publications": 0,
+    "note": "DUP-136 is an additional relationship inside the already reconciled federalism cluster; it does not add a new target. The other four pairs each add one unique held candidate pending provenance and staging."
+  }
+}
