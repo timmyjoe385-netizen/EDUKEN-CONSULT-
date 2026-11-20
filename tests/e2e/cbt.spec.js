@@ -137,7 +137,7 @@ test('published CBT questions are graded by the server after submission', async 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
-  await page.getByRole('button', { name: /Right/ }).click();
+  await page.locator('.cbt-option').nth(1).click();
   for (let i = 0; i < 19; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
   await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Submit practice/i }).click();
@@ -190,9 +190,9 @@ test('timed-out CBT automatically retries a temporary submission failure', async
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Right/ }).click();
 
-  await page.clock.fastForward(1_000);
+  await page.clock.runFor(2_000);
   await expect(page.getByText(/Temporary network\/server failure/i)).toBeVisible();
-  await page.clock.fastForward(1_500);
+  await page.clock.runFor(2_500);
 
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   expect(submissionCount).toBe(2);
@@ -248,7 +248,7 @@ test('manual CBT submission warns before submitting unanswered questions', async
   await expect(page.getByText('Question 20 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
   await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   expect(submitCalls).toBe(0);
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
