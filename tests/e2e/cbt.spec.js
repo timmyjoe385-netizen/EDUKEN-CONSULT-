@@ -348,3 +348,25 @@ test('Finish and see results also warns about unanswered questions', async ({ pa
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   expect(submitCalls).toBe(1);
 });
+
+
+test('subject practice remains available when the initial question list contains only another subject', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'biology-only', subject: 'Biology', question_text: 'Biology question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  let startPayload;
+  await page.route('**/api/cbt/start*', async route => {
+    startPayload = route.request().postDataJSON();
+    await route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({
+      attemptToken: 'g'.repeat(64), durationSeconds: 60,
+      questions: [{ id: 'english-from-server', subject: 'Use of English', prompt: 'English question?', options: ['A', 'B', 'C', 'D'] }],
+    }) });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const startButton = page.getByRole('button', { name: /Start free practice/i });
+  await expect(startButton).toBeEnabled();
+  await startButton.click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
+});
