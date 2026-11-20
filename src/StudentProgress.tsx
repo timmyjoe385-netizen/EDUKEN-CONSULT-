@@ -10,6 +10,7 @@ type Attempt = {
   duration_seconds: number | null;
 };
 type ArenaSummary = {
+  username?: string;
   national_rank: number | null;
   best_mock_score: number | null;
   best_mock_total: number | null;
@@ -77,7 +78,7 @@ export default function StudentProgress() {
       <div className="student-progress-heading">
         <div>
           <span className="cbt-eyebrow">YOUR LEARNING DASHBOARD</span>
-          <h3 id="student-progress-title">Your progress so far</h3>
+          <h3 id="student-progress-title">Your progress so far</h3>{summary?.username && <span className="cbt-session-identity">@{summary.username}</span>}
           <p>Personal performance and ranking from your saved, server-graded attempts.</p>
         </div>
       </div>
