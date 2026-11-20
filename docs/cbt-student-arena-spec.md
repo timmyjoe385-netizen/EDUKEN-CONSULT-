@@ -23,7 +23,7 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 - Reuse the platform's existing Supabase authentication. Do not create a second password store or a separate login system.
 - Public leaderboard responses may contain only username, rank, eligible score/percentage, and permitted competition statistics. Never expose real name, email, phone number, auth user ID, or other private account fields.
 - Username creation is free. Username validation, availability checks, and claiming must be enforced server-side with a database uniqueness constraint.
-- Guest/local fallback practice must never create leaderboard entries. Whether a signed-in account should be mandatory for *all* CBT starts, or only for leaderboard participation, remains a product decision before implementation.
+- Guest/local fallback practice remains available and never creates leaderboard entries. A free authenticated EDUKEN account plus a claimed username is required only to join the leaderboards; signing in is not required to practise.
 
 ## Score integrity and fairness
 
@@ -65,14 +65,18 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 - Weekly champion panels: top scorer, most improved, and most consistent.
 - Keep the design mobile-first and aligned with EDUKEN's forest-green, off-white, and restrained mint visual system.
 
+## Confirmed product decision
+
+- **Option B:** students may practise as guests. To join the competition, they sign in to their existing EDUKEN account and claim a free unique username. No new password store or second account system.
+
 ## Delivery phases
 
-1. Confirm the account requirement and final qualification rules.
-2. Add the database migration and server-side username/profile and score aggregation APIs on this feature branch.
-3. Add automated tests for username uniqueness, auth ownership, privacy, score derivation, ranking/tie-breaks, week boundaries, pagination, and exclusion of guest/local/draft attempts.
-4. Add the mobile-first Student Arena UI and tests.
-5. Apply migrations only to the isolated test Supabase project, then run API/browser/security checks there.
-6. Open/maintain a draft PR for review. No merge, production migration, Worker deployment, question-bank change, or publication without separate explicit approval.
+1. Confirmed: guest practice remains open; sign-in plus a free username is required only for leaderboard participation.
+2. Added on this branch: private student identity and subject-score schema, username claim API, public-safe leaderboard API, and server-derived subject score persistence.
+3. In progress: automated tests for username uniqueness, auth ownership, privacy, score derivation, ranking/tie-breaks, week boundaries, pagination, and exclusion of guest/local/draft attempts.
+4. Pending: mobile-first Student Arena UI, profile/progress view, weekly champion recognition, and head-to-head challenges.
+5. Applied the additive migration only to the isolated test Supabase project. Run API/browser/security checks there before considering this phase ready.
+6. Keep the PR in draft for review. No merge, production migration, Worker deployment, question-bank change, or publication without separate explicit approval.
 
 ## Explicit non-goals for this workstream
 
