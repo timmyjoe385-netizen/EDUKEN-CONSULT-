@@ -1,8 +1,7 @@
 name: EDUKEN build and Cloudflare deploy
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
   pull_request:
     branches: [main, feat/customer-wallet-system-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
@@ -84,7 +83,7 @@ jobs:
           NODE
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
