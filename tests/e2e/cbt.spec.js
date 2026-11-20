@@ -72,6 +72,28 @@ test('student identity gate locks CBT when signed out and unlocks after username
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
 });
 
+test('new students can create an account with email and password without Google', async ({ page }) => {
+  await page.route('**/api/cbt/student-profile', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ profile: null }),
+  }));
+  await page.route('**/auth/v1/signup', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({
+      access_token: 'email-signup-access-token',
+      refresh_token: 'email-signup-refresh-token',
+      expires_in: 3600,
+      user: { id: 'email-signup-student', email: 'newstudent@example.test' },
+    }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
+  await page.getByLabel('Email address').fill('newstudent@example.test');
+  await page.getByLabel('Password').fill('SecurePass123!');
+  await page.getByRole('button', { name: 'Create free account' }).click();
+  await expect(page.locator('#cbt-student-username')).toBeVisible();
+  await expect(page.getByText(/Choose the free, unique username/i)).toBeVisible();
+});
+
 test('CBT blocks local fallback when it cannot supply the 20-question minimum', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
