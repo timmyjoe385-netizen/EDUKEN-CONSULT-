@@ -265,3 +265,57 @@ test('Try again preserves the selected timed-mock question count', async ({ page
   await expect(page.getByText('Question 1 of 1')).toBeVisible();
   expect(requestedCounts).toEqual([10, 10]);
 });
+
+
+test('CBT Try again preserves the selected mixed-mock question count', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'retry-q1', subject: 'Use of English', question_text: 'Choose one.', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  const payloads = [];
+  await page.route('**/api/cbt/start*', async route => {
+    payloads.push(route.request().postDataJSON());
+    await route.fulfill({
+      status: 201, contentType: 'application/json',
+      body: JSON.stringify({ attemptToken: String(payloads.length).repeat(64), durationSeconds: 1800,
+        questions: [{ id: 'retry-q1', subject: 'Use of English', prompt: 'Choose one.', options: ['A', 'B', 'C', 'D'] }] }),
+    });
+  });
+  await page.route('**/api/cbt/submit*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'retry-q1', subject: 'Use of English', prompt: 'Choose one.', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'A is correct.' }] }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.locator('#cbt-mock-count').selectOption('20');
+  await page.getByRole('button', { name: /Start mixed mock/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  await page.getByRole('button', { name: /Try again/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(payloads.map(item => item.questionCount)).toEqual([20, 20]);
+});
+
+test('CBT calculator performs basic arithmetic and closes', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'calc-q1', subject: 'Mathematics', question_text: 'Calculate.', options: { A: '1', B: '2', C: '3', D: '4' } }] }),
+  }));
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201, contentType: 'application/json',
+    body: JSON.stringify({ attemptToken: 'd'.repeat(64), durationSeconds: 900,
+      questions: [{ id: 'calc-q1', subject: 'Mathematics', prompt: 'Calculate.', options: ['1', '2', '3', '4'] }] }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await page.getByRole('button', { name: /Calculator/i }).click();
+  const dialog = page.getByRole('dialog', { name: 'Practice calculator' });
+  await expect(dialog).toBeVisible();
+  await dialog.getByRole('button', { name: '2', exact: true }).click();
+  await dialog.getByRole('button', { name: '+', exact: true }).click();
+  await dialog.getByRole('button', { name: '3', exact: true }).click();
+  await dialog.getByRole('button', { name: '=', exact: true }).click();
+  await expect(dialog.locator('.cbt-calculator-display')).toHaveText('5');
+  await dialog.getByRole('button', { name: 'Close calculator' }).click();
+  await expect(dialog).toBeHidden();
+});
