@@ -27,6 +27,27 @@ test.beforeEach(async ({ page }) => {
   }));
 });
 
+test('guest students can start a server-graded practice session without signing in', async ({ page }) => {
+  await page.addInitScript(() => localStorage.removeItem('eduken_auth_session'));
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      attemptToken: 'a'.repeat(64),
+      expiresAt: new Date(Date.now() + 15 * 60 * 1000).toISOString(),
+      durationSeconds: 15 * 60,
+      mode: 'practice',
+      subject: 'Use of English',
+      questions: attemptRows('guest', 'Use of English'),
+    }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  await expect(page.getByText('GUEST PRACTICE').first()).toBeVisible();
+});
+
 test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
@@ -34,7 +55,7 @@ test('CBT question selectors never offer fewer than 20 questions', async ({ page
   await expect(page.locator('#cbt-mock-count option').evaluateAll(options => options.map(option => Number(option.value)))).resolves.toEqual([20, 40, 60, 100, 180]);
 });
 
-test('CBT identity gate refreshes the student profile when OAuth completes', async ({ page }) => {
+test('Student Arena identity is optional for guest practice and refreshes after OAuth', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
   await page.evaluate(() => {
@@ -42,7 +63,8 @@ test('CBT identity gate refreshes the student profile when OAuth completes', asy
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
   await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await expect(page.getByText(/You can practise freely without signing in/i)).toBeVisible();
   await page.evaluate(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'oauth-completed-session',
