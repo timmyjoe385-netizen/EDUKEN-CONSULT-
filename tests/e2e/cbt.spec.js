@@ -16,6 +16,13 @@ test.beforeEach(async ({ page }) => {
   }));
 });
 
+test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
+  await expect(page.locator('#cbt-practice-count option').evaluateAll(options => options.map(option => Number(option.value)))).resolves.toEqual([20, 40, 50]);
+  await expect(page.locator('#cbt-mock-count option').evaluateAll(options => options.map(option => Number(option.value)))).resolves.toEqual([20, 40, 60, 100, 180]);
+});
+
 test('CBT identity gate refreshes the student profile when OAuth completes', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
@@ -37,7 +44,7 @@ test('CBT identity gate refreshes the student profile when OAuth completes', asy
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
 });
 
-test('CBT falls back to original local practice when the published bank is empty', async ({ page }) => {
+test('CBT blocks local fallback when it cannot supply the 20-question minimum', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -52,7 +59,7 @@ test('CBT falls back to original local practice when the published bank is empty
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
   await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
   await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
 
   const dimensions = await page.evaluate(() => ({
