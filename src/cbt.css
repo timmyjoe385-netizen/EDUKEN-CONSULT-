@@ -106,3 +106,9 @@
 .student-progress-status{color:#68786e;font-size:12px}
 .student-progress-footnote{display:block;margin-top:12px;color:#77847b;font-size:10px;line-height:1.5}
 @media(max-width:560px){.student-progress{padding:13px}.student-progress-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.student-progress-metrics article{padding:10px}}
+
+
+.student-arena-retry{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.student-arena-retry p{margin:0}
+.student-arena-retry button{padding:8px 12px;border:1px solid #b9d1c0;border-radius:9px;background:#fff;color:#17643d;font-weight:700;cursor:pointer}
+.student-arena-retry button:focus-visible,.student-arena-more:focus-visible,.student-arena-tabs button:focus-visible{outline:3px solid #8ab99a;outline-offset:2px}
