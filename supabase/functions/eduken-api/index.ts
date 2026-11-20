@@ -3329,9 +3329,8 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/submit" && req.method === "POST") {
-      // The high-entropy attempt token authorizes guest submissions. Authenticated
-      // attempts remain bound to the account that started them.
-      const user = await currentUser(req);
+      // Submission requires the same verified student account that owns the attempt.
+      const user = await requireUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
