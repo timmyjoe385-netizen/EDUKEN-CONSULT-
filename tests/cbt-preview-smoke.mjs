@@ -15,6 +15,11 @@ try {
   const smokeUrl = new URL(url);
   smokeUrl.searchParams.set("__arena_smoke", String(Date.now()));
   await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
+  const arena = page.locator(".student-arena");
+  await arena.waitFor({ state: "visible", timeout: 20_000 });
+  assert.match(await arena.innerText(), /EDUKEN STUDENT ARENA/i, "The deployed CBT page must visibly render Student Arena.");
+  const arenaPosition = await arena.evaluate(element => element.compareDocumentPosition(document.querySelector(".cbt-how-section")) & Node.DOCUMENT_POSITION_FOLLOWING);
+  assert.ok(arenaPosition, "Student Arena must appear after the mixed mock and before the practice routine section.");
   const questionsResponse = await questionsResponsePromise;
   assert.equal(questionsResponse.status(), 200, "The deployed preview must load published CBT questions from the isolated API.");
   const payload = await questionsResponse.json();
