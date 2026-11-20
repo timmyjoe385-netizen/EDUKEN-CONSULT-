@@ -65,3 +65,10 @@ All 32 reviewer-sheet candidate IDs match the authoritative inventory's preferre
 The approval record is owner-reported; reviewers did not submit signed forms directly through this workflow. Immutable candidate-content hashes have not yet been separately captured. Therefore, the exact-version-hash field remains pending and **import eligibility remains NO for all 32**.
 
 The 13 targets with no retained candidate remain held. No source question bank, database, import, publication, merge, or production deployment was changed. See `2026-11-20-r4-item-level-approval-reconciliation.md` for the full register and remaining release gates.
+
+
+## 6. Version pinning update — 20 November 2026
+
+The approved content for all 32 candidate records has now been pinned with a SHA-256 digest. Each digest is calculated from the UTF-8 JSON representation of this ordered field set: held target, subject, exact held source location, candidate ID, question stem, options A–D, answer key, and answer explanation. The same digest is recorded in the master 32-candidate packet, all seven subject worksheets, and the authoritative 45-target inventory.
+
+The exact-version-hash gate is now closed for these 32 records. **Import eligibility remains NO** pending final staging/import-schema validation, preservation of the 13 held locations, and explicit project-owner authorization for the specific staging import. No database or production action has been taken.
