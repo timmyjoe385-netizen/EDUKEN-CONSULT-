@@ -236,7 +236,7 @@ export default function StudentArena() {
           {!loadingRows && rows.length < participantCount && (
             <button className="student-arena-more" type="button" onClick={() => void loadLeaderboard(page + 1, true)}>Load more students</button>
           )}
-          <small className="student-arena-note">Rankings use completed, server-graded attempts. National ranking requires a full 180-question mock; subject ranking requires at least 20 questions in that subject. Guest attempts are not ranked.</small>
+          <small className="student-arena-note">Rankings use completed, server-graded attempts. National ranking requires a full 180-question mock; subject ranking requires at least 20 questions in that subject. Only attempts started under a verified student username can qualify.</small>
         </div>
       )}
       {message && signedIn && profile && <p className="student-arena-message" role="alert">{message}</p>}
