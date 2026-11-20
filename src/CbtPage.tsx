@@ -453,7 +453,7 @@ export default function CbtPage() {
               <div className="cbt-number-grid">{activeQuestions.map((item, index) => <button key={item.id} aria-label={'Go to question ' + (index + 1)} className={index === current ? 'current' : answers[String(item.id)] !== undefined ? 'answered' : flagged.includes(item.id) ? 'flagged' : ''} onClick={() => setCurrent(index)}>{index + 1}</button>)}</div>
               <div className="cbt-legend"><span><i className="answered" /> Answered</span><span><i className="flagged" /> Flagged</span><span><i className="current" /> Current</span></div>
               <button className="cbt-submit-wide" onClick={requestFinish} disabled={submitting}>{submitting ? 'Submitting…' : 'Finish and see results'}</button>
-              <small>{localFallbackSession ? 'Local starter samples are not server-graded and do not count toward your saved progress or leaderboard.' : 'Your submission is linked to your EDUKEN student identity. Local starter samples are not saved as server-graded attempts.'}</small>
+              <small>{localFallbackSession ? 'Local starter samples are not server-graded and do not count toward your saved progress or leaderboard.' : studentUsername ? 'Your submission is linked to your EDUKEN student identity and eligible attempts may count toward your progress and leaderboard.' : 'Guest attempts are graded but are not attached to a student account, saved to account progress or included in the leaderboard.'}</small>
               {submitError && <p className="cbt-disclaimer" role="alert">{submitError}</p>}
             </aside>
           </div>
