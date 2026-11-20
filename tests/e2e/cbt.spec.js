@@ -439,3 +439,99 @@ test('subject practice remains available when the initial question list contains
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
 });
+
+
+test('CBT navigation, flags, saved answers and exit confirmation work together', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'navigation-list-question',
+      subject: 'Use of English',
+      question_text: 'Navigation list question?',
+      options: { A: 'A', B: 'B', C: 'C', D: 'D' },
+    }] }),
+  }));
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      attemptToken: 'h'.repeat(64),
+      durationSeconds: 800,
+      questions: makeQuestions(20, 'navigation-question-', 'Use of English', 'Navigation question?'),
+    }),
+  }));
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+
+  await page.getByRole('button', { name: /^A A$/ }).click();
+  await page.getByRole('button', { name: /Review later/i }).click();
+  await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
+
+  await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 2 of 20')).toBeVisible();
+  await page.getByRole('button', { name: /^B B$/ }).click();
+
+  await page.getByRole('button', { name: 'Previous', exact: true }).click();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  await expect(page.locator('.cbt-option.selected')).toContainText('A');
+  await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
+
+  await page.getByRole('button', { name: 'Go to question 20' }).click();
+  await expect(page.getByRole('heading', { name: 'Navigation question? 20' })).toBeVisible();
+  await page.getByRole('button', { name: 'Go to question 2' }).click();
+  await expect(page.getByText('Question 2 of 20')).toBeVisible();
+  await expect(page.locator('.cbt-option.selected')).toContainText('B');
+
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.getByRole('button', { name: /Exit/i }).click();
+  await expect(page.getByText('Question 2 of 20')).toBeVisible();
+
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: /Exit/i }).click();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeVisible();
+});
+
+test('CBT result screen can return to subject and mock selection', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'choose-again-list-question',
+      subject: 'Use of English',
+      question_text: 'Choose again list question?',
+      options: { A: 'A', B: 'B', C: 'C', D: 'D' },
+    }] }),
+  }));
+  await page.route('**/api/cbt/start*', route => route.fulfill({
+    status: 201,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      attemptToken: 'i'.repeat(64),
+      durationSeconds: 800,
+      questions: makeQuestions(20, 'choose-again-question-', 'Use of English', 'Choose again question?'),
+    }),
+  }));
+  await page.route('**/api/cbt/submit*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({
+      score: 0,
+      total: 20,
+      percent: 0,
+      review: makeReview(20, 'choose-again-question-', 'Use of English', 'Choose again question?'),
+    }),
+  }));
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Start free practice/i }).click();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: /Finish and see results/i }).click();
+  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  await page.getByRole('button', { name: /Choose another practice/i }).click();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeVisible();
+});
