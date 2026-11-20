@@ -80,7 +80,7 @@ test('published CBT questions are graded by the server after submission', async 
   }
   await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Every attempt is progress.' })).toBeVisible();
   await expect(page.getByText('Correct answer:')).toBeVisible();
   await expect(page.getByText('The second option is correct.')).toBeVisible();
 });
@@ -142,7 +142,7 @@ test('timed-out CBT automatically retries a temporary submission failure', async
   await expect(page.getByText(/Temporary network\/server failure/i)).toBeVisible();
   await page.clock.fastForward(1_500);
 
-  await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Every attempt is progress.' })).toBeVisible();
   expect(submissionCount).toBe(2);
 });
 
