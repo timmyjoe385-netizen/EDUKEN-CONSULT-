@@ -167,7 +167,7 @@ test('hero timed-mock button sends the displayed default question count', async 
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
-  await expect(page.getByText('Question 1 of 180')).toBeVisible();
+  await expect(page.getByText('Question 1 of 2080')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 180 });
 });
 
@@ -382,12 +382,12 @@ test('Finish and see results also warns about unanswered questions', async ({ pa
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 20, percent: 0, review: makeReview(20, 'finish-unanswered-', 'Use of English', 'Question?', ['A', 'B', 'C', 'D'], 'Explanation.') }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
+  await page.locator('#cbt-practice-count').selectOption('20');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
   await page.getByRole('button', { name: /Finish and see results/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
   expect(submitCalls).toBe(0);
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Finish and see results/i }).click();
@@ -412,8 +412,8 @@ test('subject practice remains available when the initial question list contains
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   const startButton = page.getByRole('button', { name: /Start free practice/i });
   await expect(startButton).toBeEnabled();
-  await page.locator('#cbt-practice-count').selectOption('1');
+  await page.locator('#cbt-practice-count').selectOption('20');
   await startButton.click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
 });
