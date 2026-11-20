@@ -112,3 +112,10 @@ Before any import:
 The approved content for all 32 candidate records has now been pinned with a SHA-256 digest. Each digest is calculated from the UTF-8 JSON representation of this ordered field set: held target, subject, exact held source location, candidate ID, question stem, options A–D, answer key, and answer explanation. The same digest is recorded in the master 32-candidate packet, all seven subject worksheets, and the authoritative 45-target inventory.
 
 The exact-version-hash gate is now closed for these 32 records. **Import eligibility remains NO** pending final staging/import-schema validation, preservation of the 13 held locations, and explicit project-owner authorization for the specific staging import. No database or production action has been taken.
+
+
+## 7. Pre-import package prepared
+
+A 32-row staging CSV has been prepared at `content/cbt/staging/2026-11-20/approved-replacement-candidates-32.csv`. It passed structural checks, has 32 unique candidate IDs matching the approved master packet, omits a status column so the server defaults every imported row to draft, and has no same-subject exact normalized stem match against the 1,600 retained-plus-held source rows.
+
+The pre-import validation record is `2026-11-20-r4-staging-import-validation-32.md`. The live import endpoint performs database writes and does not expose a dry-run mode; it was not called. The package is prepared, but no database import has occurred. An isolated test import requires separate explicit authorization.
