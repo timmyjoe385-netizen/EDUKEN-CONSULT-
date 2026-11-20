@@ -483,7 +483,7 @@ test('subject practice remains available when the initial question list contains
   expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
 });
 
-test('signed-in students can see personal progress before claiming an Arena username', async ({ page }) => {
+test('signed-in students must claim a username before starting while still seeing personal progress', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'test-access-token',
@@ -512,7 +512,9 @@ test('signed-in students can see personal progress before claiming an Arena user
   }));
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('heading', { name: 'Create your free competition username' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Create your student identity first' })).toBeVisible();
+  await expect(page.locator('#cbt-student-username')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await expect(page.getByRole('heading', { name: 'Your progress so far' })).toBeVisible();
   await expect(page.locator('.student-progress-recent-heading')).toContainText('2 subjects covered · 2 saved attempts');
   await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Questions attempted' }).getByText('20', { exact: true })).toBeVisible();
