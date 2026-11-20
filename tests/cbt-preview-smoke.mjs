@@ -17,12 +17,19 @@ try {
     }
   });
   page.on("response", response => {
-    if (/\/functions\/v1\/eduken-api\/api\/cbt\/questions/i.test(response.url())) {
+    if (/\/functions\/v1\/eduken-api\/(?:public-content|api\/cbt\/questions)/i.test(response.url())) {
       browserDiagnostics.apiResponses.push({ url: response.url(), status: response.status() });
     }
   });
   // Bypass any stale shared-preview HTML/asset cache so this test exercises the bundle built from the current PR commit.
   await page.setExtraHTTPHeaders({ "Cache-Control": "no-cache", Pragma: "no-cache" });
+  // Also verify the homepage content request uses the isolated preview backend.
+  // This guards against a stale or misconfigured bundle silently reading production content.
+  const publicContentResponsePromise = page.waitForResponse(
+    response => response.request().method() === "GET" &&
+      response.url().includes("/functions/v1/eduken-api/public-content"),
+    { timeout: 25_000 },
+  );
   const questionsResponsePromise = page.waitForResponse(
     response => response.request().method() === "GET" &&
       response.url().includes("/functions/v1/eduken-api/api/cbt/questions"),
@@ -37,10 +44,16 @@ try {
   const smokeUrl = new URL(url);
   smokeUrl.searchParams.set("__cbt_smoke", String(Date.now()));
   const navigationResponse = await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
+  let publicContentResponse;
   let questionsResponse;
   let availabilityResponse;
   try {
-    [questionsResponse, availabilityResponse] = await Promise.all([questionsResponsePromise, availabilityResponsePromise]);
+    [publicContentResponse, questionsResponse, availabilityResponse] = await Promise.all([
+      publicContentResponsePromise, questionsResponsePromise, availabilityResponsePromise,
+    ]);
+    assert.equal(new URL(publicContentResponse.url()).hostname, "wpktzogarfqrgkirzdpy.supabase.co",
+      "Public homepage content must be read from the isolated preview Supabase project, never production.");
+    assert.equal(publicContentResponse.status(), 200, "The isolated preview public-content endpoint must respond successfully.");
   } catch (error) {
     const bodyText = await page.locator("body").innerText().catch(() => "");
     console.error("CBT preview browser diagnostics:", JSON.stringify({
