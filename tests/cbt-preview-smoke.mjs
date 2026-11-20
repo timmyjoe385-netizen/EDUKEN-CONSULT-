@@ -13,6 +13,10 @@ try {
   page.on("requestfailed", request => {
     if (request.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("requestfailed " + request.method() + " " + request.url() + " :: " + (request.failure()?.errorText || "unknown"));
   });
+  page.on("console", message => {
+    if (message.type() === "error") apiNetworkEvents.push("console error " + message.text());
+  });
+  page.on("pageerror", error => apiNetworkEvents.push("pageerror " + error.message));
   page.on("response", response => {
     if (response.url().includes("/functions/v1/eduken-api/")) apiNetworkEvents.push("response " + response.status() + " " + response.url());
   });
@@ -33,6 +37,15 @@ try {
       "Access-Control-Request-Headers": "apikey,content-type",
     },
   });
+  const apiRead = await fetch(apiUrl, {
+    headers: {
+      Origin: smokeUrl.origin,
+      apikey: "sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB",
+      "Content-Type": "application/json",
+    },
+  });
+  const apiReadCors = Object.fromEntries(apiRead.headers.entries());
+  console.log("Isolated API GET:", apiRead.status, "allow-origin:", apiReadCors["access-control-allow-origin"] || "(missing)");
   const corsHeaders = Object.fromEntries(preflight.headers.entries());
   console.log("Isolated API CORS preflight:", preflight.status, JSON.stringify({
     origin: corsHeaders["access-control-allow-origin"],
