@@ -33,7 +33,8 @@ try {
   const subjectButton = page.locator(".cbt-subject-picker button:not([disabled])");
   await subjectButton.click();
   const requestedCount = Number(await page.locator("#cbt-practice-count").inputValue());
-  const availableSubjectQuestions = payload.items.filter(question => question.subject === await subjectSelect.inputValue()).length;
+  const selectedSubject = await subjectSelect.inputValue();
+  const availableSubjectQuestions = payload.items.filter(question => question.subject === selectedSubject).length;
   if (availableSubjectQuestions < requestedCount) {
     const startError = page.locator(".cbt-disclaimer[role='alert']");
     await startError.waitFor({ timeout: 15_000 });
