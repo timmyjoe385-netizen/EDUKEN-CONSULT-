@@ -187,3 +187,31 @@ test('timed-out CBT automatically retries a temporary submission failure', async
   await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
   expect(submissionCount).toBe(2);
 });
+
+
+test('hero timed-mock button sends the displayed default question count', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ items: [{
+      id: 'mock-question-1', subject: 'Use of English', question_text: 'Mock question?',
+      options: { A: 'A', B: 'B', C: 'C', D: 'D' },
+    }] }),
+  }));
+  let startPayload;
+  await page.route('**/api/cbt/start*', async route => {
+    startPayload = route.request().postDataJSON();
+    await route.fulfill({
+      status: 201,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        attemptToken: 'c'.repeat(64), durationSeconds: 1800,
+        questions: [{ id: 'mock-question-1', subject: 'Use of English', prompt: 'Mock question?', options: ['A', 'B', 'C', 'D'] }],
+      }),
+    });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Try a timed mock/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 10 });
+});
