@@ -64,6 +64,8 @@ export default function CbtIdentityGate({ onReady }: Props) {
       setProfile(next);
       setUsername('');
       onReady(next);
+      // Re-mount the Arena and progress dashboard against the newly saved profile.
+      window.location.reload();
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'That username could not be saved. Please try another.');
     } finally {
