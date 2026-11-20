@@ -83,3 +83,26 @@
 .student-arena-loading{color:#65756b;font-size:13px}
 .student-arena-more{align-self:center;padding:10px 16px;border:1px solid #b9d1c0;border-radius:10px;background:#fff;color:#17643d;font-weight:700;cursor:pointer}
 @media(max-width:560px){.student-arena{margin:24px 0;padding:16px;border-radius:17px}.student-arena-controls{align-items:stretch;flex-direction:column}.student-arena-select-label select{width:100%}.student-arena-count{align-items:flex-start;flex-direction:column;gap:4px}.student-arena-count span{text-align:left}.student-arena-row{grid-template-columns:30px minmax(0,1fr) auto;gap:7px;padding:10px}.student-arena-score{grid-column:2/4;text-align:left;margin-top:-4px}.student-arena-claim-row{flex-wrap:wrap}.student-arena-claim button{width:100%}}
+
+
+/* Student Arena personal progress dashboard */
+.student-progress{padding:16px;border:1px solid #e0eae2;border-radius:16px;background:#f8fbf8}
+.student-progress-heading h3{margin:5px 0;color:#17432e;font-size:18px}
+.student-progress-heading p{margin:0;color:#718078;font-size:12px;line-height:1.5}
+.student-progress-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:14px}
+.student-progress-metrics article{display:flex;flex-direction:column;gap:7px;min-width:0;padding:12px;border:1px solid #e4ece5;border-radius:11px;background:#fff}
+.student-progress-metrics article span{color:#6d7d72;font-size:11px;line-height:1.35}
+.student-progress-metrics article strong{color:#17643d;font-size:clamp(17px,2.5vw,22px);overflow-wrap:anywhere}
+.student-progress-recent{margin-top:16px;padding-top:14px;border-top:1px solid #e2ebe4}
+.student-progress-recent-heading,.student-progress-attempt{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.student-progress-recent-heading{margin-bottom:8px;color:#244a35;font-size:13px}
+.student-progress-recent-heading span{color:#758279;font-size:11px}
+.student-progress-attempt{padding:9px 0;border-top:1px solid #e8eee9}
+.student-progress-attempt>span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.student-progress-attempt>span:first-child strong{color:#294b37;font-size:12px}
+.student-progress-attempt small{color:#7a877e;font-size:10px}
+.student-progress-result{text-align:right}
+.student-progress-result strong{color:#17643d;font-size:13px}
+.student-progress-status{color:#68786e;font-size:12px}
+.student-progress-footnote{display:block;margin-top:12px;color:#77847b;font-size:10px;line-height:1.5}
+@media(max-width:560px){.student-progress{padding:13px}.student-progress-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.student-progress-metrics article{padding:10px}}
