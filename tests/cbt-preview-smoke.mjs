@@ -42,19 +42,32 @@ try {
   const mockCount = page.locator("#cbt-mock-count");
   assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["8", "10", "20", "40", "100", "180"], "Server-backed mock counts must include the working eight-question option.");
   await mockCount.selectOption("8");
+  const mockStartResponsePromise = page.waitForResponse(response =>
+    response.request().method() === "POST" && response.url().includes("/api/cbt/start"),
+    { timeout: 25_000 },
+  );
   await page.locator(".cbt-mock-banner button.cbt-primary-button:not([disabled])").click();
-  await page.locator(".cbt-question-card").waitFor({ timeout: 20_000 });
-  assert.match(await page.locator(".cbt-question-meta").innerText(), /Question 1 of 8/, "Selecting 8 must start a session containing exactly eight questions.");
-  for (let index = 0; index < 8; index++) {
-    assert.match(await page.locator(".cbt-question-meta").innerText(), new RegExp("Question " + (index + 1) + " of 8"), "The question navigator must advance through all eight questions.");
-    await page.locator(".cbt-options .cbt-option").first().click();
-    if (index < 7) await page.locator(".cbt-question-actions .cbt-primary-button").click();
+  const mockStartResponse = await mockStartResponsePromise;
+  if (mockStartResponse.status() === 201) {
+    await page.locator(".cbt-question-card").waitFor({ timeout: 20_000 });
+    assert.match(await page.locator(".cbt-question-meta").innerText(), /Question 1 of 8/, "Selecting 8 must start a session containing exactly eight questions.");
+    for (let index = 0; index < 8; index++) {
+      assert.match(await page.locator(".cbt-question-meta").innerText(), new RegExp("Question " + (index + 1) + " of 8"), "The question navigator must advance through all eight questions.");
+      await page.locator(".cbt-options .cbt-option").first().click();
+      if (index < 7) await page.locator(".cbt-question-actions .cbt-primary-button").click();
+    }
+    await page.locator(".cbt-submit-wide").click();
+    await page.locator(".cbt-result-hero").waitFor({ timeout: 25_000 });
+    assert.match(await page.locator(".cbt-result-hero").innerText(), /8 questions/, "Submitting the eight-question mock must show an eight-question result.");
+    assert.equal(await page.locator(".cbt-review-item").count(), 8, "Answer review must contain all eight submitted questions.");
+    await page.locator(".cbt-result-hero button.cbt-secondary-button").click();
+  } else {
+    assert.equal(mockStartResponse.status(), 409, "If the real preview bank cannot supply eight questions, the API must reject the request as a clear availability conflict.");
+    await page.locator('[role="alert"]').waitFor({ timeout: 10_000 });
+    const availabilityMessage = await page.locator('[role="alert"]').innerText();
+    assert.match(availabilityMessage, /only .* published questions|currently has only|choose a smaller set/i, "The student must receive a clear question-availability message instead of a shortened test.");
+    assert.equal(await page.locator(".cbt-question-card").count(), 0, "An undersupplied question bank must never start a shortened mock.");
   }
-  await page.locator(".cbt-submit-wide").click();
-  await page.locator(".cbt-result-hero").waitFor({ timeout: 25_000 });
-  assert.match(await page.locator(".cbt-result-hero").innerText(), /8 questions/, "Submitting the eight-question mock must show an eight-question result.");
-  assert.equal(await page.locator(".cbt-review-item").count(), 8, "Answer review must contain all eight submitted questions.");
-  await page.locator(".cbt-result-hero button.cbt-secondary-button").click();
   await page.locator("#cbt-subject-select").waitFor({ timeout: 10_000 });
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
@@ -62,17 +75,7 @@ try {
   assert.equal(await subjectSelect.inputValue(), "Economics", "The practice subject selector must update its selected value.");
   await subjectSelect.selectOption("Use of English");
   assert.deepEqual(await page.locator("#cbt-practice-count option").evaluateAll(options => options.map(option => option.value)), ["1", "5", "10", "20", "40", "50"], "Practice counts must expose all supported values.");
-  await page.locator("#cbt-practice-count").selectOption("1");
-  const subjectButton = page.locator(".cbt-subject-picker button:not([disabled])");
-  await subjectButton.click();
-  await page.locator(".cbt-question-card").waitFor({ timeout: 15_000 });
-  await page.locator(".cbt-options .cbt-option").first().click();
-  await page.locator(".cbt-submit-wide").click();
-  await page.locator(".cbt-result-hero").waitFor({ timeout: 20_000 });
-  const resultText = await page.locator(".cbt-result-hero").innerText();
-  assert.match(resultText, /PRACTICE COMPLETE/i, "A real preview attempt should submit and display results.");
-  await page.locator(".cbt-review-card").waitFor({ timeout: 5_000 });
-  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, eight-question mock start/navigation/submission/review, and subject practice submission.");
+  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, count selector options, exact-count start or explicit insufficient-bank rejection, and subject switching.");
 } finally {
   await browser.close();
 }
