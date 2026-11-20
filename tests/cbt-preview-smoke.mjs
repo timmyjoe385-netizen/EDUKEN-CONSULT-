@@ -5,13 +5,16 @@ const url = String(process.env.CBT_PREVIEW_URL || "https://eduken-consult-previe
 const browser = await chromium.launch({ headless: true });
 try {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  await page.setExtraHTTPHeaders({ "Cache-Control": "no-cache", Pragma: "no-cache" });
   const questionsResponsePromise = page.waitForResponse(
     response => response.request().method() === "GET" &&
       response.url().includes("/functions/v1/eduken-api/api/cbt/questions"),
     { timeout: 25_000 },
   );
 
-  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 45_000 });
+  const smokeUrl = new URL(url);
+  smokeUrl.searchParams.set("__arena_smoke", String(Date.now()));
+  await page.goto(smokeUrl.toString(), { waitUntil: "domcontentloaded", timeout: 45_000 });
   const questionsResponse = await questionsResponsePromise;
   assert.equal(questionsResponse.status(), 200, "The deployed preview must load published CBT questions from the isolated API.");
   const payload = await questionsResponse.json();
