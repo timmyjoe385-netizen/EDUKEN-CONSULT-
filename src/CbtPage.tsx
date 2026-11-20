@@ -317,6 +317,9 @@ export default function CbtPage() {
           explanation: '',
         })).filter((item: Question) => item.prompt && item.options.length === 4 && item.options.every(Boolean));
         if (!nextQuestions.length) throw new Error('The question set could not be prepared. Please try again.');
+        if (nextQuestions.length !== requestedCount) {
+          throw new Error(`The question service returned ${nextQuestions.length} questions, but ${requestedCount} were requested. Please try again or choose a count the question bank can supply.`);
+        }
         setAttemptToken(data.attemptToken);
         durationSeconds = Number(data.durationSeconds) || durationSeconds;
         const serverExpiry = Date.parse(String(data.expiresAt || ''));
