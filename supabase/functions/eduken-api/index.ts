@@ -100,6 +100,38 @@ async function persistCbtAttemptSummary(attempt: any, score: number, total: numb
   if (error) throw error;
 }
 
+async function persistCbtSubjectScores(attempt: any, review: any[], submittedAt: string) {
+  if (!attempt.user_id || !Array.isArray(review) || !review.length) return;
+  const started = new Date(attempt.started_at).getTime();
+  const submitted = new Date(submittedAt).getTime();
+  const durationSeconds = Number.isFinite(started) && Number.isFinite(submitted)
+    ? Math.max(0, Math.floor((submitted - started) / 1000))
+    : null;
+  const grouped = new Map<string, { score: number; total: number }>();
+  for (const item of review) {
+    const subject = String(item.subject || "").trim();
+    if (!subject) continue;
+    const current = grouped.get(subject) || { score: 0, total: 0 };
+    current.total += 1;
+    if (item.isCorrect) current.score += 1;
+    grouped.set(subject, current);
+  }
+  const rows = [...grouped.entries()].map(([subject, result]) => ({
+    attempt_session_id: attempt.id,
+    user_id: attempt.user_id,
+    mode: attempt.mode,
+    subject,
+    score: result.score,
+    total: result.total,
+    duration_seconds: durationSeconds,
+    submitted_at: submittedAt,
+  }));
+  if (!rows.length) return;
+  const { error } = await db.from("cbt_attempt_subject_scores")
+    .upsert(rows, { onConflict: "attempt_session_id,subject" });
+  if (error) throw error;
+}
+
 
 const tokenOf = (req: Request) => {
   const h = req.headers.get("Authorization") || "";
@@ -3313,6 +3345,7 @@ Deno.serve(async (req) => {
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
         const submittedAt = String(attempt.submitted_at || new Date().toISOString());
         await persistCbtAttemptSummary(attempt, Number(attempt.score ?? previous.score), Number(attempt.total ?? previous.total), submittedAt);
+        await persistCbtSubjectScores(attempt, previous.review, submittedAt);
         return json({
           score: attempt.score ?? previous.score,
           total: attempt.total ?? previous.total,
@@ -3346,12 +3379,72 @@ Deno.serve(async (req) => {
       if (updateError) throw updateError;
       if (!updated) return json({ error: "This practice attempt has already been submitted." }, 409);
       await persistCbtAttemptSummary(attempt, Number(graded.score), Number(graded.total), submittedAt);
+      await persistCbtSubjectScores(attempt, graded.review, submittedAt);
       return json({
         score: graded.score,
         total: graded.total,
         percent: graded.percent,
         review: graded.review,
         submittedAt,
+      });
+    }
+
+    if (path === "/api/cbt/student-profile" && req.method === "GET") {
+      const user = await requireUser(req);
+      const { data, error } = await db.from("cbt_student_profiles")
+        .select("username,created_at").eq("user_id", user.id).maybeSingle();
+      if (error) throw error;
+      return json({ profile: data || null });
+    }
+
+    if (path === "/api/cbt/student-profile" && req.method === "POST") {
+      const user = await requireUser(req);
+      const parsed = parseJsonObjectBody(await req.text());
+      if (!parsed.valid) return json({ error: parsed.error }, 400);
+      const username = String(parsed.value.username || "").trim();
+      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) {
+        return json({ error: "Choose a username with 3–20 letters, numbers or underscores." }, 400);
+      }
+      if (/^(admin|administrator|support|eduken|official|moderator|system|jamb|guest)$/i.test(username)) {
+        return json({ error: "That username is reserved. Please choose another." }, 400);
+      }
+      const { data: existing, error: existingError } = await db.from("cbt_student_profiles")
+        .select("username").eq("user_id", user.id).maybeSingle();
+      if (existingError) throw existingError;
+      if (existing) return json({ error: "Your EDUKEN competition username has already been claimed.", profile: existing }, 409);
+      const { data, error } = await db.from("cbt_student_profiles")
+        .insert({ user_id: user.id, username })
+        .select("username,created_at").single();
+      if (error?.code === "23505") return json({ error: "That username is already taken. Try another one." }, 409);
+      if (error) throw error;
+      return json({ profile: data }, 201);
+    }
+
+    if (path === "/api/cbt/leaderboard" && req.method === "GET") {
+      const params = new URL(req.url).searchParams;
+      const scope = params.get("scope") === "subject" ? "subject" : "national";
+      const subject = params.get("subject") || null;
+      const period = params.get("period") === "all-time" ? "all-time" : "week";
+      const page = Math.max(0, Math.min(10000, Number.parseInt(params.get("page") || "0", 10) || 0));
+      const limit = Math.max(1, Math.min(100, Number.parseInt(params.get("limit") || "50", 10) || 50));
+      if (scope === "subject" && !subject) return json({ error: "Choose a subject leaderboard." }, 400);
+      const { data, error } = await db.rpc("cbt_student_leaderboard", {
+        p_scope: scope,
+        p_subject: subject,
+        p_period: period,
+        p_limit: limit,
+        p_offset: page * limit,
+      });
+      if (error) throw error;
+      const items = data ?? [];
+      return json({
+        items,
+        page,
+        limit,
+        participantCount: Number(items[0]?.participant_count || 0),
+        scope,
+        subject,
+        period,
       });
     }
 
