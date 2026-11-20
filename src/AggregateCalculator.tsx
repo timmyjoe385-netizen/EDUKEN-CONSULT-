@@ -574,32 +574,43 @@ export default function AggregateCalculator() {
         {school !== 'custom' && sources[school] && <a href={sources[school]} target="_blank" rel="noreferrer">Open source / admission portal <ExternalLink size={14} /></a>}
         <p className="aggregate-disclaimer">Admission requirements and screening methods can change by session and course. Check the institution’s current instructions before making an application decision.</p>
       </section>
-      <section className="aggregate-directory" aria-labelledby="aggregate-directory-title">
-        <div className="aggregate-directory-heading">
-          <span className="aggregate-kicker"><ShieldCheck size={15} /> EXPANDING NATIONWIDE</span>
-          <h2 id="aggregate-directory-title">Nigerian university formula directory</h2>
-          <p>Search the schools we are tracking. Only schools with a usable formula can be calculated above; the rest stay visible while we compare current notices, social-media announcements and independent reports.</p>
-        </div>
-        <label className="aggregate-directory-search"><Search size={17} /><input value={directoryQuery} onChange={e => setDirectoryQuery(e.target.value)} placeholder="Search a university..." aria-label="Search university directory" /></label>
-        <div className="aggregate-directory-filters" role="group" aria-label="Filter universities">
-          <button type="button" className={directoryFilter === 'all' ? 'active' : ''} onClick={() => setDirectoryFilter('all')}>All schools ({directory.length})</button>
-          <button type="button" className={directoryFilter === 'ready' ? 'active' : ''} onClick={() => setDirectoryFilter('ready')}>Usable formula (official/provisional) ({directory.filter(item => item.status === 'official' || item.status === 'community').length})</button>
-          <button type="button" className={directoryFilter === 'review' ? 'active' : ''} onClick={() => setDirectoryFilter('review')}>Under verification ({directory.filter(item => item.status === 'review').length})</button>
-        </div>
-        <div className="aggregate-directory-list">
-          {filteredDirectory.map(item => <article className="aggregate-directory-item" key={item.name}>
-            <div className="aggregate-directory-item-top">
-              <strong>{item.name}</strong>
-              <span className={'aggregate-status ' + (item.status === 'official' ? 'is-official' : item.status === 'community' ? 'is-community' : 'is-review')}>
-                {item.status === 'official' ? 'Official formula' : item.status === 'community' ? 'Community-reported' : 'Needs verification'}
-              </span>
+      <section className="aggregate-directory" aria-label="Additional university formula verification directory">
+        <details className="aggregate-directory-details">
+          <summary className="aggregate-directory-summary">
+            <span>
+              <strong>Other universities — verification in progress</strong>
+              <small>We’re checking additional admission formulas before enabling more calculators.</small>
+            </span>
+            <span className="aggregate-directory-count">{directory.length} schools tracked · Expand</span>
+          </summary>
+          <div className="aggregate-directory-content">
+            <div className="aggregate-directory-heading">
+              <span className="aggregate-kicker"><ShieldCheck size={15} /> EXPANDING NATIONWIDE</span>
+              <h2 id="aggregate-directory-title">Nigerian university formula directory</h2>
+              <p>Search the schools we are tracking. Only universities with a sufficiently verified formula and scoring scale are enabled for calculation.</p>
             </div>
-            <p>{item.note}</p>
-            {item.href && <a href={item.href} target="_blank" rel="noreferrer">Check source <ExternalLink size={13} /></a>}
-          </article>)}
-          {filteredDirectory.length === 0 && <p className="aggregate-helper">No schools match that search. Try a shorter name or acronym.</p>}
-        </div>
-        <p className="aggregate-disclaimer">Directory coverage is not a claim that every institution’s formula has been verified. We will promote entries to a calculator only when the formula and its scoring scale have enough supporting evidence.</p>
+            <label className="aggregate-directory-search"><Search size={17} /><input value={directoryQuery} onChange={e => setDirectoryQuery(e.target.value)} placeholder="Search a university..." aria-label="Search university directory" /></label>
+            <div className="aggregate-directory-filters" role="group" aria-label="Filter universities">
+              <button type="button" className={directoryFilter === 'all' ? 'active' : ''} onClick={() => setDirectoryFilter('all')}>All schools ({directory.length})</button>
+              <button type="button" className={directoryFilter === 'ready' ? 'active' : ''} onClick={() => setDirectoryFilter('ready')}>Usable formula (official/provisional) ({directory.filter(item => item.status === 'official' || item.status === 'community').length})</button>
+              <button type="button" className={directoryFilter === 'review' ? 'active' : ''} onClick={() => setDirectoryFilter('review')}>Under verification ({directory.filter(item => item.status === 'review').length})</button>
+            </div>
+            <div className="aggregate-directory-list">
+              {filteredDirectory.map(item => <article className="aggregate-directory-item" key={item.name}>
+                <div className="aggregate-directory-item-top">
+                  <strong>{item.name}</strong>
+                  <span className={'aggregate-status ' + (item.status === 'official' ? 'is-official' : item.status === 'community' ? 'is-community' : 'is-review')}>
+                    {item.status === 'official' ? 'Official formula' : item.status === 'community' ? 'Community-reported' : 'Needs verification'}
+                  </span>
+                </div>
+                <p>{item.note}</p>
+                {item.href && <a href={item.href} target="_blank" rel="noreferrer">Check source <ExternalLink size={13} /></a>}
+              </article>)}
+              {filteredDirectory.length === 0 && <p className="aggregate-helper">No schools match that search. Try a shorter name or acronym.</p>}
+            </div>
+            <p className="aggregate-disclaimer">Directory coverage is not a claim that every institution’s formula has been verified. We will enable additional calculators only when the formula and scoring scale have enough supporting evidence.</p>
+          </div>
+        </details>
       </section>
     </main>
     <footer className="aggregate-footer">© 2026 EDUKEN CONSULT · Education. Opportunities. Your Next Move.</footer>
