@@ -3,6 +3,15 @@ import { api, auth } from './lib/api';
 import StudentProgress from './StudentProgress';
 
 type StudentProfile = { username: string; created_at: string };
+type WeeklyChampion = {
+  category: 'top-performer' | 'most-improved' | 'most-consistent';
+  username: string;
+  score: number;
+  total: number;
+  percentage: number;
+  detail: string;
+  attempts_count: number;
+};
 type LeaderboardRow = {
   rank: number;
   username: string;
@@ -20,6 +29,8 @@ const SUBJECTS = [
 
 export default function StudentArena() {
   const [signedIn] = useState(() => auth.isSignedIn());
+  const [champions, setChampions] = useState<WeeklyChampion[]>([]);
+  const [loadingChampions, setLoadingChampions] = useState(true);
   const [profile, setProfile] = useState<StudentProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [username, setUsername] = useState('');
@@ -34,6 +45,21 @@ export default function StudentArena() {
   const [loadingRows, setLoadingRows] = useState(false);
   const [leaderboardError, setLeaderboardError] = useState('');
   const leaderboardRequestId = useRef(0);
+
+  useEffect(() => {
+    let active = true;
+    api.get('/api/cbt/arena/champions')
+      .then(result => {
+        if (active) setChampions(Array.isArray(result.data?.champions) ? result.data.champions : []);
+      })
+      .catch(() => {
+        if (active) setChampions([]);
+      })
+      .finally(() => {
+        if (active) setLoadingChampions(false);
+      });
+    return () => { active = false; };
+  }, []);
 
   useEffect(() => {
     if (!signedIn) {
@@ -114,6 +140,41 @@ export default function StudentArena() {
         </div>
         <span className="student-arena-trophy" aria-hidden="true">🏆</span>
       </div>
+
+      <section className="student-arena-champions" aria-label="This week's champions">
+        <div className="student-arena-champions-heading">
+          <div><span className="cbt-eyebrow">WEEKLY SPOTLIGHT</span><h3>This week's champions 🌟</h3></div>
+          <small>Based on qualifying 180-question mocks</small>
+        </div>
+        {loadingChampions ? (
+          <p className="student-arena-loading" role="status">Loading this week's champions…</p>
+        ) : champions.length ? (
+          <div className="student-arena-champion-grid">
+            {(['top-performer', 'most-improved', 'most-consistent'] as const).map(category => {
+              const champion = champions.find(item => item.category === category);
+              const label = category === 'top-performer' ? 'Top performer' : category === 'most-improved' ? 'Most improved' : 'Most consistent';
+              const icon = category === 'top-performer' ? '🏆' : category === 'most-improved' ? '📈' : '🎯';
+              return (
+                <article className="student-arena-champion" key={category}>
+                  <span aria-hidden="true">{icon}</span>
+                  <small>{label}</small>
+                  {champion ? (
+                    <>
+                      <strong>@{champion.username}</strong>
+                      <b>{Number(champion.percentage).toFixed(1)}%</b>
+                      <p>{champion.detail}</p>
+                    </>
+                  ) : (
+                    <p>Complete at least two qualifying mocks this week to be recognised.</p>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="student-arena-empty">No weekly champions yet. Complete qualifying full mocks to take a place in this week's spotlight.</div>
+        )}
+      </section>
 
       {!signedIn ? (
         <div className="student-arena-gate">
