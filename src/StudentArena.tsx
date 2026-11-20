@@ -178,15 +178,15 @@ export default function StudentArena() {
 
       {!signedIn ? (
         <div className="student-arena-gate">
-          <h3>Your student identity comes first</h3>
-          <p>Sign in and create your unique EDUKEN username in the identity section above before starting any practice or mock examination. The same identity will appear here on your leaderboard.</p>
+          <h3>Practise first. Join the leaderboard when you’re ready.</h3>
+          <p>Guest practice is open to everyone. To compete on the EDUKEN leaderboard, sign in and claim a free unique username in the optional Student Arena section above.</p>
         </div>
       ) : loadingProfile ? (
         <div className="student-arena-gate" role="status">Loading your competition profile…</div>
       ) : !profile ? (
         <div className="student-arena-gate">
-          <h3>Finish setting up your student identity</h3>
-          <p>Use the identity section above to choose your unique username. Once it is saved, your Student Arena rankings and personal progress will appear here.</p>
+          <h3>One more step to join the leaderboard</h3>
+          <p>Keep practising as usual. When you’re ready to compete, use the optional identity section above to claim your free unique username.</p>
         </div>
       ) : (
         <div className="student-arena-board">
