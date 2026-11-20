@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
@@ -118,6 +118,8 @@ function App() {
   const [loginOpen, setLoginOpen] = useState(false);
   const [adminView, setAdminView] = useState(false);
   const [adminTab, setAdminTab] = useState('opportunities');
+  // Reuse the OAuth callback promise across React StrictMode effect replay.
+  const oauthCallbackPromiseRef = useRef<Promise<any> | null>(null);
   const [systemSettings, setSystemSettings] = useState<SystemSettings>(DEFAULT_SYSTEM_SETTINGS);
   const [settingsLoading, setSettingsLoading] = useState(false);
   const [settingsSaving, setSettingsSaving] = useState<string | null>(null);
@@ -432,7 +434,10 @@ function App() {
         token: (verificationToken || unsubscribeToken)!,
       });
     }
-    void auth.completeOAuthCallback().then(async (result: any) => {
+    if (!oauthCallbackPromiseRef.current) {
+      oauthCallbackPromiseRef.current = auth.completeOAuthCallback();
+    }
+    void oauthCallbackPromiseRef.current.then(async (result: any) => {
       if (!active || !result) return;
       // OAuth can also be used by customers from the public wallet. Completing that
       // callback establishes their customer session, but must never switch the public

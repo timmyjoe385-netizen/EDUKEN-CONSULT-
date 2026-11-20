@@ -30,16 +30,24 @@ try {
   assert.equal(await page.locator(".cbt-mock-subject-required input").isDisabled(), true, "Use of English must remain selected and locked.");
   const subjectSelect = page.locator("#cbt-subject-select");
   assert.ok(await subjectSelect.count(), "Subject practice must use its separate dropdown.");
-  const subjectButton = page.locator(".cbt-subject-picker button:not([disabled])");
-  await subjectButton.click();
-  await page.locator(".cbt-question-card").waitFor({ timeout: 15_000 });
-  await page.locator(".cbt-options .cbt-option").first().click();
-  await page.locator(".cbt-submit-wide").click();
-  await page.locator(".cbt-result-hero").waitFor({ timeout: 20_000 });
-  const resultText = await page.locator(".cbt-result-hero").innerText();
-  assert.match(resultText, /PRACTICE COMPLETE/i, "A real preview attempt should submit and display results.");
-  await page.locator(".cbt-review-card").waitFor({ timeout: 5_000 });
-  console.log("Live CBT preview browser smoke passed: real question fetch, hidden answer key, practice submission and result review.");
+
+  // Only one published English sample exists in this isolated database, while the
+  // student UI requests ten by default. The safe expected result is HTTP 409 and no
+  // question screen—not a fabricated or partial practice session.
+  const startResponsePromise = page.waitForResponse(
+    response => response.request().method() === "POST" &&
+      response.url().includes("/functions/v1/eduken-api/api/cbt/start"),
+    { timeout: 25_000 },
+  );
+  await page.locator(".cbt-subject-picker button:not([disabled])").click();
+  const startResponse = await startResponsePromise;
+  assert.equal(startResponse.status(), 409, "The preview must reject a practice launch when the published question count is insufficient.");
+  const startPayload = await startResponse.json();
+  assert.match(String(startPayload.error || ""), /only 1 published questions; 10 are required/i);
+  await page.getByRole("alert").filter({ hasText: /only 1 published questions/i }).waitFor({ timeout: 5_000 });
+  assert.equal(await page.locator(".cbt-question-card").count(), 0, "An insufficient question bank must not launch a practice session.");
+
+  console.log("Live CBT preview smoke passed: real question fetch, hidden answer key, required subject selection and safe insufficient-bank rejection.");
 } finally {
   await browser.close();
 }

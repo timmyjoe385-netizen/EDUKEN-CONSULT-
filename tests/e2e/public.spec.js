@@ -2103,6 +2103,8 @@ test('isolated payment webhook fails closed against a forged success event', asy
 });
 
 test('public opportunity hub hides expired deadlines but keeps current opportunities', async ({ page }) => {
+  const expiredDeadline = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const currentDeadline = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -2114,7 +2116,7 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
             title: 'Expired Opportunity Fixture',
             category: 'Scholarship',
             description: 'A test-only opportunity whose deadline has passed.',
-            deadline: '15 October 2026',
+            deadline: expiredDeadline,
             is_published: true,
           },
           {
@@ -2122,7 +2124,7 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
             title: 'Current Opportunity Fixture',
             category: 'Scholarship',
             description: 'A test-only opportunity that remains open.',
-            deadline: '30 October 2026',
+            deadline: currentDeadline,
             is_published: true,
           },
         ],
