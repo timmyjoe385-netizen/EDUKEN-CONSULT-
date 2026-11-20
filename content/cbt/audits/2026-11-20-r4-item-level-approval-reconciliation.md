@@ -91,7 +91,7 @@ The reviewer worksheets record item-level APPROVED decisions, and all 32 candida
 Before any import:
 1. Capture and record a content hash for each exact approved stem/options/key/explanation version.
 2. Run final answer-key, explanation, formatting and import-schema validation.
-3. Revisit the recorded high-similarity cautions for DUP-106, DUP-226 and DUP-97 and preserve the distinctions documented by the reviewers.
+3. Preserve the reviewer-approved distinctions for DUP-106 (selective reabsorption vs ultrafiltration), DUP-226 (meiosis I homologous chromosomes vs mitotic sister chromatids), and DUP-97 (acid basicity vs acid strength) when generating the import payload.
 4. Confirm that held rows remain excluded and that the 13 no-candidate targets are not force-filled.
 5. Obtain the project owner's explicit authorization for the specific staging import.
 
