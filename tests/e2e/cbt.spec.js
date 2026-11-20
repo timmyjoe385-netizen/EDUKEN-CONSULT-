@@ -254,22 +254,26 @@ test('manual CBT submission warns before submitting unanswered questions', async
 test('Try again preserves the selected timed-mock question count', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200, contentType: 'application/json',
-    body: JSON.stringify({ items: [{ id: 'retry-mock-q', subject: 'Use of English', question_text: 'Mock question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+    body: JSON.stringify({ items: [{ id: 'timed-q1', subject: 'Use of English', question_text: 'Question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
   }));
   const requestedCounts = [];
   await page.route('**/api/cbt/start*', async route => {
-    requestedCounts.push(route.request().postDataJSON().questionCount);
     const count = route.request().postDataJSON().questionCount;
-    await route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ attemptToken: 'e'.repeat(64), durationSeconds: 1800, questions: Array.from({ length: count }, (_, index) => ({ id: 'retry-mock-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'] })) }) });
+    requestedCounts.push(count);
+    await route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({
+      attemptToken: 'e'.repeat(64), durationSeconds: 1800,
+      questions: Array.from({ length: count }, (_, index) => ({ id: 'timed-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'] })),
+    }) });
   });
-  await page.route('**/api/cbt/submit*', async route => {
-    const body = route.request().postDataJSON();
-    const review = Object.keys(body.answers).map((id, index) => ({ id, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }));
-    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: review.length, percent: 0, review }) });
-  });
+  await page.route('**/api/cbt/submit*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
+    score: 0, total: 10, percent: 0,
+    review: Array.from({ length: 10 }, (_, index) => ({ id: 'timed-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'A is correct.' })),
+  }) }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
   await expect(page.getByText('Question 1 of 10')).toBeVisible();
+  for (let i = 0; i < 9; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 10 of 10')).toBeVisible();
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
@@ -277,7 +281,6 @@ test('Try again preserves the selected timed-mock question count', async ({ page
   await expect(page.getByText('Question 1 of 10')).toBeVisible();
   expect(requestedCounts).toEqual([10, 10]);
 });
-
 
 test('CBT Try again preserves the selected mixed-mock question count', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
@@ -287,10 +290,11 @@ test('CBT Try again preserves the selected mixed-mock question count', async ({ 
   const payloads = [];
   await page.route('**/api/cbt/start*', async route => {
     payloads.push(route.request().postDataJSON());
+    const count = payloads[payloads.length - 1].questionCount;
     await route.fulfill({
       status: 201, contentType: 'application/json',
       body: JSON.stringify({ attemptToken: String(payloads.length).repeat(64), durationSeconds: 1800,
-        questions: Array.from({ length: payloads[payloads.length - 1].questionCount }, (_, index) => ({ id: 'retry-q' + index, subject: 'Use of English', prompt: 'Choose one ' + index + '?', options: ['A', 'B', 'C', 'D'] })) }),
+        questions: Array.from({ length: count }, (_, index) => ({ id: 'retry-q' + index, subject: 'Use of English', prompt: 'Choose one ' + index + '?', options: ['A', 'B', 'C', 'D'] })) }),
     });
   });
   await page.route('**/api/cbt/submit*', route => route.fulfill({
@@ -301,6 +305,8 @@ test('CBT Try again preserves the selected mixed-mock question count', async ({ 
   await page.locator('#cbt-mock-count').selectOption('20');
   await page.getByRole('button', { name: /Start mixed mock/i }).click();
   await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  for (let i = 0; i < 19; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
@@ -349,7 +355,10 @@ test('mixed mock selector starts the exact number of questions selected', async 
 test('subject practice selector starts the exact number of questions selected', async ({ page }) => {
   const requestedCounts = [];
   await page.route('**/api/cbt/questions*', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ items: [] }),
+    status: 200, contentType: 'application/json', body: JSON.stringify({ items: [{
+      id: 'available-practice-question', subject: 'Use of English', question_text: 'Available practice question?',
+      options: { A: 'A', B: 'B', C: 'C', D: 'D' },
+    }] }),
   }));
   await page.route('**/api/cbt/start*', async route => {
     const payload = route.request().postDataJSON();
