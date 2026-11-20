@@ -243,3 +243,25 @@ test('manual CBT submission warns before submitting unanswered questions', async
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   expect(submitCalls).toBe(1);
 });
+
+
+test('Try again preserves the selected timed-mock question count', async ({ page }) => {
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'retry-mock-q', subject: 'Use of English', question_text: 'Mock question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  const requestedCounts = [];
+  await page.route('**/api/cbt/start*', async route => {
+    requestedCounts.push(route.request().postDataJSON().questionCount);
+    await route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({ attemptToken: 'e'.repeat(64), durationSeconds: 1800, questions: [{ id: 'retry-mock-q', subject: 'Use of English', prompt: 'Mock question?', options: ['A', 'B', 'C', 'D'] }] }) });
+  });
+  await page.route('**/api/cbt/submit*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'retry-mock-q', subject: 'Use of English', prompt: 'Mock question?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.getByRole('button', { name: /Try a timed mock/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await page.getByRole('button', { name: /Submit practice/i }).click();
+  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  await page.getByRole('button', { name: /Try again/i }).click();
+  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  expect(requestedCounts).toEqual([10, 10]);
+});
