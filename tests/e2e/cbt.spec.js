@@ -307,6 +307,7 @@ test('CBT calculator performs basic arithmetic and closes', async ({ page }) => 
       questions: [{ id: 'calc-q1', subject: 'Mathematics', prompt: 'Calculate.', options: ['1', '2', '3', '4'] }] }),
   }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.locator('#cbt-subject-select').selectOption('Mathematics');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await page.getByRole('button', { name: /Calculator/i }).click();
   const dialog = page.getByRole('dialog', { name: 'Practice calculator' });
