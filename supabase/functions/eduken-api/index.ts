@@ -3260,7 +3260,7 @@ Deno.serve(async (req) => {
       const token = createCbtAttemptToken();
       const now = new Date();
       const durationSeconds = mode === "mock"
-        ? (requestedQuestionCount === 180 ? 120 * 60 : 30 * 60)
+        ? (requestedQuestionCount === 180 ? 120 * 60 : requestedQuestionCount === 4 ? 4 * 60 : 30 * 60)
         : (requestedQuestionCount === defaultQuestionCount ? 15 * 60 : requestedQuestionCount * 60);
       // The visible timer remains exact; this short grace window lets the automatic
       // submit request reach the server after the countdown reaches zero.
