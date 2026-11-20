@@ -49,3 +49,4 @@
 .cbt-mock-summary{margin:12px 0 18px!important;color:var(--cbt-muted,#64716a)!important;font-size:.82rem!important;line-height:1.55}
 .cbt-mock-banner .cbt-count-select{min-width:180px}
 @media(max-width:700px){.cbt-mock-subjects{grid-template-columns:1fr}.cbt-mock-subject-required{grid-column:auto}.cbt-mock-banner{padding:18px}.cbt-mock-banner .cbt-count-select{width:100%;min-width:0}}
+.cbt-mock-banner>.cbt-primary-button{width:100%;justify-content:center;margin-top:6px}
