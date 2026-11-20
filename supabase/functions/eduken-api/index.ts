@@ -3192,15 +3192,15 @@ Deno.serve(async (req) => {
       if (!["practice", "mock"].includes(mode)) return json({ error: "Practice mode is invalid." }, 400);
       if (mode === "practice" && !subject) return json({ error: "Choose a subject before starting practice." }, 400);
 
-      // Question count is server-validated so callers cannot request unbounded sessions.
-      // Keep existing defaults until the student UI exposes the count selector.
-      const defaultQuestionCount = mode === "mock" ? 100 : 50;
+      // Enforce the same minimum shown in the student selectors on the server.
+      // Subject practice supports 20–50; mixed mocks support 20–180.
+      const defaultQuestionCount = 20;
       const maxQuestionCount = mode === "mock" ? 180 : 50;
       const requestedQuestionCount = body.questionCount === undefined
         ? defaultQuestionCount
         : Number(body.questionCount);
-      if (!Number.isInteger(requestedQuestionCount) || requestedQuestionCount < 1 || requestedQuestionCount > maxQuestionCount) {
-        return json({ error: `Question count must be a whole number from 1 to ${maxQuestionCount} for ${mode} mode.` }, 400);
+      if (!Number.isInteger(requestedQuestionCount) || requestedQuestionCount < 20 || requestedQuestionCount > maxQuestionCount) {
+        return json({ error: `Question count must be a whole number from 20 to ${maxQuestionCount} for ${mode} mode.` }, 400);
       }
 
       const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
