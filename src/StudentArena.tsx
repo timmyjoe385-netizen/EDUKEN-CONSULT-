@@ -151,7 +151,6 @@ export default function StudentArena() {
         </div>
       ) : (
         <div className="student-arena-board">
-          <StudentProgress />
           <div className="student-arena-welcome">
             <div><span>YOUR COMPETITION ID</span><strong>@{profile.username}</strong></div>
             <span className="student-arena-free">FREE MEMBER</span>
@@ -202,6 +201,7 @@ export default function StudentArena() {
         </div>
       )}
       {message && signedIn && profile && <p className="student-arena-message" role="alert">{message}</p>}
+      {signedIn && <StudentProgress />}
     </section>
   );
 }
