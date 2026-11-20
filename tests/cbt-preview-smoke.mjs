@@ -37,15 +37,6 @@ try {
       "Access-Control-Request-Headers": "apikey,content-type",
     },
   });
-  const apiRead = await fetch(apiUrl, {
-    headers: {
-      Origin: smokeUrl.origin,
-      apikey: "sb_publishable_1M8EMlYF_U0hpVvtWurNSg_pO_ZwUSB",
-      "Content-Type": "application/json",
-    },
-  });
-  const apiReadCors = Object.fromEntries(apiRead.headers.entries());
-  console.log("Isolated API GET:", apiRead.status, "allow-origin:", apiReadCors["access-control-allow-origin"] || "(missing)");
   const corsHeaders = Object.fromEntries(preflight.headers.entries());
   console.log("Isolated API CORS preflight:", preflight.status, JSON.stringify({
     origin: corsHeaders["access-control-allow-origin"],
