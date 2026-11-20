@@ -343,6 +343,40 @@ test('mixed mock selector starts the exact number of questions selected', async 
   expect(requestedCounts).toEqual([8, 10, 20, 40, 100, 180]);
 });
 
+test('subject practice selector starts the exact number of questions selected', async ({ page }) => {
+  const requestedCounts = [];
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json', body: JSON.stringify({ items: [] }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    const payload = route.request().postDataJSON();
+    requestedCounts.push(payload.questionCount);
+    const questions = Array.from({ length: payload.questionCount }, (_, index) => ({
+      id: 'practice-count-' + payload.questionCount + '-' + index,
+      subject: payload.subject,
+      prompt: 'Practice question ' + (index + 1) + '?',
+      options: ['A', 'B', 'C', 'D'],
+    }));
+    await route.fulfill({
+      status: 201, contentType: 'application/json',
+      body: JSON.stringify({ attemptToken: 'b'.repeat(64), durationSeconds: 900, questions }),
+    });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const selector = page.locator('#cbt-practice-count');
+  const start = page.locator('.cbt-subject-picker button:not([disabled])');
+  for (const count of [1, 5, 10, 20, 40, 50]) {
+    await selector.selectOption(String(count));
+    await expect(selector).toHaveValue(String(count));
+    await start.click();
+    await expect(page.getByText('Question 1 of ' + count)).toBeVisible();
+    await page.once('dialog', dialog => dialog.accept());
+    await page.getByRole('button', { name: /Exit/i }).click();
+    await expect(selector).toBeVisible();
+  }
+  expect(requestedCounts).toEqual([1, 5, 10, 20, 40, 50]);
+});
+
 test('CBT calculator performs basic arithmetic and closes', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200, contentType: 'application/json',
