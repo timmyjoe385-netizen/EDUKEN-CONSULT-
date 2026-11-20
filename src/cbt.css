@@ -112,3 +112,29 @@
 .student-arena-retry p{margin:0}
 .student-arena-retry button{padding:8px 12px;border:1px solid #b9d1c0;border-radius:9px;background:#fff;color:#17643d;font-weight:700;cursor:pointer}
 .student-arena-retry button:focus-visible,.student-arena-more:focus-visible,.student-arena-tabs button:focus-visible{outline:3px solid #8ab99a;outline-offset:2px}
+
+
+.student-arena-champions { margin: 1.25rem 0 1.5rem; }
+.student-arena-champions-heading { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: .8rem; }
+.student-arena-champions-heading h3 { margin: .2rem 0 0; color: var(--cbt-text, #173b2b); font-size: 1.15rem; }
+.student-arena-champions-heading > small { color: var(--cbt-muted, #64746a); text-align: right; }
+.student-arena-champion-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.student-arena-champion { min-width: 0; padding: 1rem; border: 1px solid var(--cbt-border, #dce7df); border-radius: 14px; background: var(--cbt-surface, #fff); display: flex; flex-direction: column; gap: .35rem; }
+.student-arena-champion > span { font-size: 1.35rem; }
+.student-arena-champion > small { color: var(--cbt-muted, #64746a); font-weight: 700; }
+.student-arena-champion > strong { overflow-wrap: anywhere; color: var(--cbt-text, #173b2b); }
+.student-arena-champion > b { color: var(--cbt-green, #176b43); font-size: 1.2rem; }
+.student-arena-champion > p { margin: 0; color: var(--cbt-muted, #64746a); font-size: .82rem; line-height: 1.45; }
+.student-progress-trend { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .9rem 1rem; margin: .85rem 0; border: 1px solid var(--cbt-border, #dce7df); border-radius: 12px; background: var(--cbt-surface, #fff); }
+.student-progress-trend > span { display: flex; flex-direction: column; gap: .2rem; }
+.student-progress-trend small { color: var(--cbt-muted, #64746a); }
+.student-progress-trend > strong { text-align: right; color: var(--cbt-text, #173b2b); }
+.student-progress-trend > strong.positive { color: #167343; }
+.student-progress-trend > strong.negative { color: #b54735; }
+@media (max-width: 640px) {
+  .student-arena-champions-heading { align-items: start; flex-direction: column; gap: .25rem; }
+  .student-arena-champions-heading > small { text-align: left; }
+  .student-arena-champion-grid { grid-template-columns: 1fr; }
+  .student-progress-trend { align-items: start; flex-direction: column; }
+  .student-progress-trend > strong { text-align: left; }
+}
