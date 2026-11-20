@@ -12,6 +12,7 @@ import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
 import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
+import { aggregateCbtSubjectScores, validateStudentUsername } from "./student-arena-validation.mjs";
 
 const cors = {
   "Access-Control-Allow-Origin": "*",
@@ -107,20 +108,12 @@ async function persistCbtSubjectScores(attempt: any, review: any[] | undefined, 
   const durationSeconds = Number.isFinite(started) && Number.isFinite(submitted)
     ? Math.max(0, Math.floor((submitted - started) / 1000))
     : null;
-  const grouped = new Map<string, { score: number; total: number }>();
-  for (const item of review) {
-    const subject = String(item.subject || "").trim();
-    if (!subject) continue;
-    const current = grouped.get(subject) || { score: 0, total: 0 };
-    current.total += 1;
-    if (item.isCorrect) current.score += 1;
-    grouped.set(subject, current);
-  }
-  const rows = [...grouped.entries()].map(([subject, result]) => ({
+  const grouped = aggregateCbtSubjectScores(review);
+  const rows = grouped.map(result => ({
     attempt_session_id: attempt.id,
     user_id: attempt.user_id,
     mode: attempt.mode,
-    subject,
+    subject: result.subject,
     score: result.score,
     total: result.total,
     duration_seconds: durationSeconds,
@@ -3401,13 +3394,9 @@ Deno.serve(async (req) => {
       const user = await requireUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
-      const username = String(parsed.value.username || "").trim();
-      if (!/^[A-Za-z0-9_]{3,20}$/.test(username)) {
-        return json({ error: "Choose a username with 3–20 letters, numbers or underscores." }, 400);
-      }
-      if (/^(admin|administrator|support|eduken|official|moderator|system|jamb|guest)$/i.test(username)) {
-        return json({ error: "That username is reserved. Please choose another." }, 400);
-      }
+      const usernameValidation = validateStudentUsername(parsed.value.username);
+      if (!usernameValidation.valid) return json({ error: usernameValidation.error }, 400);
+      const username = usernameValidation.username;
       const { data: existing, error: existingError } = await db.from("cbt_student_profiles")
         .select("username").eq("user_id", user.id).maybeSingle();
       if (existingError) throw existingError;
