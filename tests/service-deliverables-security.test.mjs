@@ -11,7 +11,7 @@ test("student deliverables listing requires authentication and restricts rows to
   const end = source.indexOf('if (path.startsWith("/api/service-deliverables/")', start);
   assert.ok(start >= 0 && end > start, "student listing route must exist");
   const route = source.slice(start, end);
-  assert.match(route, /await requireUser\(req\)/);
+  assert.match(route, /await requireGoogleUser\(req\)/);
   assert.match(route, /\.eq\("user_id", user\.id\)/);
   assert.match(route, /\.not\("published_at", "is", null\)/);
 });
@@ -21,7 +21,7 @@ test("download route scopes lookup by user and published state and creates a sho
   const end = source.indexOf("const adminRequests = path.match(", start);
   assert.ok(start >= 0 && end > start, "student download route must exist");
   const route = source.slice(start, end);
-  assert.match(route, /await requireUser\(req\)/);
+  assert.match(route, /await requireGoogleUser\(req\)/);
   assert.match(route, /\.eq\("user_id", user\.id\)/);
   assert.match(route, /\.not\("published_at", "is", null\)/);
   assert.match(route, /createSignedUrl\(item\.storage_path, 60/);
@@ -66,18 +66,42 @@ test("database migration keeps deliverables private with student ownership RLS a
 });
 
 
-test("selected service requests require a customer account while general enquiries remain available to guests", () => {
+test("service requests require a Google-linked customer account, including general enquiries", () => {
   const start = source.indexOf('if (path === "/api/service-requests" && req.method === "POST")');
   const end = source.indexOf('if (path === "/api/service-requests" && req.method === "GET")', start);
   assert.ok(start >= 0 && end > start, "service request route must exist");
   const route = source.slice(start, end);
-  assert.match(route, /const user = serviceId \? await requireUser\(req\) : await currentUser\(req\)/);
-  assert.match(app, /if \(!auth\.isSignedIn\(\)\)[\s\S]*setCustomerSignInRequest\(current => current \+ 1\)/);
+  assert.match(route, /const user = serviceId \? await requireGoogleUser\(req\) : await currentUser\(req\)/);
+  assert.match(app, /if \(!auth\.isGoogleSignedIn\(\)\)[\s\S]*setCustomerSignInRequest\(current => current \+ 1\)/);
   assert.match(app, /customerSignInRequest=\{customerSignInRequest\}/);
   const hub = readFileSync("src/PlatformHub.tsx", "utf8");
-  assert.match(hub, /auth\.signIn\(/);
+  assert.match(hub, /auth\.isGoogleSignedIn\(\)/);\n  assert.match(hub, /auth\.signIn\(/);
   assert.match(hub, /Continue with Google/);
   assert.doesNotMatch(hub, /customer-signin-email|customer-signin-password|signUpWithPassword|signInWithPassword/);
   assert.match(hub, /student-account-identity/);
   assert.match(hub, /api\.get\('\/api\/cbt\/student-profile'\)/);
+});
+
+
+test("student workspace and consultation APIs require a Google-linked identity", () => {
+  for (const routeStart of [
+    'if (path === "/api/me" && req.method === "GET")',
+    'const savedMatch = path.match(',
+    'const trackerMatch = path.match(',
+    'if (path === "/api/user/notifications" && req.method === "GET")',
+    'if (path === "/api/user/topics" && req.method === "GET")',
+    'if (path === "/api/wallet" && req.method === "GET")',
+    'if (path === "/api/service-deliverables" && req.method === "GET")',
+  ]) {
+    const start = source.indexOf(routeStart);
+    assert.ok(start >= 0, "expected route: " + routeStart);
+    const route = source.slice(start, start + 900);
+    assert.match(route, /await requireGoogleUser\(req\)/, "route must require Google identity: " + routeStart);
+  }
+  const consultationStart = source.indexOf('if (req.method === "POST" && (path === "/consultations" || path === "/api/consultations"))');
+  assert.ok(consultationStart >= 0);
+  assert.match(source.slice(consultationStart, consultationStart + 240), /await requireGoogleUser\(req\)/);
+  const aiStart = source.indexOf('if (path === "/api/ai-assistant" && req.method === "POST")');
+  assert.ok(aiStart >= 0);
+  assert.match(source.slice(aiStart, aiStart + 180), /await requireGoogleUser\(req\)/);
 });
