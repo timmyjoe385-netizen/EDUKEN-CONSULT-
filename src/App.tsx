@@ -30,6 +30,7 @@ import {
 const PlatformHub = lazy(() => import('./PlatformHub'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
+const CbtMonitoringAdmin = lazy(() => import('./CbtMonitoringAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
 
 const SectionLoading = () => <div className="section-loading" role="status" aria-live="polite">Loading this section…</div>;
@@ -1659,6 +1660,7 @@ function App() {
               'system-settings',
               'system-health',
               'cbt-questions',
+              'cbt-monitoring',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
@@ -1669,7 +1671,7 @@ function App() {
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
                   else if (tab === 'system-health') loadSystemHealth();
-                  else if (tab !== 'payments' && tab !== 'cbt-questions') loadAdmin(tab);
+                  else if (tab !== 'payments' && tab !== 'cbt-questions' && tab !== 'cbt-monitoring') loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
@@ -1684,7 +1686,9 @@ function App() {
                       ? '📊 Analytics & Insights'
                       : tab === 'cbt-questions'
                     ? '📝 CBT Question Bank'
-                    : tab === 'system-settings'
+                    : tab === 'cbt-monitoring'
+                      ? '📈 CBT Monitoring'
+                      : tab === 'system-settings'
                         ? '⚙️ Manage System'
                         : tab === 'system-health'
                           ? '🩺 System Health'
@@ -1723,7 +1727,9 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'cbt-questions' ? (
+            {adminTab === 'cbt-monitoring' ? (
+              <Suspense fallback={<SectionLoading />}><CbtMonitoringAdmin /></Suspense>
+            ) : adminTab === 'cbt-questions' ? (
               <Suspense fallback={<SectionLoading />}><CbtQuestionBankAdmin /></Suspense>
             ) : adminTab === 'system-health' ? (
               <section className="analytics-panel" aria-label="System health checks">
