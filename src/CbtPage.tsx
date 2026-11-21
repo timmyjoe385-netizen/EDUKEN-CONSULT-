@@ -276,6 +276,8 @@ export default function CbtPage() {
   }, [submitted]);
 
   const begin = async (nextMode: 'practice' | 'mock', subject = selectedSubject, requestedCount = (nextMode === 'mock' ? mockQuestionCount : practiceQuestionCount)) => {
+    // Ignore rapid repeat taps while the first start request is still in flight.
+    if (starting) return;
     if (!studentUsername) { setStartError('Sign in with Google and choose your one free EDUKEN username before starting any CBT activity.'); return; }
     setStarting(true);
     setStartError('');
