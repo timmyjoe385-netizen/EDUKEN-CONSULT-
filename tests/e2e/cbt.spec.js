@@ -37,8 +37,9 @@ test('students without a signed-in account cannot start any CBT activity', async
     await route.fulfill({ status: 403, contentType: 'application/json', body: JSON.stringify({ error: 'Student username required.' }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByLabel('Email address')).toBeVisible();
-  await expect(page.getByRole('button', { name: /Create free account/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with username/i })).toBeVisible();
+  await expect(page.getByLabel('Email address')).toHaveCount(0);
+  await expect(page.getByLabel('Password')).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
   await expect(page.locator('.cbt-subject-picker button.cbt-primary-button')).toBeDisabled();
@@ -61,7 +62,7 @@ test('student identity gate locks CBT when signed out and unlocks after username
     localStorage.removeItem('eduken_auth_session');
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
-  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with username/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await page.evaluate(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
@@ -75,49 +76,38 @@ test('student identity gate locks CBT when signed out and unlocks after username
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
 });
 
-test('new students can create an account with email and password without Google', async ({ page }) => {
-  await page.route('**/api/cbt/student-profile', route => route.fulfill({
-    status: 200, contentType: 'application/json', body: JSON.stringify({ profile: null }),
-  }));
+test('students can start with a username-only anonymous session and claim a unique username', async ({ page }) => {
   await page.route('**/auth/v1/signup', route => route.fulfill({
     status: 200, contentType: 'application/json',
     body: JSON.stringify({
-      access_token: 'email-signup-access-token',
-      refresh_token: 'email-signup-refresh-token',
+      access_token: 'anonymous-student-access-token',
+      refresh_token: 'anonymous-student-refresh-token',
       expires_in: 3600,
-      user: { id: 'email-signup-student', email: 'newstudent@example.test' },
+      user: { id: 'anonymous-student-id', is_anonymous: true },
     }),
   }));
+  let claimed = false;
+  await page.route('**/api/cbt/student-profile', route => {
+    if (route.request().method() === 'POST') {
+      claimed = true;
+      return route.fulfill({
+        status: 201, contentType: 'application/json',
+        body: JSON.stringify({ profile: { username: 'FutureStudent27', created_at: '2026-11-21T00:00:00.000Z' } }),
+      });
+    }
+    return route.fulfill({
+      status: 200, contentType: 'application/json',
+      body: JSON.stringify({ profile: claimed ? { username: 'FutureStudent27', created_at: '2026-11-21T00:00:00.000Z' } : null }),
+    });
+  });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
-  await page.getByLabel('Email address').fill('newstudent@example.test');
-  await page.getByLabel('Password').fill('SecurePass123!');
-  await page.getByRole('button', { name: 'Create free account' }).click();
+  await page.getByRole('button', { name: /Continue with username/i }).click();
   await expect(page.locator('#cbt-student-username')).toBeVisible();
-  await expect(page.getByText(/Choose the free, unique username/i)).toBeVisible();
-});
-
-test('returning students can sign in with their existing email and password', async ({ page }) => {
-  await page.route('**/auth/v1/token*', route => route.fulfill({
-    status: 200, contentType: 'application/json',
-    body: JSON.stringify({
-      access_token: 'returning-student-access-token',
-      refresh_token: 'returning-student-refresh-token',
-      expires_in: 3600,
-      user: { id: 'returning-student-id', email: 'returning@example.test' },
-    }),
-  }));
-  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.evaluate(() => {
-    localStorage.removeItem('eduken_auth_session');
-    window.dispatchEvent(new Event('eduken-auth-changed'));
-  });
-  await page.getByRole('button', { name: /Already have an account\? Sign in/i }).click();
-  await page.getByLabel('Email address').fill('returning@example.test');
-  await page.getByLabel('Password').fill('ExistingPass123!');
-  await page.getByRole('button', { name: 'Sign in with email' }).click();
-  await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+  await page.locator('#cbt-student-username').fill('FutureStudent27');
+  await page.getByRole('button', { name: /Save username/i }).click();
+  await expect(page.getByText(/Signed in as @FutureStudent27/i)).toBeVisible();
+  expect(claimed).toBe(true);
 });
 
 test('CBT blocks local fallback when it cannot supply the 20-question minimum', async ({ page }) => {
