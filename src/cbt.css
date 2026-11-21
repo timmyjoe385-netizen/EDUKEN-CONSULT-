@@ -161,3 +161,11 @@
 
 .cbt-session-identity{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border:1px solid #cfe0d4;border-radius:999px;background:#edf6f0;color:#174d35;font-size:12px;font-weight:800;white-space:nowrap}
 .cbt-result-identity{margin:0 auto 12px}
+
+
+/* Mixed mock: three clear, mobile-friendly subject dropdowns. */
+.cbt-mock-subject-selects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 16px;width:100%}
+.cbt-mock-subject-field{display:flex;flex-direction:column;gap:7px;min-width:0;color:#294a39;font-size:12px;font-weight:700}
+.cbt-mock-subject-field select{width:100%;min-width:0;background:#fff}
+.cbt-mock-subject-field select:disabled{color:#8b958e}
+@media(max-width:640px){.cbt-mock-subject-selects{grid-template-columns:1fr;gap:10px}.cbt-mock-subject-field{font-size:12px}.cbt-mock-banner{align-items:stretch;flex-direction:column}.cbt-mock-banner>.cbt-primary-button{width:100%}}

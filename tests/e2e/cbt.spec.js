@@ -609,3 +609,49 @@ test('Student Arena displays the three public-safe weekly champion categories', 
   await expect(page.getByText('@rising_student')).toBeVisible();
   await expect(page.getByText('@steady_student')).toBeVisible();
 });
+
+
+test('mixed mock uses three separate unique subject dropdowns and sends all selections', async ({ page }) => {
+  let startPayload;
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: [{ id: 'dropdown-q', subject: 'Use of English', question_text: 'Question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+  }));
+  await page.route('**/api/cbt/start*', async route => {
+    startPayload = route.request().postDataJSON();
+    const questions = Array.from({ length: startPayload.questionCount }, (_, index) => ({
+      id: 'dropdown-' + index,
+      subject: index === 0 ? 'Use of English' : startPayload.subjectCombination[(index - 1) % 3],
+      prompt: 'Mixed mock question ' + (index + 1) + '?',
+      options: ['A', 'B', 'C', 'D'],
+    }));
+    await route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({
+      attemptToken: 'h'.repeat(64), durationSeconds: 1800, questions,
+    }) });
+  });
+
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const subjectOne = page.locator('#cbt-mock-subject-1');
+  const subjectTwo = page.locator('#cbt-mock-subject-2');
+  const subjectThree = page.locator('#cbt-mock-subject-3');
+  await expect(subjectOne).toBeVisible();
+  await expect(subjectTwo).toBeVisible();
+  await expect(subjectThree).toBeVisible();
+  await expect(page.locator('.cbt-mock-subjects input[type="checkbox"]')).toHaveCount(0);
+
+  await subjectOne.selectOption('Biology');
+  await subjectTwo.selectOption('Chemistry');
+  await subjectThree.selectOption('Physics');
+  await expect(subjectOne.locator('option[value="Biology"]')).toBeEnabled();
+  await expect(subjectTwo.locator('option[value="Biology"]')).toBeDisabled();
+  await expect(subjectThree.locator('option[value="Chemistry"]')).toBeDisabled();
+
+  await page.locator('#cbt-mock-count').selectOption('60');
+  await page.getByRole('button', { name: /Start mixed mock/i }).click();
+  await expect(page.getByText('Question 1 of 60')).toBeVisible();
+  expect(startPayload).toMatchObject({
+    mode: 'mock',
+    questionCount: 60,
+    subjectCombination: ['Biology', 'Chemistry', 'Physics'],
+  });
+});

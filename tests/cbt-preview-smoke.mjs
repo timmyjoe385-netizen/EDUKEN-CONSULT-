@@ -82,18 +82,26 @@ try {
   }
 
   await page.waitForFunction(() => !document.body.innerText.includes("The published question service is not available in this preview yet."));
-  const mockSubjectOptions = page.locator(".cbt-mock-subject-option input[type=\"checkbox\"]");
-  assert.equal(await mockSubjectOptions.count(), 8, "The mock selector must show Use of English plus seven additional subjects.");
-  assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 4, "Exactly four unique subjects must be selected, including required Use of English.");
-  assert.equal(await page.locator(".cbt-mock-subject-required input").isDisabled(), true, "Use of English must remain selected and locked.");
-  const selectedAdditionalIndex = await mockSubjectOptions.evaluateAll(inputs => inputs.findIndex((input, index) => index > 0 && input.checked));
-  assert.ok(selectedAdditionalIndex > 0, "At least one additional mock subject must be selected by default.");
-  const disabledAdditionalIndex = await mockSubjectOptions.evaluateAll(inputs => inputs.findIndex((input, index) => index > 0 && input.disabled));
-  assert.ok(disabledAdditionalIndex > 0, "Unselected fourth subject must be disabled when three additional subjects are selected.");
-  await mockSubjectOptions.nth(selectedAdditionalIndex).uncheck();
-  assert.equal(await mockSubjectOptions.nth(disabledAdditionalIndex).isDisabled(), false, "Another subject must become selectable after removing one.");
-  await mockSubjectOptions.nth(disabledAdditionalIndex).check();
-  assert.equal(await mockSubjectOptions.evaluateAll(inputs => inputs.filter(input => input.checked).length), 4, "Changing the combination must preserve exactly four selected subjects.");
+  const mockSubjectSelects = [1, 2, 3].map(index => page.locator(`#cbt-mock-subject-${index}`));
+  for (const selector of mockSubjectSelects) {
+    assert.equal(await selector.count(), 1, "The mixed mock must show exactly three separate subject dropdowns.");
+    assert.ok(await selector.isVisible(), "Each additional subject dropdown must be visible on mobile.");
+  }
+  assert.equal(await page.locator(".cbt-mock-subjects input[type=\"checkbox\"]").count(), 0, "The old mixed-mock checkbox controls must be removed.");
+  const selectedSubjects = await Promise.all(mockSubjectSelects.map(selector => selector.inputValue()));
+  assert.equal(selectedSubjects.filter(Boolean).length, 3, "Exactly three additional subjects must be selected by default.");
+  assert.equal(new Set(selectedSubjects).size, 3, "The three default additional subjects must be unique.");
+  for (let index = 0; index < 3; index += 1) {
+    const options = await mockSubjectSelects[index].locator("option").evaluateAll(items => items.map(option => ({ value: option.value, disabled: option.disabled })));
+    for (const selected of selectedSubjects) {
+      if (selected !== selectedSubjects[index]) {
+        assert.equal(options.find(option => option.value === selected)?.disabled, true, "A subject selected in another dropdown must be disabled to prevent duplicates.");
+      }
+    }
+  }
+  await mockSubjectSelects[0].selectOption("Mathematics");
+  assert.equal(await mockSubjectSelects[0].inputValue(), "Mathematics", "Each dropdown must allow changing its own subject.");
+  assert.equal(await mockSubjectSelects[1].locator('option[value="Mathematics"]').isDisabled(), true, "A selected subject must not be selectable in another dropdown.");
   const mockCount = page.locator("#cbt-mock-count");
   assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["20", "40", "60", "100", "180"], "Mixed mock counts must enforce the 20-question minimum.");
   await mockCount.selectOption("20");
