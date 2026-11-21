@@ -145,6 +145,16 @@ async function requireUser(req: Request) {
   return user;
 }
 
+async function requireGoogleUser(req: Request) {
+  const user = await requireUser(req);
+  const hasGoogleIdentity = user.app_metadata?.provider === "google" ||
+    (Array.isArray(user.identities) && user.identities.some((identity: any) => identity?.provider === "google"));
+  if (!hasGoogleIdentity) {
+    throw new Response(JSON.stringify({ error: "Sign in with Google to use your EDUKEN student account." }), { status: 403, headers: { ...cors, "Content-Type": "application/json" } });
+  }
+  return user;
+}
+
 async function requireAdmin(req: Request) {
   const user = await requireUser(req);
   if (!user.email || !ADMIN_EMAILS.has(user.email.toLowerCase())) {
@@ -3179,8 +3189,8 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/start" && req.method === "POST") {
-      // Every CBT session requires a verified account with a claimed unique student username.
-      const user = await requireUser(req);
+      // Every CBT session requires a verified Google account with a claimed unique student username.
+      const user = await requireGoogleUser(req);
       const { data: studentProfile, error: studentProfileError } = await db.from("cbt_student_profiles")
         .select("username").eq("user_id", user.id).maybeSingle();
       if (studentProfileError) throw studentProfileError;
@@ -3329,8 +3339,8 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/submit" && req.method === "POST") {
-      // Submission requires the same verified student account that owns the attempt.
-      const user = await requireUser(req);
+      // Submission requires the same verified Google student account that owns the attempt.
+      const user = await requireGoogleUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const body = parsed.value as Record<string, unknown>;
@@ -3405,7 +3415,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/student-profile" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const parsed = parseJsonObjectBody(await req.text());
       if (!parsed.valid) return json({ error: parsed.error }, 400);
       const usernameValidation = validateStudentUsername(parsed.value.username);
@@ -3452,7 +3462,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/attempts" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.from("cbt_attempts")
         .select("mode,subject,score,total,submitted_at,duration_seconds")
         .eq("user_id", user.id)
@@ -3463,7 +3473,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/cbt/arena/summary" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.rpc("cbt_student_arena_summary", { p_user_id: user.id });
       if (error) throw error;
       return json({ summary: data?.[0] || null });
