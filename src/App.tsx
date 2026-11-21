@@ -519,8 +519,8 @@ function App() {
       // out can sign back in and verify the same deposit without paying again.
       try { window.sessionStorage.setItem(pendingWalletDepositKey, returnedReference); } catch { /* direct verification still works while signed in */ }
       window.history.replaceState({}, document.title, '/make-payments');
-      if (!auth.isSignedIn()) {
-        setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
+      if (!auth.isGoogleSignedIn()) {
+        setPaymentMessage('Sign in with the same Google account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
         return;
       }
       setPaymentMessage('Wallet deposit returned. Verifying securely…');
