@@ -32,16 +32,21 @@ const inFlightReads = new Map<string, Promise<any>>();
 
 const fetchWithTimeout = async (input: RequestInfo | URL, init: RequestInit = {}, timeoutMs = REQUEST_TIMEOUT_MS) => {
   const controller = new AbortController();
+  const externalSignal = init.signal;
+  const abortFromCaller = () => controller.abort();
+  if (externalSignal?.aborted) controller.abort();
+  else externalSignal?.addEventListener('abort', abortFromCaller, { once: true });
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(input, { ...init, signal: init.signal || controller.signal });
+    return await fetch(input, { ...init, signal: controller.signal });
   } catch (error) {
-    if (controller.signal.aborted) {
+    if (controller.signal.aborted && !externalSignal?.aborted) {
       throw new Error('The request took too long. Check your connection and try again.');
     }
     throw error;
   } finally {
     window.clearTimeout(timeout);
+    externalSignal?.removeEventListener('abort', abortFromCaller);
   }
 };
 
@@ -167,10 +172,16 @@ const request = async (
 };
 
 const getOnce = (path: string) => {
-  const existing = inFlightReads.get(path);
+  // Keep reads from an old signed-in session separate from reads made after
+  // sign-out or account switching, even when the endpoint path is identical.
+  const sessionKey = readSession()?.access_token || 'anonymous';
+  const key = sessionKey + ':' + path;
+  const existing = inFlightReads.get(key);
   if (existing) return existing;
-  const pending = request(path).finally(() => inFlightReads.delete(path));
-  inFlightReads.set(path, pending);
+  const pending = request(path).finally(() => {
+    if (inFlightReads.get(key) === pending) inFlightReads.delete(key);
+  });
+  inFlightReads.set(key, pending);
   return pending;
 };
 
