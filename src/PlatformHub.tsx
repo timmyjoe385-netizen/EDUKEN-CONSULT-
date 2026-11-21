@@ -164,11 +164,7 @@ export default function PlatformHub({
   }, [walletTransferInfo?.expiresAt]);
   const walletTransferCountdown = formatWalletTransferCountdown(walletTransferInfo?.expiresAt ?? null, walletTransferNow);
   const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [customerPassword, setCustomerPassword] = useState('');
-  const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
-  const [customerAuthMode, setCustomerAuthMode] = useState<'signin' | 'signup'>('signin');
 
   const refreshWallet = async () => {
     if (!auth.isSignedIn()) {
@@ -366,7 +362,6 @@ export default function PlatformHub({
 
   useEffect(() => {
     if (customerSignInRequest > 0) {
-      setCustomerAuthMode('signin');
       setCustomerSignInMessage('');
       setCustomerSignInOpen(true);
     }
@@ -378,49 +373,6 @@ export default function PlatformHub({
       await refresh();
     } catch {
       /* cancelled */
-    }
-  };
-
-  const signInCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (customerSignInLoading) return;
-    setCustomerSignInLoading(true);
-    setCustomerSignInMessage('');
-    try {
-      await auth.signInWithPassword(customerEmail, customerPassword);
-      setCustomerPassword('');
-      setCustomerSignInOpen(false);
-      setCustomerSignInMessage('');
-      await refresh();
-      await refreshWallet();
-    } catch (error) {
-      setCustomerSignInMessage(error instanceof Error ? error.message : 'Customer sign-in failed. Please try again.');
-    } finally {
-      setCustomerSignInLoading(false);
-    }
-  };
-
-  const signUpCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (customerSignInLoading) return;
-    setCustomerSignInLoading(true);
-    setCustomerSignInMessage('');
-    try {
-      const result = await auth.signUpWithPassword(customerEmail, customerPassword);
-      setCustomerPassword('');
-      if (result.session) {
-        setCustomerSignInOpen(false);
-        setCustomerAuthMode('signin');
-        await refresh();
-        await refreshWallet();
-      } else {
-        setCustomerSignInMessage('Account created. Check your email to confirm your account, then return here to sign in before submitting the service request.');
-        setCustomerAuthMode('signin');
-      }
-    } catch (error) {
-      setCustomerSignInMessage(error instanceof Error ? error.message : 'Account creation failed. Please try again.');
-    } finally {
-      setCustomerSignInLoading(false);
     }
   };
 
@@ -790,35 +742,21 @@ export default function PlatformHub({
       </div>
 
       {customerSignInOpen && (
-        <div role="presentation" onClick={event => { if (event.target === event.currentTarget && !customerSignInLoading) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+        <div role="presentation" onClick={event => { if (event.target === event.currentTarget) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
           <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
-            <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
-            <span className="kicker">CUSTOMER ACCOUNT</span>
-            <h2 id="customer-signin-title">{customerAuthMode === 'signup' ? 'Create your EDUKEN account' : 'Sign in to EDUKEN'}</h2>
-            <p>Use your student account to submit service requests and receive your documents securely.</p>
+            <button className="login-close" type="button" aria-label="Close customer sign-in" onClick={() => setCustomerSignInOpen(false)}>×</button>
+            <span className="kicker">YOUR EDUKEN ACCOUNT</span>
+            <h2 id="customer-signin-title">Sign in to EDUKEN</h2>
+            <p>Use the same Google account across EDUKEN CONSULT and CBT. Your student username and learning progress stay connected to this account.</p>
             <button
               className="customer-google-signin"
               type="button"
               onClick={() => { setCustomerSignInMessage(''); void auth.signIn(); }}
-              disabled={customerSignInLoading}
             >
               <span className="customer-google-mark" aria-hidden="true">G</span>
               Continue with Google
             </button>
-            <div className="customer-signin-divider"><span>or use email</span></div>
-            <form className="service-request-form" onSubmit={customerAuthMode === 'signup' ? signUpCustomer : signInCustomer}>
-              <label className="service-request-field" htmlFor="customer-signin-email">
-                <span>Email address</span>
-                <input id="customer-signin-email" type="email" autoComplete="username" required value={customerEmail} onChange={event => setCustomerEmail(event.target.value)} disabled={customerSignInLoading} />
-              </label>
-              <label className="service-request-field" htmlFor="customer-signin-password">
-                <span>Password {customerAuthMode === 'signup' ? '(at least 8 characters)' : ''}</span>
-                <input id="customer-signin-password" type="password" autoComplete={customerAuthMode === 'signup' ? 'new-password' : 'current-password'} minLength={customerAuthMode === 'signup' ? 8 : undefined} required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
-              </label>
-              {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
-              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? (customerAuthMode === 'signup' ? 'Creating account…' : 'Signing in…') : (customerAuthMode === 'signup' ? 'Create account' : 'Sign in securely')}</button>
-              <button className="secondary" type="button" disabled={customerSignInLoading} onClick={() => { setCustomerAuthMode(customerAuthMode === 'signup' ? 'signin' : 'signup'); setCustomerSignInMessage(''); setCustomerPassword(''); }}>{customerAuthMode === 'signup' ? 'Already have an account? Sign in' : 'New here? Create an account'}</button>
-            </form>
+            {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
           </section>
         </div>
       )}
