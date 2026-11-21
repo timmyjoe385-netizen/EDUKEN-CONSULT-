@@ -165,6 +165,7 @@ export default function PlatformHub({
   const walletTransferCountdown = formatWalletTransferCountdown(walletTransferInfo?.expiresAt ?? null, walletTransferNow);
   const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
+  const [studentUsername, setStudentUsername] = useState('');
 
   const refreshWallet = async () => {
     if (!auth.isSignedIn()) {
@@ -321,27 +322,31 @@ export default function PlatformHub({
       setTracker([]);
       setAlerts([]);
       setTopics([]);
+      setStudentUsername('');
       setWallet(null);
       setWalletTransactions([]);
       return;
     }
     try {
-      const [me, saves, apps, notices, topicData] = await Promise.all([
+      const [me, saves, apps, notices, topicData, studentProfile] = await Promise.all([
         api.get('/api/me'),
         api.get('/api/user/saved'),
         api.get('/api/user/tracker'),
         api.get('/api/user/notifications'),
         api.get('/api/user/topics'),
+        api.get('/api/cbt/student-profile'),
       ]);
       setUser(me.data.user);
       setSaved(saves.data.items || []);
       setTracker(apps.data.items || []);
       setAlerts(notices.data.items || []);
       setTopics(topicData.data.topics || []);
+      setStudentUsername(studentProfile.data?.profile?.username || '');
       void refreshWallet();
       api.post('/api/user/reminders/check', {}).catch(() => undefined);
     } catch {
       setUser(null);
+      setStudentUsername('');
     }
   };
 
@@ -519,6 +524,12 @@ export default function PlatformHub({
           Save opportunities, track applications, manage alerts and research
           admissions from one mobile-first platform.
         </p>
+        {user ? (
+          <p className="student-account-identity">
+            Signed in to EDUKEN as <strong>{studentUsername ? '@' + studentUsername : 'Google account'}</strong>
+            {!studentUsername ? <> · <a href="/cbt">Create your student username</a></> : null}
+          </p>
+        ) : null}
       </div>
       <div className="platform-grid">
         <div className="platform-card">
