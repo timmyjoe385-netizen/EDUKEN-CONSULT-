@@ -30,6 +30,7 @@ import {
 const PlatformHub = lazy(() => import('./PlatformHub'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
+const CbtMonitoringAdmin = lazy(() => import('./CbtMonitoringAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
 
 const SectionLoading = () => <div className="section-loading" role="status" aria-live="polite">Loading this section…</div>;
