@@ -1660,6 +1660,7 @@ function App() {
               'system-settings',
               'system-health',
               'cbt-questions',
+              'cbt-monitoring',
             ].map(tab => (
               <button
                 className={adminTab === tab ? 'active' : ''}
