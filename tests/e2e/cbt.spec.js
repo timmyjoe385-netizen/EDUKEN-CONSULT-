@@ -28,13 +28,15 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('students without a signed-in account cannot start any CBT activity', async ({ page }) => {
+  // beforeEach seeds an authenticated student for most tests; clear it before app startup
+  // so this test exercises the genuinely signed-out first render without an auth-event race.
+  await page.addInitScript(() => { localStorage.removeItem('eduken_auth_session'); });
   let startCalls = 0;
   await page.route('**/api/cbt/start*', async route => {
     startCalls += 1;
     await route.fulfill({ status: 403, contentType: 'application/json', body: JSON.stringify({ error: 'Student username required.' }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
   await expect(page.getByLabel('Email address')).toBeVisible();
   await expect(page.getByRole('button', { name: /Create free account/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
