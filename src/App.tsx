@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import RichContent from './components/RichContent';
 import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
@@ -147,6 +148,36 @@ function App() {
   const [pendingEmailAction, setPendingEmailAction] = useState<{ type: 'verify' | 'unsubscribe'; token: string } | null>(null);
   const [emailActionSubmitting, setEmailActionSubmitting] = useState(false);
   const [form, setForm] = useState<Record<string, any>>({});
+  const contentEditorRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const formatAdminText = (field: string, kind: 'bold' | 'heading' | 'bullet') => {
+    const textarea = contentEditorRef.current;
+    const value = String(form[field] ?? '');
+    const start = textarea?.selectionStart ?? value.length;
+    const end = textarea?.selectionEnd ?? value.length;
+    const selected = value.slice(start, end);
+    let next = value;
+    let cursorStart = start;
+    let cursorEnd = end;
+    if (kind === 'bold') {
+      const phrase = selected || 'important text';
+      const replacement = '**' + phrase + '**';
+      next = value.slice(0, start) + replacement + value.slice(end);
+      cursorStart = start + 2;
+      cursorEnd = cursorStart + phrase.length;
+    } else {
+      const lineStart = value.lastIndexOf('\\n', Math.max(0, start - 1)) + 1;
+      const prefix = kind === 'heading' ? '## ' : '- ';
+      next = value.slice(0, lineStart) + prefix + value.slice(lineStart);
+      cursorStart = start + prefix.length;
+      cursorEnd = end + prefix.length;
+    }
+    setForm(current => ({ ...current, [field]: next }));
+    window.requestAnimationFrame(() => {
+      contentEditorRef.current?.focus();
+      contentEditorRef.current?.setSelectionRange(cursorStart, cursorEnd);
+    });
+  };
   const [deleteTarget, setDeleteTarget] = useState<{ item: Item; table: string } | null>(null);
   const [deletingAdmin, setDeletingAdmin] = useState(false);
   const [savingAdminMode, setSavingAdminMode] = useState<'draft' | 'publish' | 'preserve' | null>(null);
@@ -2021,13 +2052,22 @@ function App() {
                             <span>{checked ? 'ON' : 'OFF'}</span>
                           </span>
                         ) : isLongText ? (
-                          <textarea
-                            value={form[field] ?? ''}
-                            onChange={e =>
-                              setForm({ ...form, [field]: e.target.value })
-                            }
-                            rows={field === 'content' ? 8 : 5}
-                          />
+                          <>
+                            <div className="rich-editor-toolbar" role="group" aria-label="Text formatting">
+                              <button type="button" className="secondary" onMouseDown={event => event.preventDefault()} onClick={() => formatAdminText(field, 'bold')}><b>B</b> Bold</button>
+                              <button type="button" className="secondary" onMouseDown={event => event.preventDefault()} onClick={() => formatAdminText(field, 'heading')}>Subheading</button>
+                              <button type="button" className="secondary" onMouseDown={event => event.preventDefault()} onClick={() => formatAdminText(field, 'bullet')}>• Bullet</button>
+                            </div>
+                            <textarea
+                              ref={contentEditorRef}
+                              value={form[field] ?? ''}
+                              onChange={e => setForm({ ...form, [field]: e.target.value })}
+                              rows={field === 'content' ? 8 : 5}
+                              placeholder="Write normally. Select words and tap Bold, or add a subheading or bullet point."
+                            />
+                            <small className="rich-editor-hint">Formatting preview</small>
+                            <RichContent text={String(form[field] ?? '')} className="rich-content rich-content-preview" />
+                          </>
                         ) : /(^|_)(date|deadline|expires_at|scheduled_at|start_date|end_date|publish_at)(_|$)/i.test(field) ? (
                           <input
                             type={/(_at|datetime|scheduled_at|publish_at)$/i.test(field) ? 'datetime-local' : 'date'}
@@ -2219,15 +2259,7 @@ function App() {
           </div>
           <div className="article-layout">
             <article className="article-body">
-              {paragraphs.map((paragraph, index) =>
-                index === 0 ? (
-                  <p className="lead" key={index}>
-                    {paragraph}
-                  </p>
-                ) : (
-                  <p key={index}>{paragraph}</p>
-                )
-              )}
+              <RichContent text={String(activeOpportunity.content || activeOpportunity.description || '')} className="rich-content article-rich-content" />
               {activeOpportunity.eligibility && (
                 <section>
                   <h2>Eligibility</h2>
@@ -2842,7 +2874,7 @@ function App() {
                   </div>
                   <small>{x.date || 'EDUKEN Update'}</small>
                   <h3>{x.title}</h3>
-                  <p>{x.body || 'Open the update for the full information.'}</p>
+                  <RichContent text={x.body || 'Open the update for the full information.'} className="rich-content update-rich-content" />
                   {x.sourceUrl && (
                     <a href={x.sourceUrl} target="_blank" rel="noreferrer">
                       Official Source <ArrowRight size={14} />
@@ -3273,7 +3305,7 @@ function App() {
                 </div>
                 <small>EDUKEN UPDATE • {x.date || 'Recent'}</small>
                 <h3>{x.title}</h3>
-                <p>{x.body || 'Open this update for more information.'}</p>
+                <RichContent text={x.body || 'Open this update for more information.'} className="rich-content update-rich-content" />
                 {x.verified ? (
                   <span className="verified-pill inline-pill">
                     <CheckCircle2 size={14} aria-hidden="true" /> Verified by EDUKEN
