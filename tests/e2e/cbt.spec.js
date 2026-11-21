@@ -48,14 +48,6 @@ test('students without a signed-in account cannot start any CBT activity', async
 });
 
 test('existing anonymous CBT accounts link Google without replacing the student identity', async ({ page }) => {
-  await page.addInitScript(() => {
-    localStorage.setItem('eduken_auth_session', JSON.stringify({
-      access_token: 'legacy-anonymous-session',
-      refresh_token: 'legacy-anonymous-refresh',
-      expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'legacy-student-id', is_anonymous: true },
-    }));
-  });
   await page.route('**/api/cbt/student-profile', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -71,6 +63,15 @@ test('existing anonymous CBT accounts link Google without replacing the student 
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: '/mock-google-link' }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    localStorage.setItem('eduken_auth_session', JSON.stringify({
+      access_token: 'legacy-anonymous-session',
+      refresh_token: 'legacy-anonymous-refresh',
+      expires_at: Math.floor(Date.now() / 1000) + 3600,
+      user: { id: 'legacy-student-id', is_anonymous: true },
+    }));
+    window.dispatchEvent(new Event('eduken-auth-changed'));
+  });
   await expect(page.getByRole('button', { name: /Connect Google and keep my progress/i })).toBeVisible();
   await page.getByRole('button', { name: /Connect Google and keep my progress/i }).click();
   await expect.poll(() => linkRequest?.body?.provider).toBe('google');
@@ -94,13 +95,13 @@ test('student identity gate locks CBT when signed out and unlocks after username
     localStorage.removeItem('eduken_auth_session');
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
-  await expect(page.getByRole('button', { name: /Continue with username/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await page.evaluate(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'verified-student-session',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'verified-student-id', is_anonymous: true },
+      user: { id: 'verified-student-id', is_anonymous: false, email: 'student@example.test', app_metadata: { provider: 'google' }, identities: [{ provider: 'google' }] },
     }));
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
@@ -124,8 +125,6 @@ test('Google-authenticated students claim one unique EDUKEN username', async ({ 
     });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
-  await page.getByRole('button', { name: /Continue with username/i }).click();
   await expect(page.locator('#cbt-student-username')).toBeVisible();
   await page.locator('#cbt-student-username').fill('FutureStudent27');
   await page.getByRole('button', { name: /Save username/i }).click();
