@@ -110,7 +110,7 @@ test('CBT blocks local fallback when it cannot supply the 20-question minimum', 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
-  await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
+  await expect(page.getByText(/question bank is currently unavailable.*20-question minimum.*temporarily disabled/i)).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
   await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
