@@ -9,7 +9,7 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 
 ## Agreed product scope
 
-1. Free, unique student username created before a student joins the leaderboard.
+1. Free, unique EDUKEN username created once and reused across the platform.
 2. Nationwide leaderboard across eligible EDUKEN CBT students.
 3. Eight subject leaderboards: Use of English, Mathematics, Biology, Chemistry, Physics, Economics, Government, and Literature in English.
 4. Student dashboard with own rank, scores, accuracy, practice history, and improvement over time.
@@ -19,17 +19,20 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 
 ## Identity and privacy
 
-- A username must be unique case-insensitively and attached to a server-verified EDUKEN student identity; it must not be a device-only/local-storage identity.
+- Google is the shared sign-in provider for student accounts across EDUKEN CONSULT and CBT. Account-backed student features must use the same Supabase user identity; do not create a separate CBT account.
+- Students create one unique username, case-insensitively, attached to their authenticated EDUKEN account. The same username identifies them in CBT, results, progress and Student Arena.
 - Reuse the platform's existing Supabase authentication. Do not create a second password store or a separate login system.
+- The normal website's public information pages may remain publicly viewable; any feature that stores student-specific activity or personal records must use the signed-in Google account.
 - Public leaderboard responses may contain only username, rank, eligible score/percentage, and permitted competition statistics. Never expose real name, email, phone number, auth user ID, or other private account fields.
 - Username creation is free. Username validation, availability checks, and claiming must be enforced server-side with a database uniqueness constraint.
 - Every CBT activity, including subject practice and mixed mocks, requires a verified Google-authenticated EDUKEN session and a claimed free unique username before the session can start. No guest practice is permitted.
+- Existing anonymous CBT sessions must be linked to the student's Google identity before they are replaced. The linking operation must preserve the original Supabase user ID so usernames, attempts and progress remain attached to the same account. Supabase manual identity linking must be enabled and verified in the isolated test project before release; do not switch production auth settings as part of this PR.
 
 ## Score integrity and fairness
 
 - Only completed, server-graded attempts backed by the private CBT attempt session and published question snapshots may qualify.
 - Never accept a score, percentage, username, or rank submitted by the browser as authoritative.
-- Exclude local fallback/sample practice, incomplete/expired attempts, draft questions, and guest attempts without a claimed student identity.
+- Exclude local fallback/sample practice, incomplete/expired attempts, draft questions, and attempts without a claimed student identity.
 - Do not mix unlike test lengths or modes without a defined qualification rule. Proposed initial rule:
   - National leaderboard: qualifying full 180-question / 120-minute mixed mock attempts only.
   - Subject leaderboard: qualifying timed subject attempts with at least 20 questions.
@@ -59,7 +62,7 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 ## UI outline
 
 - Add a Student Arena entry point from the CBT landing page.
-- Before a student participates in any CBT activity, create an Google-authenticated student session in the background and show a free username-claim step; do not ask for email, password, or Google sign-in.
+- Before a student participates in any CBT activity, require Google sign-in and then show the free username-claim step.
 - Dashboard cards: national rank, best qualifying score, accuracy, questions attempted, and improvement.
 - Leaderboard tabs: National / By subject; period switch: This week / All time; subject selector for the eight subjects.
 - Show all eligible participants through paginated results, with the current student's row clearly highlighted and an easy way to find their own position.
@@ -68,17 +71,19 @@ Add a student competition and progress area to the existing EDUKEN CBT experienc
 
 ## Confirmed product decision
 
-- Every student must receive an Google-authenticated EDUKEN student session and claim a free unique username before accessing any CBT activity. The username is the student's persistent identity across practice, mocks, dashboard, results and leaderboard.
-- Use the same Google-authenticated Supabase account across EDUKEN CONSULT and CBT. The unique username is the student's visible EDUKEN identity and is attached to that same server-side user ID. Do not add email, Google sign-in, password fields, a second password store, or a separate login system. Anonymous sessions remain tied to the browser/device; account recovery on another device is not available unless a recovery method is later approved.
+- One Google account is the student's shared EDUKEN identity across the normal website and CBT.
+- Each student claims one free, unique username, which is attached to the same server-side user ID and reused in all student-facing areas.
+- Existing anonymous preview accounts must be linked to Google using the supported identity-linking flow before their current session is replaced. Verify the same user ID and prior CBT records after linking.
+- No email/password student login, second password store, or separate CBT login system.
 
 ## Delivery phases
 
-1. Confirmed: a Google-authenticated student session and claimed free unique username are mandatory before any CBT activity; the student-facing flow is Google sign-in plus one shared username.
+1. In progress: shared Google sign-in for student account features, one username claim, and Google identity linking for existing anonymous preview accounts.
 2. Added on this branch: private student identity and subject-score schema, username claim API, public-safe leaderboard API, and server-derived subject score persistence.
 3. In progress: automated tests for username uniqueness, auth ownership, privacy, score derivation, ranking/tie-breaks, week boundaries, pagination, and exclusion of guest/local/draft attempts.
 4. Added: mobile-first Student Arena leaderboard UI. Pending: personal progress dashboard, most-improved recognition, weekly champions, and later head-to-head challenges.
 5. Applied the additive migration only to the isolated test Supabase project. Run API/browser/security checks there before considering this phase ready.
-6. Keep the PR in draft for review. No merge, production migration, Worker deployment, question-bank change, or publication without separate explicit approval.
+6. Keep the PR unmerged until all checks pass and the Google identity-linking configuration has been verified in isolation. No production migration, Worker deployment, question-bank change, or publication without separate explicit approval.
 
 ## Explicit non-goals for this workstream
 
