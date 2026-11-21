@@ -57,6 +57,7 @@ export default function CbtPage() {
   const [serverResult, setServerResult] = useState<any>(null);
   const [localFallbackSession, setLocalFallbackSession] = useState(false);
   const [starting, setStarting] = useState(false);
+  const startLockRef = useRef(false);
   const [submitting, setSubmitting] = useState(false);
   const [startError, setStartError] = useState('');
   const [studentUsername, setStudentUsername] = useState('');
@@ -279,7 +280,8 @@ export default function CbtPage() {
 
   const begin = async (nextMode: 'practice' | 'mock', subject = selectedSubject, requestedCount = (nextMode === 'mock' ? mockQuestionCount : practiceQuestionCount)) => {
     // Ignore rapid repeat taps while the first start request is still in flight.
-    if (starting) return;
+    if (startLockRef.current) return;
+    startLockRef.current = true;
     if (!studentUsername) { setStartError('Sign in with Google and choose your one free EDUKEN username before starting any CBT activity.'); return; }
     setStarting(true);
     setStartError('');
@@ -308,6 +310,7 @@ export default function CbtPage() {
       nextQuestions = (nextMode === 'mock' ? QUESTIONS.filter(question => ['Use of English', ...mockSubjects].includes(question.subject)) : QUESTIONS.filter(question => question.subject === subject)).slice(0, requestedCount);
       if (nextQuestions.length < requestedCount) {
         setStartError(`Only ${nextQuestions.length} local sample questions are available for this selection; ${requestedCount} were requested. Please try again when enough reviewed questions are available.`);
+        startLockRef.current = false;
         setStarting(false);
         return;
       }
@@ -338,6 +341,7 @@ export default function CbtPage() {
         if (Number.isFinite(serverExpiry)) serverDeadline = serverExpiry - 15_000;
       } catch (e) {
         setStartError(e instanceof Error ? e.message : 'Could not start practice. Please try again.');
+        startLockRef.current = false;
         setStarting(false);
         return;
       }
@@ -345,6 +349,7 @@ export default function CbtPage() {
 
     if (!nextQuestions.length) {
       setStartError('No starter questions are available for this subject yet.');
+      startLockRef.current = false;
       setStarting(false);
       return;
     }
@@ -357,6 +362,7 @@ export default function CbtPage() {
     deadlineRef.current = serverDeadline ?? (Date.now() + durationSeconds * 1000);
     setSecondsLeft(durationSeconds);
     setStarted(true);
+    startLockRef.current = false;
     setStarting(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
