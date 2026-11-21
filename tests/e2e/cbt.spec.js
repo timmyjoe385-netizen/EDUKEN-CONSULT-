@@ -81,6 +81,18 @@ test('existing anonymous CBT accounts link Google without replacing the student 
   await expect(page).toHaveURL(/mock-google-link/);
 });
 
+test('new JAMB subjects appear in practice and mixed-mock selectors', async ({ page }) => {
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  const practiceOptions = await page.locator('#cbt-subject-select option').allTextContents();
+  const mockOptions = await page.locator('#cbt-mock-subject-1 option').allTextContents();
+  expect(practiceOptions).toContain('Christian Religious Studies (CRS)');
+  expect(practiceOptions).toContain('Commerce');
+  expect(practiceOptions).toContain('Financial Accounting (Principles of Accounts)');
+  expect(mockOptions).toContain('Christian Religious Studies (CRS)');
+  expect(mockOptions).toContain('Commerce');
+  expect(mockOptions).toContain('Financial Accounting (Principles of Accounts)');
+});
+
 test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
