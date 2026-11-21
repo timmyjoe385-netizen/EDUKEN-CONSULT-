@@ -134,6 +134,10 @@ export const api = {
 
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
+  isGoogleSignedIn: () => {
+    const user = readSession()?.user;
+    return Boolean(user && (user.app_metadata?.provider === 'google' || user.identities?.some((identity: any) => identity.provider === 'google')));
+  },
   signInAnonymously: async () => {
     const response = await fetch(SUPABASE_URL + '/auth/v1/signup', {
       method: 'POST',
