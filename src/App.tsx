@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
@@ -26,10 +26,12 @@ import {
   Users,
   X,
 } from 'lucide-react';
-import PlatformHub from './PlatformHub';
-import CbtPage from './CbtPage';
-import CbtQuestionBankAdmin from './CbtQuestionBankAdmin';
-import PaymentsAdmin from './PaymentsAdmin';
+const PlatformHub = lazy(() => import('./PlatformHub'));
+const CbtPage = lazy(() => import('./CbtPage'));
+const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
+const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
+
+const SectionLoading = () => <div className="section-loading" role="status" aria-live="polite">Loading this section…</div>;
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
 
 const WA = 'https://wa.me/2348129811733';
@@ -1691,7 +1693,7 @@ function App() {
               )}
             </div>
             {adminTab === 'cbt-questions' ? (
-              <CbtQuestionBankAdmin />
+              <Suspense fallback={<SectionLoading />}><CbtQuestionBankAdmin /></Suspense>
             ) : adminTab === 'system-health' ? (
               <section className="analytics-panel" aria-label="System health checks">
                 <div className="analytics-toolbar">
@@ -1784,7 +1786,7 @@ function App() {
                               ) : null}
                             </section>
             ) : adminTab === 'payments' ? (
-              <PaymentsAdmin />
+              <Suspense fallback={<SectionLoading />}><PaymentsAdmin /></Suspense>
             ) : adminTab === 'service-requests' ? (
               <div className="admin-list">
                 {serviceRequests.length === 0 ? (
@@ -2514,7 +2516,7 @@ function App() {
   }
 
   if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
-    return <CbtPage />;
+    return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
   }
 
   return (
@@ -2727,11 +2729,13 @@ function App() {
           </div>
         </section>
 
-        <PlatformHub
-          opportunities={content.opportunities}
-          admissions={content.admissions}
-          customerSignInRequest={customerSignInRequest}
-        />
+        <Suspense fallback={<SectionLoading />}>
+          <PlatformHub
+            opportunities={content.opportunities}
+            admissions={content.admissions}
+            customerSignInRequest={customerSignInRequest}
+          />
+        </Suspense>
 
         {featuredOpps.length > 0 && (
           <section className="section spotlight-section" id="featured">
