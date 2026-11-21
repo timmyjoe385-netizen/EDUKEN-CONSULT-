@@ -4,7 +4,7 @@ const LETTERS = ["A","B","C","D"];
 const STOP = new Set(["the","a","an","of","in","on","at","to","for","from","by","with","which","what","when","where","who","how","is","are","was","were","be","been","being","and","or","as","that","this","these","those","it","its","does","do","did","can","may","most","best"]);
 
 export function normalizeText(value) {
-  return String(value ?? "").normalize("NFKC").toLowerCase().replace(/[^\\p{L}\\p{N}]+/gu," ").trim().replace(/\\s+/g," ");
+  return String(value ?? "").normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim().replace(/\s+/g," ");
 }
 
 export function parseCsv(text) {
@@ -14,7 +14,7 @@ export function parseCsv(text) {
     if(c === '"' && quoted && text[i+1] === '"'){cell+='"';i++;}
     else if(c === '"') quoted=!quoted;
     else if(c === ',' && !quoted){row.push(cell);cell="";}
-    else if((c === "\\n" || c === "\\r") && !quoted){if(c==="\\r"&&text[i+1]==="\\n")i++;row.push(cell);if(row.some(v=>v.trim()))rows.push(row);row=[];cell="";}
+    else if((c === "\n" || c === "\r") && !quoted){if(c==="\r"&&text[i+1]==="\n")i++;row.push(cell);if(row.some(v=>v.trim()))rows.push(row);row=[];cell="";}
     else cell+=c;
   }
   row.push(cell);if(row.some(v=>v.trim()))rows.push(row);
@@ -49,6 +49,7 @@ export function validateNewSubjectBank(rows,{expectedPerSubject=200,existingRows
     const optionValues=LETTERS.map(letter=>normalizeText(q["option_"+letter]));
     if(optionValues.some(v=>!v)||new Set(optionValues).size!==4)errors.push({row:n,code:"options_not_four_distinct"});
     if(q.explanation.trim().length<12)errors.push({row:n,code:"explanation_too_short"});
+    if(!["easy","medium","hard"].includes(q.difficulty))errors.push({row:n,code:"invalid_difficulty"});
     if(q.source_type!=="original")errors.push({row:n,code:"non_original_source"});
     if(q.source_year)errors.push({row:n,code:"unexpected_source_year"});
     if(!/original|written for EDUKEN/i.test(q.provenance_notes))errors.push({row:n,code:"provenance_missing"});
@@ -72,8 +73,6 @@ export function validateNewSubjectBank(rows,{expectedPerSubject=200,existingRows
     if(seen.has(key))errors.push({row:i+2,code:"exact_duplicate",matches:seen.get(key)});
     else seen.set(key,i+2);
   }
-  // Near-duplicate screening is limited to the new bank and uses a high threshold to avoid
-  // treating common syllabus terminology as a duplicate.
   for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++){
     if(rows[i].subject!==rows[j].subject)continue;
     if(similarity(rows[i].question_text,rows[j].question_text)>=0.88)
