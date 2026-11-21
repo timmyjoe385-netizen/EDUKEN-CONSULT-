@@ -1727,7 +1727,9 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'cbt-questions' ? (
+            {adminTab === 'cbt-monitoring' ? (
+              <Suspense fallback={<SectionLoading />}><CbtMonitoringAdmin /></Suspense>
+            ) : adminTab === 'cbt-questions' ? (
               <Suspense fallback={<SectionLoading />}><CbtQuestionBankAdmin /></Suspense>
             ) : adminTab === 'system-health' ? (
               <section className="analytics-panel" aria-label="System health checks">
