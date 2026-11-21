@@ -78,4 +78,6 @@ test("selected service requests require a customer account while general enquiri
   assert.match(hub, /auth\.signIn\(\)/);
   assert.match(hub, /Continue with Google/);
   assert.doesNotMatch(hub, /customer-signin-email|customer-signin-password|signUpWithPassword|signInWithPassword/);
+  assert.match(hub, /student-account-identity/);
+  assert.match(hub, /api\.get\('\/api\/cbt\/student-profile'\)/);
 });
