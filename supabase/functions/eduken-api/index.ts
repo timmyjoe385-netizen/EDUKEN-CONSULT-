@@ -3218,7 +3218,7 @@ Deno.serve(async (req) => {
         return json({ error: `Question count must be a whole number from 20 to ${maxQuestionCount} for ${mode} mode.` }, 400);
       }
 
-      const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English"];
+      const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English", "Christian Religious Studies", "Commerce", "Principles of Accounts"];
       const rawCombination = Array.isArray(body.subjectCombination) ? body.subjectCombination.map(value => String(value).trim()) : [];
       let chosenSubjects: string[] = [];
       if (mode === "mock") {
