@@ -35,7 +35,8 @@ test('students without a signed-in account cannot start any CBT activity', async
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.evaluate(() => { localStorage.removeItem('eduken_auth_session'); window.dispatchEvent(new Event('eduken-auth-changed')); });
-  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.getByLabel('Email address')).toBeVisible();
+  await expect(page.getByRole('button', { name: /Create free account/i })).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
   await expect(page.locator('.cbt-subject-picker button.cbt-primary-button')).toBeDisabled();
@@ -182,7 +183,7 @@ test('published CBT questions are graded by the server after submission', async 
   await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByText('PRACTICE COMPLETE')).toBeVisible();
-  await expect(page.getByText('Correct answer:')).toBeVisible();
+  await expect(page.getByText(/^Correct answer:/).first()).toBeVisible();
   await expect(page.getByText('The second option is correct.')).toBeVisible();
 });
 
