@@ -2198,11 +2198,6 @@ function App() {
     : null;
 
   if (activeOpportunity) {
-    const paragraphs = String(
-      activeOpportunity.content || activeOpportunity.description || ''
-    )
-      .split(/\n\s*\n|\n/)
-      .filter(Boolean);
     return (
       <div className="site">
         {toast && (
