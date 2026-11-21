@@ -282,7 +282,7 @@ export default function CbtPage() {
     // Ignore rapid repeat taps while the first start request is still in flight.
     if (startLockRef.current) return;
     startLockRef.current = true;
-    if (!studentUsername) { setStartError('Sign in with Google and choose your one free EDUKEN username before starting any CBT activity.'); return; }
+    if (!studentUsername) { setStartError('Sign in with Google and choose your one free EDUKEN username before starting any CBT activity.'); startLockRef.current = false; return; }
     setStarting(true);
     setStartError('');
     setSubmitError('');
