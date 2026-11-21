@@ -24,6 +24,32 @@ export const isFlutterwaveLiveUiEnabled = import.meta.env.VITE_ENABLE_FLUTTERWAV
 const API_BASE = SUPABASE_URL + '/functions/v1/eduken-api';
 const SESSION_KEY = 'eduken_auth_session';
 
+// Keep slow mobile connections from leaving controls spinning indefinitely.
+// Read requests may be retried safely; writes are never replayed automatically.
+const REQUEST_TIMEOUT_MS = 18000;
+const READ_RETRY_DELAY_MS = 300;
+const inFlightReads = new Map<string, Promise<any>>();
+
+const fetchWithTimeout = async (input: RequestInfo | URL, init: RequestInit = {}, timeoutMs = REQUEST_TIMEOUT_MS) => {
+  const controller = new AbortController();
+  const externalSignal = init.signal;
+  const abortFromCaller = () => controller.abort();
+  if (externalSignal?.aborted) controller.abort();
+  else externalSignal?.addEventListener('abort', abortFromCaller, { once: true });
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } catch (error) {
+    if (controller.signal.aborted && !externalSignal?.aborted) {
+      throw new Error('The request took too long. Check your connection and try again.');
+    }
+    throw error;
+  } finally {
+    window.clearTimeout(timeout);
+    externalSignal?.removeEventListener('abort', abortFromCaller);
+  }
+};
+
 type Session = {
   access_token: string;
   refresh_token?: string;
@@ -46,30 +72,37 @@ const writeSession = (session: Session | null) => {
   if (typeof window !== 'undefined') window.dispatchEvent(new Event('eduken-auth-changed'));
 };
 
-const refreshSession = async (session: Session) => {
-  if (!session.refresh_token) return session;
-  const res = await fetch(
-    SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token',
-    {
-      method: 'POST',
-      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refresh_token: session.refresh_token }),
+let refreshInFlight: Promise<Session> | null = null;
+
+const refreshSession = (session: Session): Promise<Session> => {
+  if (!session.refresh_token) return Promise.resolve(session);
+  if (refreshInFlight) return refreshInFlight;
+  refreshInFlight = (async () => {
+    const res = await fetchWithTimeout(
+      SUPABASE_URL + '/auth/v1/token?grant_type=refresh_token',
+      {
+        method: 'POST',
+        headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh_token: session.refresh_token }),
+      },
+      12000
+    );
+    if (!res.ok) {
+      writeSession(null);
+      throw new Error('Session expired. Please sign in again.');
     }
-  );
-  if (!res.ok) {
-    writeSession(null);
-    throw new Error('Session expired. Please sign in again.');
-  }
-  const next = await res.json();
-  const updated = {
-    ...session,
-    access_token: next.access_token,
-    refresh_token: next.refresh_token || session.refresh_token,
-    expires_at: Math.floor(Date.now() / 1000) + Number(next.expires_in || 3600),
-    user: next.user || session.user,
-  };
-  writeSession(updated);
-  return updated;
+    const next = await res.json();
+    const updated = {
+      ...session,
+      access_token: next.access_token,
+      refresh_token: next.refresh_token || session.refresh_token,
+      expires_at: Math.floor(Date.now() / 1000) + Number(next.expires_in || 3600),
+      user: next.user || session.user,
+    };
+    writeSession(updated);
+    return updated;
+  })();
+  return refreshInFlight.finally(() => { refreshInFlight = null; });
 };
 
 const validSession = async () => {
@@ -107,7 +140,22 @@ const request = async (
   headers.set('apikey', SUPABASE_KEY);
   if (session?.access_token)
     headers.set('Authorization', 'Bearer ' + session.access_token);
-  const response = await fetch(API_BASE + path, { ...options, headers });
+  let response: Response;
+  try {
+    response = await fetchWithTimeout(API_BASE + path, { ...options, headers });
+  } catch (error) {
+    // GET requests are idempotent. Retry once after a brief pause for transient
+    // mobile-network failures; never automatically replay a POST/PUT/DELETE.
+    if (method === 'GET' && retry) {
+      await new Promise(resolve => window.setTimeout(resolve, READ_RETRY_DELAY_MS));
+      return request(path, options, false);
+    }
+    throw error;
+  }
+  if (method === 'GET' && retry && [502, 503, 504].includes(response.status)) {
+    await new Promise(resolve => window.setTimeout(resolve, READ_RETRY_DELAY_MS));
+    return request(path, options, false);
+  }
   const text = await response.text();
   let data: any = {};
   try {
@@ -123,8 +171,24 @@ const request = async (
   return { data };
 };
 
+const getOnce = (path: string) => {
+  // Keep reads from an old signed-in session separate from reads made after
+  // sign-out or account switching, even when the endpoint path is identical.
+  const sessionKey = readSession()?.access_token || 'anonymous';
+  const key = sessionKey + ':' + path;
+  const existing = inFlightReads.get(key);
+  if (existing) return existing;
+  const pending = request(path).finally(() => {
+    if (inFlightReads.get(key) === pending) inFlightReads.delete(key);
+  });
+  inFlightReads.set(key, pending);
+  return pending;
+};
+
 export const api = {
-  get: (path: string) => request(path),
+  // Identical simultaneous reads share one network request (useful on mobile
+  // when multiple dashboard panels mount together).
+  get: (path: string) => getOnce(path),
   post: (path: string, body: any) =>
     request(path, { method: 'POST', body: JSON.stringify(body ?? {}) }),
   put: (path: string, body: any) =>

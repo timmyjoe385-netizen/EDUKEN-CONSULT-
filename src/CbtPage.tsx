@@ -57,6 +57,7 @@ export default function CbtPage() {
   const [serverResult, setServerResult] = useState<any>(null);
   const [localFallbackSession, setLocalFallbackSession] = useState(false);
   const [starting, setStarting] = useState(false);
+  const startLockRef = useRef(false);
   const [submitting, setSubmitting] = useState(false);
   const [startError, setStartError] = useState('');
   const [studentUsername, setStudentUsername] = useState('');
@@ -239,7 +240,9 @@ export default function CbtPage() {
       setSecondsLeft(previous => previous === remaining ? previous : remaining);
       if (remaining === 0 && timer !== undefined) window.clearInterval(timer);
     };
-    timer = window.setInterval(updateRemaining, 250);
+    // The deadline is absolute, so a one-second tick keeps the display accurate without
+    // waking React four times per second on lower-memory Android devices.
+    timer = window.setInterval(updateRemaining, 1000);
     document.addEventListener('visibilitychange', updateRemaining);
     updateRemaining();
     return () => {
@@ -276,7 +279,10 @@ export default function CbtPage() {
   }, [submitted]);
 
   const begin = async (nextMode: 'practice' | 'mock', subject = selectedSubject, requestedCount = (nextMode === 'mock' ? mockQuestionCount : practiceQuestionCount)) => {
-    if (!studentUsername) { setStartError('Sign in with Google and choose your one free EDUKEN username before starting any CBT activity.'); return; }
+    // Ignore rapid repeat taps while the first start request is still in flight.
+    if (startLockRef.current) return;
+    startLockRef.current = true;
+    if (!studentUsername) { setStartError('Sign in with Google and choose your one free EDUKEN username before starting any CBT activity.'); startLockRef.current = false; return; }
     setStarting(true);
     setStartError('');
     setSubmitError('');
@@ -304,6 +310,7 @@ export default function CbtPage() {
       nextQuestions = (nextMode === 'mock' ? QUESTIONS.filter(question => ['Use of English', ...mockSubjects].includes(question.subject)) : QUESTIONS.filter(question => question.subject === subject)).slice(0, requestedCount);
       if (nextQuestions.length < requestedCount) {
         setStartError(`Only ${nextQuestions.length} local sample questions are available for this selection; ${requestedCount} were requested. Please try again when enough reviewed questions are available.`);
+        startLockRef.current = false;
         setStarting(false);
         return;
       }
@@ -334,6 +341,7 @@ export default function CbtPage() {
         if (Number.isFinite(serverExpiry)) serverDeadline = serverExpiry - 15_000;
       } catch (e) {
         setStartError(e instanceof Error ? e.message : 'Could not start practice. Please try again.');
+        startLockRef.current = false;
         setStarting(false);
         return;
       }
@@ -341,6 +349,7 @@ export default function CbtPage() {
 
     if (!nextQuestions.length) {
       setStartError('No starter questions are available for this subject yet.');
+      startLockRef.current = false;
       setStarting(false);
       return;
     }
@@ -353,6 +362,7 @@ export default function CbtPage() {
     deadlineRef.current = serverDeadline ?? (Date.now() + durationSeconds * 1000);
     setSecondsLeft(durationSeconds);
     setStarted(true);
+    startLockRef.current = false;
     setStarting(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -511,7 +521,6 @@ export default function CbtPage() {
         <section className="cbt-subject-section" id="subjects"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">CHOOSE YOUR SUBJECT</span><h2>Start where you need it most.</h2></div><p>Choose a subject to practise, or take a mixed mock to check your current understanding.</p></div>{questionLoadError && <p className="cbt-disclaimer" role="status">The published question bank is currently unavailable. The small local starter set does not meet the 20-question minimum, so practice and mocks are temporarily disabled until enough reviewed questions are available.</p>}{publishedQuestions !== null && !questionLoadError && questionPool.length === 0 && <p className="cbt-disclaimer" role="status">No questions have been published yet. Your admin can add and approve questions in the CBT Question Bank.</p>}<div className="cbt-practice-count"><label htmlFor="cbt-practice-count">Questions per subject practice</label><select id="cbt-practice-count" className="cbt-count-select" value={[20, 40, 50].includes(practiceQuestionCount) ? practiceQuestionCount : 20} onChange={event => setPracticeQuestionCount(Number(event.target.value))}><option value={20}>20 questions — Quick practice</option><option value={40}>40 questions — Focused practice</option><option value={50}>50 questions — Extended practice</option></select></div><div className="cbt-subject-picker"><div className="cbt-subject-picker-copy"><label htmlFor="cbt-subject-select">Choose a subject to practise</label><p>{SUBJECTS.find(subject => subject.name === selectedSubject)?.detail || "Choose a subject to begin focused practice."}</p></div><select id="cbt-subject-select" className="cbt-count-select cbt-subject-select" value={selectedSubject} onChange={event => setSelectedSubject(event.target.value)}>{SUBJECTS.map(subject => <option key={subject.name} value={subject.name}>{subject.name}</option>)}</select><button className="cbt-primary-button" disabled={starting || !studentUsername || !canStartSelectedSubject} onClick={() => void begin("practice", selectedSubject, practiceQuestionCount)}><BookOpen size={16} /> {starting ? "Starting…" : "Practise selected subject"} <ArrowRight size={15} /></button></div><div className="cbt-mock-banner"><div><span className="cbt-eyebrow">READY FOR A CHALLENGE?</span><h3>Build your mixed mock.</h3><p>Use of English is included automatically. Select exactly three additional subjects.</p><div className="cbt-mock-subjects cbt-mock-subject-selects" aria-label="Choose three additional subjects">{[0, 1, 2].map(index => <label className="cbt-mock-subject-field" key={index} htmlFor={`cbt-mock-subject-${index + 1}`}><span>Subject {index + 1}</span><select id={`cbt-mock-subject-${index + 1}`} className="cbt-count-select" value={mockSubjects[index] || ''} onChange={event => setMockSubjects(previous => previous.map((value, position) => position === index ? event.target.value : value))}><option value="" disabled>Select a subject</option>{SUBJECTS.filter(subject => subject.name !== 'Use of English').map(subject => <option key={subject.name} value={subject.name} disabled={mockSubjects.some((selected, position) => position !== index && selected === subject.name)}>{subject.name}</option>)}</select></label>)}</div><label className="cbt-count-label" htmlFor="cbt-mock-count">Questions per mock</label><select id="cbt-mock-count" className="cbt-count-select" value={[20, 40, 60, 100, 180].includes(mockQuestionCount) ? mockQuestionCount : 20} onChange={event => setMockQuestionCount(Number(event.target.value))}><option value={20}>20 questions — Quick practice</option><option value={40}>40 questions — Focused practice</option><option value={60}>60 questions — Extended practice</option><option value={100}>100 questions — Serious practice</option><option value={180}>180 questions — Full UTME mock</option></select></div><button className="cbt-primary-button" disabled={!studentUsername || !questionPool.length || (questionLoadError && questionPool.length < mockQuestionCount) || mockSubjects.length !== 3 || starting} onClick={() => begin('mock', 'Use of English', [20, 40, 60, 100, 180].includes(mockQuestionCount) ? mockQuestionCount : 20)}>Start mixed mock <ArrowRight size={16} /></button></div></section>
         <StudentArena />
         <section className="cbt-how-section" id="how-it-works"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">A SIMPLE ROUTINE</span><h2>Practise. Review. Improve.</h2></div></div><div className="cbt-steps"><article><span>01</span><h3>Sign in and set your username</h3><p>Sign in with Google once, then choose one free, unique username that EDUKEN reuses automatically across your CBT activities.</p></article><article><span>02</span><h3>Choose your practice</h3><p>Focus on a subject or build a mixed mock using your selected subjects.</p></article><article><span>03</span><h3>Practise and improve</h3><p>Answer questions, review your results and track progress under your username.</p></article></div><div className="cbt-disclaimer"><ShieldCheck size={18} /><p>EDUKEN CBT is an independent practice resource and is not affiliated with or endorsed by JAMB. Questions shown from the question bank are published only after admin review. If the service is unavailable in preview, original starter samples may be shown; this is not a complete past-question bank or a prediction of the official examination.</p></div></section>
-        {attempts.length > 0 && <section className="cbt-history-section"><div className="cbt-section-heading"><div><span className="cbt-eyebrow">YOUR RECENT PRACTICE</span><h2>Keep your momentum.</h2></div></div><div className="cbt-history-list">{attempts.map((attempt, index) => <div className="cbt-history-row" key={attempt.date + index}><span>{attempt.subject}</span><b>{Math.round(attempt.score / attempt.total * 100)}%</b><small>{new Date(attempt.date).toLocaleDateString()}</small></div>)}</div></section>}
       </main>
       <footer className="cbt-footer"><a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CONSULT</b></span></a><span>Learn with purpose. Prepare with confidence.</span><a href="/">Return to EDUKEN CONSULT <ArrowRight size={15} /></a></footer>
     </div>
