@@ -432,7 +432,9 @@ export default function CbtPage() {
     void finish();
   };
   finishRef.current = () => { void finish(); };
-  const formatTime = (value: number) => String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0');
+  const formatTime = (value: number) => value >= 3600
+    ? String(Math.floor(value / 3600)).padStart(2, '0') + ':' + String(Math.floor((value % 3600) / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0')
+    : String(Math.floor(value / 60)).padStart(2, '0') + ':' + String(value % 60).padStart(2, '0');
   const estimatedDuration = (count: number) => formatTime(count * 40);
 
   if (started && question && !submitted) {
@@ -440,7 +442,7 @@ export default function CbtPage() {
       <div className="cbt-page">
         <header className="cbt-topbar">
           <a className="cbt-brand" href="/"><span className="cbt-brand-mark">E</span><span>EDUKEN <b>CBT</b></span></a>
-          <div className={secondsLeft <= 300 ? 'cbt-timer urgent' : 'cbt-timer'}><Clock3 size={17} /> {formatTime(secondsLeft)}</div>{secondsLeft <= 300 && <span className="cbt-time-warning" role="status" aria-live="polite">{secondsLeft <= 60 ? '1 minute or less remaining' : '5 minutes or less remaining'}</span>}
+          <div className="cbt-timer-wrap"><div className={secondsLeft <= 300 ? 'cbt-timer urgent' : 'cbt-timer'}><Clock3 size={17} /> {formatTime(secondsLeft)}</div>{secondsLeft <= 300 && <span className="cbt-time-warning" role="status" aria-live="polite">{secondsLeft <= 60 ? '1 minute or less remaining' : '5 minutes or less remaining'}</span>}</div>
         </header>
         <main className="cbt-exam-wrap">
           <div className="cbt-exam-heading">
