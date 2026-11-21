@@ -97,7 +97,7 @@ try {
   const mockCount = page.locator("#cbt-mock-count");
   assert.deepEqual(await mockCount.locator("option").evaluateAll(options => options.map(option => option.value)), ["20", "40", "60", "100", "180"], "Mixed mock counts must enforce the 20-question minimum.");
   await mockCount.selectOption("20");
-  assert.match(await page.locator(".cbt-identity-gate").innerText(), /Create your student identity first|Continue with Google/i, "The preview must require a signed-in student identity.");
+  assert.match(await page.locator(".cbt-identity-gate").innerText(), /Create your free student identity|Continue with Google/i, "The preview must require a signed-in student identity.");
   assert.equal(await page.locator(".cbt-hero-actions button").evaluateAll(buttons => buttons.every(button => button.disabled)), true, "Guest students must not start practice or mocks.");
   assert.equal(await page.locator(".cbt-subject-picker button.cbt-primary-button").isDisabled(), true, "Subject practice must remain locked until a username is saved.");
   assert.equal(await page.locator(".cbt-mock-banner button.cbt-primary-button").isDisabled(), true, "Mixed mocks must remain locked until a username is saved.");
