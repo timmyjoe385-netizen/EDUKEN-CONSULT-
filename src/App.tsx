@@ -1671,7 +1671,7 @@ function App() {
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
                   else if (tab === 'system-health') loadSystemHealth();
-                  else if (tab !== 'payments' && tab !== 'cbt-questions') loadAdmin(tab);
+                  else if (tab !== 'payments' && tab !== 'cbt-questions' && tab !== 'cbt-monitoring') loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
