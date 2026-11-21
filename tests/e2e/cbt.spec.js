@@ -97,6 +97,29 @@ test('new students can create an account with email and password without Google'
   await expect(page.getByText(/Choose the free, unique username/i)).toBeVisible();
 });
 
+test('returning students can sign in with their existing email and password', async ({ page }) => {
+  await page.route('**/auth/v1/token*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({
+      access_token: 'returning-student-access-token',
+      refresh_token: 'returning-student-refresh-token',
+      expires_in: 3600,
+      user: { id: 'returning-student-id', email: 'returning@example.test' },
+    }),
+  }));
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    localStorage.removeItem('eduken_auth_session');
+    window.dispatchEvent(new Event('eduken-auth-changed'));
+  });
+  await page.getByRole('button', { name: /Already have an account\? Sign in/i }).click();
+  await page.getByLabel('Email address').fill('returning@example.test');
+  await page.getByLabel('Password').fill('ExistingPass123!');
+  await page.getByRole('button', { name: 'Sign in with email' }).click();
+  await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
+});
+
 test('CBT blocks local fallback when it cannot supply the 20-question minimum', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
