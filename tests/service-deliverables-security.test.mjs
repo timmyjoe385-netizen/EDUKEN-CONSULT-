@@ -75,7 +75,7 @@ test("selected service requests require a customer account while general enquiri
   assert.match(app, /if \(!auth\.isSignedIn\(\)\)[\s\S]*setCustomerSignInRequest\(current => current \+ 1\)/);
   assert.match(app, /customerSignInRequest=\{customerSignInRequest\}/);
   const hub = readFileSync("src/PlatformHub.tsx", "utf8");
-  assert.match(hub, /auth\.signUpWithPassword\(customerEmail, customerPassword\)/);
-  assert.match(hub, /New here\? Create an account/);
-  assert.match(hub, /Check your email to confirm your account/);
+  assert.match(hub, /auth\.signIn\(\)/);
+  assert.match(hub, /Continue with Google/);
+  assert.doesNotMatch(hub, /customer-signin-email|customer-signin-password|signUpWithPassword|signInWithPassword/);
 });
