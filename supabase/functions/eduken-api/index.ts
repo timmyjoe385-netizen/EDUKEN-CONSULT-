@@ -1534,8 +1534,8 @@ Deno.serve(async (req) => {
         }
         selectedServiceForRequest = service;
       }
-      // Selected service requests must belong to a signed-in customer account so payment
-      // and deliverables can be tied to that student. General enquiries without serviceId stay public.
+      // Every service request belongs to a Google-authenticated customer account so
+      // requests, payments and deliverables remain attached to the same EDUKEN identity.
       const user = await requireGoogleUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
       const onlinePrice = Number(selectedServiceForRequest?.price) * quantity;
