@@ -13,9 +13,6 @@ export default function CbtIdentityGate({ onReady }: Props) {
   const [loading, setLoading] = useState(() => auth.isSignedIn());
   const [saving, setSaving] = useState(false);
   const [signingIn, setSigningIn] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [accountMode, setAccountMode] = useState<'signup' | 'signin'>('signup');
   const [message, setMessage] = useState('');
 
   useEffect(() => {
@@ -52,38 +49,14 @@ export default function CbtIdentityGate({ onReady }: Props) {
     };
   }, [onReady]);
 
-  const continueWithGoogle = async () => {
+  const continueWithUsername = async () => {
     setSigningIn(true);
     setMessage('');
     try {
-      await auth.signIn();
+      await auth.signInAnonymously();
+      // The auth-change event loads the student's profile, after which they can claim a unique username.
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Google sign-in could not start. Please try again.');
-      setSigningIn(false);
-    }
-  };
-
-  const continueWithEmail = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSigningIn(true);
-    setMessage('');
-    try {
-      if (accountMode === 'signup') {
-        const result = await auth.signUpWithPassword(email.trim(), password);
-        if (result.confirmationRequired) {
-          setAccountMode('signin');
-          setMessage('Account created. Check your email to confirm it, then sign in here to choose your username.');
-        } else {
-          setMessage('Account created. Now choose your free, unique student username.');
-        }
-      } else {
-        await auth.signInWithPassword(email.trim(), password);
-        setSignedIn(true);
-        setLoading(true);
-      }
-    } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Your account could not be verified. Please try again.');
-    } finally {
+      setMessage(error instanceof Error ? error.message : 'We could not create your student session. Please try again.');
       setSigningIn(false);
     }
   };
@@ -119,24 +92,15 @@ export default function CbtIdentityGate({ onReady }: Props) {
           <p className="cbt-identity-confirmed"><CheckCircle2 size={16} /> Signed in as <strong>@{profile.username}</strong>. This identity will follow your dashboard, results, practice history and leaderboard.</p>
         ) : !signedIn ? (
           <>
-            <p>Before starting any CBT practice or mock, create or access your free EDUKEN account and choose a unique username. No payment is required.</p>
-            <button type="button" className="cbt-primary-button" disabled={signingIn} onClick={() => void continueWithGoogle()}>
-              <ArrowRight size={17} /> {signingIn ? 'Opening Google…' : 'Continue with Google'}
+            <p>Get started with just your free, unique EDUKEN student username. No email, Google sign-in, password or payment is required.</p>
+            <button type="button" className="cbt-primary-button" disabled={signingIn} onClick={() => void continueWithUsername()}>
+              <ArrowRight size={17} /> {signingIn ? 'Preparing your student ID…' : 'Continue with username'}
             </button>
-            <small>Google is one sign-in option. You can also create or access your account using your email address.</small>
-            <form className="cbt-identity-form" onSubmit={continueWithEmail}>
-              <label htmlFor="cbt-identity-email">Email address</label>
-              <input id="cbt-identity-email" type="email" value={email} onChange={event => setEmail(event.target.value)} autoComplete="email" required />
-              <label htmlFor="cbt-identity-password">Password</label>
-              <input id="cbt-identity-password" type="password" value={password} onChange={event => setPassword(event.target.value)} minLength={8} autoComplete={accountMode === 'signup' ? 'new-password' : 'current-password'} required />
-              <button type="submit" className="cbt-primary-button" disabled={signingIn || !email.trim() || password.length < 8}>{signingIn ? 'Please wait…' : accountMode === 'signup' ? 'Create free account' : 'Sign in with email'}</button>
-              <small>{accountMode === 'signup' ? 'Use at least 8 characters. You may need to confirm your email before continuing.' : 'Sign in with the email and password for your EDUKEN account.'}</small>
-              <button type="button" className="cbt-text-button" onClick={() => { setAccountMode(accountMode === 'signup' ? 'signin' : 'signup'); setMessage(''); }}>{accountMode === 'signup' ? 'Already have an account? Sign in' : 'New to EDUKEN? Create an account'}</button>
-            </form>
+            <small>You'll choose a username that no other student can claim. Keep using this browser so your student identity and progress remain available.</small>
           </>
         ) : (
           <>
-            <p>Choose the free, unique username that will identify you throughout CBT practice, mock examinations, your dashboard, results and leaderboard. Your email and private details will not be shown publicly.</p>
+            <p>Choose the free, unique username that will identify you throughout CBT practice, mock examinations, your dashboard, results and leaderboard.</p>
             <form className="cbt-identity-form" onSubmit={claimUsername}>
               <label htmlFor="cbt-student-username">Choose your username</label>
               <div className="cbt-identity-input-row">
