@@ -4453,26 +4453,32 @@ html:not([data-theme="dark"]) .site .faq.section {
 }
 .rich-content {
   color: inherit;
-  line-height: 1.75;
+  font-size: 1rem;
+  line-height: 1.82;
   overflow-wrap: anywhere;
+  word-break: normal;
 }
-.rich-content p { margin: 0 0 .85em; font-weight: 400; }
+.rich-content p { margin: 0 0 .95em; font-weight: 400; }
 .rich-content strong { font-weight: 750; color: inherit; }
 .rich-content h3 {
-  margin: 1.15em 0 .45em;
-  font-size: 1.08em;
-  line-height: 1.35;
+  margin: 1.35em 0 .55em;
+  font-size: 1.12em;
+  line-height: 1.38;
   font-weight: 800;
   color: var(--ink, #183b2b);
 }
+.rich-content h3:first-child { margin-top: 0; }
 .rich-content h4 {
-  margin: 1em 0 .4em;
-  font-size: 1em;
-  line-height: 1.4;
+  margin: 1.1em 0 .45em;
+  font-size: 1.03em;
+  line-height: 1.45;
   font-weight: 750;
+  color: var(--ink, #183b2b);
 }
-.rich-content ul { margin: .25em 0 1em; padding-left: 1.35em; }
-.rich-content li { margin: .25em 0; padding-left: .15em; }
+.rich-content ul,
+.rich-content ol { margin: .3em 0 1.05em; padding-left: 1.55em; }
+.rich-content li { margin: .35em 0; padding-left: .2em; }
+.rich-content li::marker { color: var(--accent, #397454); font-weight: 700; }
 .rich-content-preview {
   margin-top: 8px;
   padding: 12px;
