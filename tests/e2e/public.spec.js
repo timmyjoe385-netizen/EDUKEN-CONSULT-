@@ -1080,7 +1080,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
 
-test('customer password sign-in shows a safe error without exposing provider details', async ({ page }) => {
+test('customer sign-in offers Google only and does not expose password sign-in', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1088,27 +1088,15 @@ test('customer password sign-in shows a safe error without exposing provider det
       body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
     }),
   );
-  await page.route(url =>
-    url.hostname === new URL(supabaseTestUrl).hostname
-    && url.pathname === '/auth/v1/token'
-    && url.searchParams.get('grant_type') === 'password',
-  route => route.fulfill({
-    status: 400,
-    contentType: 'application/json',
-    body: JSON.stringify({ error: 'invalid_grant', error_description: 'invalid login credentials' }),
-  }));
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
   const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
-  await dialog.getByLabel('Email address').fill('student@example.test');
-  await dialog.getByLabel('Password').fill('not-a-real-password');
-  await dialog.getByRole('button', { name: 'Sign in securely' }).click();
-  await expect(dialog.getByRole('alert')).toHaveText(
-    'Email or password was not accepted. Check your test account details and try again.',
-  );
-  await expect(dialog.getByRole('alert')).not.toContainText('invalid login credentials');
+  await expect(dialog.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
+  await expect(dialog.getByLabel('Email address')).toHaveCount(0);
+  await expect(dialog.getByLabel('Password')).toHaveCount(0);
+  await expect(dialog.getByRole('button', { name: /sign in securely/i })).toHaveCount(0);
 });
 
 test('public AI assistant rejects oversized questions before provider work', async () => {
