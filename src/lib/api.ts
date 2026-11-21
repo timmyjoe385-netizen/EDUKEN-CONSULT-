@@ -204,6 +204,33 @@ export const auth = {
   },
   signIn: async (_options?: any) => {
     const redirectTo = window.location.origin + window.location.pathname;
+    const currentSession = readSession();
+
+    // Preserve CBT history for students who already have an anonymous preview account:
+    // link Google to that same Supabase user instead of creating a second identity.
+    if (currentSession?.user?.is_anonymous) {
+      const linkResponse = await fetch(SUPABASE_URL + '/auth/v1/user/identities/authorize', {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: 'Bearer ' + currentSession.access_token,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          provider: 'google',
+          redirect_to: redirectTo,
+          scopes: 'openid email profile',
+        }),
+      });
+      const linkResult = await linkResponse.json().catch(() => ({}));
+      if (!linkResponse.ok || typeof linkResult.url !== 'string') {
+        const reason = String(linkResult.msg || linkResult.message || linkResult.error_description || linkResult.error || '');
+        throw new Error(reason || 'We could not connect Google to your existing EDUKEN account. Account linking must be enabled before continuing.');
+      }
+      window.location.assign(linkResult.url);
+      return new Promise(() => undefined);
+    }
+
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
     url.searchParams.set('redirect_to', redirectTo);
