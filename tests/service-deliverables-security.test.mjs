@@ -71,7 +71,7 @@ test("service requests require a Google-linked customer account, including gener
   const end = source.indexOf('if (path === "/api/service-requests" && req.method === "GET")', start);
   assert.ok(start >= 0 && end > start, "service request route must exist");
   const route = source.slice(start, end);
-  assert.match(route, /const user = serviceId \? await requireGoogleUser\(req\) : await currentUser\(req\)/);
+  assert.match(route, /const user = await requireGoogleUser\(req\)/);
   assert.match(app, /if \(!auth\.isGoogleSignedIn\(\)\)[\s\S]*setCustomerSignInRequest\(current => current \+ 1\)/);
   assert.match(app, /customerSignInRequest=\{customerSignInRequest\}/);
   const hub = readFileSync("src/PlatformHub.tsx", "utf8");
