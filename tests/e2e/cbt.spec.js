@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
       access_token: 'playwright-student-session',
       refresh_token: 'playwright-refresh-token',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'playwright-student-id', email: 'student@example.test' },
+      user: { id: 'playwright-student-id', is_anonymous: true },
     }));
   });
   await page.route('**/api/cbt/student-profile', route => route.fulfill({
@@ -28,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('students without a signed-in account cannot start any CBT activity', async ({ page }) => {
-  // beforeEach seeds an authenticated student for most tests; clear it before app startup
+  // beforeEach seeds a student session for most tests; clear it before app startup
   // so this test exercises the genuinely signed-out first render without an auth-event race.
   await page.addInitScript(() => { localStorage.removeItem('eduken_auth_session'); });
   let startCalls = 0;
@@ -68,7 +68,7 @@ test('student identity gate locks CBT when signed out and unlocks after username
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'verified-student-session',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'verified-student-id', email: 'student@example.test' },
+      user: { id: 'verified-student-id', is_anonymous: true },
     }));
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
