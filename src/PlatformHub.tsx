@@ -376,8 +376,8 @@ export default function PlatformHub({
     try {
       await auth.signIn({ scope: 'openid email profile offline_access' });
       await refresh();
-    } catch {
-      /* cancelled */
+    } catch (error) {
+      setCustomerSignInMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
     }
   };
 
@@ -762,7 +762,7 @@ export default function PlatformHub({
             <button
               className="customer-google-signin"
               type="button"
-              onClick={() => { setCustomerSignInMessage(''); void auth.signIn(); }}
+              onClick={() => { setCustomerSignInMessage(''); void signIn(); }}
             >
               <span className="customer-google-mark" aria-hidden="true">G</span>
               Continue with Google
