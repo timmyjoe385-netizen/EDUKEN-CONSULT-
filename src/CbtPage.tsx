@@ -239,7 +239,9 @@ export default function CbtPage() {
       setSecondsLeft(previous => previous === remaining ? previous : remaining);
       if (remaining === 0 && timer !== undefined) window.clearInterval(timer);
     };
-    timer = window.setInterval(updateRemaining, 250);
+    // The deadline is absolute, so a one-second tick keeps the display accurate without
+    // waking React four times per second on lower-memory Android devices.
+    timer = window.setInterval(updateRemaining, 1000);
     document.addEventListener('visibilitychange', updateRemaining);
     updateRemaining();
     return () => {
