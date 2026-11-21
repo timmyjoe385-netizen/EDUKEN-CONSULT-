@@ -12,6 +12,7 @@ import { normalizeContentDeadline } from "./content-deadline-validation.mjs";
 import { runContentSaveSideEffects } from "./content-save-side-effects.mjs";
 import { parseQuestionImportRows, validateQuestionInput, validateStatusTransition } from "./question-bank-validation.mjs";
 import { gradeCbtAttempt, getCbtAttemptExpiry } from "./cbt-attempt-validation.mjs";
+import { validateCbtSubjectCombination } from "./cbt-subject-validation.mjs";
 import { aggregateCbtSubjectScores, validateStudentUsername } from "./student-arena-validation.mjs";
 
 const cors = {
@@ -3218,13 +3219,11 @@ Deno.serve(async (req) => {
         return json({ error: `Question count must be a whole number from 20 to ${maxQuestionCount} for ${mode} mode.` }, 400);
       }
 
-      const supportedSubjects = ["Mathematics", "Biology", "Chemistry", "Physics", "Government", "Economics", "Literature in English", "Christian Religious Studies", "Commerce", "Principles of Accounts"];
       const rawCombination = Array.isArray(body.subjectCombination) ? body.subjectCombination.map(value => String(value).trim()) : [];
       let chosenSubjects: string[] = [];
       if (mode === "mock") {
-        if (rawCombination.length !== 3 || new Set(rawCombination).size !== 3 || rawCombination.some(value => !supportedSubjects.includes(value))) {
-          return json({ error: "Choose exactly three different additional subjects for a mixed mock." }, 400);
-        }
+        const combination = validateCbtSubjectCombination(rawCombination);
+        if (!combination.valid) return json({ error: combination.error }, 400);
         chosenSubjects = ["Use of English", ...rawCombination];
       }
 
