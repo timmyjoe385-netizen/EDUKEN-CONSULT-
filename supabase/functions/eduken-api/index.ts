@@ -1017,6 +1017,7 @@ Deno.serve(async (req) => {
     if (req.method === "GET" && (path === "/public-content" || path === "/api/public-content")) return json(await publicContent());
 
     if (req.method === "POST" && (path === "/consultations" || path === "/api/consultations")) {
+      await requireGoogleUser(req);
       let rateAllowed: boolean | null;
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "consultation"); } catch { return json({ error: "Consultations are temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Consultations are temporarily unavailable." }, 503);
@@ -1036,13 +1037,13 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/me" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data: profile } = await db.from("profiles").select("*").eq("id", user.id).maybeSingle();
       return json({ user: { userId: user.id, email: user.email }, profile });
     }
 
     if (path === "/api/me" && req.method === "PUT") {
-      const user = await requireUser(req); const b = await req.json();
+      const user = await requireGoogleUser(req); const b = await req.json();
       const { data, error } = await db.from("profiles").upsert({
         id: user.id, display_name: String(b.displayName || "").slice(0,80), email: user.email || null
       }).select().single();
@@ -1052,7 +1053,7 @@ Deno.serve(async (req) => {
 
     const savedMatch = path.match(/^\/api\/user\/saved(?:\/([^/]+))?$/);
     if (savedMatch) {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       if (req.method === "GET") return json({ items: await scoped("saved_opportunities", user.id) });
       if (req.method === "POST") {
         const b = await req.json();
@@ -1071,7 +1072,7 @@ Deno.serve(async (req) => {
 
     const trackerMatch = path.match(/^\/api\/user\/tracker(?:\/([^/]+))?$/);
     if (trackerMatch) {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       if (req.method === "GET") return json({ items: await scoped("application_tracker", user.id) });
       if (req.method === "POST") {
         const b = await req.json();
@@ -1094,12 +1095,12 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/user/notifications" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       return json({ items: await scoped("notifications", user.id) });
     }
 
     if (path === "/api/user/notifications/read" && req.method === "POST") {
-      const user = await requireUser(req); const b = await req.json();
+      const user = await requireGoogleUser(req); const b = await req.json();
       let q = db.from("notifications").update({ read: true }).eq("user_id", user.id);
       if (!b.all && b.id) q = q.eq("id", b.id);
       const { error } = await q;
@@ -1108,7 +1109,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/user/topics" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.from("topic_subscriptions").select("topic").eq("user_id", user.id);
       if (error) throw error;
       return json({ topics: (data ?? []).map(x => x.topic) });
@@ -1116,7 +1117,7 @@ Deno.serve(async (req) => {
 
     const topicMatch = path.match(/^\/api\/user\/topics\/(subscribe|unsubscribe)$/);
     if (topicMatch && req.method === "POST") {
-      const user = await requireUser(req); const b = await req.json();
+      const user = await requireGoogleUser(req); const b = await req.json();
       const topic = String(b.topic || "").trim().slice(0, 80);
       if (!topic) return json({ error: "Topic is required." }, 400);
       if (topicMatch[1] === "subscribe") {
@@ -1130,7 +1131,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/user/reminders/check" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data: saved } = await db.from("saved_opportunities").select("opportunity_id").eq("user_id", user.id);
       const ids = (saved ?? []).map(x => x.opportunity_id);
       if (ids.length) {
@@ -1154,6 +1155,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/ai-assistant" && req.method === "POST") {
+      await requireGoogleUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       if (typeof b?.question !== "string") return json({ error: "Question must be a text string." }, 400);
@@ -1534,7 +1536,7 @@ Deno.serve(async (req) => {
       }
       // Selected service requests must belong to a signed-in customer account so payment
       // and deliverables can be tied to that student. General enquiries without serviceId stay public.
-      const user = serviceId ? await requireUser(req) : await currentUser(req);
+      const user = await requireGoogleUser(req);
       const reference = "EDK-" + new Date().toISOString().slice(0,10).replace(/-/g, "") + "-" + crypto.randomUUID().slice(0,8).toUpperCase();
       const onlinePrice = Number(selectedServiceForRequest?.price) * quantity;
       const checkoutToken = selectedServiceForRequest && Number.isFinite(onlinePrice) && onlinePrice > 0 ? secureRandomToken() : null;
@@ -1549,7 +1551,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/service-requests" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       return json({ items: data ?? [] });
@@ -1557,7 +1559,7 @@ Deno.serve(async (req) => {
 
     const serviceRequestMatch = path.match(/^\/api\/service-requests\/([^/]+)$/);
     if (serviceRequestMatch && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.from("service_requests").select("id,user_id,service_id,customer_name,whatsapp,email,details,status,reference_number,quantity,created_at,updated_at,services(name,price)").eq("id", serviceRequestMatch[1]).eq("user_id", user.id).maybeSingle();
       if (error) throw error;
       if (!data) return json({ error: "Service request not found." }, 404);
@@ -1566,7 +1568,7 @@ Deno.serve(async (req) => {
 
 
     if (path === "/api/wallet" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data: wallet, error: walletError } = await db.from("customer_wallets")
         .select("id,balance,currency,created_at,updated_at").eq("user_id", user.id).maybeSingle();
       if (walletError) throw walletError;
@@ -1583,7 +1585,7 @@ Deno.serve(async (req) => {
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-initialize"); } catch { return json({ error: "Wallet deposits are temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Wallet deposits are temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many wallet deposit attempts. Please wait before trying again." }, 429);
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const amount = Number(b?.amount);
@@ -1686,7 +1688,7 @@ Deno.serve(async (req) => {
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-initialize"); } catch { return json({ error: "Wallet deposits are temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Wallet deposits are temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many wallet deposit attempts. Please wait before trying again." }, 429);
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
       if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
         return json({ error: "Flutterwave wallet deposits are not enabled for the configured key and mode.", code: "FLUTTERWAVE_MODE_OR_KEY_MISMATCH" }, 503);
@@ -1800,7 +1802,7 @@ Deno.serve(async (req) => {
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-transfer-initialize"); } catch { return json({ error: "Wallet bank transfers are temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Wallet bank transfers are temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many wallet transfer attempts. Please wait before trying again." }, 429);
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const secret = Deno.env.get("FLUTTERWAVE_SECRET_KEY");
       if (!isFlutterwaveModeEnabled(Deno.env.get("FLUTTERWAVE_MODE"), secret)) {
         return json({ error: "Flutterwave wallet transfers are not enabled for the configured key and mode.", code: "FLUTTERWAVE_MODE_OR_KEY_MISMATCH" }, 503);
@@ -1880,7 +1882,7 @@ Deno.serve(async (req) => {
       try { rateAllowed = await consumeEmailAlertRateLimit(req, "wallet-deposit-verify"); } catch { return json({ error: "Wallet verification is temporarily unavailable." }, 503); }
       if (rateAllowed === null) return json({ error: "Wallet verification is temporarily unavailable." }, 503);
       if (!rateAllowed) return json({ error: "Too many wallet verification attempts. Please wait before trying again." }, 429);
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
@@ -1964,7 +1966,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/wallet/pay-service" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const serviceRequestId = typeof b?.serviceRequestId === "string" ? b.serviceRequestId : "";
@@ -2299,7 +2301,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/payments/initialize" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       if (typeof b?.serviceRequestId !== "string" || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(b.serviceRequestId)) {
@@ -2676,7 +2678,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/payments/verify" && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       let b: any;
       try { b = await req.json(); } catch { return json({ error: "A valid JSON request body is required." }, 400); }
       const reference = typeof b?.reference === "string" ? b.reference.trim() : "";
@@ -2735,7 +2737,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/payments" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.from("payments").select("id,amount,currency,status,payment_reference,created_at,paid_at,service_requests(reference_number,customer_name)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(100);
       if (error) throw error;
       return json({ items: data ?? [] });
@@ -2869,7 +2871,7 @@ Deno.serve(async (req) => {
     }
 
     if (path === "/api/service-deliverables" && req.method === "GET") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const { data, error } = await db.from("service_deliverables")
         .select("id,service_request_id,title,description,original_filename,mime_type,file_size_bytes,published_at,created_at,service_requests(reference_number,service_id,status,services(name))")
         .eq("user_id", user.id).not("published_at", "is", null)
@@ -2884,7 +2886,7 @@ Deno.serve(async (req) => {
     }
 
     if (path.startsWith("/api/service-deliverables/") && path.endsWith("/download") && req.method === "POST") {
-      const user = await requireUser(req);
+      const user = await requireGoogleUser(req);
       const segments = path.split("/").filter(Boolean);
       const deliverableId = segments.length === 4 ? segments[2] : "";
       if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(deliverableId)) {
