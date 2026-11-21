@@ -54,7 +54,7 @@ test('existing anonymous CBT accounts link Google without replacing the student 
     body: JSON.stringify({ profile: { username: 'LegacyStudent', created_at: '2026-11-20T00:00:00.000Z' } }),
   }));
   let linkRequest;
-  await page.route('**/auth/v1/user/identities/authorize', async route => {
+  await page.route('**/auth/v1/user/identities/authorize**', async route => {
     linkRequest = {
       method: route.request().method(),
       authorization: route.request().headers().authorization,
