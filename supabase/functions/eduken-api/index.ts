@@ -3342,7 +3342,7 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (readError) throw readError;
       if (!attempt) return json({ error: "Practice attempt was not found or has expired." }, 404);
-      if (attempt.user_id && attempt.user_id !== user?.id) return json({ error: "This practice attempt belongs to a different student account." }, 403);
+      if (!attempt.user_id || attempt.user_id !== user.id) return json({ error: "This practice attempt belongs to a different student account." }, 403);
       if (attempt.status === "submitted") {
         const previous = gradeCbtAttempt(attempt.question_snapshot, attempt.answers);
         if (!previous.valid) throw new Error("Stored CBT attempt could not be graded.");
