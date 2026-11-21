@@ -168,7 +168,7 @@ export default function PlatformHub({
   const [studentUsername, setStudentUsername] = useState('');
 
   const refreshWallet = async () => {
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setWallet(null);
       setWalletTransactions([]);
       return;
@@ -282,7 +282,7 @@ export default function PlatformHub({
   };
 
   const refreshDeliverables = async () => {
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setDeliverables([]);
       setDeliverablesMessage('Sign in to view documents EDUKEN has published for your service requests.');
       return;
@@ -305,6 +305,11 @@ export default function PlatformHub({
   };
 
   const downloadDeliverable = async (item: Item) => {
+    if (!auth.isGoogleSignedIn()) {
+      setCustomerSignInMessage('');
+      setCustomerSignInOpen(true);
+      return;
+    }
     try {
       const result = await api.post('/api/service-deliverables/' + encodeURIComponent(item.id) + '/download', {});
       const downloadUrl = String(result.data?.url || '');
@@ -316,7 +321,7 @@ export default function PlatformHub({
   };
 
   const refresh = async () => {
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setUser(null);
       setSaved([]);
       setTracker([]);
@@ -357,7 +362,7 @@ export default function PlatformHub({
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
-    const unsubscribe = auth.isSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
+    const unsubscribe = auth.isGoogleSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
     return () => {
       window.removeEventListener('eduken-auth-changed', onAuthChanged);
       window.removeEventListener('eduken-wallet-updated', onWalletUpdated);
@@ -453,16 +458,19 @@ export default function PlatformHub({
   };
 
   const markRead = async (id?: string) => {
+    if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     await api.post('/api/user/notifications/read', id ? { id } : { all: true });
     await refresh();
   };
 
   const updateTracker = async (item: Item, status: string, notes: string) => {
+    if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     await api.put('/api/user/tracker/' + item.id, { status, notes });
     await refresh();
   };
 
   const askAi = async () => {
+    if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     if (!aiQuestion.trim()) return;
     setAiLoading(true);
     setAiSources([]);
@@ -620,7 +628,7 @@ export default function PlatformHub({
           <p>
             Choose categories and enable device notifications where supported.
           </p>
-          <button className="secondary" onClick={() => setOpen('alerts')}>
+          <button className="secondary" onClick={() => { if (!auth.isGoogleSignedIn()) { void signIn(); return; } setOpen('alerts'); }}>
             <Bell size={15} /> Manage alerts
           </button>
         </div>
