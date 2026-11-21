@@ -28,7 +28,7 @@ const SUBJECTS = [
 ];
 
 export default function StudentArena() {
-  const [signedIn] = useState(() => auth.isSignedIn());
+  const [signedIn] = useState(() => auth.isGoogleSignedIn());
   const [champions, setChampions] = useState<WeeklyChampion[]>([]);
   const [loadingChampions, setLoadingChampions] = useState(true);
   const [profile, setProfile] = useState<StudentProfile | null>(null);
@@ -178,15 +178,15 @@ export default function StudentArena() {
 
       {!signedIn ? (
         <div className="student-arena-gate">
-          <h3>Create your student identity to unlock the CBT.</h3>
-          <p>Sign in to your free EDUKEN account and claim a unique username before starting subject practice or a mock examination. Your username follows your results and leaderboard profile.</p>
+          <h3>Sign in with Google to unlock your student identity and CBT.</h3>
+          <p>Sign in with your Google account first. Your existing EDUKEN username and progress will then be loaded automatically. Your username follows your results and leaderboard profile.</p>
         </div>
       ) : loadingProfile ? (
         <div className="student-arena-gate" role="status">Loading your competition profile…</div>
       ) : !profile ? (
         <div className="student-arena-gate">
           <h3>Choose your free student username</h3>
-          <p>Your username is required before you can access any CBT activity. Claim it in the identity section above to continue.</p>
+          <p>Your Google account is connected. Create your one free EDUKEN username in the identity section above; it will be reused automatically across every CBT activity.</p>
         </div>
       ) : (
         <div className="student-arena-board">
