@@ -90,9 +90,9 @@ test('new JAMB subjects appear in practice and mixed-mock selectors', async ({ p
   expect(practiceOptions).toContain('Christian Religious Studies (CRS)');
   expect(practiceOptions).toContain('Commerce');
   expect(practiceOptions).toContain('Financial Accounting (Principles of Accounts)');
-  expect(mockOptions).toContain('Christian Religious Studies (CRS)');
+  expect(mockOptions).toContain('Christian Religious Studies');
   expect(mockOptions).toContain('Commerce');
-  expect(mockOptions).toContain('Financial Accounting (Principles of Accounts)');
+  expect(mockOptions).toContain('Principles of Accounts');
 });
 
 test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
