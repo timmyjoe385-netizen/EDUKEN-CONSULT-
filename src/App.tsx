@@ -166,7 +166,7 @@ function App() {
       cursorStart = start + 2;
       cursorEnd = cursorStart + phrase.length;
     } else {
-      const lineStart = value.lastIndexOf('\\n', Math.max(0, start - 1)) + 1;
+      const lineStart = value.lastIndexOf('\n', Math.max(0, start - 1)) + 1;
       const prefix = kind === 'heading' ? '## ' : '- ';
       next = value.slice(0, lineStart) + prefix + value.slice(lineStart);
       cursorStart = start + prefix.length;
