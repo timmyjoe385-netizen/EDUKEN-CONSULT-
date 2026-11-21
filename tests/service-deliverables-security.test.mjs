@@ -75,7 +75,8 @@ test("service requests require a Google-linked customer account, including gener
   assert.match(app, /if \(!auth\.isGoogleSignedIn\(\)\)[\s\S]*setCustomerSignInRequest\(current => current \+ 1\)/);
   assert.match(app, /customerSignInRequest=\{customerSignInRequest\}/);
   const hub = readFileSync("src/PlatformHub.tsx", "utf8");
-  assert.match(hub, /auth\.isGoogleSignedIn\(\)/);\n  assert.match(hub, /auth\.signIn\(/);
+  assert.match(hub, /auth\.isGoogleSignedIn\(\)/);
+  assert.match(hub, /auth\.signIn\(/);
   assert.match(hub, /Continue with Google/);
   assert.doesNotMatch(hub, /customer-signin-email|customer-signin-password|signUpWithPassword|signInWithPassword/);
   assert.match(hub, /student-account-identity/);
