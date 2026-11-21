@@ -58,7 +58,7 @@ test('existing anonymous CBT accounts link Google without replacing the student 
     linkRequest = {
       method: route.request().method(),
       authorization: route.request().headers().authorization,
-      body: route.request().postDataJSON(),
+      url: route.request().url(),
     };
     await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: '/mock-google-link' }) });
   });
@@ -74,8 +74,9 @@ test('existing anonymous CBT accounts link Google without replacing the student 
   });
   await expect(page.getByRole('button', { name: /Connect Google and keep my progress/i })).toBeVisible();
   await page.getByRole('button', { name: /Connect Google and keep my progress/i }).click();
-  await expect.poll(() => linkRequest?.body?.provider).toBe('google');
-  expect(linkRequest.method).toBe('POST');
+  await expect.poll(() => linkRequest?.url).toContain('provider=google');
+  expect(linkRequest.method).toBe('GET');
+  expect(linkRequest.url).toContain('skip_http_redirect=true');
   expect(linkRequest.authorization).toContain('Bearer legacy-anonymous-session');
   await expect(page).toHaveURL(/mock-google-link/);
 });
