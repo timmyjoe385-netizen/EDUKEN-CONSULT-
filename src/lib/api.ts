@@ -134,6 +134,26 @@ export const api = {
 
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
+  signInAnonymously: async () => {
+    const response = await fetch(SUPABASE_URL + '/auth/v1/signup', {
+      method: 'POST',
+      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ data: { account_type: 'cbt_student' } }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok || !result.access_token || !result.user?.id) {
+      const reason = String(result.msg || result.message || result.error_description || result.error || '');
+      throw new Error(reason || 'Username-only student access is not enabled yet. Please try again later.');
+    }
+    const session = {
+      access_token: result.access_token,
+      refresh_token: result.refresh_token || undefined,
+      expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
+      user: result.user,
+    };
+    writeSession(session);
+    return { user: result.user, session };
+  },
   signUpWithPassword: async (email: string, password: string) => {
     const response = await fetch(SUPABASE_URL + '/auth/v1/signup', {
       method: 'POST',
