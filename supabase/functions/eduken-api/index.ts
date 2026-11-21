@@ -3463,6 +3463,119 @@ Deno.serve(async (req) => {
       });
     }
 
+    if (path === "/api/admin/cbt-monitoring" && req.method === "GET") {
+      await requireAdmin(req);
+      const [profilesResult, attemptsResult, subjectScoresResult, sessionsResult] = await Promise.all([
+        db.from("cbt_student_profiles").select("user_id,username,created_at").order("created_at", { ascending: false }).limit(5000),
+        db.from("cbt_attempts").select("user_id,mode,subject,score,total,duration_seconds,submitted_at").not("user_id", "is", null).order("submitted_at", { ascending: false }).limit(10000),
+        db.from("cbt_attempt_subject_scores").select("user_id,subject,score,total,submitted_at").order("submitted_at", { ascending: false }).limit(20000),
+        db.from("cbt_attempt_sessions").select("user_id,status,started_at,submitted_at").not("user_id", "is", null).order("started_at", { ascending: false }).limit(10000),
+      ]);
+      for (const result of [profilesResult, attemptsResult, subjectScoresResult, sessionsResult]) {
+        if (result.error) throw result.error;
+      }
+      const profiles = profilesResult.data ?? [];
+      const attempts = attemptsResult.data ?? [];
+      const subjectScores = subjectScoresResult.data ?? [];
+      const sessions = sessionsResult.data ?? [];
+      const byUser = new Map<string, any>();
+      for (const profile of profiles) {
+        byUser.set(profile.user_id, {
+          username: profile.username,
+          joined_at: profile.created_at,
+          last_active_at: null,
+          attempts: [],
+          subjects: new Map(),
+          sessions: [],
+        });
+      }
+      for (const attempt of attempts) {
+        const student = byUser.get(attempt.user_id);
+        if (!student) continue;
+        const total = Number(attempt.total) || 0;
+        const score = Number(attempt.score) || 0;
+        student.attempts.push({
+          mode: attempt.mode,
+          subject: attempt.subject,
+          score,
+          total,
+          percentage: total > 0 ? score / total * 100 : 0,
+          duration_seconds: attempt.duration_seconds == null ? null : Number(attempt.duration_seconds),
+          submitted_at: attempt.submitted_at,
+        });
+        if (!student.last_active_at || new Date(attempt.submitted_at).getTime() > new Date(student.last_active_at).getTime()) {
+          student.last_active_at = attempt.submitted_at;
+        }
+      }
+      for (const row of subjectScores) {
+        const student = byUser.get(row.user_id);
+        if (!student) continue;
+        const key = String(row.subject || "Other");
+        const aggregate = student.subjects.get(key) ?? { subject: key, score: 0, total: 0, submitted_at: row.submitted_at };
+        aggregate.score += Number(row.score) || 0;
+        aggregate.total += Number(row.total) || 0;
+        if (new Date(row.submitted_at).getTime() > new Date(aggregate.submitted_at).getTime()) aggregate.submitted_at = row.submitted_at;
+        student.subjects.set(key, aggregate);
+      }
+      for (const session of sessions) {
+        const student = byUser.get(session.user_id);
+        if (!student) continue;
+        student.sessions.push(session);
+        const activity = session.submitted_at || session.started_at;
+        if (activity && (!student.last_active_at || new Date(activity).getTime() > new Date(student.last_active_at).getTime())) {
+          student.last_active_at = activity;
+        }
+      }
+      const now = Date.now();
+      const students = Array.from(byUser.values()).map(student => {
+        const history = student.attempts;
+        const totalQuestions = history.reduce((sum: number, item: any) => sum + item.total, 0);
+        const totalCorrect = history.reduce((sum: number, item: any) => sum + item.score, 0);
+        const recent = history.slice(0, 5);
+        const previous = history.slice(5, 10);
+        const weightedAccuracy = (items: any[]) => {
+          const total = items.reduce((sum, item) => sum + item.total, 0);
+          return total ? items.reduce((sum, item) => sum + item.score, 0) / total * 100 : null;
+        };
+        const recentAccuracy = weightedAccuracy(recent);
+        const previousAccuracy = weightedAccuracy(previous);
+        const subjects = Array.from(student.subjects.values()).map((item: any) => ({
+          ...item,
+          percentage: item.total ? item.score / item.total * 100 : 0,
+        })).sort((a: any, b: any) => a.percentage - b.percentage);
+        const activeSessions = student.sessions.filter((item: any) =>
+          !item.submitted_at && !["expired", "cancelled", "abandoned"].includes(String(item.status || "").toLowerCase())
+        ).length;
+        return {
+          username: student.username,
+          joined_at: student.joined_at,
+          last_active_at: student.last_active_at,
+          attempts_count: history.length,
+          questions_attempted: totalQuestions,
+          average_accuracy: totalQuestions ? totalCorrect / totalQuestions * 100 : 0,
+          recent_accuracy: recentAccuracy,
+          improvement_points: recentAccuracy != null && previousAccuracy != null ? recentAccuracy - previousAccuracy : null,
+          active_sessions: activeSessions,
+          subjects,
+          attempts: history.slice(0, 20),
+        };
+      }).sort((a, b) => (b.last_active_at ? new Date(b.last_active_at).getTime() : 0) - (a.last_active_at ? new Date(a.last_active_at).getTime() : 0));
+      const activeCutoff = now - 7 * 86400000;
+      const completedAttempts = attempts;
+      const allQuestions = completedAttempts.reduce((sum, item) => sum + (Number(item.total) || 0), 0);
+      const allCorrect = completedAttempts.reduce((sum, item) => sum + (Number(item.score) || 0), 0);
+      return json({
+        generated_at: new Date(now).toISOString(),
+        totals: {
+          students: profiles.length,
+          active_students_7d: students.filter(student => student.last_active_at && new Date(student.last_active_at).getTime() >= activeCutoff).length,
+          attempts: completedAttempts.length,
+          average_accuracy: allQuestions ? allCorrect / allQuestions * 100 : 0,
+        },
+        students,
+      });
+    }
+
     if (path === "/api/cbt/attempts" && req.method === "GET") {
       const user = await requireGoogleUser(req);
       const { data, error } = await db.from("cbt_attempts")
