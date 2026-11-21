@@ -3641,6 +3641,75 @@ Deno.serve(async (req) => {
       }
     }
 
+    const cbtMonitoring = path === "/api/admin/cbt-monitoring";
+    if (cbtMonitoring) {
+      await requireAdmin(req);
+      if (req.method !== "GET") return json({ error: "Method not allowed." }, 405);
+      const [profilesResult, attemptsResult, subjectScoresResult, sessionsResult] = await Promise.all([
+        db.from("cbt_student_profiles").select("user_id,username").order("username").limit(2000),
+        db.from("cbt_attempts").select("user_id,subject,mode,score,total,submitted_at,duration_seconds").not("user_id", "is", null).order("submitted_at", { ascending: false }).limit(10000),
+        db.from("cbt_attempt_subject_scores").select("user_id,subject,score,total,submitted_at,duration_seconds").order("submitted_at", { ascending: false }).limit(20000),
+        db.from("cbt_attempt_sessions").select("user_id,status,started_at,submitted_at,expires_at").not("user_id", "is", null).limit(10000),
+      ]);
+      for (const result of [profilesResult, attemptsResult, subjectScoresResult, sessionsResult]) {
+        if (result.error) throw result.error;
+      }
+      const profiles = profilesResult.data ?? [];
+      const attempts = attemptsResult.data ?? [];
+      const subjectScores = subjectScoresResult.data ?? [];
+      const sessions = sessionsResult.data ?? [];
+      const now = Date.now();
+      const day = 24 * 60 * 60 * 1000;
+      const rows = profiles.map((profile: any) => {
+        const ownAttempts = attempts.filter((item: any) => item.user_id === profile.user_id);
+        const ownScores = subjectScores.filter((item: any) => item.user_id === profile.user_id);
+        const ownSessions = sessions.filter((item: any) => item.user_id === profile.user_id);
+        const correct = ownAttempts.reduce((sum: number, item: any) => sum + Number(item.score || 0), 0);
+        const questions = ownAttempts.reduce((sum: number, item: any) => sum + Number(item.total || 0), 0);
+        const totalDuration = ownAttempts.reduce((sum: number, item: any) => sum + Number(item.duration_seconds || 0), 0);
+        const timedAttempts = ownAttempts.filter((item: any) => Number(item.duration_seconds) > 0).length;
+        const subjectMap = new Map<string, any>();
+        for (const item of ownScores) {
+          const key = String(item.subject || "Unspecified");
+          const entry = subjectMap.get(key) || { subject: key, attempts: 0, score: 0, total: 0 };
+          entry.attempts += 1; entry.score += Number(item.score || 0); entry.total += Number(item.total || 0);
+          subjectMap.set(key, entry);
+        }
+        const subjects = [...subjectMap.values()].map((item: any) => ({
+          ...item, accuracy: item.total ? Math.round(item.score / item.total * 10000) / 100 : 0,
+        })).sort((a: any, b: any) => a.accuracy - b.accuracy);
+        const timestamps = [
+          ...ownAttempts.map((item: any) => item.submitted_at),
+          ...ownSessions.map((item: any) => item.submitted_at || item.started_at),
+        ].filter(Boolean);
+        const lastActive = timestamps.sort((a: string, b: string) => Date.parse(b) - Date.parse(a))[0] || null;
+        const activeDays = new Set(timestamps.filter((value: string) => now - Date.parse(value) <= 30 * day).map((value: string) => new Date(value).toISOString().slice(0, 10)));
+        return {
+          user_id: profile.user_id, username: profile.username,
+          attempts: ownAttempts.length, questions, correct,
+          accuracy: questions ? Math.round(correct / questions * 10000) / 100 : 0,
+          average_duration_seconds: timedAttempts ? Math.round(totalDuration / timedAttempts) : null,
+          last_active: lastActive, active_days_30: activeDays.size,
+          completed_attempts: ownAttempts.length,
+          incomplete_attempts: ownSessions.filter((item: any) => item.status === "active").length,
+          subjects,
+          recent: ownAttempts.slice(0, 8),
+        };
+      }).sort((a: any, b: any) => String(b.last_active || "").localeCompare(String(a.last_active || "")));
+      const allCorrect = attempts.reduce((sum: number, item: any) => sum + Number(item.score || 0), 0);
+      const allQuestions = attempts.reduce((sum: number, item: any) => sum + Number(item.total || 0), 0);
+      const active7d = rows.filter((student: any) => student.last_active && now - Date.parse(student.last_active) <= 7 * day).length;
+      return json({
+        summary: {
+          students: profiles.length, attempts: attempts.length, questions: allQuestions,
+          average_accuracy: allQuestions ? Math.round(allCorrect / allQuestions * 10000) / 100 : 0,
+          active_7d: active7d,
+          incomplete: rows.reduce((sum: number, student: any) => sum + student.incomplete_attempts, 0),
+        },
+        students: rows,
+      });
+    }
+
     const adminConsult = path.match(/^\/api\/admin\/consultations(?:\/([^/]+))?$/);
     if (adminConsult) {
       await requireAdmin(req);

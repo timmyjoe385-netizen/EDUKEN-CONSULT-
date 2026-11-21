@@ -31,6 +31,7 @@ const PlatformHub = lazy(() => import('./PlatformHub'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
+const CbtMonitoringAdmin = lazy(() => import('./CbtMonitoringAdmin'));
 
 const SectionLoading = () => <div className="section-loading" role="status" aria-live="polite">Loading this section…</div>;
 import { JAMB_SERVICE_TEMPLATES, jambServiceFieldsFor, isJambCatalogueService, jambServiceDefaultAvailability, jambServicePublicRequirements } from './lib/jamb-service-catalogue.mjs';
@@ -1656,6 +1657,7 @@ function App() {
               'service-requests',
               'payments',
               'analytics',
+              'cbt-monitoring',
               'system-settings',
               'system-health',
               'cbt-questions',
@@ -1669,7 +1671,7 @@ function App() {
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
                   else if (tab === 'system-health') loadSystemHealth();
-                  else if (tab !== 'payments' && tab !== 'cbt-questions') loadAdmin(tab);
+                  else if (tab !== 'payments' && tab !== 'cbt-questions' && tab !== 'cbt-monitoring') loadAdmin(tab);
                 }}
               >
                 {tab === 'opportunities'
@@ -1682,7 +1684,9 @@ function App() {
                         ? '💳 Payments'
                         : tab === 'analytics'
                       ? '📊 Analytics & Insights'
-                      : tab === 'cbt-questions'
+                      : tab === 'cbt-monitoring'
+                        ? '📊 CBT Monitoring'
+                        : tab === 'cbt-questions'
                     ? '📝 CBT Question Bank'
                     : tab === 'system-settings'
                         ? '⚙️ Manage System'
@@ -1703,9 +1707,9 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'cbt-monitoring' ? 'CBT Monitoring' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && (
+              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && adminTab !== 'cbt-monitoring' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                   {adminTab === 'services' && (
                     <button
@@ -1723,7 +1727,9 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'cbt-questions' ? (
+            {adminTab === 'cbt-monitoring' ? (
+              <Suspense fallback={<SectionLoading />}><CbtMonitoringAdmin /></Suspense>
+            ) : adminTab === 'cbt-questions' ? (
               <Suspense fallback={<SectionLoading />}><CbtQuestionBankAdmin /></Suspense>
             ) : adminTab === 'system-health' ? (
               <section className="analytics-panel" aria-label="System health checks">
