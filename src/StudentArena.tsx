@@ -28,7 +28,7 @@ const SUBJECTS = [
 ];
 
 export default function StudentArena() {
-  const [signedIn] = useState(() => auth.isSignedIn());
+  const [signedIn] = useState(() => auth.isGoogleSignedIn());
   const [champions, setChampions] = useState<WeeklyChampion[]>([]);
   const [loadingChampions, setLoadingChampions] = useState(true);
   const [profile, setProfile] = useState<StudentProfile | null>(null);
@@ -178,15 +178,15 @@ export default function StudentArena() {
 
       {!signedIn ? (
         <div className="student-arena-gate">
-          <h3>Your student identity comes first</h3>
-          <p>Sign in and create your unique EDUKEN username in the identity section above before starting any practice or mock examination. The same identity will appear here on your leaderboard.</p>
+          <h3>Sign in with Google to unlock your student identity and CBT.</h3>
+          <p>Sign in with your Google account first. Your existing EDUKEN username and progress will then be loaded automatically. Your username follows your results and leaderboard profile.</p>
         </div>
       ) : loadingProfile ? (
         <div className="student-arena-gate" role="status">Loading your competition profile…</div>
       ) : !profile ? (
         <div className="student-arena-gate">
-          <h3>Finish setting up your student identity</h3>
-          <p>Use the identity section above to choose your unique username. Once it is saved, your Student Arena rankings and personal progress will appear here.</p>
+          <h3>Choose your free student username</h3>
+          <p>Your Google account is connected. Create your one free EDUKEN username in the identity section above; it will be reused automatically across every CBT activity.</p>
         </div>
       ) : (
         <div className="student-arena-board">
@@ -236,7 +236,7 @@ export default function StudentArena() {
           {!loadingRows && rows.length < participantCount && (
             <button className="student-arena-more" type="button" onClick={() => void loadLeaderboard(page + 1, true)}>Load more students</button>
           )}
-          <small className="student-arena-note">Rankings use completed, server-graded attempts. National ranking requires a full 180-question mock; subject ranking requires at least 20 questions in that subject. Guest attempts are not ranked.</small>
+          <small className="student-arena-note">Rankings use completed, server-graded attempts. National ranking requires a full 180-question mock; subject ranking requires at least 20 questions in that subject. Only attempts started under a verified student username can qualify.</small>
         </div>
       )}
       {message && signedIn && profile && <p className="student-arena-message" role="alert">{message}</p>}

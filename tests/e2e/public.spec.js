@@ -511,22 +511,16 @@ test('service request dialog validates required fields without sending a request
   await expect(page.locator('.general-service-grid')).toBeVisible();
   await serviceCard.getByRole('button', { name: 'Request this service', exact: true }).click();
 
-  const dialog = page.getByRole('dialog', {
-    name: 'Playwright Service Request Check',
-  });
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
-  for (const name of ['Full name', 'WhatsApp number', 'Additional notes (required)']) {
-    await expect(dialog.getByRole('textbox', { name })).toHaveAttribute('required', '');
-    expect(await dialog.getByRole('textbox', { name }).evaluate(element => element.checkValidity())).toBe(false);
-  }
+  await expect(dialog).toContainText(/same Google account across EDUKEN CONSULT and CBT/i);
+  await expect(dialog.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'Playwright Service Request Check' })).toHaveCount(0);
+  expect(submittedRequests, 'an unsigned visitor must not submit a service request').toEqual([]);
 
-  await dialog.getByRole('button', { name: 'Send service request' }).click();
-  await expect(dialog).toBeVisible();
-  expect(submittedRequests, 'an empty required form must not call the API').toEqual([]);
-
-  await dialog.getByRole('button', { name: 'Cancel' }).click();
+  await dialog.getByRole('button', { name: 'Close customer sign-in' }).click();
   await expect(dialog).toHaveCount(0);
-  expect(submittedRequests, 'closing the dialog must not submit a request').toEqual([]);
+  expect(submittedRequests, 'closing the sign-in prompt must not submit a request').toEqual([]);
 });
 
 test('preview safety mode blocks email alert subscriptions without sending a request', async ({ page }) => {
@@ -841,15 +835,15 @@ test('wallet reads and spending require customer auth; refunds require admin aut
     'if (path === "/api/wallet" && req.method === "GET")',
     'if (path === "/api/wallet/deposit/initialize" && req.method === "POST")',
   );
-  expect(walletRead.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
-  expect(walletRead.indexOf('await requireUser(req)')).toBeLessThan(walletRead.indexOf('db.from("customer_wallets")'));
+  expect(walletRead.indexOf('await requireGoogleUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletRead.indexOf('await requireGoogleUser(req)')).toBeLessThan(walletRead.indexOf('db.from("customer_wallets")'));
 
   const walletSpend = routeBlock(
     'if (path === "/api/wallet/pay-service" && req.method === "POST")',
     'if (path === "/api/payments/initialize-guest" && req.method === "POST")',
   );
-  expect(walletSpend.indexOf('await requireUser(req)')).toBeGreaterThanOrEqual(0);
-  expect(walletSpend.indexOf('await requireUser(req)')).toBeLessThan(walletSpend.indexOf('db.rpc("pay_service_from_customer_wallet"'));
+  expect(walletSpend.indexOf('await requireGoogleUser(req)')).toBeGreaterThanOrEqual(0);
+  expect(walletSpend.indexOf('await requireGoogleUser(req)')).toBeLessThan(walletSpend.indexOf('db.rpc("pay_service_from_customer_wallet"'));
 
   const refund = routeBlock(
     'if (path === "/api/admin/wallet/refund" && req.method === "POST")',
@@ -1080,7 +1074,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
 
-test('customer password sign-in shows a safe error without exposing provider details', async ({ page }) => {
+test('customer sign-in offers Google only and does not expose password sign-in', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1088,27 +1082,15 @@ test('customer password sign-in shows a safe error without exposing provider det
       body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
     }),
   );
-  await page.route(url =>
-    url.hostname === new URL(supabaseTestUrl).hostname
-    && url.pathname === '/auth/v1/token'
-    && url.searchParams.get('grant_type') === 'password',
-  route => route.fulfill({
-    status: 400,
-    contentType: 'application/json',
-    body: JSON.stringify({ error: 'invalid_grant', error_description: 'invalid login credentials' }),
-  }));
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
   const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
-  await dialog.getByLabel('Email address').fill('student@example.test');
-  await dialog.getByLabel('Password').fill('not-a-real-password');
-  await dialog.getByRole('button', { name: 'Sign in securely' }).click();
-  await expect(dialog.getByRole('alert')).toHaveText(
-    'Email or password was not accepted. Check your test account details and try again.',
-  );
-  await expect(dialog.getByRole('alert')).not.toContainText('invalid login credentials');
+  await expect(dialog.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
+  await expect(dialog.getByLabel('Email address')).toHaveCount(0);
+  await expect(dialog.getByLabel('Password')).toHaveCount(0);
+  await expect(dialog.getByRole('button', { name: /sign in securely/i })).toHaveCount(0);
 });
 
 test('public AI assistant rejects oversized questions before provider work', async () => {
@@ -1724,10 +1706,11 @@ test('JAMB service request dialog opens without a blank-screen runtime error', a
   });
   await expect(serviceCard).toBeVisible();
   await serviceCard.getByRole('button', { name: /Request this service/i }).click();
-  const dialog = page.getByRole('dialog', { name: /JAMB e-PIN \(UTME Without Mock\)/i });
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByRole('spinbutton', { name: 'Number of candidates' })).toHaveValue('1');
-  expect(pageErrors, 'opening the JAMB request dialog must not throw').toEqual([]);
+  await expect(dialog.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: /JAMB e-PIN \(UTME Without Mock\)/i })).toHaveCount(0);
+  expect(pageErrors, 'opening the JAMB request action must show the Google sign-in gate without a runtime error').toEqual([]);
 });
 
 test('admin workspace access is decided by server-side authorization, not a public email allowlist', () => {
@@ -1796,27 +1779,11 @@ test('service request form clearly labels and outlines customer detail fields', 
   await expect(requestButton).toBeVisible();
   await requestButton.click();
 
-  const dialog = page.getByRole('dialog', { name: /Service Request Form Fixture/i });
-  await expect(dialog.getByLabel('Full name *')).toBeVisible();
-  await expect(dialog.getByLabel('WhatsApp number *')).toBeVisible();
-  await expect(dialog.getByLabel('Email address (optional)')).toBeVisible();
-  await expect(dialog.getByLabel('Additional notes (required)')).toBeVisible();
-
-  const nameInput = dialog.locator('#service-request-customer-name');
-  const fieldStyle = await nameInput.evaluate(element => {
-    const style = window.getComputedStyle(element);
-    return {
-      borderStyle: style.borderStyle,
-      borderWidth: style.borderTopWidth,
-      borderColor: style.borderTopColor,
-      minHeight: style.minHeight,
-    };
-  });
-  expect(fieldStyle.borderStyle).toBe('solid');
-  expect(fieldStyle.borderWidth).toBe('2px');
-  expect(fieldStyle.minHeight).toBe('48px');
-  expect(fieldStyle.borderColor).not.toBe('rgba(0, 0, 0, 0)');
-  await expect(dialog).toContainText(/continue to secure checkout for priced services/i);
+  const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toContainText(/student username and learning progress stay connected to this account/i);
+  await expect(dialog.getByRole('button', { name: 'Continue with Google' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: /Service Request Form Fixture/i })).toHaveCount(0);
 });
 
 

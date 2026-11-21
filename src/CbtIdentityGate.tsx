@@ -9,6 +9,7 @@ type Props = { onReady: (profile: Profile | null) => void };
 export default function CbtIdentityGate({ onReady }: Props) {
   const [signedIn, setSignedIn] = useState(() => auth.isSignedIn());
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [googleLinked, setGoogleLinked] = useState(() => auth.isGoogleSignedIn());
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(() => auth.isSignedIn());
   const [saving, setSaving] = useState(false);
@@ -21,18 +22,22 @@ export default function CbtIdentityGate({ onReady }: Props) {
       if (!auth.isSignedIn()) {
         setSignedIn(false);
         setProfile(null);
+        setGoogleLinked(false);
         setLoading(false);
         onReady(null);
         return;
       }
       setSignedIn(true);
+      setGoogleLinked(auth.isGoogleSignedIn());
       setLoading(true);
       api.get('/api/cbt/student-profile')
         .then(result => {
           if (!active) return;
           const nextProfile = result.data?.profile || null;
           setProfile(nextProfile);
-          onReady(nextProfile);
+          const linked = auth.isGoogleSignedIn();
+          setGoogleLinked(linked);
+          onReady(linked ? nextProfile : null);
         })
         .catch(error => {
           if (!active) return;
@@ -54,8 +59,9 @@ export default function CbtIdentityGate({ onReady }: Props) {
     setMessage('');
     try {
       await auth.signIn();
+      // Google OAuth returns to EDUKEN with the same platform session, then the profile is loaded.
     } catch (error) {
-      setMessage(error instanceof Error ? error.message : 'Google sign-in could not start. Please try again.');
+      setMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
       setSigningIn(false);
     }
   };
@@ -84,22 +90,30 @@ export default function CbtIdentityGate({ onReady }: Props) {
       <div className="cbt-identity-icon"><UserRound size={22} /></div>
       <div className="cbt-identity-content">
         <span className="cbt-eyebrow">YOUR EDUKEN STUDENT ID</span>
-        <h2 id="cbt-identity-title">{profile ? 'You are ready to practise' : 'Create your student identity first'}</h2>
+        <h2 id="cbt-identity-title">{profile ? 'Your student identity is ready' : 'Create your free student identity'}</h2>
         {loading ? (
           <p role="status">Checking your student account…</p>
+        ) : signedIn && !googleLinked ? (
+          <>
+            <p>We found your existing EDUKEN student session. Connect your Google account to keep this same username, CBT history and progress when you change devices.</p>
+            <button type="button" className="cbt-primary-button" disabled={signingIn} onClick={() => void continueWithGoogle()}>
+              <ArrowRight size={17} /> {signingIn ? 'Connecting…' : 'Connect Google and keep my progress'}
+            </button>
+            <small>Your existing CBT account will be linked rather than replaced. This requires Google identity linking to be enabled on EDUKEN authentication.</small>
+          </>
         ) : profile ? (
           <p className="cbt-identity-confirmed"><CheckCircle2 size={16} /> Signed in as <strong>@{profile.username}</strong>. This identity will follow your dashboard, results, practice history and leaderboard.</p>
         ) : !signedIn ? (
           <>
-            <p>Every student needs a free EDUKEN account and a unique username before starting any practice or mock examination. Your progress will stay attached to your account.</p>
+            <p>Sign in securely with your Google account, then choose one free, unique EDUKEN username for the entire platform.</p>
             <button type="button" className="cbt-primary-button" disabled={signingIn} onClick={() => void continueWithGoogle()}>
-              <ArrowRight size={17} /> {signingIn ? 'Opening Google…' : 'Continue with Google'}
+              <ArrowRight size={17} /> {signingIn ? 'Preparing your student ID…' : 'Continue with Google'}
             </button>
-            <small>New students can create an account with Google. Returning students can sign in with the same account.</small>
+            <small>Your Google account protects your student identity across browsers and devices. You will choose your unique EDUKEN username next.</small>
           </>
         ) : (
           <>
-            <p>Choose the unique username that will appear across your CBT dashboard, results, practice history and Student Arena. Your email and other private details will not be shown publicly.</p>
+            <p>Choose the free, unique username that will identify you across EDUKEN CONSULT, including CBT practice, mock examinations, dashboard, results and leaderboard.</p>
             <form className="cbt-identity-form" onSubmit={claimUsername}>
               <label htmlFor="cbt-student-username">Choose your username</label>
               <div className="cbt-identity-input-row">

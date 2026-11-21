@@ -519,8 +519,8 @@ function App() {
       // out can sign back in and verify the same deposit without paying again.
       try { window.sessionStorage.setItem(pendingWalletDepositKey, returnedReference); } catch { /* direct verification still works while signed in */ }
       window.history.replaceState({}, document.title, '/make-payments');
-      if (!auth.isSignedIn()) {
-        setPaymentMessage('Sign in to the same EDUKEN account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
+      if (!auth.isGoogleSignedIn()) {
+        setPaymentMessage('Sign in with the same Google account used to start this wallet deposit. The payment reference is saved for verification: ' + returnedReference);
         return;
       }
       setPaymentMessage('Wallet deposit returned. Verifying securely…');
@@ -1283,9 +1283,9 @@ function App() {
   const submitServiceRequest = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedService || serviceSubmitting) return;
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setCustomerSignInRequest(current => current + 1);
-      setToast('Please sign in or create a student account before submitting this service request. Your details will remain in the form.');
+      setToast('Please sign in with Google before submitting this service request.');
       return;
     }
     const formElement = e.currentTarget;
@@ -1341,7 +1341,7 @@ function App() {
   };
 
   const submitWalletServicePayment = async () => {
-    if (!auth.isSignedIn() || !checkoutSession?.requestId || paymentSubmitting) return;
+    if (!auth.isGoogleSignedIn() || !checkoutSession?.requestId || paymentSubmitting) return;
     setPaymentSubmitting(true);
     setPaymentMessage('Checking your wallet balance and confirming the service price…');
     try {
@@ -1453,6 +1453,11 @@ function App() {
 
   const submitConsultation = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!auth.isGoogleSignedIn()) {
+      setCustomerSignInRequest(current => current + 1);
+      setToast('Please sign in with Google before sending a consultation request.');
+      return;
+    }
     const formElement = e.currentTarget;
     const fd = new FormData(formElement);
     try {
@@ -2471,7 +2476,7 @@ function App() {
                     <p className="make-payments-security">You’ll complete payment on the selected provider’s secure checkout page. The amount is checked against EDUKEN’s published service price on the server.</p>
                     <p className="make-payments-security">Email tip: If your receipt or payment notification does not appear in your Inbox, check your Spam or Junk folder. Email delivery does not determine payment status; EDUKEN confirms payment from verified payment records.</p>
                     {paymentMessage ? <p className="make-payments-message" role="status" aria-live="polite">{paymentMessage}</p> : null}
-                    {auth.isSignedIn() ? <button type="button" className="secondary" disabled={paymentSubmitting} onClick={() => void submitWalletServicePayment()}>{paymentSubmitting ? 'Checking payment…' : 'Pay with EDUKEN Wallet'}</button> : null}
+                    {auth.isGoogleSignedIn() ? <button type="button" className="secondary" disabled={paymentSubmitting} onClick={() => void submitWalletServicePayment()}>{paymentSubmitting ? 'Checking payment…' : 'Pay with EDUKEN Wallet'}</button> : null}
                     <button type="submit" className="primary" disabled={paymentSubmitting}>{paymentSubmitting ? 'Preparing checkout…' : 'Continue to ' + (paymentProvider === 'flutterwave' ? 'Flutterwave' : 'Paystack')}</button>
                   </form>
                 ) : <p className="make-payments-success" role="status">{paymentMessage || 'Payment confirmed. Thank you.'}</p>}
@@ -3144,7 +3149,7 @@ function App() {
                       <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
                       {hasPrice ? <span className="jamb-service-price__unit">per candidate</span> : null}
                     </div>
-                    <button type="button" className="primary jamb-service-request" disabled={!available || !hasPrice} onClick={() => { setSelectedService(service); setServiceForm({}); }}>
+                    <button type="button" className="primary jamb-service-request" disabled={!available || !hasPrice} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
                       {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
                       {available && hasPrice ? <ArrowRight size={16} aria-hidden="true" /> : null}
                     </button>
@@ -3186,7 +3191,7 @@ function App() {
                 {s.description ? <p>{s.description}</p> : null}
                 <div className="general-service-card__footer">
                   <strong>{s.price !== null && s.price !== undefined && s.price !== '' && Number.isFinite(Number(s.price)) ? '₦' + Number(s.price).toLocaleString('en-NG') : 'Contact for price'}</strong>
-                  <button type="button" className="primary" onClick={() => setSelectedService(s)}>Request this service <ArrowRight size={15} /></button>
+                  <button type="button" className="primary" onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(s); }}>Request this service <ArrowRight size={15} /></button>
                 </div>
               </article>
             ))}

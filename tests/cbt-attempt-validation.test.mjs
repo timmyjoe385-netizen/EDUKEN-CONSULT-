@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { gradeCbtAttempt, getCbtAttemptExpiry, CBT_SUBMISSION_GRACE_SECONDS } from "../supabase/functions/eduken-api/cbt-attempt-validation.mjs";
 
 const snapshot = [
@@ -48,4 +49,17 @@ test("timed CBT expiry includes a short server grace window for automatic submis
   assert.equal(getCbtAttemptExpiry("not-a-date", 900), null);
   assert.equal(getCbtAttemptExpiry(started, 0), null);
   assert.equal(getCbtAttemptExpiry(started, 900, -1), null);
+});
+
+const edgeSource = readFileSync(new URL("../supabase/functions/eduken-api/index.ts", import.meta.url), "utf8");
+
+test("CBT start, submission, username claiming and personal history require a Google identity", () => {
+  assert.match(edgeSource, /async function requireGoogleUser\(req: Request\)/);
+  assert.match(edgeSource, /user\.app_metadata\?\.provider === "google"/);
+  assert.match(edgeSource, /identity\?\.provider === "google"/);
+  assert.match(edgeSource, /if \(path === "\/api\/cbt\/start" && req\.method === "POST"\)[\s\S]*?requireGoogleUser\(req\)/);
+  assert.match(edgeSource, /if \(path === "\/api\/cbt\/submit" && req\.method === "POST"\)[\s\S]*?requireGoogleUser\(req\)/);
+  assert.match(edgeSource, /if \(path === "\/api\/cbt\/student-profile" && req\.method === "POST"\)[\s\S]*?requireGoogleUser\(req\)/);
+  assert.match(edgeSource, /if \(path === "\/api\/cbt\/attempts" && req\.method === "GET"\)[\s\S]*?requireGoogleUser\(req\)/);
+  assert.match(edgeSource, /if \(path === "\/api\/cbt\/arena\/summary" && req\.method === "GET"\)[\s\S]*?requireGoogleUser\(req\)/);
 });

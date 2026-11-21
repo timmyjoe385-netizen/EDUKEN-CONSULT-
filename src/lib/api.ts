@@ -134,56 +134,38 @@ export const api = {
 
 export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
-  signUpWithPassword: async (email: string, password: string) => {
-    const response = await fetch(SUPABASE_URL + '/auth/v1/signup', {
-      method: 'POST',
-      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.trim(), password }),
-    });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || !result.user?.email) {
-      const reason = String(result.error_description || result.msg || result.message || result.error || '');
-      if (/already registered|already exists/i.test(reason)) throw new Error('An account with this email already exists. Please sign in instead.');
-      if (response.status === 400 || response.status === 422) throw new Error(reason || 'Please check your email and password and try again.');
-      throw new Error(reason || 'Account creation is temporarily unavailable. Please try again.');
-    }
-    if (result.access_token) {
-      const session = {
-        access_token: result.access_token,
-        refresh_token: result.refresh_token || undefined,
-        expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
-        user: result.user,
-      };
-      writeSession(session);
-      return { user: result.user, session, confirmationRequired: false };
-    }
-    return { user: result.user, session: null, confirmationRequired: true };
-  },
-  signInWithPassword: async (email: string, password: string) => {
-    const response = await fetch(SUPABASE_URL + '/auth/v1/token?grant_type=password', {
-      method: 'POST',
-      headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.trim(), password }),
-    });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok || !result.access_token || !result.user?.email) {
-      const reason = String(result.error_description || result.msg || result.message || result.error || '');
-      if (response.status === 400 || response.status === 401) {
-        throw new Error('Email or password was not accepted. Check your test account details and try again.');
-      }
-      throw new Error(reason || 'Customer sign-in is temporarily unavailable. Please try again.');
-    }
-    const session = {
-      access_token: result.access_token,
-      refresh_token: result.refresh_token || undefined,
-      expires_at: Math.floor(Date.now() / 1000) + Number(result.expires_in || 3600),
-      user: result.user,
-    };
-    writeSession(session);
-    return { user: result.user, session };
+  isGoogleSignedIn: () => {
+    const user = readSession()?.user;
+    return Boolean(user && (user.app_metadata?.provider === 'google' || user.identities?.some((identity: any) => identity.provider === 'google')));
   },
   signIn: async (_options?: any) => {
     const redirectTo = window.location.origin + window.location.pathname;
+    const currentSession = readSession();
+
+    // Preserve CBT history for students who already have an anonymous preview account:
+    // link Google to that same Supabase user instead of creating a second identity.
+    if (currentSession?.user?.is_anonymous) {
+      const linkUrl = new URL(SUPABASE_URL + '/auth/v1/user/identities/authorize');
+      linkUrl.searchParams.set('provider', 'google');
+      linkUrl.searchParams.set('redirect_to', redirectTo);
+      linkUrl.searchParams.set('scopes', 'openid email profile');
+      linkUrl.searchParams.set('skip_http_redirect', 'true');
+      const linkResponse = await fetch(linkUrl.toString(), {
+        method: 'GET',
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: 'Bearer ' + currentSession.access_token,
+        },
+      });
+      const linkResult = await linkResponse.json().catch(() => ({}));
+      if (!linkResponse.ok || typeof linkResult.url !== 'string') {
+        const reason = String(linkResult.msg || linkResult.message || linkResult.error_description || linkResult.error || '');
+        throw new Error(reason || 'We could not connect Google to your existing EDUKEN account. Account linking must be enabled before continuing.');
+      }
+      window.location.assign(linkResult.url);
+      return new Promise(() => undefined);
+    }
+
     const url = new URL(SUPABASE_URL + '/auth/v1/authorize');
     url.searchParams.set('provider', 'google');
     url.searchParams.set('redirect_to', redirectTo);

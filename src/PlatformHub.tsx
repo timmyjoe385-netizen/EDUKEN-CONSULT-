@@ -164,14 +164,11 @@ export default function PlatformHub({
   }, [walletTransferInfo?.expiresAt]);
   const walletTransferCountdown = formatWalletTransferCountdown(walletTransferInfo?.expiresAt ?? null, walletTransferNow);
   const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [customerPassword, setCustomerPassword] = useState('');
-  const [customerSignInLoading, setCustomerSignInLoading] = useState(false);
   const [customerSignInMessage, setCustomerSignInMessage] = useState('');
-  const [customerAuthMode, setCustomerAuthMode] = useState<'signin' | 'signup'>('signin');
+  const [studentUsername, setStudentUsername] = useState('');
 
   const refreshWallet = async () => {
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setWallet(null);
       setWalletTransactions([]);
       return;
@@ -285,7 +282,7 @@ export default function PlatformHub({
   };
 
   const refreshDeliverables = async () => {
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setDeliverables([]);
       setDeliverablesMessage('Sign in to view documents EDUKEN has published for your service requests.');
       return;
@@ -308,6 +305,11 @@ export default function PlatformHub({
   };
 
   const downloadDeliverable = async (item: Item) => {
+    if (!auth.isGoogleSignedIn()) {
+      setCustomerSignInMessage('');
+      setCustomerSignInOpen(true);
+      return;
+    }
     try {
       const result = await api.post('/api/service-deliverables/' + encodeURIComponent(item.id) + '/download', {});
       const downloadUrl = String(result.data?.url || '');
@@ -319,33 +321,37 @@ export default function PlatformHub({
   };
 
   const refresh = async () => {
-    if (!auth.isSignedIn()) {
+    if (!auth.isGoogleSignedIn()) {
       setUser(null);
       setSaved([]);
       setTracker([]);
       setAlerts([]);
       setTopics([]);
+      setStudentUsername('');
       setWallet(null);
       setWalletTransactions([]);
       return;
     }
     try {
-      const [me, saves, apps, notices, topicData] = await Promise.all([
+      const [me, saves, apps, notices, topicData, studentProfile] = await Promise.all([
         api.get('/api/me'),
         api.get('/api/user/saved'),
         api.get('/api/user/tracker'),
         api.get('/api/user/notifications'),
         api.get('/api/user/topics'),
+        api.get('/api/cbt/student-profile'),
       ]);
       setUser(me.data.user);
       setSaved(saves.data.items || []);
       setTracker(apps.data.items || []);
       setAlerts(notices.data.items || []);
       setTopics(topicData.data.topics || []);
+      setStudentUsername(studentProfile.data?.profile?.username || '');
       void refreshWallet();
       api.post('/api/user/reminders/check', {}).catch(() => undefined);
     } catch {
       setUser(null);
+      setStudentUsername('');
     }
   };
 
@@ -356,7 +362,7 @@ export default function PlatformHub({
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
-    const unsubscribe = auth.isSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
+    const unsubscribe = auth.isGoogleSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
     return () => {
       window.removeEventListener('eduken-auth-changed', onAuthChanged);
       window.removeEventListener('eduken-wallet-updated', onWalletUpdated);
@@ -366,7 +372,6 @@ export default function PlatformHub({
 
   useEffect(() => {
     if (customerSignInRequest > 0) {
-      setCustomerAuthMode('signin');
       setCustomerSignInMessage('');
       setCustomerSignInOpen(true);
     }
@@ -376,51 +381,8 @@ export default function PlatformHub({
     try {
       await auth.signIn({ scope: 'openid email profile offline_access' });
       await refresh();
-    } catch {
-      /* cancelled */
-    }
-  };
-
-  const signInCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (customerSignInLoading) return;
-    setCustomerSignInLoading(true);
-    setCustomerSignInMessage('');
-    try {
-      await auth.signInWithPassword(customerEmail, customerPassword);
-      setCustomerPassword('');
-      setCustomerSignInOpen(false);
-      setCustomerSignInMessage('');
-      await refresh();
-      await refreshWallet();
     } catch (error) {
-      setCustomerSignInMessage(error instanceof Error ? error.message : 'Customer sign-in failed. Please try again.');
-    } finally {
-      setCustomerSignInLoading(false);
-    }
-  };
-
-  const signUpCustomer = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (customerSignInLoading) return;
-    setCustomerSignInLoading(true);
-    setCustomerSignInMessage('');
-    try {
-      const result = await auth.signUpWithPassword(customerEmail, customerPassword);
-      setCustomerPassword('');
-      if (result.session) {
-        setCustomerSignInOpen(false);
-        setCustomerAuthMode('signin');
-        await refresh();
-        await refreshWallet();
-      } else {
-        setCustomerSignInMessage('Account created. Check your email to confirm your account, then return here to sign in before submitting the service request.');
-        setCustomerAuthMode('signin');
-      }
-    } catch (error) {
-      setCustomerSignInMessage(error instanceof Error ? error.message : 'Account creation failed. Please try again.');
-    } finally {
-      setCustomerSignInLoading(false);
+      setCustomerSignInMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
     }
   };
 
@@ -496,16 +458,19 @@ export default function PlatformHub({
   };
 
   const markRead = async (id?: string) => {
+    if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     await api.post('/api/user/notifications/read', id ? { id } : { all: true });
     await refresh();
   };
 
   const updateTracker = async (item: Item, status: string, notes: string) => {
+    if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     await api.put('/api/user/tracker/' + item.id, { status, notes });
     await refresh();
   };
 
   const askAi = async () => {
+    if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     if (!aiQuestion.trim()) return;
     setAiLoading(true);
     setAiSources([]);
@@ -567,6 +532,12 @@ export default function PlatformHub({
           Save opportunities, track applications, manage alerts and research
           admissions from one mobile-first platform.
         </p>
+        {user ? (
+          <p className="student-account-identity">
+            Signed in to EDUKEN as <strong>{studentUsername ? '@' + studentUsername : 'Google account'}</strong>
+            {!studentUsername ? <> · <a href="/cbt">Create your student username</a></> : null}
+          </p>
+        ) : null}
       </div>
       <div className="platform-grid">
         <div className="platform-card">
@@ -657,7 +628,7 @@ export default function PlatformHub({
           <p>
             Choose categories and enable device notifications where supported.
           </p>
-          <button className="secondary" onClick={() => setOpen('alerts')}>
+          <button className="secondary" onClick={() => { if (!auth.isGoogleSignedIn()) { void signIn(); return; } setOpen('alerts'); }}>
             <Bell size={15} /> Manage alerts
           </button>
         </div>
@@ -790,35 +761,21 @@ export default function PlatformHub({
       </div>
 
       {customerSignInOpen && (
-        <div role="presentation" onClick={event => { if (event.target === event.currentTarget && !customerSignInLoading) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+        <div role="presentation" onClick={event => { if (event.target === event.currentTarget) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
           <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
-            <button className="login-close" type="button" aria-label="Close customer sign-in" disabled={customerSignInLoading} onClick={() => setCustomerSignInOpen(false)}>×</button>
-            <span className="kicker">CUSTOMER ACCOUNT</span>
-            <h2 id="customer-signin-title">{customerAuthMode === 'signup' ? 'Create your EDUKEN account' : 'Sign in to EDUKEN'}</h2>
-            <p>Use your student account to submit service requests and receive your documents securely.</p>
+            <button className="login-close" type="button" aria-label="Close customer sign-in" onClick={() => setCustomerSignInOpen(false)}>×</button>
+            <span className="kicker">YOUR EDUKEN ACCOUNT</span>
+            <h2 id="customer-signin-title">Sign in to EDUKEN</h2>
+            <p>Use the same Google account across EDUKEN CONSULT and CBT. Your student username and learning progress stay connected to this account.</p>
             <button
               className="customer-google-signin"
               type="button"
-              onClick={() => { setCustomerSignInMessage(''); void auth.signIn(); }}
-              disabled={customerSignInLoading}
+              onClick={() => { setCustomerSignInMessage(''); void signIn(); }}
             >
               <span className="customer-google-mark" aria-hidden="true">G</span>
               Continue with Google
             </button>
-            <div className="customer-signin-divider"><span>or use email</span></div>
-            <form className="service-request-form" onSubmit={customerAuthMode === 'signup' ? signUpCustomer : signInCustomer}>
-              <label className="service-request-field" htmlFor="customer-signin-email">
-                <span>Email address</span>
-                <input id="customer-signin-email" type="email" autoComplete="username" required value={customerEmail} onChange={event => setCustomerEmail(event.target.value)} disabled={customerSignInLoading} />
-              </label>
-              <label className="service-request-field" htmlFor="customer-signin-password">
-                <span>Password {customerAuthMode === 'signup' ? '(at least 8 characters)' : ''}</span>
-                <input id="customer-signin-password" type="password" autoComplete={customerAuthMode === 'signup' ? 'new-password' : 'current-password'} minLength={customerAuthMode === 'signup' ? 8 : undefined} required value={customerPassword} onChange={event => setCustomerPassword(event.target.value)} disabled={customerSignInLoading} />
-              </label>
-              {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
-              <button className="primary" type="submit" disabled={customerSignInLoading}>{customerSignInLoading ? (customerAuthMode === 'signup' ? 'Creating account…' : 'Signing in…') : (customerAuthMode === 'signup' ? 'Create account' : 'Sign in securely')}</button>
-              <button className="secondary" type="button" disabled={customerSignInLoading} onClick={() => { setCustomerAuthMode(customerAuthMode === 'signup' ? 'signin' : 'signup'); setCustomerSignInMessage(''); setCustomerPassword(''); }}>{customerAuthMode === 'signup' ? 'Already have an account? Sign in' : 'New here? Create an account'}</button>
-            </form>
+            {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
           </section>
         </div>
       )}

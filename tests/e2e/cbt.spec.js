@@ -1,12 +1,19 @@
 import { test, expect } from '@playwright/test';
 
+const questionRows = (prefix, subject, count = 20, questionText = 'Practice question?', options = { A: 'A', B: 'B', C: 'C', D: 'D' }) =>
+  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, question_text: questionText, options: typeof options === 'function' ? options(index) : options }));
+const attemptRows = (prefix, subject, count = 20, prompt = 'Practice question?', options = ['A', 'B', 'C', 'D']) =>
+  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, prompt, options: typeof options === 'function' ? options(index) : options }));
+const reviewRows = (prefix, subject, count = 20, prompt = 'Practice question?', options = ['A', 'B', 'C', 'D'], correctOption = 'A', explanation = 'Explanation.') =>
+  Array.from({ length: count }, (_, index) => ({ id: `${prefix}-${index + 1}`, subject, prompt, options: typeof options === 'function' ? options(index) : options, correctOption, explanation }));
+
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'playwright-student-session',
       refresh_token: 'playwright-refresh-token',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'playwright-student-id', email: 'student@example.test' },
+      user: { id: 'playwright-student-id', is_anonymous: false, email: 'student@example.test', app_metadata: { provider: 'google' }, identities: [{ provider: 'google' }] },
     }));
   });
   await page.route('**/api/cbt/student-profile', route => route.fulfill({
@@ -14,11 +21,77 @@ test.beforeEach(async ({ page }) => {
     contentType: 'application/json',
     body: JSON.stringify({ profile: { username: 'PlaywrightStudent', created_at: '2026-11-20T00:00:00.000Z' } }),
   }));
+  await page.route('**/api/cbt/questions*', route => route.fulfill({
+    status: 200, contentType: 'application/json',
+    body: JSON.stringify({ items: questionRows('default-question', 'Use of English') }),
+  }));
 });
 
-test('CBT identity gate refreshes the student profile when OAuth completes', async ({ page }) => {
+test('students without a signed-in account cannot start any CBT activity', async ({ page }) => {
+  // beforeEach seeds a student session for most tests; clear it before app startup
+  // so this test exercises the genuinely signed-out first render without an auth-event race.
+  await page.addInitScript(() => { localStorage.removeItem('eduken_auth_session'); });
+  let startCalls = 0;
+  await page.route('**/api/cbt/start*', async route => {
+    startCalls += 1;
+    await route.fulfill({ status: 403, contentType: 'application/json', body: JSON.stringify({ error: 'Student username required.' }) });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
+  await expect(page.getByLabel('Email address')).toHaveCount(0);
+  await expect(page.getByLabel('Password')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Try a timed mock/i })).toBeDisabled();
+  await expect(page.locator('.cbt-subject-picker button.cbt-primary-button')).toBeDisabled();
+  await expect(page.locator('.cbt-mock-banner button.cbt-primary-button')).toBeDisabled();
+  expect(startCalls).toBe(0);
+});
+
+test('existing anonymous CBT accounts link Google without replacing the student identity', async ({ page }) => {
+  await page.route('**/api/cbt/student-profile', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ profile: { username: 'LegacyStudent', created_at: '2026-11-20T00:00:00.000Z' } }),
+  }));
+  let linkRequest;
+  await page.route('**/auth/v1/user/identities/authorize**', async route => {
+    linkRequest = {
+      method: route.request().method(),
+      authorization: route.request().headers().authorization,
+      url: route.request().url(),
+    };
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: '/mock-google-link' }) });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await page.evaluate(() => {
+    localStorage.setItem('eduken_auth_session', JSON.stringify({
+      access_token: 'legacy-anonymous-session',
+      refresh_token: 'legacy-anonymous-refresh',
+      expires_at: Math.floor(Date.now() / 1000) + 3600,
+      user: { id: 'legacy-student-id', is_anonymous: true },
+    }));
+    window.dispatchEvent(new Event('eduken-auth-changed'));
+  });
+  await expect(page.getByRole('button', { name: /Connect Google and keep my progress/i })).toBeVisible();
+  await page.getByRole('button', { name: /Connect Google and keep my progress/i }).click();
+  await expect.poll(() => linkRequest?.url).toContain('provider=google');
+  expect(linkRequest.method).toBe('GET');
+  expect(linkRequest.url).toContain('skip_http_redirect=true');
+  expect(linkRequest.authorization).toContain('Bearer legacy-anonymous-session');
+  await expect(page).toHaveURL(/mock-google-link/);
+});
+
+test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
+  await expect(page.locator('#cbt-practice-count option').evaluateAll(options => options.map(option => Number(option.value)))).resolves.toEqual([20, 40, 50]);
+  await expect(page.locator('#cbt-mock-count option').evaluateAll(options => options.map(option => Number(option.value)))).resolves.toEqual([20, 40, 60, 100, 180]);
+});
+
+test('student identity gate locks CBT when signed out and unlocks after username is verified', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await expect(page.getByText(/Signed in as @PlaywrightStudent/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
   await page.evaluate(() => {
     localStorage.removeItem('eduken_auth_session');
     window.dispatchEvent(new Event('eduken-auth-changed'));
@@ -27,9 +100,9 @@ test('CBT identity gate refreshes the student profile when OAuth completes', asy
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
   await page.evaluate(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
-      access_token: 'oauth-completed-session',
+      access_token: 'verified-student-session',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'oauth-student-id', email: 'student@example.test' },
+      user: { id: 'verified-student-id', is_anonymous: false, email: 'student@example.test', app_metadata: { provider: 'google' }, identities: [{ provider: 'google' }] },
     }));
     window.dispatchEvent(new Event('eduken-auth-changed'));
   });
@@ -37,7 +110,30 @@ test('CBT identity gate refreshes the student profile when OAuth completes', asy
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
 });
 
-test('CBT falls back to original local practice when the published bank is empty', async ({ page }) => {
+test('Google-authenticated students claim one unique EDUKEN username', async ({ page }) => {
+  let claimed = false;
+  await page.route('**/api/cbt/student-profile', route => {
+    if (route.request().method() === 'POST') {
+      claimed = true;
+      return route.fulfill({
+        status: 201, contentType: 'application/json',
+        body: JSON.stringify({ profile: { username: 'FutureStudent27', created_at: '2026-11-21T00:00:00.000Z' } }),
+      });
+    }
+    return route.fulfill({
+      status: 200, contentType: 'application/json',
+      body: JSON.stringify({ profile: claimed ? { username: 'FutureStudent27', created_at: '2026-11-21T00:00:00.000Z' } : null }),
+    });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#cbt-student-username')).toBeVisible();
+  await page.locator('#cbt-student-username').fill('FutureStudent27');
+  await page.getByRole('button', { name: /Save username/i }).click();
+  await expect(page.getByText(/Signed in as @FutureStudent27/i)).toBeVisible();
+  expect(claimed).toBe(true);
+});
+
+test('CBT blocks local fallback when it cannot supply the 20-question minimum', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
@@ -50,12 +146,10 @@ test('CBT falls back to original local practice when the published bank is empty
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
   await expect(page.getByRole('heading', { name: /Prepare with purpose/i })).toBeVisible();
-  await expect(page.getByText(/question bank is empty or unavailable.*local practice mode/i)).toBeVisible();
-  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
-  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeEnabled();
-  await page.locator('#cbt-practice-count').selectOption('2');
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 2')).toBeVisible();
+  await expect(page.getByText(/question bank is currently unavailable.*20-question minimum.*temporarily disabled/i)).toBeVisible();
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /Start mixed mock/i })).toBeDisabled();
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
 
   const dimensions = await page.evaluate(() => ({
     viewport: window.innerWidth,
@@ -68,36 +162,25 @@ test('CBT falls back to original local practice when the published bank is empty
   ).toBeLessThanOrEqual(dimensions.viewport + 1);
 });
 
-test('CBT practice fallback supports navigation, flagging and answer review', async ({ page }) => {
+test('CBT practice fallback does not start an undersized sample set', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByText(/original starter samples are being used/i)).toBeVisible();
-  await page.locator('#cbt-practice-count').selectOption('2');
-  await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 2')).toBeVisible();
-
-  await page.getByRole('button', { name: /Review later/i }).click();
-  await expect(page.getByRole('button', { name: /Flagged/i })).toBeVisible();
-  await page.getByRole('button', { name: /Next question/i }).click();
-  await expect(page.getByText('Question 2 of 2')).toBeVisible();
-  page.once('dialog', dialog => dialog.accept());
-  await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
+  await expect(page.getByText(/published question bank is currently unavailable/i)).toBeVisible();
+  await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
+  await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
 });
 
 test('published CBT questions are graded by the server after submission', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
   await page.route('**/api/cbt/questions*', route =>
     route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
-        items: [{
-          id: 'question-uuid-1',
-          subject: 'Use of English',
-          question_text: 'Choose the correct option.',
-          options: { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' },
-        }],
+        items: questionRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', index => index === 0
+      ? { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' }
+      : { A: 'Choice A', B: 'Choice B', C: 'Choice C', D: 'Choice D' }),
       }),
     })
   );
@@ -108,64 +191,48 @@ test('published CBT questions are graded by the server after submission', async 
       body: JSON.stringify({
         attemptToken: 'a'.repeat(64),
         durationSeconds: 900,
-        questions: [{
-          id: 'question-uuid-1',
-          subject: 'Use of English',
-          prompt: 'Choose the correct option.',
-          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
-        }],
+        questions: attemptRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', index => index === 0
+      ? ['Wrong', 'Right', 'Also wrong', 'Not this one']
+      : ['Choice A', 'Choice B', 'Choice C', 'Choice D']),
       }),
     })
   );
   await page.route('**/api/cbt/submit*', async route => {
     const payload = route.request().postDataJSON();
     expect(payload.attemptToken).toBe('a'.repeat(64));
-    expect(payload.answers['question-uuid-1']).toBe(1);
+    expect(Object.values(payload.answers)).toContain(1);
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
-        score: 1,
-        total: 1,
-        percent: 100,
-        submittedAt: '2026-10-29T06:00:00.000Z',
-        review: [{
-          id: 'question-uuid-1',
-          subject: 'Use of English',
-          prompt: 'Choose the correct option.',
-          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
-          selectedOption: 'B',
-          correctOption: 'B',
-          explanation: 'The second option is correct.',
-          isCorrect: true,
-        }],
+        score: 1, total: 20, percent: 5, submittedAt: '2026-10-29T06:00:00.000Z',
+        review: reviewRows('question-uuid', 'Use of English', 20, 'Choose the correct option.', index => index === 0
+      ? ['Wrong', 'Right', 'Also wrong', 'Not this one']
+      : ['Choice A', 'Choice B', 'Choice C', 'Choice D'], 'B', 'The second option is correct.'),
       }),
     });
   });
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
-  await page.getByRole('button', { name: /Right/ }).click();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  await page.locator('.cbt-option').nth(1).click();
+  for (let i = 0; i < 19; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
-  await expect(page.getByText('Correct answer:')).toBeVisible();
-  await expect(page.getByText('The second option is correct.')).toBeVisible();
+  await expect(page.getByText('PRACTICE COMPLETE')).toBeVisible();
+  await expect(page.getByText(/^Correct answer:/).first()).toBeVisible();
+  await expect(page.getByText('The second option is correct.').first()).toBeVisible();
 });
 
 
 test('timed-out CBT automatically retries a temporary submission failure', async ({ page }) => {
+  page.on('dialog', dialog => dialog.accept());
   await page.clock.install();
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
-    body: JSON.stringify({ items: [{
-      id: 'question-timeout-1',
-      subject: 'Use of English',
-      question_text: 'Choose the correct option.',
-      options: { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' },
-    }] }),
+    body: JSON.stringify({ items: questionRows('question-timeout', 'Use of English', 20, 'Choose the correct option.', { A: 'Wrong', B: 'Right', C: 'Also wrong', D: 'Not this one' }) }),
   }));
   await page.route('**/api/cbt/start*', route => route.fulfill({
     status: 201,
@@ -173,13 +240,7 @@ test('timed-out CBT automatically retries a temporary submission failure', async
     body: JSON.stringify({
       attemptToken: 'b'.repeat(64),
       durationSeconds: 1,
-      expiresAt: new Date(Date.now() + 16_000).toISOString(),
-      questions: [{
-        id: 'question-timeout-1',
-        subject: 'Use of English',
-        prompt: 'Choose the correct option.',
-        options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
-      }],
+      questions: attemptRows('question-timeout', 'Use of English', 20, 'Choose the correct option.', ['Wrong', 'Right', 'Also wrong', 'Not this one']),
     }),
   }));
 
@@ -198,35 +259,22 @@ test('timed-out CBT automatically retries a temporary submission failure', async
       status: 200,
       contentType: 'application/json',
       body: JSON.stringify({
-        score: 1,
-        total: 1,
-        percent: 100,
-        submittedAt: new Date(Date.now()).toISOString(),
-        review: [{
-          id: 'question-timeout-1',
-          subject: 'Use of English',
-          prompt: 'Choose the correct option.',
-          options: ['Wrong', 'Right', 'Also wrong', 'Not this one'],
-          selectedOption: 'B',
-          correctOption: 'B',
-          explanation: 'The second option is correct.',
-          isCorrect: true,
-        }],
+        score: 1, total: 20, percent: 5, submittedAt: new Date(Date.now()).toISOString(),
+        review: reviewRows('question-timeout', 'Use of English', 20, 'Choose the correct option.', ['Wrong', 'Right', 'Also wrong', 'Not this one'], 'B', 'The second option is correct.'),
       }),
     });
   });
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
   await page.getByRole('button', { name: /Right/ }).click();
 
-  await page.clock.fastForward(1_000);
+  await page.clock.runFor(2_000);
   await expect(page.getByText(/Temporary network\/server failure/i)).toBeVisible();
-  await page.clock.fastForward(1_500);
+  await page.clock.runFor(2_500);
 
-  await expect(page.getByRole('heading', { name: 'Good work. Keep building.' })).toBeVisible();
+  await expect(page.getByText('PRACTICE COMPLETE')).toBeVisible();
   expect(submissionCount).toBe(2);
 });
 
@@ -254,32 +302,33 @@ test('hero timed-mock button sends the displayed default question count', async 
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
-  await expect(page.getByText('Question 1 of 10')).toBeVisible();
-  expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 10 });
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  expect(startPayload).toMatchObject({ mode: 'mock', questionCount: 20 });
 });
 
 
 test('manual CBT submission warns before submitting unanswered questions', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200, contentType: 'application/json',
-    body: JSON.stringify({ items: [{ id: 'unanswered-1', subject: 'Use of English', question_text: 'Question one?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+    body: JSON.stringify({ items: questionRows('unanswered', 'Use of English', 20, 'Question one?') }),
   }));
   let submitCalls = 0;
   await page.route('**/api/cbt/start*', route => route.fulfill({
     status: 201, contentType: 'application/json',
-    body: JSON.stringify({ attemptToken: 'd'.repeat(64), durationSeconds: 900, questions: [{ id: 'unanswered-1', subject: 'Use of English', prompt: 'Question one?', options: ['A', 'B', 'C', 'D'] }] }),
+    body: JSON.stringify({ attemptToken: 'd'.repeat(64), durationSeconds: 900, questions: attemptRows('unanswered', 'Use of English', 20, 'Question one?') }),
   }));
   await page.route('**/api/cbt/submit*', async route => {
     submitCalls += 1;
-    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'unanswered-1', subject: 'Use of English', prompt: 'Question one?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) });
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 20, percent: 0, review: reviewRows('unanswered', 'Use of English', 20, 'Question one?') }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  for (let i = 0; i < 19; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
   await page.getByRole('button', { name: /Submit practice/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   expect(submitCalls).toBe(0);
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
@@ -303,20 +352,20 @@ test('Try again preserves the selected timed-mock question count', async ({ page
     }) });
   });
   await page.route('**/api/cbt/submit*', route => route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({
-    score: 0, total: 10, percent: 0,
-    review: Array.from({ length: 10 }, (_, index) => ({ id: 'timed-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'A is correct.' })),
+    score: 0, total: 20, percent: 0,
+    review: Array.from({ length: 20 }, (_, index) => ({ id: 'timed-q-' + index, subject: 'Use of English', prompt: 'Mock question ' + index + '?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'A is correct.' })),
   }) }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Try a timed mock/i }).click();
-  await expect(page.getByText('Question 1 of 10')).toBeVisible();
-  for (let i = 0; i < 9; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
-  await expect(page.getByText('Question 10 of 10')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  for (let i = 0; i < 19; i += 1) await page.getByRole('button', { name: /Next question/i }).click();
+  await expect(page.getByText('Question 20 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Submit practice/i }).click();
   await expect(page.getByRole('heading', { name: 'Answer review' })).toBeVisible();
   await page.getByRole('button', { name: /Try again/i }).click();
-  await expect(page.getByText('Question 1 of 10')).toBeVisible();
-  expect(requestedCounts).toEqual([10, 10]);
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
+  expect(requestedCounts).toEqual([20, 20]);
 });
 
 test('CBT Try again preserves the selected mixed-mock question count', async ({ page }) => {
@@ -377,7 +426,7 @@ test('mixed mock selector starts the exact number of questions selected', async 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   const selector = page.locator('#cbt-mock-count');
   const start = page.getByRole('button', { name: /Start mixed mock/i });
-  for (const count of [8, 10, 20, 40, 100, 180]) {
+  for (const count of [20, 40, 60, 100, 180]) {
     await selector.selectOption(String(count));
     await expect(selector).toHaveValue(String(count));
     await start.click();
@@ -386,7 +435,7 @@ test('mixed mock selector starts the exact number of questions selected', async 
     await page.getByRole('button', { name: /Exit/i }).click();
     await expect(selector).toBeVisible();
   }
-  expect(requestedCounts).toEqual([8, 10, 20, 40, 100, 180]);
+  expect(requestedCounts).toEqual([20, 40, 60, 100, 180]);
 });
 
 test('subject practice selector starts the exact number of questions selected', async ({ page }) => {
@@ -414,7 +463,7 @@ test('subject practice selector starts the exact number of questions selected', 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   const selector = page.locator('#cbt-practice-count');
   const start = page.locator('.cbt-subject-picker button:not([disabled])');
-  for (const count of [1, 5, 10, 20, 40, 50]) {
+  for (const count of [20, 40, 50]) {
     await selector.selectOption(String(count));
     await expect(selector).toHaveValue(String(count));
     await start.click();
@@ -423,22 +472,21 @@ test('subject practice selector starts the exact number of questions selected', 
     await page.getByRole('button', { name: /Exit/i }).click();
     await expect(selector).toBeVisible();
   }
-  expect(requestedCounts).toEqual([1, 5, 10, 20, 40, 50]);
+  expect(requestedCounts).toEqual([20, 40, 50]);
 });
 
 test('CBT calculator performs basic arithmetic and closes', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200, contentType: 'application/json',
-    body: JSON.stringify({ items: [{ id: 'calc-q1', subject: 'Mathematics', question_text: 'Calculate.', options: { A: '1', B: '2', C: '3', D: '4' } }] }),
+    body: JSON.stringify({ items: questionRows('calc-q', 'Mathematics', 20, 'Calculate.', { A: '1', B: '2', C: '3', D: '4' }) }),
   }));
   await page.route('**/api/cbt/start*', route => route.fulfill({
     status: 201, contentType: 'application/json',
     body: JSON.stringify({ attemptToken: 'd'.repeat(64), durationSeconds: 900,
-      questions: [{ id: 'calc-q1', subject: 'Mathematics', prompt: 'Calculate.', options: ['1', '2', '3', '4'] }] }),
+      questions: attemptRows('calc-q', 'Mathematics', 20, 'Calculate.', ['1', '2', '3', '4']) }),
   }));
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   await page.locator('#cbt-subject-select').selectOption('Mathematics');
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
   await page.getByRole('button', { name: /Calculator/i }).click();
   const dialog = page.getByRole('dialog', { name: 'Practice calculator' });
@@ -456,24 +504,23 @@ test('CBT calculator performs basic arithmetic and closes', async ({ page }) => 
 test('Finish and see results also warns about unanswered questions', async ({ page }) => {
   await page.route('**/api/cbt/questions*', route => route.fulfill({
     status: 200, contentType: 'application/json',
-    body: JSON.stringify({ items: [{ id: 'finish-unanswered-1', subject: 'Use of English', question_text: 'Question?', options: { A: 'A', B: 'B', C: 'C', D: 'D' } }] }),
+    body: JSON.stringify({ items: questionRows('finish-unanswered', 'Use of English', 20, 'Question?') }),
   }));
   let submitCalls = 0;
   await page.route('**/api/cbt/start*', route => route.fulfill({
     status: 201, contentType: 'application/json',
-    body: JSON.stringify({ attemptToken: 'f'.repeat(64), durationSeconds: 900, questions: [{ id: 'finish-unanswered-1', subject: 'Use of English', prompt: 'Question?', options: ['A', 'B', 'C', 'D'] }] }),
+    body: JSON.stringify({ attemptToken: 'f'.repeat(64), durationSeconds: 900, questions: attemptRows('finish-unanswered', 'Use of English', 20, 'Question?') }),
   }));
   await page.route('**/api/cbt/submit*', async route => {
     submitCalls += 1;
-    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 1, percent: 0, review: [{ id: 'finish-unanswered-1', subject: 'Use of English', prompt: 'Question?', options: ['A', 'B', 'C', 'D'], correctOption: 'A', explanation: 'Explanation.' }] }) });
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ score: 0, total: 20, percent: 0, review: reviewRows('finish-unanswered', 'Use of English', 20, 'Question?') }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await page.locator('#cbt-practice-count').selectOption('1');
   await page.getByRole('button', { name: /Start free practice/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
   page.once('dialog', dialog => dialog.dismiss());
   await page.getByRole('button', { name: /Finish and see results/i }).click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
   expect(submitCalls).toBe(0);
   page.once('dialog', dialog => dialog.accept());
   await page.getByRole('button', { name: /Finish and see results/i }).click();
@@ -492,25 +539,24 @@ test('subject practice remains available when the initial question list contains
     startPayload = route.request().postDataJSON();
     await route.fulfill({ status: 201, contentType: 'application/json', body: JSON.stringify({
       attemptToken: 'g'.repeat(64), durationSeconds: 60,
-      questions: [{ id: 'english-from-server', subject: 'Use of English', prompt: 'English question?', options: ['A', 'B', 'C', 'D'] }],
+      questions: attemptRows('english-from-server', 'Use of English', 20, 'English question?'),
     }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
   const startButton = page.getByRole('button', { name: /Start free practice/i });
   await expect(startButton).toBeEnabled();
-  await page.locator('#cbt-practice-count').selectOption('1');
   await startButton.click();
-  await expect(page.getByText('Question 1 of 1')).toBeVisible();
+  await expect(page.getByText('Question 1 of 20')).toBeVisible();
   expect(startPayload).toMatchObject({ mode: 'practice', subject: 'Use of English' });
 });
 
-test('signed-in students must claim a username before starting while still seeing personal progress', async ({ page }) => {
+test('signed-in students without a username are blocked while still seeing personal progress', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.setItem('eduken_auth_session', JSON.stringify({
       access_token: 'test-access-token',
       refresh_token: 'test-refresh-token',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'student-progress-user', email: 'student@example.test' },
+      user: { id: 'student-progress-user', email: 'student@example.test', is_anonymous: false, app_metadata: { provider: 'google' }, identities: [{ provider: 'google' }] },
     }));
   });
   await page.route('**/api/cbt/student-profile', route => route.fulfill({
@@ -533,9 +579,10 @@ test('signed-in students must claim a username before starting while still seein
   }));
 
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('heading', { name: 'Create your student identity first' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Create your free student identity' })).toBeVisible();
   await expect(page.locator('#cbt-student-username')).toBeVisible();
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
+  await expect(page.getByText(/Choose the free, unique username/i)).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Your progress so far' })).toBeVisible();
   await expect(page.locator('.student-progress-recent-heading')).toContainText('2 subjects covered · 2 saved attempts');
   await expect(page.locator('.student-progress-metrics article').filter({ hasText: 'Questions attempted' }).getByText('20', { exact: true })).toBeVisible();
