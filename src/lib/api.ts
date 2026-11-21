@@ -145,18 +145,17 @@ export const auth = {
     // Preserve CBT history for students who already have an anonymous preview account:
     // link Google to that same Supabase user instead of creating a second identity.
     if (currentSession?.user?.is_anonymous) {
-      const linkResponse = await fetch(SUPABASE_URL + '/auth/v1/user/identities/authorize', {
-        method: 'POST',
+      const linkUrl = new URL(SUPABASE_URL + '/auth/v1/user/identities/authorize');
+      linkUrl.searchParams.set('provider', 'google');
+      linkUrl.searchParams.set('redirect_to', redirectTo);
+      linkUrl.searchParams.set('scopes', 'openid email profile');
+      linkUrl.searchParams.set('skip_http_redirect', 'true');
+      const linkResponse = await fetch(linkUrl.toString(), {
+        method: 'GET',
         headers: {
           apikey: SUPABASE_KEY,
           Authorization: 'Bearer ' + currentSession.access_token,
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          provider: 'google',
-          redirect_to: redirectTo,
-          scopes: 'openid email profile',
-        }),
       });
       const linkResult = await linkResponse.json().catch(() => ({}));
       if (!linkResponse.ok || typeof linkResult.url !== 'string') {
