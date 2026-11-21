@@ -556,7 +556,7 @@ test('signed-in students without a username are blocked while still seeing perso
       access_token: 'test-access-token',
       refresh_token: 'test-refresh-token',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'student-progress-user', email: 'student@example.test' },
+      user: { id: 'student-progress-user', email: 'student@example.test', is_anonymous: false, app_metadata: { provider: 'google' }, identities: [{ provider: 'google' }] },
     }));
   });
   await page.route('**/api/cbt/student-profile', route => route.fulfill({
