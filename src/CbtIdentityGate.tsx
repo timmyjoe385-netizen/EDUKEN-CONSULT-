@@ -9,6 +9,7 @@ type Props = { onReady: (profile: Profile | null) => void };
 export default function CbtIdentityGate({ onReady }: Props) {
   const [signedIn, setSignedIn] = useState(() => auth.isSignedIn());
   const [profile, setProfile] = useState<Profile | null>(null);
+  const [googleLinked, setGoogleLinked] = useState(() => auth.isGoogleSignedIn());
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(() => auth.isSignedIn());
   const [saving, setSaving] = useState(false);
@@ -21,18 +22,22 @@ export default function CbtIdentityGate({ onReady }: Props) {
       if (!auth.isSignedIn()) {
         setSignedIn(false);
         setProfile(null);
+        setGoogleLinked(false);
         setLoading(false);
         onReady(null);
         return;
       }
       setSignedIn(true);
+      setGoogleLinked(auth.isGoogleSignedIn());
       setLoading(true);
       api.get('/api/cbt/student-profile')
         .then(result => {
           if (!active) return;
           const nextProfile = result.data?.profile || null;
           setProfile(nextProfile);
-          onReady(nextProfile);
+          const linked = auth.isGoogleSignedIn();
+          setGoogleLinked(linked);
+          onReady(linked ? nextProfile : null);
         })
         .catch(error => {
           if (!active) return;
@@ -88,6 +93,14 @@ export default function CbtIdentityGate({ onReady }: Props) {
         <h2 id="cbt-identity-title">{profile ? 'Your student identity is ready' : 'Create your free student identity'}</h2>
         {loading ? (
           <p role="status">Checking your student account…</p>
+        ) : signedIn && !googleLinked ? (
+          <>
+            <p>We found your existing EDUKEN student session. Connect your Google account to keep this same username, CBT history and progress when you change devices.</p>
+            <button type="button" className="cbt-primary-button" disabled={signingIn} onClick={() => void continueWithGoogle()}>
+              <ArrowRight size={17} /> {signingIn ? 'Connecting…' : 'Connect Google and keep my progress'}
+            </button>
+            <small>Your existing CBT account will be linked rather than replaced. This requires Google identity linking to be enabled on EDUKEN authentication.</small>
+          </>
         ) : profile ? (
           <p className="cbt-identity-confirmed"><CheckCircle2 size={16} /> Signed in as <strong>@{profile.username}</strong>. This identity will follow your dashboard, results, practice history and leaderboard.</p>
         ) : !signedIn ? (
