@@ -83,6 +83,8 @@ test('existing anonymous CBT accounts link Google without replacing the student 
 
 test('new JAMB subjects appear in practice and mixed-mock selectors', async ({ page }) => {
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#cbt-subject-select')).toBeVisible();
+  await expect(page.locator('#cbt-mock-subject-1')).toBeVisible();
   const practiceOptions = await page.locator('#cbt-subject-select option').allTextContents();
   const mockOptions = await page.locator('#cbt-mock-subject-1 option').allTextContents();
   expect(practiceOptions).toContain('Christian Religious Studies (CRS)');
