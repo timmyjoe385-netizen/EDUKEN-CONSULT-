@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
       access_token: 'playwright-student-session',
       refresh_token: 'playwright-refresh-token',
       expires_at: Math.floor(Date.now() / 1000) + 3600,
-      user: { id: 'playwright-student-id', is_anonymous: true },
+      user: { id: 'playwright-student-id', is_anonymous: false, email: 'student@example.test', app_metadata: { provider: 'google' }, identities: [{ provider: 'google' }] },
     }));
   });
   await page.route('**/api/cbt/student-profile', route => route.fulfill({
@@ -37,7 +37,7 @@ test('students without a signed-in account cannot start any CBT activity', async
     await route.fulfill({ status: 403, contentType: 'application/json', body: JSON.stringify({ error: 'Student username required.' }) });
   });
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('button', { name: /Continue with username/i })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue with Google/i })).toBeVisible();
   await expect(page.getByLabel('Email address')).toHaveCount(0);
   await expect(page.getByLabel('Password')).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
@@ -45,6 +45,38 @@ test('students without a signed-in account cannot start any CBT activity', async
   await expect(page.locator('.cbt-subject-picker button.cbt-primary-button')).toBeDisabled();
   await expect(page.locator('.cbt-mock-banner button.cbt-primary-button')).toBeDisabled();
   expect(startCalls).toBe(0);
+});
+
+test('existing anonymous CBT accounts link Google without replacing the student identity', async ({ page }) => {
+  await page.addInitScript(() => {
+    localStorage.setItem('eduken_auth_session', JSON.stringify({
+      access_token: 'legacy-anonymous-session',
+      refresh_token: 'legacy-anonymous-refresh',
+      expires_at: Math.floor(Date.now() / 1000) + 3600,
+      user: { id: 'legacy-student-id', is_anonymous: true },
+    }));
+  });
+  await page.route('**/api/cbt/student-profile', route => route.fulfill({
+    status: 200,
+    contentType: 'application/json',
+    body: JSON.stringify({ profile: { username: 'LegacyStudent', created_at: '2026-11-20T00:00:00.000Z' } }),
+  }));
+  let linkRequest;
+  await page.route('**/auth/v1/user/identities/authorize', async route => {
+    linkRequest = {
+      method: route.request().method(),
+      authorization: route.request().headers().authorization,
+      body: route.request().postDataJSON(),
+    };
+    await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ url: '/mock-google-link' }) });
+  });
+  await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('button', { name: /Connect Google and keep my progress/i })).toBeVisible();
+  await page.getByRole('button', { name: /Connect Google and keep my progress/i }).click();
+  await expect.poll(() => linkRequest?.body?.provider).toBe('google');
+  expect(linkRequest.method).toBe('POST');
+  expect(linkRequest.authorization).toContain('Bearer legacy-anonymous-session');
+  await expect(page).toHaveURL(/mock-google-link/);
 });
 
 test('CBT question selectors never offer fewer than 20 questions', async ({ page }) => {
@@ -76,16 +108,7 @@ test('student identity gate locks CBT when signed out and unlocks after username
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeEnabled();
 });
 
-test('students can start with a username-only anonymous session and claim a unique username', async ({ page }) => {
-  await page.route('**/auth/v1/signup', route => route.fulfill({
-    status: 200, contentType: 'application/json',
-    body: JSON.stringify({
-      access_token: 'anonymous-student-access-token',
-      refresh_token: 'anonymous-student-refresh-token',
-      expires_in: 3600,
-      user: { id: 'anonymous-student-id', is_anonymous: true },
-    }),
-  }));
+test('Google-authenticated students claim one unique EDUKEN username', async ({ page }) => {
   let claimed = false;
   await page.route('**/api/cbt/student-profile', route => {
     if (route.request().method() === 'POST') {
@@ -143,7 +166,7 @@ test('CBT practice fallback does not start an undersized sample set', async ({ p
   await page.route('**/functions/v1/eduken-api/api/cbt/questions*', route => route.abort());
   await page.goto('/cbt', { waitUntil: 'domcontentloaded' });
 
-  await expect(page.getByText(/original starter samples are being used/i)).toBeVisible();
+  await expect(page.getByText(/published question bank is currently unavailable/i)).toBeVisible();
   await expect(page.locator('#cbt-practice-count')).toHaveValue('20');
   await expect(page.getByRole('button', { name: /Start free practice/i })).toBeDisabled();
 });
