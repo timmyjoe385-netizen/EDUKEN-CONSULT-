@@ -28,39 +28,37 @@ The question CSV is at `content/cbt/staging/2026-11-21/new-subjects-50-each.csv`
 | Commerce | 13 | 12 | 13 | 12 | 34 | 12 | 4 |
 | Principles of Accounts | 13 | 12 | 14 | 11 | 25 | 19 | 6 |
 
-An exact duplicate screen and a high-threshold near-duplicate screen were run within this 150-row batch; no matches were found. This batch has not yet been compared against the existing eight-subject question bank. The three new subjects were not present in the existing published bank at the time this work was planned.
-
-## Content and answer-key review
-
-The stems, answer keys and explanations were checked for internal consistency during authoring. CRS items use familiar biblical narratives and teachings; Commerce items use general trade and business principles; Principles of Accounts includes worked calculations and applied accounting scenarios.
-
-**Important limitation:** this is an initial draft review, not an independent sign-off by a qualified CRS, Commerce or Financial Accounting subject teacher. Any uncertain item identified during independent review should be corrected or removed before approval.
-
-
+An exact duplicate screen and a high-threshold near-duplicate screen were run within this 150-row batch; no matches were found.
 
 ## Comparison against the existing question bank
 
-The 150 draft stems were compared against the 1,563 question rows currently present in the isolated EDUKEN test database (the existing eight-subject bank: Biology, Chemistry, Economics, Government, Literature in English, Mathematics, Physics and Use of English).
+The 150 draft stems were compared against the 1,563 question rows present in the isolated EDUKEN test database (the existing eight-subject bank: Biology, Chemistry, Economics, Government, Literature in English, Mathematics, Physics and Use of English).
 
 The first cross-bank screen flagged two Commerce items for manual review:
-- One was an exact stem overlap with an Economics item about the traditional reward for land. It has been replaced with an applied natural-resource classification question.
-- One was a high-similarity overlap with an Economics balance-of-trade definition item. It has been replaced with a numerical balance-of-trade scenario.
+- One was an exact stem overlap with an Economics item about the traditional reward for land. It was replaced with an applied natural-resource classification question.
+- One was a high-similarity overlap with an Economics balance-of-trade definition item. It was replaced with a numerical balance-of-trade scenario.
 
-After those revisions, the full 150-versus-1,563 stem comparison returned **no candidates at the configured 0.50 similarity-review threshold**. This is a text-similarity screen, not proof of conceptual uniqueness; the independent subject review remains important. The comparison used the isolated test database and did not alter its records.
+After those revisions, the full 150-versus-1,563 stem comparison returned **no candidates at the configured 0.50 similarity-review threshold**. This is a text-similarity screen, not proof of conceptual uniqueness. The comparison used the isolated test database and did not alter its records.
 
 ## Editorial content pass (22 November 2026)
 
-A full editorial read-through of all 150 stems, options, answer keys and explanations was completed after the automated checks. The pass covered the three subject sets separately:
+A full editorial read-through of all 150 stems, options, answer keys and explanations was completed. It covered biblical names, events and chronology; Commerce terminology and trade concepts; and accounting treatment, concepts and worked calculations. No clear factual, answer-key or calculation error was identified in that pass. This was an editorial review by the project assistant, not a substitute for subject-teacher review.
 
-- **CRS:** biblical names, events, passages, chronology and the explanation attached to each selected answer.
-- **Commerce:** trade terminology, trade documents, business organisation, marketing, transport, banking, insurance and international-trade concepts.
-- **Principles of Accounts:** debit/credit treatment, source documents, books of original entry, control accounts, accounting concepts and arithmetic in depreciation, inventory and ratios.
+## Independent subject-teacher review (22 November 2026)
 
-No clear factual, answer-key or calculation error was identified in this editorial pass. The worked accounting calculations were rechecked. The pass is an editorial review by the project assistant; it is **not** an independent review by a qualified subject teacher and should not be represented as one. A teacher should still verify syllabus emphasis, local classroom terminology and any disputed interpretation before publication.
+Independent subject-review confirmations have now been received for all three sets:
+
+| Subject | Syllabus relevance / academic correctness | Options and answer keys | Corrections requested | Result |
+|---|---|---|---|---|
+| Christian Religious Studies (CRS) | Yes | Yes | No | Suitable for student practice |
+| Commerce | Yes | Yes | No | Suitable for student practice |
+| Financial Accounting (canonical subject: Principles of Accounts) | Yes | Yes | No | Suitable for student practice |
+
+**Review outcome: 3 of 3 subjects reviewed; 150 of 150 questions covered by positive subject-review confirmations. No corrections were requested.** The confirmations were supplied as written responses to the three review questions. Reviewer names, qualifications and individual question-level annotations were not supplied in the responses; this report therefore records the confirmations without inventing reviewer identities or claiming a named certification.
 
 ## Source and originality
 
-Questions are newly written for EDUKEN and are not represented as official JAMB past questions, leaked questions or predictions. The JAMB syllabus is used only as a topic-alignment reference:
+Questions are newly written for EDUKEN and are not represented as official JAMB past questions, leaked questions or predictions. The JAMB syllabus is used as a topic-alignment reference:
 
 - JAMB IBASS syllabus portal: https://ibass.jamb.gov.ng/e-syllabus
 - CRS syllabus: https://ibass.jamb.gov.ng/static/media/CRS.7f96f8e535ca408ca474.pdf
@@ -69,4 +67,6 @@ Questions are newly written for EDUKEN and are not represented as official JAMB 
 
 ## Release status
 
-**Staged draft only.** The CSV has not been imported into Supabase, approved, or published. No student-facing question bank or production data has been changed. Before import, run the repository's full bank validator with the 50-per-subject batch target, compare against the existing bank, perform independent subject review, and import into the isolated test project first. The eventual 200-per-subject target remains unchanged; this is only the first 50-question tranche for each subject.
+**Staged draft only.** The CSV has been imported into the isolated EDUKEN test project only (batch `5978a235-0ed8-41f6-8195-60a8c510a313`): 150 rows inserted, 150 unique fingerprints, all 150 remain in `draft` status, and zero are published. No production Supabase project, live student data, or production question bank was changed.
+
+Teacher review confirmations are complete. Remaining release gates include final CI/browser verification, any required repository-level bank validation, and explicit owner approval before any production import, merge or publication. The eventual 200-per-subject target remains unchanged; this is only the first 50-question tranche for each subject.
