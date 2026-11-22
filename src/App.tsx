@@ -2714,8 +2714,8 @@ function App() {
                         <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
                         <span>{available ? 'Available' : 'Currently unavailable'}</span>
                       </div>
-                      <button type="button" className="primary" disabled={!available || !hasPrice} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
-                        {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Price not set'} <ArrowRight size={15} />
+                      <button type="button" className="primary" disabled={!available} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
+                        {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Enquire about this service'} <ArrowRight size={15} />
                       </button>
                     </article>
                   );
