@@ -2092,6 +2092,24 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
             deadline: '30 December 2026',
             is_published: true,
           },
+          {
+            id: 'new-opportunity-fixture',
+            title: 'New Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A newly published test-only opportunity.',
+            deadline: '30 December 2026',
+            created_at: '2026-11-21T09:00:00.000Z',
+            is_published: true,
+          },
+          {
+            id: 'closing-opportunity-fixture',
+            title: 'Closing Soon Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A test-only opportunity closing within fourteen days.',
+            deadline: '28 November 2026',
+            created_at: '2026-10-01T09:00:00.000Z',
+            is_published: true,
+          },
         ],
         admissions: [],
         updates: [],
@@ -2104,6 +2122,12 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
   await page.goto('/#opportunities', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
   await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
+  const ongoingCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'Current Opportunity Fixture' }) });
+  await expect(ongoingCard.locator('.opportunity-status--ongoing')).toContainText('Ongoing');
+  const newCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'New Opportunity Fixture' }) });
+  await expect(newCard.locator('.opportunity-status--new')).toContainText('New');
+  const closingCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'Closing Soon Opportunity Fixture' }) });
+  await expect(closingCard.locator('.opportunity-status--closing-soon')).toContainText('Closing soon');
   const closedArchive = page.locator('.closed-opportunities');
   await expect(closedArchive.getByRole('heading', { name: 'Recently closed opportunities' })).toBeVisible();
   await expect(closedArchive.locator('.closed-opportunity-card')).toContainText('Expired Opportunity Fixture');
