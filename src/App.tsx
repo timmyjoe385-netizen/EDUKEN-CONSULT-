@@ -638,9 +638,9 @@ function App() {
     );
   };
 
-  const isExpiredOpportunity = (item: Item) => {
-    const rawDeadline = String(item.deadline || '').trim();
-    if (!rawDeadline) return false;
+  const opportunityDeadlineTime = (rawValue: unknown) => {
+    const rawDeadline = String(rawValue || '').trim();
+    if (!rawDeadline) return NaN;
 
     // Interpret date-only deadlines through the end of the stated day.
     const humanDate = rawDeadline.match(/\b(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})\b/);
@@ -648,16 +648,21 @@ function App() {
     let deadline: Date;
     if (humanDate) {
       const month = Date.parse(humanDate[2] + ' 1, 2000');
-      if (Number.isNaN(month)) return false;
+      if (Number.isNaN(month)) return NaN;
       deadline = new Date(Number(humanDate[3]), new Date(month).getMonth(), Number(humanDate[1]), 23, 59, 59, 999);
     } else if (isoDate) {
       deadline = new Date(Number(isoDate[1]), Number(isoDate[2]) - 1, Number(isoDate[3]), 23, 59, 59, 999);
     } else {
       deadline = new Date(rawDeadline);
-      if (Number.isNaN(deadline.getTime())) return false;
+      if (Number.isNaN(deadline.getTime())) return NaN;
       if (!/\d[T ]\d{1,2}:\d{2}/.test(rawDeadline)) deadline.setHours(23, 59, 59, 999);
     }
-    return deadline.getTime() < Date.now();
+    return deadline.getTime();
+  };
+
+  const isExpiredOpportunity = (item: Item) => {
+    const deadline = opportunityDeadlineTime(item.deadline);
+    return Number.isFinite(deadline) && deadline < Date.now();
   };
 
   const isPlaceholderUpdate = (item: Item) => {
@@ -669,7 +674,7 @@ function App() {
 
   const opportunityStatus = (item: Item) => {
     if (isExpiredOpportunity(item) || /^(closed|expired)$/i.test(String(item.status || ''))) return 'Closed';
-    const deadline = new Date(String(item.deadline || '')).getTime();
+    const deadline = opportunityDeadlineTime(item.deadline);
     if (Number.isFinite(deadline) && deadline > Date.now() && deadline - Date.now() <= 14 * 864e5) return 'Closing soon';
     const publishedValue = item.published_at || item.created_at || item.createdAt || item.date;
     const published = publishedValue ? new Date(String(publishedValue)).getTime() : NaN;
@@ -3163,6 +3168,7 @@ function App() {
                 <article className="opp-card" key={o.id}>
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    <span className={'opportunity-status opportunity-status--' + opportunityStatus(o).toLowerCase().replace(/\s+/g, '-')}>{opportunityStatus(o)}</span>
                     {o.verified ? (
                       <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
