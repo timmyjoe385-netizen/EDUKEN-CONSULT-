@@ -2693,6 +2693,14 @@ function App() {
                 <a className="secondary" href="/#contact">Ask for guidance</a>
               </div>
             </section>
+            <section className="services-request-steps" aria-labelledby="services-request-steps-title">
+              <h2 id="services-request-steps-title">How service requests work</h2>
+              <div className="services-request-steps__grid">
+                <article><span>01</span><h3>Choose a service</h3><p>Review the description, availability and any listed requirements.</p></article>
+                <article><span>02</span><h3>Send your request</h3><p>Sign in with your Google account and complete the service request form.</p></article>
+                <article><span>03</span><h3>Follow the response</h3><p>EDUKEN reviews your request. Secure checkout is shown only when an approved service price applies; unpriced enquiries are confirmed by the team.</p></article>
+              </div>
+            </section>
             <section className="services-page-section" id="available-services">
               <div className="section-head">
                 <div><span className="kicker">AVAILABLE SERVICE CATEGORIES</span><h2>JAMB and examination services</h2></div>
@@ -2709,7 +2717,8 @@ function App() {
                       <span className="services-page-card__category">{service.category || 'JAMB Services'}</span>
                       <h3>{service.name}</h3>
                       <p>{service.description || 'Contact EDUKEN to confirm the details of this service.'}</p>
-                      {requirements ? <p className="services-page-requirements"><strong>Before you request:</strong> {requirements}</p> : null}
+                      <p className="services-page-requirements"><strong>Who can request:</strong> Candidates who need this service and meet any requirements listed below.</p>
+                      {requirements ? <p className="services-page-requirements"><strong>Before you request:</strong> {requirements}</p> : <p className="services-page-requirements">No additional requirements are listed. EDUKEN will confirm any information needed after your enquiry.</p>}
                       <div className="services-page-card__meta">
                         <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
                         <span>{available ? 'Available' : 'Currently unavailable'}</span>
@@ -2734,7 +2743,8 @@ function App() {
                     <span className="services-page-card__category">{service.category || 'EDUKEN Support'}</span>
                     <h3>{service.name}</h3>
                     <p>{service.description || 'Submit an enquiry to learn more about this service.'}</p>
-                    {service.requirements ? <p className="services-page-requirements"><strong>What you may need:</strong> {service.requirements}</p> : null}
+                    <p className="services-page-requirements"><strong>Who can request:</strong> Students who need this type of support. Any service-specific conditions will be confirmed by EDUKEN.</p>
+                    {service.requirements ? <p className="services-page-requirements"><strong>What you may need:</strong> {service.requirements}</p> : <p className="services-page-requirements">No additional requirements are listed. EDUKEN will confirm what is needed after your enquiry.</p>}
                     <div className="services-page-card__meta"><strong>{service.price !== null && service.price !== undefined && service.price !== '' && Number.isFinite(Number(service.price)) ? '₦' + Number(service.price).toLocaleString('en-NG') : 'Price confirmed after enquiry'}</strong></div>
                     <button type="button" className="primary" onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); }}>
                       Request this service <ArrowRight size={15} />
