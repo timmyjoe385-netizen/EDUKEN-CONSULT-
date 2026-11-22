@@ -325,3 +325,103 @@ html[data-theme="dark"] .services-page-help p { color: #b5c7ba; }
 html[data-theme="dark"] .services-page-card__category { background: #254735; color: #d6eddd; }
 html[data-theme="dark"] .services-page-card .services-page-requirements,
 html[data-theme="dark"] .services-page-help { background: #1b3326; color: #d1e3d6; }
+
+
+/* Opportunity lifecycle labels and closed archive */
+.opportunity-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: #edf4ef;
+  color: #355b43;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+.opportunity-status--new {
+  background: #e1f2e7;
+  color: #17623a;
+}
+.opportunity-status--closing-soon {
+  background: #fff1d8;
+  color: #80500c;
+}
+.opportunity-status--ongoing {
+  background: #edf2f5;
+  color: #405765;
+}
+.opportunity-status--closed {
+  background: #f0eeee;
+  color: #666;
+}
+.closed-opportunities {
+  padding-top: 10px;
+}
+.closed-opportunities-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.closed-opportunity-card {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid #e4e8e5;
+  border-radius: 14px;
+  background: #f8f9f8;
+  opacity: .88;
+}
+.closed-opportunity-card > div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+.closed-opportunity-card h3 {
+  margin: 0;
+  color: #48584e;
+  font-size: 14px;
+  line-height: 1.4;
+}
+.closed-opportunity-card p,
+.closed-opportunity-card small {
+  margin: 0;
+  color: #6c7971;
+  font-size: 12px;
+  line-height: 1.5;
+}
+html[data-theme="dark"] .opportunity-status--new {
+  background: #1e4931;
+  color: #c8f0d5;
+}
+html[data-theme="dark"] .opportunity-status--closing-soon {
+  background: #513b1d;
+  color: #ffe0a9;
+}
+html[data-theme="dark"] .opportunity-status--ongoing {
+  background: #283b45;
+  color: #d4e5ec;
+}
+html[data-theme="dark"] .opportunity-status--closed {
+  background: #343434;
+  color: #d2d2d2;
+}
+html[data-theme="dark"] .closed-opportunity-card {
+  border-color: #35453b;
+  background: #18251d;
+}
+html[data-theme="dark"] .closed-opportunity-card h3 {
+  color: #d2ded5;
+}
+html[data-theme="dark"] .closed-opportunity-card p,
+html[data-theme="dark"] .closed-opportunity-card small {
+  color: #aab9ae;
+}
+@media (max-width: 900px) {
+  .closed-opportunities-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 520px) {
+  .closed-opportunities-grid { grid-template-columns: 1fr; }
+}
