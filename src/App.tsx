@@ -2748,7 +2748,7 @@ function App() {
               { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green' },
               { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
               { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
-              { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#general-services', icon: MessageCircle, tone: 'mint' },
+              { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
               { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
               { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '#general-services', icon: Plus, tone: 'mint' },
             ].map(card => {
@@ -3300,7 +3300,7 @@ function App() {
                     View Source <ArrowRight size={14} />
                   </a>
                 ) : (
-                  <a href="#more">
+                  <a href="#discover">
                     Explore EDUKEN <ArrowRight size={14} />
                   </a>
                 )}
