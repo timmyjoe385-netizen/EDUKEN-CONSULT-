@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { api, auth, notifications, usesIsolatedTestBackend } from './lib/api';
+import { api, auth, usesIsolatedTestBackend } from './lib/api';
 import { FileText, Download, RefreshCw } from 'lucide-react';
 import {
   Bell,
@@ -434,29 +434,6 @@ export default function PlatformHub({
     await refresh();
   };
 
-  const [notificationStatus, setNotificationStatus] = useState('');
-
-  const enablePush = async () => {
-    if (!user) {
-      await signIn();
-      return;
-    }
-    try {
-      const result = await notifications.subscribe({ showUi: true });
-      if (result.permission === 'unsupported') {
-        setNotificationStatus('This browser does not support notification permissions.');
-      } else if (result.permission === 'granted') {
-        setNotificationStatus('Browser permission granted. Automatic push delivery is not connected yet, so this does not enable background alerts.');
-      } else if (result.permission === 'denied') {
-        setNotificationStatus('Notifications are blocked in your browser settings. You can change that in your browser settings.');
-      } else {
-        setNotificationStatus('Notification permission was not granted. You can try again or check your browser settings.');
-      }
-    } catch {
-      setNotificationStatus('Could not check notification permission on this device.');
-    }
-  };
-
   const markRead = async (id?: string) => {
     if (!auth.isGoogleSignedIn()) { await signIn(); return; }
     await api.post('/api/user/notifications/read', id ? { id } : { all: true });
@@ -626,7 +603,7 @@ export default function PlatformHub({
           </div>
           <h3>Smart Alerts</h3>
           <p>
-            Choose categories and enable device notifications where supported.
+            Follow the topics you care about and manage alerts in your EDUKEN account. Background push notifications are not available yet.
           </p>
           <button className="secondary" onClick={() => { if (!auth.isGoogleSignedIn()) { void signIn(); return; } setOpen('alerts'); }}>
             <Bell size={15} /> Manage alerts
@@ -939,17 +916,9 @@ export default function PlatformHub({
 
       {open === 'alerts' && (
         <Drawer title="Notifications & Alerts" close={() => setOpen('')}>
-          <button className="primary full" onClick={enablePush}>
-            <Bell size={15} /> Check browser notification permission
-          </button>
           <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
-            Automatic background push alerts are not connected yet. Topic preferences and in-app alerts can still be managed here.
+            Background push notifications are not available yet. You can still choose your alert topics and read or mark in-app alerts as read here.
           </p>
-          {notificationStatus && (
-            <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
-              {notificationStatus}
-            </p>
-          )}
           <button className="secondary full" onClick={() => markRead()}>
             <Check size={15} /> Mark all as read
           </button>
