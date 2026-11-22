@@ -1038,6 +1038,11 @@ test('public header exposes the EDUKEN student workspace but not admin access', 
 
 
 test('customer Google sign-in on the public homepage never opens the admin dashboard', async ({ page }) => {
+  const startupErrors = [];
+  page.on('pageerror', error => startupErrors.push(error.stack || error.message));
+  page.on('console', message => {
+    if (message.type() === 'error') startupErrors.push(message.text());
+  });
   await page.route('**/auth/v1/user', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -1058,7 +1063,12 @@ test('customer Google sign-in on the public homepage never opens the admin dashb
     localStorage.removeItem('eduken_auth_session');
   });
   await page.goto('/#access_token=synthetic-customer-token&refresh_token=synthetic-refresh-token&expires_in=3600&token_type=bearer', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.site')).toBeVisible({ timeout: 15_000 });
+  try {
+    await expect(page.locator('.site')).toBeVisible({ timeout: 15_000 });
+  } catch (error) {
+    const startupFallback = await page.locator('[role="alert"]').innerText().catch(() => 'No startup fallback was rendered.');
+    throw new Error(`Public OAuth callback failed to render the homepage.\nStartup fallback: ${startupFallback}\nBrowser errors: ${startupErrors.join('\n') || 'none'}\nOriginal failure: ${error instanceof Error ? error.message : String(error)}`);
+  }
   await expect(page.locator('.admin-shell')).toHaveCount(0);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toHaveCount(0);
 });
