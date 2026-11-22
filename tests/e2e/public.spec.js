@@ -995,12 +995,14 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public header exposes customer wallet access but not admin access', async ({ page }) => {
+test('public header exposes the EDUKEN student workspace but not admin access', async ({ page }) => {
   const authorizeEndpoint = `${supabaseTestUrl}/auth/v1/authorize`;
 
-  // Customer wallet access is intentionally visible; admin access must remain private.
+  // The student workspace is the public account destination; admin access stays private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
+  const studentWorkspaceLink = page.getByRole('link', { name: 'My EDUKEN' });
+  await expect(studentWorkspaceLink).toBeVisible();
+  await expect(studentWorkspaceLink).toHaveAttribute('href', '/#eduken-platform');
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -1057,7 +1059,7 @@ test('customer Google sign-in on the public homepage never opens the admin dashb
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toHaveCount(0);
 });
 
-test('public header does not expose generic sign-in while customer wallet sign-in remains available', async ({ page }) => {
+test('public header links to the student workspace without exposing generic sign-in', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1069,7 +1071,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'My EDUKEN' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
@@ -2242,7 +2244,8 @@ test('dedicated EDUKEN Services page shows only configured services and permits 
   await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
   await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'How service requests work' })).toBeVisible();
-  await expect(page.getByText(/Candidates who need this service/)).toBeVisible();
+  await expect(page.getByText(/Candidates who need this service/)).toHaveCount(2);
+  await expect(page.getByText(/Candidates who need this service/).first()).toBeVisible();
   await expect(page.getByRole('heading', { name: 'JAMB and examination services' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Other educational support' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'JAMB Registration Assistance Fixture' })).toBeVisible();
