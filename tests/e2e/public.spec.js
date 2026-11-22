@@ -2233,3 +2233,38 @@ test('dedicated EDUKEN Services page shows only configured services and permits 
   await expect(bottomNav.getByRole('link', { name: 'Services' })).toHaveAttribute('href', '/services');
   await expect(bottomNav.getByRole('link', { name: 'CBT' })).toHaveAttribute('href', '/cbt');
 });
+
+
+test('educational updates can be filtered by their published subject category', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [
+          { id: 'updates-jamb-fixture', title: 'JAMB Registration Update Fixture', category: 'JAMB & Examinations', body: 'A test-only examination update.', is_published: true },
+          { id: 'updates-scholarship-fixture', title: 'Scholarship Announcement Fixture', category: 'Scholarships', body: 'A test-only scholarship update.', is_published: true },
+        ],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/#updates', { waitUntil: 'domcontentloaded' });
+  const updateFilters = page.getByRole('group', { name: 'Filter educational updates' });
+  await expect(updateFilters.getByRole('button', { name: 'All updates' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+
+  await updateFilters.getByRole('button', { name: 'JAMB & Examinations' }).click();
+  await expect(updateFilters.getByRole('button', { name: 'JAMB & Examinations' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toHaveCount(0);
+
+  await updateFilters.getByRole('button', { name: 'Scholarships' }).click();
+  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
+});
