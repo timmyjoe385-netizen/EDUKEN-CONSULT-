@@ -82,6 +82,7 @@ function App() {
   const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
+  const [updateFilter, setUpdateFilter] = useState('All updates');
   const [search, setSearch] = useState('');
   const [toast, setToast] = useState('');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -688,8 +689,23 @@ function App() {
   );
 
   const visibleUpdates = useMemo(
-    () => content.updates.filter(item => !isPlaceholderUpdate(item)),
-    [content.updates]
+    () => content.updates.filter(item => {
+      if (isPlaceholderUpdate(item)) return false;
+      if (updateFilter === 'All updates') return true;
+      const searchable = [item.category, item.title, item.body, item.content]
+        .map(value => String(value || '').toLowerCase())
+        .join(' ');
+      const filters: Record<string, RegExp> = {
+        'JAMB & Examinations': /jamb|exam|utme|post[- ]?utme|waec|neco|nabteb/,
+        Admissions: /admission|screening|matriculation|acceptance/,
+        Scholarships: /scholarship|grant|fellowship|bursary|funding/,
+        'Universities & Institutions': /universit|institution|polytechnic|college|school/,
+        'Jobs & Internships': /job|internship|career|vacanc|employment|trainee/,
+        'Educational News': /education|announcement|update|news|learning|student/,
+      };
+      return filters[updateFilter]?.test(searchable) ?? false;
+    }),
+    [content.updates, updateFilter]
   );
 
   const isPlaceholderAdmission = (item: Item) => {
@@ -3345,6 +3361,19 @@ function App() {
               available.
             </p>
           </div>
+          <div className="filters update-filters" role="group" aria-label="Filter educational updates">
+            {['All updates', 'JAMB & Examinations', 'Admissions', 'Scholarships', 'Universities & Institutions', 'Jobs & Internships', 'Educational News'].map(filter => (
+              <button
+                type="button"
+                key={filter}
+                className={updateFilter === filter ? 'active' : ''}
+                aria-pressed={updateFilter === filter}
+                onClick={() => setUpdateFilter(filter)}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
           <div className="update-grid">
             {visibleUpdates.map((x, i) => (
               <article className="update-card" key={x.id}>
@@ -3375,6 +3404,7 @@ function App() {
               </article>
             ))}
           </div>
+          {!loading && visibleUpdates.length === 0 ? <p className="search-empty">No published updates match this category yet. Check another category or return later.</p> : null}
         </section>
 
         <section className="trust-section" id="about">
