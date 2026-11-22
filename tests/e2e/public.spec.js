@@ -2104,6 +2104,10 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
   await page.goto('/#opportunities', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
   await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
+  const closedArchive = page.locator('.closed-opportunities');
+  await expect(closedArchive.getByRole('heading', { name: 'Recently closed opportunities' })).toBeVisible();
+  await expect(closedArchive.locator('.closed-opportunity-card')).toContainText('Expired Opportunity Fixture');
+  await expect(closedArchive.locator('.opportunity-status--closed')).toContainText('Closed');
 });
 
 test('admin content deadline validation and calendar picker are wired for create and edit', async () => {
