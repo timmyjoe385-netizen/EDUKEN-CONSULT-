@@ -2800,16 +2800,13 @@ function App() {
               WHERE AVAILABLE
             </div>
             <h1>
-              Education.
+              Welcome to
               <br />
-              <em>Opportunities.</em>
-              <br />
-              Your Next Move.
+              <em>EDUKEN CONSULT.</em>
             </h1>
             <p>
-              EDUKEN CONSULT helps students, applicants and young people stay
-              informed with trusted educational updates, admissions information
-              and opportunities that can move their future forward.
+              Your trusted destination for educational updates, opportunities,
+              preparation and student support.
             </p>
             <div className="hero-actions">
               <a className="primary" href="#opportunities">
@@ -2903,7 +2900,7 @@ function App() {
               const Icon = card.icon;
               return (
                 <a
-                  className="discovery-card"
+                  className={'discovery-card' + (card.title === 'Skills & Training' || card.title === 'More Services' ? ' discovery-card--wide' : '')}
                   href={card.href}
                   key={card.title}
                   onClick={() => { if ('filter' in card && card.filter) setOppFilter(card.filter); }}
