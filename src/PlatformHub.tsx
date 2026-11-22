@@ -362,7 +362,9 @@ export default function PlatformHub({
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
-    const unsubscribe = auth.isGoogleSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
+    // Background push notifications are not enabled in this app yet. Avoid
+    // referencing an uninitialised SDK and keep the in-app refresh listeners above.
+    const unsubscribe = () => undefined;
     return () => {
       window.removeEventListener('eduken-auth-changed', onAuthChanged);
       window.removeEventListener('eduken-wallet-updated', onWalletUpdated);
