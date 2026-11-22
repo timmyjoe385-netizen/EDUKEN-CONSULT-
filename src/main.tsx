@@ -4,6 +4,7 @@ import App from './App';
 import AggregateCalculator, { AggregateCalculatorShortcut } from './AggregateCalculator';
 import './index.css';
 import './aggregate.css';
+import './platform-upgrade.css';
 
 const isAggregateCalculator = window.location.pathname.replace(/\/+$/, '').endsWith('/aggregate-calculator');
 
