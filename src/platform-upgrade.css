@@ -182,3 +182,146 @@ html[data-theme="dark"] .mobile-bottom-nav__item--primary {
   background: #246345;
   border-color: #246345;
 }
+
+
+/* Dedicated EDUKEN services route */
+.services-page {
+  width: min(1160px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 28px 0 72px;
+}
+.services-page-hero {
+  padding: clamp(28px, 5vw, 58px);
+  border-radius: 26px;
+  background: linear-gradient(125deg, #123d2b 0%, #1d5b3d 65%, #dff0e4 180%);
+  color: #fff;
+}
+.services-page-hero .kicker { color: #c8e6d1; }
+.services-page-hero h1 {
+  max-width: 720px;
+  margin: 12px 0;
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+.services-page-hero > p {
+  max-width: 720px;
+  color: #e1eee5;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.services-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.services-page-actions .secondary {
+  border: 1px solid rgba(255,255,255,.45);
+  color: #fff;
+  background: rgba(255,255,255,.08);
+}
+.services-page-section { padding: 44px 0 10px; }
+.services-page-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.services-page-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid #e1e9e3;
+  border-radius: 18px;
+  background: #fffefa;
+  box-shadow: 0 5px 18px rgba(22,57,39,.045);
+}
+.services-page-card__category {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #e8f3eb;
+  color: #20583a;
+  font-size: 11px;
+  font-weight: 750;
+}
+.services-page-card h3 {
+  margin: 2px 0 0;
+  color: #183b2c;
+  font-size: 18px;
+  line-height: 1.3;
+}
+.services-page-card > p {
+  margin: 0;
+  color: #627168;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.services-page-card .services-page-requirements {
+  padding: 11px 12px;
+  border-left: 3px solid #83b795;
+  border-radius: 0 9px 9px 0;
+  background: #f1f7f2;
+  color: #40584a;
+}
+.services-page-card__meta {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  color: #285a3d;
+  font-size: 13px;
+}
+.services-page-card__meta span { color: #617267; font-size: 12px; }
+.services-page-card .primary { width: 100%; justify-content: center; }
+.services-page-empty {
+  padding: 18px;
+  border: 1px dashed #b9cbbd;
+  border-radius: 14px;
+  color: #52675a;
+}
+.services-page-help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  margin-top: 46px;
+  padding: 28px;
+  border-radius: 20px;
+  background: #edf5ef;
+}
+.services-page-help h2 { margin: 8px 0; color: #173b2b; }
+.services-page-help p { max-width: 650px; margin: 0; color: #52675a; line-height: 1.65; }
+.services-page-help .primary { flex: 0 0 auto; }
+.services-page-safety {
+  margin: 18px 0 0;
+  color: #718076;
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 760px) {
+  .services-page { width: min(100% - 28px, 600px); padding: 18px 0 42px; }
+  .services-page-hero { padding: 26px 22px; border-radius: 20px; }
+  .services-page-hero > p { font-size: 14px; }
+  .services-page-section { padding-top: 30px; }
+  .services-page-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 12px; }
+  .services-page-card { padding: 18px; }
+  .services-page-help { align-items: flex-start; flex-direction: column; padding: 22px; }
+}
+html[data-theme="dark"] .services-page-card {
+  border-color: #29483a;
+  background: #14251c;
+}
+html[data-theme="dark"] .services-page-card h3,
+html[data-theme="dark"] .services-page-help h2 { color: #e5f0e8; }
+html[data-theme="dark"] .services-page-card > p,
+html[data-theme="dark"] .services-page-help p { color: #b5c7ba; }
+html[data-theme="dark"] .services-page-card__category { background: #254735; color: #d6eddd; }
+html[data-theme="dark"] .services-page-card .services-page-requirements,
+html[data-theme="dark"] .services-page-help { background: #1b3326; color: #d1e3d6; }
