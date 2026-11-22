@@ -1307,7 +1307,9 @@ function App() {
         details: [
           ...(isJambCatalogueService(selectedService) ? [
             'Number of candidates: ' + String(requestedQuantity),
-            'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG'),
+            Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0
+              ? 'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG')
+              : 'Service price: To be confirmed by EDUKEN',
           ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
@@ -2695,14 +2697,7 @@ function App() {
                 <p>These services use the existing EDUKEN request form. Where a price is not listed, it will be confirmed by the team.</p>
               </div>
               <div className="services-page-grid">
-                {(content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).length
-                  ? content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s))
-                  : [
-                    { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
-                    { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
-                    { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
-                    { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
-                  ]).map((service) => (
+                {content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).map((service) => (
                   <article className="services-page-card" key={service.id || service.name}>
                     <span className="services-page-card__category">{service.category || 'EDUKEN Support'}</span>
                     <h3>{service.name}</h3>
@@ -2715,6 +2710,7 @@ function App() {
                   </article>
                 ))}
               </div>
+              {!loading && !contentLoadFailed && !content.services.some(s => !s.is_catalog_item && !isJambCatalogueService(s)) ? <p className="services-page-empty">No additional services are currently published. Please contact EDUKEN if you need guidance.</p> : null}
             </section>
             <section className="services-page-help">
               <div><span className="kicker">NOT SURE WHERE TO START?</span><h2>Let's help you find the right next step.</h2><p>Send EDUKEN a consultation request if you need help choosing the right service or understanding the process.</p></div>
@@ -3244,9 +3240,9 @@ function App() {
                       <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
                       {hasPrice ? <span className="jamb-service-price__unit">per candidate</span> : null}
                     </div>
-                    <button type="button" className="primary jamb-service-request" disabled={!available || !hasPrice} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
-                      {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
-                      {available && hasPrice ? <ArrowRight size={16} aria-hidden="true" /> : null}
+                    <button type="button" className="primary jamb-service-request" disabled={!available} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
+                      {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Enquire about this service'}
+                      {available ? <ArrowRight size={16} aria-hidden="true" /> : null}
                     </button>
                   </div>
                 </article>
