@@ -19,7 +19,7 @@ const failedAssets = [];
 
 page.on('pageerror', error => pageErrors.push(error.message));
 page.on('requestfailed', request => {
-  if (/\\.(?:m?js|css)(?:\\?|$)/i.test(request.url())) {
+  if (/\.(?:m?js|css)(?:\?|$)/i.test(request.url())) {
     failedAssets.push({ url: request.url(), error: request.failure()?.errorText || 'request failed' });
   }
 });
