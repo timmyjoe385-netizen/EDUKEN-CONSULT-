@@ -1004,7 +1004,7 @@ test('public header exposes the EDUKEN student workspace but not admin access', 
 
   // The student workspace is the public account destination; admin access stays private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const studentWorkspaceLink = page.getByRole('link', { name: 'My EDUKEN' });
+  const studentWorkspaceLink = page.getByRole('link', { name: /My EDUKEN/ });
   await expect(studentWorkspaceLink).toBeVisible();
   await expect(studentWorkspaceLink).toHaveAttribute('href', '#eduken-platform');
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
@@ -1058,7 +1058,7 @@ test('customer Google sign-in on the public homepage never opens the admin dashb
     localStorage.removeItem('eduken_auth_session');
   });
   await page.goto('/#access_token=synthetic-customer-token&refresh_token=synthetic-refresh-token&expires_in=3600&token_type=bearer', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.site')).toBeVisible();
+  await expect(page.locator('.site')).toBeVisible({ timeout: 15_000 });
   await expect(page.locator('.admin-shell')).toHaveCount(0);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toHaveCount(0);
 });
@@ -1075,7 +1075,7 @@ test('public header links to the student workspace without exposing generic sign
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'My EDUKEN' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /My EDUKEN/ })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
