@@ -3265,14 +3265,7 @@ function App() {
             </p>
           </div>
           <div className="general-service-grid">
-            {(content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).length
-              ? content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s))
-              : [
-                { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
-                { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
-                { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
-                { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
-              ]).map((s, i) => (
+            {content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).map((s, i) => (
               <article className="general-service-card" key={s.id || s.name}>
                 <div className="general-service-card__topline">
                   <span className="general-service-card__number">{String(i + 1).padStart(2, '0')}</span>
@@ -3287,6 +3280,7 @@ function App() {
               </article>
             ))}
           </div>
+          {!loading && !contentLoadFailed && !content.services.some(s => !s.is_catalog_item && !isJambCatalogueService(s)) ? <p className="services-page-empty">No additional services are currently published. Contact EDUKEN for guidance about your enquiry.</p> : null}
         </section>
 
         <section className="consult-section" id="contact">
