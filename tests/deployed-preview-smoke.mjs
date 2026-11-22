@@ -39,7 +39,7 @@ try {
     throw new Error(`Preview returned HTTP ${response?.status() ?? 'no response'}.`);
   }
 
-  await page.getByRole('heading', { name: 'Your Next Move.' }).waitFor({ state: 'visible', timeout: 45000 });
+  await page.locator('.hero h1').waitFor({ state: 'visible', timeout: 45000 });
   await page.waitForTimeout(1200);
 
   const rendered = await page.evaluate(() => {
