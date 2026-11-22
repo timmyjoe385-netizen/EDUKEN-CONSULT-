@@ -52,6 +52,7 @@ export default function CbtQuestionBankAdmin() {
   const [importHistory,setImportHistory] = useState<any[]>([]);
   const [loadingImports,setLoadingImports] = useState(false);
   const [importing,setImporting] = useState(false);
+  const [bulkPublishing,setBulkPublishing] = useState(false);
   const [filename,setFilename] = useState('');
   const [showImport,setShowImport] = useState(false);
   const [batchRows,setBatchRows] = useState<Record<string,unknown>[] | null>(null);
@@ -101,6 +102,42 @@ export default function CbtQuestionBankAdmin() {
     try { const rows=parseCsv(await file.text()); setFilename(file.name); setBatchRows(rows); setShowImport(true); }
     catch(e) { setError(e instanceof Error ? e.message : 'Could not read CSV.'); }
   };
+  const bulkPublishNewSubjects = async () => {
+    const targetSubjects = new Set(['Christian Religious Studies','Commerce','Principles of Accounts']);
+    const targets = items.filter(q => q.id && targetSubjects.has(q.subject));
+    if (filter !== 'all' || targets.length !== 150) {
+      setError(`Bulk publication stopped: choose “All states” and refresh. Expected exactly 150 questions across CRS, Commerce and Financial Accounting; found ${targets.length} in the current list.`);
+      return;
+    }
+    if (!window.confirm('Complete publication for all 150 new-subject questions? Each question will pass through Draft → Reviewed → Approved → Published using your authenticated admin account. Already completed stages will be skipped, so this action can safely resume after an interruption.')) return;
+    setBulkPublishing(true); setError(''); setMessage('');
+    const nextStages = { draft: ['reviewed','approved','published'], reviewed: ['approved','published'], approved: ['published'], published: [] } as const;
+    let completed = 0;
+    try {
+      for (let i = 0; i < targets.length; i += 5) {
+        const group = targets.slice(i, i + 5);
+        const results = await Promise.allSettled(group.map(async q => {
+          const stages = nextStages[q.status as keyof typeof nextStages];
+          if (!stages) throw new Error('Unexpected question status for ' + q.id);
+          for (const nextStatus of stages) {
+            await api.put('/api/admin/cbt/questions/' + q.id, { ...q, status: nextStatus });
+          }
+        }));
+        completed += results.filter(result => result.status === 'fulfilled').length;
+        const failed = results.findIndex(result => result.status === 'rejected');
+        if (failed !== -1) {
+          const reason = results[failed].status === 'rejected' ? results[failed].reason : null;
+          throw new Error(`Bulk publication paused after processing ${completed} of 150 questions in this run. ${reason instanceof Error ? reason.message : 'One or more server requests failed.'} Refresh the question bank and retry; completed stages will be preserved.`);
+        }
+      }
+      setMessage('All 150 new-subject questions have passed through the protected review workflow and are published.');
+    } catch(e) {
+      setError(e instanceof Error ? e.message : 'Bulk publication stopped. Refresh the question bank and inspect statuses before retrying.');
+    } finally {
+      setBulkPublishing(false);
+      await load();
+    }
+  };
   const runImport = async () => {
     if (!batchRows?.length) return;
     setImporting(true); setError('');
@@ -119,6 +156,7 @@ export default function CbtQuestionBankAdmin() {
     <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button><button className="primary" onClick={()=>setShowImport(true)}><Upload size={16}/> Import CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
     {error ? <div className="analytics-error" role="alert"><b>Action needs attention</b><p>{error}</p></div> : null}
     {message ? <div className="system-setting-row" role="status"><CheckCircle2 size={18}/><span>{message}</span></div> : null}
+    <div className="analytics-toolbar"><div className="analytics-controls"><button className="primary" onClick={()=>void bulkPublishNewSubjects()} disabled={bulkPublishing || loading || filter !== 'all' || items.filter(q=>['Christian Religious Studies','Commerce','Principles of Accounts'].includes(q.subject)).length !== 150}><ShieldCheck size={16}/>{bulkPublishing?'Publishing 150 questions…':'Publish 150 new-subject questions'}</button><small>Runs the protected review → approval → publication steps for the three reviewed subject batches.</small></div></div>
     <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Question, subject or topic"/></label></div><span>{visible.length} shown</span></div>
     {form ? <div className="system-settings-panel" style={{marginBottom:18}}><div className="analytics-toolbar"><h3>{form.id?'Edit question':'Create question'}</h3><button className="secondary" onClick={()=>setForm(null)}><X size={16}/> Close</button></div>
       <div className="admin-form-grid">
