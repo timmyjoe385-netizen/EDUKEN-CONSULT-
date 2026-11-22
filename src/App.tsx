@@ -2634,8 +2634,8 @@ function App() {
         </nav>
         <div className="auth-nav-actions">
           {themeToggle}
-          <a className="header-sign-in" href="#eduken-platform" onClick={() => setMenu(false)} aria-label="Go to EDUKEN Wallet and customer account">
-            My Wallet
+          <a className="header-sign-in" href={isServicesPage ? '/#eduken-platform' : '#eduken-platform'} onClick={() => setMenu(false)} aria-label="Go to your EDUKEN student workspace">
+            My EDUKEN
           </a>
         </div>
         <button
