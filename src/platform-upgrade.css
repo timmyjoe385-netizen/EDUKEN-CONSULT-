@@ -720,3 +720,25 @@ html[data-theme="dark"] .services-request-steps__grid p {
   .site .discovery-card { min-height: 98px; }
   .site .discovery-card__copy strong { font-size: 9px; }
 }
+
+
+/* Final mobile hero override: keep the approved forest-green treatment in light mode.
+   The later global light-theme refinement otherwise replaces the hero surface. */
+@media (max-width: 700px) {
+  html[data-theme="light"] .site .hero {
+    background:
+      radial-gradient(circle at 92% 18%, rgba(145, 205, 158, .24), transparent 28%),
+      radial-gradient(circle at 82% 92%, rgba(92, 168, 112, .26), transparent 34%),
+      linear-gradient(135deg, #123d2b 0%, #17613f 58%, #0e4b32 100%) !important;
+    color: #fff;
+  }
+  html[data-theme="light"] .site .hero .eyebrow { color: #d8eadc; }
+  html[data-theme="light"] .site .hero h1 { color: #fff; }
+  html[data-theme="light"] .site .hero h1 em { color: #d7efdd; }
+  html[data-theme="light"] .site .hero p { color: #edf5ef; }
+  html[data-theme="light"] .site .hero-actions .primary {
+    background: #f6c928 !important;
+    color: #17251d !important;
+    border: 0;
+  }
+}
