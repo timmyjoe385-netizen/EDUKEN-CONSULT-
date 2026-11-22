@@ -2537,7 +2537,7 @@ function App() {
         </div>
       )}
       <header className="nav">
-        <a className="brand" href="#home" onClick={() => setMenu(false)}>
+        <a className="brand" href="/" onClick={() => setMenu(false)}>
           <img
             className="brand-logo"
             src="./icons/icon.svg"
@@ -2551,7 +2551,7 @@ function App() {
           {['Home', 'Opportunities', 'Admissions', 'Updates'].map(x => (
             <a
               key={x}
-              href={'#' + x.toLowerCase()}
+              href={(isServicesPage ? '/' : '') + '#' + x.toLowerCase()}
               onClick={() => setMenu(false)}
             >
               {x}
@@ -2572,11 +2572,11 @@ function App() {
             </button>
             {servicesMenuOpen && (
               <div className="nav-dropdown-menu" id="eduken-services-menu">
-                <a href="#jamb-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
-                <a href="#admissions" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
-                <a href="#general-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
-                <a href="#eduken-platform" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
-                <a className="nav-dropdown-all" href="#general-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
+                <a href="/services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
+                <a href="/#admissions" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
+                <a href="/services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
+                <a href="/#eduken-platform" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
+                <a className="nav-dropdown-all" href="/services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
               </div>
             )}
           </div>
@@ -3530,7 +3530,7 @@ function App() {
       </main>
 
       <nav className="mobile-bottom-nav" aria-label="Quick navigation">
-        <a href="#home" className="mobile-bottom-nav__item">
+        <a href="/" className="mobile-bottom-nav__item">
           <Home size={19} aria-hidden="true" /><span>Home</span>
         </a>
         <a href="/services" className="mobile-bottom-nav__item">
@@ -3539,7 +3539,7 @@ function App() {
         <a href="/cbt" className="mobile-bottom-nav__item mobile-bottom-nav__item--primary">
           <Monitor size={21} aria-hidden="true" /><span>CBT</span>
         </a>
-        <a href="#updates" className="mobile-bottom-nav__item">
+        <a href="/#updates" className="mobile-bottom-nav__item">
           <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
         </a>
         <a href="/#eduken-platform" className="mobile-bottom-nav__item">
