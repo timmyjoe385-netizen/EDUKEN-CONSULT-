@@ -2834,6 +2834,41 @@ function App() {
               </span>
             </div>
           </div>
+          <div className="hero-art" aria-hidden="true">
+            <svg viewBox="0 0 240 220" role="presentation" focusable="false">
+              <circle cx="126" cy="111" r="91" fill="#b9dfc5" opacity=".18" />
+              <circle cx="178" cy="55" r="25" fill="#d9efdf" opacity=".2" />
+              <path d="M23 174c17-20 18-39 12-57 22 9 33 27 28 48-4 15-18 24-40 9Z" fill="#8fc99e"/>
+              <path d="M37 177c7-20 9-36 0-55" fill="none" stroke="#e5f3e8" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M205 164c-5-21 1-39 18-52 4 23-1 42-18 52Z" fill="#8fc99e"/>
+              <path d="M207 164c2-17 7-31 16-44" fill="none" stroke="#e5f3e8" strokeWidth="3" strokeLinecap="round"/>
+              <g transform="translate(57 112)">
+                <path d="M0 8 55 0l49 8v64l-49-8L0 72Z" fill="#fff"/>
+                <path d="M55 0v64M0 8l55 10 49-10" fill="none" stroke="#17613f" strokeWidth="4" strokeLinejoin="round"/>
+                <path d="M9 19 47 26M9 31l34 6M64 26l29-6M64 38l29-6" stroke="#9acbaa" strokeWidth="3" strokeLinecap="round"/>
+                <path d="M-4 74 55 84l53-10" fill="none" stroke="#d8eddd" strokeWidth="5" strokeLinecap="round"/>
+              </g>
+              <g transform="translate(89 38)">
+                <path d="M0 14 47 0l47 14-47 15Z" fill="#f6c928"/>
+                <path d="M17 20v25c18 13 42 13 60 0V20L47 30Z" fill="#fff"/>
+                <path d="M94 14v28" stroke="#f6c928" strokeWidth="5" strokeLinecap="round"/>
+                <circle cx="94" cy="47" r="6" fill="#f6c928"/>
+                <path d="M47 0v29" stroke="#d7a900" strokeWidth="2"/>
+              </g>
+              <g transform="translate(126 143)">
+                <rect x="0" y="0" width="66" height="43" rx="6" fill="#dceef2" stroke="#fff" strokeWidth="3"/>
+                <rect x="6" y="6" width="54" height="29" rx="3" fill="#17613f"/>
+                <path d="M-7 46h80l-8 8H1Z" fill="#f6c928"/>
+                <path d="m22 20 7 7 14-15" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              </g>
+              <g transform="translate(25 48)">
+                <rect width="39" height="49" rx="5" fill="#f6c928" transform="rotate(-9 19 24)"/>
+                <path d="M9 15h21M8 23h20M7 31h13" stroke="#17613f" strokeWidth="3" strokeLinecap="round"/>
+                <path d="m27 2 8 4-7 5" fill="none" stroke="#fff" strokeWidth="2"/>
+              </g>
+              <path d="m194 92 6 7 12-16" fill="none" stroke="#f6c928" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
           <div className="hero-visual">
             <div className="orb orb-one" />
             <div className="orb orb-two" />
