@@ -1002,7 +1002,7 @@ test('public header exposes the EDUKEN student workspace but not admin access', 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const studentWorkspaceLink = page.getByRole('link', { name: 'My EDUKEN' });
   await expect(studentWorkspaceLink).toBeVisible();
-  await expect(studentWorkspaceLink).toHaveAttribute('href', '/#eduken-platform');
+  await expect(studentWorkspaceLink).toHaveAttribute('href', '#eduken-platform');
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
