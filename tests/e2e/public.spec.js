@@ -2241,6 +2241,8 @@ test('dedicated EDUKEN Services page shows only configured services and permits 
   await page.goto('/services', { waitUntil: 'domcontentloaded' });
   await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
   await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How service requests work' })).toBeVisible();
+  await expect(page.getByText(/Candidates who need this service/)).toBeVisible();
   await expect(page.getByRole('heading', { name: 'JAMB and examination services' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Other educational support' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'JAMB Registration Assistance Fixture' })).toBeVisible();
