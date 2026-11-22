@@ -5,7 +5,6 @@ import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
   BookOpen,
-  ClipboardList,
   Calculator,
   BriefcaseBusiness,
   CheckCircle2,
