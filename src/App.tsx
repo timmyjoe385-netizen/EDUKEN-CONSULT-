@@ -10,7 +10,9 @@ import {
   CheckCircle2,
   ChevronDown,
   GraduationCap,
+  Home,
   Laptop,
+  Newspaper,
   LogOut,
   Menu,
   MessageCircle,
@@ -25,6 +27,7 @@ import {
   Target,
   Trash2,
   Users,
+  UserRound,
   X,
 } from 'lucide-react';
 const PlatformHub = lazy(() => import('./PlatformHub'));
@@ -2762,6 +2765,47 @@ function App() {
           </div>
         </section>
 
+        <section className="section discovery-section" id="discover">
+          <div className="section-head">
+            <div>
+              <span className="kicker">EXPLORE EDUKEN</span>
+              <h2>What can we help you with?</h2>
+            </div>
+            <p>Find the right place to start. Your educational updates, opportunities and student support are all within reach.</p>
+          </div>
+          <div className="discovery-grid">
+            {[
+              { title: 'CBT Practice', description: 'Prepare with EDUKEN practice and mock examinations.', href: '/cbt', icon: Monitor, tone: 'green' },
+              { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
+              { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green' },
+              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
+              { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#general-services', icon: MessageCircle, tone: 'mint' },
+              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
+              { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '#general-services', icon: Plus, tone: 'mint' },
+            ].map(card => {
+              const Icon = card.icon;
+              return (
+                <a
+                  className="discovery-card"
+                  href={card.href}
+                  key={card.title}
+                  onClick={() => { if (card.filter) setOppFilter(card.filter); }}
+                >
+                  <span className={'discovery-card__icon discovery-card__icon--' + card.tone}><Icon size={21} strokeWidth={2} /></span>
+                  <span className="discovery-card__copy">
+                    <strong>{card.title}</strong>
+                    <small>{card.description}</small>
+                  </span>
+                  <ArrowRight className="discovery-card__arrow" size={17} />
+                </a>
+              );
+            })}
+          </div>
+        </section>
+
         <Suspense fallback={<SectionLoading />}>
           <PlatformHub
             opportunities={content.opportunities}
@@ -2937,37 +2981,6 @@ function App() {
                 Keep your applications and deadlines organized in one place.
               </p>
             </div>
-          </div>
-        </section>
-
-        <section className="section" id="more">
-          <div className="section-head">
-            <div>
-              <span className="kicker">EXPLORE</span>
-              <h2>What are you looking for?</h2>
-            </div>
-            <p>
-              One platform for the information and opportunities that matter to
-              your next move.
-            </p>
-          </div>
-          <div className="category-grid">
-            {categories.map(([name, desc, Icon]) => (
-              <a
-                className="category-card"
-                href={name === 'Admissions' ? '#admissions' : '#opportunities'}
-                key={name as string}
-              >
-                <div className="icon-box">
-                  <Icon size={21} />
-                </div>
-                <h3>{name as string}</h3>
-                <p>{desc as string}</p>
-                <span>
-                  Explore <ArrowRight size={15} />
-                </span>
-              </a>
-            ))}
           </div>
         </section>
 
@@ -3468,6 +3481,24 @@ function App() {
           </a>
         </section>
       </main>
+
+      <nav className="mobile-bottom-nav" aria-label="Quick navigation">
+        <a href="#home" className="mobile-bottom-nav__item">
+          <Home size={19} aria-hidden="true" /><span>Home</span>
+        </a>
+        <a href="#general-services" className="mobile-bottom-nav__item">
+          <BriefcaseBusiness size={19} aria-hidden="true" /><span>Services</span>
+        </a>
+        <a href="/cbt" className="mobile-bottom-nav__item mobile-bottom-nav__item--primary">
+          <Monitor size={21} aria-hidden="true" /><span>CBT</span>
+        </a>
+        <a href="#updates" className="mobile-bottom-nav__item">
+          <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
+        </a>
+        <a href="#eduken-platform" className="mobile-bottom-nav__item">
+          <UserRound size={19} aria-hidden="true" /><span>Me</span>
+        </a>
+      </nav>
 
       {pendingEmailAction && (
         <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1100, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16 }}>
