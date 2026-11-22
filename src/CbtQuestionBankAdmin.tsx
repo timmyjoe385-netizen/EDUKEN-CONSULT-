@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { api } from './lib/api';
+import { api, usesIsolatedTestBackend } from './lib/api';
 import { CheckCircle2, FileSpreadsheet, Plus, RefreshCw, Save, Search, ShieldCheck, Upload, X } from 'lucide-react';
 
 type Question = {
@@ -148,6 +148,10 @@ export default function CbtQuestionBankAdmin() {
     finally { setImporting(false); }
   };
   const importPrepared150 = async () => {
+    if (!usesIsolatedTestBackend) {
+      setError('Prepared batch import is disabled outside the isolated test preview. No import was attempted.');
+      return;
+    }
     if (!window.confirm('Import the prepared 150 CRS, Commerce and Principles of Accounts questions into this isolated preview database as drafts? Nothing will be published or sent to the live site.')) return;
     setImporting(true); setError(''); setMessage(''); setImportResult(null);
     try {
@@ -169,7 +173,7 @@ export default function CbtQuestionBankAdmin() {
     const a=document.createElement('a'); a.href=url; a.download='eduken-cbt-question-template.csv'; a.click(); URL.revokeObjectURL(url);
   };
   return <section className="analytics-panel" aria-label="CBT question bank management">
-    <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button><button className="primary" onClick={()=>void importPrepared150()} disabled={importing || bulkPublishing}><Upload size={16}/>{importing ? "Importing prepared 150…" : "Import prepared 150 questions"}</button><button className="secondary" onClick={()=>setShowImport(true)}><FileSpreadsheet size={16}/> Import other CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
+    <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button>{usesIsolatedTestBackend ? <button className="primary" onClick={()=>void importPrepared150()} disabled={importing || bulkPublishing}><Upload size={16}/>{importing ? "Importing prepared 150…" : "Import prepared 150 questions"}</button> : null}<button className="secondary" onClick={()=>setShowImport(true)}><FileSpreadsheet size={16}/> Import other CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
     {error ? <div className="analytics-error" role="alert"><b>Action needs attention</b><p>{error}</p></div> : null}
     {message ? <div className="system-setting-row" role="status"><CheckCircle2 size={18}/><span>{message}</span></div> : null}
     <div className="analytics-toolbar"><div className="analytics-controls"><button className="primary" onClick={()=>void bulkPublishNewSubjects()} disabled={bulkPublishing || loading || filter !== 'all' || items.filter(q=>['Christian Religious Studies','Commerce','Principles of Accounts'].includes(q.subject)).length !== 150}><ShieldCheck size={16}/>{bulkPublishing?'Publishing 150 questions…':'Publish 150 new-subject questions'}</button><small>Runs the protected review → approval → publication steps for the three reviewed subject batches.</small></div></div>
