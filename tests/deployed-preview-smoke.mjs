@@ -43,7 +43,7 @@ try {
   await page.waitForTimeout(1200);
 
   const rendered = await page.evaluate(() => {
-    const heading = [...document.querySelectorAll('h1')].find(node => node.textContent?.includes('Your Next Move.'));
+    const heading = [...document.querySelectorAll('.hero h1')].find(node => node.textContent?.includes('EDUKEN CONSULT.'));
     const rect = heading?.getBoundingClientRect();
     const style = heading ? getComputedStyle(heading) : null;
     return {
@@ -60,13 +60,13 @@ try {
 
   if (pageErrors.length) throw new Error(`Browser runtime errors: ${pageErrors.join(' | ')}`);
   if (failedAssets.length) throw new Error(`Failed JS/CSS assets: ${JSON.stringify(failedAssets)}`);
-  if (!rendered.headingVisible || !rendered.headingText.includes('Your Next Move.')) {
+  if (!rendered.headingVisible || !rendered.headingText.includes('EDUKEN CONSULT.')) {
     throw new Error(`The expected EDUKEN homepage hero is not visibly rendered: ${JSON.stringify(rendered)}`);
   }
 
   await mkdir('test-results', { recursive: true });
   await page.screenshot({ path: 'test-results/deployed-preview-mobile-success.png', fullPage: true });
-  console.log('Deployed preview rendered the expected EDUKEN homepage hero in mobile Chromium.');
+  console.log('Deployed preview rendered the approved EDUKEN CONSULT welcome hero in mobile Chromium.');
   console.log(JSON.stringify({ rendered, consoleErrors }, null, 2));
 } catch (error) {
   await mkdir('test-results', { recursive: true });
