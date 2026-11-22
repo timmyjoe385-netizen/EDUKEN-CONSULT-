@@ -41,4 +41,4 @@ Official syllabus PDFs referenced by the existing bank blueprint:
 - Commerce: https://ibass.jamb.gov.ng/static/media/Commerce.819d9c6929bc849d1cd9.pdf
 - Principles of Accounts: https://ibass.jamb.gov.ng/static/media/Principles-of-Accounting.64fc902ad37449d1f6ff.pdf
 
-Status: staging plan only. No questions have been imported or published by this file.
+Status: 150 original questions have now been authored, combined, and passed structural, difficulty, answer-key-balance, topic-coverage, and duplicate-screening checks. See `next-150-qa-report.md`. The batch is ready for isolated test import as drafts only. No questions have been imported or published, and production remains untouched.
