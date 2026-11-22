@@ -425,3 +425,58 @@ html[data-theme="dark"] .closed-opportunity-card small {
 @media (max-width: 520px) {
   .closed-opportunities-grid { grid-template-columns: 1fr; }
 }
+
+
+.services-request-steps {
+  margin: 22px 0 4px;
+  padding: 22px;
+  border: 1px solid #e1e9e3;
+  border-radius: 18px;
+  background: #f7faf7;
+}
+.services-request-steps > h2 {
+  margin: 0 0 16px;
+  color: #173b2b;
+  font-size: 19px;
+}
+.services-request-steps__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.services-request-steps__grid article {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+}
+.services-request-steps__grid article > span {
+  color: #34704a;
+  font-size: 12px;
+  font-weight: 800;
+}
+.services-request-steps__grid h3 {
+  margin: 0;
+  color: #234634;
+  font-size: 14px;
+}
+.services-request-steps__grid p {
+  margin: 0;
+  color: #617168;
+  font-size: 12px;
+  line-height: 1.6;
+}
+html[data-theme="dark"] .services-request-steps {
+  border-color: #29483a;
+  background: #182b20;
+}
+html[data-theme="dark"] .services-request-steps > h2,
+html[data-theme="dark"] .services-request-steps__grid h3 {
+  color: #e5f0e8;
+}
+html[data-theme="dark"] .services-request-steps__grid p {
+  color: #b5c7ba;
+}
+@media (max-width: 700px) {
+  .services-request-steps { padding: 18px; }
+  .services-request-steps__grid { grid-template-columns: 1fr; gap: 16px; }
+}
