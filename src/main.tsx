@@ -59,7 +59,7 @@ class RootErrorBoundary extends Component<
   }
 }
 
-const isAggregateCalculator = window.location.pathname.replace(/\\/+$/, '').endsWith('/aggregate-calculator');
+const isAggregateCalculator = window.location.pathname.replace(/\/+$/, '').endsWith('/aggregate-calculator');
 
 // The standalone calculator does not mount App, where the appearance preference
 // is normally applied. Bootstrap the shared theme here so its CSS and controls
