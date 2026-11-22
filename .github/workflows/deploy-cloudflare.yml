@@ -66,12 +66,14 @@ jobs:
           EDUKEN_PREVIEW_URL: https://eduken-consult-preview.timmyjoe385.workers.dev/
           GITHUB_SHA: ${{ github.sha }}
         run: node tests/deployed-preview-smoke.mjs
-      - name: Upload deployed-preview failure screenshot
-        if: failure()
+      - name: Upload deployed-preview mobile screenshot
+        if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: eduken-deployed-preview-mobile-failure
-          path: test-results/deployed-preview-mobile-failure.png
+          name: eduken-deployed-preview-mobile-screenshot
+          path: |
+            test-results/deployed-preview-mobile-success.png
+            test-results/deployed-preview-mobile-failure.png
           if-no-files-found: ignore
           retention-days: 7
       - name: Smoke-test isolated guest payment recovery endpoint
