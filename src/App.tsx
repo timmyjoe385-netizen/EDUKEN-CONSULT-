@@ -5,6 +5,7 @@ import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
   ArrowRight,
   BookOpen,
+  ClipboardList,
   Calculator,
   BriefcaseBusiness,
   CheckCircle2,
@@ -79,6 +80,7 @@ const emptyContent: Content = {
 
 function App() {
   const [menu, setMenu] = useState(false);
+  const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [search, setSearch] = useState('');
@@ -2555,6 +2557,7 @@ function App() {
               {x}
             </a>
           ))}
+          <a href="/services" onClick={() => setMenu(false)}>Services</a>
           <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
           <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
             <button
@@ -2645,6 +2648,82 @@ function App() {
         </div>
       )}
       <main>
+        {isServicesPage ? (
+          <div className="services-page">
+            <section className="services-page-hero">
+              <span className="kicker">EDUKEN CONSULT · STUDENT SUPPORT</span>
+              <h1>Educational support, made easier.</h1>
+              <p>Explore the services currently listed by EDUKEN CONSULT. Review the details and requirements, then send a request through the existing secure service-request process.</p>
+              <div className="services-page-actions">
+                <a className="primary" href="#available-services">Explore services <ArrowRight size={17} /></a>
+                <a className="secondary" href="/#contact">Ask for guidance</a>
+              </div>
+            </section>
+            <section className="services-page-section" id="available-services">
+              <div className="section-head">
+                <div><span className="kicker">AVAILABLE SERVICE CATEGORIES</span><h2>JAMB and examination services</h2></div>
+                <p>Only services configured in the EDUKEN service catalogue appear here. Availability and prices are shown as currently recorded.</p>
+              </div>
+              <div className="services-page-grid">
+                {content.services.filter(isJambCatalogueService).map((service) => {
+                  const price = Number(service.price);
+                  const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
+                  const available = service.is_available !== false;
+                  const requirements = jambServicePublicRequirements(service);
+                  return (
+                    <article className="services-page-card" key={service.id}>
+                      <span className="services-page-card__category">{service.category || 'JAMB Services'}</span>
+                      <h3>{service.name}</h3>
+                      <p>{service.description || 'Contact EDUKEN to confirm the details of this service.'}</p>
+                      {requirements ? <p className="services-page-requirements"><strong>Before you request:</strong> {requirements}</p> : null}
+                      <div className="services-page-card__meta">
+                        <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
+                        <span>{available ? 'Available' : 'Currently unavailable'}</span>
+                      </div>
+                      <button type="button" className="primary" disabled={!available || !hasPrice} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
+                        {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Price not set'} <ArrowRight size={15} />
+                      </button>
+                    </article>
+                  );
+                })}
+              </div>
+              {!loading && !contentLoadFailed && !content.services.some(isJambCatalogueService) ? <p className="services-page-empty">No JAMB catalogue services are currently published. Please check back later or contact EDUKEN for guidance.</p> : null}
+            </section>
+            <section className="services-page-section">
+              <div className="section-head">
+                <div><span className="kicker">EDUCATIONAL GUIDANCE</span><h2>Other educational support</h2></div>
+                <p>These services use the existing EDUKEN request form. Where a price is not listed, it will be confirmed by the team.</p>
+              </div>
+              <div className="services-page-grid">
+                {(content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).length
+                  ? content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s))
+                  : [
+                    { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
+                    { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
+                    { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
+                    { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
+                  ]).map((service) => (
+                  <article className="services-page-card" key={service.id || service.name}>
+                    <span className="services-page-card__category">{service.category || 'EDUKEN Support'}</span>
+                    <h3>{service.name}</h3>
+                    <p>{service.description || 'Submit an enquiry to learn more about this service.'}</p>
+                    {service.requirements ? <p className="services-page-requirements"><strong>What you may need:</strong> {service.requirements}</p> : null}
+                    <div className="services-page-card__meta"><strong>{service.price !== null && service.price !== undefined && service.price !== '' && Number.isFinite(Number(service.price)) ? '₦' + Number(service.price).toLocaleString('en-NG') : 'Price confirmed after enquiry'}</strong></div>
+                    <button type="button" className="primary" onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); }}>
+                      Request this service <ArrowRight size={15} />
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </section>
+            <section className="services-page-help">
+              <div><span className="kicker">NOT SURE WHERE TO START?</span><h2>Let's help you find the right next step.</h2><p>Send EDUKEN a consultation request if you need help choosing the right service or understanding the process.</p></div>
+              <a className="primary" href="/#contact">Request a consultation <ArrowRight size={17} /></a>
+            </section>
+            <p className="services-page-safety">Service requests are not payments. Do not send your passwords, OTPs, bank-card details or sensitive identity documents through a service form.</p>
+          </div>
+        ) : (
+        <>
         <section id="home" className="hero">
           <div className="hero-copy">
             <div className="eyebrow">
@@ -2750,7 +2829,7 @@ function App() {
               { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
               { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
               { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
-              { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '#general-services', icon: Plus, tone: 'mint' },
+              { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '/services', icon: Plus, tone: 'mint' },
             ].map(card => {
               const Icon = card.icon;
               return (
@@ -3446,13 +3525,15 @@ function App() {
             📢 Join EDUKEN WhatsApp Channel <ArrowRight size={17} />
           </a>
         </section>
+        </>
+        )}
       </main>
 
       <nav className="mobile-bottom-nav" aria-label="Quick navigation">
         <a href="#home" className="mobile-bottom-nav__item">
           <Home size={19} aria-hidden="true" /><span>Home</span>
         </a>
-        <a href="#general-services" className="mobile-bottom-nav__item">
+        <a href="/services" className="mobile-bottom-nav__item">
           <BriefcaseBusiness size={19} aria-hidden="true" /><span>Services</span>
         </a>
         <a href="/cbt" className="mobile-bottom-nav__item mobile-bottom-nav__item--primary">
@@ -3461,7 +3542,7 @@ function App() {
         <a href="#updates" className="mobile-bottom-nav__item">
           <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
         </a>
-        <a href="#eduken-platform" className="mobile-bottom-nav__item">
+        <a href="/#eduken-platform" className="mobile-bottom-nav__item">
           <UserRound size={19} aria-hidden="true" /><span>Me</span>
         </a>
       </nav>
