@@ -2160,3 +2160,76 @@ test('JAMB candidate quantity has visible increment/decrement controls and bound
   expect(css).toContain('.candidate-quantity-control');
   expect(css).toContain('.candidate-quantity-button:focus-visible');
 });
+
+
+test('dedicated EDUKEN Services page shows only configured services and permits unpriced enquiries', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [
+          {
+            id: 'services-page-priced-jamb-fixture',
+            name: 'JAMB Registration Assistance Fixture',
+            category: 'JAMB Services',
+            description: 'A configured JAMB service for this test only.',
+            requirements: 'Bring your approved registration details.',
+            price: 4500,
+            is_published: true,
+            is_available: true,
+            is_catalog_item: true,
+          },
+          {
+            id: 'services-page-unpriced-jamb-fixture',
+            name: 'JAMB Change of Course Enquiry Fixture',
+            category: 'JAMB Services',
+            description: 'A configured unpriced JAMB service for this test only.',
+            price: null,
+            is_published: true,
+            is_available: true,
+            is_catalog_item: true,
+          },
+          {
+            id: 'services-page-general-fixture',
+            name: 'Admission Guidance Fixture',
+            category: 'Admissions',
+            description: 'A configured general service for this test only.',
+            price: null,
+            is_published: true,
+            is_available: true,
+            is_catalog_item: false,
+          },
+        ],
+      }),
+    }),
+  );
+
+  await page.goto('/services', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB and examination services' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Other educational support' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Assistance Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB Change of Course Enquiry Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Admission Guidance Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'School Application Assistance' })).toHaveCount(0);
+
+  const unpricedCard = page.locator('.services-page-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB Change of Course Enquiry Fixture' }),
+  });
+  const enquiryButton = unpricedCard.getByRole('button', { name: /Enquire about this service/i });
+  await expect(enquiryButton).toBeEnabled();
+  await enquiryButton.click();
+  await expect(page.getByRole('dialog', { name: 'Sign in to EDUKEN' })).toBeVisible();
+
+  const bottomNav = page.getByRole('navigation', { name: 'Quick navigation' });
+  await expect(bottomNav).toBeVisible();
+  await expect(bottomNav.getByRole('link', { name: 'Services' })).toHaveAttribute('href', '/services');
+  await expect(bottomNav.getByRole('link', { name: 'CBT' })).toHaveAttribute('href', '/cbt');
+});
