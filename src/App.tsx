@@ -24,7 +24,6 @@ import {
   Share2,
   ShieldCheck,
   Sparkles,
-  Target,
   Trash2,
   Users,
   UserRound,
@@ -59,39 +58,6 @@ type Content = {
   faqs: Item[];
   services: Item[];
 };
-
-const categories = [
-  [
-    'Admissions',
-    'Admission updates, application information and school guidance.',
-    GraduationCap,
-  ],
-  [
-    'Scholarships & Grants',
-    'Funding opportunities, fellowships and educational support.',
-    Sparkles,
-  ],
-  [
-    'Jobs & Internships',
-    'Jobs, internships and graduate trainee opportunities.',
-    BriefcaseBusiness,
-  ],
-  [
-    'Remote Opportunities',
-    'Legitimate remote work and digital opportunities.',
-    Laptop,
-  ],
-  [
-    'Educational Updates',
-    'Important education, exams and school announcements.',
-    BookOpen,
-  ],
-  [
-    'Career & Mentorship',
-    'Career development, mentorship and skill-building.',
-    Target,
-  ],
-];
 
 const DEFAULT_SYSTEM_SETTINGS = {
   subscriberNotificationsEnabled: true,
@@ -2792,7 +2758,7 @@ function App() {
                   className="discovery-card"
                   href={card.href}
                   key={card.title}
-                  onClick={() => { if (card.filter) setOppFilter(card.filter); }}
+                  onClick={() => { if ('filter' in card && card.filter) setOppFilter(card.filter); }}
                 >
                   <span className={'discovery-card__icon discovery-card__icon--' + card.tone}><Icon size={21} strokeWidth={2} /></span>
                   <span className="discovery-card__copy">
