@@ -2254,17 +2254,18 @@ test('educational updates can be filtered by their published subject category', 
   );
 
   await page.goto('/#updates', { waitUntil: 'domcontentloaded' });
-  const updateFilters = page.getByRole('group', { name: 'Filter educational updates' });
+  const updatesSection = page.locator('#updates');
+  const updateFilters = updatesSection.getByRole('group', { name: 'Filter educational updates' });
   await expect(updateFilters.getByRole('button', { name: 'All updates' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
 
   await updateFilters.getByRole('button', { name: 'JAMB & Examinations' }).click();
   await expect(updateFilters.getByRole('button', { name: 'JAMB & Examinations' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toHaveCount(0);
+  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toHaveCount(0);
 
   await updateFilters.getByRole('button', { name: 'Scholarships' }).click();
-  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
+  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
 });
