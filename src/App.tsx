@@ -106,6 +106,8 @@ function App() {
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
   const [customerSignInRequest, setCustomerSignInRequest] = useState(0);
+  const [servicesCustomerSignInOpen, setServicesCustomerSignInOpen] = useState(false);
+  const [servicesCustomerSignInMessage, setServicesCustomerSignInMessage] = useState('');
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
@@ -2640,7 +2642,7 @@ function App() {
         </nav>
         <div className="auth-nav-actions">
           {themeToggle}
-          <a className="header-sign-in" href={isServicesPage ? '/#eduken-platform' : '#eduken-platform'} onClick={() => setMenu(false)} aria-label="Go to your EDUKEN student workspace">
+          <a className="header-sign-in" href={isServicesPage ? '/#eduken-platform' : '#eduken-platform'} onClick={() => setMenu(false)} aria-label="My EDUKEN — student workspace">
             My EDUKEN
           </a>
         </div>
@@ -2729,7 +2731,7 @@ function App() {
                         <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
                         <span>{available ? 'Available' : 'Currently unavailable'}</span>
                       </div>
-                      <button type="button" className="primary" disabled={!available} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
+                      <button type="button" className="primary" disabled={!available} onClick={() => { if (!auth.isGoogleSignedIn()) { setServicesCustomerSignInMessage(''); setServicesCustomerSignInOpen(true); return; } setSelectedService(service); setServiceForm({}); }}>
                         {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Enquire about this service'} <ArrowRight size={15} />
                       </button>
                     </article>
@@ -2752,7 +2754,7 @@ function App() {
                     <p className="services-page-requirements"><strong>Who can request:</strong> Students who need this type of support. Any service-specific conditions will be confirmed by EDUKEN.</p>
                     {service.requirements ? <p className="services-page-requirements"><strong>What you may need:</strong> {service.requirements}</p> : <p className="services-page-requirements">No additional requirements are listed. EDUKEN will confirm what is needed after your enquiry.</p>}
                     <div className="services-page-card__meta"><strong>{service.price !== null && service.price !== undefined && service.price !== '' && Number.isFinite(Number(service.price)) ? '₦' + Number(service.price).toLocaleString('en-NG') : 'Price confirmed after enquiry'}</strong></div>
-                    <button type="button" className="primary" onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); }}>
+                    <button type="button" className="primary" onClick={() => { if (!auth.isGoogleSignedIn()) { setServicesCustomerSignInMessage(''); setServicesCustomerSignInOpen(true); return; } setSelectedService(service); }}>
                       Request this service <ArrowRight size={15} />
                     </button>
                   </article>
@@ -2765,6 +2767,29 @@ function App() {
               <a className="primary" href="/#contact">Request a consultation <ArrowRight size={17} /></a>
             </section>
             <p className="services-page-safety">Service requests are not payments. Do not send your passwords, OTPs, bank-card details or sensitive identity documents through a service form.</p>
+            {servicesCustomerSignInOpen && (
+              <div role="presentation" onClick={event => { if (event.target === event.currentTarget) setServicesCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+                <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="services-customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
+                  <button className="login-close" type="button" aria-label="Close customer sign-in" onClick={() => setServicesCustomerSignInOpen(false)}>×</button>
+                  <span className="kicker">YOUR EDUKEN ACCOUNT</span>
+                  <h2 id="services-customer-signin-title">Sign in to EDUKEN</h2>
+                  <p>Use the same Google account across EDUKEN CONSULT and CBT. Your student username and learning progress stay connected to this account.</p>
+                  <button className="customer-google-signin" type="button" onClick={async () => {
+                    setServicesCustomerSignInMessage('');
+                    try {
+                      await auth.signIn({ scope: 'openid email profile offline_access' });
+                      setServicesCustomerSignInOpen(false);
+                    } catch (error) {
+                      setServicesCustomerSignInMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
+                    }
+                  }}>
+                    <span className="customer-google-mark" aria-hidden="true">G</span>
+                    Continue with Google
+                  </button>
+                  {servicesCustomerSignInMessage ? <p className="make-payments-message" role="alert">{servicesCustomerSignInMessage}</p> : null}
+                </section>
+              </div>
+            )}
           </div>
         ) : (
         <>
