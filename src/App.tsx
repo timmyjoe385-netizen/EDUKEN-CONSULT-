@@ -667,6 +667,23 @@ function App() {
       /use the eduken admin dashboard to publish clear, useful updates|add scholarships, jobs, internships, grants, fellowships and competitions from the dashboard|publish practical career guidance and development opportunities/.test(body);
   };
 
+  const opportunityStatus = (item: Item) => {
+    if (isExpiredOpportunity(item) || /^(closed|expired)$/i.test(String(item.status || ''))) return 'Closed';
+    const deadline = new Date(String(item.deadline || '')).getTime();
+    if (Number.isFinite(deadline) && deadline > Date.now() && deadline - Date.now() <= 14 * 864e5) return 'Closing soon';
+    const publishedValue = item.published_at || item.created_at || item.createdAt || item.date;
+    const published = publishedValue ? new Date(String(publishedValue)).getTime() : NaN;
+    if (Number.isFinite(published) && published <= Date.now() && Date.now() - published <= 7 * 864e5) return 'New';
+    return 'Ongoing';
+  };
+
+  const closedOpps = useMemo(
+    () => content.opportunities.filter(item =>
+      !isPlaceholderOpportunity(item) && isExpiredOpportunity(item)
+    ).slice(0, 4),
+    [content.opportunities]
+  );
+
   const filteredOpps = useMemo(
     () =>
       content.opportunities.filter(o => {
@@ -2887,6 +2904,7 @@ function App() {
                 <article className="spotlight-card" key={o.id}>
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    <span className={'opportunity-status opportunity-status--' + opportunityStatus(o).toLowerCase().replace(/\s+/g, '-')}>{opportunityStatus(o)}</span>
                     {o.verified ? (
                       <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
@@ -3153,6 +3171,25 @@ function App() {
             )}
           </div>
         </section>
+
+        {closedOpps.length > 0 ? (
+          <section className="section closed-opportunities" aria-labelledby="closed-opportunities-title">
+            <div className="section-head">
+              <div><span className="kicker">PAST DEADLINES</span><h2 id="closed-opportunities-title">Recently closed opportunities</h2></div>
+              <p>These published opportunities have passed their listed deadlines. They are shown for reference only and are not presented as open applications.</p>
+            </div>
+            <div className="closed-opportunities-grid">
+              {closedOpps.map(item => (
+                <article className="closed-opportunity-card" key={item.id}>
+                  <div><span className="tag">{item.category || 'Opportunity'}</span><span className="opportunity-status opportunity-status--closed">Closed</span></div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description || 'The listed application deadline has passed.'}</p>
+                  <small>Deadline: {item.deadline || 'Passed'}</small>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="section" id="admissions">
           <div className="section-head">
