@@ -2423,8 +2423,8 @@ function App() {
             </div>
             <div>
               <b>Explore</b>
-              <a href="#opportunities">Opportunities</a>
-              <a href="#updates">Updates</a>
+              <a href="/#opportunities">Opportunities</a>
+              <a href="/#updates">Updates</a>
             </div>
             <div>
               <b>Connect</b>
