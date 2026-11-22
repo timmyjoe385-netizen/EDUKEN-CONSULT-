@@ -679,7 +679,7 @@ function App() {
 
   const closedOpps = useMemo(
     () => content.opportunities.filter(item =>
-      !isPlaceholderOpportunity(item) && isExpiredOpportunity(item)
+      !isPlaceholderOpportunity(item) && (isExpiredOpportunity(item) || /^(closed|expired)$/i.test(String(item.status || '')))
     ).slice(0, 4),
     [content.opportunities]
   );
@@ -687,7 +687,7 @@ function App() {
   const filteredOpps = useMemo(
     () =>
       content.opportunities.filter(o => {
-        if (isPlaceholderOpportunity(o) || isExpiredOpportunity(o)) return false;
+        if (isPlaceholderOpportunity(o) || opportunityStatus(o) === 'Closed') return false;
         const category = String(o.category || '').trim().toLowerCase();
         const filter = oppFilter.toLowerCase();
         const categoryMatches = oppFilter === 'All' ||
