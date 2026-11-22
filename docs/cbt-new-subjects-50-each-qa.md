@@ -36,6 +36,17 @@ The stems, answer keys and explanations were checked for internal consistency du
 
 **Important limitation:** this is an initial draft review, not an independent sign-off by a qualified CRS, Commerce or Financial Accounting subject teacher. Any uncertain item identified during independent review should be corrected or removed before approval.
 
+
+## Editorial content pass (22 November 2026)
+
+A full editorial read-through of all 150 stems, options, answer keys and explanations was completed after the automated checks. The pass covered the three subject sets separately:
+
+- **CRS:** biblical names, events, passages, chronology and the explanation attached to each selected answer.
+- **Commerce:** trade terminology, trade documents, business organisation, marketing, transport, banking, insurance and international-trade concepts.
+- **Principles of Accounts:** debit/credit treatment, source documents, books of original entry, control accounts, accounting concepts and arithmetic in depreciation, inventory and ratios.
+
+No clear factual, answer-key or calculation error was identified in this editorial pass. The worked accounting calculations were rechecked. The pass is an editorial review by the project assistant; it is **not** an independent review by a qualified subject teacher and should not be represented as one. A teacher should still verify syllabus emphasis, local classroom terminology and any disputed interpretation before publication.
+
 ## Source and originality
 
 Questions are newly written for EDUKEN and are not represented as official JAMB past questions, leaked questions or predictions. The JAMB syllabus is used only as a topic-alignment reference:
