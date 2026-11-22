@@ -480,3 +480,197 @@ html[data-theme="dark"] .services-request-steps__grid p {
   .services-request-steps { padding: 18px; }
   .services-request-steps__grid { grid-template-columns: 1fr; gap: 16px; }
 }
+
+
+/* Approved EDUKEN mobile-home direction: forest green, warm off-white and restrained mint. */
+@media (max-width: 700px) {
+  .site .hero {
+    min-height: 0;
+    display: block;
+    margin: 0 10px 18px;
+    padding: 25px 20px 22px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 0 0 24px 24px;
+    color: #fff;
+    background:
+      radial-gradient(circle at 92% 18%, rgba(145, 205, 158, .24), transparent 28%),
+      radial-gradient(circle at 82% 92%, rgba(92, 168, 112, .26), transparent 34%),
+      linear-gradient(135deg, #123d2b 0%, #17613f 58%, #0e4b32 100%);
+  }
+  .site .hero-copy { max-width: none; }
+  .site .hero .eyebrow {
+    color: #d8eadc;
+    font-size: 9px;
+    letter-spacing: .1em;
+    line-height: 1.5;
+  }
+  .site .hero h1 {
+    max-width: 310px;
+    margin: 15px 0 10px;
+    color: #fff;
+    font-size: clamp(27px, 7vw, 34px);
+    line-height: 1.12;
+    letter-spacing: -.035em;
+  }
+  .site .hero h1 em {
+    color: #d7efdd;
+    font-family: inherit;
+    font-weight: 800;
+    font-style: normal;
+  }
+  .site .hero p {
+    max-width: 300px;
+    color: #edf5ef;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .site .hero-actions {
+    gap: 8px;
+    margin: 16px 0 0;
+  }
+  .site .hero-actions .primary {
+    min-height: 42px;
+    padding: 10px 17px;
+    border: 0;
+    border-radius: 999px;
+    background: #f6c928;
+    color: #17251d;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.12);
+  }
+  .site .hero-actions .secondary,
+  .site .hero-proof,
+  .site .hero-visual {
+    display: none;
+  }
+  .site .discovery-section {
+    padding: 10px 14px 22px;
+  }
+  .site .discovery-section .section-head {
+    margin: 0 0 14px;
+    align-items: center;
+  }
+  .site .discovery-section .section-head > div { min-width: 0; }
+  .site .discovery-section .section-head .kicker,
+  .site .discovery-section .section-head p {
+    display: none;
+  }
+  .site .discovery-section .section-head h2 {
+    margin: 0;
+    color: #17251d;
+    font-size: 21px;
+    line-height: 1.2;
+    letter-spacing: -.035em;
+  }
+  .site .discovery-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .site .discovery-card {
+    min-height: 104px;
+    padding: 9px 4px 8px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 7px;
+    border: 1px solid #d9eaf1;
+    border-radius: 14px;
+    background: #eef7fc;
+    box-shadow: none;
+    text-align: center;
+  }
+  .site .discovery-card__icon {
+    width: 39px;
+    height: 39px;
+    border-radius: 12px;
+    background: transparent;
+    color: #16804b;
+  }
+  .site .discovery-card__icon--mint {
+    background: transparent;
+    color: #16804b;
+  }
+  .site .discovery-card__copy {
+    display: block;
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  .site .discovery-card__copy strong {
+    display: block;
+    color: #17251d;
+    font-size: 10px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .site .discovery-card__copy small,
+  .site .discovery-card__arrow {
+    display: none;
+  }
+  .site .discovery-card--wide {
+    grid-column: span 2;
+    min-height: 58px;
+    flex-direction: row;
+    justify-content: center;
+    padding: 8px 10px;
+  }
+  .site .discovery-card--wide .discovery-card__icon {
+    width: 30px;
+    height: 30px;
+  }
+  .site .discovery-card--wide .discovery-card__copy {
+    width: auto;
+  }
+  .site .discovery-card--wide .discovery-card__copy strong {
+    font-size: 12px;
+  }
+  .site .section-head h2 {
+    font-size: 23px;
+    line-height: 1.15;
+  }
+  .site .spotlight-section,
+  .site #updates {
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+  .site .spotlight-section .section-head,
+  .site #updates .section-head {
+    margin-bottom: 15px;
+  }
+  .site .update-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .site .update-card {
+    display: grid;
+    grid-template-columns: 112px minmax(0,1fr);
+    column-gap: 12px;
+    align-items: start;
+    padding: 10px;
+  }
+  .site .update-card .update-image {
+    grid-row: span 4;
+    height: 100px;
+    min-height: 100px;
+    padding: 8px;
+  }
+  .site .update-card > small {
+    margin: 3px 0 5px;
+    font-size: 8px;
+  }
+  .site .update-card h3 {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .site .update-card .rich-content,
+  .site .update-card .verified-pill,
+  .site .update-card .source-pill,
+  .site .update-card > a {
+    grid-column: 2;
+  }
+}
+@media (max-width: 380px) {
+  .site .discovery-grid { gap: 6px; }
+  .site .discovery-card { min-height: 98px; }
+  .site .discovery-card__copy strong { font-size: 9px; }
+}
