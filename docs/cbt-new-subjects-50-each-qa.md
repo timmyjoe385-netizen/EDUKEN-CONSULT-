@@ -37,6 +37,17 @@ The stems, answer keys and explanations were checked for internal consistency du
 **Important limitation:** this is an initial draft review, not an independent sign-off by a qualified CRS, Commerce or Financial Accounting subject teacher. Any uncertain item identified during independent review should be corrected or removed before approval.
 
 
+
+## Comparison against the existing question bank
+
+The 150 draft stems were compared against the 1,563 question rows currently present in the isolated EDUKEN test database (the existing eight-subject bank: Biology, Chemistry, Economics, Government, Literature in English, Mathematics, Physics and Use of English).
+
+The first cross-bank screen flagged two Commerce items for manual review:
+- One was an exact stem overlap with an Economics item about the traditional reward for land. It has been replaced with an applied natural-resource classification question.
+- One was a high-similarity overlap with an Economics balance-of-trade definition item. It has been replaced with a numerical balance-of-trade scenario.
+
+After those revisions, the full 150-versus-1,563 stem comparison returned **no candidates at the configured 0.50 similarity-review threshold**. This is a text-similarity screen, not proof of conceptual uniqueness; the independent subject review remains important. The comparison used the isolated test database and did not alter its records.
+
 ## Editorial content pass (22 November 2026)
 
 A full editorial read-through of all 150 stems, options, answer keys and explanations was completed after the automated checks. The pass covered the three subject sets separately:
