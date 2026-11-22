@@ -768,7 +768,7 @@ function App() {
     const opportunities = content.opportunities
       .filter(item =>
         !isPlaceholderOpportunity(item) &&
-        !isExpiredOpportunity(item) &&
+        opportunityStatus(item) !== 'Closed' &&
         [item.title, item.description, item.content, item.category, item.eligibility, item.benefits]
           .some(value => String(value || '').toLowerCase().includes(query))
       )
@@ -799,6 +799,7 @@ function App() {
         }))
         .filter(
           x =>
+            opportunityStatus(x.item) !== 'Closed' &&
             Number.isFinite(x.time) &&
             x.time > Date.now() &&
             x.time - Date.now() <= 14 * 864e5
@@ -814,7 +815,7 @@ function App() {
       content.opportunities
         .filter(
           item =>
-            !isExpiredOpportunity(item) &&
+            opportunityStatus(item) !== 'Closed' &&
             (item.featured === true ||
             String(item.featured).toLowerCase() === 'true')
         )
