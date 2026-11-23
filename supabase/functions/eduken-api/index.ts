@@ -3069,8 +3069,10 @@ Deno.serve(async (req) => {
         const params = new URL(req.url).searchParams;
         const status = params.get("status");
         const q = (params.get("q") || "").trim().replace(/[,%()]/g, " ");
-        let query = db.from("cbt_questions").select("*").order("updated_at", { ascending: false }).limit(200);
+        const importBatchId = (params.get("import_batch_id") || "").trim();
+        let query = db.from("cbt_questions").select("*").order("updated_at", { ascending: false }).limit(importBatchId ? 500 : 200);
         if (status && ["draft","reviewed","approved","published","unpublished"].includes(status)) query = query.eq("status", status);
+        if (importBatchId) query = query.eq("import_batch_id", importBatchId);
         if (q) query = query.or("question_text.ilike.%"+q+"%,subject.ilike.%"+q+"%,topic.ilike.%"+q+"%");
         const { data, error } = await query;
         if (error) throw error;

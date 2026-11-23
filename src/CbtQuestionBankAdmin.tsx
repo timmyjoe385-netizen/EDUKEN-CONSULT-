@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
-import { api } from './lib/api';
+import { api, usesIsolatedTestBackend } from './lib/api';
 import { CheckCircle2, FileSpreadsheet, Plus, RefreshCw, Save, Search, ShieldCheck, Upload, X } from 'lucide-react';
 
 type Question = {
-  id?: string; exam_type: string; subject: string; topic: string; subtopic?: string;
+  id?: string; import_batch_id?: string; exam_type: string; subject: string; topic: string; subtopic?: string;
   question_text: string; options: Record<string,string>; correct_option: string;
   explanation: string; difficulty: string; source_type: string; source_name: string;
   source_year: number | string | null; provenance_notes: string; licensing_notes: string; status: string;
@@ -104,9 +104,21 @@ export default function CbtQuestionBankAdmin() {
   };
   const bulkPublishNewSubjects = async () => {
     const targetSubjects = new Set(['Christian Religious Studies','Commerce','Principles of Accounts']);
-    const targets = items.filter(q => q.id && targetSubjects.has(q.subject));
-    if (filter !== 'all' || targets.length !== 150) {
-      setError(`Bulk publication stopped: choose “All states” and refresh. Expected exactly 150 questions across CRS, Commerce and Financial Accounting; found ${targets.length} in the current list.`);
+    const preparedBatch = importHistory.find((batch:any) => batch.filename === 'EDUKEN-next-150-new-subjects.csv' && batch.status === 'completed' && Number(batch.inserted_rows) === 150);
+    if (filter !== 'all' || !preparedBatch?.id) {
+      setError('Bulk publication stopped: refresh import history and confirm the prepared 150-question batch imported successfully.');
+      return;
+    }
+    let targets: Question[] = [];
+    try {
+      const result = await api.get('/api/admin/cbt/questions?import_batch_id=' + encodeURIComponent(preparedBatch.id));
+      targets = (result.data?.items || []).filter((q:Question) => q.id && q.import_batch_id === preparedBatch.id && targetSubjects.has(q.subject));
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Could not load the exact imported batch. No publication was attempted.');
+      return;
+    }
+    if (targets.length !== 150) {
+      setError(`Bulk publication stopped: the exact import batch contains ${targets.length} eligible questions after batch-ID verification; exactly 150 are required. No publication was attempted.`);
       return;
     }
     if (!window.confirm('Complete publication for all 150 new-subject questions? Each question will pass through Draft → Reviewed → Approved → Published using your authenticated admin account. Already completed stages will be skipped, so this action can safely resume after an interruption.')) return;
@@ -147,16 +159,36 @@ export default function CbtQuestionBankAdmin() {
     } catch(e) { setError(e instanceof Error ? e.message : 'Import failed.'); }
     finally { setImporting(false); }
   };
+  const importPrepared150 = async () => {
+    if (!usesIsolatedTestBackend) {
+      setError('Prepared batch import is disabled outside the isolated test preview. No import was attempted.');
+      return;
+    }
+    if (!window.confirm('Import the prepared 150 CRS, Commerce and Principles of Accounts questions into this isolated preview database as drafts? Nothing will be published or sent to the live site.')) return;
+    setImporting(true); setError(''); setMessage(''); setImportResult(null);
+    try {
+      const response = await fetch('/cbt/eduken-next-150-new-subjects.csv', { cache: 'no-store' });
+      if (!response.ok) throw new Error('The prepared question file could not be loaded. Refresh the preview and try again.');
+      const rows = parseCsv(await response.text());
+      const counts = rows.reduce((acc: Record<string, number>, row: any) => { const subject = String(row.subject || ''); acc[subject] = (acc[subject] || 0) + 1; return acc; }, {});
+      if (rows.length !== 150 || counts['Christian Religious Studies'] !== 50 || counts['Commerce'] !== 50 || counts['Principles of Accounts'] !== 50) throw new Error('Safety check stopped the import: the prepared file must contain exactly 50 questions for each of the three subjects.');
+      const result = await api.post('/api/admin/cbt/import', { filename: 'EDUKEN-next-150-new-subjects.csv', sourceLabel: 'EDUKEN prepared question batch', rows });
+      setImportResult(result.data);
+      setMessage('Prepared batch import completed. Questions remain drafts; nothing was published.');
+      await load(); await loadImportHistory();
+    } catch (e) { setError(e instanceof Error ? e.message : 'Prepared batch import failed.'); }
+    finally { setImporting(false); }
+  };
   const downloadTemplate = () => {
     const csv='exam_type,subject,topic,subtopic,question_text,option_A,option_B,option_C,option_D,correct_option,explanation,difficulty,source_type,source_name,source_year,provenance_notes,licensing_notes\nJAMB,Use of English,Grammar,Nouns,"Which word is a noun?",quickly,happiness,blue,run,B,"Happiness names a state.",easy,original,,,,';
     const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
     const a=document.createElement('a'); a.href=url; a.download='eduken-cbt-question-template.csv'; a.click(); URL.revokeObjectURL(url);
   };
   return <section className="analytics-panel" aria-label="CBT question bank management">
-    <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button><button className="primary" onClick={()=>setShowImport(true)}><Upload size={16}/> Import CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
+    <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button>{usesIsolatedTestBackend ? <button className="primary" onClick={()=>void importPrepared150()} disabled={importing || bulkPublishing}><Upload size={16}/>{importing ? "Importing prepared 150…" : "Import prepared 150 questions"}</button> : null}<button className="secondary" onClick={()=>setShowImport(true)}><FileSpreadsheet size={16}/> Import other CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
     {error ? <div className="analytics-error" role="alert"><b>Action needs attention</b><p>{error}</p></div> : null}
     {message ? <div className="system-setting-row" role="status"><CheckCircle2 size={18}/><span>{message}</span></div> : null}
-    <div className="analytics-toolbar"><div className="analytics-controls"><button className="primary" onClick={()=>void bulkPublishNewSubjects()} disabled={bulkPublishing || loading || filter !== 'all' || items.filter(q=>['Christian Religious Studies','Commerce','Principles of Accounts'].includes(q.subject)).length !== 150}><ShieldCheck size={16}/>{bulkPublishing?'Publishing 150 questions…':'Publish 150 new-subject questions'}</button><small>Runs the protected review → approval → publication steps for the three reviewed subject batches.</small></div></div>
+    <div className="analytics-toolbar"><div className="analytics-controls"><button className="primary" onClick={()=>void bulkPublishNewSubjects()} disabled={bulkPublishing || loading || loadingImports || filter !== 'all' || !importHistory.some((batch:any)=>batch.filename === 'EDUKEN-next-150-new-subjects.csv' && batch.status === 'completed' && Number(batch.inserted_rows) === 150)}><ShieldCheck size={16}/>{bulkPublishing?'Publishing 150 questions…':'Publish 150 new-subject questions'}</button><small>Runs the protected review → approval → publication steps for the three reviewed subject batches.</small></div></div>
     <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Question, subject or topic"/></label></div><span>{visible.length} shown</span></div>
     {form ? <div className="system-settings-panel" style={{marginBottom:18}}><div className="analytics-toolbar"><h3>{form.id?'Edit question':'Create question'}</h3><button className="secondary" onClick={()=>setForm(null)}><X size={16}/> Close</button></div>
       <div className="admin-form-grid">

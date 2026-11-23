@@ -11,12 +11,14 @@ insert into public.cbt_student_profiles (user_id, username) values
   ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2', 'arena_improved'),
   ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3', 'arena_consistent');
 
+-- Anchor fixtures inside the current week. Hour offsets from now() can cross
+-- the Monday week boundary when CI runs shortly after midnight UTC.
 insert into public.cbt_attempts (user_id, mode, subject, score, total, duration_seconds, submitted_at) values
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1', 'mock', 'Mixed mock', 170, 180, 7000, now() - interval '2 days'),
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2', 'mock', 'Mixed mock', 120, 180, 7100, now() - interval '3 days'),
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2', 'mock', 'Mixed mock', 150, 180, 7000, now() - interval '1 day'),
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3', 'mock', 'Mixed mock', 145, 180, 7050, now() - interval '2 days'),
-  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3', 'mock', 'Mixed mock', 146, 180, 7040, now() - interval '1 day');
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa1', 'mock', 'Mixed mock', 170, 180, 7000, date_trunc('week', now()) + interval '90 minutes'),
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2', 'mock', 'Mixed mock', 120, 180, 7100, date_trunc('week', now()) + interval '1 hour'),
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa2', 'mock', 'Mixed mock', 150, 180, 7000, date_trunc('week', now()) + interval '2 hours'),
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3', 'mock', 'Mixed mock', 145, 180, 7050, date_trunc('week', now()) + interval '1 hour'),
+  ('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaa3', 'mock', 'Mixed mock', 146, 180, 7040, date_trunc('week', now()) + interval '2 hours');
 
 do $$
 declare
