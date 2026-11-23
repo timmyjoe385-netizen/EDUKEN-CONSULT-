@@ -2925,7 +2925,7 @@ function App() {
               { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
               { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
               { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
-              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green', updateFilter: 'Educational News' },
               { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
               { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
               { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
@@ -2935,10 +2935,10 @@ function App() {
               const Icon = card.icon;
               return (
                 <a
-                  className={'discovery-card' + (card.title === 'Skills & Training' || card.title === 'More Services' ? ' discovery-card--wide' : '')}
+                  className="discovery-card"
                   href={card.href}
                   key={card.title}
-                  onClick={() => { if ('filter' in card && card.filter) setOppFilter(card.filter); }}
+                  onClick={() => { if ('filter' in card && card.filter) setOppFilter(card.filter); if ('updateFilter' in card && card.updateFilter) setUpdateFilter(card.updateFilter); }}
                 >
                   <span className={'discovery-card__icon discovery-card__icon--' + card.tone}><Icon size={21} strokeWidth={2} /></span>
                   <span className="discovery-card__copy">
