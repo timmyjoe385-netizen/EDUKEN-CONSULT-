@@ -3,7 +3,7 @@ import { api, usesIsolatedTestBackend } from './lib/api';
 import { CheckCircle2, FileSpreadsheet, Plus, RefreshCw, Save, Search, ShieldCheck, Upload, X } from 'lucide-react';
 
 type Question = {
-  id?: string; exam_type: string; subject: string; topic: string; subtopic?: string;
+  id?: string; import_batch_id?: string; exam_type: string; subject: string; topic: string; subtopic?: string;
   question_text: string; options: Record<string,string>; correct_option: string;
   explanation: string; difficulty: string; source_type: string; source_name: string;
   source_year: number | string | null; provenance_notes: string; licensing_notes: string; status: string;
@@ -112,13 +112,13 @@ export default function CbtQuestionBankAdmin() {
     let targets: Question[] = [];
     try {
       const result = await api.get('/api/admin/cbt/questions?import_batch_id=' + encodeURIComponent(preparedBatch.id));
-      targets = (result.data?.items || []).filter((q:Question) => q.id && targetSubjects.has(q.subject));
+      targets = (result.data?.items || []).filter((q:Question) => q.id && q.import_batch_id === preparedBatch.id && targetSubjects.has(q.subject));
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not load the exact imported batch. No publication was attempted.');
       return;
     }
     if (targets.length !== 150) {
-      setError(`Bulk publication stopped: the selected import batch contains ${targets.length} eligible questions; exactly 150 are required. No publication was attempted.`);
+      setError(`Bulk publication stopped: the exact import batch contains ${targets.length} eligible questions after batch-ID verification; exactly 150 are required. No publication was attempted.`);
       return;
     }
     if (!window.confirm('Complete publication for all 150 new-subject questions? Each question will pass through Draft → Reviewed → Approved → Published using your authenticated admin account. Already completed stages will be skipped, so this action can safely resume after an interruption.')) return;
