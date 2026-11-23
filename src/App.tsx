@@ -3677,7 +3677,7 @@ function App() {
           <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
         </a>
         <a href="/#eduken-platform" className="mobile-bottom-nav__item">
-          <UserRound size={19} aria-hidden="true" /><span>Me</span>
+          <UserRound size={19} aria-hidden="true" /><span>Dashboard</span>
         </a>
       </nav>
 
