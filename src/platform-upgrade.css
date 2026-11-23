@@ -773,3 +773,216 @@ html[data-theme="dark"] .site .hero-actions .primary {
   background: #b7dcc6 !important;
   color: #124734 !important;
 }
+
+
+/* Homepage visual refinement based on the approved EDUKEN reference.
+   Keep the existing information architecture and all working destinations. */
+.site {
+  background: #f7f5ed;
+}
+.site .hero {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 30px 30px;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(183,220,198,.22), transparent 27%),
+    radial-gradient(circle at 72% 100%, rgba(111,174,132,.18), transparent 34%),
+    linear-gradient(125deg, #103c2b 0%, #15583b 58%, #124734 100%);
+  color: #fff;
+}
+.site .hero .eyebrow { color: #dceee1; }
+.site .hero h1 { color: #fff; }
+.site .hero h1 em { color: #b7dcc6; }
+.site .hero p { color: #edf5ef; }
+.site .hero-actions .primary {
+  background: #b7dcc6;
+  border: 1px solid rgba(255,255,255,.18);
+  color: #124734;
+  box-shadow: 0 8px 22px rgba(5,28,17,.18);
+}
+.site .hero-actions .primary:hover { background: #c8e7d3; }
+.site .discovery-section,
+.site .spotlight-section,
+.site .newsroom-preview,
+.site #updates,
+.site .journey-section,
+.site .faq.section {
+  background-color: #f7f5ed;
+}
+.site .discovery-section .section-head h2,
+.site .section-head h2 { color: #173b2b; }
+.site .discovery-card {
+  border: 1px solid #dce8df;
+  border-radius: 17px;
+  background: #fffefa;
+  box-shadow: 0 5px 18px rgba(18,71,52,.045);
+}
+.site .discovery-card__icon--green {
+  color: #fff;
+  background: #124734;
+}
+.site .discovery-card__icon--mint {
+  color: #124734;
+  background: #e4f1e7;
+}
+.site .discovery-card__copy strong { color: #173b2b; }
+.site .discovery-card__copy small { color: #627168; }
+.site .spotlight-section {
+  border-radius: 24px;
+}
+.site .spotlight-card,
+.site .newsroom-card,
+.site .update-card {
+  border: 1px solid #e0e8e1;
+  border-radius: 18px;
+  background: #fffefa;
+  box-shadow: 0 7px 22px rgba(18,71,52,.055);
+}
+.site .spotlight-card h3,
+.site .newsroom-card h3,
+.site .update-card h3 { color: #173b2b; }
+.site .spotlight-card p,
+.site .newsroom-card p,
+.site .update-card .rich-content { color: #52665a; }
+.site .newsroom-card > a,
+.site .update-card > a { color: #17613f; font-weight: 750; }
+.site .update-image { border-radius: 12px; }
+.site .final-cta {
+  background: linear-gradient(125deg, #123d2b, #17613f);
+}
+.site .final-cta .kicker,
+.site .final-cta h2,
+.site .final-cta p { color: #fff; }
+@media (min-width: 701px) {
+  .site .hero {
+    min-height: 420px;
+    margin: 18px auto 28px;
+    width: min(1240px, calc(100% - 48px));
+    padding: clamp(42px, 6vw, 76px);
+    border-radius: 28px;
+  }
+  .site .hero-copy { max-width: 610px; }
+  .site .hero h1 {
+    max-width: 590px;
+    font-size: clamp(42px, 5vw, 62px);
+    line-height: 1.06;
+    letter-spacing: -.045em;
+  }
+  .site .hero p { max-width: 520px; font-size: 16px; line-height: 1.7; }
+  .site .discovery-section,
+  .site .spotlight-section,
+  .site .newsroom-preview,
+  .site #updates,
+  .site .journey-section {
+    padding-left: max(24px, calc((100% - 1160px)/2));
+    padding-right: max(24px, calc((100% - 1160px)/2));
+  }
+}
+@media (max-width: 700px) {
+  .site .hero {
+    min-height: 248px;
+    margin: 0 10px 18px;
+    padding: 25px 18px 22px;
+    border-radius: 0 0 24px 24px;
+  }
+  .site .hero-copy { max-width: 72%; }
+  .site .hero h1 { font-size: clamp(25px, 6.5vw, 32px); }
+  .site .hero p { font-size: 12px; line-height: 1.55; }
+  .site .hero-art {
+    display: block;
+    position: absolute;
+    right: -7px;
+    bottom: 4px;
+    width: 42%;
+    max-width: 158px;
+    height: 150px;
+    pointer-events: none;
+  }
+  .site .hero-art svg { width: 100%; height: 100%; }
+  .site .hero-actions { position: relative; z-index: 3; }
+  .site .hero-actions .primary {
+    min-height: 40px;
+    padding: 9px 13px;
+    border-radius: 999px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .site .discovery-section { padding: 10px 14px 22px; }
+  .site .discovery-grid { grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+  .site .discovery-card {
+    min-height: 106px;
+    padding: 10px 5px 9px;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 7px;
+    text-align: center;
+  }
+  .site .discovery-card__icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+  .site .discovery-card__copy { width: 100%; }
+  .site .discovery-card__copy strong { font-size: 10px; line-height: 1.25; }
+  .site .discovery-card__copy small,
+  .site .discovery-card__arrow { display: none; }
+  .site .discovery-card--wide { grid-column: auto; min-height: 106px; }
+  .site .spotlight-section,
+  .site .newsroom-preview,
+  .site #updates { padding-top: 25px; padding-bottom: 25px; }
+  .site .spotlight-grid,
+  .site .newsroom-grid,
+  .site .update-grid { grid-template-columns: 1fr; gap: 12px; }
+  .site .spotlight-card,
+  .site .newsroom-card,
+  .site .update-card { padding: 14px; }
+  .site .update-card {
+    display: grid;
+    grid-template-columns: 94px minmax(0,1fr);
+    column-gap: 12px;
+    align-items: start;
+  }
+  .site .update-card .update-image {
+    grid-row: span 4;
+    min-height: 96px;
+    height: 96px;
+  }
+  .site .update-card > small,
+  .site .update-card h3,
+  .site .update-card .rich-content,
+  .site .update-card .verified-pill,
+  .site .update-card .source-pill,
+  .site .update-card > a { grid-column: 2; }
+  .site .update-card h3 { font-size: 13px; line-height: 1.35; }
+}
+@media (max-width: 380px) {
+  .site .hero-copy { max-width: 74%; }
+  .site .hero h1 { font-size: 24px; }
+  .site .hero p { font-size: 11px; }
+  .site .discovery-grid { gap: 6px; }
+  .site .discovery-card__copy strong { font-size: 9px; }
+}
+html[data-theme="dark"] .site { background: #0e1c14; }
+html[data-theme="dark"] .site .discovery-section,
+html[data-theme="dark"] .site .spotlight-section,
+html[data-theme="dark"] .site .newsroom-preview,
+html[data-theme="dark"] .site #updates,
+html[data-theme="dark"] .site .journey-section,
+html[data-theme="dark"] .site .faq.section { background-color: #0e1c14; }
+html[data-theme="dark"] .site .section-head h2,
+html[data-theme="dark"] .site .discovery-section .section-head h2 { color: #e5f0e8; }
+html[data-theme="dark"] .site .discovery-card,
+html[data-theme="dark"] .site .spotlight-card,
+html[data-theme="dark"] .site .newsroom-card,
+html[data-theme="dark"] .site .update-card {
+  border-color: #29483a;
+  background: #14251c;
+}
+html[data-theme="dark"] .site .discovery-card__copy strong,
+html[data-theme="dark"] .site .spotlight-card h3,
+html[data-theme="dark"] .site .newsroom-card h3,
+html[data-theme="dark"] .site .update-card h3 { color: #e5f0e8; }
+html[data-theme="dark"] .site .discovery-card__copy small,
+html[data-theme="dark"] .site .spotlight-card p,
+html[data-theme="dark"] .site .newsroom-card p,
+html[data-theme="dark"] .site .update-card .rich-content { color: #b5c7ba; }
