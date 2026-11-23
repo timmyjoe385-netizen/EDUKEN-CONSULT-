@@ -742,3 +742,34 @@ html[data-theme="dark"] .services-request-steps__grid p {
     border: 0;
   }
 }
+
+
+/* Final alignment with the approved EDUKEN brief: three mobile columns and brand-only accents. */
+@media (max-width: 700px) {
+  .site .discovery-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .site .discovery-card {
+    border-color: #dce8df;
+    background: #f7f5ed;
+  }
+  .site .discovery-card__icon,
+  .site .discovery-card__icon--mint {
+    color: #124734;
+  }
+  .site .hero-actions .primary,
+  html[data-theme="light"] .site .hero-actions .primary {
+    background: #b7dcc6 !important;
+    color: #124734 !important;
+    border: 1px solid rgba(18, 71, 52, .12);
+  }
+}
+html[data-theme="dark"] .site .discovery-card {
+  border-color: #29483a;
+  background: #14251c;
+}
+html[data-theme="dark"] .site .hero-actions .primary {
+  background: #b7dcc6 !important;
+  color: #124734 !important;
+}
