@@ -518,6 +518,26 @@ export default function PlatformHub({
           </p>
         ) : null}
       </div>
+      <nav className="student-dashboard-categories" aria-label="Student dashboard categories">
+        <a className="student-category-card" href="/cbt">
+          <span className="student-category-icon">🎯</span><span><strong>My Learning</strong><small>CBT practice, scores and progress</small></span><span aria-hidden="true">›</span>
+        </a>
+        <div className="student-category-card">
+          <span className="student-category-icon">🎓</span><span><strong>Admissions</strong><small>Find schools and calculate your aggregate</small><span className="student-category-links"><a href="/admissions">Admission guidance</a><a href="/aggregate-calculator">Aggregate calculator</a></span></span>
+        </div>
+        <div className="student-category-card">
+          <span className="student-category-icon">🌱</span><span><strong>My Opportunities</strong><small>Save and follow scholarships, jobs and grants</small><span className="student-category-links"><button type="button" onClick={() => setOpen('saved')}>Saved ({saved.length})</button><button type="button" onClick={() => setOpen('tracker')}>Application tracker ({tracker.length})</button></span></span>
+        </div>
+        <div className="student-category-card">
+          <span className="student-category-icon">👤</span><span><strong>My Account</strong><small>Student username and service wallet</small><span className="student-category-links"><a href="/cbt">Student profile</a><button type="button" onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInOpen(true); return; } setWalletMessage(''); setOpen('wallet'); void refreshWallet(); }}>Wallet</button></span></span>
+        </div>
+        <a className="student-category-card" href="#student-deliverables-title">
+          <span className="student-category-icon">📄</span><span><strong>My Requests & Documents</strong><small>Service requests, results and published files</small></span><span aria-hidden="true">›</span>
+        </a>
+        <div className="student-category-card">
+          <span className="student-category-icon">🔔</span><span><strong>Notifications</strong><small>Choose topics and manage account alerts</small><span className="student-category-links"><button type="button" onClick={() => { if (!auth.isGoogleSignedIn()) { void signIn(); return; } setOpen('alerts'); }}>Manage notifications</button></span></span>
+        </div>
+      </nav>
       <div className="platform-grid">
         <div className="platform-card">
           <div className="platform-icon">
