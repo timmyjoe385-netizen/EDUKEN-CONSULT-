@@ -1,7 +1,7 @@
 import { Component, StrictMode, type ErrorInfo, type ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import AggregateCalculator, { AggregateCalculatorShortcut } from './AggregateCalculator';
+import AggregateCalculator from './AggregateCalculator';
 import './index.css';
 import './aggregate.css';
 import './platform-upgrade.css';
@@ -95,7 +95,7 @@ if (isAggregateCalculator) {
 createRoot(document.getElementById('root')!).render(
   <RootErrorBoundary>
     <StrictMode>
-      {isAggregateCalculator ? <AggregateCalculator /> : <><App /><AggregateCalculatorShortcut /></>}
+      {isAggregateCalculator ? <AggregateCalculator /> : <App />}
     </StrictMode>
   </RootErrorBoundary>
 );
