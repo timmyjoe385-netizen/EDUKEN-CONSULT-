@@ -121,9 +121,49 @@ export default function CbtQuestionBankAdmin() {
       setError(`Bulk publication stopped: the exact import batch contains ${targets.length} eligible questions after batch-ID verification; exactly 150 are required. No publication was attempted.`);
       return;
     }
-    if (!window.confirm('Complete publication for all 150 new-subject questions? Each question will pass through Draft → Reviewed → Approved → Published using your authenticated admin account. Already completed stages will be skipped, so this action can safely resume after an interruption.')) return;
+    const subjectCounts = targets.reduce((counts: Record<string, number>, q) => {
+      counts[q.subject] = (counts[q.subject] || 0) + 1;
+      return counts;
+    }, {});
+    const incorrectSubjects = ['Christian Religious Studies','Commerce','Principles of Accounts']
+      .filter(subject => subjectCounts[subject] !== 50);
+    if (incorrectSubjects.length) {
+      setError('Bulk publication stopped: each of the three subjects must contain exactly 50 questions in this import batch. Actual counts: ' +
+        ['Christian Religious Studies','Commerce','Principles of Accounts'].map(subject => subject + ': ' + (subjectCounts[subject] || 0)).join(', ') +
+        '. No publication was attempted.');
+      return;
+    }
+    const statusCounts = targets.reduce((counts: Record<string, number>, q) => {
+      counts[q.status] = (counts[q.status] || 0) + 1;
+      return counts;
+    }, {});
+    const alreadyPublished = statusCounts.published || 0;
+    if (alreadyPublished === 150) {
+      setMessage('No action needed: all 150 questions in this batch are already published. Nothing was changed.');
+      return;
+    }
+    const statusSummary = ['draft','reviewed','approved','published','unpublished']
+      .filter(status => statusCounts[status])
+      .map(status => `${status}: ${statusCounts[status]}`)
+      .join(' · ');
+    const confirmation = [
+      'HIGH-IMPACT ACTION: publish the exact imported batch of 150 questions?',
+      '',
+      'Christian Religious Studies: 50',
+      'Commerce: 50',
+      'Principles of Accounts: 50',
+      '',
+      `Current states: ${statusSummary || 'none'}`,
+      '',
+      'This action advances eligible questions through review, approval and publication. Published questions become available to students. Importing drafts does NOT do this.',
+    ].join('\n');
+    if (!window.confirm(confirmation)) return;
+    if (window.prompt('To confirm publication, type exactly: PUBLISH 150') !== 'PUBLISH 150') {
+      setMessage('Publication cancelled. No questions were changed.');
+      return;
+    }
     setBulkPublishing(true); setError(''); setMessage('');
-    const nextStages = { draft: ['reviewed','approved','published'], reviewed: ['approved','published'], approved: ['published'], published: [] } as const;
+    const nextStages = { draft: ['reviewed','approved','published'], reviewed: ['approved','published'], approved: ['published'], published: [], unpublished: ['reviewed','approved','published'] } as const;
     let completed = 0;
     try {
       for (let i = 0; i < targets.length; i += 5) {
@@ -214,7 +254,10 @@ export default function CbtQuestionBankAdmin() {
     <div className="analytics-toolbar"><div><span className="tag">ADMIN ONLY · SERVER-VALIDATED</span><h2>CBT Question Bank</h2><p>Create, review and publish questions. CSV imports are checked and saved as drafts only.</p></div><div className="analytics-controls"><button className="secondary" onClick={downloadTemplate}><FileSpreadsheet size={16}/> CSV template</button><button className="secondary" onClick={()=>{setForm(blank());setError('');}}><Plus size={16}/> New question</button>{usesIsolatedTestBackend ? <button className="primary" onClick={()=>void importPrepared150()} disabled={importing || bulkPublishing}><Upload size={16}/>{importing ? "Importing prepared 150…" : "Import prepared 150 questions"}</button> : null}{window.location.origin === 'https://eduken-consult.timmyjoe385.workers.dev' ? <><button className="primary" onClick={()=>void importPrepared150ToProduction()} disabled={importing || bulkPublishing || usesIsolatedTestBackend || importHistory.some((batch:any)=>batch.filename === 'EDUKEN-next-150-new-subjects.csv' && batch.status === 'completed' && Number(batch.inserted_rows) === 150)}><Upload size={16}/>{importing ? "Importing 150 drafts…" : usesIsolatedTestBackend ? "Live import blocked — isolated backend" : "Import next 150 to live bank"}</button>{usesIsolatedTestBackend ? <small role="alert">Safety lock: this page is connected to the isolated test database, so live import is disabled.</small> : null}</> : null}<button className="secondary" onClick={()=>setShowImport(true)}><FileSpreadsheet size={16}/> Import other CSV</button><button className="secondary" onClick={()=>void load()} disabled={loading}><RefreshCw size={16}/> Refresh</button></div></div>
     {error ? <div className="analytics-error" role="alert"><b>Action needs attention</b><p>{error}</p></div> : null}
     {message ? <div className="system-setting-row" role="status"><CheckCircle2 size={18}/><span>{message}</span></div> : null}
-    <div className="analytics-toolbar"><div className="analytics-controls"><button className="primary" onClick={()=>void bulkPublishNewSubjects()} disabled={bulkPublishing || loading || loadingImports || filter !== 'all' || !importHistory.some((batch:any)=>batch.filename === 'EDUKEN-next-150-new-subjects.csv' && batch.status === 'completed' && Number(batch.inserted_rows) === 150)}><ShieldCheck size={16}/>{bulkPublishing?'Publishing 150 questions…':'Publish 150 new-subject questions'}</button><small>Runs the protected review → approval → publication steps for the three reviewed subject batches.</small></div></div>
+    <div className="system-settings-panel" style={{marginTop:18,borderLeft:'4px solid var(--warning, #b7791f)'}}>
+      <div className="analytics-toolbar"><div><h3>Separate publication action</h3><p>CSV imports are saved as drafts. They do not publish automatically. Publishing is a separate, high-impact action that makes questions available to students.</p></div></div>
+      <div className="analytics-controls"><button className="secondary" onClick={()=>void bulkPublishNewSubjects()} disabled={bulkPublishing || loading || loadingImports || filter !== 'all' || !importHistory.some((batch:any)=>batch.filename === 'EDUKEN-next-150-new-subjects.csv' && batch.status === 'completed' && Number(batch.inserted_rows) === 150)}><ShieldCheck size={16}/>{bulkPublishing?'Publishing 150 questions…':'Review publication of 150-question batch'}</button><small>Requires a batch summary, a confirmation dialog and typing PUBLISH 150. If all 150 are already published, no action is taken.</small></div>
+    </div>
     <div className="analytics-toolbar"><div className="analytics-controls"><label>Review state <select value={filter} onChange={e=>setFilter(e.target.value)}><option value="all">All states</option>{statuses.map(s=><option key={s} value={s}>{s}</option>)}</select></label><label><Search size={15}/> Search <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Question, subject or topic"/></label></div><span>{visible.length} shown</span></div>
     {form ? <div className="system-settings-panel" style={{marginBottom:18}}><div className="analytics-toolbar"><h3>{form.id?'Edit question':'Create question'}</h3><button className="secondary" onClick={()=>setForm(null)}><X size={16}/> Close</button></div>
       <div className="admin-form-grid">
