@@ -121,6 +121,18 @@ export default function CbtQuestionBankAdmin() {
       setError(`Bulk publication stopped: the exact import batch contains ${targets.length} eligible questions after batch-ID verification; exactly 150 are required. No publication was attempted.`);
       return;
     }
+    const subjectCounts = targets.reduce((counts: Record<string, number>, q) => {
+      counts[q.subject] = (counts[q.subject] || 0) + 1;
+      return counts;
+    }, {});
+    const incorrectSubjects = ['Christian Religious Studies','Commerce','Principles of Accounts']
+      .filter(subject => subjectCounts[subject] !== 50);
+    if (incorrectSubjects.length) {
+      setError('Bulk publication stopped: each of the three subjects must contain exactly 50 questions in this import batch. Actual counts: ' +
+        ['Christian Religious Studies','Commerce','Principles of Accounts'].map(subject => subject + ': ' + (subjectCounts[subject] || 0)).join(', ') +
+        '. No publication was attempted.');
+      return;
+    }
     const statusCounts = targets.reduce((counts: Record<string, number>, q) => {
       counts[q.status] = (counts[q.status] || 0) + 1;
       return counts;
@@ -144,7 +156,7 @@ export default function CbtQuestionBankAdmin() {
       `Current states: ${statusSummary || 'none'}`,
       '',
       'This action advances eligible questions through review, approval and publication. Published questions become available to students. Importing drafts does NOT do this.',
-    ].join('\\n');
+    ].join('\n');
     if (!window.confirm(confirmation)) return;
     if (window.prompt('To confirm publication, type exactly: PUBLISH 150') !== 'PUBLISH 150') {
       setMessage('Publication cancelled. No questions were changed.');
