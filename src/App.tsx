@@ -2935,7 +2935,7 @@ function App() {
               const Icon = card.icon;
               return (
                 <a
-                  className="discovery-card"
+                  className={card.title === 'More Services' ? 'discovery-card discovery-card--wide' : 'discovery-card'}
                   href={card.href}
                   key={card.title}
                   onClick={() => { if ('filter' in card && card.filter) setOppFilter(card.filter); if ('updateFilter' in card && card.updateFilter) setUpdateFilter(card.updateFilter); }}
@@ -3067,9 +3067,13 @@ function App() {
                   <small>{x.date || 'EDUKEN Update'}</small>
                   <h3>{x.title}</h3>
                   <RichContent text={x.body || 'Open the update for the full information.'} className="rich-content update-rich-content" />
-                  {x.sourceUrl && (
+                  {x.sourceUrl ? (
                     <a href={x.sourceUrl} target="_blank" rel="noreferrer">
                       Official Source <ArrowRight size={14} />
+                    </a>
+                  ) : (
+                    <a href="#updates">
+                      Browse updates <ArrowRight size={14} />
                     </a>
                   )}
                 </article>
@@ -3508,8 +3512,8 @@ function App() {
                     View Source <ArrowRight size={14} />
                   </a>
                 ) : (
-                  <a href="#discover">
-                    Explore EDUKEN <ArrowRight size={14} />
+                  <a href="#updates">
+                    Browse updates <ArrowRight size={14} />
                   </a>
                 )}
               </article>
