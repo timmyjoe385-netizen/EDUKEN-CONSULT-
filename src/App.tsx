@@ -2796,8 +2796,8 @@ function App() {
         <section id="home" className="hero">
           <div className="hero-copy">
             <div className="eyebrow">
-              <span /> TRUSTED UPDATES • STUDENT-FOCUSED • OFFICIAL SOURCES
-              WHERE AVAILABLE
+              <span aria-hidden="true" />
+              <span className="eyebrow-text">TRUSTED UPDATES • STUDENT-FOCUSED • OFFICIAL SOURCES WHERE AVAILABLE</span>
             </div>
             <h1>
               Welcome to
