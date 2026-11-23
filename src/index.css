@@ -4494,3 +4494,25 @@ html:not([data-theme="dark"]) .site .faq.section {
   .rich-editor-toolbar button { flex: 1 1 auto; }
   .rich-content-preview { max-height: 220px; overflow: auto; }
 }
+
+
+/* EDUKEN Quick Draft Inbox — isolated release */
+.quick-draft-panel{max-width:900px;margin:0 auto;padding:22px;border:1px solid #dce6de;border-radius:18px;background:#fff;box-shadow:0 12px 36px rgba(18,71,52,.06)}
+.quick-draft-intro{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
+.quick-draft-icon{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:13px;color:#124734;background:#eaf4ed}
+.quick-draft-intro h2{margin:0 0 5px;color:#202923;font-size:20px}
+.quick-draft-intro p{margin:0;color:#627168;font-size:13px;line-height:1.6}
+.quick-draft-safety{display:flex;align-items:flex-start;gap:9px;padding:12px 13px;margin-bottom:20px;border:1px solid #d6e9dc;border-radius:11px;color:#285c43;background:#f1f8f3;font-size:12px;line-height:1.55}
+.quick-draft-safety svg{flex:0 0 auto;margin-top:1px}
+.quick-draft-form{display:grid;gap:15px}
+.quick-draft-form label{display:grid;gap:7px;color:#34443a;font-size:12px;font-weight:700}
+.quick-draft-form input,.quick-draft-form select,.quick-draft-form textarea{width:100%;min-width:0;border:1px solid #d5dfd8;border-radius:10px;padding:12px 13px;color:#202923;background:#fff;font-size:14px;font-weight:400}
+.quick-draft-form textarea{resize:vertical;line-height:1.6}
+.quick-draft-form input:focus,.quick-draft-form select:focus,.quick-draft-form textarea:focus{outline:3px solid rgba(183,220,198,.65);border-color:#397454}
+.quick-draft-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:3px}
+.quick-draft-actions button{cursor:pointer}
+.quick-draft-actions button:disabled{opacity:.65;cursor:wait}
+.quick-draft-error,.quick-draft-success{margin:0;padding:11px 13px;border-radius:9px;font-size:13px;line-height:1.5}
+.quick-draft-error{color:#8c2f2f;background:#fff2f0;border:1px solid #f1d2cc}
+.quick-draft-success{color:#285c43;background:#f1f8f3;border:1px solid #d6e9dc}
+@media(max-width:640px){.quick-draft-panel{padding:16px;border-radius:14px}.quick-draft-intro h2{font-size:18px}.quick-draft-actions{display:grid;grid-template-columns:1fr}.quick-draft-actions button{justify-content:center;min-height:44px}}
