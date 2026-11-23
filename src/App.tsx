@@ -33,6 +33,7 @@ const PlatformHub = lazy(() => import('./PlatformHub'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
+const QuickDraftInbox = lazy(() => import('./QuickDraftInbox'));
 const CbtMonitoringAdmin = lazy(() => import('./CbtMonitoringAdmin'));
 
 const SectionLoading = () => <div className="section-loading" role="status" aria-live="polite">Loading this section…</div>;
@@ -1661,6 +1662,7 @@ function App() {
         <div className="admin-layout">
           <aside className="admin-side">
             {[
+              'quick-drafts',
               'opportunities',
               'admissions',
               'updates',
@@ -1684,10 +1686,12 @@ function App() {
                   if (tab === 'analytics') loadAnalytics();
                   else if (tab === 'system-settings') loadSystemSettings();
                   else if (tab === 'system-health') loadSystemHealth();
-                  else if (tab !== 'payments' && tab !== 'cbt-questions' && tab !== 'cbt-monitoring') loadAdmin(tab);
+                  else if (tab !== 'quick-drafts' && tab !== 'payments' && tab !== 'cbt-questions' && tab !== 'cbt-monitoring') loadAdmin(tab);
                 }}
               >
-                {tab === 'opportunities'
+                {tab === 'quick-drafts'
+                  ? '📝 Quick Draft Inbox'
+                  : tab === 'opportunities'
                   ? '🌍 Opportunities'
                   : tab === 'consultations'
                     ? '📩 Consultations'
@@ -1720,9 +1724,9 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'cbt-monitoring' ? 'CBT Monitoring' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'quick-drafts' ? 'Quick Draft Inbox' : adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'cbt-monitoring' ? 'CBT Monitoring' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
-              {adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && adminTab !== 'cbt-monitoring' && (
+              {adminTab !== 'quick-drafts' && adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && adminTab !== 'cbt-monitoring' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                   {adminTab === 'services' && (
                     <button
@@ -1740,7 +1744,9 @@ function App() {
                 </div>
               )}
             </div>
-            {adminTab === 'cbt-monitoring' ? (
+            {adminTab === 'quick-drafts' ? (
+              <Suspense fallback={<SectionLoading />}><QuickDraftInbox /></Suspense>
+            ) : adminTab === 'cbt-monitoring' ? (
               <Suspense fallback={<SectionLoading />}><CbtMonitoringAdmin /></Suspense>
             ) : adminTab === 'cbt-questions' ? (
               <Suspense fallback={<SectionLoading />}><CbtQuestionBankAdmin /></Suspense>
