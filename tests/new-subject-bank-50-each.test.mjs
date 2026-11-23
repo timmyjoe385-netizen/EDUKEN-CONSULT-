@@ -80,3 +80,12 @@ test("no exact or high-threshold near-duplicate stems occur within a subject",()
     assert.ok(similarity(rows[i].question_text,rows[j].question_text)<0.88,`possible near duplicate rows ${i+2} and ${j+2}`);
   }
 });
+
+test("production prepared-import control uses the exact live hostname in both visibility and click guards", async () => {
+  const component = await readFile(new URL("../src/CbtQuestionBankAdmin.tsx", import.meta.url), "utf8");
+  const productionHost = "https://eduken-consult.timmyjoe385.workers.dev";
+  assert.ok(component.includes("window.location.origin === '" + productionHost + "'"), "production import button must be visible on the official production origin");
+  assert.ok(component.includes("window.location.origin !== '" + productionHost + "'"), "production import handler must reject every other origin");
+  assert.ok(!component.includes("eduken-consult.timmy385.workers.dev"), "the misspelled hostname must not remain");
+  assert.ok(component.includes("usesIsolatedTestBackend"), "isolated-backend safety guard must remain active");
+});
