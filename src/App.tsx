@@ -2796,7 +2796,6 @@ function App() {
         <section id="home" className="hero">
           <div className="hero-copy">
             <div className="eyebrow">
-              <span aria-hidden="true" />
               <span className="eyebrow-text">TRUSTED UPDATES • STUDENT-FOCUSED • OFFICIAL SOURCES WHERE AVAILABLE</span>
             </div>
             <h1>
@@ -2922,6 +2921,7 @@ function App() {
           <div className="discovery-grid">
             {[
               { title: 'CBT Practice', description: 'Prepare with EDUKEN practice and mock examinations.', href: '/cbt', icon: Monitor, tone: 'green' },
+              { title: 'Aggregate Score Calculator', description: 'Estimate your admission aggregate using the available school scoring models.', href: '/aggregate-calculator', icon: Calculator, tone: 'mint' },
               { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
               { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
               { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
