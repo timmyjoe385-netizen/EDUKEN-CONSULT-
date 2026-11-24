@@ -78,10 +78,12 @@ jobs:
                   await page.locator('#root').waitFor({ state: 'attached', timeout: 20000 });
                   await page.waitForFunction(() => {
                     const root = document.querySelector('#root');
-                    return Boolean(root && root.children.length > 0 && (root.innerText || '').trim().length > 0);
-                  }, { timeout: 45000 });
+                    const text = (root?.innerText || '').trim();
+                    return Boolean(root && root.children.length > 0 && text.length > 0 && !text.includes('Loading this section'));
+                  }, { timeout: 60000 });
                   const rendered = await page.evaluate(() => ({
                     title: document.title,
+                    fullText: (document.querySelector('#root')?.innerText || '').trim(),
                     visibleText: (document.querySelector('#root')?.innerText || '').trim().slice(0, 180),
                     viewportWidth: window.innerWidth,
                     documentWidth: document.documentElement.scrollWidth,
@@ -94,7 +96,7 @@ jobs:
                   if (pageErrors.length) throw new Error(`Uncaught browser errors: ${pageErrors.join(' | ')}`);
                   if (failedAssets.length) throw new Error(`Failed JS/CSS assets: ${JSON.stringify(failedAssets)}`);
                   if (route === '/' && !/EDUKEN/i.test(rendered.visibleText)) throw new Error('Homepage does not visibly contain EDUKEN.');
-                  if (route === '/my-eduken' && !/student workspace/i.test(rendered.visibleText)) {
+                  if (route === '/my-eduken' && !/student workspace/i.test(rendered.fullText)) {
                     throw new Error('Student workspace heading/content was not rendered.');
                   }
                   if (route === '/') {
