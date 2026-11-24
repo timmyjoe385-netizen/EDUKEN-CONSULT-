@@ -200,7 +200,7 @@ export const auth = {
   isSignedIn: () => Boolean(readSession()?.access_token),
   isGoogleSignedIn: () => {
     const user = readSession()?.user;
-    return Boolean(user && (user.app_metadata?.provider === 'google' || user.identities?.some((identity: any) => identity.provider === 'google')));
+    return Boolean(user && (user.app_metadata?.provider === 'google' || (Array.isArray(user.identities) && user.identities.some((identity: any) => identity?.provider === 'google'))));
   },
   signIn: async (_options?: any) => {
     const redirectTo = window.location.origin + window.location.pathname;
