@@ -31,6 +31,8 @@ import {
 } from 'lucide-react';
 const PlatformHub = lazy(() => import('./PlatformHub'));
 const AdmissionsPage = lazy(() => import('./AdmissionsPage'));
+const OpportunitiesPage = lazy(() => import('./OpportunitiesPage'));
+const NewsroomPage = lazy(() => import('./NewsroomPage'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
@@ -2606,6 +2608,34 @@ function App() {
         <footer>
           <div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div>
         </footer>
+      </div>
+    );
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/opportunities') {
+    return (
+      <div className="site opportunities-route">
+        <header className="nav">
+          <a className="brand" href="/"><img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" /><span>EDUKEN <b>CONSULT</b></span></a>
+          <nav className="nav-links"><a href="/">Home</a><a href="/admissions">Admissions</a><a href="/newsroom">Newsroom</a><a href="/services">Services</a></nav>
+          <div className="auth-nav-actions">{themeToggle}<a className="header-sign-in" href="/my-eduken">My EDUKEN</a></div>
+        </header>
+        <Suspense fallback={<SectionLoading />}><OpportunitiesPage opportunities={content.opportunities} loading={loading} /></Suspense>
+        <footer><div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div></footer>
+      </div>
+    );
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/newsroom') {
+    return (
+      <div className="site newsroom-route">
+        <header className="nav">
+          <a className="brand" href="/"><img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" /><span>EDUKEN <b>CONSULT</b></span></a>
+          <nav className="nav-links"><a href="/">Home</a><a href="/admissions">Admissions</a><a href="/opportunities">Opportunities</a><a href="/services">Services</a></nav>
+          <div className="auth-nav-actions">{themeToggle}<a className="header-sign-in" href="/my-eduken">My EDUKEN</a></div>
+        </header>
+        <Suspense fallback={<SectionLoading />}><NewsroomPage updates={content.updates} loading={loading} /></Suspense>
+        <footer><div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div></footer>
       </div>
     );
   }
