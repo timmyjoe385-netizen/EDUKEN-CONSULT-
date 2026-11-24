@@ -203,6 +203,21 @@ function App() {
     }
   }, [themePreference]);
 
+  // Keep older EDUKEN links working after moving public feeds to dedicated pages.
+  useEffect(() => {
+    if (window.location.pathname !== '/' && window.location.pathname !== '') return;
+    const hash = window.location.hash;
+    const routes = [
+      { pattern: /^#admissions$/, path: '/admissions' },
+      { pattern: /^#admission\/(.+)$/, path: '/admissions' },
+      { pattern: /^#opportunities$/, path: '/opportunities' },
+      { pattern: /^#opportunity\/(.+)$/, path: '/opportunities' },
+      { pattern: /^#updates$/, path: '/education-news' },
+    ];
+    const match = routes.find(route => route.pattern.test(hash));
+    if (match) window.location.replace(match.path + hash);
+  }, []);
+
   const cycleTheme = () => {
     setThemePreference(current => current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light');
   };
