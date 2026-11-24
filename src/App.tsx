@@ -30,6 +30,7 @@ import {
   X,
 } from 'lucide-react';
 const PlatformHub = lazy(() => import('./PlatformHub'));
+const AdmissionsPage = lazy(() => import('./AdmissionsPage'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
@@ -2596,6 +2597,33 @@ function App() {
         <footer>
           <div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div>
         </footer>
+      </div>
+    );
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/admissions') {
+    return (
+      <div className="site admissions-route">
+        <header className="nav">
+          <a className="brand" href="/">
+            <img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" />
+            <span>EDUKEN <b>CONSULT</b></span>
+          </a>
+          <nav className="nav-links">
+            <a href="/">Home</a>
+            <a href="/opportunities">Opportunities</a>
+            <a href="/newsroom">Newsroom</a>
+            <a href="/services">Services</a>
+          </nav>
+          <div className="auth-nav-actions">
+            {themeToggle}
+            <a className="header-sign-in" href="/my-eduken">My EDUKEN</a>
+          </div>
+        </header>
+        <Suspense fallback={<SectionLoading />}>
+          <AdmissionsPage admissions={content.admissions} loading={loading} />
+        </Suspense>
+        <footer><div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div></footer>
       </div>
     );
   }
