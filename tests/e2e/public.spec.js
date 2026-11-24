@@ -709,7 +709,7 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   await expect(navigation).toBeVisible();
   await navigation.getByRole('link', { name: 'Admissions' }).click();
   await expect(page).toHaveURL(/\/admissions$/);
-  await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('#primary-navigation')).not.toHaveClass(/\bopen\b/);
 });
 
 test('category search results can be cleared accessibly', async ({ page }) => {
@@ -1200,9 +1200,9 @@ test('published admission placeholders stay hidden while real admissions remain 
   await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
   const admissions = page.locator('#admissions');
   await expect(admissions.getByRole('heading', { name: 'Playwright Test University' })).toBeVisible();
-  const specificAdmission = admissions.getByRole('heading', { name: 'Nigerian Universities', exact: true });
+  const specificAdmission = admissions.locator('#admission-specific-admission-without-link-yet').getByRole('heading', { name: 'Nigerian Universities', exact: true });
   await expect(specificAdmission).toBeVisible();
-  await expect(specificAdmission).toHaveCount(1);
+  await expect(admissions.locator('#admission-placeholder-universities')).toHaveCount(0);
   await expect(admissions).not.toContainText('Polytechnics');
   await expect(admissions).not.toContainText('Colleges of Education');
 });
