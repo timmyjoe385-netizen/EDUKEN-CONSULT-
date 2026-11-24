@@ -709,6 +709,8 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   await expect(navigation).toBeVisible();
   await navigation.getByRole('link', { name: 'Admissions' }).click();
   await expect(page).toHaveURL(/\/admissions$/);
+  await page.waitForLoadState('domcontentloaded');
+  await expect(page.locator('#root')).not.toBeEmpty();
   await expect(page.locator('#primary-navigation')).not.toHaveClass(/\bopen\b/);
 });
 
