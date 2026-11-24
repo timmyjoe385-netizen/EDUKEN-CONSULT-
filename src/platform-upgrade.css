@@ -1125,3 +1125,148 @@ html[data-theme="dark"] .site .update-card > a {
   .student-category-card strong { font-size: 12px; }
   .student-category-card small { font-size: 10px; }
 }
+
+
+/* EDUKEN readability pass: stronger body-copy sizing and contrast without
+   changing the existing information architecture or card layouts. */
+.site .hero .eyebrow {
+  color: #eff8f1 !important;
+  font-size: 11px;
+  line-height: 1.65;
+  letter-spacing: .07em;
+}
+.site .hero p {
+  color: #f3f8f4;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.site .section-head p,
+.site .spotlight-card p,
+.site .newsroom-card p,
+.site .update-card .rich-content,
+.site .journey-section p,
+.site .faq-row p {
+  color: #4d6054;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.site .discovery-card__copy strong {
+  font-size: 13px;
+  line-height: 1.35;
+}
+.site .discovery-card__copy small {
+  color: #4f6257;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.site .update-card > small,
+.site .article-meta,
+.site .article-note {
+  color: #52645a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.site .final-cta p {
+  color: #f3f8f4;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.site .trust-points span { font-size: 14px; line-height: 1.5; }
+.site .stats span { color: #53645a; font-size: 13px; line-height: 1.5; }
+.site .footer-main p { color: #b1c2b8; font-size: 14px; line-height: 1.7; }
+.site .footer-main > div:not(:first-child) { color: #b1c2b8; font-size: 13px; }
+.site .footer-bottom { color: #aabbb1; font-size: 11px; line-height: 1.5; }
+.site .faq-row p { color: #52645a; font-size: 14px; }
+.site .hero-actions .primary { font-size: 14px; }
+.site .closed-opportunity-card { opacity: 1; }
+.site .closed-opportunity-card h3 { color: #34483b; }
+.site .closed-opportunity-card p,
+.site .closed-opportunity-card small { color: #52645a; font-size: 13px; line-height: 1.6; }
+
+/* Older public listing and service components still used on secondary pages. */
+.site .opp-card p,
+.site .admission-card p,
+.site .whatsapp-cta p,
+.site .services-page-card > p,
+.site .services-page-help p,
+.site .services-page-safety,
+.site .services-request-steps__grid p {
+  color: #4f6157;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.site .tag,
+.site .admission-top,
+.site .admission-card small,
+.site .opp-foot span,
+.site .service-row span,
+.site .opportunity-status {
+  font-size: 12px;
+  line-height: 1.45;
+}
+.site .admission-top b { font-size: 11px; }
+.site .service-row b { line-height: 1.4; }
+
+/* Admin and install guidance: keep supporting text legible, not decorative. */
+.admin-item p { color: #52645a; font-size: 14px; line-height: 1.6; }
+.admin-item small,
+.admin-editor label,
+.install-sheet p,
+.install-sheet ol,
+.analytics-cards article small,
+.analytics-cards article span {
+  color: #52645a;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.rich-editor-hint { color: #52645a; font-size: 12px; }
+
+html[data-theme="dark"] .site .section-head p,
+html[data-theme="dark"] .site .spotlight-card p,
+html[data-theme="dark"] .site .newsroom-card p,
+html[data-theme="dark"] .site .update-card .rich-content,
+html[data-theme="dark"] .site .journey-section p,
+html[data-theme="dark"] .site .faq-row p,
+html[data-theme="dark"] .site .trust-points span,
+html[data-theme="dark"] .site .stats span,
+html[data-theme="dark"] .site .footer-main p,
+html[data-theme="dark"] .site .footer-main > div:not(:first-child),
+html[data-theme="dark"] .site .footer-bottom,
+html[data-theme="dark"] .site .opp-card p,
+html[data-theme="dark"] .site .admission-card p,
+html[data-theme="dark"] .site .whatsapp-cta p,
+html[data-theme="dark"] .site .services-page-card > p,
+html[data-theme="dark"] .site .services-page-help p,
+html[data-theme="dark"] .site .services-page-safety,
+html[data-theme="dark"] .site .services-request-steps__grid p,
+html[data-theme="dark"] .site .closed-opportunity-card p,
+html[data-theme="dark"] .site .closed-opportunity-card small {
+  color: #c2d2c7;
+}
+html[data-theme="dark"] .site .closed-opportunity-card h3 { color: #e0ebe3; }
+
+@media (max-width: 700px) {
+  .site .hero .eyebrow { font-size: 11px; }
+  .site .hero p {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .site .hero-actions .primary { font-size: 13px; }
+  .site .discovery-card__copy strong { font-size: 11.5px; line-height: 1.35; }
+  .site .discovery-card__copy small { font-size: 12px; }
+  .site .update-card h3 { font-size: 15px; }
+  .site .update-card > small { font-size: 12px; }
+  .site .section-head p,
+  .site .spotlight-card p,
+  .site .newsroom-card p,
+  .site .update-card .rich-content { font-size: 14px; }
+  .site .final-cta p { font-size: 14px; }
+  .site .footer-main p { font-size: 13px; }
+  .site .footer-main > div:not(:first-child) { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .site .hero h1 { font-size: 25px; }
+  .site .hero p { font-size: 13px; }
+  .site .discovery-card__copy strong { font-size: 11px; }
+}
