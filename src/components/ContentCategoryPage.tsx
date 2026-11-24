@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Item = Record<string, any> & { id: string };
 type Category = 'jamb-news' | 'admissions' | 'scholarships' | 'education-news' | 'school-updates' | 'jobs-internships' | 'opportunities';
 
@@ -58,12 +56,19 @@ export default function ContentCategoryPage({ category, opportunities, admission
 
   return <main className="content-category-page">
     <div className="content-category-page__inner">
+      <nav className="content-category-page__nav" aria-label="EDUKEN navigation">
+        <a className="content-category-page__brand" href="/">EDUKEN <strong>CONSULT</strong></a>
+        <div><a href="/jamb-news">JAMB News</a><a href="/admissions">Admissions</a><a href="/scholarships">Scholarships</a><a href="/jobs-internships">Jobs</a></div>
+      </nav>
       <div className="content-category-page__breadcrumb"><a href="/">Home</a><span>›</span><span>{config.title}</span></div>
       <header className="content-category-page__hero">
         <span className="kicker">{config.kicker}</span>
         <h1>{config.title}</h1>
         <p>{config.intro}</p>
       </header>
+      <nav className="content-category-page__quicklinks" aria-label="More EDUKEN categories">
+        <a href="/jamb-news">JAMB News</a><a href="/admissions">Admissions</a><a href="/scholarships">Scholarships & Grants</a><a href="/education-news">Educational News</a><a href="/school-updates">School Updates</a><a href="/jobs-internships">Internships & Jobs</a>
+      </nav>
       <p className="content-category-page__count" role="status" aria-live="polite">{loading ? 'Loading published information…' : items.length + ' published item(s)'}</p>
       {loading ? <div className="content-category-page__empty">Please wait while published information loads.</div> :
         items.length === 0 ? <div className="content-category-page__empty">There are no matching published items in this section yet. Please check back later as EDUKEN publishes verified updates.</div> :
