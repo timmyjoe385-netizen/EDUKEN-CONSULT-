@@ -243,6 +243,7 @@ test('customer workspace exposes the optional EDUKEN wallet without replacing pu
   await expect(workspace.getByRole('heading', { name: 'Smart Alerts' })).toBeVisible();
   await expect(workspace.getByText(/Background push notifications are not available yet/i)).toBeVisible();
   await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
 });
 
