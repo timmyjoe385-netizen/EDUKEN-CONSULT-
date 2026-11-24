@@ -39,7 +39,12 @@ export default function ContentCategoryPage({ category, opportunities, admission
   useEffect(() => {
     const match = window.location.hash.match(/^#(?:admission\/|admission-)(.+)$/);
     if (!match) return;
-    const targetId = decodeURIComponent(match[1]);
+    let targetId = '';
+    try {
+      targetId = decodeURIComponent(match[1]);
+    } catch {
+      return;
+    }
     window.requestAnimationFrame(() => {
       document.getElementById('admission-' + targetId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
@@ -73,7 +78,7 @@ export default function ContentCategoryPage({ category, opportunities, admission
   const dateLabel = (value: string) => {
     if (!value) return '';
     const parsed = new Date(value);
-    return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' });
+    return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   };
 
   return <main id={key === 'admissions' ? 'admissions' : key === 'education-news' ? 'updates' : key === 'opportunities' ? 'opportunities' : undefined} className="content-category-page">
