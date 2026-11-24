@@ -4540,3 +4540,28 @@ html:not([data-theme="dark"]) .site .faq.section {
 .quick-draft-error{color:#8c2f2f;background:#fff2f0;border:1px solid #f1d2cc}
 .quick-draft-success{color:#285c43;background:#f1f8f3;border:1px solid #d6e9dc}
 @media(max-width:640px){.quick-draft-panel{padding:16px;border-radius:14px}.quick-draft-intro h2{font-size:18px}.quick-draft-actions{display:grid;grid-template-columns:1fr}.quick-draft-actions button{justify-content:center;min-height:44px}}
+
+/* Keep the public homepage a concise discovery hub. Full listings live on their
+   dedicated routes so students do not have to scroll through repeated content. */
+.home-compact main > #opportunities,
+.home-compact main > #admissions,
+.home-compact main > #jamb-services,
+.home-compact main > #general-services,
+.home-compact main > #contact,
+.home-compact main > #updates,
+.home-compact main > #about,
+.home-compact main > .faq,
+.home-compact main > .final-cta {
+  display: none;
+}
+.home-compact main > #featured {
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+.home-compact main > #featured .section-head p {
+  max-width: 540px;
+}
+.home-compact main > #email-alerts {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
