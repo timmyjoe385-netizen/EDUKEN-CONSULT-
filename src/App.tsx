@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import RichContent from './components/RichContent';
+import ContentCategoryPage from './components/ContentCategoryPage';
 import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
@@ -84,6 +85,8 @@ const emptyContent: Content = {
 function App() {
   const [menu, setMenu] = useState(false);
   const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
+  const categoryPageSlug = window.location.pathname.replace(/\/+$/, '').slice(1);
+  const isContentCategoryPage = ['jamb-news', 'scholarships', 'school-updates', 'jobs-internships'].includes(categoryPageSlug);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [updateFilter, setUpdateFilter] = useState('All updates');
@@ -2667,6 +2670,10 @@ function App() {
     );
   }
 
+  if (isContentCategoryPage) {
+    return <ContentCategoryPage category={categoryPageSlug} opportunities={content.opportunities} admissions={content.admissions} updates={content.updates} loading={loading} />;
+  }
+
   if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
   }
@@ -2705,6 +2712,7 @@ function App() {
               {x}
             </a>
           ))}
+          <a href="/jamb-news" onClick={() => setMenu(false)}>JAMB News</a>
           <a href="/services" onClick={() => setMenu(false)}>Services</a>
           <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
           <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
@@ -3030,10 +3038,10 @@ function App() {
               { title: 'Aggregate Score Calculator', description: 'Estimate your admission aggregate using the available school scoring models.', href: '/aggregate-calculator', icon: Calculator, tone: 'mint' },
               { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
               { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '/admissions', icon: BookOpen, tone: 'green' },
-              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/opportunities', icon: Sparkles, tone: 'mint' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/scholarships', icon: Sparkles, tone: 'mint' },
               { title: 'Educational News', description: 'Read important education and examination updates.', href: '/newsroom', icon: Newspaper, tone: 'green' },
-              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '/admissions', icon: GraduationCap, tone: 'mint' },
-              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/opportunities', icon: BriefcaseBusiness, tone: 'green' },
+              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '/school-updates', icon: GraduationCap, tone: 'mint' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/jobs-internships', icon: BriefcaseBusiness, tone: 'green' },
               { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
               { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '/opportunities', icon: Laptop, tone: 'green' },
               { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '/services', icon: Plus, tone: 'mint' },
