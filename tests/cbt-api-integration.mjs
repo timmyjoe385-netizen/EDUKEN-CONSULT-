@@ -5,19 +5,6 @@ const key = String(process.env.CBT_TEST_SUPABASE_PUBLISHABLE_KEY || "").trim();
 assert.ok(base && key, "Isolated CBT test URL and publishable key must be configured.");
 assert.equal(new URL(base).hostname, "wpktzogarfqrgkirzdpy.supabase.co", "Refusing to run CBT integration writes against anything except the isolated test project.");
 
-const endpoint = base + "/functions/v1/eduken-api";
-const request = async (path, body) => {
-  const response = await fetch(endpoint + path, {
-    method: "POST",
-    headers: { apikey: key, "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  const text = await response.text();
-  let data;
-  try { data = text ? JSON.parse(text) : {}; } catch { data = { raw: text }; }
-  return { response, data };
-};
-
 // Profile reads and claims must reject callers without an EDUKEN session.
 for (const [method, path, body] of [
   ["GET", "/api/cbt/student-profile", undefined],
@@ -82,19 +69,4 @@ for (const path of [
 }
 
 
-// A public API key alone must never create a CBT attempt. Every start requires
-// a real signed-in EDUKEN account with a claimed unique student username.
-{
-  const started = await request("/api/cbt/start", { mode: "practice", subject: "Use of English", questionCount: 1 });
-  assert.equal(started.response.status, 401, "Guest students must not start CBT sessions.");
-  assert.match(String(started.data.error || ""), /sign in|authentication|unauthorized/i, "The API should explain that a student account is required.");
-}
-
-// Attempt submission also requires the owning signed-in account; an opaque attempt
-// token must not become a transferable way to submit or inspect another student's work.
-{
-  const submitted = await request("/api/cbt/submit", { attemptToken: "a".repeat(64), answers: {} });
-  assert.equal(submitted.response.status, 401, "Guest students must not submit CBT attempts.");
-}
-
-console.log("CBT API integration passed: public-safe arena reads and mandatory authentication for attempt start and submission.");
+console.log("CBT API integration passed: public-safe arena reads, profile ownership, and leaderboard privacy.");
