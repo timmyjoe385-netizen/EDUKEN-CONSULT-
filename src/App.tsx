@@ -2247,7 +2247,7 @@ function App() {
           </a>
           <nav className="nav-links open">
             <a href="#home">Home</a>
-            <a href="#opportunities">Opportunities</a>
+            <a href="/opportunities">Opportunities</a>
             <a href="#contact">Contact</a>
             {!installed && (
               <button className="install-nav" onClick={installApp}>
@@ -2441,7 +2441,7 @@ function App() {
             <div>
               <b>Explore</b>
               <a href="/#opportunities">Opportunities</a>
-              <a href="/#updates">Updates</a>
+              <a href="/education-news">Updates</a>
             </div>
             <div>
               <b>Connect</b>
@@ -2603,14 +2603,14 @@ function App() {
           </span>
         </a>
         <nav id="primary-navigation" className={menu ? 'nav-links open' : 'nav-links'}>
-          {['Home', 'Opportunities', 'Admissions', 'Updates'].map(x => (
-            <a
-              key={x}
-              href={(isServicesPage ? '/' : '') + '#' + x.toLowerCase()}
-              onClick={() => setMenu(false)}
-            >
-              {x}
-            </a>
+          {[
+            { label: 'Home', href: '/' },
+            { label: 'Opportunities', href: '/opportunities' },
+            { label: 'Admissions', href: '/admissions' },
+            { label: 'JAMB News', href: '/jamb-news' },
+            { label: 'Education News', href: '/education-news' },
+          ].map(item => (
+            <a key={item.label} href={item.href} onClick={() => setMenu(false)}>{item.label}</a>
           ))}
           <a href="/services" onClick={() => setMenu(false)}>Services</a>
           <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
@@ -3832,9 +3832,9 @@ function App() {
           </div>
           <div>
             <b>Explore</b>
-            <a href="#admissions">Admissions</a>
-            <a href="#opportunities">Opportunities</a>
-            <a href="#updates">Updates</a>
+            <a href="/admissions">Admissions</a>
+            <a href="/opportunities">Opportunities</a>
+            <a href="/education-news">Education News</a>
           </div>
           <div>
             <b>Services</b>
