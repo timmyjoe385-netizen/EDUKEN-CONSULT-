@@ -1,0 +1,128 @@
+name: EDUKEN production read-only browser QA
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/production-readonly-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  production-browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install chromium --with-deps
+      - name: Check production pages on mobile and desktop
+        env:
+          EDUKEN_PRODUCTION_URL: https://eduken-consult.timmyjoe385.workers.dev
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          mkdir -p test-results
+          node --input-type=module <<'NODE'
+          import { chromium } from '@playwright/test';
+          import { mkdir } from 'node:fs/promises';
+
+          const base = process.env.EDUKEN_PRODUCTION_URL;
+          if (!base) throw new Error('EDUKEN_PRODUCTION_URL is required.');
+          const routes = ['/', '/admissions', '/opportunities', '/newsroom', '/my-eduken'];
+          const browser = await chromium.launch({ headless: true });
+          const results = [];
+          const failures = [];
+
+          try {
+            for (const viewport of [
+              { name: 'mobile', width: 390, height: 844, isMobile: true, hasTouch: true },
+              { name: 'desktop', width: 1440, height: 900, isMobile: false, hasTouch: false },
+            ]) {
+              for (const route of routes) {
+                const page = await browser.newPage({
+                  viewport: { width: viewport.width, height: viewport.height },
+                  deviceScaleFactor: viewport.isMobile ? 2 : 1,
+                  isMobile: viewport.isMobile,
+                  hasTouch: viewport.hasTouch,
+                });
+                const pageErrors = [];
+                const failedAssets = [];
+                page.on('pageerror', error => pageErrors.push(error.message));
+                page.on('requestfailed', request => {
+                  if (/\.(?:m?js|css)(?:\?|$)/i.test(request.url())) {
+                    failedAssets.push({ url: request.url(), error: request.failure()?.errorText || 'request failed' });
+                  }
+                });
+                page.on('response', response => {
+                  if (response.status() >= 400 && /\.(?:m?js|css)(?:\?|$)/i.test(response.url())) {
+                    failedAssets.push({ url: response.url(), error: `HTTP ${response.status()}` });
+                  }
+                });
+
+                try {
+                  const url = new URL(route, base);
+                  url.searchParams.set('readonly-qa', process.env.GITHUB_SHA || 'manual');
+                  const response = await page.goto(url.toString(), { waitUntil: 'domcontentloaded', timeout: 60000 });
+                  if (!response || response.status() !== 200) {
+                    throw new Error(`Expected HTTP 200; received ${response?.status() ?? 'no response'}`);
+                  }
+                  await page.locator('#root').waitFor({ state: 'attached', timeout: 20000 });
+                  await page.waitForFunction(() => {
+                    const root = document.querySelector('#root');
+                    return Boolean(root && root.children.length > 0 && (root.innerText || '').trim().length > 0);
+                  }, { timeout: 45000 });
+                  const rendered = await page.evaluate(() => ({
+                    title: document.title,
+                    visibleText: (document.querySelector('#root')?.innerText || '').trim().slice(0, 180),
+                    viewportWidth: window.innerWidth,
+                    documentWidth: document.documentElement.scrollWidth,
+                    rootChildren: document.querySelector('#root')?.children.length || 0,
+                  }));
+                  if (!/EDUKEN CONSULT/i.test(rendered.title)) throw new Error(`Unexpected document title: ${rendered.title}`);
+                  if (rendered.documentWidth > rendered.viewportWidth + 2) {
+                    throw new Error(`Horizontal overflow: viewport ${rendered.viewportWidth}px, document ${rendered.documentWidth}px`);
+                  }
+                  if (pageErrors.length) throw new Error(`Uncaught browser errors: ${pageErrors.join(' | ')}`);
+                  if (failedAssets.length) throw new Error(`Failed JS/CSS assets: ${JSON.stringify(failedAssets)}`);
+                  if (route === '/' && !/EDUKEN/i.test(rendered.visibleText)) throw new Error('Homepage does not visibly contain EDUKEN.');
+                  if (route === '/my-eduken' && !/student workspace/i.test(rendered.visibleText)) {
+                    throw new Error('Student workspace heading/content was not rendered.');
+                  }
+                  if (route === '/') {
+                    await page.screenshot({ path: `test-results/production-home-${viewport.name}.png`, fullPage: true });
+                  }
+                  results.push({ viewport: viewport.name, route, status: response.status(), ...rendered });
+                  console.log(`PASS ${viewport.name} ${route}: HTTP ${response.status()}`);
+                } catch (error) {
+                  failures.push({ viewport: viewport.name, route, error: String(error), pageErrors, failedAssets });
+                  await page.screenshot({ path: `test-results/production-failure-${viewport.name}-${route.replaceAll('/', '_') || 'home'}.png`, fullPage: true }).catch(() => {});
+                  console.error(`FAIL ${viewport.name} ${route}: ${String(error)}`);
+                } finally {
+                  await page.close();
+                }
+              }
+            }
+          } finally {
+            await browser.close();
+          }
+
+          console.log(JSON.stringify({ passed: results.length, failed: failures.length, results, failures }, null, 2));
+          if (failures.length) process.exitCode = 1;
+          NODE
+      - name: Upload production QA screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: eduken-production-readonly-qa
+          path: test-results/*.png
+          if-no-files-found: ignore
+          retention-days: 14
