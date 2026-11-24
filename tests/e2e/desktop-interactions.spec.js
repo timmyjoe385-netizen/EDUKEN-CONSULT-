@@ -10,6 +10,7 @@ const fixture = {
     deadline: '30 December 2026',
     source_url: 'https://example.org/opportunity',
     is_published: true,
+    featured: true,
     verified: true,
   }],
   admissions: [],
@@ -27,6 +28,20 @@ async function mockPublicContent(page) {
     }),
   );
 }
+
+
+test('featured opportunity View details opens the article on the first click', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const featuredCard = page.locator('.spotlight-card').filter({
+    has: page.getByRole('heading', { name: 'One Click Scholarship Fixture' }),
+  });
+  await expect(featuredCard).toBeVisible();
+  await featuredCard.getByRole('button', { name: 'View details' }).click();
+  await expect(page).toHaveURL(/#opportunity\/one-click-scholarship-fixture$/);
+  await expect(page.locator('.article-page').getByRole('heading', { name: 'One Click Scholarship Fixture' })).toBeVisible();
+  await expect(page.locator('.article-page')).toContainText('A concise preview.');
+});
 
 test('opportunity details expand on the first click and collapse on the next click', async ({ page }) => {
   await mockPublicContent(page);
