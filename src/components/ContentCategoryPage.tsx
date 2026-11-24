@@ -76,7 +76,7 @@ export default function ContentCategoryPage({ category, opportunities, admission
     return Number.isNaN(parsed.getTime()) ? value : parsed.toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' });
   };
 
-  return <main className="content-category-page">
+  return <main id={key === 'admissions' ? 'admissions' : key === 'education-news' ? 'updates' : key === 'opportunities' ? 'opportunities' : undefined} className="content-category-page">
     <div className="content-category-page__inner">
       <nav className="content-category-page__nav" aria-label="EDUKEN navigation">
         <a className="content-category-page__brand" href="/">EDUKEN <strong>CONSULT</strong></a>
