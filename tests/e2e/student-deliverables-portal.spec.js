@@ -25,7 +25,7 @@ test('signed-out student documents panel stays private, visible and responsive a
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.emulateMedia({ colorScheme: 'dark' });
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
 
   const panel = page.locator('.student-deliverables');
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');

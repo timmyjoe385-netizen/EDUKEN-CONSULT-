@@ -4540,3 +4540,97 @@ html:not([data-theme="dark"]) .site .faq.section {
 .quick-draft-error{color:#8c2f2f;background:#fff2f0;border:1px solid #f1d2cc}
 .quick-draft-success{color:#285c43;background:#f1f8f3;border:1px solid #d6e9dc}
 @media(max-width:640px){.quick-draft-panel{padding:16px;border-radius:14px}.quick-draft-intro h2{font-size:18px}.quick-draft-actions{display:grid;grid-template-columns:1fr}.quick-draft-actions button{justify-content:center;min-height:44px}}
+
+/* Keep the public homepage a concise discovery hub. Full listings live on their
+   dedicated routes so students do not have to scroll through repeated content. */
+.home-compact main > #opportunities,
+.home-compact main > #admissions,
+.home-compact main > #jamb-services,
+.home-compact main > #general-services,
+.home-compact main > #contact,
+.home-compact main > #updates,
+.home-compact main > #about,
+.home-compact main > .faq,
+.home-compact main > .final-cta {
+  display: none;
+}
+.home-compact main > #featured {
+  padding-top: 36px;
+  padding-bottom: 36px;
+}
+.home-compact main > #featured .section-head p {
+  max-width: 540px;
+}
+.home-compact main > #email-alerts {
+  padding-top: 32px;
+  padding-bottom: 32px;
+}
+
+
+/* Dedicated public hubs: consistent, mobile-first page framing and helpful empty states. */
+.admissions-route,
+.opportunities-route,
+.newsroom-route { min-height: 100vh; background: var(--page, #f6f8f6); }
+.admissions-route main,
+.opportunities-route main,
+.newsroom-route main { width: min(1180px, 90%); margin: 0 auto; padding: 34px 0 76px; }
+.admissions-route .services-page-hero,
+.opportunities-route .services-page-hero,
+.newsroom-route .services-page-hero {
+  position: relative; overflow: hidden; isolation: isolate;
+  padding: clamp(30px, 5vw, 62px); margin: 18px 0 42px;
+  border: 1px solid #dce8df; border-radius: 24px;
+  background: radial-gradient(circle at 88% 12%, rgba(164,211,178,.34), transparent 30%), linear-gradient(125deg,#f1f7f2 0%,#fff 58%,#e8f3eb 100%);
+}
+.admissions-route .services-page-hero::after,
+.opportunities-route .services-page-hero::after,
+.newsroom-route .services-page-hero::after {
+  content: ""; position: absolute; z-index: -1; width: 230px; height: 230px; right: -72px; bottom: -126px;
+  border: 1px solid rgba(35,103,67,.14); border-radius: 50%; box-shadow: 0 0 0 24px rgba(35,103,67,.035),0 0 0 50px rgba(35,103,67,.025);
+}
+.services-page-hero .kicker { color: #32714f; font-size: 10px; font-weight: 800; letter-spacing: .13em; }
+.services-page-hero h1 { max-width: 760px; margin: 14px 0; color: #183b2d; font-size: clamp(34px,5.5vw,58px); line-height: 1.06; letter-spacing: -.045em; }
+.services-page-hero > p { max-width: 690px; color: #5f7167; font-size: clamp(14px,1.5vw,17px); line-height: 1.75; }
+.services-page-actions,.hub-empty-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.services-page-actions a,.hub-empty-actions a { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 11px 16px; border-radius: 10px; text-decoration: none; font-size: 12px; font-weight: 800; }
+.services-page-actions .primary,.hub-empty-actions .primary { background: #17613f; color: #fff; }
+.services-page-actions .secondary,.hub-empty-actions .secondary { background: #fff; border: 1px solid #d5e2d9; color: #24563b; }
+.admissions-route .section,.opportunities-route .section,.newsroom-route .section { padding: 0; }
+.admissions-route .section-head,.opportunities-route .section-head,.newsroom-route .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 22px; }
+.admissions-route .section-head h2,.opportunities-route .section-head h2,.newsroom-route .section-head h2 { margin: 7px 0 0; color: #193b2d; font-size: clamp(23px,3vw,32px); }
+.admissions-route .section-head p,.opportunities-route .section-head p,.newsroom-route .section-head p { max-width: 420px; color: #718078; font-size: 12px; line-height: 1.65; }
+.admissions-route .search,.opportunities-route .search,.newsroom-route .search { max-width: 720px; margin: 0 0 18px; }
+.admissions-route .filters,.opportunities-route .filters,.newsroom-route .filters { margin: 0 0 22px; }
+.admissions-route .admission-grid,.newsroom-route .update-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.opportunities-route .opp-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.hub-empty-state { grid-column: 1/-1; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(24px,4vw,38px); border: 1px dashed #cbdccf; border-radius: 18px; background: linear-gradient(135deg,#fff,#f2f8f3); }
+.hub-empty-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #e3f1e6; font-size: 23px; }
+.hub-empty-state h3 { margin: 16px 0 5px; color: #1b4932; font-size: 21px; }
+.hub-empty-state p { max-width: 580px; margin: 0; color: #68796f; font-size: 13px; line-height: 1.7; }
+.admissions-route .admission-card,.opportunities-route .opp-card,.newsroom-route .update-card { min-width: 0; box-shadow: 0 8px 24px rgba(20,62,40,.045); }
+.admissions-route .admission-card h3,.opportunities-route .opp-card h3,.newsroom-route .update-card h3 { overflow-wrap: anywhere; }
+@media (max-width: 760px) {
+  .admissions-route main,.opportunities-route main,.newsroom-route main { width: min(100% - 28px, 620px); padding: 18px 0 52px; }
+  .admissions-route .services-page-hero,.opportunities-route .services-page-hero,.newsroom-route .services-page-hero { padding: 28px 22px; margin: 8px 0 32px; border-radius: 18px; }
+  .admissions-route .section-head,.opportunities-route .section-head,.newsroom-route .section-head { display: block; }
+  .admissions-route .section-head p,.opportunities-route .section-head p,.newsroom-route .section-head p { margin-top: 9px; }
+  .admissions-route .admission-grid,.newsroom-route .update-grid,.opportunities-route .opp-grid { grid-template-columns: minmax(0,1fr); }
+  .admissions-route .admission-card,.opportunities-route .opp-card,.newsroom-route .update-card { padding: 18px; }
+  .admissions-route .admission-card h3,.opportunities-route .opp-card h3 { font-size: 18px; }
+  .services-page-actions a,.hub-empty-actions a { flex: 1 1 150px; }
+}
+html[data-theme="dark"] .admissions-route,
+html[data-theme="dark"] .opportunities-route,
+html[data-theme="dark"] .newsroom-route { background: #101a15; }
+html[data-theme="dark"] .services-page-hero { background: radial-gradient(circle at 88% 12%,rgba(76,139,96,.2),transparent 30%),linear-gradient(125deg,#172a20,#1b2b22 58%,#203a2b); border-color: #345341; }
+html[data-theme="dark"] .services-page-hero h1,
+html[data-theme="dark"] .admissions-route .section-head h2,
+html[data-theme="dark"] .opportunities-route .section-head h2,
+html[data-theme="dark"] .newsroom-route .section-head h2 { color: #e7f2e9; }
+html[data-theme="dark"] .services-page-hero > p,
+html[data-theme="dark"] .admissions-route .section-head p,
+html[data-theme="dark"] .opportunities-route .section-head p,
+html[data-theme="dark"] .newsroom-route .section-head p { color: #b2c5b8; }
+html[data-theme="dark"] .hub-empty-state { background: #18281e; border-color: #45664f; }
+html[data-theme="dark"] .hub-empty-state h3 { color: #dcefe0; }
+html[data-theme="dark"] .hub-empty-state p { color: #b4c7b8; }

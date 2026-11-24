@@ -30,6 +30,9 @@ import {
   X,
 } from 'lucide-react';
 const PlatformHub = lazy(() => import('./PlatformHub'));
+const AdmissionsPage = lazy(() => import('./AdmissionsPage'));
+const OpportunitiesPage = lazy(() => import('./OpportunitiesPage'));
+const NewsroomPage = lazy(() => import('./NewsroomPage'));
 const CbtPage = lazy(() => import('./CbtPage'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
@@ -107,6 +110,8 @@ function App() {
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
   const [customerSignInRequest, setCustomerSignInRequest] = useState(0);
+  const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
+  const [customerSignInMessage, setCustomerSignInMessage] = useState('');
   const [servicesCustomerSignInOpen, setServicesCustomerSignInOpen] = useState(false);
   const [servicesCustomerSignInMessage, setServicesCustomerSignInMessage] = useState('');
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
@@ -178,6 +183,13 @@ function App() {
       return 'light';
     }
   });
+
+  useEffect(() => {
+    if (customerSignInRequest > 0) {
+      setCustomerSignInMessage('');
+      setCustomerSignInOpen(true);
+    }
+  }, [customerSignInRequest]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -2224,7 +2236,7 @@ function App() {
 
   if (activeOpportunity) {
     return (
-      <div className="site">
+      <div className="site home-compact">
         {toast && (
           <div className="toast">
             <CheckCircle2 size={18} />
@@ -2438,7 +2450,7 @@ function App() {
             <div>
               <b>Explore</b>
               <a href="/#opportunities">Opportunities</a>
-              <a href="/#updates">Updates</a>
+              <a href="/newsroom">Newsroom</a>
             </div>
             <div>
               <b>Connect</b>
@@ -2567,6 +2579,94 @@ function App() {
     );
   }
 
+  if (window.location.pathname.replace(/\/+$/, '') === '/my-eduken') {
+    return (
+      <div className="site my-eduken-page">
+        <header className="nav">
+          <a className="brand" href="/">
+            <img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" />
+            <span>EDUKEN <b>CONSULT</b></span>
+          </a>
+          <nav className="nav-links">
+            <a href="/">Home</a>
+            <a href="/services">Services</a>
+            <a href="/cbt">CBT Practice</a>
+            <a href="/#updates">Updates</a>
+          </nav>
+          <div className="auth-nav-actions">
+            {themeToggle}
+            <a className="header-sign-in" href="/my-eduken">My EDUKEN</a>
+          </div>
+        </header>
+        <Suspense fallback={<SectionLoading />}>
+          <PlatformHub
+            opportunities={content.opportunities}
+            admissions={content.admissions}
+            customerSignInRequest={customerSignInRequest}
+          />
+        </Suspense>
+        <footer>
+          <div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div>
+        </footer>
+      </div>
+    );
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/opportunities') {
+    return (
+      <div className="site opportunities-route">
+        <header className="nav">
+          <a className="brand" href="/"><img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" /><span>EDUKEN <b>CONSULT</b></span></a>
+          <nav className="nav-links"><a href="/">Home</a><a href="/admissions">Admissions</a><a href="/newsroom">Newsroom</a><a href="/services">Services</a></nav>
+          <div className="auth-nav-actions">{themeToggle}<a className="header-sign-in" href="/my-eduken">My EDUKEN</a></div>
+        </header>
+        <Suspense fallback={<SectionLoading />}><OpportunitiesPage opportunities={content.opportunities} loading={loading} /></Suspense>
+        <footer><div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div></footer>
+      </div>
+    );
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/newsroom') {
+    return (
+      <div className="site newsroom-route">
+        <header className="nav">
+          <a className="brand" href="/"><img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" /><span>EDUKEN <b>CONSULT</b></span></a>
+          <nav className="nav-links"><a href="/">Home</a><a href="/admissions">Admissions</a><a href="/opportunities">Opportunities</a><a href="/services">Services</a></nav>
+          <div className="auth-nav-actions">{themeToggle}<a className="header-sign-in" href="/my-eduken">My EDUKEN</a></div>
+        </header>
+        <Suspense fallback={<SectionLoading />}><NewsroomPage updates={content.updates} loading={loading} /></Suspense>
+        <footer><div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div></footer>
+      </div>
+    );
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/admissions') {
+    return (
+      <div className="site admissions-route">
+        <header className="nav">
+          <a className="brand" href="/">
+            <img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" />
+            <span>EDUKEN <b>CONSULT</b></span>
+          </a>
+          <nav className="nav-links">
+            <a href="/">Home</a>
+            <a href="/opportunities">Opportunities</a>
+            <a href="/newsroom">Newsroom</a>
+            <a href="/services">Services</a>
+          </nav>
+          <div className="auth-nav-actions">
+            {themeToggle}
+            <a className="header-sign-in" href="/my-eduken">My EDUKEN</a>
+          </div>
+        </header>
+        <Suspense fallback={<SectionLoading />}>
+          <AdmissionsPage admissions={content.admissions} loading={loading} />
+        </Suspense>
+        <footer><div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div></footer>
+      </div>
+    );
+  }
+
   if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
   }
@@ -2599,7 +2699,7 @@ function App() {
           {['Home', 'Opportunities', 'Admissions', 'Updates'].map(x => (
             <a
               key={x}
-              href={(isServicesPage ? '/' : '') + '#' + x.toLowerCase()}
+              href={x === 'Opportunities' ? '/opportunities' : x === 'Admissions' ? '/admissions' : x === 'Updates' ? '/newsroom' : '/'}
               onClick={() => setMenu(false)}
             >
               {x}
@@ -2648,7 +2748,7 @@ function App() {
         </nav>
         <div className="auth-nav-actions">
           {themeToggle}
-          <a className="header-sign-in" href={isServicesPage ? '/#eduken-platform' : '#eduken-platform'} onClick={() => setMenu(false)} aria-label="My EDUKEN — student workspace">
+          <a className="header-sign-in" href="/my-eduken" onClick={() => setMenu(false)} aria-label="My EDUKEN — student workspace">
             My EDUKEN
           </a>
         </div>
@@ -2929,13 +3029,13 @@ function App() {
               { title: 'CBT Practice', description: 'Prepare with EDUKEN practice and mock examinations.', href: '/cbt', icon: Monitor, tone: 'green' },
               { title: 'Aggregate Score Calculator', description: 'Estimate your admission aggregate using the available school scoring models.', href: '/aggregate-calculator', icon: Calculator, tone: 'mint' },
               { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
-              { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
-              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
-              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green', updateFilter: 'Educational News' },
-              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
-              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
+              { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '/admissions', icon: BookOpen, tone: 'green' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/opportunities', icon: Sparkles, tone: 'mint' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '/newsroom', icon: Newspaper, tone: 'green' },
+              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '/admissions', icon: GraduationCap, tone: 'mint' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/opportunities', icon: BriefcaseBusiness, tone: 'green' },
               { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
-              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
+              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '/opportunities', icon: Laptop, tone: 'green' },
               { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '/services', icon: Plus, tone: 'mint' },
             ].map(card => {
               const Icon = card.icon;
@@ -2958,13 +3058,7 @@ function App() {
           </div>
         </section>
 
-        <Suspense fallback={<SectionLoading />}>
-          <PlatformHub
-            opportunities={content.opportunities}
-            admissions={content.admissions}
-            customerSignInRequest={customerSignInRequest}
-          />
-        </Suspense>
+
 
         {featuredOpps.length > 0 && (
           <section className="section spotlight-section" id="featured">
@@ -3712,6 +3806,29 @@ function App() {
             <h2 id="admin-login-title">Admin sign in</h2>
             <p>This private sign-in page is for authorized EDUKEN CONSULT administrators only.</p>
             <button className="primary login-submit" type="button" onClick={() => void signIn()}><ArrowRight size={17} /> Continue with Google</button>
+          </section>
+        </div>
+      )}
+      {customerSignInOpen && (
+        <div role="presentation" onClick={event => { if (event.target === event.currentTarget) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
+            <button className="login-close" type="button" aria-label="Close customer sign-in" onClick={() => setCustomerSignInOpen(false)}>×</button>
+            <span className="kicker">YOUR EDUKEN ACCOUNT</span>
+            <h2 id="customer-signin-title">Sign in to EDUKEN</h2>
+            <p>Use the same Google account across EDUKEN CONSULT and CBT. Your student username and learning progress stay connected to this account.</p>
+            <button className="customer-google-signin" type="button" onClick={async () => {
+              setCustomerSignInMessage('');
+              try {
+                await auth.signIn({ scope: 'openid email profile offline_access' });
+                setCustomerSignInOpen(false);
+              } catch (error) {
+                setCustomerSignInMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
+              }
+            }}>
+              <span className="customer-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
           </section>
         </div>
       )}

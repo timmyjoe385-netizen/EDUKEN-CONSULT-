@@ -234,8 +234,8 @@ test('customer workspace exposes the optional EDUKEN wallet without replacing pu
     }),
   );
 
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const workspace = page.locator('#eduken-platform');
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
+  const workspace = page.locator('.platform-hub');
   await expect(workspace.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
   await expect(workspace.getByRole('heading', { name: 'EDUKEN Wallet' })).toBeVisible();
   await expect(workspace.getByRole('heading', { name: 'Saved Opportunities' })).toBeVisible();
@@ -243,7 +243,8 @@ test('customer workspace exposes the optional EDUKEN wallet without replacing pu
   await expect(workspace.getByRole('heading', { name: 'Smart Alerts' })).toBeVisible();
   await expect(workspace.getByText(/Background push notifications are not available yet/i)).toBeVisible();
   await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
+  await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Find your next admission opportunity.' })).toBeVisible();
 });
 
 test('homepage exposes the aggregate calculator from the primary navigation and hero', async ({ page }) => {
@@ -708,8 +709,9 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   const navigation = page.locator('#primary-navigation');
   await expect(navigation).toBeVisible();
   await navigation.getByRole('link', { name: 'Admissions' }).click();
-  await expect(page).toHaveURL(/#admissions$/);
-  await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page).toHaveURL(/\/admissions$/);
+  // The dedicated route renders its own header, so the homepage mobile menu is unmounted.
+  await expect(page.locator('#primary-navigation')).toHaveCount(0);
 });
 
 test('global search results can be cleared accessibly', async ({ page }) => {
@@ -1006,7 +1008,7 @@ test('public header exposes the EDUKEN student workspace but not admin access', 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const studentWorkspaceLink = page.getByRole('link', { name: /My EDUKEN/ });
   await expect(studentWorkspaceLink).toBeVisible();
-  await expect(studentWorkspaceLink).toHaveAttribute('href', '#eduken-platform');
+  await expect(studentWorkspaceLink).toHaveAttribute('href', '/my-eduken');
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -1087,6 +1089,7 @@ test('public header links to the student workspace without exposing generic sign
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('link', { name: /My EDUKEN/ })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
 
@@ -1099,7 +1102,7 @@ test('customer sign-in offers Google only and does not expose password sign-in',
     }),
   );
 
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
   await page.getByRole('button', { name: /Sign in to get a wallet/i }).click();
   const dialog = page.getByRole('dialog', { name: 'Sign in to EDUKEN' });
   await expect(dialog).toBeVisible();
@@ -1868,7 +1871,7 @@ test('appearance preference persists and System mode follows operating-system ch
     }
   });
   await page.emulateMedia({ colorScheme: 'light' });
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
 
   const root = page.locator('html');
   const toggle = page.locator('.theme-toggle').first();
@@ -2315,4 +2318,67 @@ test('educational updates can be filtered by their published subject category', 
   await updateFilters.getByRole('button', { name: 'Scholarships' }).click();
   await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
   await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
+});
+
+
+test('student workspace is available on its own route and is not appended to the public homepage', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.platform-hub')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /My EDUKEN/i }).first()).toHaveAttribute('href', '/my-eduken');
+
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.locator('.platform-hub')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
+});
+
+test('dedicated admissions page is reachable from discovery and renders its published-content search', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Admission Guidance/i }).first()).toHaveAttribute('href', '/admissions');
+  await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Find your next admission opportunity.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search admissions' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Admissions and screening updates' })).toBeVisible();
+});
+
+test('dedicated Opportunities page supports search, category filters and published listing content', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Scholarships & Grants/i })).toHaveAttribute('href', '/opportunities');
+  await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Find opportunities that move you forward.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search opportunities' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Opportunity categories' })).toBeVisible();
+});
+
+test('dedicated Newsroom page supports topic search and category filters', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Educational News/i })).toHaveAttribute('href', '/newsroom');
+  await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Stay informed. Stay ahead.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search newsroom' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Filter newsroom categories' })).toBeVisible();
+});
+
+
+test('dedicated opportunities page supports search and category filters', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Scholarships & Grants/i }).first()).toHaveAttribute('href', '/opportunities');
+  await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Find opportunities that move you forward.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search opportunities' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Opportunity categories' })).toBeVisible();
+});
+
+test('dedicated newsroom page supports search and topic filters', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Educational News/i }).first()).toHaveAttribute('href', '/newsroom');
+  await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Stay informed. Stay ahead.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search newsroom' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Filter newsroom categories' })).toBeVisible();
 });
