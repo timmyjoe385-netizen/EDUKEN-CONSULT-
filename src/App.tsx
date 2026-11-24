@@ -3253,12 +3253,28 @@ function App() {
                     ) : null}
                   </div>
                   <h3>{o.title}</h3>
-                  <p>{o.description}</p>
+                  <p>{o.description || 'Open this opportunity to review the full announcement and application details.'}</p>
+                  {o.eligibility ? (
+                    <div className="opp-eligibility">
+                      <strong>Eligibility</strong>
+                      <p>{String(o.eligibility).length > 180 ? String(o.eligibility).slice(0, 177).trimEnd() + '…' : o.eligibility}</p>
+                    </div>
+                  ) : null}
                   <div className="opp-foot">
-                    <span>Deadline: {o.deadline || 'See details'}</span>
-                    <button onClick={() => openOpportunity(o)}>
-                      Read Full Article <ArrowRight size={14} />
-                    </button>
+                    <span className="opp-deadline">
+                      <strong>Deadline</strong>
+                      <span>{o.deadline ? formatShareDate(String(o.deadline)) : 'Check announcement'}</span>
+                    </span>
+                    <div className="opp-actions">
+                      {o.sourceUrl ? (
+                        <a className="opp-source-link" href={o.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          {o.verified ? 'Verified source ↗' : 'Source link ↗'}
+                        </a>
+                      ) : null}
+                      <button type="button" onClick={() => openOpportunity(o)}>
+                        Full details <ArrowRight size={14} />
+                      </button>
+                    </div>
                   </div>
                 </article>
               ))
