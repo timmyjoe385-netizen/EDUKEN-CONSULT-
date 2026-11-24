@@ -713,6 +713,13 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
 });
 
 test('category search results can be cleared accessibly', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+    }),
+  );
   await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
   const search = page.getByRole('searchbox', { name: 'Search this section' });
   await expect(search).toBeVisible();
