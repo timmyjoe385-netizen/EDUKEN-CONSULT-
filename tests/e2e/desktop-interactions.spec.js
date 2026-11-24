@@ -39,7 +39,7 @@ test('featured opportunity View details opens the article on the first click', a
   await expect(featuredCard).toBeVisible();
   await featuredCard.getByRole('button', { name: 'View details' }).click();
   await expect(page).toHaveURL(/#opportunity\/one-click-scholarship-fixture$/);
-  await expect(page.locator('.article-page').getByRole('heading', { name: 'One Click Scholarship Fixture' })).toBeVisible();
+  await expect(page.locator('.article-page h1').filter({ hasText: 'One Click Scholarship Fixture' })).toBeVisible();
   await expect(page.locator('.article-page')).toContainText('A concise preview.');
 });
 
