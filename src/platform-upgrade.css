@@ -1621,3 +1621,47 @@ html[data-theme="dark"] .site .discovery-card__copy small {
     justify-content: flex-start;
   }
 }
+
+
+/* Dedicated public information destinations. The homepage remains a concise
+   directory; full listings live on their own category pages. */
+.site #opportunities,
+.site .closed-opportunities,
+.site #admissions,
+.site #updates {
+  display: none !important;
+}
+.content-category-page {
+  min-height: 70vh;
+  padding: 34px clamp(16px, 4vw, 56px) 72px;
+  background: var(--surface, #f7faf7);
+  color: var(--text, #173b2b);
+}
+.content-category-page__inner { width: min(1120px, 100%); margin: 0 auto; }
+.content-category-page__breadcrumb { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin: 0 0 22px; color:#627469; font-size:13px; }
+.content-category-page__breadcrumb a { color:#17613f; font-weight:700; text-decoration:none; }
+.content-category-page__hero { padding:clamp(24px,4vw,42px); border-radius:22px; background:linear-gradient(125deg,#103b2b,#17613f); color:#fff; margin-bottom:28px; }
+.content-category-page__hero .kicker { color:#c3efd2; font-size:12px; font-weight:800; letter-spacing:.1em; }
+.content-category-page__hero h1 { margin:10px 0; color:#fff; font-size:clamp(30px,5vw,48px); line-height:1.12; }
+.content-category-page__hero p { max-width:720px; color:#e5f2e9; line-height:1.7; }
+.content-category-page__count { margin:18px 0; color:#53665a; font-size:14px; }
+.content-category-page__grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.content-category-card { min-width:0; padding:20px; border:1px solid #dce7df; border-radius:16px; background:#fff; box-shadow:0 6px 22px rgba(20,55,35,.045); }
+.content-category-card__meta { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; color:#5c7164; font-size:12px; }
+.content-category-card h2 { margin:12px 0 8px; color:#173b2b; font-size:19px; line-height:1.35; }
+.content-category-card p { color:#4e6256; font-size:14px; line-height:1.7; white-space:pre-line; }
+.content-category-card a { display:inline-flex; align-items:center; gap:7px; margin-top:12px; color:#17613f; font-weight:700; text-decoration:none; }
+.content-category-page__empty { padding:26px; border:1px dashed #b9cbbf; border-radius:16px; background:#fff; color:#52665a; line-height:1.7; }
+.content-category-page__back { display:inline-flex; margin-top:26px; color:#17613f; font-weight:700; text-decoration:none; }
+@media(max-width:680px) {
+  .content-category-page { padding:22px 14px 56px; }
+  .content-category-page__grid { grid-template-columns:1fr; }
+  .content-category-card { padding:17px; }
+}
+html[data-theme="dark"] .content-category-page { background:#101b15; color:#e5f0e8; }
+html[data-theme="dark"] .content-category-page__count { color:#b8c9be; }
+html[data-theme="dark"] .content-category-card,
+html[data-theme="dark"] .content-category-page__empty { background:#19271f; border-color:#34483b; }
+html[data-theme="dark"] .content-category-card h2 { color:#e5f0e8; }
+html[data-theme="dark"] .content-category-card p,
+html[data-theme="dark"] .content-category-card__meta { color:#c2d2c7; }
