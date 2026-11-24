@@ -2316,3 +2316,15 @@ test('educational updates can be filtered by their published subject category', 
   await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
   await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
 });
+
+
+test('student workspace is available on its own route and is not appended to the public homepage', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.platform-hub')).toHaveCount(0);
+  await expect(page.getByRole('link', { name: /My EDUKEN/i }).first()).toHaveAttribute('href', '/my-eduken');
+
+  await page.goto('/my-eduken', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.locator('.platform-hub')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
+});
