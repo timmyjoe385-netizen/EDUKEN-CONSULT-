@@ -243,7 +243,8 @@ test('customer workspace exposes the optional EDUKEN wallet without replacing pu
   await expect(workspace.getByRole('heading', { name: 'Smart Alerts' })).toBeVisible();
   await expect(workspace.getByText(/Background push notifications are not available yet/i)).toBeVisible();
   await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
+  await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Find your next admission opportunity.' })).toBeVisible();
 });
 
 test('homepage exposes the aggregate calculator from the primary navigation and hero', async ({ page }) => {
@@ -708,7 +709,7 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   const navigation = page.locator('#primary-navigation');
   await expect(navigation).toBeVisible();
   await navigation.getByRole('link', { name: 'Admissions' }).click();
-  await expect(page).toHaveURL(/#admissions$/);
+  await expect(page).toHaveURL(/\/admissions$/);
   await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
 });
 
