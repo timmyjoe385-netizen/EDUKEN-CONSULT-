@@ -16,8 +16,20 @@ const pageConfig: Record<Category, { title: string; kicker: string; intro: strin
 const clean = (value: unknown) => String(value ?? '').trim();
 const isPlaceholder = (item: Item) => {
   const title = clean(item.title || item.school).toLowerCase();
+  const school = clean(item.school || '').toLowerCase();
+  const course = clean(item.course || item.programme || '').toLowerCase();
   const body = clean(item.body || item.details || item.description || item.content).toLowerCase();
-  return /will appear here|will be published here/.test(title) ||
+  const link = clean(item.link || item.application_url);
+  const deadline = clean(item.deadline);
+  const genericValues = new Set([
+    'nigerian universities', 'universities', 'polytechnics', 'colleges of education',
+    'admission information', 'application information', 'programme information',
+    'general admission information', 'details coming soon',
+  ]);
+  const identifyingFields = [school || title, course, body].filter(Boolean);
+  const genericAdmissionPlaceholder = identifyingFields.length >= 2 &&
+    identifyingFields.every(value => genericValues.has(value)) && !link && !deadline;
+  return genericAdmissionPlaceholder || /will appear here|will be published here/.test(title) ||
     /use the eduken admin dashboard to publish clear, useful updates|verified opportunities will appear here/.test(body);
 };
 const isExpired = (value: unknown) => {
