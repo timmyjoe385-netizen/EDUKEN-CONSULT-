@@ -2339,3 +2339,23 @@ test('dedicated admissions page is reachable from discovery and renders its publ
   await expect(page.getByRole('textbox', { name: 'Search admissions' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Admissions and screening updates' })).toBeVisible();
 });
+
+test('dedicated Opportunities page supports search, category filters and published listing content', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Scholarships & Grants/i })).toHaveAttribute('href', '/opportunities');
+  await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Find opportunities that move you forward.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search opportunities' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Opportunity categories' })).toBeVisible();
+});
+
+test('dedicated Newsroom page supports topic search and category filters', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Educational News/i })).toHaveAttribute('href', '/newsroom');
+  await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Stay informed. Stay ahead.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search newsroom' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Filter newsroom categories' })).toBeVisible();
+});
