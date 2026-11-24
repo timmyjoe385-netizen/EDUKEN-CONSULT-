@@ -8,7 +8,7 @@
 }
 .discovery-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 13px;
 }
 .discovery-card {
@@ -74,7 +74,7 @@
 }
 @media (max-width: 980px) {
   .discovery-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 700px) {
@@ -990,7 +990,21 @@ html[data-theme="dark"] .site .update-card .rich-content { color: #b5c7ba; }
 
 /* Final reference-match corrections: preserve EDUKEN palette and make key actions clear. */
 .site {
-  font-family: "Poppins", Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.site :is(h1, h2, h3, h4, .brand b, .kicker, .tag, .opportunity-status) {
+  font-family: "Poppins", Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.site :is(button, .button, .primary, .nav-cta, .hero-actions a) {
+  font-family: "Poppins", Inter, ui-sans-serif, system-ui, sans-serif;
+}
+.site p,
+.site li,
+.site input,
+.site textarea,
+.site select,
+.site label {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 .site .hero-actions .primary,
 html[data-theme="light"] .site .hero-actions .primary {
@@ -1124,4 +1138,603 @@ html[data-theme="dark"] .site .update-card > a {
   .student-category-icon { flex-basis: 30px; width: 30px; height: 30px; font-size: 16px; }
   .student-category-card strong { font-size: 12px; }
   .student-category-card small { font-size: 10px; }
+}
+
+
+/* EDUKEN readability pass: stronger body-copy sizing and contrast without
+   changing the existing information architecture or card layouts. */
+.site .hero .eyebrow {
+  color: #eff8f1 !important;
+  font-size: 11px;
+  line-height: 1.65;
+  letter-spacing: .07em;
+}
+.site .hero p {
+  color: #f3f8f4;
+  font-size: 16px;
+  line-height: 1.7;
+}
+.site .section-head p,
+.site .spotlight-card p,
+.site .newsroom-card p,
+.site .update-card .rich-content,
+.site .journey-section p,
+.site .faq-row p {
+  color: #4d6054;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.site .discovery-card__copy strong {
+  font-size: 13px;
+  line-height: 1.35;
+}
+.site .discovery-card__copy small {
+  color: #4f6257;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.site .update-card > small,
+.site .article-meta,
+.site .article-note {
+  color: #52645a;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.site .final-cta p {
+  color: #f3f8f4;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.site .trust-points span { font-size: 14px; line-height: 1.5; }
+.site .stats span { color: #53645a; font-size: 13px; line-height: 1.5; }
+.site .footer-main p { color: #b1c2b8; font-size: 14px; line-height: 1.7; }
+.site .footer-main > div:not(:first-child) { color: #b1c2b8; font-size: 13px; }
+.site .footer-bottom { color: #aabbb1; font-size: 11px; line-height: 1.5; }
+.site .faq-row p { color: #52645a; font-size: 14px; }
+.site .hero-actions .primary { font-size: 14px; }
+.site .closed-opportunity-card { opacity: 1; }
+.site .closed-opportunity-card h3 { color: #34483b; }
+.site .closed-opportunity-card p,
+.site .closed-opportunity-card small { color: #52645a; font-size: 13px; line-height: 1.6; }
+
+/* Older public listing and service components still used on secondary pages. */
+.site .opp-card p,
+.site .admission-card p,
+.site .whatsapp-cta p,
+.site .services-page-card > p,
+.site .services-page-help p,
+.site .services-page-safety,
+.site .services-request-steps__grid p {
+  color: #4f6157;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.site .tag,
+.site .admission-top,
+.site .admission-card small,
+.site .opp-foot span,
+.site .service-row span,
+.site .opportunity-status {
+  font-size: 12px;
+  line-height: 1.45;
+}
+.site .admission-top b { font-size: 11px; }
+.site .service-row b { line-height: 1.4; }
+
+/* Admin and install guidance: keep supporting text legible, not decorative. */
+.admin-item p { color: #52645a; font-size: 14px; line-height: 1.6; }
+.admin-item small,
+.admin-editor label,
+.install-sheet p,
+.install-sheet ol,
+.analytics-cards article small,
+.analytics-cards article span {
+  color: #52645a;
+  font-size: 12px;
+  line-height: 1.55;
+}
+.rich-editor-hint { color: #52645a; font-size: 12px; }
+
+html[data-theme="dark"] .site .section-head p,
+html[data-theme="dark"] .site .spotlight-card p,
+html[data-theme="dark"] .site .newsroom-card p,
+html[data-theme="dark"] .site .update-card .rich-content,
+html[data-theme="dark"] .site .journey-section p,
+html[data-theme="dark"] .site .faq-row p,
+html[data-theme="dark"] .site .trust-points span,
+html[data-theme="dark"] .site .stats span,
+html[data-theme="dark"] .site .footer-main p,
+html[data-theme="dark"] .site .footer-main > div:not(:first-child),
+html[data-theme="dark"] .site .footer-bottom,
+html[data-theme="dark"] .site .opp-card p,
+html[data-theme="dark"] .site .admission-card p,
+html[data-theme="dark"] .site .whatsapp-cta p,
+html[data-theme="dark"] .site .services-page-card > p,
+html[data-theme="dark"] .site .services-page-help p,
+html[data-theme="dark"] .site .services-page-safety,
+html[data-theme="dark"] .site .services-request-steps__grid p,
+html[data-theme="dark"] .site .closed-opportunity-card p,
+html[data-theme="dark"] .site .closed-opportunity-card small {
+  color: #c2d2c7;
+}
+html[data-theme="dark"] .site .closed-opportunity-card h3 { color: #e0ebe3; }
+
+@media (max-width: 700px) {
+  .site .hero .eyebrow { font-size: 11px; }
+  .site .hero p {
+    max-width: 100%;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .site .hero-actions .primary { font-size: 13px; }
+  .site .discovery-card__copy strong { font-size: 11.5px; line-height: 1.35; }
+  .site .discovery-card__copy small { font-size: 12px; }
+  .site .update-card h3 { font-size: 15px; }
+  .site .update-card > small { font-size: 12px; }
+  .site .section-head p,
+  .site .spotlight-card p,
+  .site .newsroom-card p,
+  .site .update-card .rich-content { font-size: 14px; }
+  .site .final-cta p { font-size: 14px; }
+  .site .footer-main p { font-size: 13px; }
+  .site .footer-main > div:not(:first-child) { font-size: 13px; }
+}
+@media (max-width: 380px) {
+  .site .hero h1 { font-size: 25px; }
+  .site .hero p { font-size: 13px; }
+  .site .discovery-card__copy strong { font-size: 11px; }
+}
+
+
+/* Mobile text visibility correction:
+   Supporting descriptions were still explicitly hidden in the compact card
+   layout. Restore them and give each card enough room to display its copy. */
+@media (max-width: 700px) {
+  .site .discovery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .site .discovery-card,
+  .site .discovery-card--wide {
+    min-height: 124px;
+    height: auto;
+    padding: 13px 11px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .site .discovery-card__copy {
+    width: 100%;
+    min-width: 0;
+  }
+  .site .discovery-card__copy strong {
+    display: block;
+    color: #173b2b !important;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .site .discovery-card__copy small {
+    display: block !important;
+    margin-top: 5px;
+    color: #43574b !important;
+    font-size: 11px;
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .site .discovery-card__arrow {
+    display: inline-flex;
+  }
+  .site .discovery-card--wide {
+    grid-column: 1 / -1 !important;
+    min-height: 76px;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px;
+  }
+  .site .discovery-card--wide .discovery-card__copy {
+    width: auto;
+    flex: 1;
+  }
+}
+@media (max-width: 380px) {
+  .site .discovery-card__copy strong { font-size: 12px; }
+  .site .discovery-card__copy small { font-size: 10.5px; }
+}
+html[data-theme="dark"] .site .discovery-card__copy strong {
+  color: #e5f0e8 !important;
+}
+html[data-theme="dark"] .site .discovery-card__copy small {
+  color: #c2d2c7 !important;
+}
+
+
+/* Homepage conversion sections: restore strong text hierarchy and contrast.
+   These two sections were inheriting muted accent colours on similarly toned
+   backgrounds, especially on narrow mobile screens. */
+.final-cta {
+  background: linear-gradient(128deg, #103b2b 0%, #17613f 100%) !important;
+  color: #ffffff !important;
+}
+.final-cta .kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: #c3efd2 !important;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  line-height: 1.5;
+}
+.final-cta h2 {
+  max-width: 760px;
+  color: #ffffff !important;
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+.final-cta p {
+  max-width: 620px;
+  margin-top: 16px;
+  color: #e5f2e9 !important;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.75;
+}
+.consult-section {
+  background: linear-gradient(135deg, #103b2b 0%, #174b35 100%) !important;
+  color: #ffffff !important;
+}
+.consult-section .kicker {
+  display: block;
+  color: #c3efd2 !important;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  line-height: 1.5;
+}
+.consult-section h2 {
+  color: #ffffff !important;
+  font-size: clamp(34px, 4.4vw, 54px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+.consult-section h2 em {
+  color: #b9e8c9 !important;
+  font-family: "Poppins", Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.02em;
+  font-style: normal;
+  font-weight: 600;
+}
+.consult-section p {
+  max-width: 490px;
+  color: #e1eee5 !important;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.75;
+}
+@media (max-width: 700px) {
+  .final-cta {
+    margin: 0 14px 48px;
+    padding: 28px 22px;
+    border-radius: 18px;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .final-cta h2 {
+    font-size: clamp(30px, 8vw, 39px);
+    line-height: 1.12;
+  }
+  .final-cta p {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .final-cta .kicker,
+  .consult-section .kicker {
+    font-size: 11px;
+    letter-spacing: .1em;
+  }
+  .final-actions {
+    gap: 9px;
+  }
+  .consult-section {
+    margin: 0 10px 56px;
+    padding: 28px 20px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+    border-radius: 18px;
+  }
+  .consult-section h2 {
+    font-size: clamp(32px, 8.5vw, 42px);
+    line-height: 1.1;
+    margin: 12px 0 16px;
+  }
+  .consult-section p {
+    font-size: 14px;
+    line-height: 1.75;
+  }
+}
+
+
+/* Compact desktop-mode / tablet layout.
+   Android browsers in "Desktop site" mode often report a tablet-sized viewport,
+   so the full desktop hero was being squeezed into a phone screen. Keep the
+   first screen focused and readable at these intermediate widths. */
+@media (min-width: 701px) and (max-width: 1100px) {
+  .site .hero {
+    width: calc(100% - 32px);
+    min-height: 0;
+    margin: 14px auto 22px;
+    padding: 34px 30px;
+    border-radius: 22px;
+  }
+  .site .hero-copy {
+    max-width: 680px;
+  }
+  .site .hero .eyebrow {
+    max-width: 540px;
+    margin-bottom: 12px;
+    font-size: 10px;
+    line-height: 1.55;
+    letter-spacing: .055em;
+  }
+  .site .hero h1 {
+    max-width: 620px;
+    margin: 0 0 12px;
+    font-size: clamp(36px, 4.5vw, 48px);
+    line-height: 1.08;
+  }
+  .site .hero p {
+    max-width: 520px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .site .hero-art,
+  .site .hero-visual,
+  .site .hero-proof {
+    display: none !important;
+  }
+  .site .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .site .hero-actions a {
+    min-height: 42px;
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+  .site .hero-actions .aggregate-hero-cta,
+  .site .hero-actions a:not(.primary):not(.cbt-hero-cta) {
+    display: none !important;
+  }
+}
+
+/* Opportunity hub feedback: make result counts, filter states and empty results
+   clear without changing the underlying opportunity data or publication flow. */
+.site .opportunity-results-summary {
+  margin: 0 0 16px;
+  color: #e0eee4;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.site .filters button[aria-pressed="true"] {
+  outline: 2px solid rgba(222, 244, 229, .7);
+  outline-offset: 2px;
+}
+.site .opportunity-empty-state {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding: 24px;
+  border: 1px solid rgba(226, 242, 231, .25);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+}
+.site .opportunity-empty-state strong {
+  font-size: 17px;
+  line-height: 1.4;
+}
+.site .opportunity-empty-state p {
+  max-width: 560px;
+  margin: 0;
+  color: #e0eee4;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.site .opportunity-empty-state button {
+  min-height: 40px;
+  padding: 9px 15px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  border-radius: 999px;
+  background: #fff;
+  color: #174b34;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Opportunity card detail hierarchy */
+.site .opp-eligibility {
+  margin: 12px 0 4px;
+  padding: 11px 13px;
+  border-left: 3px solid #8fc7a2;
+  border-radius: 0 10px 10px 0;
+  background: rgba(255, 255, 255, .07);
+}
+.site .opp-eligibility strong,
+.site .opp-deadline strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #d8f0df;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+.site .opp-eligibility p {
+  margin: 0;
+  color: #f0f6f1;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site .opp-foot {
+  align-items: flex-end;
+  gap: 14px;
+}
+.site .opp-deadline {
+  display: block;
+  min-width: 0;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.site .opp-deadline > span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.site .opp-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.site .opp-source-link {
+  color: #d7f1df;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .site .opp-foot {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .site .opp-actions {
+    justify-content: flex-start;
+  }
+}
+
+
+/* Dedicated public information destinations. The homepage remains a concise
+   directory; full listings live on their own category pages. */
+.site #opportunities,
+.site .closed-opportunities,
+.site #admissions,
+.site #updates {
+  display: none !important;
+}
+.content-category-page {
+  min-height: 70vh;
+  padding: 34px clamp(16px, 4vw, 56px) 72px;
+  background: var(--surface, #f7faf7);
+  color: var(--text, #173b2b);
+}
+.content-category-page__inner { width: min(1120px, 100%); margin: 0 auto; }
+.content-category-page__breadcrumb { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin: 0 0 22px; color:#627469; font-size:13px; }
+.content-category-page__breadcrumb a { color:#17613f; font-weight:700; text-decoration:none; }
+.content-category-page__hero { padding:clamp(24px,4vw,42px); border-radius:22px; background:linear-gradient(125deg,#103b2b,#17613f); color:#fff; margin-bottom:28px; }
+.content-category-page__hero .kicker { color:#c3efd2; font-size:12px; font-weight:800; letter-spacing:.1em; }
+.content-category-page__hero h1 { margin:10px 0; color:#fff; font-size:clamp(30px,5vw,48px); line-height:1.12; }
+.content-category-page__hero p { max-width:720px; color:#e5f2e9; line-height:1.7; }
+.content-category-page__count { margin:18px 0; color:#53665a; font-size:14px; }
+.content-category-page__grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.content-category-card { min-width:0; padding:20px; border:1px solid #dce7df; border-radius:16px; background:#fff; box-shadow:0 6px 22px rgba(20,55,35,.045); }
+.content-category-card__meta { display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; color:#5c7164; font-size:12px; }
+.content-category-card h2 { margin:12px 0 8px; color:#173b2b; font-size:19px; line-height:1.35; }
+.content-category-card p { color:#4e6256; font-size:14px; line-height:1.7; white-space:pre-line; }
+.content-category-card a { display:inline-flex; align-items:center; gap:7px; margin-top:12px; color:#17613f; font-weight:700; text-decoration:none; }
+.content-category-page__empty { padding:26px; border:1px dashed #b9cbbf; border-radius:16px; background:#fff; color:#52665a; line-height:1.7; }
+.content-category-page__back { display:inline-flex; margin-top:26px; color:#17613f; font-weight:700; text-decoration:none; }
+@media(max-width:680px) {
+  .content-category-page { padding:22px 14px 56px; }
+  .content-category-page__grid { grid-template-columns:1fr; }
+  .content-category-card { padding:17px; }
+}
+html[data-theme="dark"] .content-category-page { background:#101b15; color:#e5f0e8; }
+html[data-theme="dark"] .content-category-page__count { color:#b8c9be; }
+html[data-theme="dark"] .content-category-card,
+html[data-theme="dark"] .content-category-page__empty { background:#19271f; border-color:#34483b; }
+html[data-theme="dark"] .content-category-card h2 { color:#e5f0e8; }
+html[data-theme="dark"] .content-category-card p,
+html[data-theme="dark"] .content-category-card__meta { color:#c2d2c7; }
+
+.content-category-page__nav { display:flex; justify-content:space-between; align-items:center; gap:18px; padding:0 0 22px; border-bottom:1px solid #dce7df; margin-bottom:22px; }
+.content-category-page__brand { color:#173b2b; font-weight:800; letter-spacing:-.03em; text-decoration:none; font-size:18px; }
+.content-category-page__brand strong { color:#17613f; }
+.content-category-page__nav > div { display:flex; flex-wrap:wrap; gap:16px; }
+.content-category-page__nav > div a { color:#43594b; text-decoration:none; font-size:13px; font-weight:700; }
+.content-category-page__quicklinks { display:flex; flex-wrap:wrap; gap:9px; margin:0 0 22px; }
+.content-category-page__quicklinks a { padding:9px 13px; border:1px solid #d5e3d9; border-radius:999px; background:#fff; color:#17613f; text-decoration:none; font-size:12px; font-weight:700; }
+@media(max-width:680px) { .content-category-page__nav { align-items:flex-start; flex-direction:column; } .content-category-page__nav > div { gap:12px; } }
+html[data-theme="dark"] .content-category-page__nav { border-color:#34483b; }
+html[data-theme="dark"] .content-category-page__brand,
+html[data-theme="dark"] .content-category-page__nav > div a { color:#e5f0e8; }
+html[data-theme="dark"] .content-category-page__quicklinks a { background:#19271f; border-color:#34483b; color:#c2e8cf; }
+
+
+/* Final hero readability pass: desktop-site mode on Android can expose a
+   901–1100px CSS viewport. The illustration is intentionally hidden there,
+   so the hero must use the full available width rather than retain two columns. */
+@media (min-width: 701px) and (max-width: 1100px) {
+  .site .hero {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: start !important;
+    overflow: visible !important;
+  }
+  .site .hero-copy {
+    width: 100%;
+    max-width: 760px !important;
+    min-width: 0 !important;
+  }
+  .site .hero h1 {
+    width: 100%;
+    max-width: 100% !important;
+    font-size: clamp(38px, 5.2vw, 58px) !important;
+    line-height: 1.12 !important;
+    letter-spacing: -.045em !important;
+    overflow: visible !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+  .site .hero h1 em {
+    display: inline;
+    color: #d7efdd !important;
+    font-family: inherit !important;
+    font-style: normal !important;
+    font-weight: 800 !important;
+  }
+  .site .hero p {
+    max-width: 640px !important;
+    overflow-wrap: break-word;
+  }
+}
+
+/* Keep the full desktop hero legible at wider browser sizes too. */
+@media (min-width: 1101px) {
+  .site .hero {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr);
+  }
+  .site .hero-copy {
+    min-width: 0;
+  }
+  .site .hero h1 {
+    max-width: 100%;
+    font-size: clamp(48px, 5.5vw, 82px);
+    line-height: 1.02;
+    letter-spacing: -.05em;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+  .site .hero h1 em {
+    display: inline;
+  }
 }

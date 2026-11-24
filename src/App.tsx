@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import RichContent from './components/RichContent';
+import ContentCategoryPage from './components/ContentCategoryPage';
 import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
@@ -81,6 +82,8 @@ const emptyContent: Content = {
 function App() {
   const [menu, setMenu] = useState(false);
   const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
+  const categoryPageSlug = window.location.pathname.replace(/\/+$/, '').slice(1);
+  const isContentCategoryPage = ['jamb-news', 'admissions', 'scholarships', 'education-news', 'school-updates', 'jobs-internships', 'opportunities'].includes(categoryPageSlug);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [updateFilter, setUpdateFilter] = useState('All updates');
@@ -199,6 +202,21 @@ function App() {
       return () => media.removeEventListener('change', applyTheme);
     }
   }, [themePreference]);
+
+  // Keep older EDUKEN links working after moving public feeds to dedicated pages.
+  useEffect(() => {
+    if (window.location.pathname !== '/' && window.location.pathname !== '') return;
+    const hash = window.location.hash;
+    const routes = [
+      { pattern: /^#admissions$/, path: '/admissions' },
+      { pattern: /^#admission\/(.+)$/, path: '/admissions' },
+      { pattern: /^#opportunities$/, path: '/opportunities' },
+      { pattern: /^#opportunity\/(.+)$/, path: '/opportunities' },
+      { pattern: /^#updates$/, path: '/education-news' },
+    ];
+    const match = routes.find(route => route.pattern.test(hash));
+    if (match) window.location.replace(match.path + hash);
+  }, []);
 
   const cycleTheme = () => {
     setThemePreference(current => current === 'light' ? 'dark' : current === 'dark' ? 'system' : 'light');
@@ -2244,7 +2262,7 @@ function App() {
           </a>
           <nav className="nav-links open">
             <a href="#home">Home</a>
-            <a href="#opportunities">Opportunities</a>
+            <a href="/opportunities">Opportunities</a>
             <a href="#contact">Contact</a>
             {!installed && (
               <button className="install-nav" onClick={installApp}>
@@ -2438,7 +2456,7 @@ function App() {
             <div>
               <b>Explore</b>
               <a href="/#opportunities">Opportunities</a>
-              <a href="/#updates">Updates</a>
+              <a href="/education-news">Updates</a>
             </div>
             <div>
               <b>Connect</b>
@@ -2571,6 +2589,10 @@ function App() {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
   }
 
+  if (isContentCategoryPage) {
+    return <ContentCategoryPage category={categoryPageSlug} opportunities={content.opportunities} admissions={content.admissions} updates={content.updates} loading={loading} />;
+  }
+
   return (
     <div className="site">
       {toast && (
@@ -2596,14 +2618,14 @@ function App() {
           </span>
         </a>
         <nav id="primary-navigation" className={menu ? 'nav-links open' : 'nav-links'}>
-          {['Home', 'Opportunities', 'Admissions', 'Updates'].map(x => (
-            <a
-              key={x}
-              href={(isServicesPage ? '/' : '') + '#' + x.toLowerCase()}
-              onClick={() => setMenu(false)}
-            >
-              {x}
-            </a>
+          {[
+            { label: 'Home', href: '/' },
+            { label: 'Opportunities', href: '/opportunities' },
+            { label: 'Admissions', href: '/admissions' },
+            { label: 'JAMB News', href: '/jamb-news' },
+            { label: 'Education News', href: '/education-news' },
+          ].map(item => (
+            <a key={item.label} href={item.href} onClick={() => setMenu(false)}>{item.label}</a>
           ))}
           <a href="/services" onClick={() => setMenu(false)}>Services</a>
           <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
@@ -2927,16 +2949,13 @@ function App() {
           <div className="discovery-grid">
             {[
               { title: 'CBT Practice', description: 'Prepare with EDUKEN practice and mock examinations.', href: '/cbt', icon: Monitor, tone: 'green' },
-              { title: 'Aggregate Score Calculator', description: 'Estimate your admission aggregate using the available school scoring models.', href: '/aggregate-calculator', icon: Calculator, tone: 'mint' },
-              { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
-              { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
-              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
-              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green', updateFilter: 'Educational News' },
-              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
-              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
-              { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
-              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
-              { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '/services', icon: Plus, tone: 'mint' },
+              { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '/services', icon: GraduationCap, tone: 'mint' },
+              { title: 'Admission Guidance', description: 'Find admission information, requirements and school updates.', href: '/admissions', icon: BookOpen, tone: 'green' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/scholarships', icon: Sparkles, tone: 'mint' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '/education-news', icon: Newspaper, tone: 'green' },
+              { title: 'School Updates', description: 'Keep up with institutions, notices and admission announcements.', href: '/school-updates', icon: GraduationCap, tone: 'mint' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/jobs-internships', icon: BriefcaseBusiness, tone: 'green' },
+              { title: 'Consultation', description: 'Get personal educational guidance and student support.', href: '/#contact', icon: MessageCircle, tone: 'mint' },
             ].map(card => {
               const Icon = card.icon;
               return (
@@ -3180,8 +3199,10 @@ function App() {
                 'Competitions',
               ].map(f => (
                 <button
+                  type="button"
                   className={oppFilter === f ? 'active' : ''}
                   key={f}
+                  aria-pressed={oppFilter === f}
                   onClick={() => setOppFilter(f)}
                 >
                   {f}
@@ -3227,9 +3248,20 @@ function App() {
               ))}
             </div>
           )}
+          <div className="opportunity-results-summary" role="status" aria-live="polite">
+            {loading
+              ? 'Loading published opportunities…'
+              : `${filteredOpps.length} ${filteredOpps.length === 1 ? 'opportunity' : 'opportunities'} found${oppFilter !== 'All' ? ` in ${oppFilter}` : ''}${search.trim() ? ` for “${search.trim()}”` : ''}.`}
+          </div>
           <div className="opp-grid">
             {loading ? (
               <p>Loading live opportunities...</p>
+            ) : filteredOpps.length === 0 ? (
+              <div className="opportunity-empty-state">
+                <strong>No matching opportunities yet.</strong>
+                <p>Try another category or a shorter search. New opportunities will appear here when published by EDUKEN.</p>
+                <button type="button" onClick={() => { setOppFilter('All'); setSearch(''); }}>Clear filters</button>
+              </div>
             ) : (
               filteredOpps.map(o => (
                 <article className="opp-card" key={o.id}>
@@ -3243,12 +3275,28 @@ function App() {
                     ) : null}
                   </div>
                   <h3>{o.title}</h3>
-                  <p>{o.description}</p>
+                  <p>{o.description || 'Open this opportunity to review the full announcement and application details.'}</p>
+                  {o.eligibility ? (
+                    <div className="opp-eligibility">
+                      <strong>Eligibility</strong>
+                      <p>{String(o.eligibility).length > 180 ? String(o.eligibility).slice(0, 177).trimEnd() + '…' : o.eligibility}</p>
+                    </div>
+                  ) : null}
                   <div className="opp-foot">
-                    <span>Deadline: {o.deadline || 'See details'}</span>
-                    <button onClick={() => openOpportunity(o)}>
-                      Read Full Article <ArrowRight size={14} />
-                    </button>
+                    <span className="opp-deadline">
+                      <strong>Deadline</strong>
+                      <span>{o.deadline ? formatShareDate(String(o.deadline)) : 'Check announcement'}</span>
+                    </span>
+                    <div className="opp-actions">
+                      {o.sourceUrl ? (
+                        <a className="opp-source-link" href={o.sourceUrl} target="_blank" rel="noopener noreferrer">
+                          {o.verified ? 'Verified source ↗' : 'Source link ↗'}
+                        </a>
+                      ) : null}
+                      <button type="button" onClick={() => openOpportunity(o)}>
+                        Full details <ArrowRight size={14} />
+                      </button>
+                    </div>
                   </div>
                 </article>
               ))
@@ -3799,9 +3847,9 @@ function App() {
           </div>
           <div>
             <b>Explore</b>
-            <a href="#admissions">Admissions</a>
-            <a href="#opportunities">Opportunities</a>
-            <a href="#updates">Updates</a>
+            <a href="/admissions">Admissions</a>
+            <a href="/opportunities">Opportunities</a>
+            <a href="/education-news">Education News</a>
           </div>
           <div>
             <b>Services</b>
