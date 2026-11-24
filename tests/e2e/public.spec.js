@@ -2328,3 +2328,14 @@ test('student workspace is available on its own route and is not appended to the
   await expect(page.locator('.platform-hub')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
 });
+
+
+test('dedicated admissions page is reachable from discovery and renders its published-content search', async ({ page }) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('link', { name: /Admission Guidance/i }).first()).toHaveAttribute('href', '/admissions');
+  await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Find your next admission opportunity.' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Search admissions' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Admissions and screening updates' })).toBeVisible();
+});
