@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import RichContent from './components/RichContent';
+import ContentCategoryPage from './components/ContentCategoryPage';
 import { analyticsApi, api, auth, usesIsolatedTestBackend } from './lib/api';
 import { installAnalyticsTracking, trackEvent } from './lib/analytics';
 import {
@@ -81,6 +82,8 @@ const emptyContent: Content = {
 function App() {
   const [menu, setMenu] = useState(false);
   const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
+  const categoryPageSlug = window.location.pathname.replace(/\/+$/, '').slice(1);
+  const isContentCategoryPage = ['jamb-news', 'admissions', 'scholarships', 'education-news', 'school-updates', 'jobs-internships', 'opportunities'].includes(categoryPageSlug);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [updateFilter, setUpdateFilter] = useState('All updates');
@@ -2571,6 +2574,10 @@ function App() {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
   }
 
+  if (isContentCategoryPage) {
+    return <ContentCategoryPage category={categoryPageSlug} opportunities={content.opportunities} admissions={content.admissions} updates={content.updates} loading={loading} />;
+  }
+
   return (
     <div className="site">
       {toast && (
@@ -2927,13 +2934,13 @@ function App() {
           <div className="discovery-grid">
             {[
               { title: 'CBT Practice', description: 'Prepare with EDUKEN practice and mock examinations.', href: '/cbt', icon: Monitor, tone: 'green' },
-              { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
-              { title: 'Admission Guidance', description: 'Find admission information, requirements and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
-              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
-              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green', updateFilter: 'Educational News' },
-              { title: 'School Updates', description: 'Keep up with institutions, notices and admission announcements.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
-              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
-              { title: 'Consultation', description: 'Get personal educational guidance and student support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
+              { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '/services', icon: GraduationCap, tone: 'mint' },
+              { title: 'Admission Guidance', description: 'Find admission information, requirements and school updates.', href: '/admissions', icon: BookOpen, tone: 'green' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/scholarships', icon: Sparkles, tone: 'mint' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '/education-news', icon: Newspaper, tone: 'green' },
+              { title: 'School Updates', description: 'Keep up with institutions, notices and admission announcements.', href: '/school-updates', icon: GraduationCap, tone: 'mint' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/jobs-internships', icon: BriefcaseBusiness, tone: 'green' },
+              { title: 'Consultation', description: 'Get personal educational guidance and student support.', href: '/#contact', icon: MessageCircle, tone: 'mint' },
             ].map(card => {
               const Icon = card.icon;
               return (
