@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 
 const base = String(process.env.CBT_TEST_SUPABASE_URL || "").trim().replace(/\/+$/, "");
 const key = String(process.env.CBT_TEST_SUPABASE_PUBLISHABLE_KEY || "").trim();
+const endpoint = base + "/functions/v1/eduken-api";
 assert.ok(base && key, "Isolated CBT test URL and publishable key must be configured.");
 assert.equal(new URL(base).hostname, "wpktzogarfqrgkirzdpy.supabase.co", "Refusing to run CBT integration writes against anything except the isolated test project.");
 
