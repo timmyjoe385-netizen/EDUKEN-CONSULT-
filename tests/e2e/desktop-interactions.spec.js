@@ -101,3 +101,32 @@ test('FAQ answer opens on the first click', async ({ page }) => {
   await toggle.click();
   await expect(faq.getByText('Open the opportunity page and select View details once.')).toBeVisible();
 });
+
+test('homepage hero remains readable in Android desktop mode and full desktop widths', async ({ page }) => {
+  await mockPublicContent(page);
+  for (const width of [390, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const heroHeading = page.locator('.hero h1');
+    await expect(heroHeading).toBeVisible();
+    const dimensions = await page.evaluate(() => ({
+      viewport: document.documentElement.clientWidth,
+      content: document.documentElement.scrollWidth,
+    }));
+    expect(dimensions.content, `homepage horizontal overflow at ${width}px viewport`).toBeLessThanOrEqual(dimensions.viewport + 1);
+  }
+});
+
+test('services dropdown opens on the first click and its destination responds', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const trigger = page.getByRole('button', { name: 'Browse EDUKEN services' });
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  await trigger.click();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  const menu = page.locator('#eduken-services-menu');
+  await expect(menu).toBeVisible();
+  await menu.getByRole('link', { name: /View all services/ }).click();
+  await expect(page).toHaveURL(/\/services$/);
+  await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
+});
