@@ -20,6 +20,8 @@ export default function OpportunitiesPage({ opportunities, loading }: { opportun
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
   const visible = useMemo(() => opportunities.filter(item => {
+    const published = item.is_published ?? item.isPublished ?? item.published;
+    if (published === false || String(published).toLowerCase() === 'false' || String(published) === '0' || String(item.status || '').toUpperCase() === 'DRAFT') return false;
     const state = status(item);
     if (state === 'Closed') return false;
     const text = [item.title,item.description,item.category,item.eligibility,item.benefits].map(x=>String(x||'')).join(' ').toLowerCase();
@@ -41,7 +43,7 @@ export default function OpportunitiesPage({ opportunities, loading }: { opportun
         {['All','Scholarship','Grant','Job','Internship','Fellowship','Remote','Competition'].map(item=><button type="button" key={item} className={category===item?'active':''} aria-pressed={category===item} onClick={()=>setCategory(item)}>{item}</button>)}
       </div>
       <div className="opp-grid">
-        {loading ? <p>Loading published opportunities…</p> : visible.length === 0 ? <p className="empty-state">{query || category!=='All'?'No open opportunities match these filters.':'No open opportunities are available right now. Please check back soon.'}</p> : visible.map(item=><article className="opp-card" key={item.id}>
+        {loading ? <p>Loading published opportunities…</p> : visible.length === 0 ? <div className="hub-empty-state"><span className="hub-empty-icon" aria-hidden="true">🌱</span><h3>{query || category!=='All' ? 'No matching opportunities' : 'Fresh opportunities are coming'}</h3><p>{query || category!=='All' ? 'Try another keyword or choose a different category.' : 'We are preparing new scholarships, grants, jobs and internships. Check back soon or contact EDUKEN for guidance.'}</p><div className="hub-empty-actions"><a className="primary" href="/my-eduken">Open My EDUKEN <ArrowRight size={15} /></a><a className="secondary" href="https://wa.me/2348129811733" target="_blank" rel="noreferrer">Ask EDUKEN</a></div></div> : visible.map(item=><article className="opp-card" key={item.id}>
           <div className="opp-topline"><span className="tag">{item.category||'Opportunity'}</span><span className={'opportunity-status opportunity-status--'+status(item).toLowerCase().replace(/\s+/g,'-')}>{status(item)}</span>{item.verified?<span className="verified-pill"><ShieldCheck size={16}/><span>Verified by EDUKEN</span></span>:null}</div>
           <h3>{item.title}</h3><p>{item.description||item.content||'Open the official provider details to review this opportunity.'}</p>
           {item.eligibility?<p><b>Eligibility:</b> {item.eligibility}</p>:null}
