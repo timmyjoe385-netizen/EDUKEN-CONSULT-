@@ -1544,3 +1544,66 @@ html[data-theme="dark"] .site .discovery-card__copy small {
   font-weight: 700;
   cursor: pointer;
 }
+
+/* Opportunity card detail hierarchy */
+.site .opp-eligibility {
+  margin: 12px 0 4px;
+  padding: 11px 13px;
+  border-left: 3px solid #8fc7a2;
+  border-radius: 0 10px 10px 0;
+  background: rgba(255, 255, 255, .07);
+}
+.site .opp-eligibility strong,
+.site .opp-deadline strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #d8f0df;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+.site .opp-eligibility p {
+  margin: 0;
+  color: #f0f6f1;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.site .opp-foot {
+  align-items: flex-end;
+  gap: 14px;
+}
+.site .opp-deadline {
+  display: block;
+  min-width: 0;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.site .opp-deadline > span {
+  display: block;
+  overflow-wrap: anywhere;
+}
+.site .opp-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.site .opp-source-link {
+  color: #d7f1df;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .site .opp-foot {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .site .opp-actions {
+    justify-content: flex-start;
+  }
+}
