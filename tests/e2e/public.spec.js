@@ -710,7 +710,8 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   await expect(navigation).toBeVisible();
   await navigation.getByRole('link', { name: 'Admissions' }).click();
   await expect(page).toHaveURL(/\/admissions$/);
-  await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
+  // The dedicated route renders its own header, so the homepage mobile menu is unmounted.
+  await expect(page.locator('#primary-navigation')).toHaveCount(0);
 });
 
 test('global search results can be cleared accessibly', async ({ page }) => {
