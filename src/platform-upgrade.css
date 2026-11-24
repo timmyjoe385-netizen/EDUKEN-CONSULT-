@@ -1738,3 +1738,52 @@ html[data-theme="dark"] .content-category-page__quicklinks a { background:#19271
     display: inline;
   }
 }
+
+
+/* Public category cards: obvious one-click details disclosure. */
+.content-category-card__details-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin: 12px 10px 0 0;
+  padding: 10px 16px;
+  border: 1px solid #17613f;
+  border-radius: 999px;
+  background: #17613f;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.content-category-card__details-toggle:hover {
+  background: #103b2b;
+}
+.content-category-card__details-toggle:focus-visible {
+  outline: 3px solid #a8dfb8;
+  outline-offset: 3px;
+}
+.content-category-card__details {
+  margin-top: 14px;
+  padding: 16px;
+  border-left: 3px solid #17613f;
+  border-radius: 0 12px 12px 0;
+  background: #edf5ef;
+  color: #243c2e;
+  overflow-wrap: anywhere;
+}
+.content-category-card__details p {
+  white-space: pre-line;
+}
+.content-category-card__details a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+  margin-top: 8px;
+}
+html[data-theme="dark"] .content-category-card__details {
+  background: #20352a;
+  color: #e5f0e8;
+}
