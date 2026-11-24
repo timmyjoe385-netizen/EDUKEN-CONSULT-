@@ -4496,7 +4496,31 @@ html:not([data-theme="dark"]) .site .faq.section {
 }
 
 
-/* EDUKEN Quick Draft Inbox — isolated release */
+/* Keep the homepage trust statement readable and balanced on narrow screens. */
+.site .eyebrow {
+  gap: 9px;
+  align-items: flex-start;
+}
+.site .eyebrow-text {
+  display: block;
+  width: auto;
+  min-width: 0;
+  height: auto;
+  background: none;
+  font-size: clamp(8px, .82vw, 10px);
+  line-height: 1.55;
+  letter-spacing: .11em;
+  text-wrap: balance;
+}
+@media (max-width: 620px) {
+  .site .eyebrow-text {
+    font-size: 8px;
+    letter-spacing: .075em;
+    line-height: 1.6;
+  }
+}
+
+/* EDUKEN quick draft inbox — brand-aligned, mobile-first admin form. */
 .quick-draft-panel{max-width:900px;margin:0 auto;padding:22px;border:1px solid #dce6de;border-radius:18px;background:#fff;box-shadow:0 12px 36px rgba(18,71,52,.06)}
 .quick-draft-intro{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
 .quick-draft-icon{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:13px;color:#124734;background:#eaf4ed}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { api, auth, notifications, usesIsolatedTestBackend } from './lib/api';
+import { api, auth, usesIsolatedTestBackend } from './lib/api';
 import { FileText, Download, RefreshCw } from 'lucide-react';
 import {
   Bell,
@@ -362,7 +362,9 @@ export default function PlatformHub({
     const onWalletUpdated = () => { setWalletDepositKey(''); void refreshWallet(); };
     window.addEventListener('eduken-auth-changed', onAuthChanged);
     window.addEventListener('eduken-wallet-updated', onWalletUpdated);
-    const unsubscribe = auth.isGoogleSignedIn() ? notifications.onMessage(() => { void refresh(); void refreshWallet(); }) : () => undefined;
+    // Background push notifications are not enabled in this app yet. Avoid
+    // referencing an uninitialised SDK and keep the in-app refresh listeners above.
+    const unsubscribe = () => undefined;
     return () => {
       window.removeEventListener('eduken-auth-changed', onAuthChanged);
       window.removeEventListener('eduken-wallet-updated', onWalletUpdated);
@@ -432,29 +434,6 @@ export default function PlatformHub({
       { topic }
     );
     await refresh();
-  };
-
-  const [notificationStatus, setNotificationStatus] = useState('');
-
-  const enablePush = async () => {
-    if (!user) {
-      await signIn();
-      return;
-    }
-    try {
-      const result = await notifications.subscribe({ showUi: true });
-      if (result.permission === 'unsupported') {
-        setNotificationStatus('This browser does not support notification permissions.');
-      } else if (result.permission === 'granted') {
-        setNotificationStatus('Browser permission granted. Automatic push delivery is not connected yet, so this does not enable background alerts.');
-      } else if (result.permission === 'denied') {
-        setNotificationStatus('Notifications are blocked in your browser settings. You can change that in your browser settings.');
-      } else {
-        setNotificationStatus('Notification permission was not granted. You can try again or check your browser settings.');
-      }
-    } catch {
-      setNotificationStatus('Could not check notification permission on this device.');
-    }
   };
 
   const markRead = async (id?: string) => {
@@ -539,6 +518,26 @@ export default function PlatformHub({
           </p>
         ) : null}
       </div>
+      <nav className="student-dashboard-categories" aria-label="Student dashboard categories">
+        <a className="student-category-card" href="/cbt">
+          <span className="student-category-icon">🎯</span><span><strong>My Learning</strong><small>CBT practice, scores and progress</small></span><span aria-hidden="true">›</span>
+        </a>
+        <div className="student-category-card">
+          <span className="student-category-icon">🎓</span><span><strong>Admissions</strong><small>Find schools and calculate your aggregate</small><span className="student-category-links"><a href="/#admissions">Admission guidance</a><a href="/aggregate-calculator">Aggregate calculator</a></span></span>
+        </div>
+        <div className="student-category-card">
+          <span className="student-category-icon">🌱</span><span><strong>My Opportunities</strong><small>Save and follow scholarships, jobs and grants</small><span className="student-category-links"><button type="button" onClick={() => setOpen('saved')}>Saved ({saved.length})</button><button type="button" onClick={() => setOpen('tracker')}>Application tracker ({tracker.length})</button></span></span>
+        </div>
+        <div className="student-category-card">
+          <span className="student-category-icon">👤</span><span><strong>My Account</strong><small>Student username and service wallet</small><span className="student-category-links"><a href="/cbt">Student profile</a><button type="button" onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInOpen(true); return; } setWalletMessage(''); setOpen('wallet'); void refreshWallet(); }}>Wallet</button></span></span>
+        </div>
+        <a className="student-category-card" href="#student-deliverables-title">
+          <span className="student-category-icon">📄</span><span><strong>My Requests & Documents</strong><small>Service requests, results and published files</small></span><span aria-hidden="true">›</span>
+        </a>
+        <div className="student-category-card">
+          <span className="student-category-icon">🔔</span><span><strong>Notifications</strong><small>Choose topics and manage account alerts</small><span className="student-category-links"><button type="button" onClick={() => { if (!auth.isGoogleSignedIn()) { void signIn(); return; } setOpen('alerts'); }}>Manage notifications</button></span></span>
+        </div>
+      </nav>
       <div className="platform-grid">
         <div className="platform-card">
           <div className="platform-icon">
@@ -626,7 +625,7 @@ export default function PlatformHub({
           </div>
           <h3>Smart Alerts</h3>
           <p>
-            Choose categories and enable device notifications where supported.
+            Follow the topics you care about and manage alerts in your EDUKEN account. Background push notifications are not available yet.
           </p>
           <button className="secondary" onClick={() => { if (!auth.isGoogleSignedIn()) { void signIn(); return; } setOpen('alerts'); }}>
             <Bell size={15} /> Manage alerts
@@ -939,17 +938,9 @@ export default function PlatformHub({
 
       {open === 'alerts' && (
         <Drawer title="Notifications & Alerts" close={() => setOpen('')}>
-          <button className="primary full" onClick={enablePush}>
-            <Bell size={15} /> Check browser notification permission
-          </button>
           <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
-            Automatic background push alerts are not connected yet. Topic preferences and in-app alerts can still be managed here.
+            Background push notifications are not available yet. You can still choose your alert topics and read or mark in-app alerts as read here.
           </p>
-          {notificationStatus && (
-            <p role="status" aria-live="polite" style={{ fontSize: 13, lineHeight: 1.5 }}>
-              {notificationStatus}
-            </p>
-          )}
           <button className="secondary full" onClick={() => markRead()}>
             <Check size={15} /> Mark all as read
           </button>

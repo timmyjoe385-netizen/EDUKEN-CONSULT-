@@ -238,6 +238,10 @@ test('customer workspace exposes the optional EDUKEN wallet without replacing pu
   const workspace = page.locator('#eduken-platform');
   await expect(workspace.getByRole('heading', { name: 'Your student workspace.' })).toBeVisible();
   await expect(workspace.getByRole('heading', { name: 'EDUKEN Wallet' })).toBeVisible();
+  await expect(workspace.getByRole('heading', { name: 'Saved Opportunities' })).toBeVisible();
+  await expect(workspace.getByRole('heading', { name: 'Application Tracker' })).toBeVisible();
+  await expect(workspace.getByRole('heading', { name: 'Smart Alerts' })).toBeVisible();
+  await expect(workspace.getByText(/Background push notifications are not available yet/i)).toBeVisible();
   await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
 });
@@ -995,12 +999,14 @@ test('database hardening migration removes direct client access to consultation 
   expect(migration).toContain('do not grant direct client inserts');
 });
 
-test('public header exposes customer wallet access but not admin access', async ({ page }) => {
+test('public header exposes the EDUKEN student workspace but not admin access', async ({ page }) => {
   const authorizeEndpoint = `${supabaseTestUrl}/auth/v1/authorize`;
 
-  // Customer wallet access is intentionally visible; admin access must remain private.
+  // The student workspace is the public account destination; admin access stays private.
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
+  const studentWorkspaceLink = page.getByRole('link', { name: /My EDUKEN/ });
+  await expect(studentWorkspaceLink).toBeVisible();
+  await expect(studentWorkspaceLink).toHaveAttribute('href', '#eduken-platform');
   await expect(page.locator('a[href="/admin"]')).toHaveCount(0);
 
   // Intercept the OAuth hand-off so this test never signs into a real account.
@@ -1032,6 +1038,11 @@ test('public header exposes customer wallet access but not admin access', async 
 
 
 test('customer Google sign-in on the public homepage never opens the admin dashboard', async ({ page }) => {
+  const startupErrors = [];
+  page.on('pageerror', error => startupErrors.push(error.stack || error.message));
+  page.on('console', message => {
+    if (message.type() === 'error') startupErrors.push(message.text());
+  });
   await page.route('**/auth/v1/user', route => route.fulfill({
     status: 200,
     contentType: 'application/json',
@@ -1052,12 +1063,17 @@ test('customer Google sign-in on the public homepage never opens the admin dashb
     localStorage.removeItem('eduken_auth_session');
   });
   await page.goto('/#access_token=synthetic-customer-token&refresh_token=synthetic-refresh-token&expires_in=3600&token_type=bearer', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.site')).toBeVisible();
+  try {
+    await expect(page.locator('.site')).toBeVisible({ timeout: 15_000 });
+  } catch (error) {
+    const startupFallback = await page.locator('[role="alert"]').innerText().catch(() => 'No startup fallback was rendered.');
+    throw new Error(`Public OAuth callback failed to render the homepage.\nStartup fallback: ${startupFallback}\nBrowser errors: ${startupErrors.join('\n') || 'none'}\nOriginal failure: ${error instanceof Error ? error.message : String(error)}`);
+  }
   await expect(page.locator('.admin-shell')).toHaveCount(0);
   await expect(page.getByRole('dialog', { name: /Admin sign in/i })).toHaveCount(0);
 });
 
-test('public header does not expose generic sign-in while customer wallet sign-in remains available', async ({ page }) => {
+test('public header links to the student workspace without exposing generic sign-in', async ({ page }) => {
   await page.route('**/functions/v1/eduken-api/public-content', route =>
     route.fulfill({
       status: 200,
@@ -1069,7 +1085,7 @@ test('public header does not expose generic sign-in while customer wallet sign-i
   );
 
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.getByRole('link', { name: 'Go to EDUKEN Wallet and customer account' })).toBeVisible();
+  await expect(page.getByRole('link', { name: /My EDUKEN/ })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Sign in', exact: true })).toHaveCount(0);
   await expect(page.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
 });
@@ -2092,6 +2108,24 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
             deadline: '30 December 2026',
             is_published: true,
           },
+          {
+            id: 'new-opportunity-fixture',
+            title: 'New Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A newly published test-only opportunity.',
+            deadline: '30 December 2026',
+            created_at: '2026-11-21T09:00:00.000Z',
+            is_published: true,
+          },
+          {
+            id: 'closing-opportunity-fixture',
+            title: 'Closing Soon Opportunity Fixture',
+            category: 'Scholarship',
+            description: 'A test-only opportunity closing within fourteen days.',
+            deadline: '28 November 2026',
+            created_at: '2026-10-01T09:00:00.000Z',
+            is_published: true,
+          },
         ],
         admissions: [],
         updates: [],
@@ -2104,6 +2138,16 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
   await page.goto('/#opportunities', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
   await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
+  const ongoingCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'Current Opportunity Fixture' }) });
+  await expect(ongoingCard.locator('.opportunity-status--ongoing')).toContainText('Ongoing');
+  const newCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'New Opportunity Fixture' }) });
+  await expect(newCard.locator('.opportunity-status--new')).toContainText('New');
+  const closingCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'Closing Soon Opportunity Fixture' }) });
+  await expect(closingCard.locator('.opportunity-status--closing-soon')).toContainText('Closing soon');
+  const closedArchive = page.locator('.closed-opportunities');
+  await expect(closedArchive.getByRole('heading', { name: 'Recently closed opportunities' })).toBeVisible();
+  await expect(closedArchive.locator('.closed-opportunity-card')).toContainText('Expired Opportunity Fixture');
+  await expect(closedArchive.locator('.opportunity-status--closed')).toContainText('Closed');
 });
 
 test('admin content deadline validation and calendar picker are wired for create and edit', async () => {
@@ -2159,4 +2203,116 @@ test('JAMB candidate quantity has visible increment/decrement controls and bound
   expect(app).toContain('candidate-quantity-total');
   expect(css).toContain('.candidate-quantity-control');
   expect(css).toContain('.candidate-quantity-button:focus-visible');
+});
+
+
+test('dedicated EDUKEN Services page shows only configured services and permits unpriced enquiries', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [],
+        faqs: [],
+        services: [
+          {
+            id: 'services-page-priced-jamb-fixture',
+            name: 'JAMB Registration Assistance Fixture',
+            category: 'JAMB Services',
+            description: 'A configured JAMB service for this test only.',
+            requirements: 'Bring your approved registration details.',
+            price: 4500,
+            is_published: true,
+            is_available: true,
+            is_catalog_item: true,
+          },
+          {
+            id: 'services-page-unpriced-jamb-fixture',
+            name: 'JAMB Change of Course Enquiry Fixture',
+            category: 'JAMB Services',
+            description: 'A configured unpriced JAMB service for this test only.',
+            price: null,
+            is_published: true,
+            is_available: true,
+            is_catalog_item: true,
+          },
+          {
+            id: 'services-page-general-fixture',
+            name: 'Admission Guidance Fixture',
+            category: 'Admissions',
+            description: 'A configured general service for this test only.',
+            price: null,
+            is_published: true,
+            is_available: true,
+            is_catalog_item: false,
+          },
+        ],
+      }),
+    }),
+  );
+
+  await page.goto('/services', { waitUntil: 'domcontentloaded' });
+  await expect(page).toHaveTitle(/EDUKEN CONSULT/i);
+  await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'How service requests work' })).toBeVisible();
+  await expect(page.getByText(/Candidates who need this service/)).toHaveCount(2);
+  await expect(page.getByText(/Candidates who need this service/).first()).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB and examination services' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Other educational support' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Assistance Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB Change of Course Enquiry Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Admission Guidance Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'School Application Assistance' })).toHaveCount(0);
+
+  const unpricedCard = page.locator('.services-page-card').filter({
+    has: page.getByRole('heading', { name: 'JAMB Change of Course Enquiry Fixture' }),
+  });
+  const enquiryButton = unpricedCard.getByRole('button', { name: /Enquire about this service/i });
+  await expect(enquiryButton).toBeEnabled();
+  await enquiryButton.click();
+  await expect(page.getByRole('dialog', { name: 'Sign in to EDUKEN' })).toBeVisible();
+
+  const bottomNav = page.getByRole('navigation', { name: 'Quick navigation' });
+  await expect(bottomNav).toBeVisible();
+  await expect(bottomNav.getByRole('link', { name: 'Services' })).toHaveAttribute('href', '/services');
+  await expect(bottomNav.getByRole('link', { name: 'CBT' })).toHaveAttribute('href', '/cbt');
+});
+
+
+test('educational updates can be filtered by their published subject category', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        opportunities: [],
+        admissions: [],
+        updates: [
+          { id: 'updates-jamb-fixture', title: 'JAMB Registration Update Fixture', category: 'JAMB & Examinations', body: 'A test-only examination update.', is_published: true },
+          { id: 'updates-scholarship-fixture', title: 'Scholarship Announcement Fixture', category: 'Scholarships', body: 'A test-only scholarship update.', is_published: true },
+        ],
+        faqs: [],
+        services: [],
+      }),
+    }),
+  );
+
+  await page.goto('/#updates', { waitUntil: 'domcontentloaded' });
+  const updatesSection = page.locator('#updates');
+  const updateFilters = updatesSection.getByRole('group', { name: 'Filter educational updates' });
+  await expect(updateFilters.getByRole('button', { name: 'All updates' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+
+  await updateFilters.getByRole('button', { name: 'JAMB & Examinations' }).click();
+  await expect(updateFilters.getByRole('button', { name: 'JAMB & Examinations' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toHaveCount(0);
+
+  await updateFilters.getByRole('button', { name: 'Scholarships' }).click();
+  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
 });

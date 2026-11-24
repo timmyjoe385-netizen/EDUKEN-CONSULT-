@@ -10,7 +10,9 @@ import {
   CheckCircle2,
   ChevronDown,
   GraduationCap,
+  Home,
   Laptop,
+  Newspaper,
   LogOut,
   Menu,
   MessageCircle,
@@ -22,9 +24,9 @@ import {
   Share2,
   ShieldCheck,
   Sparkles,
-  Target,
   Trash2,
   Users,
+  UserRound,
   X,
 } from 'lucide-react';
 const PlatformHub = lazy(() => import('./PlatformHub'));
@@ -58,39 +60,6 @@ type Content = {
   services: Item[];
 };
 
-const categories = [
-  [
-    'Admissions',
-    'Admission updates, application information and school guidance.',
-    GraduationCap,
-  ],
-  [
-    'Scholarships & Grants',
-    'Funding opportunities, fellowships and educational support.',
-    Sparkles,
-  ],
-  [
-    'Jobs & Internships',
-    'Jobs, internships and graduate trainee opportunities.',
-    BriefcaseBusiness,
-  ],
-  [
-    'Remote Opportunities',
-    'Legitimate remote work and digital opportunities.',
-    Laptop,
-  ],
-  [
-    'Educational Updates',
-    'Important education, exams and school announcements.',
-    BookOpen,
-  ],
-  [
-    'Career & Mentorship',
-    'Career development, mentorship and skill-building.',
-    Target,
-  ],
-];
-
 const DEFAULT_SYSTEM_SETTINGS = {
   subscriberNotificationsEnabled: true,
   deadlineEmailAlertsEnabled: true,
@@ -111,8 +80,10 @@ const emptyContent: Content = {
 
 function App() {
   const [menu, setMenu] = useState(false);
+  const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
+  const [updateFilter, setUpdateFilter] = useState('All updates');
   const [search, setSearch] = useState('');
   const [toast, setToast] = useState('');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -136,6 +107,8 @@ function App() {
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
   const [customerSignInRequest, setCustomerSignInRequest] = useState(0);
+  const [servicesCustomerSignInOpen, setServicesCustomerSignInOpen] = useState(false);
+  const [servicesCustomerSignInMessage, setServicesCustomerSignInMessage] = useState('');
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
   const [checkoutSession, setCheckoutSession] = useState<any>(null);
   const [paymentEmail, setPaymentEmail] = useState('');
@@ -668,9 +641,9 @@ function App() {
     );
   };
 
-  const isExpiredOpportunity = (item: Item) => {
-    const rawDeadline = String(item.deadline || '').trim();
-    if (!rawDeadline) return false;
+  const opportunityDeadlineTime = (rawValue: unknown) => {
+    const rawDeadline = String(rawValue || '').trim();
+    if (!rawDeadline) return NaN;
 
     // Interpret date-only deadlines through the end of the stated day.
     const humanDate = rawDeadline.match(/\b(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})\b/);
@@ -678,16 +651,21 @@ function App() {
     let deadline: Date;
     if (humanDate) {
       const month = Date.parse(humanDate[2] + ' 1, 2000');
-      if (Number.isNaN(month)) return false;
+      if (Number.isNaN(month)) return NaN;
       deadline = new Date(Number(humanDate[3]), new Date(month).getMonth(), Number(humanDate[1]), 23, 59, 59, 999);
     } else if (isoDate) {
       deadline = new Date(Number(isoDate[1]), Number(isoDate[2]) - 1, Number(isoDate[3]), 23, 59, 59, 999);
     } else {
       deadline = new Date(rawDeadline);
-      if (Number.isNaN(deadline.getTime())) return false;
+      if (Number.isNaN(deadline.getTime())) return NaN;
       if (!/\d[T ]\d{1,2}:\d{2}/.test(rawDeadline)) deadline.setHours(23, 59, 59, 999);
     }
-    return deadline.getTime() < Date.now();
+    return deadline.getTime();
+  };
+
+  const isExpiredOpportunity = (item: Item) => {
+    const deadline = opportunityDeadlineTime(item.deadline);
+    return Number.isFinite(deadline) && deadline < Date.now();
   };
 
   const isPlaceholderUpdate = (item: Item) => {
@@ -697,10 +675,27 @@ function App() {
       /use the eduken admin dashboard to publish clear, useful updates|add scholarships, jobs, internships, grants, fellowships and competitions from the dashboard|publish practical career guidance and development opportunities/.test(body);
   };
 
+  const opportunityStatus = (item: Item) => {
+    if (isExpiredOpportunity(item) || /^(closed|expired)$/i.test(String(item.status || ''))) return 'Closed';
+    const deadline = opportunityDeadlineTime(item.deadline);
+    if (Number.isFinite(deadline) && deadline > Date.now() && deadline - Date.now() <= 14 * 864e5) return 'Closing soon';
+    const publishedValue = item.published_at || item.created_at || item.createdAt || item.date;
+    const published = publishedValue ? new Date(String(publishedValue)).getTime() : NaN;
+    if (Number.isFinite(published) && published <= Date.now() && Date.now() - published <= 7 * 864e5) return 'New';
+    return 'Ongoing';
+  };
+
+  const closedOpps = useMemo(
+    () => content.opportunities.filter(item =>
+      !isPlaceholderOpportunity(item) && (isExpiredOpportunity(item) || /^(closed|expired)$/i.test(String(item.status || '')))
+    ).slice(0, 4),
+    [content.opportunities]
+  );
+
   const filteredOpps = useMemo(
     () =>
       content.opportunities.filter(o => {
-        if (isPlaceholderOpportunity(o) || isExpiredOpportunity(o)) return false;
+        if (isPlaceholderOpportunity(o) || opportunityStatus(o) === 'Closed') return false;
         const category = String(o.category || '').trim().toLowerCase();
         const filter = oppFilter.toLowerCase();
         const categoryMatches = oppFilter === 'All' ||
@@ -719,8 +714,23 @@ function App() {
   );
 
   const visibleUpdates = useMemo(
-    () => content.updates.filter(item => !isPlaceholderUpdate(item)),
-    [content.updates]
+    () => content.updates.filter(item => {
+      if (isPlaceholderUpdate(item)) return false;
+      if (updateFilter === 'All updates') return true;
+      const searchable = [item.category, item.title, item.body, item.content]
+        .map(value => String(value || '').toLowerCase())
+        .join(' ');
+      const filters: Record<string, RegExp> = {
+        'JAMB & Examinations': /jamb|exam|utme|post[- ]?utme|waec|neco|nabteb/,
+        Admissions: /admission|screening|matriculation|acceptance/,
+        Scholarships: /scholarship|grant|fellowship|bursary|funding/,
+        'Universities & Institutions': /universit|institution|polytechnic|college|school/,
+        'Jobs & Internships': /job|internship|career|vacanc|employment|trainee/,
+        'Educational News': /education|announcement|update|news|learning|student/,
+      };
+      return filters[updateFilter]?.test(searchable) ?? false;
+    }),
+    [content.updates, updateFilter]
   );
 
   const isPlaceholderAdmission = (item: Item) => {
@@ -766,7 +776,7 @@ function App() {
     const opportunities = content.opportunities
       .filter(item =>
         !isPlaceholderOpportunity(item) &&
-        !isExpiredOpportunity(item) &&
+        opportunityStatus(item) !== 'Closed' &&
         [item.title, item.description, item.content, item.category, item.eligibility, item.benefits]
           .some(value => String(value || '').toLowerCase().includes(query))
       )
@@ -797,6 +807,7 @@ function App() {
         }))
         .filter(
           x =>
+            opportunityStatus(x.item) !== 'Closed' &&
             Number.isFinite(x.time) &&
             x.time > Date.now() &&
             x.time - Date.now() <= 14 * 864e5
@@ -812,7 +823,7 @@ function App() {
       content.opportunities
         .filter(
           item =>
-            !isExpiredOpportunity(item) &&
+            opportunityStatus(item) !== 'Closed' &&
             (item.featured === true ||
             String(item.featured).toLowerCase() === 'true')
         )
@@ -1337,7 +1348,9 @@ function App() {
         details: [
           ...(isJambCatalogueService(selectedService) ? [
             'Number of candidates: ' + String(requestedQuantity),
-            'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG'),
+            Number.isFinite(Number(selectedService.price)) && Number(selectedService.price) > 0
+              ? 'Estimated total: ₦' + (Number(selectedService.price) * requestedQuantity).toLocaleString('en-NG')
+              : 'Service price: To be confirmed by EDUKEN',
           ] : []),
           ...jambServiceFieldsFor(selectedService).map(field => field.label + ': ' + String(fd.get('serviceField_' + field.name) || '').trim()),
           String(fd.get('details') || '').trim() ? 'Additional notes: ' + String(fd.get('details') || '').trim() : '',
@@ -1711,7 +1724,7 @@ function App() {
             <div className="admin-title">
               <div>
                 <span className="kicker">EDUKEN CONSULT</span>
-                <h1>{adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'cbt-monitoring' ? 'CBT Monitoring' : adminTab === 'payments' ? 'Payment records' : adminTab === 'quick-drafts' ? 'Quick Draft Inbox' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
+                <h1>{adminTab === 'quick-drafts' ? 'Quick Draft Inbox' : adminTab === 'analytics' ? 'Analytics & Insights' : adminTab === 'system-settings' ? 'Manage System' : adminTab === 'system-health' ? 'System Health' : adminTab === 'cbt-questions' ? 'CBT Question Bank' : adminTab === 'cbt-monitoring' ? 'CBT Monitoring' : adminTab === 'payments' ? 'Payment records' : adminTab[0].toUpperCase() + adminTab.slice(1) + ' Manager'}</h1>
               </div>
               {adminTab !== 'quick-drafts' && adminTab !== 'consultations' && adminTab !== 'service-requests' && adminTab !== 'payments' && adminTab !== 'analytics' && adminTab !== 'system-settings' && adminTab !== 'system-health' && adminTab !== 'cbt-monitoring' && (
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -2424,8 +2437,8 @@ function App() {
             </div>
             <div>
               <b>Explore</b>
-              <a href="#opportunities">Opportunities</a>
-              <a href="#updates">Updates</a>
+              <a href="/#opportunities">Opportunities</a>
+              <a href="/#updates">Updates</a>
             </div>
             <div>
               <b>Connect</b>
@@ -2572,7 +2585,7 @@ function App() {
         </div>
       )}
       <header className="nav">
-        <a className="brand" href="#home" onClick={() => setMenu(false)}>
+        <a className="brand" href="/" onClick={() => setMenu(false)}>
           <img
             className="brand-logo"
             src="./icons/icon.svg"
@@ -2586,12 +2599,13 @@ function App() {
           {['Home', 'Opportunities', 'Admissions', 'Updates'].map(x => (
             <a
               key={x}
-              href={'#' + x.toLowerCase()}
+              href={(isServicesPage ? '/' : '') + '#' + x.toLowerCase()}
               onClick={() => setMenu(false)}
             >
               {x}
             </a>
           ))}
+          <a href="/services" onClick={() => setMenu(false)}>Services</a>
           <a href="/cbt" onClick={() => setMenu(false)}>EDUKEN CBT</a>
           <div className={servicesMenuOpen ? 'nav-dropdown is-open' : 'nav-dropdown'}>
             <button
@@ -2606,11 +2620,11 @@ function App() {
             </button>
             {servicesMenuOpen && (
               <div className="nav-dropdown-menu" id="eduken-services-menu">
-                <a href="#jamb-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
-                <a href="#admissions" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
-                <a href="#general-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
-                <a href="#eduken-platform" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
-                <a className="nav-dropdown-all" href="#general-services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
+                <a href="/services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">JAMB Services</span><span className="nav-dropdown-description">Available JAMB-related support</span></a>
+                <a href="/#admissions" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Admissions & Screening</span><span className="nav-dropdown-description">School guidance and admission updates</span></a>
+                <a href="/services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Academic & Document Services</span><span className="nav-dropdown-description">Printing, document and academic support</span></a>
+                <a href="/#eduken-platform" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}><span className="nav-dropdown-title">Student Portal</span><span className="nav-dropdown-description">Wallet, requests and deliverables</span></a>
+                <a className="nav-dropdown-all" href="/services" onClick={() => { setMenu(false); setServicesMenuOpen(false); }}>View all services <ArrowRight size={14} aria-hidden="true" /></a>
               </div>
             )}
           </div>
@@ -2634,8 +2648,8 @@ function App() {
         </nav>
         <div className="auth-nav-actions">
           {themeToggle}
-          <a className="header-sign-in" href="#eduken-platform" onClick={() => setMenu(false)} aria-label="Go to EDUKEN Wallet and customer account">
-            My Wallet
+          <a className="header-sign-in" href={isServicesPage ? '/#eduken-platform' : '#eduken-platform'} onClick={() => setMenu(false)} aria-label="My EDUKEN — student workspace">
+            My EDUKEN
           </a>
         </div>
         <button
@@ -2682,23 +2696,122 @@ function App() {
         </div>
       )}
       <main>
+        {isServicesPage ? (
+          <div className="services-page">
+            <section className="services-page-hero">
+              <span className="kicker">EDUKEN CONSULT · STUDENT SUPPORT</span>
+              <h1>Educational support, made easier.</h1>
+              <p>Explore the services currently listed by EDUKEN CONSULT. Review the details and requirements, then send a request through the existing secure service-request process.</p>
+              <div className="services-page-actions">
+                <a className="primary" href="#available-services">Explore services <ArrowRight size={17} /></a>
+                <a className="secondary" href="/#contact">Ask for guidance</a>
+              </div>
+            </section>
+            <section className="services-request-steps" aria-labelledby="services-request-steps-title">
+              <h2 id="services-request-steps-title">How service requests work</h2>
+              <div className="services-request-steps__grid">
+                <article><span>01</span><h3>Choose a service</h3><p>Review the description, availability and any listed requirements.</p></article>
+                <article><span>02</span><h3>Send your request</h3><p>Sign in with your Google account and complete the service request form.</p></article>
+                <article><span>03</span><h3>Follow the response</h3><p>EDUKEN reviews your request. Secure checkout is shown only when an approved service price applies; unpriced enquiries are confirmed by the team.</p></article>
+              </div>
+            </section>
+            <section className="services-page-section" id="available-services">
+              <div className="section-head">
+                <div><span className="kicker">AVAILABLE SERVICE CATEGORIES</span><h2>JAMB and examination services</h2></div>
+                <p>Only services configured in the EDUKEN service catalogue appear here. Availability and prices are shown as currently recorded.</p>
+              </div>
+              <div className="services-page-grid">
+                {content.services.filter(isJambCatalogueService).map((service) => {
+                  const price = Number(service.price);
+                  const hasPrice = service.price !== null && service.price !== undefined && String(service.price).trim() !== '' && Number.isFinite(price) && price > 0;
+                  const available = service.is_available !== false;
+                  const requirements = jambServicePublicRequirements(service);
+                  return (
+                    <article className="services-page-card" key={service.id}>
+                      <span className="services-page-card__category">{service.category || 'JAMB Services'}</span>
+                      <h3>{service.name}</h3>
+                      <p>{service.description || 'Contact EDUKEN to confirm the details of this service.'}</p>
+                      <p className="services-page-requirements"><strong>Who can request:</strong> Candidates who need this service and meet any requirements listed below.</p>
+                      {requirements ? <p className="services-page-requirements"><strong>Before you request:</strong> {requirements}</p> : <p className="services-page-requirements">No additional requirements are listed. EDUKEN will confirm any information needed after your enquiry.</p>}
+                      <div className="services-page-card__meta">
+                        <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
+                        <span>{available ? 'Available' : 'Currently unavailable'}</span>
+                      </div>
+                      <button type="button" className="primary" disabled={!available} onClick={() => { if (!auth.isGoogleSignedIn()) { setServicesCustomerSignInMessage(''); setServicesCustomerSignInOpen(true); return; } setSelectedService(service); setServiceForm({}); }}>
+                        {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Enquire about this service'} <ArrowRight size={15} />
+                      </button>
+                    </article>
+                  );
+                })}
+              </div>
+              {!loading && !contentLoadFailed && !content.services.some(isJambCatalogueService) ? <p className="services-page-empty">No JAMB catalogue services are currently published. Please check back later or contact EDUKEN for guidance.</p> : null}
+            </section>
+            <section className="services-page-section">
+              <div className="section-head">
+                <div><span className="kicker">EDUCATIONAL GUIDANCE</span><h2>Other educational support</h2></div>
+                <p>These services use the existing EDUKEN request form. Where a price is not listed, it will be confirmed by the team.</p>
+              </div>
+              <div className="services-page-grid">
+                {content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).map((service) => (
+                  <article className="services-page-card" key={service.id || service.name}>
+                    <span className="services-page-card__category">{service.category || 'EDUKEN Support'}</span>
+                    <h3>{service.name}</h3>
+                    <p>{service.description || 'Submit an enquiry to learn more about this service.'}</p>
+                    <p className="services-page-requirements"><strong>Who can request:</strong> Students who need this type of support. Any service-specific conditions will be confirmed by EDUKEN.</p>
+                    {service.requirements ? <p className="services-page-requirements"><strong>What you may need:</strong> {service.requirements}</p> : <p className="services-page-requirements">No additional requirements are listed. EDUKEN will confirm what is needed after your enquiry.</p>}
+                    <div className="services-page-card__meta"><strong>{service.price !== null && service.price !== undefined && service.price !== '' && Number.isFinite(Number(service.price)) ? '₦' + Number(service.price).toLocaleString('en-NG') : 'Price confirmed after enquiry'}</strong></div>
+                    <button type="button" className="primary" onClick={() => { if (!auth.isGoogleSignedIn()) { setServicesCustomerSignInMessage(''); setServicesCustomerSignInOpen(true); return; } setSelectedService(service); }}>
+                      Request this service <ArrowRight size={15} />
+                    </button>
+                  </article>
+                ))}
+              </div>
+              {!loading && !contentLoadFailed && !content.services.some(s => !s.is_catalog_item && !isJambCatalogueService(s)) ? <p className="services-page-empty">No additional services are currently published. Please contact EDUKEN if you need guidance.</p> : null}
+            </section>
+            <section className="services-page-help">
+              <div><span className="kicker">NOT SURE WHERE TO START?</span><h2>Let's help you find the right next step.</h2><p>Send EDUKEN a consultation request if you need help choosing the right service or understanding the process.</p></div>
+              <a className="primary" href="/#contact">Request a consultation <ArrowRight size={17} /></a>
+            </section>
+            <p className="services-page-safety">Service requests are not payments. Do not send your passwords, OTPs, bank-card details or sensitive identity documents through a service form.</p>
+            {servicesCustomerSignInOpen && (
+              <div role="presentation" onClick={event => { if (event.target === event.currentTarget) setServicesCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+                <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="services-customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
+                  <button className="login-close" type="button" aria-label="Close customer sign-in" onClick={() => setServicesCustomerSignInOpen(false)}>×</button>
+                  <span className="kicker">YOUR EDUKEN ACCOUNT</span>
+                  <h2 id="services-customer-signin-title">Sign in to EDUKEN</h2>
+                  <p>Use the same Google account across EDUKEN CONSULT and CBT. Your student username and learning progress stay connected to this account.</p>
+                  <button className="customer-google-signin" type="button" onClick={async () => {
+                    setServicesCustomerSignInMessage('');
+                    try {
+                      await auth.signIn({ scope: 'openid email profile offline_access' });
+                      setServicesCustomerSignInOpen(false);
+                    } catch (error) {
+                      setServicesCustomerSignInMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
+                    }
+                  }}>
+                    <span className="customer-google-mark" aria-hidden="true">G</span>
+                    Continue with Google
+                  </button>
+                  {servicesCustomerSignInMessage ? <p className="make-payments-message" role="alert">{servicesCustomerSignInMessage}</p> : null}
+                </section>
+              </div>
+            )}
+          </div>
+        ) : (
+        <>
         <section id="home" className="hero">
           <div className="hero-copy">
             <div className="eyebrow">
-              <span /> TRUSTED UPDATES • STUDENT-FOCUSED • OFFICIAL SOURCES
-              WHERE AVAILABLE
+              <span className="eyebrow-text">TRUSTED UPDATES • STUDENT-FOCUSED • OFFICIAL SOURCES WHERE AVAILABLE</span>
             </div>
             <h1>
-              Education.
+              Welcome to
               <br />
-              <em>Opportunities.</em>
-              <br />
-              Your Next Move.
+              <em>EDUKEN CONSULT.</em>
             </h1>
             <p>
-              EDUKEN CONSULT helps students, applicants and young people stay
-              informed with trusted educational updates, admissions information
-              and opportunities that can move their future forward.
+              Your trusted destination for educational updates, opportunities,
+              preparation and student support.
             </p>
             <div className="hero-actions">
               <a className="primary" href="#opportunities">
@@ -2725,6 +2838,41 @@ function App() {
                 <Users size={17} /> Built for students
               </span>
             </div>
+          </div>
+          <div className="hero-art" aria-hidden="true">
+            <svg viewBox="0 0 240 220" role="presentation" focusable="false">
+              <circle cx="126" cy="111" r="91" fill="#b9dfc5" opacity=".18" />
+              <circle cx="178" cy="55" r="25" fill="#d9efdf" opacity=".2" />
+              <path d="M23 174c17-20 18-39 12-57 22 9 33 27 28 48-4 15-18 24-40 9Z" fill="#8fc99e"/>
+              <path d="M37 177c7-20 9-36 0-55" fill="none" stroke="#e5f3e8" strokeWidth="3" strokeLinecap="round"/>
+              <path d="M205 164c-5-21 1-39 18-52 4 23-1 42-18 52Z" fill="#8fc99e"/>
+              <path d="M207 164c2-17 7-31 16-44" fill="none" stroke="#e5f3e8" strokeWidth="3" strokeLinecap="round"/>
+              <g transform="translate(57 112)">
+                <path d="M0 8 55 0l49 8v64l-49-8L0 72Z" fill="#fff"/>
+                <path d="M55 0v64M0 8l55 10 49-10" fill="none" stroke="#17613f" strokeWidth="4" strokeLinejoin="round"/>
+                <path d="M9 19 47 26M9 31l34 6M64 26l29-6M64 38l29-6" stroke="#9acbaa" strokeWidth="3" strokeLinecap="round"/>
+                <path d="M-4 74 55 84l53-10" fill="none" stroke="#d8eddd" strokeWidth="5" strokeLinecap="round"/>
+              </g>
+              <g transform="translate(89 38)">
+                <path d="M0 14 47 0l47 14-47 15Z" fill="#f6c928"/>
+                <path d="M17 20v25c18 13 42 13 60 0V20L47 30Z" fill="#fff"/>
+                <path d="M94 14v28" stroke="#f6c928" strokeWidth="5" strokeLinecap="round"/>
+                <circle cx="94" cy="47" r="6" fill="#f6c928"/>
+                <path d="M47 0v29" stroke="#d7a900" strokeWidth="2"/>
+              </g>
+              <g transform="translate(126 143)">
+                <rect x="0" y="0" width="66" height="43" rx="6" fill="#dceef2" stroke="#fff" strokeWidth="3"/>
+                <rect x="6" y="6" width="54" height="29" rx="3" fill="#17613f"/>
+                <path d="M-7 46h80l-8 8H1Z" fill="#f6c928"/>
+                <path d="m22 20 7 7 14-15" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              </g>
+              <g transform="translate(25 48)">
+                <rect width="39" height="49" rx="5" fill="#f6c928" transform="rotate(-9 19 24)"/>
+                <path d="M9 15h21M8 23h20M7 31h13" stroke="#17613f" strokeWidth="3" strokeLinecap="round"/>
+                <path d="m27 2 8 4-7 5" fill="none" stroke="#fff" strokeWidth="2"/>
+              </g>
+              <path d="m194 92 6 7 12-16" fill="none" stroke="#f6c928" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
           <div className="hero-visual">
             <div className="orb orb-one" />
@@ -2768,6 +2916,48 @@ function App() {
           </div>
         </section>
 
+        <section className="section discovery-section" id="discover">
+          <div className="section-head">
+            <div>
+              <span className="kicker">EXPLORE EDUKEN</span>
+              <h2>What can we help you with?</h2>
+            </div>
+            <p>Find the right place to start. Your educational updates, opportunities and student support are all within reach.</p>
+          </div>
+          <div className="discovery-grid">
+            {[
+              { title: 'CBT Practice', description: 'Prepare with EDUKEN practice and mock examinations.', href: '/cbt', icon: Monitor, tone: 'green' },
+              { title: 'Aggregate Score Calculator', description: 'Estimate your admission aggregate using the available school scoring models.', href: '/aggregate-calculator', icon: Calculator, tone: 'mint' },
+              { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
+              { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '#admissions', icon: BookOpen, tone: 'green' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green', updateFilter: 'Educational News' },
+              { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '#admissions', icon: GraduationCap, tone: 'mint' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
+              { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
+              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
+              { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '/services', icon: Plus, tone: 'mint' },
+            ].map(card => {
+              const Icon = card.icon;
+              return (
+                <a
+                  className={card.title === 'More Services' ? 'discovery-card discovery-card--wide' : 'discovery-card'}
+                  href={card.href}
+                  key={card.title}
+                  onClick={() => { if ('filter' in card && card.filter) setOppFilter(card.filter); if ('updateFilter' in card && card.updateFilter) setUpdateFilter(card.updateFilter); }}
+                >
+                  <span className={'discovery-card__icon discovery-card__icon--' + card.tone}><Icon size={21} strokeWidth={2} /></span>
+                  <span className="discovery-card__copy">
+                    <strong>{card.title}</strong>
+                    <small>{card.description}</small>
+                  </span>
+                  <ArrowRight className="discovery-card__arrow" size={17} />
+                </a>
+              );
+            })}
+          </div>
+        </section>
+
         <Suspense fallback={<SectionLoading />}>
           <PlatformHub
             opportunities={content.opportunities}
@@ -2793,6 +2983,7 @@ function App() {
                 <article className="spotlight-card" key={o.id}>
                   <div className="spotlight-top">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    <span className={'opportunity-status opportunity-status--' + opportunityStatus(o).toLowerCase().replace(/\s+/g, '-')}>{opportunityStatus(o)}</span>
                     {o.verified ? (
                       <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
@@ -2882,9 +3073,13 @@ function App() {
                   <small>{x.date || 'EDUKEN Update'}</small>
                   <h3>{x.title}</h3>
                   <RichContent text={x.body || 'Open the update for the full information.'} className="rich-content update-rich-content" />
-                  {x.sourceUrl && (
+                  {x.sourceUrl ? (
                     <a href={x.sourceUrl} target="_blank" rel="noreferrer">
                       Official Source <ArrowRight size={14} />
+                    </a>
+                  ) : (
+                    <a href="#updates">
+                      Browse updates <ArrowRight size={14} />
                     </a>
                   )}
                 </article>
@@ -2943,37 +3138,6 @@ function App() {
                 Keep your applications and deadlines organized in one place.
               </p>
             </div>
-          </div>
-        </section>
-
-        <section className="section" id="more">
-          <div className="section-head">
-            <div>
-              <span className="kicker">EXPLORE</span>
-              <h2>What are you looking for?</h2>
-            </div>
-            <p>
-              One platform for the information and opportunities that matter to
-              your next move.
-            </p>
-          </div>
-          <div className="category-grid">
-            {categories.map(([name, desc, Icon]) => (
-              <a
-                className="category-card"
-                href={name === 'Admissions' ? '#admissions' : '#opportunities'}
-                key={name as string}
-              >
-                <div className="icon-box">
-                  <Icon size={21} />
-                </div>
-                <h3>{name as string}</h3>
-                <p>{desc as string}</p>
-                <span>
-                  Explore <ArrowRight size={15} />
-                </span>
-              </a>
-            ))}
           </div>
         </section>
 
@@ -3071,6 +3235,7 @@ function App() {
                 <article className="opp-card" key={o.id}>
                   <div className="opp-topline">
                     <span className="tag">{o.category || 'Opportunity'}</span>
+                    <span className={'opportunity-status opportunity-status--' + opportunityStatus(o).toLowerCase().replace(/\s+/g, '-')}>{opportunityStatus(o)}</span>
                     {o.verified ? (
                       <span className="verified-pill"><ShieldCheck size={18} strokeWidth={3} aria-hidden="true" /><span>Verified by EDUKEN</span></span>
                     ) : o.sourceUrl ? (
@@ -3090,6 +3255,25 @@ function App() {
             )}
           </div>
         </section>
+
+        {closedOpps.length > 0 ? (
+          <section className="section closed-opportunities" aria-labelledby="closed-opportunities-title">
+            <div className="section-head">
+              <div><span className="kicker">PAST DEADLINES</span><h2 id="closed-opportunities-title">Recently closed opportunities</h2></div>
+              <p>These published opportunities have passed their listed deadlines. They are shown for reference only and are not presented as open applications.</p>
+            </div>
+            <div className="closed-opportunities-grid">
+              {closedOpps.map(item => (
+                <article className="closed-opportunity-card" key={item.id}>
+                  <div><span className="tag">{item.category || 'Opportunity'}</span><span className="opportunity-status opportunity-status--closed">Closed</span></div>
+                  <h3>{item.title}</h3>
+                  <p>{item.description || 'The listed application deadline has passed.'}</p>
+                  <small>Deadline: {item.deadline || 'Passed'}</small>
+                </article>
+              ))}
+            </div>
+          </section>
+        ) : null}
 
         <section className="section" id="admissions">
           <div className="section-head">
@@ -3192,9 +3376,9 @@ function App() {
                       <strong>{hasPrice ? '₦' + price.toLocaleString('en-NG') : 'Price not set'}</strong>
                       {hasPrice ? <span className="jamb-service-price__unit">per candidate</span> : null}
                     </div>
-                    <button type="button" className="primary jamb-service-request" disabled={!available || !hasPrice} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
-                      {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Price not set'}
-                      {available && hasPrice ? <ArrowRight size={16} aria-hidden="true" /> : null}
+                    <button type="button" className="primary jamb-service-request" disabled={!available} onClick={() => { if (!auth.isGoogleSignedIn()) { setCustomerSignInRequest(current => current + 1); return; } setSelectedService(service); setServiceForm({}); }}>
+                      {!available ? 'Currently unavailable' : hasPrice ? 'Request this service' : 'Enquire about this service'}
+                      {available ? <ArrowRight size={16} aria-hidden="true" /> : null}
                     </button>
                   </div>
                 </article>
@@ -3217,14 +3401,7 @@ function App() {
             </p>
           </div>
           <div className="general-service-grid">
-            {(content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).length
-              ? content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s))
-              : [
-                { id: 'fallback-admission-guidance', name: 'Admission Guidance', category: 'Admissions', description: 'Guidance on school choices, admission requirements and next steps.', price: null },
-                { id: 'fallback-application-help', name: 'School Application Assistance', category: 'Applications', description: 'Support understanding application steps and requirements.', price: null },
-                { id: 'fallback-career', name: 'Career & Opportunity Guidance', category: 'Career', description: 'Guidance on scholarships, internships, jobs and other opportunities.', price: null },
-                { id: 'fallback-consultation', name: 'Educational Consultation', category: 'Consultation', description: 'Personal guidance for education and study-related decisions.', price: null },
-              ]).map((s, i) => (
+            {content.services.filter(s => !s.is_catalog_item && !isJambCatalogueService(s)).map((s, i) => (
               <article className="general-service-card" key={s.id || s.name}>
                 <div className="general-service-card__topline">
                   <span className="general-service-card__number">{String(i + 1).padStart(2, '0')}</span>
@@ -3239,6 +3416,7 @@ function App() {
               </article>
             ))}
           </div>
+          {!loading && !contentLoadFailed && !content.services.some(s => !s.is_catalog_item && !isJambCatalogueService(s)) ? <p className="services-page-empty">No additional services are currently published. Contact EDUKEN for guidance about your enquiry.</p> : null}
         </section>
 
         <section className="consult-section" id="contact">
@@ -3304,6 +3482,19 @@ function App() {
               available.
             </p>
           </div>
+          <div className="filters update-filters" role="group" aria-label="Filter educational updates">
+            {['All updates', 'JAMB & Examinations', 'Admissions', 'Scholarships', 'Universities & Institutions', 'Jobs & Internships', 'Educational News'].map(filter => (
+              <button
+                type="button"
+                key={filter}
+                className={updateFilter === filter ? 'active' : ''}
+                aria-pressed={updateFilter === filter}
+                onClick={() => setUpdateFilter(filter)}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
           <div className="update-grid">
             {visibleUpdates.map((x, i) => (
               <article className="update-card" key={x.id}>
@@ -3327,13 +3518,14 @@ function App() {
                     View Source <ArrowRight size={14} />
                   </a>
                 ) : (
-                  <a href="#more">
-                    Explore EDUKEN <ArrowRight size={14} />
+                  <a href="#updates">
+                    Browse updates <ArrowRight size={14} />
                   </a>
                 )}
               </article>
             ))}
           </div>
+          {!loading && visibleUpdates.length === 0 ? <p className="search-empty">No published updates match this category yet. Check another category or return later.</p> : null}
         </section>
 
         <section className="trust-section" id="about">
@@ -3473,7 +3665,27 @@ function App() {
             📢 Join EDUKEN WhatsApp Channel <ArrowRight size={17} />
           </a>
         </section>
+        </>
+        )}
       </main>
+
+      <nav className="mobile-bottom-nav" aria-label="Quick navigation">
+        <a href="/" className="mobile-bottom-nav__item">
+          <Home size={19} aria-hidden="true" /><span>Home</span>
+        </a>
+        <a href="/services" className="mobile-bottom-nav__item">
+          <BriefcaseBusiness size={19} aria-hidden="true" /><span>Services</span>
+        </a>
+        <a href="/cbt" className="mobile-bottom-nav__item mobile-bottom-nav__item--primary">
+          <Monitor size={21} aria-hidden="true" /><span>CBT</span>
+        </a>
+        <a href="/#updates" className="mobile-bottom-nav__item">
+          <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
+        </a>
+        <a href="/#eduken-platform" className="mobile-bottom-nav__item">
+          <UserRound size={19} aria-hidden="true" /><span>Dashboard</span>
+        </a>
+      </nav>
 
       {pendingEmailAction && (
         <div role="presentation" style={{ position: 'fixed', inset: 0, zIndex: 1100, background: 'rgba(12,24,18,.72)', display: 'grid', placeItems: 'center', padding: 16 }}>

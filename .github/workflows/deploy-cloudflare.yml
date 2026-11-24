@@ -61,6 +61,21 @@ jobs:
         run: |
           npx playwright install chromium --with-deps
           node tests/cbt-preview-smoke.mjs
+      - name: Verify deployed public preview in mobile Chromium
+        env:
+          EDUKEN_PREVIEW_URL: https://eduken-consult-preview.timmyjoe385.workers.dev/
+          GITHUB_SHA: ${{ github.sha }}
+        run: node tests/deployed-preview-smoke.mjs
+      - name: Upload deployed-preview mobile screenshot
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: eduken-deployed-preview-mobile-screenshot
+          path: |
+            test-results/deployed-preview-mobile-success.png
+            test-results/deployed-preview-mobile-failure.png
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Smoke-test isolated guest payment recovery endpoint
         if: github.event_name == 'pull_request' && (github.head_ref == 'fix/guest-payment-return-recovery-20261019' || github.head_ref == 'integration/main-release-candidate-20261020' || github.head_ref == 'feat/flutterwave-test-integration')
         env:
