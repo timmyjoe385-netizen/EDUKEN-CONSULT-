@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Item = Record<string, any> & { id: string };
 type Category = 'jamb-news' | 'admissions' | 'scholarships' | 'education-news' | 'school-updates' | 'jobs-internships' | 'opportunities';
@@ -16,8 +16,20 @@ const pageConfig: Record<Category, { title: string; kicker: string; intro: strin
 const clean = (value: unknown) => String(value ?? '').trim();
 const isPlaceholder = (item: Item) => {
   const title = clean(item.title || item.school).toLowerCase();
+  const school = clean(item.school || '').toLowerCase();
+  const course = clean(item.course || item.programme || '').toLowerCase();
   const body = clean(item.body || item.details || item.description || item.content).toLowerCase();
-  return /will appear here|will be published here/.test(title) ||
+  const link = clean(item.link || item.application_url);
+  const deadline = clean(item.deadline);
+  const genericValues = new Set([
+    'nigerian universities', 'universities', 'polytechnics', 'colleges of education',
+    'admission information', 'application information', 'programme information',
+    'general admission information', 'details coming soon',
+  ]);
+  const identifyingFields = [school || title, course, body].filter(Boolean);
+  const genericAdmissionPlaceholder = identifyingFields.length >= 2 &&
+    identifyingFields.every(value => genericValues.has(value)) && !link && !deadline;
+  return genericAdmissionPlaceholder || /will appear here|will be published here/.test(title) ||
     /use the eduken admin dashboard to publish clear, useful updates|verified opportunities will appear here/.test(body);
 };
 const isExpired = (value: unknown) => {
@@ -35,6 +47,8 @@ export default function ContentCategoryPage({ category, opportunities, admission
 }) {
   const key = (pageConfig[category as Category] ? category : 'education-news') as Category;
   const config = pageConfig[key];
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const match = window.location.hash.match(/^#(?:admission\/|admission-)(.+)$/);
@@ -66,15 +80,20 @@ export default function ContentCategoryPage({ category, opportunities, admission
     return key === 'opportunities';
   };
   const updateItems = updates.filter(updateMatches);
-  const admissionItems = admissions.filter(item => !isPlaceholder(item) && (
-    key === 'admissions' || (key === 'school-updates' && /school|institution|university|polytechnic|college/i.test(clean(item.school + ' ' + item.type)))
-  ));
+  const admissionItems = admissions.filter(item => {
+    const hasUsefulDetails = [item.course, item.details, item.description, item.content, item.link, item.application_url, item.deadline].some(value => clean(value));
+    return !isPlaceholder(item) && hasUsefulDetails && (
+      key === 'admissions' || (key === 'school-updates' && /school|institution|university|polytechnic|college/i.test(clean(item.school + ' ' + item.type)))
+    );
+  });
   const opportunityItems = opportunities.filter(item => !isPlaceholder(item) && opportunityMatches(item));
   const items: Array<{ id: string; title: string; category: string; body: string; date: string; link: string; label: string; verified: boolean; kind: string }> = [
     ...updateItems.map(item => ({ id: 'update-' + item.id, title: clean(item.title) || 'Education update', category: clean(item.category) || 'EDUKEN Update', body: clean(item.body || item.content || item.description), date: clean(item.date || item.published_at), link: clean(item.link || item.url), label: 'Read announcement', verified: Boolean(item.verified), kind: 'update' })),
     ...admissionItems.map(item => ({ id: 'admission-' + item.id, title: clean(item.school || item.title) || 'Admission update', category: clean(item.type) || 'Admission', body: [clean(item.course), clean(item.details || item.description || item.content)].filter(Boolean).join('\n\n'), date: clean(item.deadline), link: clean(item.link || item.application_url), label: 'View admission details', verified: Boolean(item.verified), kind: 'admission' })),
     ...opportunityItems.map(item => ({ id: 'opportunity-' + item.id, title: clean(item.title) || 'Opportunity', category: clean(item.category) || 'Opportunity', body: [clean(item.description), clean(item.eligibility) ? 'Eligibility: ' + clean(item.eligibility) : ''].filter(Boolean).join('\n\n'), date: clean(item.deadline), link: clean(item.sourceUrl || item.link || item.application_url), label: 'View official details', verified: Boolean(item.verified), kind: 'opportunity' })),
   ];
+  const normalizedSearch = searchQuery.trim().toLowerCase();
+  const visibleItems = items.filter(item => !normalizedSearch || [item.title, item.category, item.body].join(' ').toLowerCase().includes(normalizedSearch));
   const dateLabel = (value: string) => {
     if (!value) return '';
     const parsed = new Date(value);
@@ -96,15 +115,36 @@ export default function ContentCategoryPage({ category, opportunities, admission
       <nav className="content-category-page__quicklinks" aria-label="More EDUKEN categories">
         <a href="/jamb-news">JAMB News</a><a href="/admissions">Admissions</a><a href="/scholarships">Scholarships & Grants</a><a href="/education-news">Educational News</a><a href="/school-updates">School Updates</a><a href="/jobs-internships">Internships & Jobs</a>
       </nav>
-      <p className="content-category-page__count" role="status" aria-live="polite">{loading ? 'Loading published information…' : items.length + ' published item(s)'}</p>
+      <div className="content-category-page__search">
+        <label htmlFor="category-content-search">Search this section</label>
+        <input id="category-content-search" type="search" aria-label="Search this section" value={searchQuery} onChange={event => setSearchQuery(event.target.value)} placeholder="Search published information…" />
+        {searchQuery ? <button type="button" onClick={() => setSearchQuery('')}>Clear search</button> : null}
+      </div>
+      <p className="content-category-page__count" role="status" aria-live="polite">{loading ? 'Loading published information…' : visibleItems.length + ' published item(s)'}</p>
       {loading ? <div className="content-category-page__empty">Please wait while published information loads.</div> :
-        items.length === 0 ? <div className="content-category-page__empty">There are no matching published items in this section yet. Please check back later as EDUKEN publishes verified updates.</div> :
-        <div className="content-category-page__grid">{items.map(item => <article className="content-category-card" id={item.kind === 'admission' ? item.id : undefined} key={item.id}>
+        visibleItems.length === 0 ? <div className="content-category-page__empty">{normalizedSearch ? 'No matching information found. Try another search.' : 'There are no matching published items in this section yet. Please check back later as EDUKEN publishes verified updates.'}</div> :
+        <div className="content-category-page__grid">{visibleItems.map(item => <article className="content-category-card" id={item.kind === 'admission' ? item.id : undefined} key={item.id}>
           <div className="content-category-card__meta"><span>{item.category}</span>{item.date ? <span>{item.kind === 'admission' ? 'Deadline: ' : 'Date: '}{dateLabel(item.date)}</span> : null}</div>
           {item.verified ? <span className="verified-pill"><span aria-hidden="true">✓</span> Verified by EDUKEN</span> : null}
           <h2>{item.title}</h2>
           {item.body ? <p>{item.body.length > 700 ? item.body.slice(0, 697) + '…' : item.body}</p> : <p>Open the full announcement for details and next steps.</p>}
-          {item.link ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
+          <button
+            type="button"
+            className="content-category-card__details-toggle"
+            aria-expanded={expandedItemId === item.id}
+            aria-controls={`content-details-${item.id}`}
+            onClick={() => setExpandedItemId(current => current === item.id ? null : item.id)}
+          >
+            {expandedItemId === item.id ? 'Hide details' : 'View details'}
+          </button>
+          {expandedItemId === item.id ? (
+            <div className="content-category-card__details" id={`content-details-${item.id}`} role="region" aria-label={`Full details for ${item.title}`}>
+              <p>{item.body || 'No additional description has been provided yet.'}</p>
+              {item.date ? <p><strong>{item.kind === 'admission' ? 'Deadline: ' : 'Date: '}</strong>{dateLabel(item.date)}</p> : null}
+              {item.link ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
+            </div>
+          ) : null}
+          {item.link && expandedItemId !== item.id ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
         </article>)}</div>}
       <a className="content-category-page__back" href="/">← Back to EDUKEN homepage</a>
     </div>

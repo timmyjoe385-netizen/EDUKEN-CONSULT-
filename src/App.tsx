@@ -206,6 +206,11 @@ function App() {
   // Keep older EDUKEN links working after moving public feeds to dedicated pages.
   useEffect(() => {
     if (window.location.pathname !== '/' && window.location.pathname !== '') return;
+    // Email-alert links carry one-time confirmation tokens. Keep them on the
+    // homepage so the explicit confirmation dialog can render before routing
+    // any legacy content hash to its new category destination.
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('email_alert_verify') || params.has('email_alert_unsubscribe')) return;
     const hash = window.location.hash;
     const routes = [
       { pattern: /^#admissions$/, path: '/admissions' },
@@ -753,7 +758,7 @@ function App() {
 
   const isPlaceholderAdmission = (item: Item) => {
     const school = String(item.school || '').trim().toLowerCase();
-    const course = String(item.course || '').trim().toLowerCase();
+    const course = String(item.course || item.programme || '').trim().toLowerCase();
     const details = String(item.details || item.description || item.content || '').trim().toLowerCase();
     const link = String(item.link || item.application_url || '').trim();
     const deadline = String(item.deadline || '').trim();

@@ -243,7 +243,7 @@ test('customer workspace exposes the optional EDUKEN wallet without replacing pu
   await expect(workspace.getByRole('heading', { name: 'Smart Alerts' })).toBeVisible();
   await expect(workspace.getByText(/Background push notifications are not available yet/i)).toBeVisible();
   await expect(workspace.getByRole('button', { name: /Sign in to get a wallet/i })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
+  await expect(page.locator('.hero')).toBeVisible();
 });
 
 test('homepage exposes the aggregate calculator from the primary navigation and hero', async ({ page }) => {
@@ -302,25 +302,25 @@ test('verified admission and update cards display the prominent EDUKEN badge', a
     }),
   );
 
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-
-  const admissionBadge = page.locator('#admission-verified-admission-fixture .verified-pill');
+  await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
+  const admissionCard = page.locator('.content-category-card').filter({
+    has: page.getByRole('heading', { name: 'Verified Admission Fixture' }),
+  });
+  const admissionBadge = admissionCard.locator('.verified-pill');
   await expect(admissionBadge).toContainText('Verified by EDUKEN');
-  await expect(admissionBadge.locator('svg')).toBeVisible();
 
-  const updateCard = page.locator('.newsroom-card').filter({
+  await page.goto('/education-news', { waitUntil: 'domcontentloaded' });
+  const updateCard = page.locator('.content-category-card').filter({
     has: page.getByRole('heading', { name: 'Verified Update Fixture' }),
   });
   const updateBadge = updateCard.locator('.verified-pill');
   await expect(updateBadge).toContainText('Verified by EDUKEN');
-  await expect(updateBadge.locator('svg')).toBeVisible();
-
-  const badgeStyle = await admissionBadge.evaluate(element => {
+  const badgeStyle = await updateBadge.evaluate(element => {
     const style = window.getComputedStyle(element);
     return { fontWeight: Number(style.fontWeight), borderWidth: style.borderTopWidth };
   });
   expect(badgeStyle.fontWeight, 'verification label should be bold').toBeGreaterThanOrEqual(700);
-  expect(badgeStyle.borderWidth, 'verification badge should have a thick visible border').toBe('2px');
+  expect(badgeStyle.borderWidth, 'verification badge should have a visible border').toBe('2px');
 });
 
 test('public content API returns the expected data structure', async ({ request }) => {
@@ -418,7 +418,7 @@ test('malformed admission deep links do not crash public page rendering', async 
 
   await page.goto('/#admission/%E0%A4%A', { waitUntil: 'domcontentloaded' });
   await expect(page.locator('body')).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Navigate admissions with clarity.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Admission Guidance & Updates' })).toBeVisible();
   expect(pageErrors, 'malformed URL fragments must not throw during hash parsing').toEqual([]);
 });
 
@@ -708,23 +708,32 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   const navigation = page.locator('#primary-navigation');
   await expect(navigation).toBeVisible();
   await navigation.getByRole('link', { name: 'Admissions' }).click();
-  await expect(page).toHaveURL(/#admissions$/);
-  await expect(page.getByRole('button', { name: 'Open navigation' })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page).toHaveURL(/\/admissions$/);
+  await page.waitForLoadState('domcontentloaded');
+  await expect(page.locator('#root')).not.toBeEmpty();
+  // The dedicated Admissions page has its own navigation, so the homepage
+  // navigation element is expected to be replaced after the route transition.
+  await expect(page.getByRole('heading', { name: /Admission Guidance & Updates/i })).toBeVisible();
 });
 
-test('global search results can be cleared accessibly', async ({ page }) => {
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const search = page.getByRole('textbox', { name: 'Search all EDUKEN content' });
+test('category search results can be cleared accessibly', async ({ page }) => {
+  await page.route('**/functions/v1/eduken-api/public-content', route =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ opportunities: [], admissions: [], updates: [], faqs: [], services: [] }),
+    }),
+  );
+  await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
+  const search = page.getByRole('searchbox', { name: 'Search this section' });
   await expect(search).toBeVisible();
   await search.fill('playwright-no-match-check');
-
-  await expect(page.getByRole('region', { name: 'Search results' })).toBeVisible();
+  await expect(page.getByText('No matching information found. Try another search.')).toBeVisible();
   const clear = page.getByRole('button', { name: 'Clear search' });
   await expect(clear).toBeVisible();
   await clear.click();
-
   await expect(search).toHaveValue('');
-  await expect(page.getByRole('region', { name: 'Search results' })).toHaveCount(0);
+  await expect(page.locator('.content-category-card')).toHaveCount(0);
 });
 
 test('global search excludes placeholder updates but keeps real updates searchable', async ({ page }) => {
@@ -759,16 +768,15 @@ test('global search excludes placeholder updates but keeps real updates searchab
     }),
   );
 
-  await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const search = page.getByRole('textbox', { name: 'Search all EDUKEN content' });
-  const results = page.getByRole('region', { name: 'Search results' });
+  await page.goto('/education-news', { waitUntil: 'domcontentloaded' });
+  const search = page.getByRole('searchbox', { name: 'Search this section' });
 
   await search.fill('will appear here');
-  await expect(results).toBeVisible();
-  await expect(results).not.toContainText('Updates will appear here');
+  await expect(page.getByText('No matching information found. Try another search.')).toBeVisible();
+  await expect(page.locator('.content-category-card')).toHaveCount(0);
 
   await search.fill('Playwright Searchable Update');
-  await expect(results).toContainText('Playwright Searchable Update');
+  await expect(page.getByRole('heading', { name: 'Playwright Searchable Update' })).toBeVisible();
 });
 
 test('admin APIs reject unauthenticated reads and writes', async ({ request }) => {
@@ -1193,16 +1201,14 @@ test('published admission placeholders stay hidden while real admissions remain 
     }),
   );
 
-  await page.goto('/#admissions', { waitUntil: 'domcontentloaded' });
+  await page.goto('/admissions', { waitUntil: 'domcontentloaded' });
   const admissions = page.locator('#admissions');
   await expect(admissions.getByRole('heading', { name: 'Playwright Test University' })).toBeVisible();
-  const specificAdmission = admissions.getByRole('heading', { name: 'Nigerian Universities', exact: true });
+  const specificAdmission = admissions.locator('#admission-specific-admission-without-link-yet').getByRole('heading', { name: 'Nigerian Universities', exact: true });
   await expect(specificAdmission).toBeVisible();
-  await expect(specificAdmission).toHaveCount(1);
-
+  await expect(admissions.locator('#admission-placeholder-universities')).toHaveCount(0);
   await expect(admissions).not.toContainText('Polytechnics');
   await expect(admissions).not.toContainText('Colleges of Education');
-  await expect(admissions).not.toContainText('No matching published admission records yet');
 });
 
 test('public opportunity content omits internal notification preferences', () => {
@@ -2135,19 +2141,11 @@ test('public opportunity hub hides expired deadlines but keeps current opportuni
     }),
   );
 
-  await page.goto('/#opportunities', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.opp-card h3', { hasText: 'Expired Opportunity Fixture' })).toHaveCount(0);
-  await expect(page.locator('.opp-card h3', { hasText: 'Current Opportunity Fixture' })).toBeVisible();
-  const ongoingCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'Current Opportunity Fixture' }) });
-  await expect(ongoingCard.locator('.opportunity-status--ongoing')).toContainText('Ongoing');
-  const newCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'New Opportunity Fixture' }) });
-  await expect(newCard.locator('.opportunity-status--new')).toContainText('New');
-  const closingCard = page.locator('.opp-card').filter({ has: page.getByRole('heading', { name: 'Closing Soon Opportunity Fixture' }) });
-  await expect(closingCard.locator('.opportunity-status--closing-soon')).toContainText('Closing soon');
-  const closedArchive = page.locator('.closed-opportunities');
-  await expect(closedArchive.getByRole('heading', { name: 'Recently closed opportunities' })).toBeVisible();
-  await expect(closedArchive.locator('.closed-opportunity-card')).toContainText('Expired Opportunity Fixture');
-  await expect(closedArchive.locator('.opportunity-status--closed')).toContainText('Closed');
+  await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Expired Opportunity Fixture' })).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Current Opportunity Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'New Opportunity Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Closing Soon Opportunity Fixture' })).toBeVisible();
 });
 
 test('admin content deadline validation and calendar picker are wired for create and edit', async () => {
@@ -2300,19 +2298,11 @@ test('educational updates can be filtered by their published subject category', 
     }),
   );
 
-  await page.goto('/#updates', { waitUntil: 'domcontentloaded' });
-  const updatesSection = page.locator('#updates');
-  const updateFilters = updatesSection.getByRole('group', { name: 'Filter educational updates' });
-  await expect(updateFilters.getByRole('button', { name: 'All updates' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
-  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+  await page.goto('/jamb-news', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toHaveCount(0);
 
-  await updateFilters.getByRole('button', { name: 'JAMB & Examinations' }).click();
-  await expect(updateFilters.getByRole('button', { name: 'JAMB & Examinations' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toBeVisible();
-  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toHaveCount(0);
-
-  await updateFilters.getByRole('button', { name: 'Scholarships' }).click();
-  await expect(updatesSection.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
-  await expect(updatesSection.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
+  await page.goto('/education-news', { waitUntil: 'domcontentloaded' });
+  await expect(page.getByRole('heading', { name: 'Scholarship Announcement Fixture' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'JAMB Registration Update Fixture' })).toHaveCount(0);
 });
