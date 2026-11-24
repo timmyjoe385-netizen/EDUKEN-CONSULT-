@@ -2450,7 +2450,7 @@ function App() {
             <div>
               <b>Explore</b>
               <a href="/#opportunities">Opportunities</a>
-              <a href="/#updates">Updates</a>
+              <a href="/newsroom">Newsroom</a>
             </div>
             <div>
               <b>Connect</b>
@@ -3030,12 +3030,12 @@ function App() {
               { title: 'Aggregate Score Calculator', description: 'Estimate your admission aggregate using the available school scoring models.', href: '/aggregate-calculator', icon: Calculator, tone: 'mint' },
               { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
               { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '/admissions', icon: BookOpen, tone: 'green' },
-              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '#opportunities', icon: Sparkles, tone: 'mint', filter: 'Scholarships' },
-              { title: 'Educational News', description: 'Read important education and examination updates.', href: '#updates', icon: Newspaper, tone: 'green', updateFilter: 'Educational News' },
+              { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/opportunities', icon: Sparkles, tone: 'mint' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '/newsroom', icon: Newspaper, tone: 'green' },
               { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '/admissions', icon: GraduationCap, tone: 'mint' },
-              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '#opportunities', icon: BriefcaseBusiness, tone: 'green', filter: 'Jobs' },
+              { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/opportunities', icon: BriefcaseBusiness, tone: 'green' },
               { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
-              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '#opportunities', icon: Laptop, tone: 'green' },
+              { title: 'Skills & Training', description: 'Find learning programmes and skills opportunities.', href: '/opportunities', icon: Laptop, tone: 'green' },
               { title: 'More Services', description: 'Explore other approved EDUKEN services.', href: '/services', icon: Plus, tone: 'mint' },
             ].map(card => {
               const Icon = card.icon;
