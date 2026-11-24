@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Item = Record<string, any> & { id: string };
 type Category = 'jamb-news' | 'admissions' | 'scholarships' | 'education-news' | 'school-updates' | 'jobs-internships' | 'opportunities';
@@ -35,6 +35,7 @@ export default function ContentCategoryPage({ category, opportunities, admission
 }) {
   const key = (pageConfig[category as Category] ? category : 'education-news') as Category;
   const config = pageConfig[key];
+  const [expandedItemId, setExpandedItemId] = useState<string | null>(null);
 
   useEffect(() => {
     const match = window.location.hash.match(/^#(?:admission\/|admission-)(.+)$/);
@@ -104,7 +105,23 @@ export default function ContentCategoryPage({ category, opportunities, admission
           {item.verified ? <span className="verified-pill"><span aria-hidden="true">✓</span> Verified by EDUKEN</span> : null}
           <h2>{item.title}</h2>
           {item.body ? <p>{item.body.length > 700 ? item.body.slice(0, 697) + '…' : item.body}</p> : <p>Open the full announcement for details and next steps.</p>}
-          {item.link ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
+          <button
+            type="button"
+            className="content-category-card__details-toggle"
+            aria-expanded={expandedItemId === item.id}
+            aria-controls={`content-details-${item.id}`}
+            onClick={() => setExpandedItemId(current => current === item.id ? null : item.id)}
+          >
+            {expandedItemId === item.id ? 'Hide details' : 'View details'}
+          </button>
+          {expandedItemId === item.id ? (
+            <div className="content-category-card__details" id={`content-details-${item.id}`} role="region" aria-label={`Full details for ${item.title}`}>
+              <p>{item.body || 'No additional description has been provided yet.'}</p>
+              {item.date ? <p><strong>{item.kind === 'admission' ? 'Deadline: ' : 'Date: '}</strong>{dateLabel(item.date)}</p> : null}
+              {item.link ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
+            </div>
+          ) : null}
+          {item.link && expandedItemId !== item.id ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
         </article>)}</div>}
       <a className="content-category-page__back" href="/">← Back to EDUKEN homepage</a>
     </div>
