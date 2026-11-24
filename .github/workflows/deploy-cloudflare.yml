@@ -1,8 +1,13 @@
 name: EDUKEN build and Cloudflare deploy
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
+    inputs:
+      approve_production_deploy:
+        description: Explicitly approve deploying the current main commit to production.
+        required: true
+        type: boolean
+        default: false
   pull_request:
     branches: [main, feat/customer-wallet-system-20261016]
     types: [opened, synchronize, reopened, ready_for_review]
@@ -99,7 +104,7 @@ jobs:
           NODE
 
   deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.approve_production_deploy
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 15
