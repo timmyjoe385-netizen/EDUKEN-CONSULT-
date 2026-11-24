@@ -107,6 +107,8 @@ function App() {
   const [serviceForm, setServiceForm] = useState<Record<string, string>>({});
   const [serviceSubmitting, setServiceSubmitting] = useState(false);
   const [customerSignInRequest, setCustomerSignInRequest] = useState(0);
+  const [customerSignInOpen, setCustomerSignInOpen] = useState(false);
+  const [customerSignInMessage, setCustomerSignInMessage] = useState('');
   const [servicesCustomerSignInOpen, setServicesCustomerSignInOpen] = useState(false);
   const [servicesCustomerSignInMessage, setServicesCustomerSignInMessage] = useState('');
   const [paymentPage, setPaymentPage] = useState(() => window.location.pathname.replace(/\/+$/, '') === '/make-payments');
@@ -178,6 +180,13 @@ function App() {
       return 'light';
     }
   });
+
+  useEffect(() => {
+    if (customerSignInRequest > 0) {
+      setCustomerSignInMessage('');
+      setCustomerSignInOpen(true);
+    }
+  }, [customerSignInRequest]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -3739,6 +3748,29 @@ function App() {
             <h2 id="admin-login-title">Admin sign in</h2>
             <p>This private sign-in page is for authorized EDUKEN CONSULT administrators only.</p>
             <button className="primary login-submit" type="button" onClick={() => void signIn()}><ArrowRight size={17} /> Continue with Google</button>
+          </section>
+        </div>
+      )}
+      {customerSignInOpen && (
+        <div role="presentation" onClick={event => { if (event.target === event.currentTarget) setCustomerSignInOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 1200, background: 'rgba(7, 20, 38, .72)', display: 'grid', placeItems: 'center', padding: 16 }}>
+          <section className="login-dialog" role="dialog" aria-modal="true" aria-labelledby="customer-signin-title" style={{ width: '100%', maxWidth: 440 }}>
+            <button className="login-close" type="button" aria-label="Close customer sign-in" onClick={() => setCustomerSignInOpen(false)}>×</button>
+            <span className="kicker">YOUR EDUKEN ACCOUNT</span>
+            <h2 id="customer-signin-title">Sign in to EDUKEN</h2>
+            <p>Use the same Google account across EDUKEN CONSULT and CBT. Your student username and learning progress stay connected to this account.</p>
+            <button className="customer-google-signin" type="button" onClick={async () => {
+              setCustomerSignInMessage('');
+              try {
+                await auth.signIn({ scope: 'openid email profile offline_access' });
+                setCustomerSignInOpen(false);
+              } catch (error) {
+                setCustomerSignInMessage(error instanceof Error ? error.message : 'Google sign-in could not be started. Please try again.');
+              }
+            }}>
+              <span className="customer-google-mark" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            {customerSignInMessage ? <p className="make-payments-message" role="alert">{customerSignInMessage}</p> : null}
           </section>
         </div>
       )}
