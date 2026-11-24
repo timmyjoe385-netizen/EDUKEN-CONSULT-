@@ -87,7 +87,7 @@ function App() {
   const [menu, setMenu] = useState(false);
   const isServicesPage = window.location.pathname.replace(/\/+$/, '') === '/services';
   const categoryPageSlug = window.location.pathname.replace(/\/+$/, '').slice(1);
-  const isContentCategoryPage = ['jamb-news', 'scholarships', 'school-updates', 'jobs-internships'].includes(categoryPageSlug);
+  const isContentCategoryPage = ['jamb-news', 'scholarships', 'education-news', 'school-updates', 'jobs-internships'].includes(categoryPageSlug);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [oppFilter, setOppFilter] = useState('All');
   const [updateFilter, setUpdateFilter] = useState('All updates');
@@ -3040,7 +3040,7 @@ function App() {
               { title: 'JAMB Services', description: 'Explore available examination-related assistance.', href: '#jamb-services', icon: GraduationCap, tone: 'mint' },
               { title: 'Admission Guidance', description: 'Find admission information and school updates.', href: '/admissions', icon: BookOpen, tone: 'green' },
               { title: 'Scholarships & Grants', description: 'Discover funding and educational opportunities.', href: '/scholarships', icon: Sparkles, tone: 'mint' },
-              { title: 'Educational News', description: 'Read important education and examination updates.', href: '/newsroom', icon: Newspaper, tone: 'green' },
+              { title: 'Educational News', description: 'Read important education and examination updates.', href: '/education-news', icon: Newspaper, tone: 'green' },
               { title: 'School Updates', description: 'Keep up with institutions and admission notices.', href: '/school-updates', icon: GraduationCap, tone: 'mint' },
               { title: 'Internships & Jobs', description: 'Explore work experience and career opportunities.', href: '/jobs-internships', icon: BriefcaseBusiness, tone: 'green' },
               { title: 'Educational Consultation', description: 'Get guidance when you need personal support.', href: '#contact', icon: MessageCircle, tone: 'mint' },
