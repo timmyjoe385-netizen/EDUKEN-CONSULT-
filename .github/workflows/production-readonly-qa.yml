@@ -99,9 +99,11 @@ jobs:
                   if (route === '/my-eduken' && !/student workspace/i.test(rendered.fullText)) {
                     throw new Error('Student workspace heading/content was not rendered.');
                   }
-                  if (route === '/') {
-                    await page.screenshot({ path: `test-results/production-home-${viewport.name}.png`, fullPage: true });
-                  }
+                  const routeName = route === '/' ? 'home' : route.slice(1).replaceAll('/', '-');
+                  await page.screenshot({
+                    path: `test-results/production-${routeName}-${viewport.name}.png`,
+                    fullPage: true,
+                  });
                   results.push({ viewport: viewport.name, route, status: response.status(), ...rendered });
                   console.log(`PASS ${viewport.name} ${route}: HTTP ${response.status()}`);
                 } catch (error) {
