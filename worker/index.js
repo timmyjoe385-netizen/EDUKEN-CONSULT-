@@ -466,6 +466,21 @@ export default {
       }
     }
 
-    return env.ASSETS.fetch(request);
+    const assetResponse = await env.ASSETS.fetch(request);
+    const acceptsHtml = (request.headers.get("accept") || "").includes("text/html");
+    if (request.method === "GET" && (request.mode === "navigate" || acceptsHtml)) {
+      // Always revalidate the app shell so mobile browsers cannot keep an old
+      // HTML entry point after a preview deploy while its hashed JS/CSS changes.
+      const headers = new Headers(assetResponse.headers);
+      headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
+      headers.set("CDN-Cache-Control", "no-store");
+      headers.set("Cloudflare-CDN-Cache-Control", "no-store");
+      return new Response(assetResponse.body, {
+        status: assetResponse.status,
+        statusText: assetResponse.statusText,
+        headers,
+      });
+    }
+    return assetResponse;
   },
 };
