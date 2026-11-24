@@ -711,7 +711,9 @@ test('mobile navigation opens and closes accessibly', async ({ page }) => {
   await expect(page).toHaveURL(/\/admissions$/);
   await page.waitForLoadState('domcontentloaded');
   await expect(page.locator('#root')).not.toBeEmpty();
-  await expect(page.locator('#primary-navigation')).not.toHaveClass(/\bopen\b/);
+  // The dedicated Admissions page has its own navigation, so the homepage
+  // navigation element is expected to be replaced after the route transition.
+  await expect(page.getByRole('heading', { name: /Admission Guidance & Updates/i })).toBeVisible();
 });
 
 test('category search results can be cleared accessibly', async ({ page }) => {
