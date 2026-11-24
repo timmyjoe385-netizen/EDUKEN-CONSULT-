@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 
-const base = String(process.env.CBT_TEST_SUPABASE_URL || "").trim().replace(/\\/+$/, "");
+const base = String(process.env.CBT_TEST_SUPABASE_URL || "").trim().replace(/[/]+$/, "");
 const key = String(process.env.CBT_TEST_SUPABASE_PUBLISHABLE_KEY || "").trim();
 const route = process.argv[2];
 assert.ok(base && key, "Isolated CBT test URL and publishable key must be configured.");
