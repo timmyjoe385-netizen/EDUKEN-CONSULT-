@@ -130,3 +130,15 @@ test('services dropdown opens on the first click and its destination responds', 
   await expect(page).toHaveURL(/\/services$/);
   await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
 });
+
+test('opportunity details disclosure is keyboard accessible', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/opportunities', { waitUntil: 'domcontentloaded' });
+  const card = page.locator('.content-category-card').filter({
+    has: page.getByRole('heading', { name: 'One Click Scholarship Fixture' }),
+  });
+  const button = card.getByRole('button', { name: 'View details' });
+  await button.focus();
+  await page.keyboard.press('Enter');
+  await expect(card.getByRole('region', { name: 'Full details for One Click Scholarship Fixture' })).toBeVisible();
+});
