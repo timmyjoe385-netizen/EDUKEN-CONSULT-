@@ -2567,6 +2567,39 @@ function App() {
     );
   }
 
+  if (window.location.pathname.replace(/\/+$/, '') === '/my-eduken') {
+    return (
+      <div className="site my-eduken-page">
+        <header className="nav">
+          <a className="brand" href="/">
+            <img className="brand-logo" src="./icons/icon.svg" alt="EDUKEN CONSULT" />
+            <span>EDUKEN <b>CONSULT</b></span>
+          </a>
+          <nav className="nav-links">
+            <a href="/">Home</a>
+            <a href="/services">Services</a>
+            <a href="/cbt">CBT Practice</a>
+            <a href="/#updates">Updates</a>
+          </nav>
+          <div className="auth-nav-actions">
+            {themeToggle}
+            <a className="header-sign-in" href="/my-eduken">My EDUKEN</a>
+          </div>
+        </header>
+        <Suspense fallback={<SectionLoading />}>
+          <PlatformHub
+            opportunities={content.opportunities}
+            admissions={content.admissions}
+            customerSignInRequest={customerSignInRequest}
+          />
+        </Suspense>
+        <footer>
+          <div className="footer-bottom"><span>© 2026 EDUKEN CONSULT. All rights reserved.</span><a href="/">Back to homepage</a></div>
+        </footer>
+      </div>
+    );
+  }
+
   if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
   }
@@ -2648,7 +2681,7 @@ function App() {
         </nav>
         <div className="auth-nav-actions">
           {themeToggle}
-          <a className="header-sign-in" href={isServicesPage ? '/#eduken-platform' : '#eduken-platform'} onClick={() => setMenu(false)} aria-label="My EDUKEN — student workspace">
+          <a className="header-sign-in" href="/my-eduken" onClick={() => setMenu(false)} aria-label="My EDUKEN — student workspace">
             My EDUKEN
           </a>
         </div>
@@ -2958,13 +2991,7 @@ function App() {
           </div>
         </section>
 
-        <Suspense fallback={<SectionLoading />}>
-          <PlatformHub
-            opportunities={content.opportunities}
-            admissions={content.admissions}
-            customerSignInRequest={customerSignInRequest}
-          />
-        </Suspense>
+
 
         {featuredOpps.length > 0 && (
           <section className="section spotlight-section" id="featured">
