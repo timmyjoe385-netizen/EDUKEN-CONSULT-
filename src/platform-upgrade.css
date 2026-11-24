@@ -1270,3 +1270,66 @@ html[data-theme="dark"] .site .closed-opportunity-card h3 { color: #e0ebe3; }
   .site .hero p { font-size: 13px; }
   .site .discovery-card__copy strong { font-size: 11px; }
 }
+
+
+/* Mobile text visibility correction:
+   Supporting descriptions were still explicitly hidden in the compact card
+   layout. Restore them and give each card enough room to display its copy. */
+@media (max-width: 700px) {
+  .site .discovery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .site .discovery-card,
+  .site .discovery-card--wide {
+    min-height: 124px;
+    height: auto;
+    padding: 13px 11px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .site .discovery-card__copy {
+    width: 100%;
+    min-width: 0;
+  }
+  .site .discovery-card__copy strong {
+    display: block;
+    color: #173b2b !important;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .site .discovery-card__copy small {
+    display: block !important;
+    margin-top: 5px;
+    color: #43574b !important;
+    font-size: 11px;
+    line-height: 1.45;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .site .discovery-card__arrow {
+    display: inline-flex;
+  }
+  .site .discovery-card--wide {
+    grid-column: 1 / -1 !important;
+    min-height: 76px;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 12px;
+  }
+  .site .discovery-card--wide .discovery-card__copy {
+    width: auto;
+    flex: 1;
+  }
+}
+@media (max-width: 380px) {
+  .site .discovery-card__copy strong { font-size: 12px; }
+  .site .discovery-card__copy small { font-size: 10.5px; }
+}
+html[data-theme="dark"] .site .discovery-card__copy strong {
+  color: #e5f0e8 !important;
+}
+html[data-theme="dark"] .site .discovery-card__copy small {
+  color: #c2d2c7 !important;
+}
