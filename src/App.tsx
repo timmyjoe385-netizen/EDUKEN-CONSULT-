@@ -758,7 +758,7 @@ function App() {
 
   const isPlaceholderAdmission = (item: Item) => {
     const school = String(item.school || '').trim().toLowerCase();
-    const course = String(item.course || '').trim().toLowerCase();
+    const course = String(item.course || item.programme || '').trim().toLowerCase();
     const details = String(item.details || item.description || item.content || '').trim().toLowerCase();
     const link = String(item.link || item.application_url || '').trim();
     const deadline = String(item.deadline || '').trim();
