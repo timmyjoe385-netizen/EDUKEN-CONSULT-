@@ -38,7 +38,7 @@ export default function AdmissionsPage({ admissions, loading }: { admissions: Ad
         </label>
         <div className="admission-grid">
           {loading ? <p>Loading published admissions…</p> : visibleAdmissions.length === 0 ? (
-            <p className="empty-state">{query ? 'No published admission records match your search.' : 'No published admission records are available right now. Please check back soon.'}</p>
+            <div className="hub-empty-state"><span className="hub-empty-icon" aria-hidden="true">🎓</span><h3>{query ? 'No matching admission updates' : 'New admission updates are on the way'}</h3><p>{query ? 'Try a different school, course or admission type.' : 'We are preparing this section. In the meantime, explore admission guidance or contact our team for help.'}</p><div className="hub-empty-actions"><a className="primary" href="/services">Explore guidance <ArrowRight size={15} /></a><a className="secondary" href="https://wa.me/2348129811733" target="_blank" rel="noreferrer">Ask EDUKEN</a></div></div>
           ) : visibleAdmissions.map(item => (
             <article className="admission-card" key={item.id}>
               <div className="admission-top">
