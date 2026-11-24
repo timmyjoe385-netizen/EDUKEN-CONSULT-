@@ -3177,8 +3177,10 @@ function App() {
                 'Competitions',
               ].map(f => (
                 <button
+                  type="button"
                   className={oppFilter === f ? 'active' : ''}
                   key={f}
+                  aria-pressed={oppFilter === f}
                   onClick={() => setOppFilter(f)}
                 >
                   {f}
@@ -3224,9 +3226,20 @@ function App() {
               ))}
             </div>
           )}
+          <div className="opportunity-results-summary" role="status" aria-live="polite">
+            {loading
+              ? 'Loading published opportunities…'
+              : `${filteredOpps.length} ${filteredOpps.length === 1 ? 'opportunity' : 'opportunities'} found${oppFilter !== 'All' ? ` in ${oppFilter}` : ''}${search.trim() ? ` for “${search.trim()}”` : ''}.`}
+          </div>
           <div className="opp-grid">
             {loading ? (
               <p>Loading live opportunities...</p>
+            ) : filteredOpps.length === 0 ? (
+              <div className="opportunity-empty-state">
+                <strong>No matching opportunities yet.</strong>
+                <p>Try another category or a shorter search. New opportunities will appear here when published by EDUKEN.</p>
+                <button type="button" onClick={() => { setOppFilter('All'); setSearch(''); }}>Clear filters</button>
+              </div>
             ) : (
               filteredOpps.map(o => (
                 <article className="opp-card" key={o.id}>
