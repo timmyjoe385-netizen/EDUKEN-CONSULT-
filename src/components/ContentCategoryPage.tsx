@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 type Item = Record<string, any> & { id: string };
 type Category = 'jamb-news' | 'admissions' | 'scholarships' | 'education-news' | 'school-updates' | 'jobs-internships' | 'opportunities';
 
@@ -13,10 +15,19 @@ const pageConfig: Record<Category, { title: string; kicker: string; intro: strin
 
 const clean = (value: unknown) => String(value ?? '').trim();
 const isPlaceholder = (item: Item) => {
-  const title = clean(item.title).toLowerCase();
-  const body = clean(item.body).toLowerCase();
+  const title = clean(item.title || item.school).toLowerCase();
+  const body = clean(item.body || item.details || item.description || item.content).toLowerCase();
   return /will appear here|will be published here/.test(title) ||
     /use the eduken admin dashboard to publish clear, useful updates|verified opportunities will appear here/.test(body);
+};
+const isExpired = (value: unknown) => {
+  const raw = clean(value);
+  if (!raw) return false;
+  const parsed = new Date(raw);
+  if (Number.isNaN(parsed.getTime())) return false;
+  const deadline = new Date(parsed);
+  deadline.setHours(23, 59, 59, 999);
+  return deadline.getTime() < Date.now();
 };
 
 export default function ContentCategoryPage({ category, opportunities, admissions, updates, loading }: {
@@ -24,6 +35,16 @@ export default function ContentCategoryPage({ category, opportunities, admission
 }) {
   const key = (pageConfig[category as Category] ? category : 'education-news') as Category;
   const config = pageConfig[key];
+
+  useEffect(() => {
+    const match = window.location.hash.match(/^#(?:admission\/|admission-)(.+)$/);
+    if (!match) return;
+    const targetId = decodeURIComponent(match[1]);
+    window.requestAnimationFrame(() => {
+      document.getElementById('admission-' + targetId)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }, [key, loading, admissions]);
+
   const updateMatches = (item: Item) => {
     if (isPlaceholder(item)) return false;
     const searchable = [item.category, item.title, item.body, item.content].map(clean).join(' ').toLowerCase();
@@ -33,6 +54,7 @@ export default function ContentCategoryPage({ category, opportunities, admission
     return false;
   };
   const opportunityMatches = (item: Item) => {
+    if (isExpired(item.deadline)) return false;
     const categoryText = clean(item.category + ' ' + item.title + ' ' + item.description).toLowerCase();
     if (key === 'scholarships') return /scholarship|grant|fellowship|bursary|funding/.test(categoryText);
     if (key === 'jobs-internships') return /job|internship|career|vacanc|employment|trainee/.test(categoryText);
@@ -43,10 +65,10 @@ export default function ContentCategoryPage({ category, opportunities, admission
     key === 'admissions' || (key === 'school-updates' && /school|institution|university|polytechnic|college/i.test(clean(item.school + ' ' + item.type)))
   ));
   const opportunityItems = opportunities.filter(item => !isPlaceholder(item) && opportunityMatches(item));
-  const items: Array<{ id: string; title: string; category: string; body: string; date: string; link: string; label: string }> = [
-    ...updateItems.map(item => ({ id: 'update-' + item.id, title: clean(item.title) || 'Education update', category: clean(item.category) || 'EDUKEN Update', body: clean(item.body || item.content || item.description), date: clean(item.date || item.published_at), link: clean(item.link || item.url), label: 'Read announcement' })),
-    ...admissionItems.map(item => ({ id: 'admission-' + item.id, title: clean(item.school) || 'Admission update', category: clean(item.type) || 'Admission', body: [clean(item.course), clean(item.details || item.description || item.content)].filter(Boolean).join('\n\n'), date: clean(item.deadline), link: clean(item.link || item.application_url), label: 'View admission details' })),
-    ...opportunityItems.map(item => ({ id: 'opportunity-' + item.id, title: clean(item.title) || 'Opportunity', category: clean(item.category) || 'Opportunity', body: [clean(item.description), clean(item.eligibility) ? 'Eligibility: ' + clean(item.eligibility) : ''].filter(Boolean).join('\n\n'), date: clean(item.deadline), link: clean(item.sourceUrl || item.link || item.application_url), label: 'View official details' })),
+  const items: Array<{ id: string; title: string; category: string; body: string; date: string; link: string; label: string; verified: boolean; kind: string }> = [
+    ...updateItems.map(item => ({ id: 'update-' + item.id, title: clean(item.title) || 'Education update', category: clean(item.category) || 'EDUKEN Update', body: clean(item.body || item.content || item.description), date: clean(item.date || item.published_at), link: clean(item.link || item.url), label: 'Read announcement', verified: Boolean(item.verified), kind: 'update' })),
+    ...admissionItems.map(item => ({ id: 'admission-' + item.id, title: clean(item.school || item.title) || 'Admission update', category: clean(item.type) || 'Admission', body: [clean(item.course), clean(item.details || item.description || item.content)].filter(Boolean).join('\n\n'), date: clean(item.deadline), link: clean(item.link || item.application_url), label: 'View admission details', verified: Boolean(item.verified), kind: 'admission' })),
+    ...opportunityItems.map(item => ({ id: 'opportunity-' + item.id, title: clean(item.title) || 'Opportunity', category: clean(item.category) || 'Opportunity', body: [clean(item.description), clean(item.eligibility) ? 'Eligibility: ' + clean(item.eligibility) : ''].filter(Boolean).join('\n\n'), date: clean(item.deadline), link: clean(item.sourceUrl || item.link || item.application_url), label: 'View official details', verified: Boolean(item.verified), kind: 'opportunity' })),
   ];
   const dateLabel = (value: string) => {
     if (!value) return '';
@@ -72,8 +94,9 @@ export default function ContentCategoryPage({ category, opportunities, admission
       <p className="content-category-page__count" role="status" aria-live="polite">{loading ? 'Loading published information…' : items.length + ' published item(s)'}</p>
       {loading ? <div className="content-category-page__empty">Please wait while published information loads.</div> :
         items.length === 0 ? <div className="content-category-page__empty">There are no matching published items in this section yet. Please check back later as EDUKEN publishes verified updates.</div> :
-        <div className="content-category-page__grid">{items.map(item => <article className="content-category-card" key={item.id}>
-          <div className="content-category-card__meta"><span>{item.category}</span>{item.date ? <span>{key === 'admissions' ? 'Deadline: ' : 'Date: '}{dateLabel(item.date)}</span> : null}</div>
+        <div className="content-category-page__grid">{items.map(item => <article className="content-category-card" id={item.kind === 'admission' ? item.id : undefined} key={item.id}>
+          <div className="content-category-card__meta"><span>{item.category}</span>{item.date ? <span>{item.kind === 'admission' ? 'Deadline: ' : 'Date: '}{dateLabel(item.date)}</span> : null}</div>
+          {item.verified ? <span className="verified-pill"><span aria-hidden="true">✓</span> Verified by EDUKEN</span> : null}
           <h2>{item.title}</h2>
           {item.body ? <p>{item.body.length > 700 ? item.body.slice(0, 697) + '…' : item.body}</p> : <p>Open the full announcement for details and next steps.</p>}
           {item.link ? <a href={item.link} target="_blank" rel="noopener noreferrer">{item.label} <span aria-hidden="true">↗</span></a> : null}
