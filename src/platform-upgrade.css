@@ -1442,3 +1442,59 @@ html[data-theme="dark"] .site .discovery-card__copy small {
     line-height: 1.75;
   }
 }
+
+
+/* Compact desktop-mode / tablet layout.
+   Android browsers in "Desktop site" mode often report a tablet-sized viewport,
+   so the full desktop hero was being squeezed into a phone screen. Keep the
+   first screen focused and readable at these intermediate widths. */
+@media (min-width: 701px) and (max-width: 1100px) {
+  .site .hero {
+    width: calc(100% - 32px);
+    min-height: 0;
+    margin: 14px auto 22px;
+    padding: 34px 30px;
+    border-radius: 22px;
+  }
+  .site .hero-copy {
+    max-width: 680px;
+  }
+  .site .hero .eyebrow {
+    max-width: 540px;
+    margin-bottom: 12px;
+    font-size: 10px;
+    line-height: 1.55;
+    letter-spacing: .055em;
+  }
+  .site .hero h1 {
+    max-width: 620px;
+    margin: 0 0 12px;
+    font-size: clamp(36px, 4.5vw, 48px);
+    line-height: 1.08;
+  }
+  .site .hero p {
+    max-width: 520px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .site .hero-art,
+  .site .hero-visual,
+  .site .hero-proof {
+    display: none !important;
+  }
+  .site .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .site .hero-actions a {
+    min-height: 42px;
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+  .site .hero-actions .aggregate-hero-cta,
+  .site .hero-actions a:not(.primary):not(.cbt-hero-cta) {
+    display: none !important;
+  }
+}
