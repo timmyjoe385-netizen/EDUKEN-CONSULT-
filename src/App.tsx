@@ -36,6 +36,7 @@ const AdmissionsPage = lazy(() => import('./AdmissionsPage'));
 const OpportunitiesPage = lazy(() => import('./OpportunitiesPage'));
 const NewsroomPage = lazy(() => import('./NewsroomPage'));
 const CbtPage = lazy(() => import('./CbtPage'));
+const AggregateCalculator = lazy(() => import('./AggregateCalculator'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
 const QuickDraftInbox = lazy(() => import('./QuickDraftInbox'));
@@ -2677,6 +2678,10 @@ function App() {
 
   if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/aggregate-calculator') {
+    return <Suspense fallback={<SectionLoading />}><AggregateCalculator /></Suspense>;
   }
 
   return (
