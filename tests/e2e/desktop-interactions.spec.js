@@ -172,3 +172,22 @@ test('newsroom verification and source labels wrap without overlap at desktop wi
     expect(sourceBox.x >= badgeBox.x + badgeBox.width - 1 || sourceBox.y >= badgeBox.y + badgeBox.height - 1, 'source label should not overlap the verification badge').toBeTruthy();
   }
 });
+
+
+test('homepage trust line and newsroom publication metadata meet minimum text sizes', async ({ page }) => {
+  await mockPublicContent(page);
+  for (const width of [390, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const trustLine = page.locator('.hero .eyebrow-text');
+    await expect(trustLine).toBeVisible();
+    const trustSize = await trustLine.evaluate(element => parseFloat(getComputedStyle(element).fontSize));
+    expect(trustSize, `homepage trust line font size at ${width}px`).toBeGreaterThanOrEqual(11);
+
+    await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+    const date = page.locator('.update-card > small').first();
+    await expect(date).toBeVisible();
+    const dateSize = await date.evaluate(element => parseFloat(getComputedStyle(element).fontSize));
+    expect(dateSize, `Newsroom date font size at ${width}px`).toBeGreaterThanOrEqual(12);
+  }
+});
