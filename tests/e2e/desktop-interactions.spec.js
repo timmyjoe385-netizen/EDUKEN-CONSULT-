@@ -135,3 +135,39 @@ test('scholarship details disclosure is keyboard accessible', async ({ page }) =
   await page.keyboard.press('Enter');
   await expect(card.getByRole('region', { name: 'Full details for One Click Scholarship Fixture' })).toBeVisible();
 });
+
+
+function relativeLuminance(hex) {
+  const channels = hex.match(/[a-f0-9]{2}/gi).map(value => parseInt(value, 16) / 255);
+  const linear = channels.map(value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+}
+
+function contrastRatio(foreground, background) {
+  const luminances = [relativeLuminance(foreground), relativeLuminance(background)].sort((a, b) => b - a);
+  return (luminances[0] + 0.05) / (luminances[1] + 0.05);
+}
+
+test('homepage trust statement has readable contrast in light and dark themes at phone, desktop-site and desktop widths', async ({ page }) => {
+  await mockPublicContent(page);
+  for (const theme of ['light', 'dark']) {
+    await page.addInitScript(value => localStorage.setItem('eduken-theme', value), theme);
+    for (const width of [390, 900, 1280]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto('/', { waitUntil: 'domcontentloaded' });
+      const trustLine = page.locator('.hero .eyebrow-text');
+      await expect(trustLine).toBeVisible();
+      const actual = await trustLine.evaluate(element => {
+        const style = getComputedStyle(element);
+        const rect = element.getBoundingClientRect();
+        return { color: style.color, fontSize: style.fontSize, width: rect.width, height: rect.height };
+      });
+      const rgb = actual.color.match(/\\d+/g).slice(0, 3).map(Number);
+      const foreground = '#' + rgb.map(value => value.toString(16).padStart(2, '0')).join('');
+      const background = theme === 'dark' ? '#101b16' : '#fbfcfa';
+      expect(actual.width, `trust statement width at ${width}px in ${theme} mode`).toBeGreaterThan(0);
+      expect(actual.height, `trust statement height at ${width}px in ${theme} mode`).toBeGreaterThan(0);
+      expect(contrastRatio(foreground, background), `trust statement contrast at ${width}px in ${theme} mode`).toBeGreaterThanOrEqual(4.5);
+    }
+  }
+});
