@@ -14,7 +14,16 @@ const fixture = {
     verified: true,
   }],
   admissions: [],
-  updates: [],
+  updates: [{
+    id: 'newsroom-layout-fixture',
+    title: 'One Click Scholarship Fixture',
+    category: 'Education News',
+    body: 'A newsroom layout fixture for verification and source metadata.',
+    date: '25 November 2026',
+    sourceUrl: '',
+    is_published: true,
+    verified: true,
+  }],
   faqs: [{ id: 'faq-one', question: 'How do I view an opportunity?', answer: 'Open the opportunity page and select View details once.' }],
   services: [],
 };
@@ -160,6 +169,6 @@ test('newsroom verification and source labels wrap without overlap at desktop wi
     const sourceBox = await source.boundingBox();
     expect(badgeBox).not.toBeNull();
     expect(sourceBox).not.toBeNull();
-    expect(sourceBox.y, 'source label should sit below or beside the badge without overlap').toBeGreaterThanOrEqual(badgeBox.y + badgeBox.height - 1);
+    expect(sourceBox.x >= badgeBox.x + badgeBox.width - 1 || sourceBox.y >= badgeBox.y + badgeBox.height - 1, 'source label should not overlap the verification badge').toBeTruthy();
   }
 });
