@@ -166,7 +166,7 @@ test('homepage trust statement has readable contrast in light and dark themes at
         const rect = element.getBoundingClientRect();
         return { color: style.color, width: rect.width, height: rect.height };
       });
-      const rgb = actual.color.match(/\\d+/g).slice(0, 3).map(Number);
+      const rgb = actual.color.match(/\d+/g).slice(0, 3).map(Number);
       const foreground = '#' + rgb.map(value => value.toString(16).padStart(2, '0')).join('');
       const background = theme === 'dark' ? '#101b16' : '#fbfcfa';
       expect(actual.width, `trust statement width at ${width}px in ${theme} mode`).toBeGreaterThan(0);
