@@ -37,7 +37,7 @@ test('featured opportunity View details opens the article on the first click', a
   });
   await expect(featuredCard).toBeVisible();
   await featuredCard.getByRole('button', { name: 'View details' }).click();
-  await expect(page).toHaveURL(/#opportunity\\/one-click-scholarship-fixture$/);
+  await expect(page).toHaveURL(new RegExp("#opportunity/one-click-scholarship-fixture$"));
   await expect(page.locator('.article-page h1').filter({ hasText: 'One Click Scholarship Fixture' })).toBeVisible();
   await expect(page.locator('.article-page')).toContainText('A concise preview.');
 });
@@ -79,7 +79,7 @@ test('category navigation responds to one click', async ({ page }) => {
   await mockPublicContent(page);
   await page.goto('/scholarships', { waitUntil: 'domcontentloaded' });
   await page.getByRole('navigation', { name: 'EDUKEN navigation' }).getByRole('link', { name: 'Admissions' }).click();
-  await expect(page).toHaveURL(/\\/admissions$/);
+  await expect(page).toHaveURL(new RegExp("/admissions$"));
   await expect(page.getByRole('heading', { name: 'Admission Guidance & Updates' })).toBeVisible();
 });
 
@@ -120,7 +120,7 @@ test('services dropdown opens on the first click and its destination responds', 
   const menu = page.locator('#eduken-services-menu');
   await expect(menu).toBeVisible();
   await menu.getByRole('link', { name: /View all services/ }).click();
-  await expect(page).toHaveURL(/\\/services$/);
+  await expect(page).toHaveURL(new RegExp("/services$"));
   await expect(page.getByRole('heading', { name: 'Educational support, made easier.' })).toBeVisible();
 });
 
