@@ -4747,8 +4747,9 @@ html[data-theme="dark"] .hub-empty-state p { color: #b4c7b8; }
   max-width: 100%;
   overflow-wrap: anywhere;
 }
-.newsroom-route .update-card__signals .verified-pill,
-.newsroom-route .update-card__signals .source-pill {
+ .newsroom-route .update-card__signals .verified-pill,
+.newsroom-route .update-card__signals .source-pill,
+.newsroom-route .update-card__signals > a {
   margin: 0;
 }
 .newsroom-route .update-card__source {
