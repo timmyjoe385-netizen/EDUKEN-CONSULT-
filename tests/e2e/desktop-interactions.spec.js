@@ -191,3 +191,68 @@ test('homepage trust line and newsroom publication metadata meet minimum text si
     expect(dateSize, `Newsroom date font size at ${width}px`).toBeGreaterThanOrEqual(12);
   }
 });
+
+
+test('desktop homepage hero has readable contrast and compact navigation at 1280px', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const hero = page.locator('.hero');
+  const heading = hero.locator('h1');
+  await expect(heading).toBeVisible();
+  const colors = await page.evaluate(() => ({
+    heading: getComputedStyle(document.querySelector('.hero h1')).color,
+    emphasis: getComputedStyle(document.querySelector('.hero h1 em')).color,
+    trust: getComputedStyle(document.querySelector('.hero .eyebrow-text')).color,
+    paragraph: getComputedStyle(document.querySelector('.hero p')).color,
+    background: getComputedStyle(document.querySelector('.hero')).backgroundImage,
+  }));
+  expect(colors.heading).toBe('rgb(255, 255, 255)');
+  expect(colors.emphasis).toBe('rgb(183, 220, 198)');
+  expect(colors.trust).toBe('rgb(228, 243, 232)');
+  expect(colors.paragraph).toBe('rgb(237, 245, 239)');
+  expect(colors.background).toContain('16, 60, 43');
+
+  const nav = page.locator('.site > .nav .nav-links');
+  const menu = page.locator('.site > .nav .menu-btn');
+  await expect(menu).toBeVisible();
+  await expect(nav).toBeHidden();
+  await menu.click();
+  await expect(nav).toBeVisible();
+  const navBounds = await nav.boundingBox();
+  expect(navBounds).not.toBeNull();
+  expect(navBounds.x).toBeGreaterThanOrEqual(0);
+  expect(navBounds.x + navBounds.width).toBeLessThanOrEqual(1281);
+});
+
+test('mobile discovery cards are wider and descriptions remain readable at 390px', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const grid = page.locator('.discovery-grid');
+  await expect(grid).toBeVisible();
+  const columns = await grid.evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length);
+  expect(columns).toBe(2);
+  const card = page.locator('.discovery-card').first();
+  const cardBounds = await card.boundingBox();
+  expect(cardBounds.width).toBeGreaterThan(145);
+  await expect(card.locator('.discovery-card__copy small')).toBeVisible();
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
+
+test('mobile hero illustration stays clear of the primary action', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const art = await page.locator('.hero-art').boundingBox();
+  const action = await page.locator('.hero-actions .primary').boundingBox();
+  expect(art).not.toBeNull();
+  expect(action).not.toBeNull();
+  const overlaps = art.x < action.x + action.width && art.x + art.width > action.x &&
+    art.y < action.y + action.height && art.y + art.height > action.y;
+  expect(overlaps, 'hero illustration must not overlap the primary call to action').toBeFalsy();
+});
