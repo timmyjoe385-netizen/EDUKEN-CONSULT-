@@ -38,8 +38,10 @@ export default function NewsroomPage({ updates, loading }: { updates: Item[]; lo
           <small>EDUKEN UPDATE · {item.date||'Date not specified'}</small>
           <h3>{item.title}</h3>
           <p>{item.body||item.content||'Open the official source for more information.'}</p>
-          {item.verified?<span className="verified-pill inline-pill"><CheckCircle2 size={14}/> Verified by EDUKEN</span>:item.sourceUrl?<span className="source-pill inline-pill">Source available</span>:null}
-          {item.sourceUrl?<a href={item.sourceUrl} target="_blank" rel="noreferrer">View source <ArrowRight size={14}/></a>:<span>Source link not provided</span>}
+          <div className="update-card__signals">
+            {item.verified?<span className="verified-pill inline-pill"><CheckCircle2 size={14}/> Verified by EDUKEN</span>:item.sourceUrl?<span className="source-pill inline-pill">Source available</span>:null}
+            {item.sourceUrl?<a href={item.sourceUrl} target="_blank" rel="noreferrer">View source <ArrowRight size={14}/></a>:<span className="update-card__source">Source link not provided</span>}
+          </div>
         </article>)}
       </div>
     </section>
