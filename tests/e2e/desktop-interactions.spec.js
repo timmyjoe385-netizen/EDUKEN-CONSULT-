@@ -149,7 +149,7 @@ test('scholarship details disclosure is keyboard accessible', async ({ page }) =
 test('mobile Dashboard and footer service links point to existing destinations', async ({ page }) => {
   await mockPublicContent(page);
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  await expect(page.locator('.mobile-bottom-nav').getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/my-eduken');
+  await expect(page.locator('.mobile-bottom-nav a.mobile-bottom-nav__item').filter({ hasText: 'Dashboard' })).toHaveAttribute('href', '/my-eduken');
   for (const label of ['Consultation', 'Admission Guidance', 'Mentorship']) {
     await expect(page.locator('footer').getByRole('link', { name: label })).toHaveAttribute('href', '#general-services');
   }
