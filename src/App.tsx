@@ -3785,7 +3785,7 @@ function App() {
         <a href="/#updates" className="mobile-bottom-nav__item">
           <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
         </a>
-        <a href="/#eduken-platform" className="mobile-bottom-nav__item">
+        <a href="/my-eduken" className="mobile-bottom-nav__item">
           <UserRound size={19} aria-hidden="true" /><span>Dashboard</span>
         </a>
       </nav>
@@ -3931,9 +3931,9 @@ function App() {
           </div>
           <div>
             <b>Services</b>
-            <a href="#services">Consultation</a>
-            <a href="#services">Admission Guidance</a>
-            <a href="#services">Mentorship</a>
+            <a href="#general-services">Consultation</a>
+            <a href="#general-services">Admission Guidance</a>
+            <a href="#general-services">Mentorship</a>
           </div>
           <div>
             <b>Stay Connected</b>
