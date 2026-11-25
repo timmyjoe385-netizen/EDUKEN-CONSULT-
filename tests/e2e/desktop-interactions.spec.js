@@ -150,17 +150,21 @@ function contrastRatio(foreground, background) {
 
 test('homepage trust statement has readable contrast in light and dark themes at phone, desktop-site and desktop widths', async ({ page }) => {
   await mockPublicContent(page);
-  for (const theme of ['light', 'dark']) {
-    await page.addInitScript(value => localStorage.setItem('eduken-theme', value), theme);
-    for (const width of [390, 900, 1280]) {
-      await page.setViewportSize({ width, height: 900 });
-      await page.goto('/', { waitUntil: 'domcontentloaded' });
-      const trustLine = page.locator('.hero .eyebrow-text');
-      await expect(trustLine).toBeVisible();
+  for (const width of [390, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const trustLine = page.locator('.hero .eyebrow-text');
+    await expect(trustLine).toBeVisible();
+
+    for (const theme of ['light', 'dark']) {
+      if (theme === 'dark') {
+        await page.getByRole('button', { name: /Appearance is Light mode/ }).click();
+        await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+      }
       const actual = await trustLine.evaluate(element => {
         const style = getComputedStyle(element);
         const rect = element.getBoundingClientRect();
-        return { color: style.color, fontSize: style.fontSize, width: rect.width, height: rect.height };
+        return { color: style.color, width: rect.width, height: rect.height };
       });
       const rgb = actual.color.match(/\\d+/g).slice(0, 3).map(Number);
       const foreground = '#' + rgb.map(value => value.toString(16).padStart(2, '0')).join('');
@@ -169,5 +173,6 @@ test('homepage trust statement has readable contrast in light and dark themes at
       expect(actual.height, `trust statement height at ${width}px in ${theme} mode`).toBeGreaterThan(0);
       expect(contrastRatio(foreground, background), `trust statement contrast at ${width}px in ${theme} mode`).toBeGreaterThanOrEqual(4.5);
     }
+    await page.evaluate(() => localStorage.setItem('eduken-theme', 'light'));
   }
 });
