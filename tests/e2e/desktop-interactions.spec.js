@@ -80,7 +80,7 @@ test('category navigation responds to one click', async ({ page }) => {
   await page.goto('/scholarships', { waitUntil: 'domcontentloaded' });
   await page.getByRole('navigation', { name: 'EDUKEN navigation' }).getByRole('link', { name: 'Admissions' }).click();
   await expect(page).toHaveURL(new RegExp("/admissions$"));
-  await expect(page.getByRole('heading', { name: 'Admission Guidance & Updates' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Find your next admission opportunity.' })).toBeVisible();
 });
 
 test('FAQ answer opens on the first click', async ({ page }) => {
