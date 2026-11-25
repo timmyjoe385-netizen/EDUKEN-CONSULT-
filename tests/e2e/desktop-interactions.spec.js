@@ -135,3 +135,31 @@ test('scholarship details disclosure is keyboard accessible', async ({ page }) =
   await page.keyboard.press('Enter');
   await expect(card.getByRole('region', { name: 'Full details for One Click Scholarship Fixture' })).toBeVisible();
 });
+
+
+test('mobile Dashboard and footer service links point to existing destinations', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.mobile-bottom-nav').getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/my-eduken');
+  for (const label of ['Consultation', 'Admission Guidance', 'Mentorship']) {
+    await expect(page.locator('footer').getByRole('link', { name: label })).toHaveAttribute('href', '#general-services');
+  }
+});
+
+test('newsroom verification and source labels wrap without overlap at desktop widths', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+  const card = page.locator('.update-card').filter({ hasText: 'One Click Scholarship Fixture' });
+  await expect(card).toBeVisible();
+  for (const width of [900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    const signals = card.locator('.update-card__signals');
+    const badge = signals.locator('.verified-pill');
+    const source = signals.locator('.update-card__source');
+    const badgeBox = await badge.boundingBox();
+    const sourceBox = await source.boundingBox();
+    expect(badgeBox).not.toBeNull();
+    expect(sourceBox).not.toBeNull();
+    expect(sourceBox.y, 'source label should sit below or beside the badge without overlap').toBeGreaterThanOrEqual(badgeBox.y + badgeBox.height - 1);
+  }
+});
