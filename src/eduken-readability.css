@@ -54,7 +54,7 @@ html[data-theme="dark"] .content-category-page__search button { background:#1927
 .site .discovery-card__copy strong { font-size:13px; line-height:1.35; }
 .site .discovery-card__copy small { display:block; color:#4f6257; font-size:13px; line-height:1.5; }
 .site .hero .eyebrow { color:#587064 !important; font-size:11px; line-height:1.65; letter-spacing:.07em; }
-.site .hero p { color:#f3f8f4; font-size:16px; line-height:1.7; }
+.site .hero p { color:#53645a; font-size:16px; line-height:1.7; }
 @media(max-width:700px) {
   .content-category-page { padding:22px 14px 56px; }
   .content-category-page__grid { grid-template-columns:1fr; }
