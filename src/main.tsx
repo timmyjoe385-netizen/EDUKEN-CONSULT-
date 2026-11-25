@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import AggregateCalculator from './AggregateCalculator';
 import './index.css';
+import './public-copy-visibility.css';
 import './aggregate.css';
 import './platform-upgrade.css';
 
