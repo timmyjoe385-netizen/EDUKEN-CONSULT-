@@ -1,0 +1,34 @@
+
+/* Public conversion copy contrast repair — November 2026.
+   Explicitly pair foreground and background colours so inherited white text
+   cannot disappear on the pale premium consultation/CTA surfaces. */
+.site .consult-section {
+  background: linear-gradient(135deg,#edf6ef 0%,#dcefe3 100%) !important;
+  color: #173b2b !important;
+  border: 1px solid #c9dfcf !important;
+}
+.site .consult-section .kicker { color:#286344 !important; -webkit-text-fill-color:#286344 !important; opacity:1 !important; }
+.site .consult-section h2,.site .consult-section h2 em { color:#173b2b !important; -webkit-text-fill-color:#173b2b !important; text-shadow:none !important; }
+.site .consult-section p { color:#43574b !important; -webkit-text-fill-color:#43574b !important; opacity:1 !important; }
+.site .consult-section .light-btn { background:#174b38 !important; border:1px solid #174b38 !important; color:#fff !important; -webkit-text-fill-color:#fff !important; }
+.site .consult-section .light-btn svg { color:#fff !important; }
+.site .consult-section form input,.site .consult-section form textarea { background:#fff !important; color:#173b2b !important; border:1px solid #b9cfc0 !important; }
+.site .consult-section form input::placeholder,.site .consult-section form textarea::placeholder { color:#627568 !important; opacity:1 !important; }
+.site .final-cta { background:linear-gradient(125deg,#e7f1e9 0%,#d5e8da 100%) !important; color:#173b2b !important; border:1px solid #c9ddce !important; }
+.site .final-cta .kicker { color:#286344 !important; -webkit-text-fill-color:#286344 !important; opacity:1 !important; }
+.site .final-cta h2,.site .final-cta h2 em { color:#173b2b !important; -webkit-text-fill-color:#173b2b !important; opacity:1 !important; text-shadow:none !important; }
+.site .final-cta p { color:#43574b !important; -webkit-text-fill-color:#43574b !important; opacity:1 !important; }
+html[data-theme="dark"] .site .consult-section,html[data-theme="dark"] .site .final-cta { background:linear-gradient(135deg,#172c20 0%,#203d2c 100%) !important; color:#edf6ef !important; border-color:#3c6048 !important; }
+html[data-theme="dark"] .site .consult-section .kicker,html[data-theme="dark"] .site .final-cta .kicker { color:#bce4c8 !important; -webkit-text-fill-color:#bce4c8 !important; }
+html[data-theme="dark"] .site .consult-section h2,html[data-theme="dark"] .site .consult-section h2 em,html[data-theme="dark"] .site .final-cta h2,html[data-theme="dark"] .site .final-cta h2 em { color:#f1f7f2 !important; -webkit-text-fill-color:#f1f7f2 !important; }
+html[data-theme="dark"] .site .consult-section p,html[data-theme="dark"] .site .final-cta p { color:#c8d9cc !important; -webkit-text-fill-color:#c8d9cc !important; }
+html[data-theme="dark"] .site .consult-section form input,html[data-theme="dark"] .site .consult-section form textarea { background:#102319 !important; color:#f1f7f2 !important; border-color:#496b54 !important; }
+html[data-theme="dark"] .site .consult-section form input::placeholder,html[data-theme="dark"] .site .consult-section form textarea::placeholder { color:#b6c9ba !important; }
+@media(max-width:760px) {
+ .site .consult-section { padding:28px 22px !important; gap:22px !important; }
+ .site .consult-section h2 { font-size:clamp(34px,9vw,48px) !important; line-height:1.05 !important; }
+ .site .final-cta { display:block !important; margin:0 4% 54px !important; padding:30px 22px !important; }
+ .site .final-cta h2 { font-size:clamp(32px,8.5vw,46px) !important; line-height:1.05 !important; }
+ .site .final-cta p { font-size:14px !important; line-height:1.65 !important; }
+ .site .final-cta .final-actions { display:flex !important; flex-wrap:wrap; margin-top:22px; }
+}
