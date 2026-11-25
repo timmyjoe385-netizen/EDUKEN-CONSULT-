@@ -256,3 +256,48 @@ test('mobile hero illustration stays clear of the primary action', async ({ page
     art.y < action.y + action.height && art.y + art.height > action.y;
   expect(overlaps, 'hero illustration must not overlap the primary call to action').toBeFalsy();
 });
+
+
+test('consultation and final next-move copy stay visible at phone, tablet and desktop widths', async ({ page }) => {
+  await mockPublicContent(page);
+  for (const width of [390, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const consultation = page.locator('.consult-section');
+    await expect(consultation.getByText("Let's figure out", { exact: false })).toBeVisible();
+    await expect(consultation.locator('h2')).toContainText('your next move.');
+    await expect(consultation.locator('p')).toContainText('Not sure which school, course, application route or opportunity is right for you?');
+
+    const finalCta = page.locator('.final-cta');
+    await expect(finalCta.getByText('MAKE YOUR NEXT MOVE')).toBeVisible();
+    await expect(finalCta.locator('h2')).toContainText('Your next opportunity');
+    await expect(finalCta.locator('h2')).toContainText('could be one click away.');
+    await expect(finalCta.locator('p')).toContainText('Stay informed. Make smarter decisions. Move forward with EDUKEN CONSULT.');
+
+    const colors = await page.evaluate(() => {
+      const read = (selector) => {
+        const element = document.querySelector(selector);
+        const style = getComputedStyle(element);
+        return { color: style.color, fill: style.webkitTextFillColor, opacity: style.opacity, display: style.display };
+      };
+      return {
+        consultationHeading: read('.consult-section h2'),
+        consultationCopy: read('.consult-section p'),
+        finalKicker: read('.final-cta .kicker'),
+        finalHeading: read('.final-cta h2'),
+        finalCopy: read('.final-cta p'),
+      };
+    });
+    for (const [label, style] of Object.entries(colors)) {
+      expect(style.display, label + ' must not be hidden at ' + width + 'px').not.toBe('none');
+      expect(style.opacity, label + ' must be fully visible at ' + width + 'px').toBe('1');
+      expect(style.color, label + ' must have an explicit readable color at ' + width + 'px').not.toBe('rgba(0, 0, 0, 0)');
+    }
+    expect(colors.consultationHeading.color).toBe('rgb(23, 59, 43)');
+    expect(colors.consultationCopy.color).toBe('rgb(67, 87, 75)');
+    expect(colors.finalKicker.color).toBe('rgb(40, 99, 68)');
+    expect(colors.finalHeading.color).toBe('rgb(23, 59, 43)');
+    expect(colors.finalCopy.color).toBe('rgb(67, 87, 75)');
+  }
+});
