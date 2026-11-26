@@ -1,0 +1,53 @@
+name: Submit EDUKEN Admin Draft (Free Manual Method)
+
+on:
+  workflow_dispatch:
+    inputs:
+      draft_json:
+        description: 'Paste one JSON draft payload. Example is in the workflow guide.'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  submit-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate draft payload
+        env:
+          DRAFT_JSON: ${{ inputs.draft_json }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$DRAFT_JSON" | jq -e '
+            type == "object" and
+            (.section | IN("opportunities", "admissions", "updates", "faqs", "services"))
+          ' >/dev/null
+          printf '%s' "$DRAFT_JSON" > draft-payload.json
+          echo "Payload is valid JSON and the section is supported."
+
+      - name: Submit unpublished draft to EDUKEN
+        env:
+          DRAFT_JSON: ${{ inputs.draft_json }}
+          DRAFT_SECRET: ${{ secrets.EDUKEN_DRAFT_INTAKE_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "$DRAFT_SECRET" ]; then
+            echo "::error::EDUKEN_DRAFT_INTAKE_SECRET is not configured in GitHub Actions secrets."
+            exit 1
+          fi
+          response_file="$(mktemp)"
+          status="$(curl --silent --show-error --output "$response_file" --write-out '%{http_code}' \
+            --request POST \
+            --url 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-draft-intake' \
+            --header "Authorization: Bearer $DRAFT_SECRET" \
+            --header 'Content-Type: application/json' \
+            --data "$DRAFT_JSON")"
+          cat "$response_file"
+          echo
+          if [ "$status" != "201" ]; then
+            echo "::error::Draft intake returned HTTP $status. No success is being reported."
+            exit 1
+          fi
+          echo "EDUKEN draft created successfully. It remains unpublished; publish it manually in Admin."
