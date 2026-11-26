@@ -250,8 +250,7 @@ test('mobile hero illustration stays clear of the primary action', async ({ page
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const art = page.locator('.hero-art');
-  const action = await page.locator('.hero-actions .primary').boundingBox();
-  await expect(action ? page.locator('.hero-actions .primary') : page.locator('.hero-actions .primary')).toBeVisible();
+  await expect(page.locator('.hero-actions .primary')).toBeVisible();
   await expect(art, 'decorative hero art should be hidden on narrow screens').toBeHidden();
 });
 
