@@ -249,13 +249,10 @@ test('mobile hero illustration stays clear of the primary action', async ({ page
   await mockPublicContent(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
-  const art = await page.locator('.hero-art').boundingBox();
+  const art = page.locator('.hero-art');
   const action = await page.locator('.hero-actions .primary').boundingBox();
-  expect(art).not.toBeNull();
-  expect(action).not.toBeNull();
-  const overlaps = art.x < action.x + action.width && art.x + art.width > action.x &&
-    art.y < action.y + action.height && art.y + art.height > action.y;
-  expect(overlaps, 'hero illustration must not overlap the primary call to action').toBeFalsy();
+  await expect(action ? page.locator('.hero-actions .primary') : page.locator('.hero-actions .primary')).toBeVisible();
+  await expect(art, 'decorative hero art should be hidden on narrow screens').toBeHidden();
 });
 
 
