@@ -121,6 +121,7 @@ test('homepage hero remains readable in Android desktop mode and full desktop wi
 
 test('services dropdown opens on the first click and its destination responds', async ({ page }) => {
   await mockPublicContent(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const trigger = page.getByRole('button', { name: 'Browse EDUKEN services' });
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
