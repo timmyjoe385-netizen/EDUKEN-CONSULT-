@@ -193,15 +193,10 @@ html[data-theme="dark"] .site .discovery-card__copy small { color:#c2d2c7 !impor
   }
 }
 @media (max-width: 700px) {
-  .site .hero-copy { max-width: 70% !important; }
-  .site .hero-art {
-    width: 34% !important;
-    max-width: 124px !important;
-    height: 125px !important;
-    right: -4px !important;
-    bottom: 7px !important;
-    opacity: .88;
-  }
+  .site .hero-copy { max-width: 100% !important; }
+  /* The illustration is decorative; hide it on narrow screens so it can never
+     cover the hero actions or compete with the primary student journey. */
+  .site .hero-art { display: none !important; }
   .site .discovery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     gap: 10px !important;
