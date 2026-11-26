@@ -2259,7 +2259,7 @@ function App() {
               EDUKEN <b>CONSULT</b>
             </span>
           </a>
-          <nav className="nav-links open">
+          <nav className="nav-links">
             <a href="#home">Home</a>
             <a href="#opportunities">Opportunities</a>
             <a href="#contact">Contact</a>
