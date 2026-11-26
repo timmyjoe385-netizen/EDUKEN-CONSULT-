@@ -2241,7 +2241,7 @@ function App() {
 
   if (activeOpportunity) {
     return (
-      <div className="site home-compact">
+      <div className="site home-compact article-view">
         {toast && (
           <div className="toast">
             <CheckCircle2 size={18} />
