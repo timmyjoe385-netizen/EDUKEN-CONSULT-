@@ -93,3 +93,149 @@ html[data-theme="dark"] .site .discovery-card__copy small { color:#c2d2c7 !impor
 .content-category-page { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
 .content-category-page :is(h1,h2,h3,.kicker) { font-family: Poppins, Inter, ui-sans-serif, system-ui, sans-serif; }
 .content-category-page p,.content-category-page a,.content-category-page button,.content-category-page input { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+
+
+/* November 2026 visual-audit corrections: consistent contrast, compact desktop
+   navigation, and readable mobile discovery cards. */
+.site .hero {
+  background:
+    radial-gradient(circle at 86% 18%, rgba(183,220,198,.22), transparent 27%),
+    radial-gradient(circle at 72% 100%, rgba(111,174,132,.18), transparent 34%),
+    linear-gradient(125deg, #103c2b 0%, #15583b 58%, #124734 100%) !important;
+  color: #fff !important;
+}
+.site .hero h1,
+.site .hero h1:not(em) {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,.14);
+}
+.site .hero h1 em {
+  color: #b7dcc6 !important;
+  -webkit-text-fill-color: #b7dcc6 !important;
+}
+.site .hero .eyebrow,
+.site .hero .eyebrow-text {
+  color: #e4f3e8 !important;
+  -webkit-text-fill-color: #e4f3e8 !important;
+  opacity: 1 !important;
+}
+.site .hero p {
+  color: #edf5ef !important;
+  -webkit-text-fill-color: #edf5ef !important;
+}
+.admissions-route .services-page-hero .kicker,
+.opportunities-route .services-page-hero .kicker,
+.newsroom-route .services-page-hero .kicker {
+  color: #246040 !important;
+}
+.admissions-route .services-page-hero h1,
+.opportunities-route .services-page-hero h1,
+.newsroom-route .services-page-hero h1 {
+  color: #183b2d !important;
+  -webkit-text-fill-color: #183b2d !important;
+}
+.admissions-route .services-page-hero > p,
+.opportunities-route .services-page-hero > p,
+.newsroom-route .services-page-hero > p {
+  color: #43574b !important;
+  -webkit-text-fill-color: #43574b !important;
+}
+@media (min-width: 1101px) and (max-width: 1400px) {
+  .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .nav {
+    min-height: 68px;
+    height: auto;
+    padding: 10px 4%;
+    gap: 10px;
+  }
+  .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .nav-links {
+    display: none;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    z-index: 80;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    margin: 0;
+    padding: 12px 4.5% 18px;
+    background: #fbfcfa;
+    border-bottom: 1px solid #dce6de;
+    box-shadow: 0 16px 28px rgba(14,42,28,.12);
+    color: #263c30;
+  }
+  .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .nav-links.open {
+    display: flex;
+  }
+  .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .nav-links a,
+  .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .nav-links button {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    border-radius: 9px;
+    color: #263c30;
+    font-size: 14px;
+  }
+  .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    width: 44px;
+    min-width: 44px;
+    min-height: 44px;
+    border: 1px solid #d5e1d8;
+    border-radius: 11px;
+    background: #fff;
+    color: #173f31;
+  }
+}
+@media (max-width: 700px) {
+  .site .hero-copy { max-width: 100% !important; }
+  /* The illustration is decorative; hide it on narrow screens so it can never
+     cover the hero actions or compete with the primary student journey. */
+  .site .hero-art { display: none !important; }
+  .site .discovery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .site .discovery-card {
+    min-height: 136px !important;
+    padding: 12px !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    text-align: left !important;
+  }
+  .site .discovery-card__copy {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  .site .discovery-card__copy strong {
+    color: #173b2b !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    overflow-wrap: normal;
+  }
+  .site .discovery-card__copy small {
+    display: block !important;
+    margin-top: 4px;
+    color: #52665a !important;
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .site .discovery-card__arrow { display: inline-flex !important; }
+  .site .discovery-card--wide {
+    grid-column: 1 / -1 !important;
+    min-height: 72px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    text-align: left !important;
+  }
+}
+html[data-theme="dark"] .site .discovery-card__copy strong { color: #e5f0e8 !important; }
+html[data-theme="dark"] .site .discovery-card__copy small { color: #c2d2c7 !important; }

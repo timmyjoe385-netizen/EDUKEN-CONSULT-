@@ -262,6 +262,7 @@ test('homepage exposes the aggregate calculator from the primary navigation and 
     }),
   );
 
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
 
   const navigationLink = page.locator('#primary-navigation a[href="/aggregate-calculator"]');

@@ -36,6 +36,7 @@ const AdmissionsPage = lazy(() => import('./AdmissionsPage'));
 const OpportunitiesPage = lazy(() => import('./OpportunitiesPage'));
 const NewsroomPage = lazy(() => import('./NewsroomPage'));
 const CbtPage = lazy(() => import('./CbtPage'));
+const AggregateCalculator = lazy(() => import('./AggregateCalculator'));
 const CbtQuestionBankAdmin = lazy(() => import('./CbtQuestionBankAdmin'));
 const PaymentsAdmin = lazy(() => import('./PaymentsAdmin'));
 const QuickDraftInbox = lazy(() => import('./QuickDraftInbox'));
@@ -2240,14 +2241,14 @@ function App() {
 
   if (activeOpportunity) {
     return (
-      <div className="site home-compact">
+      <div className="site home-compact article-view">
         {toast && (
           <div className="toast">
             <CheckCircle2 size={18} />
             {toast}
           </div>
         )}
-        <header className="nav">
+        <header className="nav" style={{ position: "static" }}>
           <a className="brand" href="#home" onClick={() => setArticleSlug('')}>
             <img
               className="brand-logo"
@@ -2258,7 +2259,7 @@ function App() {
               EDUKEN <b>CONSULT</b>
             </span>
           </a>
-          <nav className="nav-links open">
+          <nav className="nav-links">
             <a href="#home">Home</a>
             <a href="#opportunities">Opportunities</a>
             <a href="#contact">Contact</a>
@@ -2677,6 +2678,10 @@ function App() {
 
   if (window.location.pathname.replace(/\/+$/, '') === '/cbt') {
     return <Suspense fallback={<SectionLoading />}><CbtPage /></Suspense>;
+  }
+
+  if (window.location.pathname.replace(/\/+$/, '') === '/aggregate-calculator') {
+    return <Suspense fallback={<SectionLoading />}><AggregateCalculator /></Suspense>;
   }
 
   return (
@@ -3785,7 +3790,7 @@ function App() {
         <a href="/#updates" className="mobile-bottom-nav__item">
           <BookOpen size={19} aria-hidden="true" /><span>Updates</span>
         </a>
-        <a href="/#eduken-platform" className="mobile-bottom-nav__item">
+        <a href="/my-eduken" className="mobile-bottom-nav__item">
           <UserRound size={19} aria-hidden="true" /><span>Dashboard</span>
         </a>
       </nav>
@@ -3931,9 +3936,9 @@ function App() {
           </div>
           <div>
             <b>Services</b>
-            <a href="#services">Consultation</a>
-            <a href="#services">Admission Guidance</a>
-            <a href="#services">Mentorship</a>
+            <a href="#general-services">Consultation</a>
+            <a href="#general-services">Admission Guidance</a>
+            <a href="#general-services">Mentorship</a>
           </div>
           <div>
             <b>Stay Connected</b>

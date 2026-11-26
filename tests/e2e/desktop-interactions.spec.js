@@ -14,7 +14,16 @@ const fixture = {
     verified: true,
   }],
   admissions: [],
-  updates: [],
+  updates: [{
+    id: 'newsroom-layout-fixture',
+    title: 'One Click Scholarship Fixture',
+    category: 'Education News',
+    body: 'A newsroom layout fixture for verification and source metadata.',
+    date: '25 November 2026',
+    sourceUrl: '',
+    is_published: true,
+    verified: true,
+  }],
   faqs: [{ id: 'faq-one', question: 'How do I view an opportunity?', answer: 'Open the opportunity page and select View details once.' }],
   services: [],
 };
@@ -112,6 +121,7 @@ test('homepage hero remains readable in Android desktop mode and full desktop wi
 
 test('services dropdown opens on the first click and its destination responds', async ({ page }) => {
   await mockPublicContent(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto('/', { waitUntil: 'domcontentloaded' });
   const trigger = page.getByRole('button', { name: 'Browse EDUKEN services' });
   await expect(trigger).toHaveAttribute('aria-expanded', 'false');
@@ -134,4 +144,157 @@ test('scholarship details disclosure is keyboard accessible', async ({ page }) =
   await button.focus();
   await page.keyboard.press('Enter');
   await expect(card.getByRole('region', { name: 'Full details for One Click Scholarship Fixture' })).toBeVisible();
+});
+
+
+test('mobile Dashboard and footer service links point to existing destinations', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.mobile-bottom-nav a.mobile-bottom-nav__item').filter({ hasText: 'Dashboard' })).toHaveAttribute('href', '/my-eduken');
+  for (const label of ['Consultation', 'Admission Guidance', 'Mentorship']) {
+    await expect(page.locator('footer').getByRole('link', { name: label })).toHaveAttribute('href', '#general-services');
+  }
+});
+
+test('newsroom verification and source labels wrap without overlap at desktop widths', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+  const card = page.locator('.update-card').filter({ hasText: 'One Click Scholarship Fixture' });
+  await expect(card).toBeVisible();
+  for (const width of [900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    const signals = card.locator('.update-card__signals');
+    const badge = signals.locator('.verified-pill');
+    const source = signals.locator('.update-card__source');
+    const badgeBox = await badge.boundingBox();
+    const sourceBox = await source.boundingBox();
+    expect(badgeBox).not.toBeNull();
+    expect(sourceBox).not.toBeNull();
+    expect(sourceBox.x >= badgeBox.x + badgeBox.width - 1 || sourceBox.y >= badgeBox.y + badgeBox.height - 1, 'source label should not overlap the verification badge').toBeTruthy();
+  }
+});
+
+
+test('homepage trust line and newsroom publication metadata meet minimum text sizes', async ({ page }) => {
+  await mockPublicContent(page);
+  for (const width of [390, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+    const trustLine = page.locator('.hero .eyebrow-text');
+    await expect(trustLine).toBeVisible();
+    const trustSize = await trustLine.evaluate(element => parseFloat(getComputedStyle(element).fontSize));
+    expect(trustSize, `homepage trust line font size at ${width}px`).toBeGreaterThanOrEqual(11);
+
+    await page.goto('/newsroom', { waitUntil: 'domcontentloaded' });
+    const date = page.locator('.update-card > small').first();
+    await expect(date).toBeVisible();
+    const dateSize = await date.evaluate(element => parseFloat(getComputedStyle(element).fontSize));
+    expect(dateSize, `Newsroom date font size at ${width}px`).toBeGreaterThanOrEqual(12);
+  }
+});
+
+
+test('desktop homepage hero has readable contrast and compact navigation at 1280px', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const hero = page.locator('.hero');
+  const heading = hero.locator('h1');
+  await expect(heading).toBeVisible();
+  const colors = await page.evaluate(() => ({
+    heading: getComputedStyle(document.querySelector('.hero h1')).color,
+    emphasis: getComputedStyle(document.querySelector('.hero h1 em')).color,
+    trust: getComputedStyle(document.querySelector('.hero .eyebrow-text')).color,
+    paragraph: getComputedStyle(document.querySelector('.hero p')).color,
+    background: getComputedStyle(document.querySelector('.hero')).backgroundImage,
+  }));
+  expect(colors.heading).toBe('rgb(255, 255, 255)');
+  expect(colors.emphasis).toBe('rgb(183, 220, 198)');
+  expect(colors.trust).toBe('rgb(228, 243, 232)');
+  expect(colors.paragraph).toBe('rgb(237, 245, 239)');
+  expect(colors.background).toContain('16, 60, 43');
+
+  const nav = page.locator('.site > .nav .nav-links');
+  const menu = page.locator('.site > .nav .menu-btn');
+  await expect(menu).toBeVisible();
+  await expect(nav).toBeHidden();
+  await menu.click();
+  await expect(nav).toBeVisible();
+  const navBounds = await nav.boundingBox();
+  expect(navBounds).not.toBeNull();
+  expect(navBounds.x).toBeGreaterThanOrEqual(0);
+  expect(navBounds.x + navBounds.width).toBeLessThanOrEqual(1281);
+});
+
+test('mobile discovery cards are wider and descriptions remain readable at 390px', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const grid = page.locator('.discovery-grid');
+  await expect(grid).toBeVisible();
+  const columns = await grid.evaluate(element => getComputedStyle(element).gridTemplateColumns.split(' ').length);
+  expect(columns).toBe(2);
+  const card = page.locator('.discovery-card').first();
+  const cardBounds = await card.boundingBox();
+  expect(cardBounds.width).toBeGreaterThan(145);
+  await expect(card.locator('.discovery-card__copy small')).toBeVisible();
+  const dimensions = await page.evaluate(() => ({
+    viewport: document.documentElement.clientWidth,
+    content: document.documentElement.scrollWidth,
+  }));
+  expect(dimensions.content).toBeLessThanOrEqual(dimensions.viewport + 1);
+});
+
+test('mobile hero illustration stays clear of the primary action', async ({ page }) => {
+  await mockPublicContent(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  const art = page.locator('.hero-art');
+  await expect(page.locator('.hero-actions .primary')).toBeVisible();
+  await expect(art, 'decorative hero art should be hidden on narrow screens').toBeHidden();
+});
+
+
+test('consultation and final next-move copy stay visible at phone, tablet and desktop widths', async ({ page }) => {
+  await mockPublicContent(page);
+  for (const width of [390, 900, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+    const consultation = page.locator('.consult-section');
+    await expect(consultation.getByText("Let's figure out", { exact: false })).toBeVisible();
+    await expect(consultation.locator('h2')).toContainText('your next move.');
+    await expect(consultation.locator('p')).toContainText('Not sure which school, course, application route or opportunity is right for you?');
+
+    const finalCta = page.locator('.final-cta');
+    await expect(finalCta.getByText('MAKE YOUR NEXT MOVE')).toBeVisible();
+    await expect(finalCta.locator('h2')).toContainText('Your next opportunity');
+    await expect(finalCta.locator('h2')).toContainText('could be one click away.');
+    await expect(finalCta.locator('p')).toContainText('Stay informed. Make smarter decisions. Move forward with EDUKEN CONSULT.');
+
+    const colors = await page.evaluate(() => {
+      const read = (selector) => {
+        const element = document.querySelector(selector);
+        const style = getComputedStyle(element);
+        return { color: style.color, fill: style.webkitTextFillColor, opacity: style.opacity, display: style.display };
+      };
+      return {
+        consultationHeading: read('.consult-section h2'),
+        consultationCopy: read('.consult-section p'),
+        finalKicker: read('.final-cta .kicker'),
+        finalHeading: read('.final-cta h2'),
+        finalCopy: read('.final-cta p'),
+      };
+    });
+    for (const [label, style] of Object.entries(colors)) {
+      expect(style.display, label + ' must not be hidden at ' + width + 'px').not.toBe('none');
+      expect(style.opacity, label + ' must be fully visible at ' + width + 'px').toBe('1');
+      expect(style.color, label + ' must have an explicit readable color at ' + width + 'px').not.toBe('rgba(0, 0, 0, 0)');
+    }
+    expect(colors.consultationHeading.color).toBe('rgb(23, 59, 43)');
+    expect(colors.consultationCopy.color).toBe('rgb(67, 87, 75)');
+    expect(colors.finalKicker.color).toBe('rgb(40, 99, 68)');
+    expect(colors.finalHeading.color).toBe('rgb(23, 59, 43)');
+    expect(colors.finalCopy.color).toBe('rgb(67, 87, 75)');
+  }
 });

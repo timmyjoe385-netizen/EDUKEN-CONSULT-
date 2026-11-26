@@ -371,6 +371,7 @@ textarea {
   padding: 48px 7% 90px;
 }
 .article-back {
+  scroll-margin-top: 240px;
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -915,7 +916,7 @@ textarea {
   color: #2c694c;
   border-radius: 20px;
   padding: 6px 9px;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 800;
 }
 .opp-card h3 {
@@ -964,7 +965,7 @@ textarea {
   color: #32714f;
   padding: 6px 8px;
   border-radius: 20px;
-  font-size: 8px;
+  font-size: 10px;
 }
 .admission-card h3 {
   margin: 28px 0 8px;
@@ -1101,9 +1102,10 @@ textarea {
 .update-card > small {
   display: block;
   color: #718078;
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  margin: 18px 4px 8px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  margin: 16px 4px 8px;
 }
 .update-card h3 {
   font-size: 17px;
@@ -1262,7 +1264,8 @@ footer {
   display: flex;
   justify-content: space-between;
   color: #71877d;
-  font-size: 9px;
+  font-size: 11px;
+  line-height: 1.5;
 }
 .whatsapp-cta {
   margin: 0 7% 90px;
@@ -4507,15 +4510,15 @@ html:not([data-theme="dark"]) .site .faq.section {
   min-width: 0;
   height: auto;
   background: none;
-  font-size: clamp(8px, .82vw, 10px);
+  font-size: clamp(11px, .92vw, 12px);
   line-height: 1.55;
   letter-spacing: .11em;
   text-wrap: balance;
 }
 @media (max-width: 620px) {
   .site .eyebrow-text {
-    font-size: 8px;
-    letter-spacing: .075em;
+    font-size: 11px;
+    letter-spacing: .04em;
     line-height: 1.6;
   }
 }
@@ -4728,4 +4731,56 @@ html[data-theme="dark"] .hub-empty-state p { color: #b4c7b8; }
   .site:not(.admissions-route):not(.opportunities-route):not(.newsroom-route):not(.my-eduken-page) .opp-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* Keep newsroom verification and source information in a predictable, wrapping row. */
+.newsroom-route .update-card > small,
+.newsroom-page .update-card > small {
+  font-size: 12px !important;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+}
+.newsroom-route .update-card__signals,
+.newsroom-page .update-card__signals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+  margin-top: 14px;
+}
+.newsroom-route .update-card__signals > *,
+.newsroom-page .update-card__signals > * {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+ .newsroom-route .update-card__signals .verified-pill,
+.newsroom-route .update-card__signals .source-pill,
+.newsroom-route .update-card__signals > a,
+.newsroom-page .update-card__signals .verified-pill,
+.newsroom-page .update-card__signals .source-pill,
+.newsroom-page .update-card__signals > a {
+  margin: 0;
+}
+.newsroom-route .update-card__source,
+.newsroom-page .update-card__source {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  color: #526158;
+  font-size: 12px;
+  line-height: 1.5;
+}
+html[data-theme="dark"] .newsroom-route .update-card__source,
+html[data-theme="dark"] .newsroom-page .update-card__source { color: #c2d2c7; }
+
+
+/* Keep the article-view header entirely outside the sticky navigation layer. */
+.article-view > .nav {
+  position: static !important;
+  inset: auto !important;
+  z-index: auto !important;
+  transform: none !important;
 }
