@@ -1,0 +1,70 @@
+name: EDUKEN secure production draft-intake test
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_production_test:
+        description: "Create one clearly labelled unpublished QA draft in the production Updates section."
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  test-production-draft-intake:
+    if: github.ref == 'refs/heads/main' && inputs.confirm_production_test == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Validate protected secret is configured
+        env:
+          INTAKE_SECRET: ${{ secrets.EDUKEN_DRAFT_INTAKE_SECRET }}
+        run: |
+          if [ -z "$INTAKE_SECRET" ] || [ "${#INTAKE_SECRET}" -lt 32 ]; then
+            echo "::error::Add EDUKEN_DRAFT_INTAKE_SECRET to GitHub Actions repository secrets before running this test."
+            exit 1
+          fi
+
+      - name: Submit and verify one unpublished draft in production
+        env:
+          INTAKE_SECRET: ${{ secrets.EDUKEN_DRAFT_INTAKE_SECRET }}
+        run: |
+          node --input-type=module <<'NODE'
+          const endpoint = 'https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1/eduken-draft-intake';
+          const marker = new Date().toISOString();
+          const payload = {
+            section: 'updates',
+            title: '[QA TEST] Production Assistant Draft Intake — ' + marker,
+            category: 'EDUKEN Production Integration Test',
+            content: 'Automated integration test. This is a test-only, unpublished draft created to verify the production assistant draft-intake connection. Do not publish.',
+            source: 'EDUKEN automated production integration test',
+            source_url: 'https://eduken-consult.timmy385.workers.dev/'
+          };
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              authorization: 'Bearer ' + process.env.INTAKE_SECRET
+            },
+            body: JSON.stringify(payload)
+          });
+
+          const result = await response.json().catch(() => ({}));
+          if (response.status !== 201 ||
+              result.ok !== true ||
+              result.section !== 'updates' ||
+              result.status !== 'DRAFT' ||
+              result.is_published !== false ||
+              !result.id) {
+            throw new Error('Production draft-intake test failed. HTTP ' + response.status +
+              '. Response: ' + JSON.stringify(result));
+          }
+
+          console.log('PASS: authenticated draft was created in the production Updates table.');
+          console.log('Returned row ID: ' + result.id);
+          console.log('Publication state: DRAFT; is_published=false.');
+          console.log('The QA row is intentionally retained for admin confirmation and must not be published.');
+          NODE
