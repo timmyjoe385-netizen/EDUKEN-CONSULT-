@@ -81,7 +81,7 @@ test('homepage aggregate calculator card and hero CTA open the real calculator o
   await expect(page.getByRole('heading', { name: 'EDUKEN Aggregate Calculator' })).toBeVisible();
 
   await page.goto('/');
-  await page.locator('.discovery-card').filter({ hasText: 'Aggregate Score Calculator' }).click();
+  await page.locator('.discovery-card').filter({ has: page.getByText('Aggregate Score Calculator', { exact: true }) }).click();
   await expect(page).toHaveURL(/\/aggregate-calculator$/);
   await expect(page.getByRole('heading', { name: 'EDUKEN Aggregate Calculator' })).toBeVisible();
 });
@@ -101,18 +101,18 @@ test('homepage discovery cards lead to their advertised sections and pages', asy
   ];
   for (const [label, url, heading] of checks) {
     await page.goto('/');
-    await page.locator('.discovery-card').filter({ hasText: label }).click();
+    await page.locator('.discovery-card').filter({ has: page.getByText(label, { exact: true }) }).click();
     await expect(page).toHaveURL(new RegExp(url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$'));
     await expect(page.locator('body')).toContainText(heading);
   }
 
   await page.goto('/');
-  await page.locator('.discovery-card').filter({ hasText: 'JAMB Services' }).click();
+  await page.locator('.discovery-card').filter({ has: page.getByText('JAMB Services', { exact: true }) }).click();
   await expect(page).toHaveURL(/#jamb-services$/);
   await expect(page.locator('#jamb-services h2')).toHaveText('JAMB Services');
 
   await page.goto('/');
-  await page.locator('.discovery-card').filter({ hasText: 'Educational Consultation' }).click();
+  await page.locator('.discovery-card').filter({ has: page.getByText('Educational Consultation', { exact: true }) }).click();
   await expect(page).toHaveURL(/#contact$/);
   await expect(page.locator('#contact h2')).toContainText('your next move');
 });
