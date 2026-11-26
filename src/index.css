@@ -4777,8 +4777,10 @@ html[data-theme="dark"] .newsroom-route .update-card__source,
 html[data-theme="dark"] .newsroom-page .update-card__source { color: #c2d2c7; }
 
 
-/* The opportunity article is a focused reading view; keep its header in normal flow so it cannot cover the return control. */
-.article-view .nav {
-  position: relative;
-  top: auto;
+/* Keep the article-view header entirely outside the sticky navigation layer. */
+.article-view > .nav {
+  position: static !important;
+  inset: auto !important;
+  z-index: auto !important;
+  transform: none !important;
 }
