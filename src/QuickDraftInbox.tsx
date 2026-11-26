@@ -23,11 +23,12 @@ export default function QuickDraftInbox() {
     const cleanTitle = title.trim(), cleanContent = content.trim(), cleanSource = sourceUrl.trim();
     if (!cleanTitle || !cleanContent) { setError('Add a title and the main content before saving.'); return; }
     if (cleanSource) { try { const parsed = new URL(cleanSource); if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error(); } catch { setError('Enter a valid source link beginning with https:// or http://.'); return; } }
-    const common = { status: 'DRAFT', is_published: false, sourceUrl: cleanSource, category: category.trim() };
+    const common = { status: 'DRAFT', is_published: false, category: category.trim() };
+    const source = ['opportunities', 'admissions', 'updates'].includes(section) ? { sourceUrl: cleanSource } : {};
     let payload: Record<string, unknown>;
-    if (section === 'opportunities') payload = { ...common, title: cleanTitle, description: summary.trim() || cleanContent.split(/\\r?\\n/)[0].slice(0, 180), content: cleanContent, verified: false, featured: false, urgent: false, notifyOnPublish: false };
-    else if (section === 'admissions') payload = { ...common, school: cleanTitle, title: cleanTitle, description: summary.trim(), details: cleanContent, verified: false, featured: false, urgent: false, notifyOnPublish: false };
-    else if (section === 'updates') payload = { ...common, title: cleanTitle, description: summary.trim(), body: cleanContent, verified: false, featured: false, urgent: false, notifyOnPublish: false };
+    if (section === 'opportunities') payload = { ...common, ...source, title: cleanTitle, description: summary.trim() || cleanContent.split(/\\r?\\n/)[0].slice(0, 180), content: cleanContent, verified: false, featured: false, urgent: false, notifyOnPublish: false };
+    else if (section === 'admissions') payload = { ...common, ...source, school: cleanTitle, title: cleanTitle, description: summary.trim(), details: cleanContent, verified: false, featured: false, urgent: false, notifyOnPublish: false };
+    else if (section === 'updates') payload = { ...common, ...source, title: cleanTitle, description: summary.trim(), body: cleanContent, verified: false, featured: false, urgent: false, notifyOnPublish: false };
     else if (section === 'services') payload = { ...common, name: cleanTitle, description: summary.trim() || cleanContent.slice(0, 240), requirements: cleanContent };
     else payload = { ...common, question: cleanTitle, answer: cleanContent };
     setSubmitting(true);
@@ -44,7 +45,7 @@ export default function QuickDraftInbox() {
       {section !== 'faqs' && <label><span>Short summary (optional)</span><textarea value={summary} onChange={e => setSummary(e.target.value)} maxLength={700} rows={2} placeholder="A brief description for the content listing" disabled={submitting}/></label>}
       {section !== 'faqs' && <label><span>Category (optional)</span><input value={category} onChange={e => setCategory(e.target.value)} maxLength={80} placeholder="e.g. Scholarship, Admission, Education" disabled={submitting}/></label>}
       <label><span>{section === 'faqs' ? 'Answer' : section === 'admissions' ? 'Admission details' : section === 'services' ? 'Requirements / full details' : 'Full content'}</span><textarea value={content} onChange={e => setContent(e.target.value)} maxLength={18000} rows={9} required placeholder="Paste the prepared content here. Keep dates, eligibility and instructions clear." disabled={submitting}/></label>
-      <label><span>Original source link (recommended)</span><input type="url" inputMode="url" value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} maxLength={1000} placeholder="https://official-website.gov.ng/..." disabled={submitting}/></label>
+      {['opportunities', 'admissions', 'updates'].includes(section) && <label><span>Original source link (recommended)</span><input type="url" inputMode="url" value={sourceUrl} onChange={e => setSourceUrl(e.target.value)} maxLength={1000} placeholder="https://official-website.gov.ng/..." disabled={submitting}/></label>}
       {error && <p className="quick-draft-error" role="alert">{error}</p>}{message && <p className="quick-draft-success" role="status">{message}</p>}
       <div className="quick-draft-actions"><button className="primary" type="submit" disabled={submitting}>{submitting ? 'Saving draft…' : 'Save as unpublished draft'}</button><button className="secondary" type="button" disabled={submitting} onClick={reset}>Clear form</button></div>
     </form>
