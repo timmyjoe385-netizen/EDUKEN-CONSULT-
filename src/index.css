@@ -371,7 +371,7 @@ textarea {
   padding: 48px 7% 90px;
 }
 .article-back {
-  scroll-margin-top: 160px;
+  scroll-margin-top: 240px;
   display: inline-flex;
   align-items: center;
   gap: 7px;
