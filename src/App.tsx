@@ -2248,7 +2248,7 @@ function App() {
             {toast}
           </div>
         )}
-        <header className="nav">
+        <header className="nav" style={{ position: "static" }}>
           <a className="brand" href="#home" onClick={() => setArticleSlug('')}>
             <img
               className="brand-logo"
