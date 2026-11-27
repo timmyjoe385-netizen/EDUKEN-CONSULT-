@@ -1,0 +1,139 @@
+openapi: 3.1.0
+info:
+  title: EDUKEN Draft Intake
+  version: 1.0.0
+  description: >
+    Securely create unpublished EDUKEN content drafts. This API cannot publish,
+    feature, verify, mark urgent, or notify users about content. Every accepted
+    record is stored with is_published=false.
+servers:
+  - url: https://pphxltbkwygqjtjgkhxu.supabase.co/functions/v1
+paths:
+  /eduken-draft-intake:
+    post:
+      operationId: createUnpublishedDraft
+      summary: Save an EDUKEN announcement as an unpublished draft
+      description: >
+        Creates a draft in the selected EDUKEN admin content section. Never
+        publish or represent the item as published. Publication must be performed
+        manually by the EDUKEN administrator in the admin dashboard.
+      security:
+        - DraftIntakeBearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/OpportunityDraft'
+                - $ref: '#/components/schemas/AdmissionDraft'
+                - $ref: '#/components/schemas/UpdateDraft'
+                - $ref: '#/components/schemas/FaqDraft'
+                - $ref: '#/components/schemas/ServiceDraft'
+      responses:
+        '201':
+          description: Draft successfully created; remains unpublished.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok, section, id, status, is_published]
+                properties:
+                  ok:
+                    type: boolean
+                    const: true
+                  section:
+                    type: string
+                  id:
+                    type: string
+                  status:
+                    type: string
+                    const: DRAFT
+                  is_published:
+                    type: boolean
+                    const: false
+        '400':
+          description: Invalid content, unsupported field, or missing required field.
+        '401':
+          description: Invalid or missing bearer secret.
+        '413':
+          description: Request exceeds 40 KB.
+        '503':
+          description: Draft intake is not configured.
+components:
+  securitySchemes:
+    DraftIntakeBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: EDUKEN draft-intake secret
+  schemas:
+    OpportunityDraft:
+      type: object
+      additionalProperties: false
+      required: [section, title]
+      properties:
+        section:
+          const: opportunities
+        title: { type: string, minLength: 1 }
+        category: { type: string }
+        description: { type: string }
+        organization: { type: string }
+        location: { type: string }
+        deadline: { type: string, description: 'YYYY-MM-DD' }
+        application_url: { type: string, format: uri }
+        official_source: { type: string }
+        content: { type: string }
+        eligibility: { type: string }
+        benefits: { type: string }
+        how_to_apply: { type: string }
+    AdmissionDraft:
+      type: object
+      additionalProperties: false
+      required: [section, title]
+      properties:
+        section:
+          const: admissions
+        title: { type: string, minLength: 1 }
+        school: { type: string }
+        programme: { type: string }
+        category: { type: string }
+        description: { type: string }
+        deadline: { type: string, description: 'YYYY-MM-DD' }
+        application_url: { type: string, format: uri }
+        official_source: { type: string }
+    UpdateDraft:
+      type: object
+      additionalProperties: false
+      required: [section, title]
+      properties:
+        section:
+          const: updates
+        title: { type: string, minLength: 1 }
+        category: { type: string }
+        content: { type: string }
+        source: { type: string }
+        source_url: { type: string, format: uri }
+    FaqDraft:
+      type: object
+      additionalProperties: false
+      required: [section, question, answer]
+      properties:
+        section:
+          const: faqs
+        question: { type: string, minLength: 1 }
+        answer: { type: string, minLength: 1 }
+        category: { type: string }
+    ServiceDraft:
+      type: object
+      additionalProperties: false
+      required: [section, name]
+      properties:
+        section:
+          const: services
+        name: { type: string, minLength: 1 }
+        category: { type: string }
+        description: { type: string }
+        requirements: { type: string }
+        price: { type: number, minimum: 0 }
+        is_available: { type: boolean }
+        is_catalog_item: { type: boolean }
